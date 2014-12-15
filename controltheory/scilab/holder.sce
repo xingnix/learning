@@ -1,0 +1,15 @@
+w=%i*[0.01:0.1:20];
+g0=(1-exp(-w))./w;
+//gh0=sin(w/2/%i)./(w/2/%i).*exp(-w/2);
+g1=(1+w).*((1-exp(-w))./w).^2;
+[a0,b0]=phasemag(g0);
+b0=10^(b0/20)
+[a1,b1]=phasemag(g1);
+b1=10^(b1/20)
+scf;
+subplot(2,1,1);
+plot(abs(w),b0,'r')
+plot(abs(w),b1,'b')
+subplot(2,1,2)
+plot(abs(w),a0,'r')
+plot(abs(w),a1,'b')
