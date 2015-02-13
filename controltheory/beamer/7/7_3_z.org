@@ -1,0 +1,155 @@
+# #+LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \pgfplotsset{compat=1.8}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [table]
+# #+LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header:  \mode<article>{\usepackage{beamerarticle}}
+# #+latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# #+latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  线性离散系统分析
+#+latex_header: \subtitle{Z变换}
+#+AUTHOR:    
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+* Z变换
+** Z变换定义
+ * 采样信号  $e^*(t)$  的Laplace变换  
+      \[E^*(s)=\sum_{n=0}^{\infty}e(nT)e^{-nsT}\]
+ * <2->令  $Z=e^{sT}$ ,则  
+      \[e^{-nsT}=Z^{-n}\]
+ * <3->得:  
+      \[E(Z)=\sum_{n=0}^{\infty}e(nT)Z^{-n}\]
+ * <3->记作  
+      \[E(Z)={\cal Z}[e^*(t)]={\cal Z}[e(t)]\]
+** Z变换计算
+  * 级数求合法
+     * 按照Z变换的定义求解
+  * 部分分式法:
+     * 先求出  $e(t)$  的Laplace变换  $E(s)$  ,将其展开成部分分式之和,使每部分对应的Z变换是已知的.
+** 级数求合法示例: $\delta_T(t)=\sum_{n=0}^{\infty}\delta(t-nT)$
+  * <2->解:
+     \begin{eqnarray*}
+     e^*(t) & = & \sum_{n=0}^{\infty}e(nT)\delta(t-nT) \\
+      &=& \sum_{n=0}^{\infty}\delta(t-nT) \\
+     e(nT) &=& 1\\
+     E(z) &=& \sum_{n=0}^{\infty}z^{-n}\\
+      &=& \frac{1}{1-z^{-1}} \\
+     &=& \frac{z}{z-1}
+     \end{eqnarray*}
+     其中 $\qquad |z^{-1}|<1$ 
+  * <3->$1(t)$  与  $\delta_T(t)$  对应的Z变换相同.
+** 级数求合法示例: 单位阶跃信号 $1(t)$
+ * <2-> 解: 
+      \begin{eqnarray*}
+      e(nT)&=&1 , \\
+      E(z) &=  &\sum_{n=0}^{\infty}e(nT)z^{-n} \\
+       &=& \sum_{n=0}^{\infty}z^{-n} \\
+      &=& \frac{1}{1-z^{-1}} \\
+      &=& \frac{1}{z-1}
+      \end{eqnarray*}
+      其中  $\qquad |z^{-1}|<1$ 
+
+** 部分分式法示例:  $E(s)=\frac{a}{s(s+a)}$ 
+ * <2->解:
+     \begin{eqnarray*}
+     E(s) & = & \frac{1}{s}-\frac{1}{s+a}\\
+     e(t) &=& 1-e^{-at} \\
+     E(z) &=& \frac{1}{1-z^{-1}} -\frac{1}{1-z^{-1}e^{-aT}}
+     \end{eqnarray*}
+ *  <3->Z变换表:
+     \[\begin{matrix}
+     \delta(t) & 1 & 1 \\
+     1(t) & \frac{1}{s} & \frac{1}{1-z^{-1}} \\
+     t & \frac{1}{s^2} & \frac{Tz^{-1}}{(1-z^{-1})^2} \\
+     e^{-at} & \frac{1}{s+a} &\frac{1}{1-e^{-aT}z^{-1}}
+     \end{matrix}\]
+** Z变换性质
+ * <2->线性定理:    ${\cal Z}[\alpha e_1(t)+\beta e_2(t)]=\alpha E_1(z)+\beta E_2(z)$ 
+ * <3->实数位移定理:  ${\cal Z}[e(t+kT)] = z^k[E(z)-\sum_{n=0}^{k-1}e(nT)z^{-n}]$ 
+ * <4->复数位移定理:  ${\cal Z}[e^{\pm at}e(t)] = E(ze^{\mp aT})$ 
+ * <5->终值定理:  $\lim_{n\rightarrow\infty}e(nT)=\lim_{z\rightarrow 1}(1-z^{-1})E(z)$ 
+ * <6->卷积定理: 若  $g(nT)=x(nT)*y(nT)$  则  $G(z)=X(z)Y(z)$  . ($x(nT)*y(nT)=\sum_{k=0}^{\infty}x(kT)y((n-k)T)$)
+* Z反变换
+** Z反变换
+ \[e(nT)={\cal Z}^{-1}[E(z)]\]
+ * 幂级数展开法
+ * 部分分式法
+    * 展开成部分分式后查表
+ * 反演积分法
+** 幂级数展开法
+\begin{eqnarray*}
+E(z) & = &\frac{b_0+b_1 z^{-1}+\cdots+b_m z^{-m}}{1+a_1 z^{-1}+\cdots+a_n z^{-n}} \\
+ &=& c_0+c_1 z^{-1}+\cdots +c_n z^{-n} \\
+ &=& \sum_{n=0}^{\infty}c_n z^{-n} \\
+e^{*}(t) &=& \sum_{n=0}^{\infty}c_n\delta(t-nT) \\
+e(nT) &=& c_n 
+\end{eqnarray*}
+** 反演积分法
+\begin{eqnarray*}
+E(z) & = & \sum_{n=0}^{\infty}e(nT)z^{-n} \\
+  &=& e(0)+e(T)z^{-1}+\cdots+e(nT)z^{-n}+\cdots \\
+E(z)z^{n-1} &=& e(0)z^{n-1}+e(T)z^{n-2}+\cdots+e(nT)z^{-1}+\cdots \\
+e(nT)&=& Res(E(z)z^{n-1})
+\end{eqnarray*}
+** 反演积分法示例:  $E(z)=\frac{z^2}{(z-1)(z-0.5)}$  求  $e(nT)$ 
+  * <2->解:
+     \begin{eqnarray*}
+     E(z)z^{n-1} & = &\frac{z^{n+1}}{(z-1)(z-0.5)} \\
+     Res_1 &=& \lim_{z\rightarrow 1}\frac{(z-1)z^{n+1}}{(z-1)(z-0.5)} \\
+	&=& 2 \\
+     Res_2 &=& \lim_{z\rightarrow 0.5}\frac{(z-0.5)z^{n+1}}{(z-1)(z-0.5)} \\
+	&=& -0.5^n \\
+     e(nT) &=& Res_1+Res_2 \\
+      &=& 2-0.5^n
+     \end{eqnarray*}

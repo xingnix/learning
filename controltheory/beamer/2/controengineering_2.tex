@@ -1,0 +1,1487 @@
+% Created 2014-10-15 星期三 11:16
+\documentclass{article}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage[usenames]{color}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{控制系统的复域数学模型}
+\mode<article>{\renewcommand{\labelitemii}{$\cdot$}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{自动控制系统的数学模型}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+\section{时域模型}
+\label{sec-1}
+\subsection{简介}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{数学模型分类}
+\label{sec-1-1-1}
+
+\begin{itemize}
+\item <2->数学模型：描述系统内部物理量/变量之间关系的数学表达式
+\item <3->数学模型种类：
+\begin{itemize}
+\item <4->时域(t)：微分方程、差分方程、状态方程
+\item <5->复域(s)：传递函数、结构图
+\item <6->频域(w)：频率特性
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{建模步骤}
+\label{sec-1-1-2}
+
+\begin{enumerate}
+\item <2->列出系统的输入变量、输出变量
+\item <3->列写系统的原始方程
+\item <4->对原始方程进行线性化
+\item <5->消去中间变量，得到仅有输入/输出变量的微分方程
+\end{enumerate}
+\end{frame}
+\begin{frame}
+\frametitle{线性化原理与方法}
+\label{sec-1-1-3}
+
+原理：在系统工作点处，将非线性函数展开成泰勒级数，忽略高次项，得到线性化方程
+\begin{itemize}
+\item <2->$y=f(x)$ 在 $x_0$ 处展开
+\begin{itemize}
+\item <3->$y =f(x_0)+f'(x_0)(x-x_0)+\cdots$
+\item <3->$y \approx   y_0 + k(x-x_0)$
+\end{itemize}
+\item <4->$y=f(x_1,x_2)$ 在 $(x_{10},x_{20})$ 处展开
+\begin{itemize}
+\item <5->$y = f(x_{10},x_{20})+f_{x1}(x_{10},x_{20})(x-x_{10})+f_{x2}(x_{10},x_{20})(x-x_{20})+\cdots$
+\item <5->$y = y_0+K_1(x-x_{10})+K_2(x-x_{20})$
+\end{itemize}
+\item <6-> 增量化方程
+\begin{itemize}
+\item <7-> $dY=y-y_0$
+\item <7-> $dX=x-x_0$
+\item <8-> $dY=K dX$
+\end{itemize}
+\end{itemize}
+\end{frame}
+\subsection{线性微分方程与线性系统}
+\label{sec-1-2}
+\begin{frame}
+\frametitle{线性微分方程的解}
+\label{sec-1-2-1}
+
+   解＝特解＋通解
+
+\begin{itemize}
+\item <2->通解由微分方程的特征根决定
+\begin{itemize}
+\item <3->微分方程： $a_0 x''(t)+a_1 x'(t)+a_2 x(t) =b$
+\item <4->特征方程：  $a_0s^2+a_1 s + a_2=0$
+\end{itemize}
+\item <5-> n阶方程有n个互异特征根 $\lambda_1,...,\lambda_n$ 时,通解为
+      $y(t)=c_1e^{\lambda_1 t}+...+c_ne^{\lambda_n t}$
+\item <6-> 若有重根  $\lambda=\lambda_1=\lambda_2$,则
+      $y(t)=c_1 t e^{\lambda t}+c_2e^{\lambda t}+...+c_ne^{\lambda_n t}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{线性系统的定义与特点}
+\label{sec-1-2-2}
+
+\begin{itemize}
+\item <2->条件:
+\begin{itemize}
+\item 可加性： 若 $r_1(t)->c_1(t)$, $r_2(t)->c_2(t)$ 则： $r_1(t)+r_2(t)->c_1(t)+c_2(t)$
+\item 齐次性： $r_1(t)->c_1(t)$ 则： $a r_1(t) -> a c_1(t)$
+\end{itemize}
+\item <3-> 微积分特性: $r_1(t)\rightarrow c_1(t)$  则  $\int r_1(t) \rightarrow \int c_1(t), r_1(t)'\rightarrow c_1(t)'$
+\end{itemize}
+\end{frame}
+\subsection{机械系统示例(因果关系:力与位移的关系)}
+\label{sec-1-3}
+\begin{frame}
+\frametitle{机械系统示例1}
+\label{sec-1-3-1}
+\begin{itemize}
+
+\item 弹簧-质量-阻尼系统\\
+\label{sec-1-3-1-1}%
+\begin{tikzpicture}[every node/.style={outer sep=0pt,thick}]
+%#+begin_example
+%  \|                         (F)->       (-fv)    |/
+%  \|        (-kY)            .---.       ----.    |/
+%  \|-----'\/\/\/\/\/\/\/'----+ m +--------+] +----|/
+%  \|                         '---' (Y)   ----'    |/
+%  \|==============================================|/
+%#+end_example
+
+\tikzstyle{spring}=[thick,decorate,decoration={zigzag,pre length=0.3cm,post length=0.3cm,segment length=6}]
+\tikzstyle{damper}=[thick,decoration={markings,  
+  mark connection node=dmp,
+  mark=at position 0.5 with 
+  {
+    \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=15pt,minimum height=3pt,draw=none] {};
+    \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+    \draw [thick] ($(dmp.north)+(0,-5pt)$) -- ($(dmp.north)+(0,5pt)$);
+  }
+}, decorate]
+%\tikzstyle{ground}=[fill,pattern=north east lines,draw=none,minimum width=0.75cm,minimum height=0.3cm]
+\tikzstyle{ground}=[draw=none,minimum width=0.75cm,minimum height=0.3cm]
+
+\node (M) [draw,minimum width=1cm, minimum height=2.5cm] {$m$};
+
+\node (ground) [draw,ground,anchor=north,yshift=-0.25cm,minimum width=1.5cm] at (M.south) {};
+\draw (ground.north east) -- (ground.north west);
+\draw [thick] (M.south west) ++ (0.2cm,-0.125cm) circle (0.125cm)  (M.south east) ++ (-0.2cm,-0.125cm) circle (0.125cm);
+\draw [->,red,thick] (M.north east)++(0,-1em)-- + (3em,0);
+\draw [red,ultra thick] (M.north east)++(2em,-1em) node[above] {$F$};
+
+\node (wall) [ground, rotate=-90, minimum width=3cm,yshift=-3cm] {};
+\draw (wall.north east) -- (wall.north west);
+
+\draw [spring] (wall.170) -- ($(M.north west)!(wall.170)!(M.south west)$);
+\draw [damper] (wall.10) -- ($(M.north west)!(wall.10)!(M.south west)$);
+
+\draw [red,-latex,ultra thick] (M.east) ++ (0.2cm,0) -- +(1cm,0);
+\draw [red,thick] (M.east)++(0.5cm,0) node[above] {$Y$};
+
+\end{tikzpicture}
+
+
+\item 解:\\
+\label{sec-1-3-1-2}%
+\begin{itemize}
+\item 输入： $F(t)$ , 输出： $Y(t)$
+\item 原始方程： $F- k Y(t) -f v = ma$
+\item 消去中间变量：
+\begin{itemize}
+\item $v = Y'(t)$
+\item $a = v'$
+\item $mY"+fY'+kY=F$
+\end{itemize}
+\end{itemize}
+
+\end{itemize} % ends low level
+\end{frame}
+\subsection{电气系统示例}
+\label{sec-1-4}
+\begin{frame}
+\frametitle{电气及机电系统示例1}
+\label{sec-1-4-1}
+\begin{itemize}
+
+\item 电阻、电容网絡\\
+\label{sec-1-4-1-1}%
+\begin{circuitikz}[american voltages]
+%#+begin_example
+%             C  (I_1) -->
+%        .----||---.
+%        |         |
+%  o-----+--[R_1]--+--+-----o
+%  +       (I_2) -->  |
+%                     |
+%  (E_r)      (I) | [R_2] (E_c)
+%                 v   |
+%  -                  |
+%  o------------------+-----o
+%#+end_example
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$E_c$,-o](5,3)
+  to [short] (3,3)
+  to [R, l=$R_2$,i_={$I$}] (3,0)
+
+  (0,0) to [open, v>=$E_r$,-o] (0,3)
+  to [R,l=$R_1$ ,i_={$I_2$}] (3,3)
+
+  (0.5,3) to [short] (0.5,4.5) to [C, l=$C$ ,i_={$I_1$}] (3,4.5) to [short] (3,3);
+\end{circuitikz}
+
+
+\item 解：\\
+\label{sec-1-4-1-2}%
+\begin{itemize}
+\item 输入：$E_r$ ,输出 $E_c$
+\item 原始方程：
+\begin{itemize}
+\item $I=I_1+I_2$
+\item $E_c=R_2 I$
+\item $E_r=R_1 I_2+E_c$
+\item $C (E_r-E_c)' = I_1$
+\end{itemize}
+\item 消去I,I$_1$,I$_2$得：
+\begin{itemize}
+\item $R_1 C E_c'+(R_1+R_2)/R_2 E_c = R_1 E_r'+ E_r$
+\end{itemize}
+\end{itemize}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{电气及机电系统示例2}
+\label{sec-1-4-2}
+\begin{itemize}
+
+\item 电阻、电容网络\\
+\label{sec-1-4-2-1}%
+\begin{circuitikz}[american voltages]
+%#+begin_example
+%  
+%  o--------[R]-------+-----o
+%  +       (I) -->    |
+%                     |
+%  (U_r)          C ----- 
+%                   ----- U_c
+%                     |
+%  -                  |
+%  o------------------+-----o
+%#+end_example
+
+\draw
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$U_c$,-o](5,3)
+  to [short] (3,3)
+  to [C, l=$C$] (3,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [R,l=$R$ ,i_={$I$}] (3,3);
+
+\end{circuitikz}
+
+
+\item 解：\\
+\label{sec-1-4-2-2}%
+\begin{itemize}
+\item 输入： $U_r$ ,输出： $U_c$
+\item $U_r=R I +U_c$ , $C U_c' = I$
+\item 消去 $I$ ,  $RC U_c' +U_c = U_r$
+\end{itemize}
+     
+\end{itemize} % ends low level
+\end{frame}
+\subsection{非线性系统示例}
+\label{sec-1-5}
+\begin{frame}
+\frametitle{倒立摆系统线性化模型}
+\label{sec-1-5-1}
+\begin{itemize}
+
+\item 倒立摆\\
+\label{sec-1-5-1-1}%
+\begin{tikzpicture}[every node/.style={outer sep=0pt,thick}]
+%#+begin_example
+%                   ^          //
+%                   | \theta  //
+%                   |        //
+%                   |       //
+%                   |      //
+%                   |     //
+%                   |    //
+%                   |   /+
+%                   |  //| mg
+%                 N | // v
+%                   |//  -----> H
+%                   //
+%            .------+------.
+%            |             |
+%            |      +------------>  F
+%            |      |      |
+%            '------|------'
+%                O  |   O
+%  =================|==================
+%                   | Mg
+%                   v 
+%#+end_example
+%\tikzstyle{ground}=[draw=none,minimum width=0.75cm,minimum height=0.3cm]
+\node (M) [draw,minimum width=5em, minimum height=3em] {};
+%\node (ground) [draw,anchor=north,yshift=-0.25cm,minimum width=10em] at (M.south) {};
+%\draw (ground.north east) -- (ground.north west);
+\draw [thick] (M.south west) ++ (0.2cm,-0.125cm) circle (0.125cm)  (M.south east) ++ (-0.2cm,-0.125cm) circle (0.125cm);
+\draw [thick] (M.south west) ++ (-0.2cm,-0.25cm) --  ($(M.south east) + (0.2cm,-0.25cm)$);
+\draw [thick] (M.north) circle (0.3em) ;
+%\draw [->,red,thick] (M.north east)++(0,-1em)-- + (3em,0));
+\draw [->,red,thick] (M.center)-- + (3em,0);
+\draw [red,ultra thick] (M.center)++(3em,0) node[below] {$F$};
+\draw [->,red,thick] (M.center)-- + (0,-5em);
+\draw [red,ultra thick] (M.center)++(0,-5em) node[right] {$Mg$};
+\node (stick) [anchor=west,draw, rotate=60, minimum height=0.1cm,minimum width=7em,] at (M.north) {};
+\draw [->,red,thick] (stick.center)-- + (0,-2.3em);
+\draw [red,ultra thick] (stick.center)++(0,-2.3em) node[right] {$mg$};
+\draw [red,thick,<->] (stick.west)++(0,5em)  arc (90:60:5em) ;
+\draw [red] (stick.west)++(75:5em) node[above] {$\theta$};
+\draw [red,dashed,thick] (stick.west)--+(0,7em);
+\draw [->,red,thick] (stick.west)--+(0,3em) node[left] {$N$};
+\draw [->,red,thick] (stick.west)--+(3em,0) node[below] {$H$};
+%\draw (wall.north east) -- (wall.north west);
+%\draw [red,-latex,ultra thick] (M.east) ++ (0.2cm,0) -- +(1cm,0);
+%\draw [red,thick] (M.east)++(0.5cm,0) node[above] {$Y$};
+\end{tikzpicture}
+
+\mode<article>{
+\begin{itemize}
+\item $M$: 小车质量
+\item $m$：杆质量
+\item $l$:摆杆半长
+\item $J$:摆杆转动惯量（绕质心）
+\end{itemize}
+}
+
+
+
+\item 解：\\
+\label{sec-1-5-1-2}%
+\begin{itemize}
+\item 输入$F$,输出 $\theta,r$
+\item 原始方程：
+\begin{itemize}
+\item 小车水平方向： $Mr''=F-H$
+\item 杆水平方向： $m(r+l sin(\theta))'' = H$
+\item 杆竖直方向： $m (l cos(\theta))'' = N-mg$
+\item 杆转动： $J(\theta)''=N l sin(\theta) - H l cos(\theta)$
+\end{itemize}
+\item 整理后：
+\begin{itemize}
+\item $(M+m)r''+ml\cos(\theta)\theta''-ml\sin(\theta)(\theta')^2=F$
+\item $ml\cos(\theta)r''+(J+m l^2)\theta''=mgl\sin(\theta)$
+\end{itemize}
+\item 线性化 ( $\theta\rightarrow 0,\sin(\theta)\approx \theta,cos(\theta)\approx 1$ )
+\begin{itemize}
+\item $(M+m)r''+ml\theta'' = F$
+\item $ml r'' +(J+ml^2)\theta''=mgl\theta$
+\end{itemize}
+\end{itemize}
+
+
+
+
+\end{itemize} % ends low level
+\end{frame}
+\section{复域模型}
+\label{sec-2}
+\subsection{Laplace变换}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{概念}
+\label{sec-2-1-1}
+
+\begin{itemize}
+\item <2->定义
+       \begin{eqnarray*}
+       {\cal L}[F(t)] &=& F(s) \\
+       	&=& \int_0^{+\infty}f(t)e^{-st}dt
+       \end{eqnarray*}
+\item <3->作用：将微积分运算变成代数运算
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{常用函数的Laplace变换}
+\label{sec-2-1-2}
+
+\begin{itemize}
+\item <2->单位脉冲函数 $f(t)=\delta(t) \rightarrow   F(s)=1$
+\item <3->阶跃函数 $f(t)=A,(t\geq 0) \rightarrow   F(s)=\frac{A}{s}$
+\item <4->斜坡函数（速度）  $f(t)=vt,(t\geq0) \rightarrow F(s)=\frac{v}{s^2}$
+\item <5->加速度函数  $f(t)=\frac{1}{2}at^2,(t\geq 0) \rightarrow  F(s)=\frac{a}{s^3}$
+\item <6->指数函数 $f(t)=e^{at} \rightarrow  F(s)=\frac{1}{s-a}$
+\item <7->正弦函数 $f(t)=A\sin(\omega t)\rightarrow F(s)=\frac{A\omega}{s^2+\omega^2}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Laplace变换的性质}
+\label{sec-2-1-3}
+
+\begin{itemize}
+\item <2->线性: $f(t)=f_1(t)+f_2(t)\rightarrow  F(s)=F_1(s)+F_2(s)$
+\item <3->衰减: $g(t)=f(t)e^{-at} \rightarrow G(s)=F(s+a)$
+\item <4->延迟: $g(t)=f(t-a) \rightarrow  G(s)=F(s)e^{-as}$ , 一个信号经过 $e^{-as}$ 后，相当于对这个信号作延迟运算
+\item <5->积分: $g(t)=\int_0^t f(\tau) d\tau \rightarrow  G(s)=\frac{F(s)}{s}$ , $\frac{1}{s}$ 相当于积分器
+\item <6->微分: $g(t)=f(t)'\rightarrow  G(s)=sF(s)-f(0)$ , 零初始条件下， $G(s)=sF(s)$ , $s$ 相当于微分器
+\item <7->初值定理: 若 $f(t)$ 在 $t=0$ 处无脉冲分量则 $f(0)=\lim_{t->0}f(t)=\lim_{s->\infty}sF(s)$
+\item <8->终值定理: 若 $F(s)$ 极点全部在左半平面，则 $f(\infty)=lim_{t->\infty}f(t)=lim_{s->0}sF(s)$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{传递函数概念}
+\label{sec-2-1-4}
+
+\begin{itemize}
+\item <2->概念：数学模型，从现阶段来讲，描述的是输入与输出的数学运算关系。 传递函数可以表示出系统的结构，可以用来研究系统结构，参数变化对系统性能的影响。
+\item <3->定义：线性定常系统的传递函数是指在零初始条件下，系统输出量的拉氏变换与输入量的拉氏变换之比，记作：$G(s)=\frac{C(s)}{R(s)}$ 。
+\end{itemize}
+\end{frame}
+\subsection{传递函数的零点与极点}
+\label{sec-2-2}
+\begin{frame}
+\frametitle{传递函数的形式}
+\label{sec-2-2-1}
+
+\begin{itemize}
+\item <2->传递函数有三种表达形式
+\begin{itemize}
+\item <3->分子分母多项式
+\item <4->零极点形式
+\item <5->典型环节形式
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{分子分母多项式}
+\label{sec-2-2-2}
+
+\begin{itemize}
+\item <2->在零初始条件下，对微分方程两端进行拉氏变换，有
+      \begin{eqnarray*}
+      \only<3->{ a_n c^{(n)}(t)+...+a_0c(t) &=& b_m r^{(m)}(t)+...+b_0r } \\
+      \only<4->{ a_n s^n C(s)+...+a_0C(s) &=& b_m s^m R(s)+...+b_0 R(s) }\\
+      \only<5->{ (a_n s^n+...+a_0)C(s) &=& (b_m s^m+...+b_0)R(s) }\\
+      \only<6->{ G(s) &=& \frac{C(s)}{R(s)} }\\
+      \only<7->{ &=& \frac{b_m s^m+b_{m-1}s^{m-1}+...+b_0}{a_n s^n+a_{n-1}s^{n-1}+...+a_0} }
+      \end{eqnarray*}
+\item <8->传递函数只与系统的结构和参数有关
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{零极点形式}
+\label{sec-2-2-3}
+
+　$$G(s)=\frac{k_g\prod_{i=1}^m(s-z_i)}{\prod_{j=1}^n(s-p_j)}$$
+\begin{itemize}
+\item $k_g$ 根轨迹增益
+\item $z_i$ 零点
+\item $p_j$ 极点
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{典型环节形式}
+\label{sec-2-2-4}
+
+   $$G(s)=\frac{K\prod_{i=1}^m(\tau_i s+1)}{s^{\nu}\prod_{j=1}^n(\tau_j s+1)}$$
+
+\begin{itemize}
+\item $K$ :系统增益
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{传递函数的零极点对系统输出的影响}
+\label{sec-2-2-5}
+
+\begin{itemize}
+\item <2-> $N(s)C(s)=M(s)R(s)$
+\begin{itemize}
+\item $M(s)=(b_m s^m+b_{m-1}s^{m-1}+...+b_0)$
+\item $N(s)=(a_n s^n+a_{n-1}s^{n-1}+...+a_0)$
+\end{itemize}
+\item <3-> $G(s)=\frac{C(s)}{R(s)}=\frac{M(s)}{N(s)}$
+\item <4-> $M(s)=0$ 求得极点, $N(s)=0$ 求得零点。
+\item <5-> $c(t)=c_1e^{\lambda_1 t}+...+c_ne^{\lambda_n t}$
+\item <6-> 系统运动模态由极点决定
+\item <7-> 各模态所占比例由零点决定
+\end{itemize}
+\end{frame}
+\subsection{典型环节传递函数}
+\label{sec-2-3}
+\begin{frame}
+\frametitle{比例环节}
+\label{sec-2-3-1}
+
+\begin{eqnarray*}
+c(t) &=& kr(t) \\
+C(s) &=& kR(s) \\
+G(s) &=& \frac{C(s)}{R(s)} \\
+   &=& k
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{积分环节}
+\label{sec-2-3-2}
+\begin{itemize}
+
+\item 传递函数\\
+\label{sec-2-3-2-1}%
+\begin{itemize}
+\item $c(t) = \int r(t)dt$
+\item $C(s) = \frac{R(s)}{s}$
+\item $G(s) = \frac{1}{s}$
+\end{itemize}
+
+\begin{circuitikz}[x=0.7cm]
+\draw
+            (5,.5) node [op amp] (opamp) {}
+           (0,1) node [ left ] {$U_{r}$} 
+            to [R, l=$R$,o-*,i_=$I$] (opamp.-)
+            (opamp.+) to ($( opamp.+)+(0,-0.5)$) node [ground] {}
+           (opamp.out) to [short] +(0,1.5) to   [C, l_=$C$, i_=$I_c$] ($(opamp.-)+(0,1)$) to [short] (opamp.-) 
+           (opamp.out) to [short , *-o] (7,.5) node [ right ] {$U_{c}$};
+\end{circuitikz}
+
+
+\item 推导\\
+\label{sec-2-3-2-2}%
+\begin{enumerate}
+\item <2-> $U_r    = I R$
+\item <3-> $U_r(s) = I(s)R$
+\item <2-> $C\frac{dU_c}{dt}    = I_c=-I$
+\item <3-> $U_c(s) = -\frac{I(s)}{Cs}$
+\item <4-> $U_c(s) = -\frac{U_r(s)}{RCs}$
+\item <5-> $\frac{U_c(s)}{U_r(s)} = -\frac{1}{RCs}$
+\end{enumerate}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{微分环节}
+\label{sec-2-3-3}
+\begin{itemize}
+
+\item 传递函数
+\label{sec-2-3-3-1}%
+\begin{itemize}
+\item $c(t)=r'(t)$
+\item $C(s)=sR(s)$
+\item $G(s)=s$
+\end{itemize}
+
+\begin{circuitikz}[american voltages,x=0.7cm]
+%       o---c --+-------o
+%               |
+%      U_r      R      U_c
+%               |
+%       o-------+-------o
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$U_c$,-o](5,3)
+  to [short] (3,3)
+  to [R, l=$R$, i_={$I$}] (3,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [C,l=$C$] (3,3);
+\end{circuitikz}
+
+
+\item 推导
+\label{sec-2-3-3-2}%
+\begin{eqnarray*}
+  U_r &= &\frac{1}{C}\int I dt +U_c \\
+  U_r(s) &=& \frac{I(s)}{Cs}+U_c(s) \\
+  IR &=& U_c \\
+  I(s)R&=&U_c(s) \\
+  U_r(s) &=& \frac{U_c(s)}{RCs}+U_c(s)\\
+  \frac{U_c(s)}{U_r(s)} &=&\frac{RCs}{1+RCs} \\
+  &\approx & RCs , \qquad (RC\ll 1)
+\end{eqnarray*}
+\mode<article>{实际物理系统 $n\geq m$ . 其中: $n$ :传递函数分母阶次, $m$ 分子阶次}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{一阶惯性环节}
+\label{sec-2-3-4}
+\begin{itemize}
+
+\item 传递函数
+\label{sec-2-3-4-1}%
+\begin{eqnarray*}
+G(s) &=& \frac{1}{Ts+1}
+\end{eqnarray*}
+其中 $T=RC$ 为时间常数
+
+\begin{circuitikz}[american voltages,x=0.7cm]
+%       o---R --+-------o
+%               |
+%      U_r      C      U_c
+%               |
+%       o-------+-------o
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$U_c$,-o](5,3)
+  to [short] (3,3)
+  to [C, l_=$C$, i_={$I$}] (3,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [R,l=$R$] (3,3);
+\end{circuitikz}
+
+
+\item 推导\\
+\label{sec-2-3-4-2}%
+\begin{eqnarray*}
+ U_r &= &IR dt +U_c \\
+ U_r(s) &=& I(s)R+U_c(s) \\
+ U_c &=& \frac{1}{C}\int I dt \\
+ I(s)&=&CsU_c \\
+ U_r(s) &=& U_c(s)RCs+U_c(s)\\
+ \frac{U_c(s)}{U_r(s)} &=&\frac{1}{1+RCs} 
+\end{eqnarray*}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{一阶微分环节}
+\label{sec-2-3-5}
+
+   $$G(s)=1+\tau s$$
+\end{frame}
+\begin{frame}
+\frametitle{二阶振荡环节}
+\label{sec-2-3-6}
+\begin{itemize}
+
+\item LC振荡电路\\
+\label{sec-2-3-6-1}%
+\begin{circuitikz}[american voltages,x=0.7cm]
+%       o-R --L-+-------o
+%               |
+%      U_r      C      U_c
+%               |
+%       o-------+-------o
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (6,0)
+  to [open, v^>=$U_c$,-o](6,3)
+  to [short] (4,3)
+  to [C, l_=$C$, i_={$I$}] (4,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [R,l=$R$] (2,3)
+  to [L,l=$L$] (4,3);
+\end{circuitikz}
+\begin{eqnarray*}
+U_r &= &IR + U_L+ U_c \\
+U_c &=& \frac{1}{C}\int I dt \\
+U_L &=& L\frac{dI}{dt} 
+\end{eqnarray*}
+
+
+\item 推导\\
+\label{sec-2-3-6-2}%
+\begin{eqnarray*}
+ U_r(s) &=& I(s)R+U_L(s)+U_c(s) \\
+ U_c(s) &=& \frac{I(s)}{Cs}\\
+ I(s)&=&CsU_c \\
+ U_L(s) &=& LsI(s) \\
+        &=& LCs^2U_c(s) \\
+ U_r(s) &=& (Rcs+LCs^2+1)U_c(s)\\
+ \frac{U_c(s)}{U_r(s)} &=&\frac{1}{LCs^2+RCs+1}
+\end{eqnarray*}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{二阶振荡环节标准形式}
+\label{sec-2-3-7}
+
+\begin{itemize}
+\item <2-> 标准形式:
+       \begin{eqnarray*}
+        G(s) &=& \frac{\omega^2}{s^2+2\xi\omega_n s+\omega_n^2}\\
+             &=& \frac{1}{T^2s^2+2\xi Ts+1}
+       \end{eqnarray*}
+        其中 $T\omega_n=1$
+\item <3->术语：
+\begin{itemize}
+\item $\omega_n$ : 无阻尼振荡频率或自然频率
+\item $\xi$ : 阻尼比或阻尼系数
+\item $T$ : 时间常数
+\end{itemize}
+\end{itemize}
+
+\mode<article>{例：姿态角、角速度、加速度计等其数学模型均为二阶振荡环节}
+\end{frame}
+\begin{frame}
+\frametitle{二阶微分环节}
+\label{sec-2-3-8}
+
+　　　$$G(s)=\tau^2s^2+2\xi\tau s + 1$$
+\end{frame}
+\begin{frame}
+\frametitle{延迟环节}
+\label{sec-2-3-9}
+
+\begin{eqnarray*}
+c(t) &=& r(t-\tau) \\
+C(s) &=& R(s)e^{-\tau s} \\
+G(s) &=&e^{-\tau s}
+\end{eqnarray*}
+\end{frame}
+\section{结构图}
+\label{sec-3}
+\subsection{结构图介绍}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{结构图特点}
+\label{sec-3-1-1}
+
+\begin{itemize}
+\item <2->结构图是系统中各元件功能和信号流向的图解，它表示系统中各元部件的相互连接以及信号在系统中的传递路线。
+\item <3->特点
+\begin{itemize}
+\item <4-> 形象直观
+\item <5-> 可以评价各元部件对系统性能的影响
+\item <6-> 工程上使用广泛
+\item <7-> 可描述线性或非线性系统
+\item <8-> 同一结构图可用不同元器件构成实现
+\item <9-> 对于某一确定系统或元件，其结构图不是唯一的
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{系统结构图的组成及绘制}
+\label{sec-3-1-2}
+
+组成：4个基本单元
+\begin{itemize}
+\item <2-> 信号线
+\item <3-> 引出点（分支点）
+\item <4-> 比较点（累加点）
+\item <5-> 传递函数环节
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{环节连接方式}
+\label{sec-3-1-3}
+
+  3种连接方式：
+\begin{itemize}
+\item <2-> 串联
+\item <3-> 并联
+\item <4-> 反馈
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{串联}
+\label{sec-3-1-4}
+\begin{itemize}
+
+\item 结构图
+\label{sec-3-1-4-1}%
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%#+begin_example
+%          .---------.   .---------.   .---------.
+%  R(s)--->|  G_1(s) |-->|  G_2(s) |-->|  G_3(s) |---> C(s)
+%          '---------'   '---------'   '---------'
+%#+end_example
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+%\path[->](r) edge node {} (p1) ; 
+\path[red] node[draw, inner sep=5pt,right =of r] (g1) {$G_1(s)$}; 
+\path[->] (r) edge node [midway]{$ $} (g1); 
+\path[red] node[draw, inner sep=5pt,right =of g1] (g2) {$G_2(s)$}; 
+\path[->] (g1) edge node [midway]{$ $} (g2); 
+\path[red] node[draw, inner sep=5pt,right =of g2] (g3) {$G_3(s)$}; 
+\path[->] (g2) edge node [midway]{$ $} (g3); 
+\path[->] node[ right =of g3] (o) {$C(s)$}; 
+\path[->] (g3) edge node {} (o); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+
+\item 传递函数计算
+\label{sec-3-1-4-2}%
+\begin{itemize}
+\item 等效传递函数等于各环节传递函数的乘积
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{并联}
+\label{sec-3-1-5}
+\begin{itemize}
+
+\item 结构图
+\label{sec-3-1-5-1}%
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%#+begin_example
+%                .---------.      
+%           .--->|  G_1(s) |-----. 
+%           |    '---------'     |
+%           |    .---------.     |
+%  R(s)-----+--->|  G_2(s) |-----o---> C(s)
+%           |    '---------'     |
+%           |    .---------.     |
+%           '--->|  G_3(s) |-----' 
+%                '---------'
+%#+end_example
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+%\path[->](r) edge node {} (p1) ; 
+\path[red] node[draw, inner sep=5pt,right =of r] (g2) {$G_2(s)$}; 
+\path[->] (r) edge node [midway]{$ $} (g2); 
+\path[red] node[draw, inner sep=5pt,above =of g2] (g1) {$G_1(s)$}; 
+\path[->,draw] (r.east)++(1em,0) |- (g1); 
+\path[red] node[draw, inner sep=5pt,below =of g2] (g3) {$G_3(s)$}; 
+\path[->,draw] (r.east)++(1em,0) |- (g3); 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g2] (p1) { }; 
+\path[->](g2) edge node {} (p1) ; 
+\path[->,draw] (g1.east) -| (p1); 
+\path[->,draw] (g3.east) -| (p1); 
+\path[->] node[ right =of p1] (o) {$C(s)$}; 
+\path[->] (p1) edge node {} (o); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+
+\item 传递函数计算
+\label{sec-3-1-5-2}%
+\begin{itemize}
+\item 等效传递函数等于各环节传递函数的代数和
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{反馈}
+\label{sec-3-1-6}
+
+
+\mode<article>{一个环节输出信号通过另一个环节反馈至自己的输入端并与原输入信号进行比较的连接}
+\begin{itemize}
+
+\item 结构图
+\label{sec-3-1-6-1}%
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%#+begin_example
+%  
+%             E(s) .---------.    
+%  R(s)-----o------|  G(s)   |----+---> C(s)
+%        _  ^      '---------'    |
+%           |    .----------.     |
+%           '----|   H(s)   |-----' 
+%                '----------'
+%#+end_example
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ right =of r] (rr) {}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+%\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of p1] (p2) {}; 
+%\path[->](p1) edge node[midway] {$E(s)$} (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p1] (g) {$G(s)$}; 
+\path[->] (p1) edge node[midway] {$E(s)$} (g); 
+\path[->] node[ right =of g] (o) {$C(s)$}; 
+\path[->] (g) edge node {} (o); 
+\path[red,->] node[draw, inner sep=5pt,below =of g] (h) {$H(s)$}; 
+\path[->, draw] (g.east)++(1em,0) |-   (h.east); 
+\path[->, draw] (h.west) -|  node[very near end] {$-$} (p1); 
+%\path[blue,->] node[draw, inner sep=5pt,above =of p1] (gr) {$G_r(s)$}; 
+%\path[->, draw] (rr.west) |-   (gr.west); 
+%\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+
+\item 结构图
+\label{sec-3-1-6-2}%
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%#+begin_example
+%                                N(s)                 
+%                               |
+%                               |
+%                .---------.    v       .---------.
+%  R(s)-----o----|  G_1(s) |-->-o------>| G_2(s)  |--+---> C(s)
+%        _  ^    '---------'            '---------'  |
+%           |                  .----------.          |
+%           '------------------|   H(s)   |----------' 
+%                              '----------'
+%#+end_example
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ right =of r] (rr) {}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p1] (g1) {$G_1(s)$}; 
+\path[->] (p1) edge node[midway] {$E(s)$} (g1); 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g1] (p2) {}; 
+\path[->](g1) edge node[midway] { } (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p2] (g2) {$G_2(s)$}; 
+\path[->] (p2) edge node[midway] { } (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[red,->] node[draw, inner sep=5pt,below =of p2] (h) {$H(s)$}; 
+\path[->, draw] (g2.east)++(1em,0) |-   (h.east); 
+\path[->, draw] (h.west) -|  node[very near end] {$-$} (p1); 
+\path node[ inner sep=5pt,above =of p2] (n) {$N$}; 
+\path[->] (n) edge node {} (p2); 
+%\path[blue,->] node[draw, inner sep=5pt,above =of p1] (gr) {$G_r(s)$}; 
+%\path[->, draw] (rr.west) |-   (gr.west); 
+%\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{术语介绍：}
+\label{sec-3-1-7}
+
+\begin{itemize}
+\item <2-> 前向通道及其传递函数：信号从R(s)->C(s)的通道称为前向通道，前向通道上各传递函数的乘积称为前向通道传递函数
+\item <3-> 反馈能道及其传递函数：信号从C(s)->E(s)的通道称为反馈通道，反馈通道上各传递函数的乘积称为反馈通道传递函数
+\item <4-> 反馈连接的等效传递函数：$G(s)=\frac{\text{前向通道传递函数}}{1\pm\text{前向通道传递函数}\times\text{反馈通道传函数}}$
+\item <5-> 开环系统传递函数：$G_{open}(s)=G(s)H(s)$
+\item <6-> 误差传递函数：$\Phi_e(s)=\frac{E(s)}{R(s)}=1-\frac{C(s)H(s)}{R(s)}=\frac{1}{1+G(s)H(s)}$
+\item <7-> 扰动传递函数：$\Phi_f(s)=\frac{C(s)}{N(s)}=\frac{G_2(s)}{1+G_1(s)G_2(s)H(s)}$
+\item <8-> 闭环传递函数：$\Phi(s)=\frac{C(s)}{R(s)}$
+\end{itemize}
+\end{frame}
+\subsection{结构图化简方法}
+\label{sec-3-2}
+\begin{frame}
+\frametitle{结构图化简}
+\label{sec-3-2-1}
+
+\begin{itemize}
+\item <2-> 目地: 求系统的闭环传递函数 $\Phi(s)=\frac{C(s)}{R(s)}$
+\item <3-> 化简方法：
+\begin{itemize}
+\item <4-> 串、并、反馈连接
+\item <5-> 比较点、分支点移动
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{例:求 $\Phi(s)=\frac{C(s)}{R(s)}$ ：}
+\label{sec-3-2-2}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%#+begin_example
+%  
+%                 .--------.   .--------.      .--------.
+%  R(s)-->o-->o-->[ G_1(s) ]-->[ G_2(s) ]--+-->[ G_3(s) ]--+--> C(s)
+%       _ ^ _ ^   '--------'   '--------'  |   '--------'  |
+%         |   |                            |               |
+%         |   '----------------------------'               |
+%         |                                                |
+%         '------------------------------------------------'
+%#+end_example
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ right =of r] (rr) {}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of p1] (p2) {}; 
+\path[->](p1) edge node[midway] { } (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p2] (g1) {$G_1(s)$}; 
+\path[->] (p2) edge node[midway] {} (g1); 
+\path[red,->] node[draw, inner sep=5pt,right =of g1] (g2) {$G_2(s)$}; 
+\path[->] (g1) edge node[midway] { } (g2); 
+\path[red,->] node[draw, inner sep=5pt,right =of g2] (g3) {$G_3(s)$}; 
+\path[->] (g2) edge node[midway] { } (g3); 
+\path[->] node[ right =of g3] (o) {$C(s)$}; 
+\path[->] (g3) edge node {} (o); 
+%\path[red,->] node[draw, inner sep=5pt,below =of p2] (h) {$H(s)$}; 
+%\path[->, draw] (g2.east)++(1em,0) |-   (h.east); 
+%\path[->, draw] (h.west) -|  node[very near end] {$-$} (p1); 
+%\path node[ inner sep=5pt,above =of p2] (n) {$N$}; 
+%\path[->] (n) edge node {} (p2); 
+%\path[blue,->] node[draw, inner sep=5pt,above =of p1] (gr) {$G_r(s)$}; 
+%\path[->, draw] (rr.west) |-   (gr.west); 
+%\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p2); 
+\path[->, draw] (g3.east)+(1em,0) -- +(1em,-5em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\mode<article>{解：}
+
+\begin{eqnarray}
+G(s) &=& \frac{G_1(s)G_2(s)}{1+G_1(s)G_2(s)} \\
+\Phi(s) &=& \frac{G(s)G_3(s)}{1+G(s)G_3(s)}  \\
+\Phi(s) &=& \frac{G_1(s)G_2(s)G_3(s)}{1+G_1(s)G_2(s)+G_1(s)G_2(s)G_3(s)}
+\end{eqnarray}
+\end{frame}
+\begin{frame}
+\frametitle{例: 结构图化简}
+\label{sec-3-2-3}
+
+
+\begin{tikzpicture}[node distance=1em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ right =of r] (rr) {}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of p1] (p2) {}; 
+\path[->](p1) edge node[midway] { } (p2) ; 
+\path node[draw, inner sep=5pt,right =of p2] (g1) {$G_1(s)$}; 
+\path[->] (p2) edge node[midway] {} (g1); 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g1] (p3) {}; 
+\path[->](g1) edge node[midway] { } (p3) ; 
+\path node[draw, inner sep=5pt,right =of p3] (g2) {$G_2(s)$}; 
+\path[->] (p3) edge node[midway] { } (g2); 
+\path node[draw, inner sep=5pt,right =of g2] (g3) {$G_3(s)$}; 
+\path[->] (g2) edge node[midway] { } (g3); 
+\path[->] node[ right =of g3] (o) {$C(s)$}; 
+\path[->] (g3) edge node {} (o); 
+\path[red,->] node[draw, inner sep=5pt,below =of g1] (h1) {$H_1(s)$}; 
+\path[->, draw] (g2.east)+(0.3em,0) |-   (h1.east); 
+\path[->, draw] (h1.west) -|  node[very near end] {$-$} (p2); 
+%\path node[ inner sep=5pt,above =of p2] (n) {$N$}; 
+%\path[->] (n) edge node {} (p2); 
+\path node[draw, inner sep=5pt,above =of g2] (h2) {$H_2(s)$}; 
+\path[->, draw] (g3.east)+(0.3em,0) |-   (h2.east); 
+\path[->, draw] (h2.west) -|  node[very near end] {$-$} (p3); 
+%\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+%\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p2); 
+\path[->, draw] (g3.east)+(0.3em,0) -- +(0.3em,-5em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{tikzpicture}[node distance=1em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ right =of r] (rr) {}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of p1] (p2) {}; 
+\path (p1) edge node { } (p2) ; 
+\path node[draw, inner sep=5pt,right =of p2] (g1) {$G_1(s)$}; 
+\path (p2) edge node {} (g1); 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g1] (p3) {}; 
+\path[->](g1) edge node { } (p3) ; 
+\path node[draw, inner sep=5pt,right =of p3] (g2) {$G_2(s)$}; 
+\path[->] (p3) edge node { } (g2); 
+\path[blue] node[draw, inner sep=5pt,right =of g2] (g3) {$G_3(s)$}; 
+\path[->] (g2) edge node { } (g3); 
+\path[->] node[ right =of g3] (o) {$C(s)$}; 
+\path[->] (g3) edge node {} (o); 
+\path[red] node[draw, inner sep=5pt,below =of g1] (h1) {$H_1(s)$}; 
+\path[blue,->] node[draw, inner sep=5pt,below =of g2] (g13) {$\frac{1}{G_3(s)}$}; 
+\path[->, draw] (g3.east)+(0.3em,0) |-   (g13.east); 
+\path[->] (g13) edge node {} (h1); 
+\path[->, draw] (h1.west) -|  node[very near end] {$-$} (p2); 
+%\path node[ inner sep=5pt,above =of p2] (n) {$N$}; 
+%\path[->] (n) edge node {} (p2); 
+\path node[draw, inner sep=5pt,above =of g2] (h2) {$H_2(s)$}; 
+\path[->, draw] (g3.east)+(0.3em,0) |-   (h2.east); 
+\path[->, draw] (h2.west) -|  node[very near end] {$-$} (p3); 
+%\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+%\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p2); 
+\path[->, draw] (g3.east)+(0.3em,0) -- +(0.3em,-5em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+\end{frame}
+\begin{frame}
+\frametitle{例: 结构图化简(续)}
+\label{sec-3-2-4}
+\begin{itemize}
+
+\item 内回路化为 $\Phi_1(s)$
+\label{sec-3-2-4-1}%
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ right =of r] (rr) {}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of p1] (p2) {}; 
+\path (p1) edge node { } (p2) ; 
+\path node[draw, inner sep=5pt,right =of p2] (g1) {$G_1(s)$}; 
+\path (p2) edge node {} (g1); 
+\path node[draw, inner sep=5pt,right =of g1] (g2) {$\Phi_1(s)$}; 
+\path[->] (g1) edge node { } (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[red] node[draw, inner sep=5pt,below =of g1] (h1) {$H_1(s)$}; 
+\path[blue,->] node[draw, inner sep=5pt,right =of h1] (g13) {$\frac{1}{G_3(s)}$}; 
+\path[->, draw] (g2.east)+(1em,0) |-   (g13.east); 
+\path[->] (g13) edge node {} (h1); 
+\path[->, draw] (h1.west) -|  node[very near end] {$-$} (p2); 
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-7em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+
+\item 内回路化为 $\Phi_2(s)$
+\label{sec-3-2-4-2}%
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ right =of r] (rr) {}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path node[draw, inner sep=5pt,right =of p1] (g1) {$\Phi_2(s)$}; 
+\path[->] (p1) edge node { } (g1); 
+\path[->] node[ right =of g1] (o) {$C(s)$}; 
+\path[->] (g1) edge node {} (o); 
+\path[->, draw] (g1.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{例: 结构图化简(续)}
+\label{sec-3-2-5}
+
+
+\mode<article>{解：}
+
+\begin{eqnarray}
+\Phi_1(s) &=& \frac{G_2 G_3}{1+G_2 G_3 H_2} \\
+\Phi_2(s) &=& \frac{G_1 \Phi_1}{1+H_1G_1 \Phi_1 / G_3} \\
+          &=& \frac{G_1 G_2 G_3}{1+G_2 G_3 H_2+G_1G_2H_1} \\
+\Phi(s)   &=& \frac{\Phi_2}{1+ \Phi_2} \\
+          &=& \frac{G_1 G_2 G_3}{1+G_2 G_3 H_2+G_1G_2H_1+G_1 G_2 G_3} \\
+\end{eqnarray}
+
+结构图变换规则：各通道传递函数不变，即等效变换
+\end{frame}
+\subsection{结构图等效变换}
+\label{sec-3-3}
+\begin{frame}
+\frametitle{比较点移动}
+\label{sec-3-3-1}
+\begin{itemize}
+
+\item 比较点移动
+\label{sec-3-3-1-1}%
+\begin{tikzpicture}[node distance=1em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path node[draw, inner sep=5pt,right =of p1] (g1) {$G(s)$}; 
+\path (p1) edge node {} (g1); 
+\path[->] node[ right =of g1] (o) {$C(s)$}; 
+\path[->] (g1) edge node {} (o); 
+\path[->] node[below=of r] (q) {$Q(s)$}; 
+\path[->, draw] (q) -|   (p1); 
+\begin{scope}[shift={(13em,0)}]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[draw, inner sep=5pt,right =of r] (g1) {$G(s)$}; 
+\path (r) edge node {} (g1); 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g1] (p1) {}; 
+\path[->](g1) edge node {} (p1) ; 
+\path[->] node[ right =of p1] (o) {$C(s)$}; 
+\path[->] (p1) edge node {} (o); 
+\path[->] node[below=of r] (q) {$Q(s)$}; 
+\path node[draw, inner sep=5pt,right =of q] (g2) {$G(s)$}; 
+\path (q) edge node {} (g2); 
+\path[->, draw] (g2) -|   (p1); 
+\end{scope}
+\end{tikzpicture} 
+
+
+\item 比较点移动
+\label{sec-3-3-1-2}%
+\begin{tikzpicture}[node distance=1em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[draw, inner sep=5pt,right =of r] (g1) {$G(s)$}; \path (r) edge node {} (g1); 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g1] (p1) {}; \path[->](g1) edge node {} (p1) ; 
+\path[->] node[ right =of p1] (o) {$C(s)$}; \path[->] (p1) edge node {} (o); 
+
+\path[->] node[below=of r] (q) {$Q(s)$}; \path[->, draw] (q) -|   (p1); 
+\begin{scope}[shift={(16em,0)}]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; \path[->](r) edge node {} (p1) ; 
+\path node[draw, inner sep=5pt,right =of p1] (g1) {$G(s)$}; \path (p1) edge node {} (g1); 
+\path[->] node[ right =of g1] (o) {$C(s)$}; \path[->] (g1) edge node {} (o); 
+
+\path[->] node[draw , inner sep=5pt,below=of r] (g2) {$\frac{1}{G(s)}$}; \path[->, draw] (g2) -|   (p1); 
+\path[->] node[left=of g2] (q) {$Q(s)$}; \path[->, draw] (q) --   (g2); 
+\end{scope}
+\end{tikzpicture} 
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{分支点移动}
+\label{sec-3-3-2}
+\begin{itemize}
+
+\item 分支点移动
+\label{sec-3-3-2-1}%
+\begin{tikzpicture}[node distance=1.5em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[draw, inner sep=5pt,right =of r] (g1) {$G(s)$}; 
+\path (r) edge node {} (g1); 
+\path[->] node[ right =of g1] (o) {$C(s)$}; 
+\path[->] (g1) edge node {} (o); 
+
+\path[->] node[below=of o] (q) {$Q(s)$}; 
+\path[->, draw] (g1.east)+(0.7em,0) |- (q); 
+\begin{scope}[shift={(12em,0)}]
+\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[draw, inner sep=5pt,right =of r] (g1) {$G(s)$}; 
+\path (r) edge node {} (g1); 
+\path node[draw, inner sep=5pt,below =of g1] (g2) {$G(s)$};
+\path[->,draw] (r.east)+(0.7em,0) |- (g2); 
+\path[->] node[ right =of g1] (o) {$C(s)$}; 
+\path[->] (g1) edge node {} (o); 
+\path[->] node[right=of g2] (q) {$Q(s)$}; 
+\path[->, draw] (g2.east) -- (q); 
+\end{scope}
+\end{tikzpicture} 
+
+
+\item 分支点移动
+\label{sec-3-3-2-2}%
+\begin{tikzpicture}[node distance=1.5em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[draw, inner sep=5pt,right =of r] (g1) {$G(s)$}; \path (r) edge node {} (g1); 
+\path[->] node[ right =of g1] (o) {$C(s)$}; \path[->] (g1) edge node {} (o); 
+
+\path[->] node[below=of o] (q) {$Q(s)$}; \path[->, draw] (g1.west)+(-0.7em,0) |- (q); 
+\begin{scope}[shift={(12em,0)}]
+\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[draw, inner sep=5pt,right =of r] (g1) {$G(s)$}; \path (r) edge node {} (g1); 
+\path[->] node[ right =of g1] (o) {$C(s)$}; \path[->] (g1) edge node {} (o); 
+
+\path node[draw, inner sep=5pt,below =of o] (g2) {$\frac{1}{G(s)}$}; \path[->,draw] (g1.east)+(0.7em,0) |-  (g2); 
+\path[->] node[right=of g2] (q) {$Q(s)$}; \path[->, draw] (g2) -- (q); 
+\end{scope}
+\end{tikzpicture} 
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{分支点与比较点的相互移动}
+\label{sec-3-3-3}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[draw, circle,inner sep=2pt,right =of r] (p1) {}; \path (r) edge node {} (p1); 
+\path[->] node[ right =of p1] (o) {$C(s)$}; \path[->] (p1) edge node {} (o); 
+\path[->] node[below=of r] (q) {$Q(s)$}; \path[->, draw] (q) -| (p1); 
+\path[->] node[below=of o] (y) {$Y(s)$}; \path[->, draw] (p1.east)+(1em,0) |- (y); 
+\begin{scope}[shift={(13em,0)}]
+\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path node[draw, circle,inner sep=2pt,right =of r] (p1) {}; \path (r) edge node{} (p1); 
+\path[->] node[ right =of p1] (o) {$C(s)$}; \path[->] (p1) edge node {} (o); 
+\path node[draw, circle,inner sep=2pt,below =of p1] (p2) {}; \path[->,draw] (r.east)+(1em,0) |- (p2); 
+\path[->] node[right=of p2] (y) {$Y(s)$}; \path[->, draw] (p2) -- (y); 
+\path[->] node[below=of p2] (q) {$Q(s)$}; \path[->, draw] (q) -- (p2); 
+\path[->] node[above=of p1] (q) {$Q(s)$}; \path[->, draw] (q) -- (p1); 
+\end{scope}
+\end{tikzpicture} 
+\end{frame}
+\begin{frame}
+\frametitle{例:求 $\Phi(s)=\frac{C(s)}{R(s)}$}
+\label{sec-3-3-4}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ right =of r] (rr) {}; 
+\path node[draw, inner sep=5pt,right =of rr] (g1) {$G_1(s)$};     \path[->] (r) edge node{} (g1); 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g1] (p2) {}; \path[->] (g1) edge node { } (p2) ; 
+\path[->] node[ right =of p2] (o) {$C(s)$}; \path[->] (p2) edge node {} (o); 
+
+\path node[draw, inner sep=5pt,below =of g1] (g2) {$G_2(s)$}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,left =of g2] (p1) {}; 
+\path[->](rr.center) edge node {} (p1) ; 
+\path[->] (p1) edge node { } (g2); 
+\path[->, draw] (g2.east) -|  node[near end] {$X(s)$} (p2); 
+\path node[draw, inner sep=5pt,below =of g2] (g3) {$G_3(s)$}; 
+\path[->, draw] (p2.east)+(1em,0) |-   (g3.east); 
+\path[->, draw] (g3.west) -|  node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{eqnarray}
+C(s) &=& R(s)G_1+X(s) \\
+X(s) &=& G_2(R(s)-C(s)G_3) \\
+C(s) &=& R(s)G_1+G_2(R(s)-C(s)G_3) \\
+\frac{C(s)}{R(s)} &=& \frac{G_1+G_2}{1+G_2G_3}
+\end{eqnarray}
+\end{frame}
+\subsection{信号流图}
+\label{sec-3-4}
+\begin{frame}
+\frametitle{信号流图定义}
+\label{sec-3-4-1}
+
+ 由节点与有向支路构成的能表征系统功能与信号流动方向的图，称为系统的信号流图。
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label= left:$F(s)$] (r) {}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=right:$Y(s)$,right =of r] (c) {}; \path[->] (r) edge node {$H(s)$} (c) ; 
+%\path[->, draw] (r.east) edge node[middle] {$H(s)$}(c.west); 
+\end{tikzpicture} 
+\end{frame}
+\begin{frame}
+\frametitle{结构图与信号流图}
+\label{sec-3-4-2}
+
+\begin{tikzpicture}
+[
+amark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[above]{#1}}},postaction={decorate}},
+bmark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[below]{#1}}},postaction={decorate}},
+terminal/.style 2 args={draw,circle,inner sep=2pt,label={#1:#2}},
+]
+
+%Place the nodes
+\node[terminal={below}{$f(t)$}] (a) at (0,0) {};
+\node[terminal={below left}{$y_1$}] (b) at (1cm,0) {};
+\node[terminal={below left}{$\ddot{y}_2$}] (c) at (3cm,0) {};
+\node[terminal={[xshift=-4mm]below right}{$\dot{y}_2=x_2$}] (d) at (5cm,0) {};
+\node[terminal={below right}{$y_2=x_1$}] (e) at (7cm,0) {};
+%Draw the connections
+\draw[amark=$1/K$] (a) to (b);
+\draw[amark=$K/M$] (b) to (c);
+\draw[amark=$s^{-1}$] (c) to (d);
+\draw[amark=$s^{-1}$] (d) to (e);
+\draw[bmark=$-B/M$] (d) to[bend left=45] (c);
+\draw[amark=$1$,label revd] (e) to[bend left=50] (b);
+\draw[amark=$-K/M$,label revd] (e) to[bend right=50] (c);
+\end{tikzpicture}
+\end{frame}
+\subsection{梅森公式}
+\label{sec-3-5}
+\begin{frame}
+\frametitle{梅森公式}
+\label{sec-3-5-1}
+
+\begin{itemize}
+\item <2-> 优点：不需要对结构图作任何变换，可以直接对复杂的结构图求取系统的闭环传递函数
+\item <3-> 梅森公式 
+       $$ G(s)=\frac{C(s)}{R(s)}=\frac{1}{\Delta}\sum_{k=1}^l P_k\Delta_k $$
+\begin{itemize}
+\item <4-> $\Delta$ : 系统的特征多项式, $\Delta$ =1-(所有不同回路增益之和)+(所有两两不接触回路增益乘积之和)-(所有三个互不接触回路增益乘积之和)+\ldots{}
+\item <5-> $P_k$ : 第k条前向通道
+\item <6-> $\Delta_k$ : 系统结构图去除 $P_k$ 后的特征多项式
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{梅森公式示例(结构图)：}
+\label{sec-3-5-2}
+
+
+\begin{tikzpicture}[node distance=1em,auto,>=latex'] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+%\path[->] node[ right =of r] (rr) {}; 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) {}; \path[->](r) edge node {} (p1) ; 
+\path node[draw, inner sep=5pt,right =of p1] (g1) {$G_1(s)$};     \path (p1) edge node{} (g1); 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g1] (p2) {}; \path (g1) edge node { } (p2) ; 
+\path node[draw, inner sep=5pt,right =of p2] (g2) {$G_2(s)$}; \path[->] (p2) edge node[midway] { } (g2); 
+\path node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g2] (p3) {}; \path[->](g2) edge node{} (p3) ; 
+\path[blue] node[draw, inner sep=5pt,right =of p3] (g3) {$G_3(s)$}; \path[->] (p3) edge node{} (g3); 
+\path[->] node[ right =of g3] (o) {$C(s)$}; 
+\path[->] (g3) edge node {} (o); 
+\path[red] node[draw, inner sep=5pt,below =of g1] (h1) {$H_1(s)$}; 
+\path[->, draw] (p2.east)+(0.3em,0) |-   (h1.east); 
+\path[->, draw] (h1.west) -|  node[very near end] {$-$} (p1); 
+\path node[draw, inner sep=5pt,above =of g2] (h2) {$H_2(s)$}; 
+\path[->, draw] (p3.east)+(0.3em,0) |-   (h2.east); 
+\path[->, draw] (h2.west) -|  node[very near end] {$-$} (p2); 
+\path[red] node[draw, inner sep=5pt,below =of g3] (h3) {$H_3(s)$}; 
+\path[->, draw] (g3.east)+(0.5em,0) |-   (h3.east); 
+\path[->, draw] (h3.west) -|  node[very near end] {$-$} (p3); 
+%\path node[ inner sep=5pt,above =of p2] (n) {$N$}; 
+%\path[->] (n) edge node {} (p2); 
+%\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+%\path[->, draw] (g2.east)+(0.3em,0) -- +(0.3em,-3em) -| node[very near end] {$-$} (p2); 
+%\path[->, draw] (g3.east)+(0.7em,0) -- +(0.7em,-7em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+\end{frame}
+\begin{frame}
+\frametitle{梅森公式示例（信号流图）:}
+\label{sec-3-5-3}
+
+\begin{tikzpicture}
+[
+amark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[above]{ #1 };}},postaction={decorate}},
+bmark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[below]{ #1 };}},postaction={decorate}},
+terminal/.style 2 args={draw,circle,inner sep=2pt,label={#1:#2}},
+]
+
+%Place the nodes
+\node[terminal={below}{$R(s)$}] (r) at (0,0) {};
+\node[terminal={below left}{$ $}] (p1) at (1cm,0) {};
+\node[terminal={below left}{$ $}] (p2) at (3cm,0) {};
+\node[terminal={[xshift=-4mm]below right}{$ $}] (p3) at (5cm,0) {};
+\node[terminal={below right}{$C(s)$}] (c) at (7cm,0) {};
+%Draw the connections
+\draw[amark=$1$] (r) to (p1);
+\draw[amark=$G_1(s)$] (p1) to (p2);
+\draw[bmark=$G_2(s)$] (p2) to (p3);
+\draw[amark=$G_3(s)$] (p3) to (c);
+\draw[bmark=$-H_1(s)$] (p2) to[bend left=45] (p1);
+\draw[amark=$-H_2(s)$] (p3) to[bend right=50] (p2);
+\draw[bmark=$-H_3(s)$] (c) to[bend left=50] (p3);
+\end{tikzpicture}
+
+
+\mode<article>{解：}
+
+\begin{itemize}
+\item <2-> $\Phi(s)=\frac{C(s)}{R(s)}=\frac{1}{\Delta}\sum P_k\Delta_k$ ;
+\item <3-> $P_1=G_1 G_2 G_3,L_1=-G_1H_1,L_2= -G_2H_2,L_3= -G_3H_3$ ;
+\item <4-> $\Delta_1=1$ ;
+\item <5-> $\Delta=1-(L_1+L_2+L_3)+L_1 L_3 = 1+G_1 H_1 +H_2 H_2 +G_3 H_3 + G_1 G_3 H_1 H_3$ ;
+\item <6-> $\Phi(s)=\frac{G_1 G_2 G_3}{1+G_1 H_1 + G_2 H_2 + G_3 H_3 + G_1 G_3 H_1 H_3}$ .
+\end{itemize}
+\end{frame}
+
+\end{document}

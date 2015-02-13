@@ -1,0 +1,333 @@
+% Created 2014-11-28 星期五 12:40
+\documentclass[table]{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{离散系统基本概念}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性离散系统分析}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+\section{特点}
+\label{sec-1}
+\begin{frame}
+\frametitle{离散系统与离散信号}
+\label{sec-1-1}
+
+\mode<article>{离散信号只在离散的时刻有值，通常也把只在离散时刻有非零值的脉冲序列称为离散信号。}
+\begin{itemize}
+\item <2->离散信号:脉冲或数字信号。
+\item <3->离散系统:控制系统中有一处或几处信号是脉冲或数字信号
+\end{itemize}
+\end{frame}
+\section{采样控制系统}
+\label{sec-2}
+\begin{frame}
+\frametitle{采样控制系统}
+\label{sec-2-1}
+
+\mode<article>{通常被控对象是连续系统，采用离散系统作为控制器时需要将连续信号采样，得到离散信号供控制器使用，还需要将控制器的输出复现为连续信号输入到被控对象。}
+\begin{itemize}
+\item <2->采样: 连续信号转变为离散脉冲序列的过程
+\begin{itemize}
+\item <3->周期采样:离散信号的获取是周期性的
+\item <4->非周期采样:离散信号的获取是非周期的
+\end{itemize}
+\item <5->复现:把脉冲序列转变为连续信号的过程
+\end{itemize}
+\begin{columns}
+\begin{column}{0.35\textwidth}
+\begin{block}<2->{连续信号}
+\label{sec-2-1-1}
+
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[smooth,mark=none] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.35\textwidth}
+\begin{block}<2->{采样:}
+\label{sec-2-1-2}
+
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.35\textwidth}
+\begin{block}<5->{复现:}
+\label{sec-2-1-3}
+
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[const plot] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{采样器与保持器}
+\label{sec-2-2}
+
+\begin{itemize}
+\item 典型采样控制系统中既有连续的模拟信号,又有离散的脉冲信号,因此需要:
+\begin{itemize}
+\item 采样器: 模拟信号转换为脉冲信号
+\item 保持器: 脉冲信号转换为模拟信号
+\end{itemize}
+\end{itemize}
+
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of p1] (s) {}; 
+\draw[blue] (s.west)--(s.north east);\draw[blue,->] (s.north west) arc (70:0:1.7em);\draw (s.south) node {$T$};\draw[blue] (s.north) node[above] {$S$};
+\path[](p1) edge node[midway] {$e(t)$} (s) ; 
+\path[->] node[draw, inner sep=5pt,right =of s] (k) {$K$}; 
+\path[->] (s) edge node[midway] {$e^*(t)$} (k); 
+\path[blue,->] node[draw, inner sep=5pt,right =of k] (gh) {$G_h(s)$}; 
+\path[->] (k) edge node {} (gh); 
+\path[red,->] node[draw, inner sep=5pt,right =of gh] (gp) {$G_p(s)$}; 
+\path[->] (gh) edge node[midway] {$e_h(t)$} (gp); 
+\path[->] node[ right =of gp] (o) {$c(t)$}; 
+\path[->] (gp) edge node {} (o); 
+\path[->] node[draw, inner sep=5pt,below =of gh] (h) {$H(s)$}; 
+\path[->, draw] (o.west)+(-1em,0) |-   (h.east); 
+\path[->, draw] (h.west) -| node[very near end] {$-$} (p1); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item $e^*(t)$  :采样信号
+\item $G_h(s)$  :保持器
+\item $e_h(t)$  :复现信号
+\item $S$  :理想采样开关
+\item $T$  :采样周期
+\end{itemize}
+\end{frame}
+\section{数字控制系统}
+\label{sec-3}
+\begin{frame}
+\frametitle{数字控制系统}
+\label{sec-3-1}
+
+\begin{itemize}
+\item 以数字计算机作为控制器控制连续对象
+\item 系统中既有连续信号,又有数字信号,实现两种信号之间的转换装置为A/D,D/A.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{模数转换器(A/D)}
+\label{sec-3-2}
+
+\begin{itemize}
+\item 将连续信号转换为数字信号.
+\item <2->工作过程:
+\begin{itemize}
+\item <2->采样过程:  $e(t)\rightarrow e^*(t)$
+\item <3->量化过程:  $e^*(t)\rightarrow \bar{e}^*(t)$
+\end{itemize}
+\end{itemize}
+\begin{columns}
+\begin{column}{0.35\textwidth}
+\begin{block}<2->{连续信号}
+\label{sec-3-2-1}
+
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[smooth,mark=none] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.35\textwidth}
+\begin{block}<2->{采样:}
+\label{sec-3-2-2}
+
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.35\textwidth}
+\begin{block}<3->{量化:}
+\label{sec-3-2-3}
+
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{数模转换器(D/A)}
+\label{sec-3-3}
+
+\begin{itemize}
+\item 将离散的数字信号转换为连续模拟信号
+\item <2->工作过程:
+\begin{itemize}
+\item 解码过程: 将离散数字信号转换为离散模拟信号
+\item 复现过程: 将离散的模拟信号转换为连续的模拟信号
+\end{itemize}
+\end{itemize}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{数字信号}
+\label{sec-3-3-1}
+
+\begin{tikzpicture}[scale=0.7]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{复现:}
+\label{sec-3-3-2}
+
+\begin{tikzpicture}[scale=0.7]
+\begin{axis}[grid=both]
+\addplot+[const plot] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{量化方法}
+\label{sec-3-4}
+
+\begin{itemize}
+\item <2->只舍不入: 只取量化单位  $q$  的整数部分
+       \begin{eqnarray*}
+        E(e) &=& \frac{q}{2} \\
+        \sigma^2 &=& \frac{q^2}{3}
+       \end{eqnarray*}
+\item <3->有舍有入: 类似四舍五入
+       \begin{eqnarray*}
+        E(e) &=& 0 \\
+        \sigma^2 &=& \frac{q^2}{12}
+       \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{减小量化误差方法}
+\label{sec-3-5}
+
+\begin{itemize}
+\item 减小  $q$  , 即增大字长  $i$  :   
+         \[q=\frac{x_{max}-x_{min}}{2^i}\]
+\end{itemize}
+\end{frame}
+\section{离散系统研究方法}
+\label{sec-4}
+\begin{frame}
+\frametitle{离散系统研究方法}
+\label{sec-4-1}
+
+\begin{itemize}
+\item 连续系统: Laplacian 变换
+\item <2->离散系统: Z变换
+\item <3->离散系统学习要点
+\begin{itemize}
+\item <4->离散数学模型,离散系统与连续系统对比
+\item <5->离散系统的稳定性,稳态性能与动态性能分析
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}

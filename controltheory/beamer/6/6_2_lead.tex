@@ -1,0 +1,438 @@
+% Created 2014-11-09 星期日 22:23
+\documentclass[table]{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{串联超前校正}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统校正方法}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+\section{串联超前校正原理与方法}
+\label{sec-1}
+\begin{frame}
+\frametitle{串联超前校正原理}
+\label{sec-1-1}
+
+利用超前校正网络的相角超前特性来提升系统的相角裕度 $\gamma$ 
+\begin{eqnarray*}
+G_c(s) &=& \frac{1+aTs}{1+Ts} ,a>1 \\
+\phi_c(\omega) & = & \arctan(aT\omega)-\arctan(T\omega) 
+\end{eqnarray*}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{校正网络Bode图}
+\label{sec-1-1-1}
+
+\begin{tikzpicture}[ yscale=0.55,yscale=0.7]
+\draw[->] (-1,0) -- (3.5,0);
+\draw[->] (0,-0.5) -- (0,2.1);
+\draw (0,1.5) node[above left] {$L_c(\omega)$};
+\draw [red,thick] plot coordinates {(0,0) (1,0) (2,1)  (3,1)};
+\draw (1,0) node[below] {$\frac{1}{aT}$};
+\draw (2,0) node[below] {$\frac{1}{T}$};
+\draw[pink] (1.5,0) -- +(0,0.5);
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (3.5,0);
+\draw[->] (0,-0.5) -- (0,2.1);
+\draw (0,1.5) node[above left] {$\phi_c(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.5,0.1) (1,0.45) (1.5,1) (2,0.45) (2.5,0.1) (3,0)};
+\draw (1,0) node[below] {$\frac{1}{aT}$};
+\draw (2,0) node[below] {$\frac{1}{T}$};
+\draw[pink] (1.5,0) -- +(0,1);
+\end{scope}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<3->{超前校正示意图:}
+\label{sec-1-1-2}
+
+\begin{tikzpicture}[scale=0.7]
+\coordinate (o) at (0,0);
+\coordinate (ox) at (4.5,0);
+\draw[->] (o) -- (ox);
+\draw[->] (0,-1.1) -- (0,1.5);
+\draw (0,0.5) node[above left] {$L(\omega)$};
+\draw (o) node[below left] {$o$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\coordinate (s) at (1,1);
+\coordinate (s1) at ($(s) + (160:1)$);
+\coordinate (s2) at ($(s)+(-40:4.5)$);
+\coordinate (w1) at (intersection of s--s2 and o--ox);
+\coordinate (w2) at ($(w1)+(0.5,0)$);
+\coordinate (w2down) at ($(w2)+(0,-5)$);
+\coordinate (w2v) at (intersection of w2--w2down and s--s2);
+\coordinate (w2e) at ($(w2)+(160:5)$);
+\coordinate (w2left) at (intersection of w2--w2e and s--s2);
+\coordinate (w2right) at ($2*(w2)-(w2left)$);
+\draw[red] (s1)--(s)--(s2);
+\draw[blue] (w2left)--(w2right)--+(-40:1);
+\draw[purple] (w2)--(w2v);
+\draw (w1) node[below left] {$\omega_c'$};
+\draw (w2) node[above right] {$\omega_c''$};
+
+\begin{scope}[shift={(0,-2.3)}]
+\draw[->] (o) -- (ox);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.2) node[above left] {$\phi(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.3,-0.1) (0.6,-0.25) (1.1,-0.5) (1.5,-0.65) (2,-0.7) (3.7,-0.9)};
+\draw [blue,thick] plot [smooth] coordinates {(1.1,-0.5) (1.5,-0.6) (2.7,-0.6) (3.7,-0.9)};
+\draw[dashed,red] (0,-1) -- (4.5,-1);
+\draw (0,-1) node[left] {$-180^\circ$};
+\end{scope}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正网络分析}
+\label{sec-1-2}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{最大超前角:}
+\label{sec-1-2-1}
+
+\begin{eqnarray*}
+\frac{d\phi_c(\omega)}{d\omega} & = & 0 \\
+\omega_m &=& \frac{1}{T\sqrt{a}}\\
+\phi_c(\omega_m) &=& 2\arctan\sqrt{a}-\frac{\pi}{2}\\
+                 &=& \arcsin\frac{a-1}{a+1}
+\end{eqnarray*}
+工程中一般 $\phi_m\leq 60^{\circ},a<20$ 
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<3->{幅值}
+\label{sec-1-2-2}
+
+\begin{eqnarray*}
+\lg\omega_m &=& \frac{1}{2}(\lg\frac{1}{T}+\lg\frac{1}{aT}) \\
+L_c(\omega) &=& 20\lg\omega_m-20\lg\frac{1}{aT} \\
+            &=& 10\lg a
+\end{eqnarray*}
+\begin{itemize}
+\item <4-> $\omega_m$ 位于 $\frac{1}{aT}$ 与 $\frac{1}{T}$ 的几何中心
+\item <5-> 超前网絡设计使得设计后的 $\omega_c\approx\omega_m$ ,以获得最大相角提升
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{适用范围}
+\label{sec-1-3}
+
+\begin{itemize}
+\item 超前校正适用范围:
+\begin{itemize}
+\item <2->原系统稳定, $\gamma$ 不够
+\item <3->希望的截止频率比原系统大,主要用于提高系统的瞬态性能(动态品质)
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{设计步聚(设计参数 $K,a,T$ )}
+\label{sec-1-4}
+
+\begin{enumerate}
+\item 根据 $e_{ss}$ 的指标要求,确定开环增益 $K$
+\item 计算未校正系统的 $\omega_c',\gamma'$
+\item 转换时域指标到频域指标,得到希望的 $\omega_c'',\gamma''$
+\item <2->设计超前校正网络的参数 $a,T$
+\begin{itemize}
+\item <2->确定 $a$  :  
+         \[L(\omega_c'')=-10\lg a\]
+\item <2->确定 $T$  :  
+        \[\omega_c'' = \omega_m = \frac{1}{T\sqrt{a}}\]
+\end{itemize}
+\item <3->检验校正后系统的 $\omega_c,\gamma$ .
+\end{enumerate}
+\end{frame}
+\begin{frame}
+\frametitle{设计步聚(设计参数 $K,a,T$ )}
+\label{sec-1-5}
+
+\begin{enumerate}
+\item 根据 $e_{ss}$ 的指标要求,确定开环增益 $K$
+\item 计算未校正系统的 $\omega_c',\gamma'$
+\item 转换时域指标到频域指标,得到希望的 $\gamma''$
+\item <2->设计超前校正网络的参数 $a,T$
+\begin{itemize}
+\item <2->确定 $a$  : 
+       \begin{align*}
+        \phi_m &=\gamma''-\gamma'+\epsilon \\
+        a &=\frac{1 +\sin\phi_m}{1-\sin\phi_m}\\
+       \end{align*}
+\item <2->确定 $T$  :  
+       \begin{align*}
+        L(\omega_c'') &=-10\lg a \\
+        \omega_c'' &= \omega_m = \frac{1}{T\sqrt{a}}
+       \end{align*}
+\end{itemize}
+\item <3->检验校正后系统的 $\gamma$ .
+\end{enumerate}
+\end{frame}
+\section{超前校正示例}
+\label{sec-2}
+\begin{frame}
+\frametitle{超前校正示例1}
+\label{sec-2-1}
+
+单位负反馈开环传递函数  $G(s)=\frac{200}{s(0.1s+1)}$ ,设计校正网絡,使已校正系统相角裕度  $\gamma''\geq 45^{\circ}$ , 截止频率  $\omega_c''\geq 50 rad/s$  .
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+       L(\omega) & = &\begin{cases} 20\lg\frac{200}{\omega} & \omega < 10 \\
+      20\lg\frac{200}{0.1\omega^2} & \omega\geq 10
+      \end{cases} \\
+      \omega_c' &=& 44.7 \\
+        &<& \omega_c'' \\
+      \gamma' &=& 12.6^{\circ} \\
+       &<& \gamma''
+      \end{eqnarray*}
+      选择超前校正网絡.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例1(续)求 $a$}
+\label{sec-2-2}
+
+\begin{itemize}
+\item 先根据 $\phi_m$ 尝试确定参数  $a$ 
+      \begin{eqnarray*}
+      \phi_m & = &\gamma''-\gamma'+\epsilon \\
+      \epsilon &=& 10^{\circ} \\
+      \phi_{m} &=& 45^{\circ}-12.6^{\circ}+10^{\circ} \\
+       &=& 42.4^{\circ} \\
+      a &=& \frac{1+\sin\phi_m}{1-\sin\phi_m} \\
+       &=& 5.1
+      \end{eqnarray*}
+      其中  $\epsilon$  是因为估算有误差而留的余量.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例1(续)求 $T$}
+\label{sec-2-3}
+
+\begin{itemize}
+\item 求解  $T$
+     \begin{eqnarray*}
+     L(\omega_c'') +10\lg a &= & 0 \\
+     20\lg\frac{2000}{(\omega_c'')^2}+20\lg\sqrt{a} &=& 0 \\
+     \frac{2000\sqrt{5}}{(\omega_c'')^2} &=& 1 \\
+     \omega_c'' &=& 66.9 \\
+     \omega_m &=& \frac{1}{T\sqrt{a}} \\
+     \omega_c'' &=& \omega_m \\
+     T &=& 0.0066
+     \end{eqnarray*}
+\item <2->计算此时的相角裕度: 
+     \begin{eqnarray*}
+     \gamma'' &=& 180^{\circ}+42.4^{\circ}-90^{\circ}-\arctan(0.1\omega_c'') \\
+      &=& 50.9^{\circ}
+     \end{eqnarray*}
+\item <2->满足要求的超前校正网絡为  $G(s)=\frac{1+0.034s}{1+0.0066s}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例2}
+\label{sec-2-4}
+
+ $G(s)=\frac{K}{s(s+1)}$ ,设计校正网絡使  $\gamma''\geq 45^{\circ}$  ,单位斜坡作用下  $e_{ss} \leq \frac{1}{15}$ 
+
+\begin{itemize}
+\item <2->解: 根据稳态误差要求,得:
+     \begin{eqnarray*}
+     e_{ss} & = & \frac{1}{K} 
+            \leq  \frac{1}{15} \\
+     K & \geq & 15
+     \end{eqnarray*}
+     取  $K=15$  .
+     \begin{eqnarray*}
+     L(\omega) & = & \begin{cases} 20\lg\frac{15}{\omega}  & \omega< 1 \\
+                                  20\lg\frac{15}{\omega^2} & \omega\geq 1   \end{cases}\\
+     \omega_c' &=& 3.9 \\
+     \gamma'  &=& 14.5^{\circ} 
+      < 45^{\circ}
+     \end{eqnarray*}
+     选择超前校正网絡.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例2(续)  求 $a$}
+\label{sec-2-5}
+
+\begin{itemize}
+\item 先根据  $\phi_m$  确定  $a$  
+     \begin{eqnarray*}
+     \phi_m & = &\gamma''-\gamma'+\epsilon \\
+     \epsilon &=& 10^{\circ} \\
+     \phi_m &=& 40.5^{\circ} \\
+     a &=& \frac{1+\sin\phi_{m}}{1-\sin\phi_m} \\
+      &=& 4.7 
+     \end{eqnarray*}
+     其中  $\epsilon$  是因为估算有误差而留的余量.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例2(续)  求 $T$}
+\label{sec-2-6}
+
+\begin{itemize}
+\item 然后求解  $T$ 
+     \begin{eqnarray*}
+     L(\omega_c'') +10\lg a &= & 0 \\
+     20\lg\frac{15}{(\omega_c'')^2}+20\lg\sqrt{a} &=& 0 \\
+     \frac{15\sqrt{4.7}}{(\omega_c'')^2} &=& 1 \\
+     \omega_c'' &=& 5.7 \\
+     \omega_m &=& \frac{1}{T\sqrt{a}} \\
+     \omega_c'' &=& \omega_m \\
+     T &=& 0.08
+     \end{eqnarray*}
+\item <2-> 计算此时的相角裕度: 
+     \begin{eqnarray*}
+     \gamma'' &=& 180^{\circ}+40.5^{\circ}-90^{\circ}-\arctan(\omega_c'') \\
+      &=& 50.5^{\circ}
+     \end{eqnarray*}
+\item <2-> 满足要求的超前校正网絡为  $G(s)=\frac{1+0.38s}{1+0.08s}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例3}
+\label{sec-2-7}
+
+ 单位负反馈  $G(s)=\frac{K}{s(0.05s+1)(0.2s+1)}$ ,设计超前校正网絡使  $K_v\geq 5,\sigma\%\leq 25\%, t_s\leq 1s$ 
+
+\begin{itemize}
+\item <2-> 解: 由性能指标知:
+      \begin{eqnarray*}
+      K & = &5 \\
+      \sigma\% &=& 0.16+0.4(M_r-1) \\
+      0.25 &=& 0.16+0.4(M_r-1) \\
+      M_r &=& 1.225 \\
+      t_s &=&\frac{K_0\pi}{\omega_c''} \\
+      K_0 &=& 2+1.5(M_r-1)+2.5(M_r-1)^2 
+          = 2.5 \\
+      \omega_c'' &=& 7.7 \\
+      \gamma'' &=&\arcsin\frac{1}{M_r}
+         = 55^{\circ}
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例3(续)频率特性分析}
+\label{sec-2-8}
+
+
+\begin{eqnarray*}
+L(\omega) & = & \begin{cases} 20\lg\frac{5}{\omega}  & \omega< 5 \\
+                             20\lg\frac{5}{0.2\omega^2} & 5\leq\omega< 20  \\
+                             20\lg\frac{5}{0.01\omega^3} & \omega \geq 20 \end{cases}\\
+\omega_c' &=& 5 \\
+\gamma'  &=& 180^{\circ}-90^{\circ}-\arctan0.2\omega_c' -\arctan0.05\omega_c'\\
+  &=& 31.0^{\circ}
+\end{eqnarray*}
+
+选择超前校正网絡.
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例3(续):计算  $a$}
+\label{sec-2-9}
+
+
+\begin{eqnarray*}
+\omega_c'' &=& 7.7 \\
+L(\omega_c'') +10\lg a &= & 0 \\
+20\lg\frac{5}{0.2(\omega_c'')^2}+20\lg\sqrt{a} &=& 0 \\
+\frac{5\sqrt{a}}{0.2(\omega_c'')^2} &=& 1 \\
+a &=& 5.6 \\
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例3(续):根据截止频率计算  $T$}
+\label{sec-2-10}
+
+\begin{itemize}
+\item 计算 $T$
+      \begin{eqnarray*}
+      \omega_m &=& \frac{1}{T\sqrt{a}} \\
+      \omega_c'' &=& \omega_m \\
+      T &=& 0.055 \\
+      \phi_m &=& \arcsin\frac{a-1}{a+1} \\
+      &=& 44^{\circ} 
+      \end{eqnarray*}
+\item <2->计算此时的相角裕度: 
+      \begin{eqnarray*}
+      \gamma'' &=& 180^{\circ}+44^{\circ}-90^{\circ}-\arctan(0.05\omega_c'')-\arctan(0.2\omega_c'') \\
+       &=& 56^{\circ}
+      \end{eqnarray*}
+\item <2->满足要求的超前校正网絡为  $G(s)=\frac{1+0.3s}{1+0.055s}$
+\end{itemize}
+\end{frame}
+
+\end{document}

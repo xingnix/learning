@@ -1,0 +1,1 @@
+del *~  *.out *.snm *.log *.swp *.nav *.aux *.toc

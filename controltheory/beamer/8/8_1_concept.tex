@@ -1,0 +1,279 @@
+% Created 2015-02-13 Fri 11:33
+\documentclass[table]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<article>{\usepackage{beamerarticle}}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{非线性系统的基本概念}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{非线性控制系统分析}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+\section{非线性系统的特征}
+\label{sec-1}
+\begin{frame}
+\frametitle{非线性系统的普遍性}
+\label{sec-1-1}
+
+\begin{itemize}
+\item 实际系统或多或少存在非线性特征(环节)
+\item <2->有些系统人为采用非线性部件或非线性控制器
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{非线性系统的特征}
+\label{sec-1-2}
+
+\begin{itemize}
+\item <2->稳定性
+
+   不存在整个系统是否稳定的概念,与初始条件及输入幅值大小有关
+\item <3->时间响应
+
+   与初始条件及输入信号的大小,输入信号的频率有关
+\item <4->畸变现象
+
+   正弦输入得到非正弦输出
+\item <5->自激振荡
+
+   非线性系统在无外界周期信号作用下会产生具有固定振幅和频率的稳定周期运动,称为自振,有时人为引入变频小幅度的颤振来克服间隙,摩擦等非线性因素的不利影响.
+\end{itemize}
+\end{frame}
+\section{分析方法}
+\label{sec-2}
+\begin{frame}
+\frametitle{分析方法}
+\label{sec-2-1}
+
+\begin{itemize}
+\item <2->无通用方法针对不同非线性系统采用灵活的分析设计方法
+\begin{itemize}
+\item <3->相平面法:一,二阶系统
+\item <4->描述函数法:阶次不限,结构限制
+\item <5->计算机求解:数值求解
+\end{itemize}
+\end{itemize}
+\end{frame}
+\section{非线性特性对系统的影响}
+\label{sec-3}
+\section{非线性特性的影响}
+\label{sec-4}
+\begin{frame}
+\frametitle{死区特性}
+\label{sec-4-1}
+\begin{columns}
+\begin{column}{0.35\textwidth}
+\begin{block}{死区特性}
+\label{sec-4-1-1}
+
+\begin{tikzpicture}[scale=0.6]
+%             /
+%            /
+%   ---------
+%  /
+% /
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below left] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,0) (0,0) (1,0) (2,1)};
+\draw (1,0) node[above] {$\Delta$};
+\draw (-1,0) node[above ] {$-\Delta$};
+\draw (1.5,0.5) node[above ] {$K$};
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.35\textwidth}
+\begin{block}<2->{影响}
+\label{sec-4-1-2}
+
+\begin{itemize}
+\item $K\downarrow\rightarrow\text{稳定性}\uparrow\rightarrow\sigma\%\downarrow$
+\item 抗小幅干扰信号
+\item $e_{ss}\uparrow$
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{饱和特性}
+\label{sec-4-2}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}{饱和特性}
+\label{sec-4-2-1}
+
+\begin{tikzpicture}
+%       ------
+%      /
+%------
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below right] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,-1) (0,0) (1,1) (2,1)};
+\draw (1,0) node[below] {$a$};
+\draw (-1,0) node[below ] {$-a$};
+\draw (0.5,0.5) node[above ] {$K$};
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{影响}
+\label{sec-4-2-2}
+
+\begin{itemize}
+\item 稳定系统: $K\downarrow\rightarrow\gamma\uparrow\rightarrow\sigma\%\downarrow$
+\item 不稳定系统: 自激振荡
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{滞环特性}
+\label{sec-4-3}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}{滞环特性}
+\label{sec-4-3-1}
+
+\begin{tikzpicture}
+%       /-/
+%      / /
+%     /-/
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below right] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,0) (0,1) };
+\draw [blue,thick] plot coordinates {(0,-1) (1,0) (2,1) };
+\draw [red] plot coordinates {(0.3,-0.7) (1.7,0.7) (-0.3,0.7) (-1.7,-0.7) (0.3,-0.7) };
+\draw [red,thick,->] (0.3,-0.7)-- (1,0);
+\draw [red,thick,->] (1.7,0.7)--(0,0.7);
+\draw [red,thick,->]  (-0.3,0.7)-- (-1,0) ;
+\draw [red,thick,->]  (-1.7,-0.7)-- (0,-0.7) ;
+\draw (1,0) node[below] {$b$};
+\draw (-1,0) node[below ] {$-b$};
+\draw (1.5,0.5) node[right ] {$K$};
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{影响}
+\label{sec-4-3-2}
+
+ $e_{ss}\uparrow$ 降低了控制精度(死区),振荡加剧甚至不稳定(相角滞后作用)
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{继电特性}
+\label{sec-4-4}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}{继电特性}
+\label{sec-4-4-1}
+
+\begin{tikzpicture}
+%          --------
+%          | |
+%     -------- 
+%     | |
+%   -----
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[above left] {$o$};
+\draw [red,thick] plot coordinates {(-2,-1) (-0.5,-1) };
+\draw [red,thick] plot coordinates {(0.5,1) (2,1) };
+\draw [red,thick] plot coordinates {(-1,0) (1,0) };
+\draw [red,thick,->] (-1,0)-- (-1,-1);
+\draw [red,thick,->]  (-0.5,-1)-- (-0.5,0) ;
+\draw [red,thick,->] (0.5,1)--(0.5,0);
+\draw [red,thick,->]  (1,0)-- (1,1) ;
+\draw (1,0) node[below] {$h$};
+\draw (0.5,0) node[below ] {$mh$};
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{影响}
+\label{sec-4-4-2}
+
+常使系统振荡
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\end{document}

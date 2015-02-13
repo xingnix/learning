@@ -1,0 +1,205 @@
+# +LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \pgfplotsset{compat=1.8}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [table]
+# +LaTeX_CLASS_OPTIONS: [bigger]
+ # +latex_header:  \mode<article>{\usepackage{beamerarticle}}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# +latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  线性系统校正方法
+#+latex_header: \subtitle{反馈校正}
+#+AUTHOR: 邢超
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+
+* 校正原理
+** 反馈校正原理
+
+\begin{tikzpicture}[node distance=1em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue,->] node[draw, right =of p1] (gc) {$G_1(s)$}; 
+\path[->] (p1) edge node {} (gc) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of gc] (p2) {}; 
+\path[->] (gc) edge node {} (p2) ; 
+\path[blue,->] node[draw, inner sep=5pt,right =of p2] (g) {$G_2(s)$}; 
+\path[->] (p2) edge node {} (g); 
+\path[->] node[ right =of g] (o) {$C(s)$}; 
+\path[->] (g) edge node {} (o); 
+\path[red,->] node[draw, inner sep=5pt,below =of g] (gf) {$G_c(s)$}; 
+\path[ draw] (g.east)+(0.3em,0)  |-  (gf); 
+\path[->, draw] (gf.west) -| node[very near end] {$-$} (p2); 
+\path[->, draw] (g.east)+(0.3em,0) -- +(0.3em,-5em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+ * 系统开环传递函数为:  
+    \[G(s)=\frac{G_1(s)G_2(s)}{1+G_2(s)G_c(,s)}\]  
+    其中 $G_c$  为反馈校正传递函数.
+
+**  反馈校正原理(续)
+
+  * 若在系统工作频段内(动态性能起主要影响的频段内)有:  $|G_2(s)G_c(s)|\gg 1$  成立,则
+      \begin{eqnarray*}
+      G(s) & = &\frac{G_1(s)G_2(s)}{1+G_2(s)G_c(s)} \\
+           &\approx& \frac{G_1(s)G_2(s)}{G_2(s)G_c(s)}\\ 
+           &=& \frac{G_1(s)}{G_c}
+      \end{eqnarray*}
+  * <2->表明校正后的系统特性几乎与被反馈校正装置包围的环节无关.
+
+\mode<article>{基本原理: 用反馈校正装置包围未校正系统中对动态性能改善有重大妨碍作用的某些环节,在满足  $|G_2G_c|\gg 1$  的条件下,局部反馈回路的特性主要取决于反馈校正装置,而与被包围部分无关.}
+
+* 反馈校正的特点
+** 反馈校正的特点
+ * <2->削弱非线性的影响
+ * <3->减小系统的时间常数
+ * <4->降低系统对参数变化的敏感性
+ * <5->抑制系统噪声
+
+* 反馈校正的设计方法
+** 转化为串联校正设计
+\begin{eqnarray*}
+G(s) &=& \frac{G_1(s)}{G_c(s)} \\
+G_f(s) & = &\frac{1}{G_c(s)} \\
+G(s) &=& G_1(s)G_f(s)
+\end{eqnarray*}
+** 反馈校正示例1
+测速-相角超前反馈校正系统如下图所示, $G_f(s)=\frac{T_2s}{T_2s+1}K_t's$ , $K_1=440,T_1=0.025$ 要求校正后 $\gamma''\geq 50^{\circ},\omega_c''\geq 40$ 并具有一定的抑制噪声能力，求解测速反馈系数 $K_t'$, 超前网络时间常数 $T_2$
+
+\begin{tikzpicture}[node distance=1em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of p1] (p2) {}; 
+\path[->] (p1) edge node {} (p2) ; 
+\path[blue,->] node[draw, inner sep=5pt,right =of p2] (g) {$\frac{K_1}{s(T_1s+1)}$}; 
+\path[->] (p2) edge node {} (g); 
+\path[->] node[ right =of g] (o) {$C(s)$}; 
+\path[->] (g) edge node {} (o); 
+\path[red,->] node[draw, inner sep=5pt,below =of g] (gf) {$G_f(s)$}; 
+\path[ draw] (g.east)+(0.3em,0)  |-  (gf); 
+\path[->, draw] (gf.west) -| node[very near end] {$-$} (p2); 
+\path[->, draw] (g.east)+(0.3em,0) -- +(0.3em,-5em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+** 反馈校正示例1求解
+\begin{align*}
+G(s) &=\frac{K_1}{s(T_1s+1)}\frac{(T_1s+1)(T_2s+1)}{(T's+1)(T''s+1)}\\
+T' &=\frac{T_2}{T''}T_1 \\
+T'' &= T_1+(1+K_1K_t')T_2-T' \\
+\end{align*}
+可看作滞后-超前校正，取 $\omega_c''=42$ 得 $T'/T_1=T_2/T''=0.1,T'=0.0025$
+$\gamma''=180^{\circ}-90^{\circ}-\arctan T'\omega_c''+\arctan T_2\omega_c''-\arctan T''\omega_c''>50^{\circ}$ 取 $T_2=0.1,T''=1$ 得 $\gamma''=72^{\circ},K_t'\approx 0.02$
+** 综合法设计反馈校正网絡:原理
+ * 校正后系统开环传递函数  $G(s)\approx\frac{G_1(s)}{G_c(s)}$ 
+ * <2->按综合法设计系统期望传递函数  $G(s)$  ,则 $G_c(s)\approx\frac{G_0(s)}{G(s)}$ 
+ * <3->使用条件:
+     \begin{eqnarray*}
+      |G_2 G_c| & > & 1 \\
+      G_0 & = & G_1 G_2 \\
+      G &=& \frac{G_1}{G_c}\\
+	&=& \frac{G_0}{G_2 G_c} \\
+      |G| & <& | G_{0} | \\ 
+      20\lg|G_0|&>&20\lg|G|
+     \end{eqnarray*}
+** 综合法设计反馈校正网絡:设计步聚
+ * 按  $e_{ss}$  要求,确定开环增益 $K$  ,并画出确定了 $K$  的 $20\lg|G_0(s)|$
+ * 按综合法设计期望开环对数幅频特性 $20\lg|G(s)|$
+ * <2->按  $20\lg|G_2 G_c|=20\lg|G_0(s)|-20\lg |G(s)|$  求解  $G_2(s)G_c(s)$ 
+ * <3->检查局部反馈回路稳定性,以及是否满足:  
+	   \[|G_2(j\omega_c)G_c(j\omega_c)|\gg 1\]
+ * <4->由 $G_2G_c$ 求解 $G_c$ 
+ * <5->检验校正后的系统是否满足设计要求
+** 综合法反馈校正示例1
+设系统结构图如下，其中 $G_1(s)=\frac{K_1}{0.014s+1}$ , $G_2(s)=\frac{12}{(0.1s+1)(0.02s+1)}$ , $G_3(s)=\frac{0.0025}{s}$ , $0<K_1<6000$ 。设计反馈校正装置 $G_c(s)$ 满足以下指标：
+   +  静态速度误差系数 $K_v\geq 150$
+   +  单位阶跃输入下的超调量 $\sigma\%\leq 40\%$
+   +  单位阶跃输入下的调节时间 $t_s\leq 1s$
+
+\begin{tikzpicture}[node distance=1em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue,->] node[draw, right =of p1] (g1) {$G_1(s)$}; 
+\path[->] (p1) edge node {} (g1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p2) {}; 
+\path[->] (g1) edge node {} (p2) ; 
+\path[blue,->] node[draw, inner sep=5pt,right =of p2] (g2) {$G_2(s)$}; 
+\path[->] (p2) edge node {} (g2); 
+\path[red,->] node[draw, inner sep=5pt,below =of g2] (gf) {$G_c(s)$}; 
+\path[ draw] (g2.east)+(0.3em,0)  |-  (gf); 
+\path[->, draw] (gf.west) -| node[very near end] {$-$} (p2); 
+\path[blue,->] node[draw, inner sep=5pt,right =of g2] (g3) {$G_3(s)$}; 
+\path[->] (g2) edge node {} (g3); 
+\path[->] node[ right =of g3] (o) {$C(s)$}; 
+\path[->] (g3) edge node {} (o); 
+\path[->, draw] (g3.east)+(0.3em,0) -- +(0.3em,-5em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+** 综合法反馈校正示例1求解
+  + $K_1=150/0.0025=5000$ , $G_o(s)=\frac{150}{s(0.014s+1)(0.02s+1)(0.1s+1)}$ , $\omega_c'=38.7$
+  + 期望特性中频段: $M_r=1.6,\omega_c=13,\omega_3=1/0.014=71.3,\omega_2=4,\gamma=63.3^{\circ}$
+  + 低频段: $\omega_1=0.35$
+  + 高频段: $\omega_4=75$
+  + 期望特性 $G_E(s)=\frac{150(0.25s+1)}{2.86s^2(0.013s+1)}$
+  + $G_2G_c\approx 1+G_2G_c=G_o/G_E$ 得 
+      + $G_2G_c\approx \frac{2.86s(0.013s+1)}{(0.25s+1)(0.1s+1)(0.02s+1)(0.014s+1)}$
+      + $G_2G_c\approx \frac{2.86s}{(0.25s+1)(0.1s+1)(0.02s+1)}$
+** 综合法反馈校正示例1求解(续)
+  + $\gamma(G_2G_c)=44.3^{\circ}$ 内环稳定
+  + $20\lg(|G_2(j\omega_c)G_c(j\omega_c)|)=18.9$ 满足 $|G_2G_c|\gg 1$
+  + $G_c=\frac{0.238s}{0.25s+1}$
+  + 验算: $K_v=150,\gamma=54.3^{\circ},M_r=1.23,\sigma\%=25.2\%,t_s=0.6s$  符合要求
+  

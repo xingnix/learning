@@ -1,0 +1,457 @@
+% Created 2014-11-23 星期日 22:31
+\documentclass[table]{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.5}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{复合校正}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统校正方法}
+\author{邢超}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{复合校正特点}
+\label{sec-1}
+\begin{frame}
+\frametitle{复合校正特点}
+\label{sec-1-1}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[draw, right =of p1] (gc) {$G_c(s)$}; 
+\path[->](p1) edge node {} (gc) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of gc] (p2) {}; 
+\path[->](gc) edge node {} (p2) ; 
+\path[red,->] node[draw, right =of p2] (g1) {$G_1(s)$}; 
+\path[->] (p2) edge node {} (g1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p3) {}; 
+\path[->] (g1) edge node {} (p3) ; 
+\path[red,->] node[draw, right =of p3] (g2) {$G_2(s)$}; 
+\path[->] (p3) edge node {} (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+
+\path[blue,->] node[draw, above =of gc] (gr) {$G_r(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of gr] (pr) {}; 
+\path[ draw] (r.east)+(1em,0) |-   (gr.west); 
+\path[->, draw] (gr.east) -- (pr); 
+\path[blue,->] node[draw, above =of g1] (gn) {$G_n(s)$}; 
+\path[ draw] (p3.north)+(0,5em) |-   (gn.east); 
+\path[->,draw] (p3.north)+(0,5em) -- node[very near end] {$+$} node[very near start] {$N(s)$} (p3.north) ; 
+\path[->, draw] (gn.west) -- node[very near end] {$+$} (pr); 
+\path[->, draw] (pr) -- node[very near end] {$+$} (p2); 
+
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item 应用场合:系统中存在可测量的扰动,或者对系统的稳态精度和响应速度要求很高
+\end{itemize}
+\begin{itemize}
+\item 校正方式:
+\begin{itemize}
+\item 按扰动补偿
+\item 按输入补偿
+\end{itemize}
+\end{itemize}
+\end{frame}
+\section{按扰动补偿的复合校正}
+\label{sec-2}
+\begin{frame}
+\frametitle{按扰动补偿的复合校正}
+\label{sec-2-1}
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of p1] (p2) {}; 
+\path[->](p1) edge node {} (p2) ; 
+\path[red,->] node[draw,  inner sep=5pt,right =of p2] (g1) {$G_1(s)$}; 
+\path[->] (p2) edge node {} (g1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p3) {}; 
+\path[->] (g1) edge node {} (p3) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p3] (g2) {$G_2(s)$}; 
+\path[->] (p3) edge node {} (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,above =of g1] (gn) {$G_n(s)$}; 
+\path[ draw] (p3.north)+(0,5em) |-   (gn.east); 
+\path[->,draw] (p3.north)+(0,5em) -- node[very near end] {$+$} node[very near start] {$N(s)$} (p3.north) ; 
+\path[->, draw] (gn.west) -| node[very near end] {$+$} (p2); 
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item 目的:使扰动不对系统的输出产生任何影响: $\Phi_N(s)=0$
+\item 条件:扰动可测
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按扰动补偿的复合校正:设计 $G_n(s)$}
+\label{sec-2-2}
+
+\begin{itemize}
+\item 对扰动的误差全补偿条件:
+    \begin{eqnarray*}
+    \Phi_N(s)&=&0 \\
+    \frac{G_2+G_nG_1G_2}{1+G_1G_2} & = & 0 \\
+    G_2+G_nG_1G_2 &=& 0 \\
+    G_n &=& \frac{-1}{G_1}
+    \end{eqnarray*}
+\item <2->  全补偿时, $G_n(s)$ 的分子阶次大于分母阶次, 物理上不可实现.
+\item <3-> 部分补偿
+\begin{itemize}
+\item 在系统性能起主要影响的频段内近似补偿($n\geq m$),
+\item 稳态补偿($\lim_{s\to 0}G_n(s)$)
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按扰动补偿的复合校正示例1}
+\label{sec-2-3}
+
+某伺服控制系统结构图如下:
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%    gn<------------N(s)
+%    v +            kn/km
+%   --o--k1/(T1s+1) -o---  km/s/(Tm s+1)--+ 
+%     ^-------------------------------/
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of p1] (p2) {}; 
+\path[->](p1) edge node {} (p2) ; 
+\path[red,->] node[draw,  inner sep=5pt,right =of p2] (g1) {$\frac{K_1}{T_1 s+1}$}; 
+\path[->] (p2) edge node {} (g1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p3) {}; 
+\path[->] (g1) edge node {} (p3) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p3] (g2) {$\frac{K_m}{s(T_m s+1)}$}; 
+\path[->] (p3) edge node {} (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,above =of p2] (gn) {$G_n(s)$}; 
+\path[->, draw] (gn)-- node[very near end] {$+$} (p2); 
+\path[red,->] node[draw, inner sep=5pt,above =of p3] (g3) {$\frac{K_n}{K_m}$}; 
+\path[->] (g3) edge node {} node[very near end] {$+$} (p3); 
+\path[->, draw] (g3.north)+(0,1em) -|   (gn.north); 
+\path[->,draw] (g3.north)+(0,2em) --  node[very near start] {$N(s)$} (g3.north) ; 
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item 设计对  $N(s)$ 的全补偿校正网絡  $G_n(s)$  ,
+\item 近似全补偿校正网絡  $G_{n1}(s)$  ,
+\item 稳态全补偿网絡  $G_{n2}(s)$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按扰动补偿的复合校正示例1:解:}
+\label{sec-2-4}
+
+\begin{itemize}
+\item 全补偿:
+      \begin{eqnarray*}
+      \Phi_N(s) &= & 0\\
+      \frac{C(s)}{N(s)} &=& 0\\
+      \frac{K_n}{K_m}+G_n(s)\cdot\frac{K_1}{T_1 s+1}  &=& 0\\
+      G_n(s) &=&-\frac{K_n(T_1 s+1)}{K_1 K_m}
+      \end{eqnarray*}
+\item <2->近似全补偿:  $G_{n1}(s)=-\frac{K_n}{K_1 K_m }\cdot\frac{T_1 s+1}{T_2 s+1}$  .其中  $T_1\gg T_2$  .
+\item <3->稳态全补偿:  $G_{n1}(s)=-\frac{K_n}{K_1 K_m }$
+\end{itemize}
+\end{frame}
+\section{按输入补偿的复合校正}
+\label{sec-3}
+\begin{frame}
+\frametitle{按输入补偿的复合校正}
+\label{sec-3-1}
+
+目的:使输出完全跟踪输入信号,即  $C(s)=R(s)$ 
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ right =of r] (rr) {}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of rr] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of p1] (p2) {}; 
+\path[->](p1) edge node[midway] {$E(s)$} (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p2] (g) {$G(s)$}; 
+\path[->] (p2) edge node {} (g); 
+\path[->] node[ right =of g] (o) {$C(s)$}; 
+\path[->] (g) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,above =of p1] (gr) {$G_r(s)$}; 
+\path[->, draw] (rr.west) |-   (gr.west); 
+\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{eqnarray*}
+C(s) &=&(E(s)+G_r(s)R(s))G(s)\\
+E(s) &=& R(s)-C(s)\\
+E(s) &=&\frac{1-G_r(s)G(s)}{1+G(s)}R(s)
+\end{eqnarray*}
+ $G_r(s)$ 为按输入补偿的复合校正装置(前馈装置)传递函数.
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正分析}
+\label{sec-3-2}
+
+  对输入信号的误差全补偿条件: 
+     \begin{align*}
+     E(s) &= R(s)-C(s) \\
+          &= \frac{1-G_r(s)G(s)}{1+G(s)}R(s)\\
+          &= 0 \\
+   G_r(s) &= \frac{1}{G(s)}
+     \end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正:部分补偿:}
+\label{sec-3-3}
+
+\begin{itemize}
+\item 采用满足跟踪精度要求的部分补偿条件,在对系统性能起主要影响的频段内实现补偿,使  $G_r(s)$ 可物理实现.
+\item <2->设反馈系统开环传递函数:  $G(s)$  ,取  $G_r(s)=\lambda_1 s$  得:
+      \begin{align*}
+      G(s) & =  \frac{K_v}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)} \\
+      \Phi_e(s) &= \frac{1-G(s)G_r(s)}{1+G(s)} \\
+              &= \frac{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)-K_v\lambda_1 s}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)+K_v}
+      \end{align*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正:部分补偿(续):}
+\label{sec-3-4}
+
+\begin{itemize}
+\item 若取  $\lambda_1=\frac{a_1}{K_v}$  则有:
+      \begin{align*}
+       \Phi_e(s)&= \frac{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_2s)}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)+K_v}
+      \end{align*}
+      系统为II型系统.
+\item <2->同理,取  $G_r(s)=\lambda_1 s+\lambda_2 s^2, \lambda_1=\frac{a_1}{K_v},\lambda_2=\frac{a_2}{K_v}$ ,则
+      \begin{align*}
+       \Phi_e(s)&= \frac{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_3s^2)}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)+K_v}
+      \end{align*}
+      系统为III型系统.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{前馈系统分析}
+\label{sec-3-5}
+
+\begin{itemize}
+\item 前馈系统:
+      \begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+      %\path[use as bounding box] (-1,0) rectangle (10,-2); 
+      \path[->] node[] (r) {$R(s)$}; 
+      \path[->] node[ right =of r] (rr) {}; 
+      \path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of rr] (p1) {}; 
+      \path[->](r) edge node {} (p1) ; 
+      \path[->] node[draw, inner sep=5pt,right =of p1] (gc) {$G_c(s)$}; 
+      \path[->] (p1) edge node[midway] {$E(s)$} (gc); 
+      \path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of gc] (p2) {}; 
+      \path[->](gc) edge  (p2) ; 
+      \path[red,->] node[draw, inner sep=5pt,right =of p2] (g) {$G(s)$}; 
+      \path[->] (p2) edge node {} (g); 
+      \path[->] node[ right =of g] (o) {$C(s)$}; 
+      \path[->] (g) edge node {} (o); 
+      \path[blue,->] node[draw, inner sep=5pt,above =of gc] (gr) {$G_r(s)$}; 
+      \path[->, draw] (rr.west) |-   (gr.west); 
+      \path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+      \path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+      \end{tikzpicture}
+\item <2->误差全补偿 \mode<article>{,分析方法类似,}
+        \begin{align*}
+        C(s) &= R(s)\\
+        C(s) &= R(s)G_r(s)G(s)+E(s)G_c(s)G(s)  \\
+        E(s) &= R(s)-C(s)=0 \\
+        G_r(s)G(s) &= 1 
+     %  G_r(s) &= \frac{1}{G(s)}
+        \end{align*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{前馈系统部分补偿:}
+\label{sec-3-6}
+
+\begin{align*}
+\Phi_e^{(0)}(s) &= \frac{1}{1+G_c(s)G(s)}  & \Phi_e(s) &= \frac{1-G(s)G_r(s)}{1+G_c(s)G(s)}
+\end{align*}
+\begin{itemize}
+\item <2->设: 
+   \begin{align*}
+   G(s)G_r(s) &=\frac{\lambda_0+\lambda_1 s+\lambda_2 s^2+\cdots+\lambda_n s^n}{a_0+a_1 s+ a_2 s^2+\cdots+a_n s^n}
+   \end{align*}
+\item <3->得：
+    \begin{align*}
+    \Phi_e(s) &=\frac{a_0+a_1 s+\cdots+a_n s^n-(\lambda_0+\lambda_1 s+\cdots+\lambda_n s^n)}{(a_0+a_1 s+ a_2 s^2+\cdots+a_n s^n)(1+G_c(s)G(s))}
+    \end{align*}
+\item <4-> 将  $\Phi_e(s)$  与  $\Phi_e^{(0)}(s)$  比较可知,当 
+     \begin{equation*}
+     \begin{cases}
+     \lambda_i=a_i & i=1,2,\cdots,k \\
+     \lambda_i=0 & i=k+1,\cdots ,n 
+     \end{cases}
+     \end{equation*}
+    时,系统类型可提高  $k$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{前馈系统分析(续)稳定性分析}
+\label{sec-3-7}
+
+      \begin{eqnarray*}
+      \Phi_0(s) & = &\frac{G_c(s)G(s)}{1+G_c(s)G(s)} \\
+      \Phi(s) & = &\frac{(G_c(s)+G_r(s))G(s)}{1+G_c(s)G(s)} 
+      \end{eqnarray*}
+\begin{itemize}
+\item <2-> 当 $G_r(s)$ 极点实部小于0时，校正后系统稳定性不变。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正示例1:}
+\label{sec-3-8}
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ right =of r] (rr) {}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of rr] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[draw, inner sep=5pt,right =of p1] (g1) {$\frac{K_1}{T_1 s+1}$}; 
+\path[->] (p1) edge node[midway] {$E(s)$} (g1); 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p2) {}; 
+\path[->](g1) edge  (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p2] (g2) {$\frac{K_2}{s(T_2 s+1)}$}; 
+\path[->] (p2) edge node {} (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,above =of g1] (gr) {$G_r(s)$}; 
+\path[->, draw] (rr.west) |-   (gr.west); 
+\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+设计  $G_r(s)$ 
+\begin{itemize}
+\item 实现完全补偿
+\item 使系统等效为II型系统
+\item 使系统等效为III型系统
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正示例1(续):}
+\label{sec-3-9}
+
+\begin{itemize}
+\item 取  $G_r(s)=\lambda_1 s+\lambda_2 s^2$ ,得:
+    \begin{align*}
+    \Phi_e &=\frac{1-G_r(s)\frac{K_2}{s(T_2 s+1)}}{1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)}}\\
+     &=\frac{s(T_2 s+1)-G_r(s)K_2}{s(T_2 s+1)(1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)})}\\
+     &=\frac{s(T_2 s+1)-(\lambda_1 s+\lambda_2 s^2) K_2}{s(T_2 s+1)(1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)})}
+    \end{align*}
+\item 取  $\lambda_{1}=\frac{1}{K_2},\lambda_2=0$  则系统为II型系统,
+\item 取  $\lambda_{1}=\frac{1}{K_2},\lambda_2=\frac{T_2}{K_2}$ 则能实现完全补偿.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正示例1(续):}
+\label{sec-3-10}
+
+\begin{itemize}
+\item 取 $G_r(s)=\frac{\lambda_1 s+\lambda_2 s^2}{Ts+1}$ ,得：
+    \begin{align*}
+    \Phi_e &=\frac{1-G_r(s)\frac{K_2}{s(T_2 s+1)}}{1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)}}\\
+     &=\frac{s(T_2 s+1)(Ts+1)-(\lambda_1 s+\lambda_2 s^2)K_2}{s(Ts+1)(T_2 s+1)(1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)})}\\
+     &=\frac{T T_2 s^3+(T+T_2)s^2+s-(\lambda_1 s+\lambda_2 s^2)K_2}{s(Ts+1)(T_2 s+1)(1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)})}
+    \end{align*}
+\item 取 $\lambda_1=\frac{1}{K_2},\lambda_2=\frac{T_2+T}{K_2}$ 则系统为III型系统.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正示例1(续):}
+\label{sec-3-11}
+
+\begin{itemize}
+\item 取 $G_r(s)=\frac{\lambda_1 s+\lambda_2 s^2}{(T_3s+1)(T_4s+1)}$ ,得：
+    \begin{align*}
+     \Phi_e &=\frac{1-G_r(s)\frac{K_2}{s(T_2 s+1)}}{1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)}}\\
+       &=\frac{s(T_2 s+1)(T_3s+1)(T_4s+1)-(\lambda_1s+\lambda_2 s^2)K_2}{s(T_3s+1)(T_4s+1)(T_2 s+1)(1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)})}
+      % &=\frac{T_4 T_3 T_2 s^3+(T_4T_3+T_4T_2+T_3T_2)s^2+(T_4+T_3+T_2)s+1-(\lambda_1+\lambda_2 s)K_2}{(T_3s+1)(T_4s+1)(T_2 s+1)(1+\frac{K_1}{T_1 s+1}\frac{K_2}{s(T_2 s+1)})}
+    \end{align*}
+\item 取 $\lambda_1=\frac{1}{K_2},\lambda_2=\frac{T_2+T_3+T_4}{K_2}$ 则系统为III型系统.
+\end{itemize}
+\end{frame}
+
+\end{document}

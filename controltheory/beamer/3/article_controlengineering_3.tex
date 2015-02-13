@@ -1,0 +1,1560 @@
+% Created 2013-10-20 Sun 19:10
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{amsmath}
+\usepackage[usenames]{color}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统时域分析法}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+\section{动态性能分析}
+\label{sec-1}
+
+
+
+
+
+
+\mode<article>{分析 $\sigma\%,t_s$ 等指标, $r(t)=1,R(s)=\frac{1}{s}$ }
+\subsection{一阶系统动态性能}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{惯性环节动态性能}
+\label{sec-1-1-1}
+
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%              
+%              .------.
+% R-->o----- ->| 1/Ts |--+--> C
+%   _ ^        '------'  |
+%     |                  |  
+%     '------------------'
+%
+%
+% 1                        2                        3             4              5    6
+$R(s)$ &  \pscirclebox[framesep=-0.2em]{$\times$} &   &  \psframebox{$\frac{1}{Ts}$}   & {\hskip 1em}   & $C(s)$ \\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\ncline{->}{1,4}{1,6}
+%\ncangle[angleA=0,angleB=0,armA=0.5em,armB=0.5em]{1,4}{2,4}
+\ncangles[angleA=0,angleB=-90,armA=1em,armB=2em]{->}{1,4}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+\begin{eqnarray*}
+G(s) & = & \frac{1}{Ts}\\
+\Phi(s) &=& \frac{1}{Ts+1} \\
+C(s) &=& \Phi(s)R(s) \\
+     &=& \frac{-T}{Ts+1}+\frac{1}{s} \\
+c(t) &=& 1-e^{-t/T}
+\end{eqnarray*}
+\end{frame}
+\subsection{二阶系统时域分析}
+\label{sec-1-2}
+\begin{frame}
+\frametitle{传递函数}
+\label{sec-1-2-1}
+
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%              
+%              .----------------------.
+% R-->o----- ->| w_n^2/s^2+2\xi\w_n s |--+--> C
+%   _ ^        '----------------------'  |
+%     |                                  |  
+%     '----------------------------------'
+%
+% 1                        2                        3             4              5    6
+$R(s)$ &  \pscirclebox[framesep=-0.2em]{$\times$} &   &  \psframebox{$\frac{\omega_n^2}{s^2+2\xi\omega_n s}$}   & {\hskip 1em}   & $C(s)$ \\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\ncline{->}{1,4}{1,6}
+%\ncangle[angleA=0,angleB=0,armA=0.5em,armB=0.5em]{1,4}{2,4}
+\ncangles[angleA=0,angleB=-90,armA=1em,armB=2em]{->}{1,4}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+\begin{itemize}
+\item $\xi$: 阻尼比
+\item $\omega_n$:自然频率,无阻尼振荡频率
+\end{itemize}
+\begin{eqnarray*}
+r(t) &=& 1 \\
+R(s) &=& \frac{1}{s}\\
+G(s) & =& \frac{\omega_n^2}{s^2+2\xi\omega_n s} \\
+\Phi(s) &=& \frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2}\\
+p_{1,2} &=& -\xi\omega_n\pm\omega_n\sqrt{\xi^2-1}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{$\xi\leq 0$}
+\label{sec-1-2-2}
+
+\begin{itemize}
+\item <2-> $\xi< 0$ 时有正实根,不稳定
+\item <3-> $\xi=0$ 时有两个纯虚根,无阻尼,临界稳定,等幅振荡,频率为$\omega_n$,
+	 \begin{eqnarray*}
+	 C(s) & = & \frac{\omega_n^2}{s^2+\omega_n^2}\cdot \frac{1}{s}  \\
+	      & =& \frac{-s}{s^2+\omega_2}+\frac{1}{s} \\
+	 c(t) &=& 1-\cos\omega_n t
+	 \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{$\xi>1$}
+\label{sec-1-2-3}
+
+    系统闭环极点为两个不同的实根.过阻尼,相当于两个一阶系统并联, $\sigma\%=0$
+       \begin{eqnarray*}
+       \Phi(s) & = & \frac{\omega_n^2}{(s-p_1)(s-p_2)} \\
+	       & = & \frac{K_1}{s-p_1}+\frac{K_2}{s-p_2}\\
+       c(t)    &=& 1-\frac{e^{p_1 t}}{1-\frac{p_1}{p_2}}-\frac{e^{p_2 t}}{1-\frac{p_2}{p_1}}
+       \end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{$\xi=1$}
+\label{sec-1-2-4}
+
+\begin{itemize}
+\item <1-> 闭环极点有两个相同的负实根$p_{1,2}=-\xi\omega_n=-\omega_n$
+       \begin{eqnarray*}
+       C(s) & = &\frac{\omega_n^2}{(s+\omega_n^2)}\cdot\frac{1}{s} \\
+       c(t) &=& 1-e^{-\omega_n t}(1+\omega_n t)
+       \end{eqnarray*}
+\item <2-> 且有:
+       \begin{eqnarray*}
+       \frac{dc(t)}{dt} &=& \omega_ne^{-\omega_n t}(1+\omega_n t)-\omega_n e^{-\omega_n t}
+       	=  \omega_n^2 te^{-\omega_n t} 
+       	>  0 \\
+       c(0) &=&0 \\
+       c(\infty)&=&1\\
+       \sigma \% &=& 0\\
+       t_s &=& 4.75T \\
+       T &=&\frac{1}{\omega_n}
+       \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{$0<\xi<1$}
+\label{sec-1-2-5}
+
+   系统有一对实部小于零的共轭复根, $p_{1,2}  =  -\xi\omega_n\pm j\omega_n\sqrt{1-\xi^2}$
+\begin{eqnarray*}
+C(s) &=& \frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2}\cdot\frac{1}{s} \\
+     &=& \frac{1}{s}-\frac{s+\xi\omega_n}{(s+\xi\omega_n)^2+(1-\xi^2)\omega_n^2}-\frac{\xi\omega_n}{(s+\xi\omega_n)^2+(1-\xi^2)\omega_n^2} \\
+c(t) &=& 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}(\sqrt{1-\xi^2}\sin\sqrt{1-\xi^2}\omega_n t \\
+     & &+\xi\cos\sqrt{1-\xi^2}\omega_n t)\\
+     &=& 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta)\\
+\beta & = & \tan^{-1}\frac{\sqrt{1-\xi^2}}{\xi} \\
+\omega_d &=& \sqrt{1-\xi^2}\omega_n
+\end{eqnarray*}
+\end{frame}
+\subsection{二阶系统阶跃响应指标计算}
+\label{sec-1-3}
+\begin{frame}
+\frametitle{二阶欠阻尼系统阶跃响应指标}
+\label{sec-1-3-1}
+
+
+\begin{eqnarray*}
+   c(t)  &=& 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta)\\
+\end{eqnarray*}
+
+\begin{itemize}
+\item 欠阻尼. $\omega_d$ 称为有阻尼振荡频率.最佳阻尼比 $\xi=0.707$
+\item 指标: $\sigma\% , t_s , t_p , t_r$ 等
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{上升时间 $t_r$}
+\label{sec-1-3-2}
+
+\begin{itemize}
+\item $100\%$ 的 $t_r$ : $c(t)$ 首次达到 $c(\infty)$ 的时间
+\item $90\%$ 的 $t_r$ : $c(t)$ 首次达到 $90\%c(\infty)$ 的时间
+\item $70\%$ 的 $t_r$ : $c(t)$ 首次达到 $70\%c(\infty)$ 的时间
+\end{itemize}
+
+\begin{eqnarray*}
+c(t) & = & c(\infty) \\
+1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta) &=& 1 \\
+sin(\omega_d t+\beta) &=& 0 \\
+\omega_d t+\beta &=& k\pi \\
+t_r &=& \frac{\pi-\beta}{\omega_d}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{峰值时间 $t_p$}
+\label{sec-1-3-3}
+
+
+\mode<article>{$c(t)$ 达到最大值的时间}
+
+\begin{eqnarray*}
+\frac{dc(t)}{dt} &=& 0 \\
+-\xi\omega_n e^{-\xi\omega_n t}\sin(\omega_d t+\beta)+e^{-\xi\omega_n t}\omega_d\cos(\omega_d t+\beta) & = & 0 \\
+\omega_d\cos(\omega_d t+\beta) &=& \xi\omega_n \sin(\omega_d t+\beta) \\
+\tan(\omega_d t+\beta) &=& \frac{\sqrt{1-\xi^2}}{\xi} \\
+\tan(\omega_d t+\beta) &=& \tan\beta \\
+\omega_d t &=& k\pi\\
+t_p &=& \frac{\pi}{\omega_d}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{超调量 $\sigma \%$}
+\label{sec-1-3-4}
+
+\begin{eqnarray*}
+\sigma \% & = & \frac{c_{max}-c(\infty)}{c(\infty)}\times 100\% 
+         = (c(t_p)-1) \\
+         &=& -\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t_p}\sin(\omega_d t_p+\beta) \\
+         &=& -\frac{1}{\sqrt{1-\xi^2}}e^{-\frac{\xi\omega_n\pi}{\omega_d}}\sin(\pi+\beta) \\
+         &=& \frac{1}{\sqrt{1-\xi^2}}e^{-\frac{\xi\pi}{\sqrt{1-\xi^2}}}\sin(\beta) \\
+         &=& e^{-\frac{\xi\pi}{\sqrt{1-\xi^2}}}\times 100\% \\
+\end{eqnarray*}
+
+\mode<article>{分析:}
+\begin{itemize}
+\item <2->$\sigma\%$ 只与 $\xi$ 有关,两者成反比关系
+\item <3->工程上一般取 $\sigma\%\in[0.4,0.8]$
+\item <4->最佳阻尼比 $\xi=0.707,\sigma\%=4.3\%$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{调节时间 $t_s$}
+\label{sec-1-3-5}
+
+
+\mode<article>{近似估算:}
+
+\begin{eqnarray*}
+c(t) & = & 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta)\\
+     &\approx & 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t} \\
+%     &\approx & 1-e^{-\xi\omega_n t} \\
+e(t) &=& c(\infty)-c(t) \\
+    &\approx& \frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\\ 
+%     &\approx& e^{-\xi\omega_n t}
+\end{eqnarray*}
+
+\begin{itemize}
+\item <2-> $t_s$ 与 $\omega_n,\xi$ 有关:通常取 $\xi\omega_n t_s = 3.5,t_s=\frac{3.5}{\xi\omega}$
+\end{itemize}
+       
+\end{frame}
+\begin{frame}
+\frametitle{二阶过阻尼系统阶跃响应指标}
+\label{sec-1-3-6}
+
+\begin{itemize}
+\item <2->$\sigma\%=0$
+\item <3->$\xi=1$ 时, 
+       	\[t_s=\frac{4.75}{\omega_n}\]
+\item <4->$\xi>1,|p_1|\gg |p_2|$ 时,系统降阶,去掉极点 $p_2$ , 
+       \[t_s=\frac{3}{|p_1|}\]
+\end{itemize}
+\end{frame}
+\subsection{高阶系统时域分析（3阶及以上系统）}
+\label{sec-1-4}
+\begin{frame}
+\frametitle{三阶系统}
+\label{sec-1-4-1}
+
+\begin{itemize}
+\item <2-> 根的几种情况
+\begin{itemize}
+\item <3-> 3个负实根 $p_1,p_2,p_3$
+\item <4-> 1个负实根,一对共轭复根 
+       \[-s_0,-\xi\omega_n\pm j\omega_n\sqrt{1-\xi^2},(0<\xi<1)\]
+\end{itemize}
+\item <5-> 重点考虑有复根的情况.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{三阶系统($\Phi(s)$) 单位阶跃响应($C(s)$)}
+\label{sec-1-4-2}
+
+\begin{eqnarray*}
+ \Phi(s) & = & \frac{s_0\omega_n^2}{(s+s_0)(s^2+2\xi\omega_n s+\omega_n^2)} \\
+ C(s) &=& \frac{s_0\omega_n^2}{s(s+s_0)(s^2+2\xi\omega_n s+\omega_n^2)} \\
+ c(t) &=& 1-\frac{e^{-s_0 t}}{b\xi^2(b-2)+1}-\frac{e^{-\xi\omega_n t}}{b\xi^2(b-2)+1} \\
+     & & \left(b\xi^2(b-2)\cos\omega_d t + \frac{b\xi(\xi^2(b-2)+1)}{\sqrt{1-\xi^2}}\sin\omega_d t\right) \\
+ \omega_d &=& \omega_n\sqrt{1-\xi^2} \\
+ b &=& \frac{s_0}{\xi\omega_n}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{$b$ 对 $c(t)$ 的影响}
+\label{sec-1-4-3}
+
+
+\begin{itemize}
+\item <2->复根比实根离虚轴近得多
+      \begin{eqnarray*}
+      b & \gg & 1\\
+      c(t) &\approx & 1-e^{-\xi\omega_n t}\left(\cos\omega_d t + \frac{1}{\sqrt{1-\xi^2}}\sin\omega_d t\right) 
+      \end{eqnarray*}
+      近似看作2阶欠阻尼系统.
+\item <3->实根比复根离虚轴近得多
+      \begin{eqnarray*}
+      b & \approx & 0\\
+      c(t) &\approx & 1-e^{-s_0 t}
+      \end{eqnarray*}
+      近似看作1阶系统
+\item <4->实根与复根与虚轴距离同
+      \begin{eqnarray*}
+      b & \approx & 1\\
+      c(t) &\approx & 1-\frac{e^{-\xi\omega_n t}}{1-\xi^2}\left(1+\xi\sin(\omega_d t-\beta)\right) 
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{主导极点法}
+\label{sec-1-4-4}
+
+\begin{itemize}
+\item <2->目的:分析高阶系统的性能
+\item <3->内容:系统有多个极点,其中某些极点决定了整个系统的性能,对系统起主导作用,称这些极点为主导极点.
+\item <4->确定方法:主导极点离虚轴距离为 $a$ ,其它极点离虚轴距离 $\geq 5a$
+\end{itemize}
+\end{frame}
+\section{稳定性分析}
+\label{sec-2}
+\subsection{稳定性的概念}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{稳定性}
+\label{sec-2-1-1}
+
+
+\psset{unit=1em}
+\begin{pspicture}(0,0)(30em,5em)
+%\begin{pspicture}[showgrid](0,0)(30em,10em)
+%
+%       o    \   o   /  \     /
+%       ^     \  ^  /    \ o /
+%      / \     \/ \/      \_/   
+%
+\psset{unit=1em}
+%\multips(1.5,2.5)(4,0){3}{\pscircle(0,0){0.5}}
+\psset{linecolor=red}
+%\psline(0,0)(50,6)
+\pscircle(4.5,4){1}
+\pscurve(0,0)(4.5,3)(9,0)
+\psset{linecolor=violet}
+\pscircle(14.5,2){1}
+\pscurve(10,0)(12,2)(14.5,1)(17.5,2)(19,0)
+\psset{linecolor=blue}
+\pscircle(24.5,1){1}
+\pscurve(20,2)(24.5,0)(29,2)
+%\psplot{0}{6}{x sqrt}
+%\rput(3,3){中文}
+%\pscustom{\dim{1}
+%\code{
+%dup dup  scale currentlinewidth exch div setlinewidth 
+%0 0 moveto 3 6 lineto stroke}}
+\end{pspicture}
+
+定义:系统处于平衡状态时,若有干扰使系统偏离平衡状态,当扰动消除后,系统仍能回到原来的平衡状态,则称该系统是稳定的,反之称为不稳定.
+\end{frame}
+\begin{frame}
+\frametitle{稳定的充要条件}
+\label{sec-2-1-2}
+
+
+\begin{itemize}
+\item 系统的传递函数
+      \begin{eqnarray*}
+      \Phi(s) & = & \frac{C(s)}{R(s)} = \frac{k_{g}\prod_{i=1}^{m}(s-z_{i})}{\sum_{j=1}^{n}(s-p_{j})} 
+      \end{eqnarray*}
+\item 设系统输入为单位脉冲信号: $r(t)=\delta(t),R(s)=1$
+      \begin{eqnarray*}
+      C(s) & = & \Phi(s)R(s) =  \frac{k_{g}\prod_{i=1}^{m}(s-z_{i})}{\sum_{j=1}^{n}(s-p_{j})} \\
+	   & = &  k_{g}\sum_{j=1}^{n}\frac{k_{j}}{s-p_{j}} \\
+      c(t) & = & k_{g}\sum_{j=1}^{n}k_{j}e^{p_{j}t}
+      \end{eqnarray*}
+\item 当 $\Re(p_{j})<0$ 时,有 $\lim_{t\rightarrow\infty}c(t) = 0$
+\item 稳定性充要条件:系统的闭环极点均具有负实部
+\end{itemize}
+\end{frame}
+\subsection{古尔维茨判据及劳斯判据}
+\label{sec-2-2}
+\begin{frame}
+\frametitle{特征多项式}
+\label{sec-2-2-1}
+
+\begin{eqnarray*}
+G(s) & = & \frac{M(s)}{N(s)}\\
+M(s) &=&  b_{o}s^{m}+\cdots+b_{n} \\
+N(s) & =& a_{0}s^{n}+\cdots+a_{n}
+\end{eqnarray*}
+其中:
+\begin{itemize}
+\item $N(s)$ 称为特征多项式
+\item $N(s)=0$ 称为特征方程(只与 $a_{0},\cdots,a_{n}$ 有关)
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{古尔维茨判据(代数判据):}
+\label{sec-2-2-2}
+
+\begin{itemize}
+\item <2-> 稳定的必要条件:特征多项式中各项系数大于零.
+\item <3-> 稳定的充要条件:特征多项式中各项系数所构成的主行列式及顺序主子式全部大于零.
+\item <3-> 主行列式:
+      \begin{equation*}
+      \Delta_{n}=\left|
+      \begin{matrix}
+      a_{1}  & a_{3} & a_{5} & \cdots & 0  \\
+      a_{0}  & a_{2} & a_{4} & \cdots & 0  \\
+      0      & a_{1} & a_{3} & \cdots & 0  \\
+      \vdots & a_{0} & a_{2} & \cdots & 0  \\
+      \vdots &\vdots &\vdots &        & 0   \\
+       	0    &  0    & \cdots & a_{n-2}& a_{n}
+      \end{matrix}
+      \right|
+      \end{equation*}
+\item <4-> 顺序主子式有n-1个: $\Delta_{1},\cdots,\Delta_{n-1}$
+\item <5-> 李纳德-戚帕特判据:若所有奇次古尔维茨行列式为正,则偶次古尔维茨行列式必为正,反之亦然
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{劳斯-古尔维茨判据,简称劳斯判据}
+\label{sec-2-2-3}
+
+\begin{itemize}
+\item <2->构造劳斯表判断系统是否稳定
+      \begin{equation*}
+      \begin{matrix}
+      s^{n}   &  a_{0}  &  a_{2}  & a_{4}  & \cdots  \\
+      s^{n-1} &  a_{1}  & a_{3}   & a_{5}  & \cdots  \\
+      s^{n-2} &  c_{1}=\frac{a_1 a_2 - a_0 a_3}{a_1} &  c_{2}=\frac{a_1 a_4 - a_0 a_5}{a_1} & \cdots \\
+      s^{n-3} &  d_{1}=\frac{c_1 a_3 - a_1 c_2}{c_1} &  d_{2}=\frac{c_1 a_5 - a_1 c_3}{c_1} & \cdots \\
+      \vdots  &   \vdots                             &                                      & \cdots  \\
+      s^{0}   &   a_{n}                              &                                      &
+      \end{matrix}
+      \end{equation*}
+\item <3->劳斯判据:
+\begin{itemize}
+\item <4->系统稳定的充要条件:劳斯表中第一列元素均大于零
+\item <5->若第一列元素有小于零的,则系统不稳定,且不稳定根的个数等于第一列元素变号的次数.
+\end{itemize}
+\end{itemize}
+\end{frame}
+\subsection{劳斯判据示例}
+\label{sec-2-3}
+\begin{frame}
+\frametitle{Routh 判据示例1: $3s^{4}+10s^{3}+5s^{2}+s+2=0$}
+\label{sec-2-3-1}
+
+
+解:
+\begin{itemize}
+
+\item 劳斯表:
+\label{sec-2-3-1-1}%
+\begin{equation*}
+\begin{matrix}
+s^{4} & 3   &  5  &  2 \\
+s^{3} & 10  &  1        \\
+s^{2} & 4.7 &  2       \\
+s^{1} & -\frac{15.3}{4.7}  \\
+s^{0} & 2   
+\end{matrix}
+\end{equation*}
+
+
+\item 结论\\
+\label{sec-2-3-1-2}%
+系统不稳定,有2个不稳定根.
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Routh 判据示例2:}
+\label{sec-2-3-2}
+
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%              .---------------.
+%              |     s+1       |
+% R-->o--> K ->| ------------- |--+--> C
+%   _ ^        |  (s(s+2)(s+3) |  |
+%     |        '---------------'  |
+%     '---------------------------'
+%
+%
+% 1                        2                        3                           4              5    6
+$r$ &  \pscirclebox[framesep=-0.2em]{$\times$}& \psframebox{$K$} &  \psframebox{$\frac{s+1}{s(s+2)(s+3)}$}&  & $y$ \\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,3}
+\ncline{->}{1,3}{1,4}
+\ncline{->}{1,4}{1,6}
+\ncangles[angleA=0,angleB=-90,armA=0.5em,armB=1em]{->}{1,4}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+求使系统稳定的 $K$ 的范围
+
+\mode<article>{解:}
+\begin{itemize}
+
+\item 传递函数\\
+\label{sec-2-3-2-1}%
+\begin{eqnarray*}
+G(s)     & = & \frac{K(s+1)}{s(s+2)(s+3)}\\
+\Phi(s)  & = & \frac{K(s+1)}{s^{3}+5s^{2}+(6+K)s+K}
+\end{eqnarray*}
+
+
+\item 劳斯表:\\
+\label{sec-2-3-2-2}%
+\[
+\begin{matrix}
+s^{3}  &    1   &  6+K  \\
+s^{2}  &    5   &  K  \\
+s^{1}  &   \frac{30+4K}{5}  & 0 \\
+s^{0}  &  K
+\end{matrix}
+\]
+
+稳定条件:
+\begin{eqnarray*}
+30+4K & > & 0 \\
+K & >  & 0
+\end{eqnarray*}
+
+得: $K>0$
+
+\end{itemize} % ends low level
+\end{frame}
+\subsection{劳斯判据应用中的特殊情况}
+\label{sec-2-4}
+\begin{frame}
+\frametitle{Routh表特殊情况:第一列元素有零元,系统不稳定:}
+\label{sec-2-4-1}
+
+\begin{itemize}
+\item 先用 $\epsilon$ 代替,再令 $\epsilon\rightarrow 0$
+\item 系统升阶: $(s+a)D(s),a>0$
+\end{itemize}
+\begin{itemize}
+
+\item 例:\\
+\label{sec-2-4-1-1}%
+系统特征方程: $D(s)=s^{4}+2s^{3}+s^{2}+2s+1=0$ 判断系统的稳定性,求出不稳定根的个数.
+
+
+\item Roth表:\\
+\label{sec-2-4-1-2}%
+\[
+\begin{matrix}
+s^{4}   &  1  &   1  \\
+s^{3}   &  2  &  2   \\
+s^{2}   &  0(\epsilon)  &  1   \\
+s^{1}   &  \frac{2\epsilon-2}{\epsilon} & 0 \\
+s^{0}   &  1   \\
+\end{matrix}
+\]
+
+
+\item $(s+1)D(s)=s^{5}+3s^{4}+3s^{3}+3s^{2}+3s+1$\\
+\label{sec-2-4-1-3}%
+\[
+\begin{matrix}
+s^{5} & 1 & 3 & 3 \\
+s^{4} & 3 & 3 & 1 \\
+s^{3} & 2 & \frac{8}{3} \\
+s^{2} & -1 & 1 \\
+s^{1} & \frac{14}{3} & 0 \\
+s^{0} & 1
+\end{matrix}
+\]
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{特殊情况:全行为零时:}
+\label{sec-2-4-2}
+
+\begin{itemize}
+\item 全零行的数值由上一行求导代替
+\item 辅助方程:全零行的上一行可构成辅助方程,辅助方程的解全部为系统特征根
+\end{itemize}
+\begin{itemize}
+
+\item 例:\\
+\label{sec-2-4-2-1}%
+$D(s)=s^{4}+5s^{3}+5s^{2}-5s-6$ 求系统不稳定根的个数
+
+
+\item Routh表\\
+\label{sec-2-4-2-2}%
+\[
+\begin{matrix}
+s^{4} &  1 &  5 & -6 \\
+s^{3} &  5 & -5 \\
+s^{2} &  6 & -6 \\
+s^{1} &  0(12)  & 0 \\
+s^{0} &  -6
+\end{matrix}
+\]
+
+
+\item 辅助方程
+\label{sec-2-4-2-3}%
+\begin{itemize}
+\item 对 $6s^{2}-6$ 求导得 $12s$
+\item 辅助方程 $6s^2-6=0$ ,得 $s_{1,2}=\pm 1$ 系统不稳定根为1
+\end{itemize}
+
+\end{itemize} % ends low level
+\end{frame}
+\subsection{劳斯判据求解系统参数}
+\label{sec-2-5}
+\begin{frame}
+\frametitle{例: $D(s)=s^{4}+2s^{3}+ks^{2}+s+2$ 求 $K$ 值稳定范围}
+\label{sec-2-5-1}
+
+
+解:
+\begin{itemize}
+
+\item Routh表\\
+\label{sec-2-5-1-1}%
+\[
+\begin{matrix}
+s^{4} & 1 & K & 2\\
+s^{3} & 2 & 1 \\
+s^{2} & \frac{2K-1}{2} & 2\\
+s^{1} & 1-\frac{8}{2K-1} & 0 \\
+s^{0} & 2 \\
+\end{matrix}
+\]
+\begin{eqnarray*}
+2K-1 & > & 0 \\
+%   K & > 1 \\
+1-\frac{8}{2K-1} &>& 0  
+%   K &> \frac{9}{2} 
+\end{eqnarray*}
+得: $K>\frac{9}{2}$
+
+
+\item 当 $K=\frac{9}{2}$ 时:\\
+\label{sec-2-5-1-2}%
+Routh表:
+
+$$
+\begin{matrix}
+s^{4} & 1 & 4.5 & 2\\
+s^{3} & 2 & 1 \\
+s^{2} & 4 & 2\\
+s^{1} & 0(8) & 0 \\
+s^{0} & 2 \\
+\end{matrix}
+$$
+其中辅助方程为 $4s^{2}+2=0$ ,可解得 $s=\pm\frac{\sqrt{2}}{2}j$ 
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{例: $D(s)=Ts^{3}+s^{2}+K=0$}
+\label{sec-2-5-2}
+\begin{itemize}
+
+\item Routh表\\
+\label{sec-2-5-2-1}%
+\[
+\begin{matrix}
+s^{3} & T  & 0\\
+s^{2} & 1  & K \\
+s^{1} & -TK \\
+s^{0} & K 
+\end{matrix}
+\]
+
+
+\item 无解
+\label{sec-2-5-2-2}%
+\begin{eqnarray*}
+T & > & 0 \\
+K & > & 0 \\
+TK& < & 0 
+\end{eqnarray*}
+
+\end{itemize} % ends low level
+\end{frame}
+\subsection{相对稳定性}
+\label{sec-2-6}
+\begin{frame}
+\frametitle{例:$D(s)=s^{3}+5.5s^{2}+8.5s+3$}
+\label{sec-2-6-1}
+
+\begin{itemize}
+\item 判断系统是否具有相对稳定性:$\sigma=1$
+\end{itemize}
+
+解:
+\begin{itemize}
+
+\item Routh表\\
+\label{sec-2-6-1-1}%
+\[
+\begin{matrix}
+s^{3} & 1 &  8.5 \\
+s^{2} & 5.5  & 3 \\
+s^{1} & 8.5-\frac{3}{5.5} & 0 \\
+s^{0} & 3
+\end{matrix}
+\]
+
+
+\item 将 $s=z-\sigma$ 代入 $D(s)$ 中\\
+\label{sec-2-6-1-2}%
+得 $D(z)=z^{3}+2.5z^{2}+0.5z-1$ ,不稳定.
+
+\begin{itemize}
+
+\item Routh表:\\
+\label{sec-2-6-1-2-1}%
+\[
+\begin{matrix}
+s^{3} & 1 &  0.5 \\
+s^{2} & 2.5  & -1 \\
+s^{1} & 0.5+\frac{1}{2.5} & 0 \\
+s^{0} & -1
+\end{matrix}
+\]
+
+
+\item 结论\\
+\label{sec-2-6-1-2-2}%
+有一个不稳定极点.
+
+
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\section{稳态误差}
+\label{sec-3}
+\subsection{误差传递函数}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{系统误差}
+\label{sec-3-1-1}
+\begin{itemize}
+
+\item ignore
+\label{sec-3-1-1-1}%
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%              
+%         E(s) .------.
+% R-->o----- ->| G(s) |--+--> C
+%   _ ^        '------'  |
+%     |                  |  
+%     '--------[ H(s) ]--'
+%
+%
+% 1                        2                        3             4              5    6
+$R(s)$ &  \pscirclebox[framesep=-0.2em]{$\times$} &$\cdots $   &  \psframebox{$G(s)$}   &   & $C(s)$ \\
+       &                                          &       &  \psframebox{$H(s)$}&  &        \\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\naput{$E(s)$}
+\ncline{->}{1,4}{1,6}
+\ncangle[angleA=0,angleB=0,armA=0.5em,armB=0.5em]{1,4}{2,4}
+\ncangle[angleA=180,angleB=-90,armA=0.5em,armB=1em]{->}{2,4}{1,2}
+\naput[npos=2.3]{$-$}
+\end{psmatrix}
+
+\mode<article>{系统误差有两种:}
+
+\begin{itemize}
+\item <2->输入端定义:$E_{2}(s)=E(s)$
+\item <3->输出端定义:$E_{1}(s)=C_{expect}-C_{real}$
+\item <4->不加特别说明,系统误差指的是输入端定义.
+\end{itemize}
+
+
+\item $E(s)$ 与 $E_1(s)$\\
+\label{sec-3-1-1-2}%
+\begin{eqnarray*}
+C_{expect} & = & \frac{R(s)}{H(s)}\\
+E_{1}(s)   & = & \frac{R(s)}{H(s)}-C(s) \\
+           & = & \frac{R(s)-C(s)H(s)}{H(s)}\\
+           & =& \frac{E(s)}{H(s)}
+\end{eqnarray*}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{误差传递函数:}
+\label{sec-3-1-2}
+
+\begin{eqnarray*}
+\Phi_{e}(s) & = & \frac{E(s)}{R(s)}\\
+            & = & \frac{1}{1+G(s)H(s)} \\
+            & = & \frac{R(s)-H(s)C(s)}{R(s)} \\
+            & = & 1-H(s)\Phi(s)
+\end{eqnarray*}
+
+\begin{itemize}
+\item <2-> 系统误差:$E(s)=\Phi_{e}(s)R(s)$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{稳态误差:}
+\label{sec-3-1-3}
+
+\begin{eqnarray*}
+e_{ss} &=& \lim_{t\rightarrow \infty}e(t) \\
+       &=& \lim_{s\rightarrow 0}sE(s)  \\
+       &= & \lim_{s\rightarrow 0}s\Phi_{e}(s)R(s)
+\end{eqnarray*}
+
+\begin{itemize}
+\item <2->说明:
+\begin{itemize}
+\item <2->稳态误差与输入信号密切相关
+\item <3->求稳态误差前要判断系统稳定性
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{扰动作用下的稳态误差}
+\label{sec-3-1-4}
+
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%          1    2  3     4    5    6    7 
+%                            | N(s)
+%               E(s)         v +  
+%         R---->o--> G_1(s)--o- G_2(s)--+--> C
+%             _ ^                       |
+%               |                       |  
+%               '-----------H(s)--------+
+%           
+%
+% 1                         2                           3                  4                     5
+       &                                       &               &                        &         $N(s)$                                  &   \\  
+$R(s)$  &\pscirclebox[framesep=-0.2em]{$\times$}& {\hskip 1em} &  \psframebox{$G_1(s)$} &  \pscirclebox[framesep=-0.2em]{$\times$} &  \psframebox{$G_2(s)$}  & \    & $C(s)$ \\
+       &                                         &              &     &   \psframebox{$ H(s) $} 
+%link
+\ncline{->}{1,5}{2,5}
+%\naput{$N(s)$}
+\ncline{->}{2,1}{2,2}
+\ncline{->}{2,2}{2,4}
+\naput{$E(s)$}
+\ncline{->}{2,4}{2,5}
+\ncline{->}{2,5}{2,6}
+\ncline{->}{2,6}{2,8}
+\ncangles[angleA=180,angleB=0,armA=0em,armB=0em]{->}{2,7}{3,5}
+\ncangle[angleA=180,angleB=-90,armA=0em,armB=0em]{->}{3,5}{2,2}
+\naput[npos=1.6]{$-$}
+\end{psmatrix}
+\begin{itemize}
+
+\item 输入端定义:\\
+\label{sec-3-1-4-1}%
+\begin{eqnarray*}
+E(s) & = &E_R(s)+E_N(s) \\
+E_R(s)&=& \Phi_e(s)R(s) \\
+E_N(s)&=& \Phi_{en}(s)N(s) \\
+\end{eqnarray*}
+
+
+\item 输出端定义:\\
+\label{sec-3-1-4-2}%
+令 $R(s)=0$ ,计算 $N(s)$ 单独引起的 $e_{ss}$ ,此时 $C_{expect}(s)=0$ 
+
+\begin{eqnarray*}
+E(s) & = & 0-C(s) \\
+     & = & -\Phi_N(s)N(s)\\
+\Phi_N(s) &=& \frac{G_2}{1+G_1G_2}\\
+e_{ss}&=&\lim_{s\rightarrow 0}s(-\Phi_N(s)N(s)) 
+\end{eqnarray*}
+
+
+\end{itemize} % ends low level
+\end{frame}
+\subsection{系统类型与静态误差系数}
+\label{sec-3-2}
+\begin{frame}
+\frametitle{阶跃输入:}
+\label{sec-3-2-1}
+
+\begin{eqnarray*}
+r(t) & = & A \\
+R(s) & = & \frac{A}{s} \\
+e_{ss}&=& \lim_{s\rightarrow 0}s \cdot\frac{1}{1+G_{open}(s)}\cdot\frac{A}{s} \\
+      &=& \lim_{s\rightarrow 0}\frac{A}{1+G_{open}(s)}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{速度输入}
+\label{sec-3-2-2}
+
+\begin{eqnarray*}
+r(t) & = & vt \\
+R(s) & = & \frac{v}{s^{2}} \\
+e_{ss}&=& \lim_{s\rightarrow 0}s \cdot\frac{1}{1+G_{open}(s)}\cdot\frac{v}{s^{2}} \\
+      &=& \lim_{s\rightarrow 0}\frac{A}{s+sG_{open}(s)}\\
+      &=& \lim_{s\rightarrow 0}\frac{A}{sG_{open}(s)}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{加速度输入}
+\label{sec-3-2-3}
+
+\begin{eqnarray*}
+r(t) & = & \frac{1}{2}at^{2} \\
+R(s) & = & \frac{a}{s^{2}} \\
+e_{ss}&=& \lim_{s\rightarrow 0}s \cdot\frac{1}{1+G_{open}(s)}\cdot\frac{a}{s^{3}} \\
+      &=& \lim_{s\rightarrow 0}\frac{A}{s^{2}+s^{2}G_{open}(s)}\\
+      &=& \lim_{s\rightarrow 0}\frac{A}{s^{2}G_{open}(s)}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{系统类型}
+\label{sec-3-2-4}
+
+\begin{itemize}
+\item <2->由开环传递函数定义
+      \begin{eqnarray*}
+       G_{open} & = & G(s)H(s) \\
+	       	& = & \frac{K\prod_{i=1}^{m}(\tau_{i}s+1)}{s^{\nu}\prod_{j=1}^{n-\nu}(T_{j}s+1)}
+      \end{eqnarray*}
+\item <2->其中 $K$ 为开环增益.
+\item <3->定义:
+\begin{itemize}
+\item $\nu=0$ 称为0型系统
+\item $\nu=1$ 称为I型系统
+\item $\nu=2$ 称为II型系统
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{静态误差系数}
+\label{sec-3-2-5}
+
+\begin{itemize}
+\item <2->静态位置误差系数
+       	\begin{eqnarray*}
+       	r(t) &=& A\\
+       	e_{ss}&=&\frac{A}{1+K_{p}}, \qquad
+       	K_{p}=\lim_{s\rightarrow 0} G_{open}(s)
+       	\end{eqnarray*}
+\item <3->静态速度误差系数 
+       	\begin{eqnarray*}
+       	r(t)&=&vt\\
+       	e_{ss}&=&\frac{v}{K_{v}}, \qquad
+       	K_{v}=\lim_{s\rightarrow 0} sG_{open}(s)
+       	\end{eqnarray*}
+\item <4->静态加速度误差系数 
+       	\begin{eqnarray*}
+       	r(t)&=&\frac{1}{2}at^{2}\\
+       	e_{ss}&=&\frac{a}{K_{a}}, \qquad
+       	K_{v}=\lim_{s\rightarrow 0} s^{2}G_{open}(s)
+       	\end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{零型系统($\nu=0$)}
+\label{sec-3-2-6}
+
+\begin{itemize}
+\item <2-> $r(t)=A$ 时:
+      \begin{eqnarray*}
+      K_p &=& \lim_{s\rightarrow 0}G_o(s) 
+	  = \lim_{s\rightarrow 0}\frac{K\prod_{i=0}^m(\tau_i s+1)}{\prod_{j=1}^n (\tau_j s+1)} 
+	  = K \\
+      e_{ss1} &=& \frac{A}{1+K_p}
+      \end{eqnarray*}
+      \mode<article>{称为有差系统.}
+\item <3-> $r(t)=vt$ 时:
+      \begin{eqnarray*}
+      K_v &=& \lim_{s\rightarrow 0}sG_o(s) 
+	  = 0 \\
+      e_{ss2} &=& \infty 
+      \end{eqnarray*}
+\item <4> $r(t)=\frac{1}{2}at^2$ 时:
+      \begin{eqnarray*}
+      K_a &=& \lim_{s\rightarrow 0}s^2 G(s)_o(s) 
+	  = 0 \\
+      e_{ss3} &=& \infty
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{I型系统($\nu=1$)}
+\label{sec-3-2-7}
+
+\begin{itemize}
+\item <2->$r(t)=A$ 时:
+      \begin{eqnarray*}
+      K_p &=& \lim_{s\rightarrow 0}G_o(s) 
+	  = \lim_{s\rightarrow 0}\frac{K\prod_{i=0}^m(\tau_i s+1)}{s\prod_{j=1}^{n-1}(\tau_j s+1)} 
+	  = \infty \\
+      e_{ss1} &=& \frac{1}{1+K_p}
+	    = 0
+      \end{eqnarray*}
+      \mode<article>{无差系统.}
+\item <3->$r(t)=vt$ 时:
+      \begin{eqnarray*}
+      K_v &=& \lim_{s\rightarrow 0}sG_o(s) 
+	  = K \\
+      e_{ss2} &=& \frac{v}{K_v} 
+	      =\frac{v}{K}
+      \end{eqnarray*}
+\item <4->$r(t)=\frac{1}{2}at^2$ 时:
+      \begin{eqnarray*}
+      K_a &=& \lim_{s\rightarrow 0}s^2 G(s)_o(s) 
+	  = 0 \\
+      e_{ss3} &=& \infty
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{II型系统($\nu=2$)}
+\label{sec-3-2-8}
+
+\begin{eqnarray*}
+K_p & = & \infty\\
+e_{ss1} &=& 0 \\
+K_v & = & \infty \\
+e_{ss2} &=& 0 \\
+K_a &=& K \\
+e_{ss3} &=& \frac{a}{K}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{小结:}
+\label{sec-3-2-9}
+
+\begin{itemize}
+\item <2->零型:
+      \[e_{ss1}=\frac{A}{1+K},e_{ss2}=e_{ss3}=\infty\]
+\item <3->I型:
+      \[e_{ss1}=0,e_{ss2}=\frac{v}{K},e_{ss3}=\infty\]
+\item <4->II型:
+      \[e_{ss1}=e_{ss2}=0,e_{ss3}=\frac{a}{K}\]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{例:}
+\label{sec-3-2-10}
+
+
+若 $G(s)H(s) =\frac{10K_h}{s+1},K_h\in\{0.1,1\}$ ,求单位阶跃下的 $e_{ss}$ .
+
+\mode<article>{解:}
+\begin{itemize}
+
+\item 解法1\\
+\label{sec-3-2-10-1}%
+零型系统, $r(t)=1,e_{ss}=\frac{1}{1+K_p}$
+
+\begin{eqnarray*}
+K_p &=  &\lim_{s\rightarrow 0}G(s)H(s) \\
+    &=& 10K_h \\
+    &=&
+\begin{cases}
+1  & K_h =0.1 \\
+10 & K_h = 1
+\end{cases}\\
+e_{ss} &=&
+\begin{cases}
+0.5 & K_h=0.1 \\
+\frac{1}{11} & K_h=1
+\end{cases}
+\end{eqnarray*}
+
+
+\item 解法2:\\
+\label{sec-3-2-10-2}%
+\begin{eqnarray*}
+e_{ss} &=& \lim_{s\rightarrow 0}s\Phi_e(s)R(s)\\
+    &=&\lim_{s\rightarrow 0}s\frac{1}{1+G(s)H(s)}R(s)\\
+    &=&\lim_{s\rightarrow 0}s\frac{s+1}{s+1+10K_h}\frac{1}{s}\\
+    &=& \frac{1}{1+10K_h} \\
+    &=&
+\begin{cases}
+0.5 & K_h=0.1 \\
+\frac{1}{11} & K_h=1
+\end{cases}
+\end{eqnarray*}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{例:  求 $r(t)=2+3t$ 时的 $e_{ss}$}
+\label{sec-3-2-11}
+
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+% 1    2   3  4   5   6    7       8   9
+%           R*    E(s)    .------.
+% R-->2/s+1-->o------>o-->| G(s) |--+--> C
+%           _ ^     _ ^   '------'  |
+%             |       |             |  
+%             |       '----0.8s-----+
+%             |                     |
+%             '---------------------'
+%        
+%
+% 1                        2                 3        
+$R(s)$ &  \psframebox{$\frac{2}{s+1}$} & ${\hskip 1em}  $ & %
+\pscirclebox[framesep=-0.2em]{$\times$} &$ $   & \pscirclebox[framesep=-0.2em]{$\times$} & %
+\psframebox{$\frac{5}{s(5s+1)}$}   & \   & $C(s)$ \\
+  &   &     &  & & & \psframebox{$ 0.8s $} &  \ &  \\
+\\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\naput{$R^{*}(s)$}
+\ncline{->}{1,4}{1,6}
+\naput{$E(s)$}
+\ncline{->}{1,6}{1,7}
+\ncline{->}{1,7}{1,9}
+\ncline{2,8}{2,7}
+\ncangle[angleA=180,angleB=-90,armA=0.5em,armB=1em]{->}{2,7}{1,6}
+\naput[npos=2.3]{$-$}
+\ncangles[angleA=180,angleB=-90,armA=0em,armB=4.5em]{->}{1,8}{1,4}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+解:
+
+\begin{eqnarray*}
+G(s) & = \frac{C(s)}{E(s)} \\
+     &=& \frac{\frac{5}{s(5s+1)}}{1+\frac{4s}{s(5s+1)}} \\
+    & = & \frac{5}{5s^2+5s} \\
+    & = & \frac{1}{s(s+1)} 
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{例:计算稳态误差}
+\label{sec-3-2-12}
+
+\mode<article>{判断稳定性:}
+
+\begin{eqnarray*}
+\Phi(s) &=& \frac{C(s)}{R^{*}(s)}
+        = \frac{1}{s(s+1)+1} \\
+\Phi_e(s) &=& \frac{s(s+1)}{s(s+1)+1}
+\end{eqnarray*}
+系统稳定.
+
+\begin{eqnarray*}
+R(s) &=& \frac{2s+3}{s^2}\\
+e_{ss} & = &\lim_{s\rightarrow 0}s\Phi_e(s)R^{*}(s) \\
+       &=& \lim_{s\rightarrow 0}s\cdot\frac{s(s+1)}{s(s+1)+1}\cdot\frac{2}{s+1}\cdot\frac{2s+3}{s^2} \\
+       &=& 6
+\end{eqnarray*}
+\end{frame}
+\subsection{动态误差系数}
+\label{sec-3-3}
+\begin{frame}
+\frametitle{动态误差系数}
+\label{sec-3-3-1}
+
+动态误差系数完整地描述系统稳态误差随时间变化的规律,而不是指误差信号随时间的变化规律,静态误差可看作动态误差的一个特例.
+
+\begin{eqnarray*}
+E(s) & = & \Phi_e(s)R(s)\\
+\Phi_e(s) &=& \frac{E(s)}{R(s)}\\
+         &=&\frac{1}{1+G(s)H(s)} \\
+         &=& \frac{M(s)}{N(s)} 
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{在 $s=0$ 处展开,得:}
+\label{sec-3-3-2}
+
+
+\begin{eqnarray*}
+\phi_e(s)  &=& \Phi_e(0)+\dot{\Phi}_e(0)s+\cdots+\frac{\Phi_e^{(n)}(0)s^n}{n!}+\cdots \\
+E(s) & = & \Phi_e(0)R(s)+\dot{\Phi}_e(0)sR(s)+\cdots+\frac{\Phi_e^{(n)}(0)s^nR(s)}{n!}+\cdots \\
+e_{ss}(t) & = & \Phi_e(0)r(t)+\dot{\Phi}_e(0)\dot{r}(t)+\cdots+\frac{\Phi_e^{(n)}(0)r^{(n)}(t)}{n!}+\cdots \\
+          &= & \sum_{i=1}^{\infty}C_ir^{(i)}(t) ,\qquad
+C_i = \frac{\Phi_e^{(i)}(0)}{i!}
+\end{eqnarray*}
+
+\begin{itemize}
+\item 其中 $C_i$ 称为动态误差系数.
+\begin{itemize}
+\item $C_0$ 动态位置误差系数
+\item $C_1$ 动态速度误差系数
+\item $C_2$ 动态加速度误差系数
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{动态误差系数示例:}
+\label{sec-3-3-3}
+
+\begin{itemize}
+\item <2-> 零型系统 $r(t)=1$ 则 \[e_{ss}(t)=C_0 ,C_0=\frac{1}{1+K_p}\]
+\item <3-> I型系统 $r(t)=t$ 则 \[e_{ss}(t)=C_0 t+C_1,C_0=0,C_1=\frac{1}{K_v}\]
+\item <4-> II型系统 $r(t)=t$ 则 \[e_{ss}(t)=C_0 \frac{1}{2}at^2+C_1at+C_2 a,C_0=C_1=0,C_2=\frac{1}{K_a}\]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{讨论: $C_i$ 的计算}
+\label{sec-3-3-4}
+
+\begin{eqnarray*}
+\Phi_e(s) &=& \frac{M(s)}{N(s)} \\
+ & = & C_0+C_1s+C_2s^2+\cdots
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{例: $G(s)H(s)=\frac{1}{s(s+1)}$}
+\label{sec-3-3-5}
+
+
+综合除法:
+
+\[
+\begin{matrix}
+\text{divident}      &      &   \text{divisor}  &    & \text{quotient} &   & \text{remainder} \\  
+s^2+s             &\div  &    s^2+s+1     & \rightarrow &  s       &  & s^2+s-s(1+s+s^2) \\
+-s^3             &\div  &   s^2+s+1       & \rightarrow  & -s^3     &   & -s^3-(-s^3)(1+s+s^2)\\
+ s^4+s^5         &\div  &  s^ 2+s+1       & \rightarrow & s^4  &   & \cdots  \\
+\cdots           &\div   &  s^2+s+1       &\rightarrow  & \cdots   &    &\cdots   
+\end{matrix}
+\]
+
+得:
+\begin{eqnarray*}
+\Phi_e(s)  &=& s-s^3+s^4+\cdots
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{例: $G(s)H(s)=\frac{1}{s(s+1)}$}
+\label{sec-3-3-6}
+
+
+另一种写法:
+
+\begin{eqnarray*}
+\frac{s^2+s}{s^2+s+1} & = & s + \frac{-s^2+s-s(1+s+s^2)}{s^2+s+1}  \\
+\frac{-s^3}{s^2+s+1}  & = & -s^3+\frac{-s^3-(-s^3)(1+s+s^2)}{s^2+s+1}\\
+\frac{s^4+s^5}{s^2+s+1} &=& s^4 +\cdots \\
+\cdots                  &=& \cdots \\
+\Phi_e(s)               &=& s-s^3+s^4+\cdots
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{例:}
+\label{sec-3-3-7}
+
+单位负反馈系统开环传递函数: $G_o(s)=\frac{100}{s(0.s1+1)}$ 求输入信号为 $\sin(5 t)$ 时的稳态误差.
+
+解:系统稳定,
+\begin{eqnarray*}
+r(t) &=& sin(\omega t),\omega=5 \\
+E(s) &=& \Phi_e(s)R(s) \\
+e_{ss}&=& \sum_{i=0}^{\infty}C_i r^{(i)} \\
+\Phi_e(s)&=& \frac{1}{1+G_o(s)} \\
+         &=& \frac{0.1s^2+s}{0.1s^2+s+100} 
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{解法1}
+\label{sec-3-3-8}
+
+
+
+
+
+\begin{itemize}
+\item $\frac{0.1s^2+s}{0.1s^2+s+100}  =0.01s+\frac{0.1s^2+s-0.01s(0.1s^2+s+100)}{0.1s^2+s+100}$
+\item $\frac{-10^{-3}s^3+0.09s^2}{0.1s^2+s+100} = 9\times 10^{-4}s^2+\frac{-10^{-3}s^3+0.09s^2-9\times 10^{-4}s^2(0.1s^2+s+100)}{0.1s^2+s+100}$
+\item $\frac{-9\times 10^{-5}s^4-1.9\times 10^{-3}s^3}{0.1s^2+s+100}  = -1.9\times 10^{-5}s^3 + \cdots$
+\end{itemize}
+所以
+\begin{itemize}
+\item $\Phi_e(s) = 0+0.01s+9\times 10^{-4}s^2-1.9\times 10^{-5}s^3+\cdots$
+\item $e_{ss}(t) = (C_0-C_2\omega^2+C_4\omega^4+\cdots)\sin(\omega t)+(C_1-C_3\omega^3+C_5\omega^5+\cdots)\cos(\omega t)$
+\item $e_{ss}(t) = -0.055\cos(5t-249^{\circ})$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{解法2:}
+\label{sec-3-3-9}
+
+\begin{eqnarray*}
+E(s) & = & \Phi_e(s)R(s) \\
+     &=& \frac{s^2+10S}{s^2+10S+1000}\cdot\frac{5}{s^2+25}\\
+     &=&\frac{-0.0498s-0.1115}{s^2+25}+\frac{as+b}{s^2+10s+1000}\\
+e_{ss}(t)&=& -0.055\cos(5t-249^{\circ})+\Delta 
+\end{eqnarray*}
+其中: $\lim_{t\rightarrow\infty}\Delta = 0$
+\end{frame}
+\subsection{减小稳态误差的措施}
+\label{sec-3-4}
+\begin{frame}
+\frametitle{减小 $e_{ss}$ 的措施}
+\label{sec-3-4-1}
+
+\begin{itemize}
+\item <2->增大开环增益
+\item <3->增加系统类型
+\item <4->串级控制抑制扰动
+\item <5->复合控制
+\end{itemize}
+\end{frame}
+\section{示例}
+\label{sec-4}
+\subsection{例1}
+\label{sec-4-1}
+\begin{frame}
+\frametitle{例1:速度反馈}
+\label{sec-4-1-1}
+\begin{itemize}
+
+\item 结构图
+\label{sec-4-1-1-1}%
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%         1    2   3  4          5    6    7
+%                E(s)     .--------.
+%         R-->o------>o-->|k/s(s+1)|--+--> C
+%           _ ^     _ ^   '--------'  |
+%             |       |               |  
+%             |       '------As-------+
+%             |                       |
+%             '-----------------------'
+%
+% 1                        2                          3        
+$R(s)$  & \pscirclebox[framesep=-0.2em]{$\times$} & {\hskip 1em}    & \pscirclebox[framesep=-0.2em]{$\times$} & %
+\psframebox{$\frac{K}{s(s+1)}$}   & \   & $C(s)$ \\
+  &   &     &  & \psframebox{$ As $} &  \ &    \\
+\\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\naput{$E(s)$}
+\ncline{->}{1,4}{1,5}
+\ncline{->}{1,5}{1,7}
+\ncline{2,6}{2,5}
+\ncangle[angleA=180,angleB=-90,armA=0.5em,armB=1em]{->}{2,5}{1,4}
+\naput[npos=2.3]{$-$}
+\ncangles[angleA=180,angleB=-90,armA=0em,armB=3.5em]{->}{1,6}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+As为系统的速度反馈,求解:
+\begin{itemize}
+\item $A=\{0.8,0\}$ 时系统稳态误差及动态品质指标( $K=1$ ,求 $e_{ss}$ 时 $R(s)=\frac{1}{s^2}$ )
+\item 若要求系统的 $\sigma\%=20\%$ , $t_s\leq 1s$ ,确定 $A,K$ 的值
+\end{itemize}
+
+
+\item 解:\\
+\label{sec-4-1-1-2}%
+\begin{eqnarray*}
+G(s)&=& \frac{K}{s(s+1)+KAs}\\
+    &=&  \frac{K}{s^2+(KA+1)s} \\
+\Phi(s) &=& \frac{K}{s^2+(KA+1)s+K} 
+\end{eqnarray*}
+系统稳定,为I型系统.
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{例1(续):计算稳态误差:}
+\label{sec-4-1-2}
+
+ $R(s)=\frac{1}{s^2}$ 时,
+\begin{eqnarray*}
+e_{ss} &=& \frac{1}{Kv} \\
+K_v &=& \lim_{s\rightarrow 0}sG(s) \\
+    &=& \lim_{s\rightarrow 0}\frac{K}{s+KA+1} \\
+    &=& \frac{K}{KA+1} \\
+\end{eqnarray*}
+
+\begin{itemize}
+\item $K=1,A=0.8$ 时, $e_{ss}=\frac{KA+1}{K}=1.8$
+\item $K=1,A=0$ 时, $e_{ss}=\frac{KA+1}{K}=1$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{例1(续):计算动态品质:}
+\label{sec-4-1-3}
+
+
+\begin{eqnarray*}
+\Phi(s) &=& \frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2} \\
+        &=& \frac{K}{s^2+(KA+1)s+K} \\
+\sigma\% &=& e^{-\frac{\xi\pi}{\sqrt{1-\xi^2}}} \\
+t_s &=& \frac{3.5}{\xi\omega_n}
+\end{eqnarray*}
+
+\begin{itemize}
+\item <2-> $K=1,A=0$ 时, $\omega_n=1,\xi=0.5,\sigma\%=16.3\%,t_s=7$
+\item <3-> $K=1,A=0.8$ 时, $\omega_n=1,\xi=0.9,\sigma\%=0.15\%,t_s=3.89$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{例1(续):确定 $A,K$ 值}
+\label{sec-4-1-4}
+
+
+
+\begin{eqnarray*}
+e^{\frac{-\xi\pi}{\sqrt{1-\xi^2}}} &=&20\% \\
+\frac{3.5}{\xi\omega_n} &=& 1
+\end{eqnarray*}
+
+得: $\xi=0.456,\omega_n=7.68$
+
+\begin{eqnarray*}
+2\xi\omega_n & = & AK+1\\
+K &=& \omega_n^2
+\end{eqnarray*}
+
+得: $A=0.102,K=58.9$
+\end{frame}
+\subsection{例2}
+\label{sec-4-2}
+\begin{frame}
+\frametitle{例2:比例-微分控制}
+\label{sec-4-2-1}
+
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%         1    2   3  4      5                6          7    8
+%                E(s)                          
+%         R-->o---+--1------>o--> wn2/s(s+2\x\wn2)--+--> C
+%           _ ^   |           ^                      |
+%             |   !--Tds------!                      |  
+%             |                                      |
+%             '--------------------------------------'
+%
+% 1                        2                          3        
+$R(s)$  & \pscirclebox[framesep=-0.2em]{$\times$} & {\hskip 1em} & \psframebox{$1$} 
+ & \pscirclebox[framesep=-0.2em]{$\times$} & %
+\psframebox{$\frac{\omega_n^2}{s(s+2\xi\omega_n)}$}   & \   & $C(s)$ \\
+    &     &  & \psframebox{$ T_d s $} &  \ &   \\
+\\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\naput{$E(s)$}
+\ncline{->}{1,4}{1,5}
+\ncline{->}{1,5}{1,6}
+\ncline{->}{1,6}{1,8}
+\ncangle[angleA=0,angleB=180,armA=0.5em,armB=1em]{->}{1,3}{2,4}
+\ncangle[angleA=0,angleB=-90,armA=0.5em,armB=1em]{->}{2,4}{1,5}
+\naput[npos=2.3]{$+$}
+\ncangles[angleA=180,angleB=-90,armA=0em,armB=3.5em]{->}{1,7}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+比较原系统与PD控制系统的稳态性能与动态性能
+
+解:
+
+\begin{eqnarray*}
+G(s) & = &\frac{\omega_n^2(1+T_d s)}{s^2+2\xi\omega_n s} \\
+\Phi(s) &=&\frac{\omega_n^2(1+T_d s)}{s^2+(2\xi+T_d\omega_n)\omega_n s+\omega_n^2}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{例2(续):稳态误差}
+\label{sec-4-2-2}
+
+系统稳定,为I型系统.
+\begin{eqnarray*}
+e_{ss} & =& \frac{1}{K_v} \\
+K_v &=& \lim_{s\rightarrow 0}sG(s) \\
+   &=& \lim_{s\rightarrow 0}\frac{\omega_n^2(1+T_d s)}{s+2\xi\omega_n} \\
+   &=&\frac{\omega_n}{2\xi}
+\end{eqnarray*}
+
+$e_{ss}$ 与 $T_d$ 无关.
+\end{frame}
+\begin{frame}
+\frametitle{例2(续):比较动态性能}
+\label{sec-4-2-3}
+
+考虑如下三个系统:
+\begin{eqnarray*}
+\Phi_1(s) &=&\frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2}\\
+\Phi_2(s) &=&\frac{\omega_n^2(1+T_d s) }{s^2+(2\xi+T_d\omega_n)\omega_n s+\omega_n^2}\\
+\Phi_3(s) &=&\frac{\omega_n^2}{s^2+(2\xi+T_d\omega_n)\omega_n s+\omega_n^2}
+\end{eqnarray*}           
+
+\begin{itemize}
+\item <2->与系统1相比,系统3的阻尼比较大,两者的自然频率相同.
+\item <3->因为:
+        \begin{eqnarray*}
+        \Phi_2(s) & = & (1+T_d s)\Phi_3(s) \\
+        c_2(t) &=& c_3(t)+T_d\frac{dc_3(t)}{dt}
+        \end{eqnarray*}
+       由于存在微分作用,因此对高频噪声有放大作用.
+\end{itemize}
+\end{frame}
+
+\end{document}

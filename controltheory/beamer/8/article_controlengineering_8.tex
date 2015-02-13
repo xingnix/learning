@@ -1,0 +1,616 @@
+% Created 2015-02-13 Fri 11:33
+\documentclass[table]{article}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{非线性控制系统分析}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+\mode<article>{要点:描述函数法,分析自振点的稳定性,自振点参数求解及非线性特性参数对自振点参数的影响}
+\section{非线性系统的基本概念}
+\label{sec-1}
+\subsection{非线性系统的特征}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{非线性系统的普遍性}
+\label{sec-1-1-1}
+
+\begin{itemize}
+\item 实际系统或多或少存在非线性特征(环节)
+\item <2->有些系统人为采用非线性部件或非线性控制器
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{非线性系统的特征}
+\label{sec-1-1-2}
+
+\begin{itemize}
+\item <2->稳定性
+
+    不存在整个系统是否稳定的概念,与初始条件及输入幅值大小有关
+\item <3->时间响应
+
+    与初始条件及输入信号的大小,输入信号的频率有关
+\item <4->畸变现象
+
+    正弦输入得到非正弦输出
+\item <5->自激振荡
+
+    非线性系统在无外界周期信号作用下会产生具有固定振幅和频率的稳定周期运动,称为自振,有时人为引入变频小幅度的颤振来克服间隙,摩擦等非线性因素的不利影响.
+\end{itemize}
+\end{frame}
+\subsection{分析方法}
+\label{sec-1-2}
+\begin{frame}
+\frametitle{分析方法}
+\label{sec-1-2-1}
+
+\begin{itemize}
+\item <2->无通用方法针对不同非线性系统采用灵活的分析设计方法
+\begin{itemize}
+\item <3->相平面法:一,二阶系统
+\item <4->描述函数法:阶次不限,结构限制
+\item <5->计算机求解:数值求解
+\end{itemize}
+\end{itemize}
+\end{frame}
+\subsection{非线性特性对系统的影响}
+\label{sec-1-3}
+\subsection{非线性特性的影响}
+\label{sec-1-4}
+\begin{frame}
+\frametitle{死区特性}
+\label{sec-1-4-1}
+\begin{itemize}
+
+\item 死区特性
+\label{sec-1-4-1-1}%
+\begin{tikzpicture}[scale=0.6]
+%             /
+%            /
+%   ---------
+%  /
+% /
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below left] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,0) (0,0) (1,0) (2,1)};
+\draw (1,0) node[above] {$\Delta$};
+\draw (-1,0) node[above ] {$-\Delta$};
+\draw (1.5,0.5) node[above ] {$K$};
+\end{tikzpicture}
+
+
+\item 影响
+\label{sec-1-4-1-2}%
+\begin{itemize}
+\item $K\downarrow\rightarrow\text{稳定性}\uparrow\rightarrow\sigma\%\downarrow$
+\item 抗小幅干扰信号
+\item $e_{ss}\uparrow$
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{饱和特性}
+\label{sec-1-4-2}
+\begin{itemize}
+
+\item 饱和特性
+\label{sec-1-4-2-1}%
+\begin{tikzpicture}
+%       ------
+%      /
+%------
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below right] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,-1) (0,0) (1,1) (2,1)};
+\draw (1,0) node[below] {$a$};
+\draw (-1,0) node[below ] {$-a$};
+\draw (0.5,0.5) node[above ] {$K$};
+\end{tikzpicture}
+
+\item 影响
+\label{sec-1-4-2-2}%
+\begin{itemize}
+\item 稳定系统: $K\downarrow\rightarrow\gamma\uparrow\rightarrow\sigma\%\downarrow$
+\item 不稳定系统: 自激振荡
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{滞环特性}
+\label{sec-1-4-3}
+\begin{itemize}
+
+\item 滞环特性
+\label{sec-1-4-3-1}%
+\begin{tikzpicture}
+%       /-/
+%      / /
+%     /-/
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below right] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,0) (0,1) };
+\draw [blue,thick] plot coordinates {(0,-1) (1,0) (2,1) };
+\draw [red] plot coordinates {(0.3,-0.7) (1.7,0.7) (-0.3,0.7) (-1.7,-0.7) (0.3,-0.7) };
+\draw [red,thick,->] (0.3,-0.7)-- (1,0);
+\draw [red,thick,->] (1.7,0.7)--(0,0.7);
+\draw [red,thick,->]  (-0.3,0.7)-- (-1,0) ;
+\draw [red,thick,->]  (-1.7,-0.7)-- (0,-0.7) ;
+\draw (1,0) node[below] {$b$};
+\draw (-1,0) node[below ] {$-b$};
+\draw (1.5,0.5) node[right ] {$K$};
+\end{tikzpicture}
+
+\item 影响\\
+\label{sec-1-4-3-2}%
+$e_{ss}\uparrow$ 降低了控制精度(死区),振荡加剧甚至不稳定(相角滞后作用)
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{继电特性}
+\label{sec-1-4-4}
+\begin{itemize}
+
+\item 继电特性
+\label{sec-1-4-4-1}%
+\begin{tikzpicture}
+%          --------
+%          | |
+%     -------- 
+%     | |
+%   -----
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[above left] {$o$};
+\draw [red,thick] plot coordinates {(-2,-1) (-0.5,-1) };
+\draw [red,thick] plot coordinates {(0.5,1) (2,1) };
+\draw [red,thick] plot coordinates {(-1,0) (1,0) };
+\draw [red,thick,->] (-1,0)-- (-1,-1);
+\draw [red,thick,->]  (-0.5,-1)-- (-0.5,0) ;
+\draw [red,thick,->] (0.5,1)--(0.5,0);
+\draw [red,thick,->]  (1,0)-- (1,1) ;
+\draw (1,0) node[below] {$h$};
+\draw (0.5,0) node[below ] {$mh$};
+\end{tikzpicture}
+
+
+\item 影响\\
+\label{sec-1-4-4-2}%
+常使系统振荡
+
+
+\end{itemize} % ends low level
+\end{frame}
+\section{描述函数法}
+\label{sec-2}
+\subsection{基本概念}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{描述函数法基本概念}
+\label{sec-2-1-1}
+
+\begin{itemize}
+\item 1940年,P.J.Daniel提出,
+\item 基本思想:
+      在一定的假设条件下,将非线性环节在正弦信号作用下的输出用一次谐波分量近似,并导出非线性环节的等效近似频率特性,即描述函数.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{描述函数法假设条件}
+\label{sec-2-1-2}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+\path[red] node[draw, right =of p1] (n) {$N$}; 
+\path[->] (p1) edge node[midway] {$x(t)$} (n) ; 
+\path[blue] node[draw, inner sep=5pt,right =of n] (g) {$G(s)$}; 
+\path[->] (n) edge node [midway]{$y(t)$} (g); 
+\path[->] node[ right =of g] (o) {$c(t)$}; 
+\path[->] (g) edge node {} (o); 
+\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item 一个非线性环节N和一个线性部分串联
+\item <2->非性环节是奇对称的:  $y(x)=-y(-x)$  即无恒定分量
+\item <3-> $G(s)$ 具有较好的低通特性
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{描述函数定义}
+\label{sec-2-1-3}
+
+非线性环节输出信号的一次谐波分量和输入信号的复数比定义为非线性环节的描述函数.
+\begin{eqnarray*}
+x(t) & = & A\sin\omega t\\
+y(t) &=& A_0+\sum_{n=1}^{\infty}(A_n\cos n\omega t + B_n\sin n\omega t)\\
+A_n &=& \frac{1}{\pi}\int_0^{2\pi}y(t)\cos n\omega t d\omega t \\
+A_n &=& \frac{1}{\pi}\int_0^{2\pi}y(t)\sin n\omega t d\omega t 
+\end{eqnarray*}
+
+分析:
+\begin{itemize}
+\item <2-> $A_0=0$  ,(假设:奇对称性)
+\item <3->n越大,谐波分量的频率越高,幅值  $A_n,B_n$  越小,(假设条件:G(s)具有较好的低通特性),高次谐波分量已被充分过滤掉
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{描述函数定义(续)}
+\label{sec-2-1-4}
+
+\begin{itemize}
+\item 非线性环节在  $x(t)=A\sin\omega t$  输入下
+      \begin{align*}
+       y(t) & \approx  y_1(t) = A_1\cos\omega t+B_1\sin\omega t   = Y_1\sin(\omega t+\phi_1) \\
+       	Y_1 &= \sqrt{A_1^2+B_1^2}  \qquad \phi_1 = \arctan\frac{A_1}{B_1} \\
+      A_1 &= \frac{1}{\pi}\int_0^{2\pi}y(t)\cos \omega t d\omega t  \qquad B_1 = \frac{1}{\pi}\int_0^{2\pi}y(t)\sin \omega t d\omega t 
+      \end{align*}
+\item <2->描述函数为:
+      \begin{align*}
+      N(A) & = |N(A)|e^{j\angle N(A)} = \frac{Y_1}{A}e^{j\phi_1} \\
+	   &= \frac{\sqrt{A_1^2+B_1^2}}{A}e^{j\arctan\frac{A_1}{B_1}} = \frac{B_1}{A}+j\frac{A_1}{A}
+      \end{align*}
+\item <3->若  $y(t)=-y(-t)$ ,则  $A_1=0,N(A)=\frac{B_1}{A}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{描述函数特点}
+\label{sec-2-1-5}
+
+\begin{itemize}
+\item <2->一般非线性环节的描述函数  $N$  为  $A$  及  $\omega$  的函数,表示成  $N(A,\omega)$  若非线性环节中不含储能元件,则只与  $A$  有关
+\item <3->描述函数是非线性元件的等效传递特性,它是只考虑基波分量,忽略高次谐波分量之后的结果, 所以这种方法也称作谐波线性化法,当非线性元件用描述函数表示后,可以用频域法分析非线性系统的运动特性.
+\end{itemize}
+\end{frame}
+\subsection{典型非线特性的描述函数}
+\label{sec-2-2}
+\begin{frame}
+\frametitle{死区特性的描述函数}
+\label{sec-2-2-1}
+\begin{itemize}
+
+\item 死区特性
+\label{sec-2-2-1-1}%
+\begin{tikzpicture}[scale=0.6]
+%             /
+%            /
+%   ---------
+%  /
+% /
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below left] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,0) (0,0) (1,0) (2,1)};
+\draw (1,0) node[above] {$\Delta$};
+\draw (-1,0) node[above ] {$-\Delta$};
+\draw (1.5,0.5) node[above ] {$K$};
+\end{tikzpicture}
+
+
+\item 输入/输出信号
+\label{sec-2-2-1-2}%
+\begin{tikzpicture}[scale=0.6]
+\begin{axis}[
+%axis x line=middle,axis y line= middle, 
+ylabel=$   $ ,xlabel=$   $ ,
+ymin=-1,ymax=1,xmin=-0,xmax=7,every axis plot post/.append style={mark=none}]
+grid=both,
+\addplot[blue,thick]
+shell {
+octave -q --eval "t=[0:0.1:2*pi]';disp([t,sin(t)]);"
+};
+\addplot[red,thick]
+shell {
+octave -q --eval "t=[0:0.1:2*pi]';x=sin(t);disp([t,max(x-0.5,0)+min(x+0.5,0)]);"
+};
+\legend{$\sin(t)$ , $y(sin(t))$};
+\end{axis}
+\end{tikzpicture}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{死区特性的描述函数(续)}
+\label{sec-2-2-2}
+
+\begin{eqnarray*}
+y(x) & = &\begin{cases} 
+0  &  |x| \leq \Delta \\
+K(x-\Delta)  & |x|>\Delta   \end{cases} \\
+x &=& A\sin\omega t \\
+y(t) &=& \begin{cases} 
+0  &  0\leq \omega t \leq \psi_1 \\
+K(A\sin\omega t-\Delta)  & \psi_1 < x \leq \frac{\pi}{2}   \end{cases} \\
+\psi_1 &=& \arcsin\frac{\Delta}{A}
+\end{eqnarray*}
+\begin{itemize}
+\item <2-> 死区是奇对称的,  $A_1 = 0$
+      \begin{eqnarray*}
+      B_1 &=& \frac{1}{\pi}\int_0^{2\pi}y(t)\sin\omega t d\omega t 
+           =  \frac{4}{\pi}\int_0^{\frac{\pi}{2}}K(A\sin\omega t -\Delta)\sin\omega t d\omega t \\
+      N(A)&=&  \frac{B_1}{A} =\frac{2K}{\pi}\left(\frac{\pi}{2}-\arcsin\frac{\Delta}{A}-\frac{\Delta}{A}\sqrt{1-(\frac{\Delta}{A})^2}\right),\qquad A\geq\Delta
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{饱和特性的描述函数}
+\label{sec-2-2-3}
+\begin{itemize}
+
+\item 饱和特性
+\label{sec-2-2-3-1}%
+\begin{tikzpicture}
+%       ------
+%      /
+%------
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below right] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,-1) (0,0) (1,1) (2,1)};
+\draw (1,0) node[below] {$a$};
+\draw (-1,0) node[below ] {$-a$};
+\draw (0.5,0.5) node[above ] {$K$};
+\end{tikzpicture}
+
+\item 描述函数\\
+\label{sec-2-2-3-2}%
+\begin{eqnarray*}
+N(A) &=& \frac{B_1}{A} 
+      =   \frac{2K}{\pi}\left(\arcsin\frac{a}{A}+\frac{a}{A}\sqrt{1-(\frac{a}{A})^2}\right) ,\qquad A\geq a 
+\end{eqnarray*}
+\begin{itemize}
+\item <3->当  $A\leq a$  时  $N(A)=K$
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{滞环特性的描述函数}
+\label{sec-2-2-4}
+\begin{itemize}
+
+\item 滞环特性
+\label{sec-2-2-4-1}%
+\begin{tikzpicture}
+%       /-/
+%      / /
+%     /-/
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below right] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,0) (0,1) };
+\draw [blue,thick] plot coordinates {(0,-1) (1,0) (2,1) };
+\draw [red] plot coordinates {(0.3,-0.7) (1.7,0.7) (-0.3,0.7) (-1.7,-0.7) (0.3,-0.7) };
+\draw [red,thick,->] (0.3,-0.7)-- (1,0);
+\draw [red,thick,->] (1.7,0.7)--(0,0.7);
+\draw [red,thick,->]  (-0.3,0.7)-- (-1,0) ;
+\draw [red,thick,->]  (-1.7,-0.7)-- (0,-0.7) ;
+\draw (1,0) node[below] {$b$};
+\draw (-1,0) node[below ] {$-b$};
+\draw (1.5,0.5) node[right ] {$K$};
+\end{tikzpicture}
+
+\item 描述函数\\
+\label{sec-2-2-4-2}%
+非单值奇对称  $A_1\neq 0,B_1\neq 0$ 
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{继电特性的描述函数}
+\label{sec-2-2-5}
+\begin{itemize}
+
+\item 继电特性
+\label{sec-2-2-5-1}%
+\begin{tikzpicture}
+%          --------
+%          | |
+%     -------- 
+%     | |
+%   -----
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[above left] {$o$};
+\draw [red,thick] plot coordinates {(-2,-1) (-0.5,-1) };
+\draw [red,thick] plot coordinates {(0.5,1) (2,1) };
+\draw [red,thick] plot coordinates {(-1,0) (1,0) };
+\draw [red,thick,->] (-1,0)-- (-1,-1);
+\draw [red,thick,->]  (-0.5,-1)-- (-0.5,0) ;
+\draw [red,thick,->] (0.5,1)--(0.5,0);
+\draw [red,thick,->]  (1,0)-- (1,1) ;
+\draw (1,0) node[below] {$h$};
+\draw (0.5,0) node[below ] {$mh$};
+\end{tikzpicture}
+
+
+\item 描述函数\\
+\label{sec-2-2-5-2}%
+非单值奇对称     $N(A)=\frac{B_1}{A}+j\frac{A_1}{A}$ 
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{组合非线性特性的描述函数}
+\label{sec-2-2-6}
+
+\begin{itemize}
+\item 并联
+      \begin{eqnarray*}
+      y_1 & = & N_1(x)\\
+      y_2 &=& N_2(x) \\
+      y &=& y_1+y_2 \\
+       	&=& N_1(x)+N_2(x)
+      \end{eqnarray*}
+\item <2->串联:
+
+      与联接次序有关
+\end{itemize}
+\end{frame}
+\subsection{非线性系统稳定性分析}
+\label{sec-2-3}
+\begin{frame}
+\frametitle{非线性系统稳定性分析}
+\label{sec-2-3-1}
+\begin{itemize}
+
+\item 线性系统有:\\
+\label{sec-2-3-1-1}%
+\begin{eqnarray*}
+      \Phi(s) &=& \frac{G(s)}{1+G(s)} \\
+      1+G(s) &=& 0 \\
+      G(s) &=& -1+j0 \\
+      G(j\omega) &=& -1+j0
+      \end{eqnarray*}
+      Nyquist判据: 当  $G(j\omega)$ 曲线不包围 $(-1,j0)$ 点时,系统稳定,穿越 $(-1,j0)$ 时临界稳定
+
+\item 非线性系统:\\
+\label{sec-2-3-1-2}%
+\begin{eqnarray*}
+      \Phi(j\omega) &=& \frac{N(A)G(j\omega)}{1+N(A)G(j\omega)} \\
+      1+N(A)G(j\omega) &=& 0 \\
+      G(s) &=& \frac{-1}{N(A)} 
+      \end{eqnarray*}
+\begin{itemize}
+\item $\frac{-1}{N(A)}$ 称为负倒描述函数.
+\item <3-> 推广Nyquist判据:若  $G(j\omega)$  曲线不包围  $\frac{-1}{N(A)}$ ,则稳定,包围  $\frac{-1}{N(A)}$  则不稳定.若相交,则非线性系统存在周期运动.
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\subsection{周期运动的稳定性}
+\label{sec-2-4}
+\begin{frame}
+\frametitle{非线性系统的周期运动}
+\label{sec-2-4-1}
+
+\begin{itemize}
+\item 周期运动:用正弦的周期运动近似,频率和幅值可用交点处  $G(j\omega)$ 的对应  $\omega$  和  $\frac{-1}{N(A)}$  对应的  $A$  确定.
+\item <2-> 稳定的周期运动: 非线性系统的自激振荡受干扰后能收敛于原来的等幅持续振荡.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{周期运动稳定性分析,}
+\label{sec-2-4-2}
+\begin{itemize}
+
+\item Nyquist图
+\label{sec-2-4-2-1}%
+\begin{tikzpicture}
+\coordinate (o) at (0,0);
+\coordinate (ox) at (0.5,0);
+\draw[->] (-3.5,0) -- (ox);
+\draw[->] (0,-3) -- (0,1);
+\draw (o) node[below left] {$o$};
+\draw [blue,smooth,thick] plot coordinates {(-3,-3) (-2.7,-2.5) (-2,-0.7) (-1,0.5) (0,0)};
+\draw [red,smooth,thick] plot coordinates {(-3.5,-3) (-2.7,-2.5) (-2,-1.5) (-2,-0.7) (-3,-0.2)};
+\draw[->,red,thick] (-3,-0.2)--(-3.1,-0.17);
+\draw (-2,-0.7) node[right] {$M_1$};
+\draw (-2.7,-2.5) node[above left] {$M_2$};
+\end{tikzpicture}
+
+
+\item $M_1,M_2$  均产生周期运动其中
+\label{sec-2-4-2-2}%
+\begin{itemize}
+\item <2->$M_1$  点: 受扰动振幅  $A\uparrow$  ,不被Nyquist曲线包围,因此系统趋于稳定,导致振幅衰减, $A\downarrow$ ,又回到  $M_1$  点,因此  $M_1$  点处的周期运动  $A_1\sin\omega_1 t$  是稳定的
+\item <3->$M_2$  点: 受扰动振幅  $A\uparrow$  , 仍被Nyquist曲线包围,系统仍不稳定,导致振幅加剧, $A\uparrow$ ,进一步加剧振荡,最后会到达  $M_1$  点,因此  $M_2$  点处的周期运动是不稳定的
+\end{itemize}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{周期运动稳定性判别:}
+\label{sec-2-4-3}
+
+\begin{itemize}
+\item $\frac{-1}{N(A)}$  由不稳定区域向稳定区域穿出时产生的周期运动是稳定的
+\item <2->$\frac{-1}{N(A)}$  由稳定区域向不稳定区域穿出时产生的周期运动是不稳定的
+\end{itemize}
+\end{frame}
+
+\end{document}

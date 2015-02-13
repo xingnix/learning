@@ -1,0 +1,214 @@
+# +LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+ # +LATEX_HEADER: \pgfplotsset{compat=1.8}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [table]
+# +LaTeX_CLASS_OPTIONS: [bigger]
+ # +latex_header:  \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# +latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  线性系统的频域分析法
+#+latex_header: \subtitle{频率特性分析}
+#+AUTHOR:邢超
+#+EMAIL: xingnix@live.com
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+
+
+* 频域性能分析
+** 稳定裕度
+ * 相角裕度 $\gamma$ : $\gamma=180^{\circ}+\phi(\omega_c)$ 
+ * 幅值裕度 $h$ : $h=-20\lg A(\omega_x)$ 
+
+** Nyquist 图与稳定裕度
+[[file:image/margin_nyquist_scilab.pdf]]
+
+** Bode 图与稳定裕度
+[[file:image/margin_bode_scilab.pdf]]
+
+** $\omega_c$ 近似计算
+ 例: $G_o(s)=\frac{100(s+4)}{s(s+1)(s+2)(s+3)}$ 近似计算求解 $\omega_c$ 
+   *  <3->$\omega_c<1$   时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c}$ , $\omega_c=\frac{200}{3}>2$ 矛盾.
+   *  <4->$1<\omega_c<2$ 时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c\cdot\omega_c}$ , $\omega_c=\sqrt{\frac{200}{3}}>2$ 矛盾.
+   *  <5->$2<\omega_c<3$ 时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c\cdot\omega_c\cdots\frac{\omega_c}{2}}$ , $\omega_c=\sqrt[3]{\frac{400}{3}}>3$ 矛盾.
+   *  <6->$3<\omega_c<4$ 时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c\cdot\omega_c\cdots\frac{\omega_c}{2}\cdots\frac{\omega_c}{3}}$ , $\omega_c=\sqrt[4]{400}>4$ 矛盾.
+   *  <7->$4<\omega_c$ 时, $A(\omega)=\frac{200}{3}\cdot\frac{\frac{\omega_c}{4}}{\omega_c\cdot\omega_c\cdots\frac{\omega_c}{2}\cdots\frac{\omega_c}{3}}$ , $\omega_c=\sqrt[3]{100}>4$ 成立.
+
+** $\omega_x$ 计算
+ 例: $G_o(s)=\frac{100(s+4)}{s(s+1)(s+2)(s+3)}$ 求解 $\omega_x$ , 即求 
+
+$G_o(s)=\frac{K(s+4)}{s(s+1)(s+2)(s+3)}$ 
+
+的根轨迹与虚轴交点.
+
+$D(s)=s^4+6s^3+11s^2+(K+6)s+4K$
+
+*** Routh表:						      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.45
+    :END:
+\begin{math}
+\begin{matrix}
+s^4 & 1  & 11     & 4K \\
+s^3 & 6  & K+6  \\
+s^2 & \frac{60-K}{6} & 4K \\
+s^1 & 0 & 0 \\
+\end{matrix}
+\end{math}
+
+*** 根轨迹与虚轴交点 					      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.45
+    :END:
+\begin{align*}
+\frac{60-K}{6}(K+6) &=4K\times 6 \\
+\frac{K^2}{6}+15K-60 &=0\\
+K&=-45\pm 3\sqrt{265}\\
+% &\approx 3.83\\
+\frac{60-K}{6}s^2 &= 4K\\
+\omega_x &\approx 1.28
+\end{align*}
+** 频带宽度
+ * 设闭环系统频率特性为 $\Phi(j\omega)$ , 若 $\omega>\omega_b$ 时,有 $20\lg|\Phi(j\omega)| <20\lg|\Phi(j0)|-3$ ,则称 $\omega_b$ 为带宽频率.
+
+      \begin{tikzpicture}
+      \draw[->] (-1,0) -- (4.5,0);
+      \draw[->] (0,-0.5) -- (0,2);
+      %\draw[dashed] (-4,-5) -- (-4,0);
+      \draw [red] plot [smooth] coordinates {(0,1) (1,1)  (2,1.2) (2.5,0.70795) (3,0.2) };
+      \draw (0,1) node[left] {$1$};
+      \draw (0,0) node[below left] {$o$};
+      \draw[pink,dashed] (2,0)-- ++(0,1.2);
+      \draw (2,0) node[below] {$\omega_r$};
+      \draw[pink,dashed] (0,1.2)--++(2,0);
+      \draw (0,1.2) node[above left] {$M_r$};
+      \draw[blue,dashed] (2.5,0)-- ++(0,0.70795);
+      \draw (2.5,0) node[below] {$\omega_b$};
+      \draw[blue,dashed] (0,0.70795)--++(2.5,0);
+      \end{tikzpicture}
+* 闭环频率特性的确定
+** 等 $\alpha$ 曲线
+\begin{align*}
+G(j\omega) &= Ae^{j\phi} \\
+\Phi(j\omega) &= Me^{j\alpha}\\
+ &= \frac{Ae^{j\phi}}{1+Ae^{j\phi}}\\
+\frac{Ae^{j\phi}}{Me^{j\alpha}}&=1+Ae^{j\phi} \\
+\frac{A}{M}&=e^{-j(\phi-\alpha)}+Ae^{j\alpha}\\
+0 &= \sin(\alpha-\phi)+A\sin\alpha\\
+20\lg A &=20\lg\frac{\sin(\phi-\alpha)}{\sin\alpha}
+\end{align*}
+** 等 $M$ 曲线
+\begin{align*}
+\frac{Ae^{j\phi}}{Me^{j\alpha}}&=1+Ae^{j\phi} \\
+\frac{A}{M}&=|1+Ae^{j\phi}|\\
+\frac{A^2}{M^2}&=(1+A\cos\phi)^2+A^2\sin^2\phi\\
+0 &=(1-M^{-2})A^2+2\cos\phi A+1\\
+A &= \frac{\cos\phi\pm\sqrt{\cos^2\phi+M^{-2}-1}}{M^{-2}-1}\\
+20\lg A &=20\lg \frac{\cos\phi\pm\sqrt{\cos^2\phi+M^{-2}-1}}{M^{-2}-1}
+\end{align*}
+** Nichols Chart
+[[file:image/nichols_chart.eps]]
+
+* 指标转换
+** 系统闭环和开环和频域指标的关系
+\begin{align*}
+G(j\omega) &= Ae^{-j(180^{\circ}-\gamma(\omega))}\\
+&=A\left( -\cos\gamma(\omega)-j\sin\gamma(\omega)\right)\\
+M&=\left|\frac{G(j\omega)}{1+G(j\omega)}\right| \\
+ &=\frac{A}{\sqrt{1+A^2-2A\cos\gamma(\omega)}}\\
+ &=\frac{1}{\sqrt{\left[\frac{1}{A}-\cos\gamma(\omega)\right]^2+\sin^2\gamma(\omega)}}\\
+M_r &= \frac{1}{\sin\gamma(\omega_r)} \approx \frac{1}{sin\gamma}\qquad (\omega_r \approx \omega_c)
+\end{align*}
+
+
+** ２阶系统频域指标
+\begin{align*}
+G(j\omega) &= \frac{\omega_n^2}{j\omega(j\omega+2\xi\omega_n)}\\
+&=\frac{\omega_n^2}{\omega\sqrt{\omega^2+4\xi^2\omega_n^2}}\angle(-\arctan \frac{\omega}{2\xi\omega_n}-90^{\circ})\\
+\omega_c &=\omega_n(\sqrt{4\xi^4+1}-2\xi^2)^{\frac{1}{2}}\\
+\gamma &= 180^{\circ}+\angle G(j\omega_c) \\
+ &=\arctan \frac{2\xi\omega_n}{\omega_c}
+\end{align*}
+** 2阶系统频域指标( $M_r,\omega_r$ )
+\begin{eqnarray*}
+M_r & = &\frac{1}{2\xi\sqrt{1-\xi^2}} \\
+\omega_r &=& \omega_n\sqrt{1-2\xi^2}
+\end{eqnarray*}
+ * <2->$M_r$ 与 $\sigma\%$ 一一对应,且成正比
+
+** 高阶系统频域指标
+*** 经验公式					      :BMCOL:B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_col: 0.7
+     :BEAMER_env: ignoreheading
+     :END:
+\begin{eqnarray*}
+M_r & = & \frac{1}{\sin\gamma}\\
+\sigma\% &=& 16\%+0.4(M_r-1), (1\leq M_r\leq 1.8) \\
+t_s &=& \frac{K\pi}{\omega_c}\\
+K&=& 2+1.5(M_r-1)+2.5(M_r-1)^2 
+\end{eqnarray*}
+
+ *  <2->$\gamma\uparrow \rightarrow \sigma\%\downarrow \rightarrow \xi\uparrow$ 
+ *  <3->$\omega_c\uparrow \rightarrow t_s\downarrow$ 
+
+*** 频域要求: 						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.3
+     :BEAMER_env: block
+     :BEAMER_envargs: <4->
+     :END:
+ * 低频段:稳态性能
+ * 中频段:瞬态性能
+ * 高频段:抗干扰能力

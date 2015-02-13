@@ -1,0 +1,459 @@
+# +LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \PassOptionsToPackage{usenames}{color}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+#+LATEX_HEADER: \newcommand*\diff{\mathop{}\!\mathrm{d}}
+#+LATEX_HEADER: \allowdisplaybreaks
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+# +latex_header:  \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# +latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  线性系统时域分析法
+#+latex_header: \subtitle{示例}
+#+AUTHOR: 
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+
+
+
+* 速度反馈
+** 速度反馈分析
+*** 结构图 					      :BMCOL:B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: ignoreheading
+     :END:
+\begin{psmatrix} [rowsep=0.4,colsep=0.5]
+%         1    2   3  4          5    6    7
+%                E(s)     .------------------------.
+%         R-->o------>o-->|omegan/s(s+2\xi\omega_n)|--+--> C
+%           _ ^     _ ^   '------------------------'  |
+%             |       |                               |  
+%             |       '------K_t s--------------------+
+%             |                                       |
+%             '---------------------------------------'
+%
+% 1                        2                          3        
+$R(s)$  & \pscirclebox[framesep=-0.2em]{$\times$} & {\hskip 1em}    & \pscirclebox[framesep=-0.2em]{$\times$} & %
+\psframebox{$\frac{\omega_n^2}{s(s+2\xi\omega_n)}$}   & \   & $C(s)$ \\
+  &   &     &  & \psframebox{$ K_t s $} &  \ &    \\
+\\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\naput{$E(s)$}
+\ncline{->}{1,4}{1,5}
+\ncline{->}{1,5}{1,7}
+\ncline{2,6}{2,5}
+\ncangle[angleA=180,angleB=-90,armA=0.5em,armB=1em]{->}{2,5}{1,4}
+\naput[npos=2.3]{$-$}
+\ncangles[angleA=180,angleB=-90,armA=0em,armB=3.5em]{->}{1,6}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+*** 分析: 						      :B_block:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :BEAMER_col: 0.5
+     :END:
+
+\begin{align*}
+\Phi(s) &= \frac{\omega_n^2}{s^2+2\xi_t\omega_n s+\omega_n^2} \\
+\xi_t &= \xi+\frac{1}{2}K_t\omega_n 
+\end{align*}
+
+** 速度反馈示例
+*** 结构图					      :BMCOL:B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: ignoreheading
+     :END:
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%         1    2   3  4          5    6    7
+%                E(s)     .--------.
+%         R-->o------>o-->|k/s(s+1)|--+--> C
+%           _ ^     _ ^   '--------'  |
+%             |       |               |  
+%             |       '------As-------+
+%             |                       |
+%             '-----------------------'
+%
+% 1                        2                          3        
+$R(s)$  & \pscirclebox[framesep=-0.2em]{$\times$} & {\hskip 1em}    & \pscirclebox[framesep=-0.2em]{$\times$} & %
+\psframebox{$\frac{K}{s(s+1)}$}   & \   & $C(s)$ \\
+  &   &     &  & \psframebox{$ As $} &  \ &    \\
+\\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\naput{$E(s)$}
+\ncline{->}{1,4}{1,5}
+\ncline{->}{1,5}{1,7}
+\ncline{2,6}{2,5}
+\ncangle[angleA=180,angleB=-90,armA=0.5em,armB=1em]{->}{2,5}{1,4}
+\naput[npos=2.3]{$-$}
+\ncangles[angleA=180,angleB=-90,armA=0em,armB=3.5em]{->}{1,6}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+As为系统的速度反馈,求解:
+ * $A=\{0.8,0\}$ 时系统稳态误差及动态品质指标( $K=1$ ,求 $e_{ss}$ 时 $R(s)=\frac{1}{s^2}$ )
+ * 若要求系统的 $\sigma\%=20\%$ , $t_s\leq 1s$ ,确定 $A,K$ 的值
+
+*** 解:							      :B_block:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :BEAMER_col: 0.5
+     :END:
+
+\begin{align*}
+G(s)&= \frac{K}{s(s+1)+KAs}\\
+    &=  \frac{K}{s^2+(KA+1)s} \\
+\Phi(s) &= \frac{K}{s^2+(KA+1)s+K} 
+\end{align*}
+系统稳定,为I型系统.
+
+** （续）计算稳态误差:
+ $R(s)=\frac{1}{s^2}$ 时,
+\begin{align*}
+e_{ss} &= \frac{1}{Kv} \\
+K_v &= \lim_{s\rightarrow 0}sG(s) \\
+    &= \lim_{s\rightarrow 0}\frac{K}{s+KA+1} \\
+    &= \frac{K}{KA+1} \\
+\end{align*}
+
+  * $K=1,A=0.8$ 时, $e_{ss}=\frac{KA+1}{K}=1.8$
+  * $K=1,A=0$ 时, $e_{ss}=\frac{KA+1}{K}=1$
+
+** （续）:计算动态品质:
+
+\begin{eqnarray*}
+\Phi(s) &=& \frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2} \\
+        &=& \frac{K}{s^2+(KA+1)s+K} \\
+\sigma\% &=& e^{-\frac{\xi\pi}{\sqrt{1-\xi^2}}} \\
+t_s &=& \frac{3.5}{\xi\omega_n}
+\end{eqnarray*}
+
+ * <2-> $K=1,A=0$ 时, $\omega_n=1,\xi=0.5,\sigma\%=16.3\%,t_s=7$
+ * <3-> $K=1,A=0.8$ 时, $\omega_n=1,\xi=0.9,\sigma\%=0.15\%,t_s=3.89$
+
+** （续）确定 $A,K$ 值
+
+
+\begin{eqnarray*}
+e^{\frac{-\xi\pi}{\sqrt{1-\xi^2}}} &=&20\% \\
+\frac{3.5}{\xi\omega_n} &=& 1
+\end{eqnarray*}
+
+得: $\xi=0.456,\omega_n=7.68$
+
+\begin{eqnarray*}
+2\xi\omega_n & = & AK+1\\
+K &=& \omega_n^2
+\end{eqnarray*}
+
+得: $A=0.102,K=58.9$
+
+* 比例-微分控制
+** 传递函数
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%         1    2   3  4      5                6          7    8
+%                E(s)                          
+%         R-->o---+--1------>o--> wn2/s(s+2\x\wn2)--+--> C
+%           _ ^   |           ^                      |
+%             |   !--Tds------!                      |  
+%             |                                      |
+%             '--------------------------------------'
+%
+% 1                        2                          3        
+$R(s)$  & \pscirclebox[framesep=-0.2em]{$\times$} & {\hskip 1em} & \psframebox{$1$} 
+ & \pscirclebox[framesep=-0.2em]{$\times$} & %
+\psframebox{$\frac{\omega_n^2}{s(s+2\xi\omega_n)}$}   & \   & $C(s)$ \\
+    &     &  & \psframebox{$ T_d s $} &  \ &   \\
+\\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\naput{$E(s)$}
+\ncline{->}{1,4}{1,5}
+\ncline{->}{1,5}{1,6}
+\ncline{->}{1,6}{1,8}
+\ncangle[angleA=0,angleB=180,armA=0.5em,armB=1em]{->}{1,3}{2,4}
+\ncangle[angleA=0,angleB=-90,armA=0.5em,armB=1em]{->}{2,4}{1,5}
+\naput[npos=2.3]{$+$}
+\ncangles[angleA=180,angleB=-90,armA=0em,armB=3.5em]{->}{1,7}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+比较原系统与PD控制系统的稳态性能与动态性能
+
+解:
+
+\begin{eqnarray*}
+G(s) & = &\frac{\omega_n^2(1+T_d s)}{s^2+2\xi\omega_n s} \\
+\Phi(s) &=&\frac{\omega_n^2(1+T_d s)}{s^2+(2\xi+T_d\omega_n)\omega_n s+\omega_n^2}
+\end{eqnarray*}
+
+** 稳态误差
+系统稳定,为I型系统.
+\begin{eqnarray*}
+e_{ss} & =& \frac{1}{K_v} \\
+K_v &=& \lim_{s\rightarrow 0}sG(s) \\
+   &=& \lim_{s\rightarrow 0}\frac{\omega_n^2(1+T_d s)}{s+2\xi\omega_n} \\
+   &=&\frac{\omega_n}{2\xi}
+\end{eqnarray*}
+
+$e_{ss}$ 与 $T_d$ 无关.
+
+** 动态性能分析
+考虑如下三个系统:
+\begin{eqnarray*}
+\Phi_1(s) &=&\frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2}\\
+\Phi_2(s) &=&\frac{\omega_n^2(1+T_d s) }{s^2+(2\xi+T_d\omega_n)\omega_n s+\omega_n^2}\\
+\Phi_3(s) &=&\frac{\omega_n^2}{s^2+(2\xi+T_d\omega_n)\omega_n s+\omega_n^2}
+\end{eqnarray*}           
+
+ * <2->与系统1相比,系统3的阻尼比较大,两者的自然频率相同.
+ * <3->因为:
+        \begin{eqnarray*}
+        \Phi_2(s) & = & (1+T_d s)\Phi_3(s) \\
+        c_2(t) &=& c_3(t)+T_d\frac{dc_3(t)}{dt}
+        \end{eqnarray*}
+       由于存在微分作用,因此对高频噪声有放大作用.
+** 动态性能计算：阶跃响应
+\begin{align*}
+\Phi &=  \frac{\omega_n^2}{z}\left(\frac{s+z}{s^2+2\xi_d\omega_n s+\omega_n^2}\right)\qquad (\xi_d=\xi+\frac{\omega_n}{2z},z=\frac{1}{T_d})\\
+C(s) &= \frac{\omega_n^2}{s(s^2+2\xi_d\omega_n s+\omega_n^2)}+\frac{1}{z}\frac{s\omega_n^2}{s(s^2+2\xi_d\omega_n s+\omega_n^2)}\\
+h(t) &= 1+re^{-\xi_d\omega_n t}\sin(\omega_n\sqrt{1-\xi_d^2}t+\psi) \\
+r &= \frac{\sqrt{z^2-2\xi_d\omega_n z+\omega_n^2}}{z\sqrt{1-\xi_d^2}}\\
+\psi &= -\pi+\arctan\frac{\omega_n\sqrt{1-\xi_d^2}}{z-\xi_d\omega_n}+\arctan \frac{\sqrt{1-\xi_d^2}}{\xi_d}
+\end{align*}
+** 动态性能计算：峰值时间
+
+\begin{eqnarray*}
+\frac{\diff h(t)}{\diff t} & =& 0\\
+\tan(\omega_n\sqrt{1-\xi_d^2}t_p+\psi) &=& \frac{\sqrt{1-\xi_d^2}}{\xi_d}\\
+t_p &=& \frac{\beta_d-\psi}{\omega_n\sqrt{1-\xi_d^2}}\qquad \left(\beta_d=\arctan \frac{\sqrt{1-\xi_d^2}}{\xi_d}\right)\\
+\end{eqnarray*}
+** 动态性能计算：超调量
+\begin{eqnarray*}
+h(t_p) & =& 1+re^{-\xi_d\omega_n t_p}\sin(\omega_n\sqrt{1-\xi_d^2}t_p+\psi) \\
+ &=& 1+re^{-\xi_d\omega_n t_p}\sin(\beta_d) \\
+\sigma\% &=& r\sqrt{1-\xi_d^2}e^{-\xi_d\omega_n t_p} \times 100\%
+\end{eqnarray*}
+** 动态性能计算：调节时间
+\begin{align*}
+\Delta  &= |h(t)-h(\infty)|\\
+&= |re^{-\xi_d\omega_n t}\sin(\omega_n\sqrt{1-\xi_d^2}t+\psi) |\\
+&\leqslant re^{-\xi_d\omega_n t} \\
+t_s &= \frac{3+\ln r}{\xi_d \omega_n}\qquad (\Delta=0.05)
+\end{align*}
+** 比例-微分控制示例
+设单位反馈系统开环传递函数： $G(s)=\frac{K(T_d s+1)}{s(1.67s+1)}$
+若要求单位斜坡函数输入时 $e_{ss}\leq 0.2, \xi_d=0.5$ 求
+$K,T_d$ 的值，并估算系统在阶跃函数作用下的动态性能。
+
+解：
+*** 求 $K$ ： 						      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :BEAMER_env: block
+    :END:
+\begin{eqnarray*}
+e_{ss} & =& \frac{1}{K} \leq 0.2\\
+ K &=& 5 
+\end{eqnarray*}
+*** $T_d=0$						      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :BEAMER_env: block
+    :END:
+\begin{eqnarray*}
+s^2+0.6s+3 & =& 0\\
+\xi &=& 0.173 \\
+\omega_n &=& 1.732 \\
+t_p &=& 1.84s \\
+\sigma\% &=& 57.6\% \\
+t_s &=& 11.7s
+\end{eqnarray*}
+
+*** $T_d\neq0$						      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :BEAMER_env: block
+    :END:
+\begin{eqnarray*}
+\xi_d & =& 0.5\\
+T_d &=& \frac{2(\xi_d-\xi)}{\omega_n}\\
+t_p &=& 1.63s \\
+\sigma\% &=& 22\% \\
+t_s &=& 3.49s
+\end{eqnarray*}
+* 比例-积分控制
+** 比例-积分控制分析
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%         1    2   3  4      5                6          7    8
+%                E(s)            |N(s)              
+%         R-->o--K_1(1+1/T_i s)->o-> K_2/s(T_2 s+1)---+--> C
+%           _ ^                                       |
+%             |                                       |  
+%             |                                       |
+%             '---------------------------------------'
+%
+% 1                        2                          3        
+ & & & & N(S)\\
+$R(s)$  & \pscirclebox[framesep=-0.2em]{$\times$} & {\hskip 1em} 
+& \psframebox{$K_1(1+\frac{1}{T_i s})$} 
+ & \pscirclebox[framesep=-0.2em]{$\times$} & %
+\psframebox{$\frac{K_2}{s(T_2 s+1)}$}   & \   & $C(s)$ \\
+\\
+%link
+\ncline{->}{2,1}{2,2}
+\ncline{->}{2,2}{2,4}
+\naput{$E(s)$}
+\ncline{->}{2,4}{2,5}
+\ncline{->}{2,5}{2,6}
+\ncline{->}{2,6}{2,8}
+\ncline{->}{1,5}{2,5}
+\ncangles[angleA=180,angleB=-90,armA=0em,armB=3.5em]{->}{2,7}{2,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+
+\begin{align*}
+E_n(s) &=-\frac{K_2 T_i s}{T_i T_2 s^3+T_i s^2+K_1K_2T_i s+K_1K_2}N(s)\\
+\end{align*}
+系统稳定时：
+\begin{align*}
+e_{ssn} &=\lim_{s\to 0}sE_n(s) = 0 & (N(s)=\frac{n_0}{s})\\
+e_{ssn} &=\lim_{s\to 0}sE_n(s) = -\frac{n_1T_i}{K_1} & (N(s)=\frac{n_1}{s^2})
+\end{align*}
+
+** 比例-积分控制示例
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%         1    2   3  4      5                6          7    8
+%                E(s)                          
+%         R-->o---+--1------>o--> wn2/s(s+2\x\wn2)--+--> C
+%           _ ^   |          ^                      |
+%             |   !--K_1/s---!                      |  
+%             |                                     |
+%             '-------------------------------------'
+%
+% 1                        2                          3        
+$R(s)$  & \pscirclebox[framesep=-0.2em]{$\times$} & {\hskip 1em} & \psframebox{$1$} 
+ & \pscirclebox[framesep=-0.2em]{$\times$} & %
+\psframebox{$\frac{\omega_n^2}{s(s+2\xi\omega_n)}$}   & \   & $C(s)$ \\
+    &     &  & \psframebox{$ \frac{K_1}{s} $} &  &   \\
+\\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\naput{$E(s)$}
+\ncline{->}{1,4}{1,5}
+\ncline{->}{1,5}{1,6}
+\ncline{->}{1,6}{1,8}
+\ncangle[angleA=0,angleB=180,armA=0.5em,armB=1em]{->}{1,3}{2,4}
+\ncangle[angleA=0,angleB=-90,armA=0.5em,armB=1em]{->}{2,4}{1,5}
+\naput[npos=2.3]{$+$}
+\ncangles[angleA=180,angleB=-90,armA=0em,armB=4.5em]{->}{1,7}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+已知参数 $\xi=0.2,\omega_n=86.6$ 求：
+ - 使闭环系统稳定的 $K_1$ 范围
+ - 使闭环系统极点实部全部小于-1的 $K_1$ 范围
+
+解：
+
+\begin{align*}
+\Phi &=\frac{\omega_n(s+K_1)}{s^3+2\xi\omega_n s^2+\omega_n^2s+K_1\omega_n^2} \\
+D(s) &=s^3+2\xi\omega_n s^2+\omega_n^2s+K_1\omega_n^2=0\\
+D(s) &=s^3+ 34.6 s^2 + 7500 s + 7500 K_1=0\\
+\end{align*}
+** 比例-积分控制示例(稳定性)
+Routh表：
+\[
+\begin{matrix}
+s^3 & 1    & 7500 \\
+s^2 & 34.6 & 7500K_1 \\
+s^1 & \frac{34.6\times 7500-7500K_1}{34.6} & 0 \\
+s^0 & 7500K_1 
+\end{matrix}
+\]
+
+得：
+\[
+0<K_1<34.6
+\]
+** 比例-积分控制示例(相对稳定性)
+设： $s=s_1-1$
+
+\begin{align*}
+(s_1-1)^3+34.6(s_1-1)^2+7500(s_1-1)+7500K_1 &=0 \\
+s_1^3 + 31.6 s_1^2+7433.8s_1+(7500K_1-7466.4)&=0
+\end{align*}
+Routh表：
+\[
+\begin{matrix}
+s^3 & 1    & 7433.8 \\
+s^2 & 31.6 & 7500K_1-7466.4 \\
+s^1 & \frac{31.6\times 7433.8-(7500K_1-7466.4)}{31.6} & 0 \\
+s^0 & 7500K_1-7466.4
+\end{matrix}
+\]
+得： 
+\[
+1<K_1<32.3
+\]

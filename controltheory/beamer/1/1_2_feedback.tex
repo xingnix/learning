@@ -1,0 +1,388 @@
+% Created 2014-10-09 星期四 10:31
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+\setbeamercovered{transparent}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{自动控制的基本概念}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{开环控制}
+\label{sec-1}
+\begin{frame}
+\frametitle{开环控制}
+\label{sec-1-1}
+
+\begin{itemize}
+\item <2->定义：开环控制是指控制器与被控对象之间只有顺向作用而没有反向联系，称为开环控制。
+\item <3->系统的输出量对系统的输入量无影响
+\item <4->开环系统对控制偏差无修正能力。
+\begin{itemize}
+\item <5->按给定量控制
+\item <6->按扰动量控制
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按给定量控制}
+\label{sec-1-2}
+
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$U_g$}; 
+%\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+%\path[->](r) edge node {} (p1) ; 
+\path[blue] node[draw, right =of r] (n) {信号变换与驱动电路}; 
+\path[->] (r) edge node[midway] {} (n) ; 
+\path[red] node[draw, inner sep=5pt,right =of n] (g) {电机}; 
+\path[->] (n) edge node [midway]{$ $} (g); 
+\path[->] node[ right =of g] (o) {$n$}; 
+\path[->] (g) edge node {} (o); 
+%\path[blue] node[draw, below =of g] (h) {传感器};
+%\path[->,draw] (g.east)+(1em,0) |- (h.east) ; 
+%\path[->,draw] (h.west) -| (p1) ; 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item 输入量: 电压 $U_g$
+\item 输出量: 电机转速 $n$
+\item $n=kU_g$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按扰动量控制}
+\label{sec-1-3}
+
+   对扰动进行补偿,使扰动的影响减小
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$U_0$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue] node[draw, right =of p1] (n) {驱动电路}; 
+\path[->] (p1) edge node[midway] {$U_c$} (n) ; 
+\path[red] node[draw, inner sep=5pt,right =of n] (g) {电机}; 
+\path[->] (n) edge node [midway]{$ $} (g); 
+\path[->] node[ right =of g] (o) {$n$}; 
+\path[->] (g) edge node {} (o); 
+\path[blue] node[draw, below =of g] (l) {负载扰动};
+\path[dashed,draw] (g.south) edge (l) ; 
+\path[blue] node[draw, below =of n] (h) {扰动测量};
+\path[->,draw] (l) edge  node[midway] {$i$} (h) ; 
+\path[->,draw] (h.west) -| node[midway]{$U_b$} (p1) ; 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item $U_c=U_0+U_b$
+\item 负载增加导致 $n\downarrow , i\uparrow$
+\item $i\uparrow\rightarrow U_b\uparrow\rightarrow U_c\uparrow\rightarrow n\uparrow$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{开环控制特点}
+\label{sec-1-4}
+
+\begin{enumerate}
+\item <2->优点：原理简单,结构简单,反应速度快,灵敏度高
+\item <3->缺点：
+\begin{itemize}
+\item 对控制偏差无修正能力
+\item 控制精度取决于各控制元器件的精度
+\end{itemize}
+\item <4->适应场合：对控制精度要求不高的系统
+\item <5-> 结构图：   输入 $\rightarrow$ 控制器 $\rightarrow$ 被控对象 $\rightarrow$ 输出  （顺向作用）
+\end{enumerate}
+\end{frame}
+\section{闭环控制}
+\label{sec-2}
+\begin{frame}
+\frametitle{闭环控制}
+\label{sec-2-1}
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {期望}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue] node[draw, right =of p1] (n) {控制器}; 
+\path[->] (p1) edge node[midway] {偏差} (n) ; 
+\path[red] node[draw, inner sep=5pt,right =of n] (g) {被控对象}; 
+\path[->] (n) edge node [midway]{$ $} (g); 
+\path[->] node[ right =of g] (o) {输出}; 
+\path[->] (g) edge node {} (o); 
+\path[blue] node[draw, below =of g] (h) {传感器};
+\path[->,draw] (g.east)+(1em,0) |- (h.east) ; 
+\path[->,draw] (h.west) -| (p1) ; 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item <2-> 定义： 闭环控制是指在输出量处,通过 \textbf{反馈} 回路使得输出量对输入量施加影响
+\item <3-> 控制目的：通过在输入端引入输出量,使得输入处的偏差 $\rightarrow0$
+\item <4->闭环控制按偏差进行调节。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{反馈}
+\label{sec-2-2}
+
+\begin{itemize}
+\item 反馈: 指将系统的输出返回到输入端并以某种方式改变输入，进而影响系统功能的过程。
+\item 正反馈: 输出变化时,反馈对输出造成的影响与输出变化趋势相同
+\item 负反馈：输出变化时,反馈对输出造成的影响与输出变化趋势相反
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{示例：人手工竖杆}
+\label{sec-2-3}
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\begin{block}{示意图}
+\label{sec-2-3-1}
+
+
+
+
+\input{image/rod.tex}
+\end{block}
+\end{column}
+\begin{column}{0.7\textwidth}
+\begin{block}{分析}
+\label{sec-2-3-2}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {0}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue] node[draw, right =of p1] (n) {脑}; 
+\path[->] (p1) edge node[midway] {偏差} (n) ; 
+\path[blue] node[draw, right =of n] (d) {手}; 
+\path[->] (n) edge node[midway] {} (d) ; 
+\path[red] node[draw, inner sep=5pt,right =of d] (g) {杆}; 
+\path[->] (d) edge node [midway]{$ $} (g); 
+\path[->] node[ right =of g] (o) {$\theta$}; 
+\path[->] (g) edge node {} (o); 
+\path[blue] node[draw, below =of d] (h) {眼};
+\path[->,draw] (g.east)+(1em,0) |- (h.east) ; 
+\path[->,draw] (h.west) -| (p1) ; 
+\end{tikzpicture} 
+
+
+\begin{itemize}
+\item 反馈通道：眼
+\item 执行机构：手
+\item 被控制量：杆与竖直方向夹角  $\theta\rightarrow 0$
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{示例：倒立摆系统}
+\label{sec-2-4}
+
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[blue] node[draw, right =of n] (d) {电机}; 
+\path[red] node[draw, inner sep=5pt,right =of d] (g) {小车}; 
+\path[red,draw] (g.south)+(-0.7em,-0.25em) circle (0.25em) (g.south)+(0.7em,-0.25em) circle (0.25em);
+\path[red,draw] (g.north)--+(60:3em);
+\path[draw,dashed] (g.north)--+(90:3em);
+\path[draw,dashed] (g.north)++(90:2.5em) arc (90:60:2.5em);
+\path  (g.north)+(75:3em) node {$\theta$};
+\path[] (d) edge node [midway]{$ $} (g); 
+\path[blue] node[draw, right =of g] (h) {传感器};
+\path[] (g) edge node {$\theta,r$}(h) ; 
+\path[red,draw] (d.south)|-($(g.south)+(0,-0.51em)$)-| (h.south);
+
+\path[blue] node[draw, below =of g] (n) {控制器}; 
+\path[<-,draw] (d.west)--+(-1em,0) |- (n.west) ; 
+\path[->,draw] (h.east)--+(1em,0) |- (n.east) ; 
+\end{tikzpicture} 
+
+
+\begin{itemize}
+\item 执行机构：电机
+\item 反馈通道：角度传感器、位置传感器
+\item 被控制量： $\theta\rightarrow 0, r\rightarrow 0$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{示例：直流电机速度反馈控制系统}
+\label{sec-2-5}
+
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$U_g$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue] node[draw, right =of p1] (n) {放大器}; 
+\path[->] (p1) edge node[midway] {$U_d$} (n) ; 
+\path[red] node[draw, inner sep=5pt,right =of n] (d) {驱动电路}; 
+\path[->] (n) edge node [midway]{$ $} (d); 
+\path[red] node[draw, inner sep=5pt,right =of d] (g) {电机}; 
+\path[->] (d) edge node [midway]{$ $} (g); 
+\path[red] node[draw, inner sep=5pt,below =of g] (s) {测速电机};
+\path[red] (g) edge node {$n$} (s); 
+\path[->,draw] (s.west) -| node[near start] {$U_f$} node[very near end] {$-$} (p1) ; 
+\end{tikzpicture} 
+
+\begin{eqnarray}
+  n  &=& K U_d \\
+  U_d &=& U_g-U_f \\
+  U_f &=& K' n
+\end{eqnarray}
+
+负载增大后: $n\downarrow\rightarrow U_f\downarrow\rightarrow U_d\uparrow\rightarrow n\uparrow$
+\end{frame}
+\begin{frame}
+\frametitle{负反馈放大器}
+\label{sec-2-6}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {r}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue] node[draw, right =of p1] (g) {$K$}; 
+\path[->] (p1) edge node[midway] {E} (g) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g] (p2) { }; 
+\path[->] (g) edge node [midway]{$ $} (p2); 
+\path[->] node[ right =of p2] (o) {$c$}; 
+\path[->] (p2) edge node {} (o); 
+
+\path[blue] node[draw, below =of g] (h) {$A$};
+\path[->,draw] (g.east)+(1em,0) |- (h.east) ; 
+\path[->,draw] (h.west) -| (p1) ; 
+
+\path[blue] node[ above =of p2] (f) {$f$};
+\path[->] (f) edge node [midway]{$ $} (p2); 
+\end{tikzpicture} 
+
+\begin{eqnarray}
+c &=& Ke+f \\
+e &=& r-Ac \\
+c &=& \frac{Kc}{1+KA}+\frac{f}{1+KA}
+\end{eqnarray}
+\end{frame}
+\begin{frame}
+\frametitle{闭环控制的特点}
+\label{sec-2-7}
+
+\begin{enumerate}
+\item <2->按偏差进行调节
+\item <3->控制精度较高，取决于反馈通道元器件的精度，而反馈通道所包围的电路中的元器件的元件精度可降低
+\item <4->抗干扰能力强
+\end{enumerate}
+\end{frame}
+\begin{frame}
+\frametitle{复合控制}
+\label{sec-2-8}
+
+扰动补偿+闭环控制
+
+例：直流电机速度复合控制
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+\tikzstyle{every node}=[font=\small]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$U_g$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue] node[draw, right =of p1] (n) {放大器}; 
+\path[->] (p1) edge node[midway] {$U_d$} (n) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of n] (p2) { }; 
+\path[->](n) edge node {} (p2) ; 
+\path[red] node[draw, inner sep=5pt,right =of p2] (d) {驱动电路}; 
+\path[->] (p2) edge node [midway]{$ $} (d); 
+\path[red] node[draw, inner sep=5pt,right =of d] (g) {电机}; 
+\path[->] (d) edge node [midway]{$ $} (g); 
+\path[red] node[draw, inner sep=5pt,below =of g] (s) {测速电机};
+\path[red] (g) edge node {$n$} (s); 
+\path[->,draw] (s.west) -| node[near start] {$U_f$} node[very near end] {$-$} (p1) ; 
+
+\path[blue] node[draw, above =of g] (l) {负载扰动};
+\path[dashed,draw] (g.north) edge (l) ; 
+\path[blue] node[draw, left =of l] (h) {扰动测量};
+\path[->,draw] (l) edge  node[midway] {$i$} (h) ; 
+\path[->,draw] (h.west) -| node[near end]{$U_b$} (p2) ; 
+\end{tikzpicture} 
+\end{frame}
+
+\end{document}

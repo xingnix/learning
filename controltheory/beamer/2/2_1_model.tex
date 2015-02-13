@@ -1,0 +1,443 @@
+% Created 2014-10-09 星期四 12:05
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{用微分方程描述的数学模型}
+\mode<article>{\renewcommand{\labelitemii}{$\cdot$}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{自动控制系统的数学模型}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{简介}
+\label{sec-1}
+\begin{frame}
+\frametitle{数学模型分类}
+\label{sec-1-1}
+
+\begin{itemize}
+\item <2->数学模型：描述系统内部物理量/变量之间关系的数学表达式
+\item <3->数学模型种类：
+\begin{itemize}
+\item <4->时域(t)：微分方程、差分方程、状态方程
+\item <5->复域(s)：传递函数、结构图
+\item <6->频域(w)：频率特性
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{建模步骤}
+\label{sec-1-2}
+
+\begin{enumerate}
+\item <2->列出系统的输入变量、输出变量
+\item <3->列写系统的原始方程
+\item <4->对原始方程进行线性化
+\item <5->消去中间变量，得到仅有输入/输出变量的微分方程
+\end{enumerate}
+\end{frame}
+\begin{frame}
+\frametitle{线性化原理与方法}
+\label{sec-1-3}
+
+原理：在系统工作点处，将非线性函数展开成泰勒级数，忽略高次项，得到线性化方程
+\begin{itemize}
+\item <2->$y=f(x)$ 在 $x_0$ 处展开
+\begin{itemize}
+\item <3->$y =f(x_0)+f'(x_0)(x-x_0)+\cdots$
+\item <3->$y \approx   y_0 + k(x-x_0)$
+\end{itemize}
+\item <4->$y=f(x_1,x_2)$ 在 $(x_{10},x_{20})$ 处展开
+\begin{itemize}
+\item <5->$y = f(x_{10},x_{20})+f_{x1}(x_{10},x_{20})(x-x_{10})+f_{x2}(x_{10},x_{20})(x-x_{20})+\cdots$
+\item <5->$y = y_0+K_1(x-x_{10})+K_2(x-x_{20})$
+\end{itemize}
+\item <6-> 增量化方程
+\begin{itemize}
+\item <7-> $dY=y-y_0$
+\item <7-> $dX=x-x_0$
+\item <8-> $dY=K dX$
+\end{itemize}
+\end{itemize}
+\end{frame}
+\section{线性微分方程与线性系统}
+\label{sec-2}
+\begin{frame}
+\frametitle{线性微分方程的解}
+\label{sec-2-1}
+
+  解＝特解＋通解
+
+\begin{itemize}
+\item <2->通解由微分方程的特征根决定
+\begin{itemize}
+\item <3->微分方程： $a_0 x''(t)+a_1 x'(t)+a_2 x(t) =b$
+\item <4->特征方程：  $a_0s^2+a_1 s + a_2=0$
+\end{itemize}
+\item <5-> n阶方程有n个互异特征根 $\lambda_1,...,\lambda_n$ 时,通解为
+     $y(t)=c_1e^{\lambda_1 t}+...+c_ne^{\lambda_n t}$
+\item <6-> 若有重根  $\lambda=\lambda_1=\lambda_2$,则
+     $y(t)=c_1 t e^{\lambda t}+c_2e^{\lambda t}+...+c_ne^{\lambda_n t}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{线性系统的定义与特点}
+\label{sec-2-2}
+
+\begin{itemize}
+\item <2->条件:
+\begin{itemize}
+\item 可加性： 若 $r_1(t)->c_1(t)$, $r_2(t)->c_2(t)$ 则： $r_1(t)+r_2(t)->c_1(t)+c_2(t)$
+\item 齐次性： $r_1(t)->c_1(t)$ 则： $a r_1(t) -> a c_1(t)$
+\end{itemize}
+\item <3-> 微积分特性: $r_1(t)\rightarrow c_1(t)$  则  $\int r_1(t) \rightarrow \int c_1(t), r_1(t)'\rightarrow c_1(t)'$
+\end{itemize}
+\end{frame}
+\section{机械系统示例(因果关系:力与位移的关系)}
+\label{sec-3}
+\begin{frame}
+\frametitle{机械系统示例1}
+\label{sec-3-1}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}<1->{弹簧-质量-阻尼系统}
+\label{sec-3-1-1}
+
+
+\begin{tikzpicture}[every node/.style={outer sep=0pt,thick}]
+%#+begin_example
+%  \|                         (F)->       (-fv)    |/
+%  \|        (-kY)            .---.       ----.    |/
+%  \|-----'\/\/\/\/\/\/\/'----+ m +--------+] +----|/
+%  \|                         '---' (Y)   ----'    |/
+%  \|==============================================|/
+%#+end_example
+
+\tikzstyle{spring}=[thick,decorate,decoration={zigzag,pre length=0.3cm,post length=0.3cm,segment length=6}]
+\tikzstyle{damper}=[thick,decoration={markings,  
+  mark connection node=dmp,
+  mark=at position 0.5 with 
+  {
+    \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=15pt,minimum height=3pt,draw=none] {};
+    \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+    \draw [thick] ($(dmp.north)+(0,-5pt)$) -- ($(dmp.north)+(0,5pt)$);
+  }
+}, decorate]
+%\tikzstyle{ground}=[fill,pattern=north east lines,draw=none,minimum width=0.75cm,minimum height=0.3cm]
+\tikzstyle{ground}=[draw=none,minimum width=0.75cm,minimum height=0.3cm]
+
+\node (M) [draw,minimum width=1cm, minimum height=2.5cm] {$m$};
+
+\node (ground) [draw,ground,anchor=north,yshift=-0.25cm,minimum width=1.5cm] at (M.south) {};
+\draw (ground.north east) -- (ground.north west);
+\draw [thick] (M.south west) ++ (0.2cm,-0.125cm) circle (0.125cm)  (M.south east) ++ (-0.2cm,-0.125cm) circle (0.125cm);
+\draw [->,red,thick] (M.north east)++(0,-1em)-- + (3em,0);
+\draw [red,ultra thick] (M.north east)++(2em,-1em) node[above] {$F$};
+
+\node (wall) [ground, rotate=-90, minimum width=3cm,yshift=-3cm] {};
+\draw (wall.north east) -- (wall.north west);
+
+\draw [spring] (wall.170) -- ($(M.north west)!(wall.170)!(M.south west)$);
+\draw [damper] (wall.10) -- ($(M.north west)!(wall.10)!(M.south west)$);
+
+\draw [red,-latex,ultra thick] (M.east) ++ (0.2cm,0) -- +(1cm,0);
+\draw [red,thick] (M.east)++(0.5cm,0) node[above] {$Y$};
+
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{解:}
+\label{sec-3-1-2}
+
+
+\begin{itemize}
+\item 输入： $F(t)$ , 输出： $Y(t)$
+\item 原始方程： $F- k Y(t) -f v = ma$
+\item 消去中间变量：
+\begin{itemize}
+\item $v = Y'(t)$
+\item $a = v'$
+\item $mY"+fY'+kY=F$
+\end{itemize}
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\section{电气系统示例}
+\label{sec-4}
+\begin{frame}
+\frametitle{电气及机电系统示例1}
+\label{sec-4-1}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}<1->{电阻、电容网絡}
+\label{sec-4-1-1}
+
+
+\begin{circuitikz}[american voltages]
+%#+begin_example
+%             C  (I_1) -->
+%        .----||---.
+%        |         |
+%  o-----+--[R_1]--+--+-----o
+%  +       (I_2) -->  |
+%                     |
+%  (E_r)      (I) | [R_2] (E_c)
+%                 v   |
+%  -                  |
+%  o------------------+-----o
+%#+end_example
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$E_c$,-o](5,3)
+  to [short] (3,3)
+  to [R, l=$R_2$,i_={$I$}] (3,0)
+
+  (0,0) to [open, v>=$E_r$,-o] (0,3)
+  to [R,l=$R_1$ ,i_={$I_2$}] (3,3)
+
+  (0.5,3) to [short] (0.5,4.5) to [C, l=$C$ ,i_={$I_1$}] (3,4.5) to [short] (3,3);
+\end{circuitikz}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{解：}
+\label{sec-4-1-2}
+
+
+\begin{itemize}
+\item 输入：$E_r$ ,输出 $E_c$
+\item 原始方程：
+\begin{itemize}
+\item $I=I_1+I_2$
+\item $E_c=R_2 I$
+\item $E_r=R_1 I_2+E_c$
+\item $C (E_r-E_c)' = I_1$
+\end{itemize}
+\item 消去I,I$_1$,I$_2$得：
+\begin{itemize}
+\item $R_1 C E_c'+(R_1+R_2)/R_2 E_c = R_1 E_r'+ E_r$
+\end{itemize}
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{电气及机电系统示例2}
+\label{sec-4-2}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}<1->{电阻、电容网络}
+\label{sec-4-2-1}
+
+
+\begin{circuitikz}[american voltages]
+%#+begin_example
+%  
+%  o--------[R]-------+-----o
+%  +       (I) -->    |
+%                     |
+%  (U_r)          C ----- 
+%                   ----- U_c
+%                     |
+%  -                  |
+%  o------------------+-----o
+%#+end_example
+
+\draw
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$U_c$,-o](5,3)
+  to [short] (3,3)
+  to [C, l=$C$] (3,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [R,l=$R$ ,i_={$I$}] (3,3);
+
+\end{circuitikz}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{解：}
+\label{sec-4-2-2}
+
+
+\begin{itemize}
+\item 输入： $U_r$ ,输出： $U_c$
+\item $U_r=R I +U_c$ , $C U_c' = I$
+\item 消去 $I$ ,  $RC U_c' +U_c = U_r$
+\end{itemize}
+    
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\section{非线性系统示例}
+\label{sec-5}
+\begin{frame}[t]
+\frametitle{倒立摆系统线性化模型}
+\label{sec-5-1}
+\begin{columns}
+\begin{column}{0.23\textwidth}
+\begin{block}<1->{倒立摆}
+\label{sec-5-1-1}
+
+
+\begin{tikzpicture}[every node/.style={outer sep=0pt,thick}]
+%#+begin_example
+%                   ^          //
+%                   | \theta  //
+%                   |        //
+%                   |       //
+%                   |      //
+%                   |     //
+%                   |    //
+%                   |   /+
+%                   |  //| mg
+%                 N | // v
+%                   |//  -----> H
+%                   //
+%            .------+------.
+%            |             |
+%            |      +------------>  F
+%            |      |      |
+%            '------|------'
+%                O  |   O
+%  =================|==================
+%                   | Mg
+%                   v 
+%#+end_example
+%\tikzstyle{ground}=[draw=none,minimum width=0.75cm,minimum height=0.3cm]
+\node (M) [draw,minimum width=5em, minimum height=3em] {};
+%\node (ground) [draw,anchor=north,yshift=-0.25cm,minimum width=10em] at (M.south) {};
+%\draw (ground.north east) -- (ground.north west);
+\draw [thick] (M.south west) ++ (0.2cm,-0.125cm) circle (0.125cm)  (M.south east) ++ (-0.2cm,-0.125cm) circle (0.125cm);
+\draw [thick] (M.south west) ++ (-0.2cm,-0.25cm) --  ($(M.south east) + (0.2cm,-0.25cm)$);
+\draw [thick] (M.north) circle (0.3em) ;
+%\draw [->,red,thick] (M.north east)++(0,-1em)-- + (3em,0));
+\draw [->,red,thick] (M.center)-- + (3em,0);
+\draw [red,ultra thick] (M.center)++(3em,0) node[below] {$F$};
+\draw [->,red,thick] (M.center)-- + (0,-5em);
+\draw [red,ultra thick] (M.center)++(0,-5em) node[right] {$Mg$};
+\node (stick) [anchor=west,draw, rotate=60, minimum height=0.1cm,minimum width=7em,] at (M.north) {};
+\draw [->,red,thick] (stick.center)-- + (0,-2.3em);
+\draw [red,ultra thick] (stick.center)++(0,-2.3em) node[right] {$mg$};
+\draw [red,thick,<->] (stick.west)++(0,5em)  arc (90:60:5em) ;
+\draw [red] (stick.west)++(75:5em) node[above] {$\theta$};
+\draw [red,dashed,thick] (stick.west)--+(0,7em);
+\draw [->,red,thick] (stick.west)--+(0,3em) node[left] {$N$};
+\draw [->,red,thick] (stick.west)--+(3em,0) node[below] {$H$};
+%\draw (wall.north east) -- (wall.north west);
+%\draw [red,-latex,ultra thick] (M.east) ++ (0.2cm,0) -- +(1cm,0);
+%\draw [red,thick] (M.east)++(0.5cm,0) node[above] {$Y$};
+\end{tikzpicture}
+
+\mode<article>{
+\begin{itemize}
+\item $M$: 小车质量
+\item $m$：杆质量
+\item $l$:摆杆半长
+\item $J$:摆杆转动惯量（绕质心）
+\end{itemize}
+}
+\end{block}
+\end{column}
+\begin{column}{0.77\textwidth}
+\begin{block}<2->{解：}
+\label{sec-5-1-2}
+
+
+\begin{itemize}
+\item 输入$F$,输出 $\theta,r$
+\item 原始方程：
+\begin{itemize}
+\item 小车水平方向： $Mr''=F-H$
+\item 杆水平方向： $m(r+l sin(\theta))'' = H$
+\item 杆竖直方向： $m (l cos(\theta))'' = N-mg$
+\item 杆转动： $J(\theta)''=N l sin(\theta) - H l cos(\theta)$
+\end{itemize}
+\item 整理后：
+\begin{itemize}
+\item $(M+m)r''+ml\cos(\theta)\theta''-ml\sin(\theta)(\theta')^2=F$
+\item $ml\cos(\theta)r''+(J+m l^2)\theta''=mgl\sin(\theta)$
+\end{itemize}
+\item 线性化 ( $\theta\rightarrow 0,\sin(\theta)\approx \theta,cos(\theta)\approx 1$ )
+\begin{itemize}
+\item $(M+m)r''+ml\theta'' = F$
+\item $ml r'' +(J+ml^2)\theta''=mgl\theta$
+\end{itemize}
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,225 @@
+# #+LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \pgfplotsset{compat=1.8}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [table]
+# #+LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header:  \mode<article>{\usepackage{beamerarticle}}
+# #+latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# #+latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  非线性控制系统分析
+#+latex_header: \subtitle{非线性系统的基本概念}
+#+AUTHOR:    
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+* 非线性系统的特征
+** 非线性系统的普遍性
+ * 实际系统或多或少存在非线性特征(环节)
+ * <2->有些系统人为采用非线性部件或非线性控制器
+** 非线性系统的特征
+ * <2->稳定性
+
+   不存在整个系统是否稳定的概念,与初始条件及输入幅值大小有关
+ * <3->时间响应
+
+   与初始条件及输入信号的大小,输入信号的频率有关
+ * <4->畸变现象
+
+   正弦输入得到非正弦输出
+ * <5->自激振荡
+
+   非线性系统在无外界周期信号作用下会产生具有固定振幅和频率的稳定周期运动,称为自振,有时人为引入变频小幅度的颤振来克服间隙,摩擦等非线性因素的不利影响.
+* 分析方法
+** 分析方法
+ * <2->无通用方法针对不同非线性系统采用灵活的分析设计方法
+      * <3->相平面法:一,二阶系统
+      * <4->描述函数法:阶次不限,结构限制
+      * <5->计算机求解:数值求解
+* 非线性特性对系统的影响
+#   *** 典型非线性环节
+#    * 死区
+#    * 饱和
+#    * 间隙
+#    * 摩擦
+#    * 组合
+* 非线性特性的影响
+** 死区特性
+*** 死区特性						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :END:
+\begin{tikzpicture}[scale=0.6]
+%             /
+%            /
+%   ---------
+%  /
+% /
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below left] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,0) (0,0) (1,0) (2,1)};
+\draw (1,0) node[above] {$\Delta$};
+\draw (-1,0) node[above ] {$-\Delta$};
+\draw (1.5,0.5) node[above ] {$K$};
+\end{tikzpicture}
+
+*** 影响						      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :BEAMER_env: block
+    :BEAMER_envargs: <2->
+    :END:
+ * $K\downarrow\rightarrow\text{稳定性}\uparrow\rightarrow\sigma\%\downarrow$
+ * 抗小幅干扰信号
+ * $e_{ss}\uparrow$
+** 饱和特性
+*** 饱和特性						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+\begin{tikzpicture}
+%       ------
+%      /
+%------
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below right] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,-1) (0,0) (1,1) (2,1)};
+\draw (1,0) node[below] {$a$};
+\draw (-1,0) node[below ] {$-a$};
+\draw (0.5,0.5) node[above ] {$K$};
+\end{tikzpicture}
+*** 影响						      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :BEAMER_envargs: <2->
+    :END:
+ * 稳定系统: $K\downarrow\rightarrow\gamma\uparrow\rightarrow\sigma\%\downarrow$
+ * 不稳定系统: 自激振荡
+** 滞环特性
+*** 滞环特性						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+\begin{tikzpicture}
+%       /-/
+%      / /
+%     /-/
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[below right] {$o$};
+\draw [blue,thick] plot coordinates {(-2,-1) (-1,0) (0,1) };
+\draw [blue,thick] plot coordinates {(0,-1) (1,0) (2,1) };
+\draw [red] plot coordinates {(0.3,-0.7) (1.7,0.7) (-0.3,0.7) (-1.7,-0.7) (0.3,-0.7) };
+\draw [red,thick,->] (0.3,-0.7)-- (1,0);
+\draw [red,thick,->] (1.7,0.7)--(0,0.7);
+\draw [red,thick,->]  (-0.3,0.7)-- (-1,0) ;
+\draw [red,thick,->]  (-1.7,-0.7)-- (0,-0.7) ;
+\draw (1,0) node[below] {$b$};
+\draw (-1,0) node[below ] {$-b$};
+\draw (1.5,0.5) node[right ] {$K$};
+\end{tikzpicture}
+*** 影响						      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :BEAMER_envargs: <2->
+    :END:
+ $e_{ss}\uparrow$ 降低了控制精度(死区),振荡加剧甚至不稳定(相角滞后作用)
+** 继电特性
+*** 继电特性						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+\begin{tikzpicture}
+%          --------
+%          | |
+%     -------- 
+%     | |
+%   -----
+\coordinate (o) at (0,0);
+\coordinate (ox) at (2.3,0);
+\draw[->] (-2.3,0) -- (ox);
+\draw[->] (0,-1.3) -- (0,1.3);
+\draw (o) node[above left] {$o$};
+\draw [red,thick] plot coordinates {(-2,-1) (-0.5,-1) };
+\draw [red,thick] plot coordinates {(0.5,1) (2,1) };
+\draw [red,thick] plot coordinates {(-1,0) (1,0) };
+\draw [red,thick,->] (-1,0)-- (-1,-1);
+\draw [red,thick,->]  (-0.5,-1)-- (-0.5,0) ;
+\draw [red,thick,->] (0.5,1)--(0.5,0);
+\draw [red,thick,->]  (1,0)-- (1,1) ;
+\draw (1,0) node[below] {$h$};
+\draw (0.5,0) node[below ] {$mh$};
+\end{tikzpicture}
+
+*** 影响						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+常使系统振荡
+

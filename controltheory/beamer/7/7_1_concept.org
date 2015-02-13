@@ -1,0 +1,254 @@
+# #+LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \pgfplotsset{compat=1.8}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [table]
+# #+LaTeX_CLASS_OPTIONS: [bigger]
+ # +latex_header:  \mode<article>{\usepackage{beamerarticle}}
+# #+latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# #+latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  线性离散系统分析
+#+latex_header: \subtitle{离散系统基本概念}
+#+AUTHOR:    
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+* 特点
+** 离散系统与离散信号
+\mode<article>{离散信号只在离散的时刻有值，通常也把只在离散时刻有非零值的脉冲序列称为离散信号。}
+ * <2->离散信号:脉冲或数字信号。
+ * <3->离散系统:控制系统中有一处或几处信号是脉冲或数字信号
+* 采样控制系统
+** 采样控制系统
+\mode<article>{通常被控对象是连续系统，采用离散系统作为控制器时需要将连续信号采样，得到离散信号供控制器使用，还需要将控制器的输出复现为连续信号输入到被控对象。}
+ * <2->采样: 连续信号转变为离散脉冲序列的过程
+    * <3->周期采样:离散信号的获取是周期性的
+    * <4->非周期采样:离散信号的获取是非周期的
+ * <5->复现:把脉冲序列转变为连续信号的过程
+*** 连续信号						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[smooth,mark=none] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+*** 采样:						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+*** 复现:						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <5->
+     :END:
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[const plot] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+** 采样器与保持器
+  * 典型采样控制系统中既有连续的模拟信号,又有离散的脉冲信号,因此需要:
+       * 采样器: 模拟信号转换为脉冲信号
+       * 保持器: 脉冲信号转换为模拟信号
+
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of p1] (s) {}; 
+\draw[blue] (s.west)--(s.north east);\draw[blue,->] (s.north west) arc (70:0:1.7em);\draw (s.south) node {$T$};\draw[blue] (s.north) node[above] {$S$};
+\path[](p1) edge node[midway] {$e(t)$} (s) ; 
+\path[->] node[draw, inner sep=5pt,right =of s] (k) {$K$}; 
+\path[->] (s) edge node[midway] {$e^*(t)$} (k); 
+\path[blue,->] node[draw, inner sep=5pt,right =of k] (gh) {$G_h(s)$}; 
+\path[->] (k) edge node {} (gh); 
+\path[red,->] node[draw, inner sep=5pt,right =of gh] (gp) {$G_p(s)$}; 
+\path[->] (gh) edge node[midway] {$e_h(t)$} (gp); 
+\path[->] node[ right =of gp] (o) {$c(t)$}; 
+\path[->] (gp) edge node {} (o); 
+\path[->] node[draw, inner sep=5pt,below =of gh] (h) {$H(s)$}; 
+\path[->, draw] (o.west)+(-1em,0) |-   (h.east); 
+\path[->, draw] (h.west) -| node[very near end] {$-$} (p1); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+ *  $e^*(t)$  :采样信号
+ *  $G_h(s)$  :保持器
+ *  $e_h(t)$  :复现信号
+ *  $S$  :理想采样开关
+ *  $T$  :采样周期
+
+* 数字控制系统
+** 数字控制系统
+ * 以数字计算机作为控制器控制连续对象
+ * 系统中既有连续信号,又有数字信号,实现两种信号之间的转换装置为A/D,D/A.
+** 模数转换器(A/D)
+ * 将连续信号转换为数字信号.
+ * <2->工作过程:
+    * <2->采样过程:  $e(t)\rightarrow e^*(t)$ 
+    * <3->量化过程:  $e^*(t)\rightarrow \bar{e}^*(t)$ 
+*** 连续信号						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[smooth,mark=none] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+*** 采样:						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+*** 量化:						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <3->
+     :END:
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+
+** 数模转换器(D/A)
+ * 将离散的数字信号转换为连续模拟信号
+ * <2->工作过程:
+    * 解码过程: 将离散数字信号转换为离散模拟信号
+    * 复现过程: 将离散的模拟信号转换为连续的模拟信号
+*** 数字信号						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{tikzpicture}[scale=0.7]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+*** 复现:						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{tikzpicture}[scale=0.7]
+\begin{axis}[grid=both]
+\addplot+[const plot] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+
+# *** 量化误差及其分析
+** 量化方法
+ * <2->只舍不入: 只取量化单位  $q$  的整数部分
+       \begin{eqnarray*}
+	E(e) &=& \frac{q}{2} \\
+	\sigma^2 &=& \frac{q^2}{3}
+       \end{eqnarray*}
+ * <3->有舍有入: 类似四舍五入
+       \begin{eqnarray*}
+	E(e) &=& 0 \\
+	\sigma^2 &=& \frac{q^2}{12}
+       \end{eqnarray*}
+** 减小量化误差方法
+  * 减小  $q$  , 即增大字长  $i$  :   
+         \[q=\frac{x_{max}-x_{min}}{2^i}\]
+# *** 量化单位  $q$  对量化噪声的影响
+
+* 离散系统研究方法
+** 离散系统研究方法
+ *  连续系统: Laplacian 变换
+ *  <2->离散系统: Z变换
+ *  <3->离散系统学习要点
+      * <4->离散数学模型,离散系统与连续系统对比
+      * <5->离散系统的稳定性,稳态性能与动态性能分析

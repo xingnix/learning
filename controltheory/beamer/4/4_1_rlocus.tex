@@ -1,0 +1,181 @@
+% Created 2013-10-24 Thu 13:36
+\documentclass[table]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{amsmath}
+\usepackage[usenames]{color}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{基本概念}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统的根轨迹法}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{零极点与根轨迹}
+\label{sec-1}
+\begin{frame}
+\frametitle{根轨迹法}
+\label{sec-1-1}
+
+\begin{itemize}
+\item <2->系统性能由闭环极点决定
+\item <3->目的:分析系统参数变化对系统性能影响
+\item <4->根轨迹法:根据系统开环零极点作出系统闭环极点随参数变动的轨迹
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{分析 $K$ 变化对系统性能的影响}
+\label{sec-1-2}
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) { $ r(t) $ }; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left: $   $ ,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+%\path[red] node[draw, right =of p1] (n) { $ N $ }; 
+%\path[->] (p1) edge node[midway] { $ x(t) $ } (n) ; 
+\path[red] node[draw, inner sep=5pt,right =of p1] (g) { $ \frac{K}{s(s+1)} $ }; 
+\path[->] (p1) edge node [midway]{ $   $ } (g); 
+\path[->] node[ right =of g] (o) { $ c(t) $ }; 
+\path[->] (g) edge node {} (o); 
+\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] { $ - $ } (p1); 
+\end{tikzpicture} 
+
+\begin{eqnarray*}
+\Phi(s) & = &\frac{K}{s^2+s+K} \\
+D(s) &=& s^2+s+K \\
+D(s) &=& 0 \\
+s_{1,2} &=& \frac{-1\pm\sqrt{1-4K}}{2}
+\end{eqnarray*}
+
+\mode<beamer>{\rowcolors[]{1}{green!10}{blue!10}}
+\begin{tabular}{l!{\vrule}c<{\onslide<2->}c<{\onslide<3->}c<{\onslide<4->}c<{\onslide<5->}c<{\onslide<6->}c<{\onslide<7->}}
+K   & 0  &  0.25 & 1          & 4         & $\cdots$ & $\infty$ \\
+$s_1$ & 0  &  -0.5 & -0.5+0.87j & -0.5+1.9j & $\cdots$ & -0.5+ $\infty$ j \\
+$s_1$ & -1 &  -0.5 & -0.5-0.87j & -0.5-1.9j & $\cdots$ & -0.5- $\infty$ j 
+\end{tabular}
+\end{frame}
+\section{根轨迹的基本条件}
+\label{sec-2}
+\begin{frame}
+\frametitle{根轨迹条件:系统模型}
+\label{sec-2-1}
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) { $ r(t) $ }; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left: $   $ ,right =of r] (p1) { }; 
+\path[->](r) edge node {} (p1) ; 
+%\path[red] node[draw, right =of p1] (n) { $ N $ }; 
+%\path[->] (p1) edge node[midway] { $ x(t) $ } (n) ; 
+\path[red] node[draw, inner sep=5pt,right =of p1] (g) { $ G(s) $ }; 
+\path[->] (p1) edge node [midway]{ $   $ } (g); 
+\path[->] node[ right =of g] (o) { $ c(t) $ }; 
+\path[->] (g) edge node {} (o); 
+\path[red] node[draw, inner sep=5pt,below =of g] (h) { $ H(s) $ }; 
+\path[->,draw] (g.east)+(1em,0) |- (h.east); 
+\path[->, draw] (h) -| node[very near end] { $ - $ } (p1); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] { $ - $ } (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item <2-> 开环传递函数(零极点形式):  
+          \[G(s)=\frac{K_g\prod_{i=1}^m(s-z_i)}{\prod_{j=1}^n(s-p_j)}\]
+\item <3-> 变动的参数:根轨迹增益  $K_g$
+\item <4-> $K_g$ 从  $0\rightarrow\infty$  时,闭环极点的运动轨迹
+\item <5-> 对于负反馈系统,称为  $180^\circ$  根轨迹.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{根轨迹条件:幅值条件与相角条件}
+\label{sec-2-2}
+
+
+\begin{eqnarray*}
+\Phi(s) &=& \frac{G(s)}{1+G(s)H(s)} \\
+D(s) &= &1+G(s)H(s) 
+     = 0 \\
+G(s)H(s) &=& -1 \\
+\frac{K_g\prod_{i=1}^m(s+z_i)}{\prod_{j=1}^n(s+p_j)} &=& -1 
+\end{eqnarray*}
+
+\begin{itemize}
+\item <2->幅值条件:  $\frac{K_g\prod_{i=1}^m|s+z_i|}{\prod_{j=1}^n|s+p_j|} = 1$
+\item <3->相角条件:  $\sum_{i=1}^m\angle (s+z_i)-\sum_{j=1}^n\angle (s+p_j) = (2k+1)\pi$
+\item <4->命题
+\begin{itemize}
+\item <4->满足相角条件的点一定是根轨迹上的点
+\item <5->根轨迹上的点何时成为系统闭环极点由  $K_g$  决定
+\end{itemize}
+\item <6->结论: 绘制根轨迹只依据相角条件即可
+\end{itemize}
+\end{frame}
+
+\end{document}

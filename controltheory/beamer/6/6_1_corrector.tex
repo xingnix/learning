@@ -1,0 +1,125 @@
+% Created 2014-11-25 星期二 10:42
+\documentclass[table]{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{系统设计与校正}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统校正方法}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+\section{校正装置的目的}
+\label{sec-1}
+\begin{frame}
+\frametitle{校正装置的目的}
+\label{sec-1-1}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+% \path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue,->] node[draw, right =of p1] (gc) {$G_{c}(s)$}; 
+\path[blue,->] node[draw, above =of gc] (gr) {$G_{r}(s)$}; 
+\path[->] (p1) edge node {} (gc) ; 
+\path[ draw] (r.east)+(1em,0)  |-  (gr); 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of gc] (p2) {}; 
+\path[->] (gc) edge node {} (p2) ; 
+\path[->,draw] (gr) -| (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p2] (g) {$G(s)$}; 
+\path[->] (p2) edge node {} (g); 
+\path[->] node[ right =of g] (o) {$C(s)$}; 
+\path[->] (g) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,below =of g] (gf) {$G_f(s)$}; 
+\path[ draw] (g.east)+(1em,0)  |-  (gf); 
+\path[->, draw] (gf.west) -| node[very near end] {$-$} (p2); 
+\path[->, draw] (g.east)+(1em,0) -- +(1em,-7em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item <2->改善系统稳定性
+\item <2->改善系统的稳态性能
+\item <2->改善系统的动态品质
+\end{itemize}
+\end{frame}
+\section{设计指标的转换}
+\label{sec-2}
+\begin{frame}
+\frametitle{设计指标的转换}
+\label{sec-2-1}
+
+\begin{itemize}
+\item <2->二阶系统的时域与频域指标有明确的转换公式
+\item <3->高阶系统的时域与频域指标有近似转换公式
+\item <4->校正后系统的要求
+\begin{itemize}
+\item <4->低频段:积分环节, $K$ 尽量大,以减小稳态误差
+\item <5->中频段:以斜率 $-20dB/dec$ 穿越 $0dB$ 线,使 $\omega_c$ 足够大,提高动态性能
+\item <6->高频段:抗干扰要求,增益下降要快
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}

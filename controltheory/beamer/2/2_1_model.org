@@ -1,0 +1,367 @@
+# +LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+ # +latex_header:  \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# +latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  自动控制系统的数学模型
+#+latex_header: \subtitle{用微分方程描述的数学模型}
+#+AUTHOR:    
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+#+latex_header:\mode<article>{\renewcommand{\labelitemii}{$\cdot$}}
+
+
+
+
+
+
+
+
+
+
+* 简介 
+** 数学模型分类
+ * <2->数学模型：描述系统内部物理量/变量之间关系的数学表达式
+ * <3->数学模型种类：
+   * <4->时域(t)：微分方程、差分方程、状态方程
+   * <5->复域(s)：传递函数、结构图
+   * <6->频域(w)：频率特性
+
+** 建模步骤
+ 1. <2->列出系统的输入变量、输出变量
+ 1. <3->列写系统的原始方程
+ 1. <4->对原始方程进行线性化
+ 1. <5->消去中间变量，得到仅有输入/输出变量的微分方程
+
+** 线性化原理与方法
+原理：在系统工作点处，将非线性函数展开成泰勒级数，忽略高次项，得到线性化方程
+ * <2->$y=f(x)$ 在 $x_0$ 处展开  
+    * <3->$y =f(x_0)+f'(x_0)(x-x_0)+\cdots$
+    * <3->$y \approx   y_0 + k(x-x_0)$
+ * <4->$y=f(x_1,x_2)$ 在 $(x_{10},x_{20})$ 处展开
+    * <5->$y = f(x_{10},x_{20})+f_{x1}(x_{10},x_{20})(x-x_{10})+f_{x2}(x_{10},x_{20})(x-x_{20})+\cdots$
+    * <5->$y = y_0+K_1(x-x_{10})+K_2(x-x_{20})$
+ * <6-> 增量化方程 
+   * <7-> $dY=y-y_0$
+   * <7-> $dX=x-x_0$
+   * <8-> $dY=K dX$
+#   * <8-> 改变符号 $dX\rightarrow X,dY\rightarrow Y$ 得增量化方程（小扰动方程）: $Y=K X$
+* 线性微分方程与线性系统
+** 线性微分方程的解
+  解＝特解＋通解
+
+  * <2->通解由微分方程的特征根决定
+    * <3->微分方程： $a_0 x''(t)+a_1 x'(t)+a_2 x(t) =b$
+    * <4->特征方程：  $a_0s^2+a_1 s + a_2=0$
+  * <5-> n阶方程有n个互异特征根 $\lambda_1,...,\lambda_n$ 时,通解为
+     $y(t)=c_1e^{\lambda_1 t}+...+c_ne^{\lambda_n t}$
+  * <6-> 若有重根  $\lambda=\lambda_1=\lambda_2$,则
+     $y(t)=c_1 t e^{\lambda t}+c_2e^{\lambda t}+...+c_ne^{\lambda_n t}$
+** 线性系统的定义与特点
+ * <2->条件:
+    * 可加性： 若 $r_1(t)->c_1(t)$, $r_2(t)->c_2(t)$ 则： $r_1(t)+r_2(t)->c_1(t)+c_2(t)$
+    * 齐次性： $r_1(t)->c_1(t)$ 则： $a r_1(t) -> a c_1(t)$
+ * <3-> 微积分特性: $r_1(t)\rightarrow c_1(t)$  则  $\int r_1(t) \rightarrow \int c_1(t), r_1(t)'\rightarrow c_1(t)'$
+
+* 机械系统示例(因果关系:力与位移的关系)
+** 机械系统示例1
+*** 弹簧-质量-阻尼系统
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :BEAMER_envargs: <1->
+    :END:
+
+\begin{tikzpicture}[every node/.style={outer sep=0pt,thick}]
+%#+begin_example
+%  \|                         (F)->       (-fv)    |/
+%  \|        (-kY)            .---.       ----.    |/
+%  \|-----'\/\/\/\/\/\/\/'----+ m +--------+] +----|/
+%  \|                         '---' (Y)   ----'    |/
+%  \|==============================================|/
+%#+end_example
+
+\tikzstyle{spring}=[thick,decorate,decoration={zigzag,pre length=0.3cm,post length=0.3cm,segment length=6}]
+\tikzstyle{damper}=[thick,decoration={markings,  
+  mark connection node=dmp,
+  mark=at position 0.5 with 
+  {
+    \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=15pt,minimum height=3pt,draw=none] {};
+    \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+    \draw [thick] ($(dmp.north)+(0,-5pt)$) -- ($(dmp.north)+(0,5pt)$);
+  }
+}, decorate]
+%\tikzstyle{ground}=[fill,pattern=north east lines,draw=none,minimum width=0.75cm,minimum height=0.3cm]
+\tikzstyle{ground}=[draw=none,minimum width=0.75cm,minimum height=0.3cm]
+
+\node (M) [draw,minimum width=1cm, minimum height=2.5cm] {$m$};
+
+\node (ground) [draw,ground,anchor=north,yshift=-0.25cm,minimum width=1.5cm] at (M.south) {};
+\draw (ground.north east) -- (ground.north west);
+\draw [thick] (M.south west) ++ (0.2cm,-0.125cm) circle (0.125cm)  (M.south east) ++ (-0.2cm,-0.125cm) circle (0.125cm);
+\draw [->,red,thick] (M.north east)++(0,-1em)-- + (3em,0);
+\draw [red,ultra thick] (M.north east)++(2em,-1em) node[above] {$F$};
+
+\node (wall) [ground, rotate=-90, minimum width=3cm,yshift=-3cm] {};
+\draw (wall.north east) -- (wall.north west);
+
+\draw [spring] (wall.170) -- ($(M.north west)!(wall.170)!(M.south west)$);
+\draw [damper] (wall.10) -- ($(M.north west)!(wall.10)!(M.south west)$);
+
+\draw [red,-latex,ultra thick] (M.east) ++ (0.2cm,0) -- +(1cm,0);
+\draw [red,thick] (M.east)++(0.5cm,0) node[above] {$Y$};
+
+\end{tikzpicture}
+
+*** 解:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :BEAMER_envargs: <2->
+    :END:
+
+ * 输入： $F(t)$ , 输出： $Y(t)$
+ * 原始方程： $F- k Y(t) -f v = ma$ 
+ * 消去中间变量：
+     *  $v = Y'(t)$
+     *  $a = v'$
+     *  $mY"+fY'+kY=F$
+
+# \mode<article>{ 例 旋转体运动方程，见P22}
+* 电气系统示例
+** 电气及机电系统示例1
+*** 电阻、电容网絡
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :BEAMER_envargs: <1->
+    :END:
+
+\begin{circuitikz}[american voltages]
+%#+begin_example
+%             C  (I_1) -->
+%        .----||---.
+%        |         |
+%  o-----+--[R_1]--+--+-----o
+%  +       (I_2) -->  |
+%                     |
+%  (E_r)      (I) | [R_2] (E_c)
+%                 v   |
+%  -                  |
+%  o------------------+-----o
+%#+end_example
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$E_c$,-o](5,3)
+  to [short] (3,3)
+  to [R, l=$R_2$,i_={$I$}] (3,0)
+
+  (0,0) to [open, v>=$E_r$,-o] (0,3)
+  to [R,l=$R_1$ ,i_={$I_2$}] (3,3)
+
+  (0.5,3) to [short] (0.5,4.5) to [C, l=$C$ ,i_={$I_1$}] (3,4.5) to [short] (3,3);
+\end{circuitikz}
+
+*** 解：
+   :PROPERTIES:
+   :BEAMER_col: 0.5
+   :BEAMER_envargs: <2->
+   :BEAMER_env: block
+   :END:
+
+ * 输入：$E_r$ ,输出 $E_c$
+ * 原始方程：
+	*   $I=I_1+I_2$
+	*   $E_c=R_2 I$
+	*   $E_r=R_1 I_2+E_c$
+	*   $C (E_r-E_c)' = I_1$
+ * 消去I,I_1,I_2得：
+	*  $R_1 C E_c'+(R_1+R_2)/R_2 E_c = R_1 E_r'+ E_r$
+
+** 电气及机电系统示例2
+*** 电阻、电容网络					      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_envargs: <1->
+    :BEAMER_col: 0.5
+    :END:
+
+\begin{circuitikz}[american voltages]
+%#+begin_example
+%  
+%  o--------[R]-------+-----o
+%  +       (I) -->    |
+%                     |
+%  (U_r)          C ----- 
+%                   ----- U_c
+%                     |
+%  -                  |
+%  o------------------+-----o
+%#+end_example
+
+\draw
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$U_c$,-o](5,3)
+  to [short] (3,3)
+  to [C, l=$C$] (3,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [R,l=$R$ ,i_={$I$}] (3,3);
+
+\end{circuitikz}
+
+*** 解：						      :BMCOL:B_block:
+   :PROPERTIES:
+   :BEAMER_col: 0.5
+   :BEAMER_envargs: <2->
+   :BEAMER_env: block
+   :END:
+
+  * 输入： $U_r$ ,输出： $U_c$
+  *  $U_r=R I +U_c$ , $C U_c' = I$
+  * 消去 $I$ ,  $RC U_c' +U_c = U_r$
+    
+* 非线性系统示例
+** 倒立摆系统线性化模型
+  :PROPERTIES:
+  :BEAMER_envargs: [t]
+  :END:
+*** 倒立摆
+    :PROPERTIES:
+    :BEAMER_col: 0.23
+    :BEAMER_env: block
+    :BEAMER_envargs: <1->
+    :END:
+
+\begin{tikzpicture}[every node/.style={outer sep=0pt,thick}]
+%#+begin_example
+%                   ^          //
+%                   | \theta  //
+%                   |        //
+%                   |       //
+%                   |      //
+%                   |     //
+%                   |    //
+%                   |   /+
+%                   |  //| mg
+%                 N | // v
+%                   |//  -----> H
+%                   //
+%            .------+------.
+%            |             |
+%            |      +------------>  F
+%            |      |      |
+%            '------|------'
+%                O  |   O
+%  =================|==================
+%                   | Mg
+%                   v 
+%#+end_example
+%\tikzstyle{ground}=[draw=none,minimum width=0.75cm,minimum height=0.3cm]
+\node (M) [draw,minimum width=5em, minimum height=3em] {};
+%\node (ground) [draw,anchor=north,yshift=-0.25cm,minimum width=10em] at (M.south) {};
+%\draw (ground.north east) -- (ground.north west);
+\draw [thick] (M.south west) ++ (0.2cm,-0.125cm) circle (0.125cm)  (M.south east) ++ (-0.2cm,-0.125cm) circle (0.125cm);
+\draw [thick] (M.south west) ++ (-0.2cm,-0.25cm) --  ($(M.south east) + (0.2cm,-0.25cm)$);
+\draw [thick] (M.north) circle (0.3em) ;
+%\draw [->,red,thick] (M.north east)++(0,-1em)-- + (3em,0));
+\draw [->,red,thick] (M.center)-- + (3em,0);
+\draw [red,ultra thick] (M.center)++(3em,0) node[below] {$F$};
+\draw [->,red,thick] (M.center)-- + (0,-5em);
+\draw [red,ultra thick] (M.center)++(0,-5em) node[right] {$Mg$};
+\node (stick) [anchor=west,draw, rotate=60, minimum height=0.1cm,minimum width=7em,] at (M.north) {};
+\draw [->,red,thick] (stick.center)-- + (0,-2.3em);
+\draw [red,ultra thick] (stick.center)++(0,-2.3em) node[right] {$mg$};
+\draw [red,thick,<->] (stick.west)++(0,5em)  arc (90:60:5em) ;
+\draw [red] (stick.west)++(75:5em) node[above] {$\theta$};
+\draw [red,dashed,thick] (stick.west)--+(0,7em);
+\draw [->,red,thick] (stick.west)--+(0,3em) node[left] {$N$};
+\draw [->,red,thick] (stick.west)--+(3em,0) node[below] {$H$};
+%\draw (wall.north east) -- (wall.north west);
+%\draw [red,-latex,ultra thick] (M.east) ++ (0.2cm,0) -- +(1cm,0);
+%\draw [red,thick] (M.east)++(0.5cm,0) node[above] {$Y$};
+\end{tikzpicture}
+
+\mode<article>{
+  * $M$: 小车质量 
+  * $m$：杆质量 
+  * $l$:摆杆半长
+  * $J$:摆杆转动惯量（绕质心）
+}
+#  * $f_0$:小车运动动摩擦系数
+#  * $f$：铰链动摩擦系数
+
+
+*** 解：
+    :PROPERTIES:
+    :BEAMER_col: 0.77
+    :BEAMER_env: block
+    :BEAMER_envargs: <2->
+    :END:
+
+  * 输入$F$,输出 $\theta,r$
+  * 原始方程：
+    * 小车水平方向： $Mr''=F-H$
+    * 杆水平方向： $m(r+l sin(\theta))'' = H$
+    * 杆竖直方向： $m (l cos(\theta))'' = N-mg$
+    * 杆转动： $J(\theta)''=N l sin(\theta) - H l cos(\theta)$
+  * 整理后：
+    *   $(M+m)r''+ml\cos(\theta)\theta''-ml\sin(\theta)(\theta')^2=F$
+    *   $ml\cos(\theta)r''+(J+m l^2)\theta''=mgl\sin(\theta)$
+  * 线性化 ( $\theta\rightarrow 0,\sin(\theta)\approx \theta,cos(\theta)\approx 1$ )
+      *  $(M+m)r''+ml\theta'' = F$
+      *  $ml r'' +(J+ml^2)\theta''=mgl\theta$
+
+
+# \mode<article>{
+# 小结：
+#   * 对被控对象熟知
+#   * 线性化工作
+#   * 线性系统特性、特征根
+# }

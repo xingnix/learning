@@ -1,0 +1,419 @@
+% Created 2014-09-24 星期三 12:37
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{amsmath}
+\usepackage[usenames]{color}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{线性系统动态性能分析}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统时域分析法}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\mode<article>{分析 $\sigma\%,t_s$ 等指标, $r(t)=1,R(s)=\frac{1}{s}$ }
+\section{一阶系统动态性能}
+\label{sec-1}
+\begin{frame}
+\frametitle{一阶系统单位阶跃响应}
+\label{sec-1-1}
+
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%              
+%              .------.
+% R-->o----- ->| 1/Ts |--+--> C
+%   _ ^        '------'  |
+%     |                  |  
+%     '------------------'
+%
+%
+% 1                        2                        3             4              5    6
+$R(s)$ &  \pscirclebox[framesep=-0.2em]{$\times$} &   &  \psframebox{$\frac{1}{Ts}$}   & {\hskip 1em}   & $C(s)$ \\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\ncline{->}{1,4}{1,6}
+%\ncangle[angleA=0,angleB=0,armA=0.5em,armB=0.5em]{1,4}{2,4}
+\ncangles[angleA=0,angleB=-90,armA=1em,armB=2em]{->}{1,4}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+\begin{eqnarray*}
+G(s) & = & \frac{1}{Ts}\\
+\Phi(s) &=& \frac{1}{Ts+1} \\
+R(s) &= & \frac{1}{s} \\
+C(s) &=& \Phi(s)R(s) \\
+     &=& \frac{-T}{Ts+1}+\frac{1}{s} \\
+c(t) &=& 1-e^{-t/T}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{一阶系统单位脉冲响应}
+\label{sec-1-2}
+
+
+\begin{eqnarray*}
+R(s) &= & 1 \\
+C(s) &=& \Phi(s)R(s) \\
+     &=& \Phi(s) \\
+     &=& \frac{1}{Ts+1} \\
+c(t) &=& \frac{1}{T}e^{-t/T}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{一阶系统单位斜坡响应}
+\label{sec-1-3}
+
+\begin{eqnarray*}
+R(s) &= & \frac{1}{s^{2}} \\
+C(s) &=& \Phi(s)R(s) \\
+     &=& \frac{1}{(Ts+1)s^{2}} \\
+     &=& \frac{1}{s^{2}}-\frac{T}{s}+\frac{T^2}{Ts+1} \\
+c(t) &=& (t-T)+Te^{-t/T}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{一阶系统单位加速度响应}
+\label{sec-1-4}
+
+\begin{eqnarray*}
+R(s) &= & \frac{1}{s^{3}} \\
+C(s) &=& \Phi(s)R(s) \\
+     &=& \frac{1}{(Ts+1)s^{3}} \\
+     &=& \frac{1}{s^3}-\frac{T}{s^2}+\frac{T^2}{s}-\frac{T^3}{sT+1}\\
+c(t) &=& \frac{1}{2}t^2-Tt+T^2(1-e^{-t/T})
+\end{eqnarray*}
+\end{frame}
+\section{二阶系统时域分析}
+\label{sec-2}
+\begin{frame}
+\frametitle{传递函数}
+\label{sec-2-1}
+
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%              
+%              .----------------------.
+% R-->o----- ->| w_n^2/s^2+2\xi\w_n s |--+--> C
+%   _ ^        '----------------------'  |
+%     |                                  |  
+%     '----------------------------------'
+%
+% 1                        2                        3             4              5    6
+$R(s)$ &  \pscirclebox[framesep=-0.2em]{$\times$} &   &  \psframebox{$\frac{\omega_n^2}{s^2+2\xi\omega_n s}$}   & {\hskip 1em}   & $C(s)$ \\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,4}
+\ncline{->}{1,4}{1,6}
+%\ncangle[angleA=0,angleB=0,armA=0.5em,armB=0.5em]{1,4}{2,4}
+\ncangles[angleA=0,angleB=-90,armA=1em,armB=2em]{->}{1,4}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+\begin{itemize}
+\item $\xi$: 阻尼比
+\item $\omega_n$:自然频率,无阻尼振荡频率
+\end{itemize}
+\begin{eqnarray*}
+r(t) &=& 1 \\
+R(s) &=& \frac{1}{s}\\
+G(s) & =& \frac{\omega_n^2}{s^2+2\xi\omega_n s} \\
+\Phi(s) &=& \frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2}\\
+p_{1,2} &=& -\xi\omega_n\pm\omega_n\sqrt{\xi^2-1}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{$\xi\leq 0$}
+\label{sec-2-2}
+
+\begin{itemize}
+\item <2-> $\xi< 0$ 时有正实根,不稳定
+\item <3-> $\xi=0$ 时有两个纯虚根,无阻尼,临界稳定,等幅振荡,频率为$\omega_n$,
+        \begin{eqnarray*}
+        C(s) & = & \frac{\omega_n^2}{s^2+\omega_n^2}\cdot \frac{1}{s}  \\
+             & =& \frac{-s}{s^2+\omega_2}+\frac{1}{s} \\
+        c(t) &=& 1-\cos\omega_n t
+        \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{$\xi>1$}
+\label{sec-2-3}
+
+   系统闭环极点为两个不同的实根.过阻尼,相当于两个一阶系统并联, $\sigma\%=0$
+      \begin{eqnarray*}
+      \Phi(s) & = & \frac{\omega_n^2}{(s-p_1)(s-p_2)} \\
+              & = & \frac{K_1}{s-p_1}+\frac{K_2}{s-p_2}\\
+      c(t)    &=& 1-\frac{e^{p_1 t}}{1-\frac{p_1}{p_2}}-\frac{e^{p_2 t}}{1-\frac{p_2}{p_1}}
+      \end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{$\xi=1$}
+\label{sec-2-4}
+
+\begin{itemize}
+\item <1-> 闭环极点有两个相同的负实根$p_{1,2}=-\xi\omega_n=-\omega_n$
+      \begin{eqnarray*}
+      C(s) & = &\frac{\omega_n^2}{(s+\omega_n^2)}\cdot\frac{1}{s} \\
+      c(t) &=& 1-e^{-\omega_n t}(1+\omega_n t)
+      \end{eqnarray*}
+\item <2-> 且有:
+      \begin{eqnarray*}
+      \frac{dc(t)}{dt} &=& \omega_ne^{-\omega_n t}(1+\omega_n t)-\omega_n e^{-\omega_n t}
+       =  \omega_n^2 te^{-\omega_n t} 
+       >  0 \\
+      c(0) &=&0 \\
+      c(\infty)&=&1\\
+      \sigma \% &=& 0\\
+      t_s &=& 4.75T \\
+      T &=&\frac{1}{\omega_n}
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{$0<\xi<1$}
+\label{sec-2-5}
+
+   系统有一对实部小于零的共轭复根, $p_{1,2}  =  -\xi\omega_n\pm j\omega_n\sqrt{1-\xi^2}$
+\begin{eqnarray*}
+C(s) &=& \frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2}\cdot\frac{1}{s} \\
+     &=& \frac{1}{s}-\frac{s+\xi\omega_n}{(s+\xi\omega_n)^2+(1-\xi^2)\omega_n^2}-\frac{\xi\omega_n}{(s+\xi\omega_n)^2+(1-\xi^2)\omega_n^2} \\
+c(t) &=& 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}(\sqrt{1-\xi^2}\sin\sqrt{1-\xi^2}\omega_n t \\
+     & &+\xi\cos\sqrt{1-\xi^2}\omega_n t)\\
+     &=& 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta)\\
+\beta & = & \tan^{-1}\frac{\sqrt{1-\xi^2}}{\xi} \\
+\omega_d &=& \sqrt{1-\xi^2}\omega_n
+\end{eqnarray*}
+\end{frame}
+\section{二阶系统阶跃响应指标计算}
+\label{sec-3}
+\begin{frame}
+\frametitle{二阶欠阻尼系统阶跃响应指标}
+\label{sec-3-1}
+
+
+\begin{eqnarray*}
+   c(t)  &=& 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta)\\
+\end{eqnarray*}
+
+\begin{itemize}
+\item 欠阻尼. $\omega_d$ 称为有阻尼振荡频率.最佳阻尼比 $\xi=0.707$
+\item 指标: $\sigma\% , t_s , t_p , t_r$ 等
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{上升时间 $t_r$}
+\label{sec-3-2}
+
+\begin{itemize}
+\item $100\%$ 的 $t_r$ : $c(t)$ 首次达到 $c(\infty)$ 的时间
+\item $90\%$ 的 $t_r$ : $c(t)$ 首次达到 $90\%c(\infty)$ 的时间
+\item $70\%$ 的 $t_r$ : $c(t)$ 首次达到 $70\%c(\infty)$ 的时间
+\end{itemize}
+
+\begin{eqnarray*}
+c(t) & = & c(\infty) \\
+1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta) &=& 1 \\
+sin(\omega_d t+\beta) &=& 0 \\
+\omega_d t+\beta &=& k\pi \\
+t_r &=& \frac{\pi-\beta}{\omega_d}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{峰值时间 $t_p$}
+\label{sec-3-3}
+
+
+\mode<article>{$c(t)$ 达到最大值的时间}
+
+\begin{eqnarray*}
+\frac{dc(t)}{dt} &=& 0 \\
+-\xi\omega_n e^{-\xi\omega_n t}\sin(\omega_d t+\beta)+e^{-\xi\omega_n t}\omega_d\cos(\omega_d t+\beta) & = & 0 \\
+\omega_d\cos(\omega_d t+\beta) &=& \xi\omega_n \sin(\omega_d t+\beta) \\
+\tan(\omega_d t+\beta) &=& \frac{\sqrt{1-\xi^2}}{\xi} \\
+\tan(\omega_d t+\beta) &=& \tan\beta \\
+\omega_d t &=& k\pi\\
+t_p &=& \frac{\pi}{\omega_d}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{超调量 $\sigma \%$}
+\label{sec-3-4}
+
+\begin{eqnarray*}
+\sigma \% & = & \frac{c_{max}-c(\infty)}{c(\infty)}\times 100\% 
+         = (c(t_p)-1) \\
+         &=& -\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t_p}\sin(\omega_d t_p+\beta) \\
+         &=& -\frac{1}{\sqrt{1-\xi^2}}e^{-\frac{\xi\omega_n\pi}{\omega_d}}\sin(\pi+\beta) \\
+         &=& \frac{1}{\sqrt{1-\xi^2}}e^{-\frac{\xi\pi}{\sqrt{1-\xi^2}}}\sin(\beta) \\
+         &=& e^{-\frac{\xi\pi}{\sqrt{1-\xi^2}}}\times 100\% \\
+\end{eqnarray*}
+
+\mode<article>{分析:}
+\begin{itemize}
+\item <2->$\sigma\%$ 只与 $\xi$ 有关,两者成反比关系
+\item <3->工程上一般取 $\xi\in[0.4,0.8]$
+\item <4->最佳阻尼比 $\xi=0.707,\sigma\%=4.3\%$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{调节时间 $t_s$}
+\label{sec-3-5}
+
+
+\mode<article>{近似估算:}
+
+\begin{eqnarray*}
+c(t) & = & 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta)\\
+     &\approx & 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t} \\
+%     &\approx & 1-e^{-\xi\omega_n t} \\
+e(t) &=& c(\infty)-c(t) \\
+    &\approx& \frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\\ 
+%     &\approx& e^{-\xi\omega_n t}
+\end{eqnarray*}
+
+\begin{itemize}
+\item <2-> $t_s$ 与 $\omega_n,\xi$ 有关:通常取 $\xi\omega_n t_s = 3.5,t_s=\frac{3.5}{\xi\omega}$
+\end{itemize}
+       
+\end{frame}
+\begin{frame}
+\frametitle{二阶过阻尼系统阶跃响应指标}
+\label{sec-3-6}
+
+\begin{itemize}
+\item <2->$\sigma\%=0$
+\item <3->$\xi=1$ 时, 
+       \[t_s=\frac{4.75}{\omega_n}\]
+\item <4->$\xi>1,|p_1|\gg |p_2|$ 时,系统降阶,去掉极点 $p_2$ , 
+      \[t_s=\frac{3}{|p_1|}\]
+\end{itemize}
+\end{frame}
+\section{高阶系统时域分析（3阶及以上系统）}
+\label{sec-4}
+\begin{frame}
+\frametitle{三阶系统}
+\label{sec-4-1}
+
+\begin{itemize}
+\item <2-> 根的几种情况
+\begin{itemize}
+\item <3-> 3个负实根 $p_1,p_2,p_3$
+\item <4-> 1个负实根,一对共轭复根 
+      \[-s_0,-\xi\omega_n\pm j\omega_n\sqrt{1-\xi^2},(0<\xi<1)\]
+\end{itemize}
+\item <5-> 重点考虑有复根的情况.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{三阶系统($\Phi(s)$) 单位阶跃响应($C(s)$)}
+\label{sec-4-2}
+
+\begin{eqnarray*}
+ \Phi(s) & = & \frac{s_0\omega_n^2}{(s+s_0)(s^2+2\xi\omega_n s+\omega_n^2)} \\
+ C(s) &=& \frac{s_0\omega_n^2}{s(s+s_0)(s^2+2\xi\omega_n s+\omega_n^2)} \\
+ c(t) &=& 1-\frac{e^{-s_0 t}}{b\xi^2(b-2)+1}-\frac{e^{-\xi\omega_n t}}{b\xi^2(b-2)+1} \\
+     & & \left(b\xi^2(b-2)\cos\omega_d t + \frac{b\xi(\xi^2(b-2)+1)}{\sqrt{1-\xi^2}}\sin\omega_d t\right) \\
+ \omega_d &=& \omega_n\sqrt{1-\xi^2} \\
+ b &=& \frac{s_0}{\xi\omega_n}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{$b$ 对 $c(t)$ 的影响}
+\label{sec-4-3}
+
+
+\begin{itemize}
+\item <2->复根比实根离虚轴近得多
+     \begin{eqnarray*}
+     b & \gg & 1\\
+     c(t) &\approx & 1-e^{-\xi\omega_n t}\left(\cos\omega_d t + \frac{1}{\sqrt{1-\xi^2}}\sin\omega_d t\right) 
+     \end{eqnarray*}
+     近似看作2阶欠阻尼系统.
+\item <3->实根比复根离虚轴近得多
+     \begin{eqnarray*}
+     b & \approx & 0\\
+     c(t) &\approx & 1-e^{-s_0 t}
+     \end{eqnarray*}
+     近似看作1阶系统
+\item <4->实根与复根与虚轴距离同
+     \begin{eqnarray*}
+     b & \approx & 1\\
+     c(t) &\approx & 1-\frac{e^{-\xi\omega_n t}}{1-\xi^2}\left(1+\xi\sin(\omega_d t-\beta)\right) 
+     \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{主导极点法}
+\label{sec-4-4}
+
+\begin{itemize}
+\item <2->目的:分析高阶系统的性能
+\item <3->内容:系统有多个极点,其中某些极点决定了整个系统的性能,对系统起主导作用,称这些极点为主导极点.
+\item <4->确定方法:主导极点离虚轴距离为 $a$ ,其它极点离虚轴距离 $\geq 5a$
+\end{itemize}
+\end{frame}
+
+\end{document}

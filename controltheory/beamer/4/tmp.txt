@@ -1,0 +1,2 @@
+% Created 2013-10-20 Sun 22:19
+\documentclass[table]{beamer}

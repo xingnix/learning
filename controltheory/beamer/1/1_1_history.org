@@ -1,0 +1,134 @@
+# +LaTeX_CLASS: article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+   #    +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header: \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+
+#+TITLE:  自动控制的基本概念
+#+AUTHOR:    
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+
+#+latex_header:\setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+
+
+
+
+
+
+
+
+
+*  自动控制历史
+** Centrifugal governor
+ # 离心调速器
+ #+ATTR_LATEX: width=\textwidth
+[[file:image/centrifugal_governor.png]]
+
+** Tolilet Valve
+ #+ATTR_LATEX: width=\textwidth
+[[file:image/250px-Gravity_toilet_valves_handle_down.svg.png]]
+
+** 指南车
+ #+ATTR_LATEX: width=\textwidth
+[[file:image/zhinanche.jpg]]
+
+** 莲花漏
+ #+ATTR_LATEX: width=\textwidth
+[[file:image/lianhualou.jpg]]
+
+** Windmil fantail
+#+ATTR_LATEX: height=\textheight
+[[file:image/DK_Fanoe_Windmill01.JPG]]
+
+** telautograph
+ #+ATTR_LATEX: width=\textwidth
+[[file:image/telautograph.jpg]]
+
+** 控制理论的发展
+    * <1> Pierre-Simon Laplace (1749-1827) invented the Z-transform in his work on probability theory, now used to solve discrete-time control theory problems. The Z-transform is a discrete-time equivalent of the Laplace transform which is named after him.
+    * <2> Joseph Fourier (21 March 1768 – 16 May 1830) was a French mathematician and physicist born in Auxerre and best known for initiating the investigation of Fourier series and their applications to problems of heat transfer and vibrations. The Fourier transform and Fourier's Law are also named in his honour. Fourier is also generally credited with the discovery of the greenhouse effect.
+    * <3> James Clerk Maxwell (13 June 1831 – 5 November 1879) published a paper On governors in the Proceedings of Royal Society, vol. 16 (1867–1868). This paper is considered a central paper of the early days of control theory. Here "governors" refers to the governor or the centrifugal governor used to regulate steam engines.
+
+** 控制理论的发展
+    * <1> Alexander Lyapunov (1857–1918) in the 1890s marks the beginning of stability theory.
+    * <2> Harold S. Black (1898–1983), invented the concept of negative feedback amplifiers in 1927. He managed to develop stable negative feedback amplifiers in the 1930s.
+    * <3> Norbert Wiener (1894–1964) co-developed the Wiener–Kolmogorov filter and coined the term cybernetics in the 1940s.
+
+** 控制理论的发展
+    * <1> Harry Nyquist (1889–1976), developed the Nyquist stability criterion for feedback systems in the 1930s.
+    * <2> Claude Elwood Shannon (April 30, 1916 – February 24, 2001) is also credited with the introduction of sampling theory, which is concerned with representing a continuous-time signal from a (uniform) discrete set of samples. 
+#    * Richard Bellman (1920–1984), developed dynamic programming since the 1940s.
+#    * Andrey Kolmogorov (1903–1987) co-developed the Wiener–Kolmogorov filter (1941).
+    * <3> Hendrik Wade Bode (pronounced Boh-dee in English, Boh-dah in Dutch),(24 December 1905 – 21 June 1982) was an American engineer, researcher, inventor, author and scientist, of Dutch ancestry.
+      He made important contributions to control system theory and mathematical tools for the analysis of stability of linear systems, inventing Bode plots, gain margin and phase margin.
+
+** 控制理论的发展
+    * <1> John R. Ragazzini (1912–1988) introduced digital control and the use of Z-transform in control theory (invented by Laplace) in the 1950s.
+    * <2> Walter Richard Evans (January 15, 1920 - July 10, 1999) was a noted American control theorist and the inventor of the root locus method in 1948. 
+    * <3> In control systems theory, the describing function (DF) method, developed by Nikolay Mitrofanovich Krylov and Nikolay Bogoliubov in the 1930s, and extended by Ralph Kochenburger is an approximate procedure for analyzing certain nonlinear control problems.
+#    * Lev Pontryagin (1908–1988) introduced the maximum principle and the bang-bang principle.
+
+*  自动控制理论
+** 自动控制
+# 无人工直接参与的情况下，利用控制装置(控制器)使得生产过程或被控对象中的某一个/多个物理量能够准确地按照期望的规律运行。
+ 无人工直接参与的情况下，利用控制装置(控制器)使被控对象按照给定的规律变化。
+
+**  自动控制理论
+   * <2->经典控制理论
+   * <3->现代控制理论
+# * <3->智能控制理论
+#        * 神经网络
+#        * 专家系统
+
+** 课程内容：
+ 1. <2->一般概念
+ 1. <3->数学模型
+ 1. <4->分析方法
+    1. 时域分析法
+    1. 根轨迹法
+    1. 频域分析法
+ 1. <5->设计方法
+ 1. <6->离散系统分析
+ 1. <7->典型非线性系统的分析

@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ "$2" = "a" ] || [ "$2" = "2" ] ; then
+sed s/documentclass{beamer/documentclass{article/ $1.tex > article_$1.tex
+xelatex -interaction=nonstopmode article_$1.tex
+if [ "$2" = "2" ] ; then
+xelatex -interaction=nonstopmode $1.tex
+mv $1.pdf beamer_$1.pdf
+fi
+else
+xelatex -interaction=nonstopmode $1.tex
+mv $1.pdf beamer_$1.pdf
+fi

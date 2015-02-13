@@ -1,0 +1,225 @@
+# #+LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \pgfplotsset{compat=1.8}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [table]
+# #+LaTeX_CLASS_OPTIONS: [bigger]
+ # +latex_header:  \mode<article>{\usepackage{beamerarticle}}
+# #+latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# #+latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  线性离散系统分析
+#+latex_header: \subtitle{信号采样与保持}
+#+AUTHOR:    
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+* 信号的采样
+** 采样信号
+  *  <2->\mode<article>{理想采样的结果是脉冲信号，其强度为连续信号在采样时刻的值}若采样开关为理想采样开关,则有:  
+       \[e^*(t)=e(t)\delta_T(t)\]
+     其中  $\delta_T(t)$  为理想单位脉冲序列:  
+	      \[\delta_T(t)=\sum_{n=0}^{\infty}\delta(t-nT)\]
+  * <3->\mode<article>{将单位脉冲序列乘以连续信号即可完成采样，将连续信号转换成采样信号（加权脉冲序列）。}得:
+     \begin{eqnarray*}
+     e^{*}(t) & = & e(t)\sum_{n=0}^{\infty}\delta(t-nT) \\
+       &=&  \sum_{n=0}^{\infty}e(t)\delta(t-nT) \\
+       &=&  \sum_{n=0}^{\infty}e(nT)\delta(t-nT) 
+     \end{eqnarray*}
+
+** 采样信号的Laplace变换
+     \begin{eqnarray*}
+     {\cal L}(e^{*}(t)) & =  & {\cal L}( \sum_{n=0}^{\infty}e(nT)\delta(t-nT) )\\
+     &=&  \sum_{n=0}^{\infty}e(nT){\cal L}(\delta(t-nT) )\\
+     &=&  \sum_{n=0}^{\infty}e(nT)e^{-nTs}
+     \end{eqnarray*}
+ \mode<article>{直接计算离散信号的Laplace变换时会发现，时域信号可由一系列有延迟的脉冲信号构成。根据Laplace变换的性质，时域延迟会导致复域出现  $s$  的指数函数，而不是关于 $s$ 的有理分式，难以分析。为了能够方便地分析离散信号，需要学习一种新的数学工具--- Z 变换}
+** 采样信号的频谱分析
+ \mode<article>{为了得到采样信号的频谱，可用另一种思路计算离散信号的Laplace变换}
+ *  <2->将  $\delta_T(t)$  以 Fourier 级数表示,得: 
+      \begin{eqnarray*}
+      \delta_T(t) & = &\sum_{n=-\infty}^{\infty}C_n e^{jn\omega_s t} \\
+      C_n &=&\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\delta_T(t)e^{-jn\omega_s t}dt \\
+        &=&\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\delta(t)dt \\ 
+        &=& \frac{1}{T} \\
+      \omega_s &=& \frac{2\pi}{T} 
+    \end{eqnarray*}
+** 采样信号的频谱分析(续)
+\mode<article>{通过Laplace变换或Fourier变换对比分析连续信号与采样信号的频率特性，可以看到采样过程的频域描述：将连续信号的频谱平移后再叠加。 }
+# 将采样过程的时域与频域表示结合起来考虑会发现：采样过程在时域看起来只获取了连续函数的部分值（数据量减少了），但在频域看来却是对原连续信号频谱的平移与叠加（数据量增加了）。
+
+  *  采样
+      \begin{eqnarray*}
+      \delta_T(t) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}e^{jn\omega_s t} \\
+      e^*(t) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}e(t)e^{jn\omega_s t} \\
+      E^*(s) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}E(s+jn\omega_s ) \\
+      E^*(j\omega) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}E(j(\omega+n\omega_s)) 
+      \end{eqnarray*}
+ *  <2->$e^*(t)$  的频谱为以  $\omega_s$  为周期的无穷多个频谱之和.
+ *  <3->设  $e(t)$ 带宽有限,最高角频率为  $\omega_h$ , 则当  $\omega_s>2\omega_h$  时,  $e^*(t)$  频谱的各部分不会相互重叠.
+** Nyquist-Shannon sampling theorem
+ * <2->若采样器的输入信号  $e(t)$ 只有有限带宽,且其最高频率分量为  $\omega_h$  ,
+ * <3->当采样周期满足  
+	\[T\leq\frac{2\pi}{2\omega_h}\]  
+    则信号  $e(t)$  可以完全从  $e^*(t)$  中恢复出来.
+\mode<article>{这是连续信号能完全从离散信号复现的保证，即：连续信号转换为离散信号时没有丢失任何信息。}
+# 实际信号的高频分量通常是逐渐衰减的，因此只能做到采样后频谱各部分近似无重叠
+
+** 工程中  $T$  的选取
+\mode<article>{为了满足控制系统的性能指标，需要采样频率尽可能大一些。但采样频率过大或过小都有不足之处。}
+ *  <2-> $T$  过小,增加计算量
+ *  <3-> $T$  过大,动态性能差,稳定性难保证
+ *  <4->经验公式:
+       * <4->在随动系统中,若校正后系统截止频率为  $\omega_c$ ,则采样频率为  $\omega_s=10\omega_c$  , 即  $T=\frac{\pi}{5\omega_c}$
+       * <5->按  $t_r,t_s$  选取,   $T=\frac{T_r}{10},T=\frac{t_s}{40}$
+* 采样函数Laplace变换性质
+**  采样函数Laplace变换性质:$G^*(s)=G^*(s+jk\omega_s)$
+\mode<article>{这个性质表明采样信号的Laplace变换是周期函数。}
+ * <2-> 证明:
+     \begin{eqnarray*}
+     G^*(s) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}G(s+jn\omega_s) \\
+     G^*(s+jk\omega_s) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}G(s+j(n+k)\omega_s) \\
+      &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}G(s+jn\omega_s)\\
+      &=& G^*(s)
+     \end{eqnarray*}
+**  采样函数Laplace变换性质:$[G(s)E^*(s)]^*=G^*(s)E^*(s)$
+\mode<article>{这个性质表明：当一个连续系统的输入信号为采样信号时，如何得到输出信号的采样。}
+ * <2-> 证明
+     \begin{eqnarray*}
+     [G(s)E^*(s)]^* &= & \frac{1}{T}\sum_{n=-\infty}^{\infty}[G(s+jn\omega_s)E^*(s+jn\omega_s)] \\
+      &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}[G(s+jn\omega_s)E^*(s)] \\
+      &=& (\frac{1}{T}\sum_{n=-\infty}^{\infty}G(s+jn\omega_s))E^*(s) \\
+      &=& G^*(s)E^*(s)
+     \end{eqnarray*}
+* 信号的保持
+** 信号的保持
+ * <2->将数字信号及脉冲信号转换成连续的模拟信号,采用保持器.主要解决  $nT$  与  $(n+1)T$  之间的插值问题.
+ * <3->保持器是具有外推功能的元件,外推公式为:  
+	 \[e(nT+\Delta t)=a_0+a_1 \Delta t+a_2(\Delta t)^2+\cdots+a_m(\Delta t)^m\]
+   式中  $a_0,\cdots,a_m$  由过去各采样时刻  $(m+1)$ 个离散的信号  $e^*((n-i)T),(i=0,\cdots,m)$  惟一确定.  
+ * <4-> $m=0$ 时称为零阶保持器,  
+ * <5-> $m=1$ 时称为一阶保持器.
+** 零阶保持器
+ *  <2-> $e(nT+\Delta t)=a_0$  , 当  $\Delta t=0$  时,有  $e(nT)=a_0$ , 即:按常值外推,  $e(t)=e(nT),t\in [ nT,(n+1)T)$ 
+ *  <3-> 设零阶保持器输入为  $r^*(t)=\delta(t)$  ,则输出为  $e(t)=1,t\in [ nT,(n+1)T)$  因此
+     \begin{eqnarray*}
+     {\cal L} (r^*) &=& 1 \\
+     {\cal L} (e) &=& \frac{1}{s}-\frac{e^{-Ts}}{s} \\
+     G_h(s) &=& \frac{E(s)}{R^*(s)}
+	    = \frac{1-e^{-Ts}}{s} \\
+     G_h(j\omega) &= &\frac{1-e^{-jT\omega}}{j\omega} 
+      = \frac{e^{-j\omega T/2}(e^{j\omega T/2}-e^{-j\omega T/2})}{j\omega}\\
+      &=& \frac{2\sin\frac{\omega T}{2}}{\omega}e^{-j\omega T/2} \\
+      &=& \frac{2\sin\frac{\pi\omega}{\omega_s}}{\omega}e^{-j\pi\omega /\omega_s} 
+     \end{eqnarray*}
+** 零阶保持器频率特性
+*** Bode图						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{tikzpicture}[scale=0.5]
+%g=1-e^{-2\pi s}/s
+\begin{axis}[
+%axis x line=middle,axis y line= left, 
+xticklabel=$\pgfmathprintnumber{\tick}\omega_s$ ,
+yticklabel=$\pgfmathprintnumber{\tick}T$ ,
+ylabel=$|G_h(j\omega)|$ ,xlabel=$\omega$ ,
+every axis plot post/.append style={mark=none},
+grid=both,
+ymin=0,ymax=1.1,xmin=0.1,xmax=3]
+\addplot[violet,thick] shell {octave -q --eval "w=[0.1:0.1:3]';m=abs(1/2/pi*(1-exp(-2*pi*j*w))./(j*w));disp([w,m]);" };
+%\legend{$|G_h(j\omega)|$ , $\angle G_h(j\omega)$};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}[scale=0.5]
+%g=1-e^{-2\pi s}/s
+\begin{axis}[
+%axis x line=middle,axis y line= left, 
+xticklabel=$\pgfmathprintnumber{\tick}\omega_s$ ,
+yticklabel=$\pgfmathprintnumber{\tick}\pi$ ,
+ylabel=$\angle G_h(j\omega)$ ,xlabel=$\omega$ ,
+every axis plot post/.append style={mark=none},
+grid=both,
+ymin=-1.5,ymax=0,xmin=0,xmax=3]
+\addplot[blue] plot coordinates  {(0,0) (1,-1) };
+\addplot[blue] plot coordinates  {(1,0) (2,-1) };
+\addplot[blue] plot coordinates  {(2,0) (3,-1) };
+%\addplot plot coordinates  {(0,-1) (1,-1) (1,0)};
+%\legend{$|G_h(j\omega)|$ , $\angle G_h(j\omega)$};
+\end{axis}
+\end{tikzpicture}
+
+*** 零阶保持器特性					      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :BEAMER_env: block
+    :BEAMER_envargs: <3->
+    :END:
+   * 低通滤波
+   * 相角迟后
+   * 时间延迟
+** 一阶保持器
+\begin{eqnarray*}
+ e(nT+\Delta t) &=& a_0+a_1 \Delta t, \qquad (0\leq \Delta t < T) \\
+ a_0& = & e(nT) \\
+ a_1&=& \frac{e(nT)-e((n-1)T)}{T} \\
+G_h(s) &=& T(1+s)\left(\frac{1-e^{-Ts}}{Ts}\right)^2 \\
+G_h(j\omega) &=& \sqrt{1+(\omega T)^2}\left(\frac{2\sin\frac{\omega T}{2}}{\omega }\right)^2e^{-j(\omega T-\arctan\omega T)}
+\end{eqnarray*}
+
+#  * <2-> 其相角迟后比零阶保持器大得多,大大降低了系统相位裕度  $\gamma$  ,
+   * <2-> 高频噪声增大
+   * <3-> 因此一般只用零阶保持器.
+

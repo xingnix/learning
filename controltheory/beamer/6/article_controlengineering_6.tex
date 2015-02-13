@@ -1,0 +1,1460 @@
+% Created 2013-10-28 Mon 23:06
+\documentclass[table]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{amsmath}
+\usepackage[usenames]{color}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{系统设计与串联校正}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统校正方法}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{系统的设计与校正}
+\label{sec-1}
+\subsection{校正装置的目的}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{校正装置的目的}
+\label{sec-1-1-1}
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+% \path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue,->] node[draw, right =of p1] (gc) {$G_{c}(s)$}; 
+\path[->] (p1) edge node {} (gc) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of gc] (p2) {}; 
+\path[->] (gc) edge node {} (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p2] (g) {$G(s)$}; 
+\path[->] (p2) edge node {} (g); 
+\path[->] node[ right =of g] (o) {$C(s)$}; 
+\path[->] (g) edge node {} (o); 
+\path[red,->] node[draw, inner sep=5pt,below =of g] (gf) {$G_f(s)$}; 
+\path[ draw] (g.east)+(1em,0)  |-  (gf); 
+\path[->, draw] (gf.west) -| node[very near end] {$-$} (p2); 
+\path[->, draw] (g.east)+(1em,0) -- +(1em,-7em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item <2->改善系统稳定性
+\item <2->改善系统的稳态性能
+\item <2->改善系统的动态品质
+\end{itemize}
+\end{frame}
+\subsection{设计指标的转换}
+\label{sec-1-2}
+\begin{frame}
+\frametitle{设计指标的转换}
+\label{sec-1-2-1}
+
+\begin{itemize}
+\item <2->二阶系统的时域与频域指标有明确的转换公式
+\item <3->高阶系统的时域与频域指标有近似转换公式
+\item <4->校正后系统的要求
+\begin{itemize}
+\item <4->低频段:积分环节, $K$ 尽量大,以减小稳态误差
+\item <5->中频段:以斜率 $-20dB/dec$ 穿越 $0dB$ 线,使 $\omega_c$ 足够大,提高动态性能
+\item <6->高频段:抗干扰要求,增益下降要快
+\end{itemize}
+\end{itemize}
+\end{frame}
+\section{串联超前校正与串联滞后校正}
+\label{sec-2}
+\subsection{串联超前校正原理与方法}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{串联超前校正原理}
+\label{sec-2-1-1}
+
+利用超前校正网络的相角超前特性来提升系统的相角裕度 $\gamma$ 
+\begin{eqnarray*}
+G_c(s) &=& \frac{1+aTs}{1+Ts} ,a>1 \\
+\phi_c(\omega) & = & \arctan(aT\omega)-\arctan(T\omega) 
+\end{eqnarray*}
+\begin{itemize}
+
+\item 校正网络Bode图
+\label{sec-2-1-1-1}%
+\begin{tikzpicture}[ yscale=0.55,yscale=0.7]
+\draw[->] (-1,0) -- (3.5,0);
+\draw[->] (0,-0.5) -- (0,2.1);
+\draw (0,1.5) node[above left] {$L_c(\omega)$};
+\draw [red,thick] plot coordinates {(0,0) (1,0) (2,1)  (3,1)};
+\draw (1,0) node[below] {$\frac{1}{aT}$};
+\draw (2,0) node[below] {$\frac{1}{T}$};
+\draw[pink] (1.5,0) -- +(0,0.5);
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (3.5,0);
+\draw[->] (0,-0.5) -- (0,2.1);
+\draw (0,1.5) node[above left] {$\phi_c(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.5,0.1) (1,0.45) (1.5,1) (2,0.45) (2.5,0.1) (3,0)};
+\draw (1,0) node[below] {$\frac{1}{aT}$};
+\draw (2,0) node[below] {$\frac{1}{T}$};
+\draw[pink] (1.5,0) -- +(0,1);
+\end{scope}
+\end{tikzpicture}
+
+
+\item 超前校正示意图:
+\label{sec-2-1-1-2}%
+\begin{tikzpicture}[scale=0.7]
+\coordinate (o) at (0,0);
+\coordinate (ox) at (4.5,0);
+\draw[->] (o) -- (ox);
+\draw[->] (0,-1.1) -- (0,1.5);
+\draw (0,0.5) node[above left] {$L(\omega)$};
+\draw (o) node[below left] {$o$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\coordinate (s) at (1,1);
+\coordinate (s1) at ($(s) + (160:1)$);
+\coordinate (s2) at ($(s)+(-40:4.5)$);
+\coordinate (w1) at (intersection of s--s2 and o--ox);
+\coordinate (w2) at ($(w1)+(0.5,0)$);
+\coordinate (w2down) at ($(w2)+(0,-5)$);
+\coordinate (w2v) at (intersection of w2--w2down and s--s2);
+\coordinate (w2e) at ($(w2)+(160:5)$);
+\coordinate (w2left) at (intersection of w2--w2e and s--s2);
+\coordinate (w2right) at ($2*(w2)-(w2left)$);
+\draw[red] (s1)--(s)--(s2);
+\draw[blue] (w2left)--(w2right)--+(-40:1);
+\draw[purple] (w2)--(w2v);
+\draw (w1) node[below left] {$\omega_c'$};
+\draw (w2) node[above right] {$\omega_c''$};
+
+\begin{scope}[shift={(0,-2.3)}]
+\draw[->] (o) -- (ox);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.2) node[above left] {$\phi(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.3,-0.1) (0.6,-0.25) (1.1,-0.5) (1.5,-0.65) (2,-0.7) (3.7,-0.9)};
+\draw [blue,thick] plot [smooth] coordinates {(1.1,-0.5) (1.5,-0.6) (2.7,-0.6) (3.7,-0.9)};
+\draw[dashed,red] (0,-1) -- (4.5,-1);
+\draw (0,-1) node[left] {$-180^\circ$};
+\end{scope}
+\end{tikzpicture}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{超前校正网络分析}
+\label{sec-2-1-2}
+\begin{itemize}
+
+\item 最大超前角:
+\label{sec-2-1-2-1}%
+\begin{eqnarray*}
+\frac{d\phi_c(\omega)}{d\omega} & = & 0 \\
+\omega_m &=& \frac{1}{T\sqrt{a}}\\
+\phi_c(\omega_m) &=& 2\arctan\sqrt{a}-\frac{\pi}{2}\\
+                 &=& \arcsin\frac{a-1}{a+1}
+\end{eqnarray*}
+工程中一般 $\phi_m\leq 60^{\circ},a<20$ 
+
+\item 幅值
+\label{sec-2-1-2-2}%
+\begin{eqnarray*}
+\lg\omega_m &=& \frac{1}{2}(\lg\frac{1}{T}+\lg\frac{1}{aT}) \\
+L_c(\omega) &=& 20\lg\omega_m-20\lg\frac{1}{aT} \\
+            &=& 10\lg a
+\end{eqnarray*}
+\begin{itemize}
+\item <4-> $\omega_m$ 位于 $\frac{1}{aT}$ 与 $\frac{1}{T}$ 的几何中心
+\item <5-> 超前网絡设计使得设计后的 $\omega_c\approx\omega_m$ ,以获得最大相角提升
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{适用范围}
+\label{sec-2-1-3}
+
+\begin{itemize}
+\item 超前校正适用范围:
+\begin{itemize}
+\item <2->原系统稳定, $\gamma$ 不够
+\item <3->希望的截止频率比原系统大,主要用于提高系统的瞬态性能(动态品质)
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{设计步聚(设计参数 $K,a,T$ )}
+\label{sec-2-1-4}
+
+\begin{enumerate}
+\item 根据 $e_{ss}$ 的指标要求,确定开环增益 $K$
+\item 计算未校正系统的 $\omega_c',\gamma'$
+\item 转换时域指标到频域指标,得到希望的 $\omega_c'',\gamma''$
+\item <2->设计超前校正网络的参数 $a,T$
+\begin{itemize}
+\item <2->确定 $a$  :  
+          \[L(\omega_c'')=-10\lg a\]
+\item <2->确定 $T$  :  
+         \[\omega_c'' = \omega_m = \frac{1}{T\sqrt{a}}\]
+\end{itemize}
+\item <3->检验校正后系统的 $\omega_c,\gamma$ .
+\end{enumerate}
+\end{frame}
+\subsection{超前校正示例}
+\label{sec-2-2}
+\begin{frame}
+\frametitle{超前校正示例1}
+\label{sec-2-2-1}
+
+单位负反馈开环传递函数  $G(s)=\frac{200}{s(0.1s+1)}$ ,设计校正网絡,使已校正系统相角裕度  $\gamma''\geq 45^{\circ}$ , 截止频率  $\omega_c''\geq 50 rad/s$  .
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+       L(\omega) & = &\begin{cases} 20\lg\frac{200}{\omega} & \omega < 10 \\
+      20\lg\frac{200}{0.1\omega^2} & \omega\geq 10
+      \end{cases} \\
+      \omega_c' &=& 44.7 \\
+        &<& \omega_c'' \\
+      \gamma' &=& 12.6^{\circ} \\
+       &<& \gamma''
+      \end{eqnarray*}
+      选择超前校正网絡.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例1(续)求 $a$}
+\label{sec-2-2-2}
+
+\begin{itemize}
+\item 先根据 $\phi_m$ 尝试确定参数  $a$ 
+       \begin{eqnarray*}
+       \phi_m & = &\gamma''-\gamma'+\epsilon \\
+       \epsilon &=& 10^{\circ} \\
+       \phi_{m} &=& 45^{\circ}-12.6^{\circ}+10^{\circ} \\
+       	&=& 42.4^{\circ} \\
+       a &=& \frac{1+\sin\phi_m}{1-\sin\phi_m} \\
+       	&=& 5.1
+       \end{eqnarray*}
+       其中  $\epsilon$  是因为估算有误差而留的余量.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例1(续)求 $T$}
+\label{sec-2-2-3}
+
+\begin{itemize}
+\item 求解  $T$
+      \begin{eqnarray*}
+      L(\omega_c'') +10\lg a &= & 0 \\
+      20\lg\frac{2000}{(\omega_c'')^2}+20\lg\sqrt{a} &=& 0 \\
+      \frac{2000\sqrt{5}}{(\omega_c'')^2} &=& 1 \\
+      \omega_c'' &=& 66.9 \\
+      \omega_m &=& \frac{1}{T\sqrt{a}} \\
+      \omega_c'' &=& \omega_m \\
+      T &=& 0.0066
+      \end{eqnarray*}
+\item <2->计算此时的相角裕度: 
+      \begin{eqnarray*}
+      \gamma'' &=& 180^{\circ}+42.4^{\circ}-90^{\circ}-\arctan(0.1\omega_c'') \\
+       &=& 50.9^{\circ}
+      \end{eqnarray*}
+\item <2->满足要求的超前校正网絡为  $G(s)=\frac{1+0.034s}{1+0.0066s}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例2}
+\label{sec-2-2-4}
+
+  $G(s)=\frac{K}{s(s+1)}$ ,设计校正网絡使  $\gamma''\geq 45^{\circ}$  ,单位斜坡作用下  $e_{ss} \leq \frac{1}{15}$ 
+
+\begin{itemize}
+\item <2->解: 根据稳态误差要求,得:
+      \begin{eqnarray*}
+      e_{ss} & = & \frac{1}{K} 
+	     \leq  \frac{1}{15} \\
+      K & \geq & 15
+      \end{eqnarray*}
+      取  $K=15$  .
+      \begin{eqnarray*}
+      L(\omega) & = & \begin{cases} 20\lg\frac{15}{\omega}  & \omega< 1 \\
+				   20\lg\frac{15}{\omega^2} & \omega\geq 1   \end{cases}\\
+      \omega_c' &=& 3.9 \\
+      \gamma'  &=& 14.5^{\circ} 
+       < 45^{\circ}
+      \end{eqnarray*}
+      选择超前校正网絡.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例2(续)  求 $a$}
+\label{sec-2-2-5}
+
+\begin{itemize}
+\item 先根据  $\phi_m$  确定  $a$  
+      \begin{eqnarray*}
+      \phi_m & = &\gamma''-\gamma'+\epsilon \\
+      \epsilon &=& 10^{\circ} \\
+      \phi_m &=& 40.5^{\circ} \\
+      a &=& \frac{1+\sin\phi_{m}}{1-\sin\phi_m} \\
+       &=& 4.7 
+      \end{eqnarray*}
+      其中  $\epsilon$  是因为估算有误差而留的余量.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例2(续)  求 $T$}
+\label{sec-2-2-6}
+
+\begin{itemize}
+\item 然后求解  $T$ 
+      \begin{eqnarray*}
+      L(\omega_c'') +10\lg a &= & 0 \\
+      20\lg\frac{15}{(\omega_c'')^2}+20\lg\sqrt{a} &=& 0 \\
+      \frac{15\sqrt{4.7}}{(\omega_c'')^2} &=& 1 \\
+      \omega_c'' &=& 5.7 \\
+      \omega_m &=& \frac{1}{T\sqrt{a}} \\
+      \omega_c'' &=& \omega_m \\
+      T &=& 0.08
+      \end{eqnarray*}
+\item <2-> 计算此时的相角裕度: 
+      \begin{eqnarray*}
+      \gamma'' &=& 180^{\circ}+40.5^{\circ}-90^{\circ}-\arctan(\omega_c'') \\
+       &=& 50.5^{\circ}
+      \end{eqnarray*}
+\item <2-> 满足要求的超前校正网絡为  $G(s)=\frac{1+0.38s}{1+0.08s}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例3}
+\label{sec-2-2-7}
+
+  单位负反馈  $G(s)=\frac{K}{s(0.05s+1)(0.2s+1)}$ ,设计超前校正网絡使  $K_v\geq 5,\sigma\%\leq 25\%, t_s\leq 1s$ 
+
+\begin{itemize}
+\item <2-> 解: 由性能指标知:
+       \begin{eqnarray*}
+       K & = &5 \\
+       \sigma\% &=& 0.16+0.4(M_r-1) \\
+       0.25 &=& 0.16+0.4(M_r-1) \\
+       M_r &=& 1.225 \\
+       t_s &=&\frac{K_0\pi}{\omega_c''} \\
+       K_0 &=& 2+1.5(M_r-1)+2.5(M_r-1)^2 
+           = 2.5 \\
+       \omega_c'' &=& 7.7 \\
+       \gamma'' &=&\arcsin\frac{1}{M_r}
+          = 55^{\circ}
+       \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例3(续)频率特性分析}
+\label{sec-2-2-8}
+
+
+\begin{eqnarray*}
+L(\omega) & = & \begin{cases} 20\lg\frac{5}{\omega}  & \omega< 5 \\
+                             20\lg\frac{5}{0.2\omega^2} & 5\leq\omega< 20  \\
+                             20\lg\frac{5}{0.01\omega^3} & \omega \geq 20 \end{cases}\\
+\omega_c' &=& 5 \\
+\gamma'  &=& 180^{\circ}-90^{\circ}-\arctan0.2\omega_c' -\arctan0.05\omega_c'\\
+  &=& 31.0^{\circ}
+\end{eqnarray*}
+
+选择超前校正网絡.
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例3(续):计算  $a$}
+\label{sec-2-2-9}
+
+
+\begin{eqnarray*}
+\omega_c'' &=& 7.7 \\
+L(\omega_c'') +10\lg a &= & 0 \\
+20\lg\frac{5}{0.2(\omega_c'')^2}+20\lg\sqrt{a} &=& 0 \\
+\frac{5\sqrt{a}}{0.2(\omega_c'')^2} &=& 1 \\
+a &=& 5.6 \\
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{超前校正示例3(续):根据截止频率计算  $T$}
+\label{sec-2-2-10}
+
+\begin{itemize}
+\item 计算 $T$
+       \begin{eqnarray*}
+       \omega_m &=& \frac{1}{T\sqrt{a}} \\
+       \omega_c'' &=& \omega_m \\
+       T &=& 0.055 \\
+       \phi_m &=& \arcsin\frac{a-1}{a+1} \\
+       &=& 44^{\circ} 
+       \end{eqnarray*}
+\item <2->计算此时的相角裕度: 
+       \begin{eqnarray*}
+       \gamma'' &=& 180^{\circ}+44^{\circ}-90^{\circ}-\arctan(0.05\omega_c'')-\arctan(0.2\omega_c'') \\
+       	&=& 56^{\circ}
+       \end{eqnarray*}
+\item <2->满足要求的超前校正网絡为  $G(s)=\frac{1+0.3s}{1+0.055s}$
+\end{itemize}
+\begin{itemize}
+
+\item 串联滞后校正原理与方法
+\label{sec-2-2-10-1}%
+\begin{itemize}
+
+\item 串联滞后校正原理\\
+\label{sec-2-2-10-1-1}%
+利用滞后网絡的幅值衰减特性,使校正后的 $\omega_c$ 前移,从而达到提升 $\gamma$ 的目的.
+\begin{eqnarray*}
+G_c(s) & = &\frac{1+bTs}{1+Ts} 
+\end{eqnarray*}
+其中:$b<1$ 
+
+\begin{itemize}
+
+\item 校正网络Bode图
+\label{sec-2-2-10-1-1-1}%
+\begin{tikzpicture}[scale=0.7]
+\draw[->] (-1,0) -- (3.5,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$L_c(\omega)$};
+\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\draw (1,0) node[above] {$\frac{1}{T}$};
+\draw (2,0) node[above] {$\frac{1}{bT}$};
+\draw[dashed,pink] (1.5,0) -- + (0,-1);
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (3.5,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$\phi_c(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.5,-0.1) (1,-0.45) (1.5,-1) (2,-0.45) (2.5,-0.1) (3,0)};
+\draw (1,0) node[above] {$\frac{1}{T}$};
+\draw (2,0) node[above] {$\frac{1}{bT}$};
+\draw[dashed,pink] (1.5,0) -- +(0,-1);
+\end{scope}
+\end{tikzpicture}
+
+
+\item 滞后校正示意图:
+\label{sec-2-2-10-1-1-2}%
+\begin{tikzpicture}[scale=0.7]
+\coordinate (o) at (0,0);
+\coordinate (ox) at (4.5,0);
+\draw[->] (-1,0) -- (ox);
+\draw[->] (0,-1.1) -- (0,1.5);
+\draw (0,0.5) node[above left] {$L(\omega)$};
+\draw (o) node[below left] {$o$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\coordinate (c) at (3.5,-0.3);
+\coordinate (c1) at ($(c) +(160:3)$);
+\coordinate (d) at (3.5,0.2);
+\coordinate (de) at ($(3.5,0.2)+(-40:1)$);
+\coordinate (a) at ($(d) +(160:3)$);
+\coordinate (a1) at ($(a) +(-40:3)$);
+\coordinate (b) at (intersection of a--a1 and c--c1);
+\coordinate (w1) at (intersection of d--de and o--ox);
+\coordinate (w2) at (intersection of b--c and o--ox);
+\draw[red] (a)++(160:0.5)--(d)--(de);
+\draw[blue] (a)--(b)--(c)--+(-40:1);
+\draw (w1) node[above right] {$\omega_c'$};
+\draw (w2) node[below] {$\omega_c''$};
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (4.5,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$\phi(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.3,-0.1) (0.6,-0.25) (1.1,-0.5) (2.5,-0.65) (3,-0.7) (3.7,-0.9) (3.9,-1)};
+\draw[dashed,red] (0,-1) -- (4.5,-1);
+\draw (0,-1) node[left] {$-180^\circ$};
+\end{scope}
+\end{tikzpicture}
+
+\end{itemize} % ends low level
+
+\item 滞后校正网络分析
+\label{sec-2-2-10-1-2}%
+\begin{itemize}
+\item 根据期望相角裕度 $\gamma''$ ,求解
+       	\begin{eqnarray*}
+       	\gamma'' & = &180+\phi(\omega_c'')+\phi_c(\omega_c'') 
+       	\end{eqnarray*}
+\item <2->得到期望截止频率 $\omega_c''$ ,其中 $\phi_c(\omega_c'')$ 可取为 $-6^\circ$ .
+\item <3->为了实现新的截止频率,需要:
+       	\begin{eqnarray*}
+       	20\lg b & = & L(\omega_c'') 
+       	\end{eqnarray*}
+\item <4->为了减轻对相频特性的影响,需要:
+       	\begin{eqnarray*}
+       	 \omega_c'' & = & \frac{10}{bT}
+       	\end{eqnarray*}
+\end{itemize}
+
+\item 适用泛围
+\label{sec-2-2-10-1-3}%
+\begin{itemize}
+\item <2->未校正系统可以是不稳定系统,
+\item <3->所希望的截止频率 $\omega_c''$ 一定比未校正系统的截止频率 $\omega_c'$ 小,主要是提高系统稳态精度.
+\end{itemize}
+
+\item 设计步聚\\
+\label{sec-2-2-10-1-4}%
+设计步聚
+\begin{itemize}
+\item 由 $e_ss$ 确定开环增益 $K$
+\item 画未校正系统Bode图
+\item <2->由设计指标确定 $\gamma''$ ,求解:  $\gamma''-180^{\circ} = \phi(\omega_c'')-6^{\circ}$ 确定 $\omega_c''$
+\item <3->计算 $b,T$ , 
+         \[20\lg b=L(\omega_c''),\frac{1}{bT}=0.1\omega_c''\]
+\end{itemize}
+\end{itemize} % ends low level
+
+\item 滞后校正示例
+\label{sec-2-2-10-2}%
+\begin{itemize}
+
+\item 滞后校正示例1\\
+\label{sec-2-2-10-2-1}%
+设单位负反馈系统 $G(s)=\frac{K}{s(s+1)(0.2s+1)}$ 设计串联校正装置,满足  $K_v=8, \gamma''\geq 40^{\circ}$ 
+
+解:
+
+\begin{itemize}
+\item <2->根据稳态性能指标得
+      \begin{eqnarray*}
+      K_v & = &8 \\
+      K_v &= & K \\
+       K &=& 8
+      \end{eqnarray*}
+      \begin{eqnarray*}
+      L(\omega) & = & \begin{cases}20\lg\frac{8}{\omega} & \omega <1 \\
+                                   20\lg\frac{8}{\omega^2} & 1\leq \omega < 5 \\
+                                   20\lg\frac{8}{0.2\omega^3} &  \omega \geq 5 \\  \end{cases}\\
+      \omega_c' &=& 2.8 \\
+      \gamma' &=& -10 \\
+      \end{eqnarray*}
+\end{itemize}
+
+
+\item 滞后校正示例1:参数求解\\
+\label{sec-2-2-10-2-2}%
+根据  $\gamma''$  计算  $\omega_c''$ 
+\begin{eqnarray*}
+180^{\circ}-90^{\circ}-\arctan\omega_c''-\arctan0.2\omega_c'' & = & 40^{\circ}+\epsilon\\
+\epsilon &=& 6^{\circ} \\
+\omega_c'' &\approx& 0.7 \\
+L(\omega_c'') +20\lg b&=& 0 \\
+b &=& 0.09 \\
+\frac{1}{bT} &=& 0.1\omega_c''\\
+T &=& 158.7 \\
+\end{eqnarray*}
+
+滞后校正网絡为:  $G_c=\frac{14.3s+1}{158.7s+1}$ 
+
+
+\item 滞后校正示例2\\
+\label{sec-2-2-10-2-3}%
+设单位负反馈系统  $G(s)=\frac{5}{s(s+1)(0.5s+1)}$  ,设计串联校正装置,使校正后系统满足 $\gamma''\geq 40^{\circ}, h''\geq 10dB$ 
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+      L(\omega) & = & \begin{cases} 20\lg\frac{5}{\omega} & \omega <1\\
+                                    20\lg\frac{5}{\omega^2} & 1<\omega<2 \\
+                                    20\lg\frac{5}{0.5\omega^3} & \omega\geq 2 \end{cases}\\
+      \omega_c' &=& 2.15 \\
+      \gamma' &=& 180^{\circ}-90^{\circ}-\arctan\omega_c'-\arctan0.5\omega_c' \\
+       &=& -22^{\circ} 
+      \end{eqnarray*}
+\end{itemize}
+
+
+\item 滞后校正示例2(续)选用滞后校正,根据  $\gamma''$  计算  $\omega_c''$\\
+\label{sec-2-2-10-2-4}%
+\begin{eqnarray*}
+180^{\circ}+\phi(\omega_c'') & = & 40^{\circ}+\epsilon\\
+\epsilon &=& 6^{\circ} \\
+\omega_c'' &\approx& 0.5 \\
+L(\omega_c'') +20\lg b &=& 0 \\
+20\lg\frac{5}{\omega_c''} +20\lg b &=& 0\\
+b &=& 0.1 \\
+\frac{1}{bT} &=& 0.1\omega_c'' \\
+T &=& 200
+\end{eqnarray*}
+
+
+\item 滞后校正示例2(续)验证相角裕度
+\label{sec-2-2-10-2-5}%
+\begin{itemize}
+\item 直接计算校正后的相角裕度  $h''$  较困难,可结合幅频特性验证.
+       	\begin{eqnarray*}
+       	L(\omega_x)+L_c(\omega_x) &=& -10 \\
+       	20\lg\frac{5b}{\omega_x^2} &=& -10, \qquad 1<\omega_x<2 \\
+       	\omega_x &\approx& 1.36 \\
+       	\phi(\omega_x) & = & -178^{\circ} \\
+       	\omega_x'' &>& \omega_x \\
+       	L(\omega_x'')+L_c(\omega_x'') &<& -10 \\
+       	h'' &>& 10dB
+       	\end{eqnarray*}
+\end{itemize}
+
+
+
+
+
+
+\begin{itemize}
+
+\item 串联滞后-超前校正原理与方法
+\label{sec-2-2-10-2-5-1}%
+\begin{itemize}
+
+\item 串联滞后-超前校正原理
+\label{sec-2-2-10-2-5-1-1}%
+\begin{itemize}
+\item 滞后部分的幅值衰减特性,提高系统的稳态性能
+\item 超前部分的相角超前特性,提高系统的动态性能
+\end{itemize}
+
+\begin{math}
+G_c = \frac{(1+T_a s)(1+T_b s)}{(1+aT_a s)(1+\frac{T_b}{a}s)}
+\end{math}
+其中 $a>1$ 
+
+\begin{tikzpicture}
+\draw[->] (-1,0) -- (6,0);
+\draw[->] (0,-1.1) -- (0,1.1);
+\draw (0,0.5) node[above left] {$L_c(\omega)$};
+\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (4,-1) (5,0) (6,0) };
+\draw (1,0) node[above] {$\frac{1}{aT_a}$};
+\draw (2,0) node[above] {$\frac{1}{T_a}$};
+\draw (4,0) node[above] {$\frac{1}{T_b}$};
+\draw (5,0) node[above] {$\frac{a}{T_b}$};
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (6,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$\phi_c(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {
+(0,0) (0.5,-0.1) (1,-0.45) (1.5,-1) (2,-0.45) (2.5,-0.1) (3,0)
+(3.5,0.1) (4,0.45) (4.5,1) (5,0.45) (5.5,0.1) (6,0)};
+\draw (1,0) node[above] {$\frac{1}{aT_a}$};
+\draw (2,0) node[above] {$\frac{1}{T_a}$};
+\draw (4,0) node[below] {$\frac{1}{T_b}$};
+\draw (5,0) node[below] {$\frac{a}{T_b}$};
+\end{scope}
+\end{tikzpicture}
+
+
+\item 适用泛围
+\label{sec-2-2-10-2-5-1-2}%
+\begin{itemize}
+\item 系统不稳定,且要求的稳态性能与动态性能较高时
+\end{itemize}
+
+\item 设计步聚
+\label{sec-2-2-10-2-5-1-3}%
+\begin{itemize}
+\item 由 $e_{ss}$ 要求确定开环增益
+\item 绘制未校正系统Bode图,计算 $\omega_c',\gamma',h'$
+\item <2->选择  $\frac{1}{T_b}$  为  $L(\omega)$  上斜率由  $-20dB/dec$  至 $-40dB/dec$ 的交接频率(为保证校正后的截止频率处斜率为 $-20dB/dec$ ,且有一定宽度
+\item <3->计算期望的截止频率 $\omega_c''$ ,求解  $L(\omega_c'')+20\lg T_b\omega_c''-20\lg a=0$  得 $a$
+\item <4->计算期望相角裕度 $\gamma''$ ,求解:  $180^\circ+\phi_c(\omega_c'')+\phi(\omega_c'')=\gamma''$  ,得 $T_a$
+\end{itemize}
+\end{itemize} % ends low level
+
+\item 串联滞后-超前校正示例
+\label{sec-2-2-10-2-5-2}%
+\begin{itemize}
+
+\item 串联滞后-超前校正示例1\\
+\label{sec-2-2-10-2-5-2-1}%
+单位负反馈系统  $G(s)=\frac{K}{s(0.1s+1)(0.01s+1)}$  设计校正网絡,满足  $K_v \geq 100,\gamma'>40,\omega_c''\approx 20$ 
+
+解:
+\begin{itemize}
+\item <2->由稳态性能指标得:  $K=100$ 
+      \begin{eqnarray*}
+      L(\omega) & = &\begin{cases}20\lg\frac{100}{\omega} & \omega<10 \\
+                                  20\lg\frac{100}{0.1\omega^2} & 10\leq \omega<100 \\
+                                  20\lg\frac{100}{0.001\omega^3} & \omega \geq 100 \end{cases} \\
+      \omega_c' &=& 31.6 \\
+      \gamma' &=& 180^{\circ}-90^{\circ}-\arctan0.1\omega_c'-\arctan0.01\omega_c' \\
+       &=& 0 
+      \end{eqnarray*}
+\end{itemize}
+
+
+\item 串联滞后-超前校正示例1(续):选用滞后-超前校正\\
+\label{sec-2-2-10-2-5-2-2}%
+\[G_c = \frac{(1+T_a s)(1+T_b s)}{(1+aT_a s)(1+\frac{T_b}{a}s)}\]
+
+根据截止频率  $\omega_c''$  确定  $T_b,a$ 
+\begin{eqnarray*}
+T_b & = & 0.1\\
+L(\omega_c'') +20\lg0.1\omega_c'' &=& 20\lg\frac{100}{\omega_c''} \\
+&=& 20\lg5\\
+20\lg a &=& 20\lg5 \\
+a &=& 5 
+\end{eqnarray*}
+
+
+\item 串联滞后-超前校正示例1(续):验证相角裕度,确定 $T_{a}$\\
+\label{sec-2-2-10-2-5-2-3}%
+\begin{eqnarray*}
+\phi(\omega_c'') &=& -90^{\circ}-\arctan 0.1\omega_c''-\arctan 0.01\omega_c'' 
+ = -165^{\circ} \\
+ & & 180^{\circ}+\phi(\omega_c'')+\arctan0.1\omega_c''-\arctan(\frac{T_b}{a}\omega_c'') \\
+&=& 57^{\circ} 
+ \geq  \epsilon+\gamma'' ,\qquad (\epsilon = 6^{\circ})\\
+\frac{1}{T_a} &=&0.1\omega_c''\\
+T_a &=& 0.5
+\end{eqnarray*}
+
+得  $G_c=\frac{(1+0.5s)(1+0.1s)}{(1+2.5s)(1+0.02s)}$ 
+
+
+\item 串联滞后-超前校正示例2\\
+\label{sec-2-2-10-2-5-2-4}%
+单位负反馈系统开环对数幅频特性曲线如图所示,其中虚线表示校正前的实线表示校正后的.要求
+\begin{enumerate}
+\item 确定校正装置类型,写出传递函数
+\item 确定校正后系统稳定时的开环增益
+\item 当开环增益  $k=1$  时,求校正后系统的相位裕度  $\gamma$ , 幅值裕度  $h$
+\end{enumerate}
+
+\begin{itemize}
+
+\item Bode图
+\label{sec-2-2-10-2-5-2-4-1}%
+\begin{tikzpicture}[scale=0.8]
+\coordinate (o) at (0,0);
+\coordinate (ox) at (3.5,0);
+\draw[->] (-1.1,0) -- (ox);
+\draw[->] (0,-1.1) -- (0,3.5);
+\draw (o) node[above left] {$o$};
+\draw (o) node[below left] {$0.1$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\draw[red,thick] (3,0.5)--+(-1,1)--+(-4,2.5);
+\draw[red,thick] (3,0.5)--+(0.5,-1);
+\draw[dashed,purple,thick] (0,2.5)--(1,2.5)--(2,1.5);
+\draw[dashed,blue] (1,0)--(1,2.5);
+\draw[dashed,blue] (2,0)--(2,1.5);
+\draw[dashed,blue] (3,0)--(3,0.5);
+\draw (1,0) node[below] {$1$};
+\draw (2,0) node[below] {$10$};
+\draw (3,0) node[below] {$100$};
+\draw[red,thick] (0.7,1.5) node[] {$-20dB/dec$};
+\draw[red,thick] (2.7,0.7) node[above right] {$-40dB/dec$};
+\draw[red,thick] (3.3,0) node[below right] {$-60dB/dec$};
+\end{tikzpicture}
+
+
+\item 解:由图得
+\label{sec-2-2-10-2-5-2-4-2}%
+\begin{itemize}
+\item 采用了串联滞后-超前校正
+\item 校正前传递函数:  $G_1(s)=\frac{K(10s+1)}{s(s+1)^2(0.01s+1)}$
+\item 校正后传递函数:  $G_2(s)=\frac{K}{s(0.1s+1)(0.01s+1)}$
+\item 校正装置传递函数:  $G_2(s)=\frac{(s+1)^2}{(0.1s+1)(10s+1)}$
+\end{itemize}
+
+\end{itemize} % ends low level
+
+\item 串联滞后-超前校正示例2(续):确定开环增益\\
+\label{sec-2-2-10-2-5-2-5}%
+校正前系统闭环特征方程:  
+
+\[D(s)=s(0.1s+1)(0.01s+1)+K\]
+
+Routh表
+
+\[
+\begin{matrix}
+s^3  & 1 & 1000 \\
+s^2  & 110 & 1000K \\
+s^1  & \frac{110000-1000K}{110} & 0 \\
+s^0  & 1000K 
+\end{matrix}\]
+
+得:  $1<K<110$ 
+
+
+\item 串联滞后-超前校正示例2(续):稳定裕度计算\\
+\label{sec-2-2-10-2-5-2-6}%
+当  $K=1$  时, 
+\begin{eqnarray*}
+G_2(s) &=& \frac{1}{s(0.1s+1)(0.01s+1)} \\
+L(\omega) & = & \begin{cases} 20\lg\frac{1}{\omega} & \omega<10 \\
+                              20\lg\frac{1}{0.1\omega^2} & 10\leq \omega <100 \\
+                              20\lg\frac{1}{0.001\omega^3} & \omega\geq 100  \end{cases}\\
+\omega_c &=& 1 \\
+\gamma &=& 180^{\circ}+\phi(\omega_c) \\
+ &=& 83.7^{\circ} \\
+\phi(\omega_x) &=& -\pi \\
+\omega_x &=& 31.6\\
+h &=& -20\lg\frac{1}{0.1\omega_x^2} \\
+ &=& 10 dB
+\end{eqnarray*}
+
+
+
+
+
+
+
+
+\begin{itemize}
+
+\item 串联综合法校正原理与方法
+\label{sec-2-2-10-2-5-2-6-1}%
+\begin{itemize}
+
+\item 串联综合法校正原理
+\label{sec-2-2-10-2-5-2-6-1-1}%
+\begin{itemize}
+\item <2->将性能指标要求转化为期望对数幅频特性,
+\item <3->再与待校正系统的开环对数幅频特性比较,从而确定校正装置的形式和参数.
+\item <4->该方法适用于最小相位系统.
+\item <5->设开环系统期望频率特性为 $G(j\omega)$ ,待求校正装置频率特性为 $G_c(j\omega)$ ,原系统频率特性为 $G_0(j\omega)$ .
+       	    \begin{eqnarray*}
+       	    G(s) &= &G_c(s)G_0(s) \\
+       	    20\lg|G_c(j\omega)| &=& 20\lg|G(j\omega)|-20\lg|G_0(j\omega)|
+       	    \end{eqnarray*}
+\end{itemize}
+
+\item 期望频率特性
+\label{sec-2-2-10-2-5-2-6-1-2}%
+\begin{itemize}
+\item 期望对数幅率渐近特性的一般形状为:
+\begin{itemize}
+\item 低频段斜率: $-40 dB/dec$
+\item 中频段斜率: $-20 dB/dec$
+\item 高频段斜率: $-40 dB/dec$
+\end{itemize}
+\item <2->对应的传递函数:  $G(s)=\frac{K(1+\frac{s}{\omega_2})}{s^2(1+\frac{s}{\omega_3})}$ ,其中 $\omega_2<\omega_3$
+\end{itemize}
+
+\item 期望频率特性分析 $G(s)=\frac{K(1+\frac{s}{\omega_2})}{s^2(1+\frac{s}{\omega_3})}$
+\label{sec-2-2-10-2-5-2-6-1-3}%
+\begin{itemize}
+\item 相频特性:
+       	    \begin{eqnarray*}
+       	    \phi_{\omega} &=& -180^{\circ}+\arctan\frac{\omega}{\omega_2}-\arctan\frac{\omega}{\omega_3} \\
+       	    \gamma &=& \arctan\frac{\omega}{\omega_2}-\arctan\frac{\omega}{\omega_3} 
+       	    \end{eqnarray*}
+\begin{itemize}
+\item 令  $\frac{d\gamma}{d\omega}=0$  得  $\omega_m=\sqrt{\omega_2\omega_3}$  .
+\end{itemize}
+\item <2->定义中频段宽度:  $H=\frac{\omega_2}{\omega_3}$ ,则:
+       	    \begin{eqnarray*}
+       	    \gamma_m &= &\arcsin\frac{H-1}{H+1} 
+       	    \end{eqnarray*}
+\end{itemize}
+
+\item 确定参数 $\omega_2,\omega_3$
+\label{sec-2-2-10-2-5-2-6-1-4}%
+\begin{itemize}
+\item 通常  $\omega_m<\omega_c$  且  $\omega_m\approx\omega_c$ ,设系统谐振峰值为  $M_r$  ,则近似有:
+       	    \begin{eqnarray*}
+       	    M_r &= &\frac{1}{\sin\gamma} \\
+       	    \sin\gamma &=& \frac{H-1}{H+1} \\
+       	    H &=&\frac{M_r+1}{M_r-1}
+       	    \end{eqnarray*}
+\item <2->可选取:
+       	    \begin{eqnarray*}
+       	    \omega_2 & \leq &\frac{\omega_c(M_r-1)}{M_r} \\
+       	    \omega_3 & \geq &\frac{\omega_c(M_r+1)}{M_r} 
+       	    \end{eqnarray*}
+\end{itemize}
+
+
+\item 设计步聚
+\label{sec-2-2-10-2-5-2-6-1-5}%
+\begin{itemize}
+
+\item 设计步聚
+\label{sec-2-2-10-2-5-2-6-1-5-1}%
+\begin{itemize}
+\item 由 $e_{ss}$ 确定开环增益 $K$
+\item 由设计指标确定系统期望  $M_r,\omega_c$
+\item <2->选取  $\omega_2\leq\frac{\omega_c(M_r-1)}{M_r},\omega_3\geq\frac{\omega_c(M_r+1)}{M_r}$
+\item <3->在 $\omega_2$ 处做  $-40dB/dec$ 线与原系统  $L(\omega)$  低频段相交
+\item <4->在 $\omega_3$ 处做  $-40dB/dec$ 线与原系统  $L(\omega)$  高频段相交
+\item <5->写出期望开环传递函数  $G(s)$
+\item <5->$G_c(s)=\frac{G(s)}{G_0(s)}$
+\end{itemize}
+
+\item 示意图:
+\label{sec-2-2-10-2-5-2-6-1-5-2}%
+\begin{tikzpicture}
+\coordinate (o) at (0,0);
+\coordinate (ox) at (4.5,0);
+\draw[->] (-1,0) -- (ox);
+\draw[->] (0,-1.1) -- (0,2);
+\draw (0,2) node[above left] {$L(\omega)$};
+\draw (o) node[below left] {$o$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\coordinate (s1) at (-0.5,1.5);
+\coordinate (s2) at ($(s1) +(-20:3)$);
+\coordinate (s3) at ($(s2)+(-40:1)$);
+\coordinate (s4) at ($(s3)+(-60:1)$);
+\coordinate (wc) at (2,0);
+\coordinate (w1up) at ($(wc)+(160:1)$);
+\coordinate (w2down) at ($(wc)+(-20:1)$);
+\coordinate (w1upe) at ($(w1up)+(140:5)$);
+\coordinate (w2downe) at ($(w2down)+(-40:5)$);
+\coordinate (w1i) at (intersection of w1up--w1upe and s1--s2);
+\coordinate (w2i) at (intersection of w2down--w2downe and s3--s4);
+%\coordinate (w2) at (intersection of b--c and o--ox);
+\draw[red] (s1)--(s2)--(s3)--(s4);
+\draw[blue,thick] (w1i)--(w1up) (w2down)--(w2i);
+\draw[purple,thick] (w1up)-- (w2down);
+\draw (wc) node[below] {$\omega_c$};
+\end{tikzpicture}
+
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\section{反馈校正}
+\label{sec-3}
+\subsection{校正原理}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{反馈校正原理}
+\label{sec-3-1-1}
+
+
+\begin{tikzpicture}[node distance=1em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[blue,->] node[draw, right =of p1] (gc) {$G_1(s)$}; 
+\path[->] (p1) edge node {} (gc) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of gc] (p2) {}; 
+\path[->] (gc) edge node {} (p2) ; 
+\path[blue,->] node[draw, inner sep=5pt,right =of p2] (g) {$G_2(s)$}; 
+\path[->] (p2) edge node {} (g); 
+\path[->] node[ right =of g] (o) {$C(s)$}; 
+\path[->] (g) edge node {} (o); 
+\path[red,->] node[draw, inner sep=5pt,below =of g] (gf) {$G_c(s)$}; 
+\path[ draw] (g.east)+(0.3em,0)  |-  (gf); 
+\path[->, draw] (gf.west) -| node[very near end] {$-$} (p2); 
+\path[->, draw] (g.east)+(0.3em,0) -- +(0.3em,-5em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item 系统开环传递函数为:  
+    \[G(s)=\frac{G_1(s)G_2(s)}{1+G_2(s)G_c(,s)}\]  
+    其中 $G_c$  为反馈校正传递函数.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{反馈校正原理(续)}
+\label{sec-3-1-2}
+
+
+\begin{itemize}
+\item 若在系统工作频段内(动态性能起主要影响的频段内)有:  $|G_2(s)G_c(s)|\gg 1$  成立,则
+      \begin{eqnarray*}
+      G(s) & = &\frac{G_1(s)G_2(s)}{1+G_2(s)G_c(s)} \\
+           &\approx& \frac{G_1(s)G_2(s)}{G_2(s)G_c(s)}\\ 
+           &=& \frac{G_1(s)}{G_c}
+      \end{eqnarray*}
+\item <2->表明校正后的系统特性几乎与被反馈校正装置包围的环节无关.
+\end{itemize}
+
+\mode<article>{基本原理: 用反馈校正装置包围未校正系统中对动态性能改善有重大妨碍作用的某些环节,在满足  $|G_2G_c|\gg 1$  的条件下,局部反馈回路的特性主要取决于反馈校正装置,而与被包围部分无关.}
+\end{frame}
+\subsection{反馈校正的特点}
+\label{sec-3-2}
+\begin{frame}
+\frametitle{反馈校正的特点}
+\label{sec-3-2-1}
+
+\begin{itemize}
+\item <2->削弱非线性的影响
+\item <3->减小系统的时间常数
+\item <4->降低系统对参数变化的敏感性
+\item <5->抑制系统噪声
+\end{itemize}
+\end{frame}
+\subsection{反馈校正的设计方法}
+\label{sec-3-3}
+\begin{frame}
+\frametitle{转化为串联校正设计}
+\label{sec-3-3-1}
+
+\begin{eqnarray*}
+G(s) &=& \frac{G_1(s)}{G_c(s)} \\
+G_f(s) & = &\frac{1}{G_c(s)} \\
+G(s) &=& G_1(s)G_f(s)
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{综合法设计反馈校正网絡:原理}
+\label{sec-3-3-2}
+
+\begin{itemize}
+\item 校正后系统开环传递函数  $G(s)\approx\frac{G_1(s)}{G_c(s)}$
+\item <2->按综合法设计系统期望传递函数  $G(s)$  ,则 $G_c(s)\approx\frac{G_0(s)}{G(s)}$
+\item <3->使用条件:
+      \begin{eqnarray*}
+       |G_2 G_c| & > & 1 \\
+       G_0 & = & G_1 G_2 \\
+       G &=& \frac{G_1}{G_c}\\
+	 &=& \frac{G_0}{G_2 G_c} \\
+       |G| & <& | G_{0} | \\ 
+       20\lg|G_0|&>&20\lg|G|
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{综合法设计反馈校正网絡:设计步聚}
+\label{sec-3-3-3}
+
+\begin{itemize}
+\item 按  $e_{ss}$  要求,确定开环增益 $K$  ,并画出确定了 $K$  的 $20\lg|G_0(s)|$
+\item 按综合法设计期望开环对数幅频特性 $20\lg|G(s)|$
+\item <2->按  $20\lg|G_2 G_c|=20\lg|G_0(s)|-20\lg |G(s)|$  求解  $G_2(s)G_c(s)$
+\item <3->检查局部反馈回路稳定性,以及是否满足:  
+	    \[|G_2(j\omega_c)G_c(j\omega_c)|\gg 1\]
+\item <4->由 $G_2G_c$ 求解 $G_c$
+\item <5->检验校正后的系统是否满足设计要求
+\end{itemize}
+\end{frame}
+\section{复合校正}
+\label{sec-4}
+\subsection{复合校正特点}
+\label{sec-4-1}
+\begin{frame}
+\frametitle{复合校正特点}
+\label{sec-4-1-1}
+
+\begin{itemize}
+\item 应用场合:系统中存在强扰动,特别是低频强扰动,或者系统的稳态精度和响应速度要求很高
+\item <2->校正原理:采用前馈校正装置,按不变性原理进行设计
+\item <3->校正方式:
+\begin{itemize}
+\item 按扰动补偿
+\item 按输入补偿
+\end{itemize}
+\end{itemize}
+\end{frame}
+\subsection{按扰动补偿的复合校正}
+\label{sec-4-2}
+\begin{frame}
+\frametitle{按扰动补偿的复合校正}
+\label{sec-4-2-1}
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of p1] (p2) {}; 
+\path[->](p1) edge node {} (p2) ; 
+\path[->] node[draw, right =of p2] (g1) {$G_1(s)$}; 
+\path[->] (p2) edge node {} (g1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p3) {}; 
+\path[->] (g1) edge node {} (p3) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p3] (g2) {$G_2(s)$}; 
+\path[->] (p3) edge node {} (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,above =of g1] (gn) {$G_n(s)$}; 
+\path[ draw] (p3.north)+(0,5em) |-   (gn.east); 
+\path[->,draw] (p3.north)+(0,5em) -- node[very near end] {$+$} node[very near start] {$N(s)$} (p3.north) ; 
+\path[->, draw] (gn.west) -| node[very near end] {$+$} (p2); 
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item 目的:使扰动不对系统的输出产生任何影响或作用  $\Phi_N(s)=0$
+\item 条件:扰动可测
+\item 任务:设计  $G_n(s)$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按扰动补偿的复合校正:设计 $G_n(s)$}
+\label{sec-4-2-2}
+
+\begin{eqnarray*}
+\Phi_N(s)&=&0 \\
+\frac{G_2+G_nG_1G_2}{1+G_1G_2} & = & 0 \\
+G_2+G_nG_1G_2 &=& 0 \\
+G_n &=& \frac{-1}{G_1}
+\end{eqnarray*}
+称  $G_n=\frac{-1}{G_1}$  为对扰动的误差全补偿条件
+
+\begin{itemize}
+\item <2->存在问题:G$_n$(s)的分子阶次大于分母阶次,物理上不可实现.
+\item <3->解决办法:
+\begin{itemize}
+\item 在系统性能起主要影响的频段内采用全补偿($n\geq m$),
+\item 稳态全补偿(取  $G_n(s)$  的静态增益)
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按扰动补偿的复合校正示例1}
+\label{sec-4-2-3}
+
+某伺服控制系统结构图如下:
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+%    gn<------------N(s)
+%    v +            kn/km
+%   --o--k1/(T1s+1) -o---  km/s/(Tm s+1)--+ 
+%     ^-------------------------------/
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of p1] (p2) {}; 
+\path[->](p1) edge node {} (p2) ; 
+\path[->] node[draw, right =of p2] (g1) {$\frac{K_1}{T_1 s+1}$}; 
+\path[->] (p2) edge node {} (g1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p3) {}; 
+\path[->] (g1) edge node {} (p3) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p3] (g2) {$\frac{K_m}{s(T_m s+1)}$}; 
+\path[->] (p3) edge node {} (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,above =of p2] (gn) {$G_n(s)$}; 
+\path[->, draw] (gn)-- node[very near end] {$+$} (p2); 
+\path[red,->] node[draw, inner sep=5pt,above =of p3] (g3) {$\frac{K_n}{K_m}$}; 
+\path[->] (g3) edge node {} node[very near end] {$+$} (p3); 
+\path[->, draw] (g3.north)+(0,1em) -|   (gn.north); 
+\path[->,draw] (g3.north)+(0,2em) --  node[very near start] {$N(s)$} (g3.north) ; 
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item 设计对  $N(s)$ 的全补偿校正网絡  $G_n(s)$  ,
+\item 近似全补偿校正网絡  $G_{n1}(s)$  ,
+\item 稳态全补偿网絡  $G_{n2}(s)$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按扰动补偿的复合校正示例1:解:}
+\label{sec-4-2-4}
+
+\begin{itemize}
+\item 全补偿:
+       \begin{eqnarray*}
+       \Phi_N(s) &= & 0\\
+       \frac{C(s)}{N(s)} &=& 0\\
+       \frac{K_n}{K_m}+G_n(s)\cdot\frac{K_1}{T_1 s+1}  &=& 0\\
+       G_n(s) &=&-\frac{K_n(T_1 s+1)}{K_1 K_m}
+       \end{eqnarray*}
+\item <2->近似全补偿:  $G_{n1}(s)=-\frac{K_n}{K_1 K_m }\cdot\frac{T_1 s+1}{T_2 s+1}$  .其中  $T_1\gg T_2$  .
+\item <3->稳态全补偿:  $G_{n1}(s)=-\frac{K_n}{K_1 K_m }$
+\end{itemize}
+\end{frame}
+\subsection{按输入补偿的复合校正}
+\label{sec-4-3}
+\begin{frame}
+\frametitle{按输入补偿的复合校正}
+\label{sec-4-3-1}
+
+目的:使输出完全跟踪输入信号,即  $C(s)=R(s)$ 
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ right =of r] (rr) {}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of rr] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of p1] (p2) {}; 
+\path[->](p1) edge node[midway] {$E(s)$} (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p2] (g) {$G(s)$}; 
+\path[->] (p2) edge node {} (g); 
+\path[->] node[ right =of g] (o) {$C(s)$}; 
+\path[->] (g) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,above =of p1] (gr) {$G_r(s)$}; 
+\path[->, draw] (rr.west) |-   (gr.west); 
+\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{eqnarray*}
+C(s) &=&(E(s)+G_r(s)R(s))G(s)\\
+E(s) &=& R(s)-C(s)\\
+C(s) &=&\frac{(1+G_r(s))G(s)}{1+G(s)}R(s)
+\end{eqnarray*}
+ $G_r(s)$ 为按输入补偿的复合校正装置(前馈装置)传递函数.
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正分析}
+\label{sec-4-3-2}
+
+\begin{itemize}
+\item 由  $C(s)=R(s)$ ,得
+      \begin{eqnarray*}
+      E(s) &=& R(s)-C(s) \\
+	   &=& 0 \\
+      \frac{C(s)}{R(s)} & = & 1 \\
+      C(s) &=& (R(s)G_r(s)+E(s))G(s) \\
+	   &=& R(s)G_r(s)G(s) \\
+      G_r(s))G(s)&=&1 \\
+      G_r(s) &=& \frac{1}{G(s)}
+      \end{eqnarray*}
+\item 称  $G_r(s)=\frac{1}{G(s)}$  为对输入信号的的误差全补偿条件.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正:部分补偿:}
+\label{sec-4-3-3}
+
+\begin{itemize}
+\item <2->工程中无法实现全补偿,大多采用满足跟踪精度要求的部分偿条件,或者在对系统性能起主要影响的频段内实现近似全补偿,使  $G(s)$ 可物理实现.
+\item <3->定义等效开环传递函数  $G_k(s)$ ,满足:  $\Phi(s)=\frac{G_k(s)}{1+G_k(s)}$  ,得:
+       \begin{eqnarray*}
+       G_k(s) &=& \frac{\Phi(s)}{1-\Phi(s)}\\
+       \Phi_e(s) & = & 1-\Phi(s) \\
+               	&=& \frac{1}{1+G_k(s)}\\
+       G_k(s) &=& \frac{1-\Phi_e(s)}{\Phi_e(s)}
+       \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正:部分补偿:(续)}
+\label{sec-4-3-4}
+
+\begin{itemize}
+\item 设反馈系统开环传递函数:  $G(s)$  ,取  $G_r(s)=\lambda_1 s$  得:
+       \begin{eqnarray*}
+       G(s) & = & \frac{K_v}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)} \\
+       \Phi_0(s) &=& \frac{K_v}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)+K_v} \\
+       \Phi(s) &=& \Phi_0(s)(1+G_r(s)) \\
+               &=& \frac{K_v(1+\lambda_1 s)}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)+K_v}\\
+       G_k(s) &=& \frac{K_v(1+\lambda_1 s)}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_1)+K_v -K_v(1+\lambda_1 s)}\\
+           &=& \frac{K_v(1+\lambda_1 s)}{s(a_ns^{n-1}+a_{n-1}s^{n-2}+\cdots+a_2 s)+(a_1 -K_v\lambda_1) s}\\
+           &=& \frac{K_v(1+\lambda_1 s)}{s^2(a_ns^{n-2}+a_{n-1}s^{n-3}+\cdots+a_2 )+(a_1 -K_v\lambda_1) s}
+       \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正:部分补偿:(续)}
+\label{sec-4-3-5}
+
+\begin{itemize}
+\item 若取  $\lambda_1=\frac{a_1}{K_v}$  则有:
+       \begin{eqnarray*}
+       G_k(s)  &=& \frac{K_v(1+\lambda_1 s)}{s^2(a_ns^{n-2}+a_{n-1}s^{n-3}+\cdots+a_2 )}
+       \end{eqnarray*}
+       系统为II型系统.
+\item <2->同理,若取  $G_r(s)=\lambda_1 s+\lambda_2 s^2, \lambda_1=\frac{a_1}{K_v},\lambda_2=\frac{a_2}{K_v}$ ,则
+       \begin{eqnarray*}
+       G_k(s)  &=& \frac{K_v(1+\lambda_1 s)}{s^3(a_ns^{n-3}+a_{n-1}s^{n-4}+\cdots+a_3 )}
+       \end{eqnarray*}
+       系统为III型系统.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{前馈系统分析}
+\label{sec-4-3-6}
+
+\begin{itemize}
+\item 一般而言,前馈系统不是加在系统的输入端,而是在前向通道的中间部分,即:
+      
+      \begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+      %\path[use as bounding box] (-1,0) rectangle (10,-2); 
+      \path[->] node[] (r) {$R(s)$}; 
+      \path[->] node[ right =of r] (rr) {}; 
+      \path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of rr] (p1) {}; 
+      \path[->](r) edge node {} (p1) ; 
+      \path[->] node[draw, inner sep=5pt,right =of p1] (g1) {$G_1(s)$}; 
+      \path[->] (p1) edge node[midway] {$E(s)$} (g1); 
+      \path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p2) {}; 
+      \path[->](g1) edge  (p2) ; 
+      \path[red,->] node[draw, inner sep=5pt,right =of p2] (g2) {$G_2(s)$}; 
+      \path[->] (p2) edge node {} (g2); 
+      \path[->] node[ right =of g2] (o) {$C(s)$}; 
+      \path[->] (g2) edge node {} (o); 
+      \path[blue,->] node[draw, inner sep=5pt,above =of g1] (gr) {$G_r(s)$}; 
+      \path[->, draw] (rr.west) |-   (gr.west); 
+      \path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+      \path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+      \end{tikzpicture}
+\end{itemize}
+
+\mode<article>{分析方法类似,}
+\begin{eqnarray*}
+C(s) &=&R(s)\\
+C(s) &=& R(s)G_r(s)G_2(s)+E(s)G_1(s)G_2(s)  \\
+E(s) &=& R(s)-C(s) 
+     =0 \\
+G_r(s)G_2(s) &=& 1 
+\end{eqnarray*}
+误差全补偿条件:  $G_r(s)=\frac{1}{G_2(s)}$  . 
+\end{frame}
+\begin{frame}
+\frametitle{前馈系统分析(续)部分补偿: $\Phi_e(s)$}
+\label{sec-4-3-7}
+
+\begin{eqnarray*}
+G_1(s) &=  &\frac{N_1}{D_1} \\
+G_2(s) &=  &\frac{N_2}{D_2} \\
+G_r(s) &=  &\frac{N_r}{D_r} \\
+\Phi_e^{(0)}(s) &=& \frac{1}{1+G_1G_2} \\
+&=& \frac{1}{1+\frac{N_1N_2}{D_1D_2}} 
+= \frac{D_1D_2}{D_1D_2+N_1N_2} \\
+\Phi_e(s) &=& \frac{1-G_2G_r}{1+G_1G_2} \\
+ &=& \frac{1-\frac{N_2N_r}{D_2D_r}}{1+\frac{N_1N_2}{D_1D_2}} 
+ = \frac{D_1(D_2-\frac{N_2N_r}{D_r})}{D_1D_2+N_1N_2} 
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{前馈系统分析(续)部分补偿: $G_r(s)$}
+\label{sec-4-3-8}
+
+\begin{itemize}
+\item $\Phi_e^{(0)}$  为校正前系统误差传递函数,若取  $D_r=N_2$  则:
+      \begin{eqnarray*}
+      \Phi_e(s) &=& \frac{D_1(D_2-\frac{N_2N_r}{D_r})}{D_1D_2+N_1N_2} 
+		 =\frac{D_1(D_2-N_r)}{D_1D_2+N_1N_2} \\
+      D_2 &=& a_0+a_1 s+ a_2 s^2+\cdots+a_n s^n \\
+      N_r &=& \lambda_0+\lambda_1 s+\lambda_2 s^2 +\cdots +\lambda_n s^n \\
+      \end{eqnarray*}
+\item <2-> 将  $\Phi_e(s)$  与  $\Phi_e^{(0)}(s)$  比较可知,当 
+      \begin{equation}
+      \begin{cases}
+      \lambda_i=a_i & i=1,2,\cdots,k \\
+      \lambda_i=0 & i=k+1,\cdots ,n 
+      \end{cases}
+      \end{equation}
+     时,系统类型可提高  $k$ . 此时,有:
+      \begin{eqnarray*}
+      G_r(s) &=& \frac{N_r(s)}{D_r(s)} 
+      = \frac{\lambda_0+\lambda_1 s+\lambda_2 s^2 +\cdots +\lambda_n s^k}{N_2} 
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{前馈系统分析(续)稳定性分析}
+\label{sec-4-3-9}
+
+\begin{itemize}
+\item 由于前馈校正不改变闭环传递函数的分母多项式,所以不改变闭环极点,稳定性与原系统相同.
+       \begin{eqnarray*}
+       \Phi_0(s) & = &\frac{G_1(s)G_2(s)}{1+G_1(s)G_2(s)} \\
+       \Phi(s) & = &\frac{(G_1(s)+G_r(s))G_2(s)}{1+G_1(s)G_2(s)} 
+       \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正示例1:}
+\label{sec-4-3-10}
+
+
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$R(s)$}; 
+\path[->] node[ right =of r] (rr) {}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of rr] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[draw, inner sep=5pt,right =of p1] (g1) {$\frac{K_1}{T_1 s+1}$}; 
+\path[->] (p1) edge node[midway] {$E(s)$} (g1); 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of g1] (p2) {}; 
+\path[->](g1) edge  (p2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of p2] (g2) {$\frac{K_2}{T_2 s+1}$}; 
+\path[->] (p2) edge node {} (g2); 
+\path[->] node[ right =of g2] (o) {$C(s)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,above =of g1] (gr) {$G_r(s)$}; 
+\path[->, draw] (rr.west) |-   (gr.west); 
+\path[->, draw] (gr.east) -| node[very near end] {$+$} (p2); 
+\path[->, draw] (g2.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+设计  $G_r(s)$  实现完全补偿或使系统等效为II型系统.
+\end{frame}
+\begin{frame}
+\frametitle{按输入补偿的复合校正示例1:解:}
+\label{sec-4-3-11}
+
+\begin{itemize}
+\item 取  $G_r(s)=\lambda_1 s+\lambda_2 s^2$ ,得:
+      \begin{eqnarray*}
+      \Phi &= &\frac{K_1K_2+(\lambda_1 s +\lambda_2 s^2)(T_1 s+1) K_2}{(T_1 s+1)s(T_2 s+1)+K_1K_2} \\
+      G_k(s) &=& \frac{\Phi(s)}{1-\Phi(s)} \\
+      % &=& \frac{K_1K_2+(\lambda_1 s+\lambda_2 s^2)(T_1 s+1) K_2}{(T_1 s+1)s(T_2 s+1)+K_1K_2-K_1K_2-(\lambda_1 s + \lambda_2 s^2) (T_1 s+1) K_2} \\
+       &=&  \frac{K_1K_2+(\lambda_1 s+\lambda_2 s^2)(T_1 s+1) K_2}{(T_1 s+1)s(T_2 s+1)-(\lambda_1 s + \lambda_2 s^2) (T_1 s+1) K_2} \\
+      % &=&  \frac{K_1K_2+(\lambda_1 s+\lambda_2 s^2)(T_1 s+1) K_2}{s[(T_1 s+1)(T_2 s+1)-(\lambda_1+\lambda_2 s)(T_1 s+1) K_2]} \\
+       &=&  \frac{K_1K_2+(\lambda_1 s+\lambda_2 s^2)(T_1 s+1) K_2}{s(T_1 s+1)[(T_2 s+1)-(\lambda_1+\lambda_2 s) K_2]} 
+      % &=& \frac{K_1K_2+(\lambda_1 s+\lambda_2 s^2)(T_1 s+1) K_2}{s[T_1 T_2 s^2+2 (T_1 +T_2) s+1-\lambda_2 T_1 s^2 K_2-\lambda_2 s K_2- \lambda_1 T_1 K_2 s-\lambda_1 K_2} 
+      \end{eqnarray*}
+\item 取  $\lambda_{1}=\frac{1}{K_2},\lambda_2=0$  则系统为II型系统,
+\item 取  $\lambda_{1}=\frac{1}{K_2},\lambda_2=\frac{T_2}{K_2}$ 则能实现完全补偿.
+\end{itemize}
+\end{frame}
+
+\end{document}

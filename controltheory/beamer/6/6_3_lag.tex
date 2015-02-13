@@ -1,0 +1,303 @@
+% Created 2014-11-17 星期一 17:47
+\documentclass[table]{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{串联滞后校正}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统校正方法}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{串联滞后校正原理与方法}
+\label{sec-1}
+\begin{frame}
+\frametitle{串联滞后校正原理}
+\label{sec-1-1}
+
+利用滞后网絡的幅值衰减特性,使校正后的 $\omega_c$ 前移,从而达到提升 $\gamma$ 的目的.
+\begin{eqnarray*}
+G_c(s) & = &\frac{1+bTs}{1+Ts} 
+\end{eqnarray*}
+其中:$b<1$ 
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}<2->{校正网络Bode图}
+\label{sec-1-1-1}
+
+\begin{tikzpicture}[scale=0.7]
+\draw[->] (-1,0) -- (3.5,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$L_c(\omega)$};
+\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\draw (1,0) node[above] {$\frac{1}{T}$};
+\draw (2,0) node[above] {$\frac{1}{bT}$};
+\draw[dashed,pink] (1.5,0) -- + (0,-1);
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (3.5,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$\phi_c(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.5,-0.1) (1,-0.45) (1.5,-1) (2,-0.45) (2.5,-0.1) (3,0)};
+\draw (1,0) node[above] {$\frac{1}{T}$};
+\draw (2,0) node[above] {$\frac{1}{bT}$};
+\draw[dashed,pink] (1.5,0) -- +(0,-1);
+\end{scope}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}<3->{滞后校正示意图:}
+\label{sec-1-1-2}
+
+\begin{tikzpicture}[scale=0.7]
+\coordinate (o) at (0,0);
+\coordinate (ox) at (4.5,0);
+\draw[->] (-1,0) -- (ox);
+\draw[->] (0,-1.1) -- (0,1.5);
+\draw (0,0.5) node[above left] {$L(\omega)$};
+\draw (o) node[below left] {$o$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\coordinate (c) at (3.5,-0.3);
+\coordinate (c1) at ($(c) +(160:3)$);
+\coordinate (d) at (3.5,0.2);
+\coordinate (de) at ($(3.5,0.2)+(-40:1)$);
+\coordinate (a) at ($(d) +(160:3)$);
+\coordinate (a1) at ($(a) +(-40:3)$);
+\coordinate (b) at (intersection of a--a1 and c--c1);
+\coordinate (w1) at (intersection of d--de and o--ox);
+\coordinate (w2) at (intersection of b--c and o--ox);
+\draw[red] (a)++(160:0.5)--(d)--(de);
+\draw[blue] (a)--(b)--(c)--+(-40:1);
+\draw (w1) node[above right] {$\omega_c'$};
+\draw (w2) node[below] {$\omega_c''$};
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (4.5,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$\phi(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.3,-0.1) (0.6,-0.25) (1.1,-0.5) (2.5,-0.65) (3,-0.7) (3.7,-0.9) (3.9,-1)};
+\draw[dashed,red] (0,-1) -- (4.5,-1);
+\draw (0,-1) node[left] {$-180^\circ$};
+\end{scope}
+\end{tikzpicture}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{滞后校正网络分析}
+\label{sec-1-2}
+
+\begin{itemize}
+\item 根据期望相角裕度 $\gamma''$ ,求解
+     \begin{eqnarray*}
+     \gamma'' & = &180^{\circ}+\phi(\omega_c'')+\phi_c(\omega_c'') 
+     \end{eqnarray*}
+\item <2->得到期望截止频率 $\omega_c''$ ,其中 $\phi_c(\omega_c'')$ 可取为 $-6^\circ$ .
+\item <3->为了实现新的截止频率,需要:
+     \begin{eqnarray*}
+     20\lg b & = & L(\omega_c'') 
+     \end{eqnarray*}
+\item <4->为了减轻对相频特性的影响,需要:
+     \begin{eqnarray*}
+      \omega_c'' & = & \frac{10}{bT}
+     \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{适用泛围}
+\label{sec-1-3}
+
+\begin{itemize}
+\item 主要用于提高系统稳定程度
+\item 期望截止频率小于未校正系统截止频率,即: $\omega_c''<\omega_c'$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{设计步聚}
+\label{sec-1-4}
+
+设计步聚
+\begin{itemize}
+\item 由 $e_{ss}$ 确定开环增益 $K$
+\item 画未校正系统Bode图
+\item <2->由设计指标确定 $\gamma''$ ,求解:  $\gamma''-180^{\circ} = \phi(\omega_c'')-6^{\circ}$ 确定 $\omega_c''$
+\item <3->计算 $b,T$ , 
+         \[20\lg b=L(\omega_c''),\frac{1}{bT}=0.1\omega_c''\]
+\end{itemize}
+\end{frame}
+\section{滞后校正示例}
+\label{sec-2}
+\begin{frame}
+\frametitle{滞后校正示例1}
+\label{sec-2-1}
+
+设单位负反馈系统 $G(s)=\frac{K}{s(s+1)(0.2s+1)}$ 设计串联校正装置,满足  $K_v=8, \gamma''\geq 40^{\circ}$ 
+
+解:
+
+\begin{itemize}
+\item <2->根据稳态性能指标得
+      \begin{eqnarray*}
+      K_v & = &8 \\
+      K_v &= & K \\
+       K &=& 8
+      \end{eqnarray*}
+      \begin{eqnarray*}
+      L(\omega) & = & \begin{cases}20\lg\frac{8}{\omega} & \omega <1 \\
+                                   20\lg\frac{8}{\omega^2} & 1\leq \omega < 5 \\
+                                   20\lg\frac{8}{0.2\omega^3} &  \omega \geq 5 \\  \end{cases}\\
+      \omega_c' &=& 2.8 \\
+      \gamma' &=& -10^{\circ} \\
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{滞后校正示例1:参数求解}
+\label{sec-2-2}
+
+根据  $\gamma''$  计算  $\omega_c''$ 
+\begin{eqnarray*}
+180^{\circ}-90^{\circ}-\arctan\omega_c''-\arctan0.2\omega_c'' & = & 40^{\circ}+\epsilon\\
+\epsilon &=& 6^{\circ} \\
+\omega_c'' &\approx& 0.7 \\
+L(\omega_c'') +20\lg b&=& 0 \\
+b &=& 0.09 \\
+\frac{1}{bT} &=& 0.1\omega_c''\\
+T &=& 158.7 \\
+\end{eqnarray*}
+
+滞后校正网絡为:  $G_c=\frac{14.3s+1}{158.7s+1}$ 
+\end{frame}
+\begin{frame}
+\frametitle{滞后校正示例2}
+\label{sec-2-3}
+
+设单位负反馈系统  $G(s)=\frac{5}{s(s+1)(0.5s+1)}$  ,设计串联校正装置,使校正后系统满足 $\gamma''\geq 40^{\circ}, h''\geq 10dB$ 
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+      L(\omega) & = & \begin{cases} 20\lg\frac{5}{\omega} & \omega <1\\
+                                    20\lg\frac{5}{\omega^2} & 1<\omega<2 \\
+                                    20\lg\frac{5}{0.5\omega^3} & \omega\geq 2 \end{cases}\\
+      \omega_c' &=& 2.15 \\
+      \gamma' &=& 180^{\circ}-90^{\circ}-\arctan\omega_c'-\arctan0.5\omega_c' \\
+       &=& -22^{\circ} 
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{滞后校正示例2(续)选用滞后校正,根据  $\gamma''$  计算  $\omega_c''$}
+\label{sec-2-4}
+
+
+\begin{eqnarray*}
+180^{\circ}+\phi(\omega_c'') & = & 40^{\circ}+\epsilon\\
+\epsilon &=& 6^{\circ} \\
+\omega_c'' &\approx& 0.5 \\
+L(\omega_c'') +20\lg b &=& 0 \\
+20\lg\frac{5}{\omega_c''} +20\lg b &=& 0\\
+b &=& 0.1 \\
+\frac{1}{bT} &=& 0.1\omega_c'' \\
+T &=& 200
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{滞后校正示例2(续)验证幅值裕度}
+\label{sec-2-5}
+
+\begin{align*}
+\phi(\omega_x) &= -180^{\circ} \\
+\angle\omega_x j(\omega_x j+1)(0.5\omega_x j+1) &=180^{\circ}\\
+\angle(\omega_x j+1)(0.5\omega_x j+1) &=90^{\circ}\\
+\angle(-0.5\omega_x^2+1+1.5\omega_x j) &=90^{\circ}\\
+-0.5\omega_x^2+1 &=0 \\
+\omega_x &=\sqrt{2}\\
+L(\omega_x) &=-20\lg\frac{5}{\sqrt{2}\cdot\sqrt{2}\cdot 0.5\sqrt{2}} \\
+&\approx -11\\
+h'' &=11>10
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{滞后校正示例2(续)另一种方式验证幅值裕度：}
+\label{sec-2-6}
+
+\begin{itemize}
+\item 当校正后的幅值裕度  $h''$ 难以计算时,可结合幅频特性验证。
+     \begin{eqnarray*}
+     L(\omega_x)+L_c(\omega_x) &=& -10 \\
+     20\lg\frac{5b}{\omega_x^2} &=& -10, \qquad 1<\omega_x<2 \\
+     \omega_x &\approx& 1.36 \\
+     \phi(\omega_x) & = & -178^{\circ} \\
+     \omega_x'' &>& \omega_x \\
+     L(\omega_x'')+L_c(\omega_x'') &<& -10 \\
+     h'' &>& 10dB
+     \end{eqnarray*}
+\end{itemize}
+\end{frame}
+
+\end{document}

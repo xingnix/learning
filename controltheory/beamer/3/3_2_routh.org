@@ -1,0 +1,471 @@
+# +LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+ # +latex_header:  \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# +latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  线性系统时域分析法
+#+latex_header: \subtitle{线性定常系统的稳定性}
+#+AUTHOR:    
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+
+
+
+* 稳定性的概念
+** 稳定性
+
+\psset{unit=1em}
+\begin{pspicture}(0,0)(30em,5em)
+%\begin{pspicture}[showgrid](0,0)(30em,10em)
+%
+%       o    \   o   /  \     /
+%       ^     \  ^  /    \ o /
+%      / \     \/ \/      \_/   
+%
+\psset{unit=1em}
+%\multips(1.5,2.5)(4,0){3}{\pscircle(0,0){0.5}}
+\psset{linecolor=red}
+%\psline(0,0)(50,6)
+\pscircle(4.5,4){1}
+\pscurve(0,0)(4.5,3)(9,0)
+\psset{linecolor=violet}
+\pscircle(14.5,2){1}
+\pscurve(10,0)(12,2)(14.5,1)(17.5,2)(19,0)
+\psset{linecolor=blue}
+\pscircle(24.5,1){1}
+\pscurve(20,2)(24.5,0)(29,2)
+%\psplot{0}{6}{x sqrt}
+%\rput(3,3){中文}
+%\pscustom{\dim{1}
+%\code{
+%dup dup  scale currentlinewidth exch div setlinewidth 
+%0 0 moveto 3 6 lineto stroke}}
+\end{pspicture}
+
+定义:系统处于平衡状态时,若有干扰使系统偏离平衡状态,当扰动消除后,系统仍能回到原来的平衡状态,则称该系统是稳定的,反之称为不稳定.
+
+** 稳定的充要条件
+
+ * 系统的传递函数
+     \begin{eqnarray*}
+     \Phi(s) & = & \frac{C(s)}{R(s)} = \frac{k_{g}\prod_{i=1}^{m}(s-z_{i})}{\sum_{j=1}^{n}(s-p_{j})} 
+     \end{eqnarray*}
+ * 设系统输入为单位脉冲信号: $r(t)=\delta(t),R(s)=1$
+     \begin{eqnarray*}
+     C(s) & = & \Phi(s)R(s) =  \frac{k_{g}\prod_{i=1}^{m}(s-z_{i})}{\sum_{j=1}^{n}(s-p_{j})} \\
+	  & = &  k_{g}\sum_{j=1}^{n}\frac{k_{j}}{s-p_{j}} \\
+     c(t) & = & k_{g}\sum_{j=1}^{n}k_{j}e^{p_{j}t}
+     \end{eqnarray*}
+ * 当 $\Re(p_{j})<0$ 时,有 $\lim_{t\rightarrow\infty}c(t) = 0$
+ * 稳定性充要条件:系统的闭环极点均具有负实部
+
+* 古尔维茨判据及劳斯判据
+** 特征多项式
+\begin{eqnarray*}
+G(s) & = & \frac{M(s)}{N(s)}\\
+M(s) &=&  b_{o}s^{m}+\cdots+b_{n} \\
+N(s) & =& a_{0}s^{n}+\cdots+a_{n}
+\end{eqnarray*}
+其中:
+  * $N(s)$ 称为特征多项式
+  * $N(s)=0$ 称为特征方程(只与 $a_{0},\cdots,a_{n}$ 有关)
+
+** 古尔维茨判据(代数判据):
+ * <2-> 稳定的必要条件:特征多项式中各项系数大于零. 
+ * <3-> 稳定的充要条件:特征多项式中各项系数所构成的主行列式及顺序主子式全部大于零.
+ * <3-> 主行列式:
+     \begin{equation*}
+     \Delta_{n}=\left|
+     \begin{matrix}
+     a_{1}  & a_{3} & a_{5} & \cdots & 0  \\
+     a_{0}  & a_{2} & a_{4} & \cdots & 0  \\
+     0      & a_{1} & a_{3} & \cdots & 0  \\
+     \vdots & a_{0} & a_{2} & \cdots & 0  \\
+     \vdots &\vdots &\vdots &        & 0   \\
+       0    &  0    & \cdots & a_{n-2}& a_{n}
+     \end{matrix}
+     \right|
+     \end{equation*}
+ * <4-> 顺序主子式有n-1个: $\Delta_{1},\cdots,\Delta_{n-1}$
+ * <5-> 李纳德-戚帕特判据:若所有奇次古尔维茨行列式为正,则偶次古尔维茨行列式必为正,反之亦然
+
+** 劳斯-古尔维茨判据,简称劳斯判据
+ * <2->构造劳斯表判断系统是否稳定
+     \begin{equation*}
+     \begin{matrix}
+     s^{n}   &  a_{0}  &  a_{2}  & a_{4}  & \cdots  \\
+     s^{n-1} &  a_{1}  & a_{3}   & a_{5}  & \cdots  \\
+     s^{n-2} &  c_{1}=\frac{a_1 a_2 - a_0 a_3}{a_1} &  c_{2}=\frac{a_1 a_4 - a_0 a_5}{a_1} & \cdots \\
+     s^{n-3} &  d_{1}=\frac{c_1 a_3 - a_1 c_2}{c_1} &  d_{2}=\frac{c_1 a_5 - a_1 c_3}{c_1} & \cdots \\
+     \vdots  &   \vdots                             &                                      & \cdots  \\
+     s^{0}   &   a_{n}                              &                                      &
+     \end{matrix}
+     \end{equation*}
+ * <3->劳斯判据:
+   *  <4->系统稳定的充要条件:劳斯表中第一列元素均大于零
+   *  <5->若第一列元素有小于零的,则系统不稳定,且不稳定根的个数等于第一列元素变号的次数.
+** 劳斯表与多项式除法
+\begin{equation*}
+     \begin{matrix}
+     s^{n}   &  a_{0}  &  a_{2}  & a_{4}  & \cdots  \\
+     s^{n-1} &  a_{1}  & a_{3}   & a_{5}  & \cdots  \\
+     s^{n-2} &  c_{1}=a_2 -\frac{ a_0 a_3}{a_1} &  c_{2}=a_4 - \frac{a_0 a_5}{a_1} & \cdots \\
+     s^{n-3} &  d_{1}=a_3 -\frac{ a_1 c_2}{c_1} &  d_{2}=a_5 -\frac{ a_1 c_3}{c_1} & \cdots \\
+     \vdots  &   \vdots                             &                                      & \cdots  \\
+     s^{0}   &   a_{n}                              &                                      &
+     \end{matrix}
+\end{equation*}
+即：
+\begin{align*}
+    a_0 s^n+a_2 s^{n-2}+\cdots &= s \frac{a_0}{a_1}(a_1 s^{n-1}+a_3 s^{n-3}+\cdots)+c_1 s^{n-2}+c_2 s^{n-4}+\cdots\\
+    c_1 s^{n-2}+c_2 s^{n-4}+\cdots &=s \frac{c_1}{d_1}(d_1 s^{n-3}+d_2 s^{n-5}+\cdots)+\cdots
+\end{align*}
+
+* 劳斯判据示例
+** Routh 判据示例1: $3s^{4}+10s^{3}+5s^{2}+s+2=0$
+
+解:
+
+
+*** 劳斯表:							    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{equation*}
+\begin{matrix}
+s^{4} & 3   &  5  &  2 \\
+s^{3} & 10  &  1        \\
+s^{2} & 4.7 &  2       \\
+s^{1} & -\frac{15.3}{4.7}  \\
+s^{0} & 2   
+\end{matrix}
+\end{equation*}
+
+*** 结论							    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_envargs: <3->
+     :END:
+系统不稳定,有2个不稳定根.
+
+** Routh 判据示例2:
+\begin{psmatrix}[rowsep=0.4,colsep=0.5]
+%              .---------------.
+%              |     s+1       |
+% R-->o--> K ->| ------------- |--+--> C
+%   _ ^        |  (s(s+2)(s+3) |  |
+%     |        '---------------'  |
+%     '---------------------------'
+%
+%
+% 1                        2                        3                           4              5    6
+$r$ &  \pscirclebox[framesep=-0.2em]{$\times$}& \psframebox{$K$} &  \psframebox{$\frac{s+1}{s(s+2)(s+3)}$}&  & $y$ \\
+%link
+\ncline{->}{1,1}{1,2}
+\ncline{->}{1,2}{1,3}
+\ncline{->}{1,3}{1,4}
+\ncline{->}{1,4}{1,6}
+\ncangles[angleA=0,angleB=-90,armA=0.5em,armB=1em]{->}{1,4}{1,2}
+\naput[npos=3.6]{$-$}
+\end{psmatrix}
+
+求使系统稳定的 $K$ 的范围
+
+\mode<article>{解:}
+
+*** 传递函数						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.55
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+
+\begin{eqnarray*}
+G(s)     & = & \frac{K(s+1)}{s(s+2)(s+3)}\\
+\Phi(s)  & = & \frac{K(s+1)}{s^{3}+5s^{2}+(6+K)s+K}
+\end{eqnarray*}
+
+*** 劳斯表:						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.45
+     :BEAMER_env: block
+     :BEAMER_envargs: <3->
+     :END:
+
+\[
+\begin{matrix}
+s^{3}  &    1   &  6+K  \\
+s^{2}  &    5   &  K  \\
+s^{1}  &   \frac{30+4K}{5}  & 0 \\
+s^{0}  &  K
+\end{matrix}
+\]
+
+稳定条件:
+\begin{eqnarray*}
+30+4K & > & 0 \\
+K & >  & 0
+\end{eqnarray*}
+
+得: $K>0$
+
+* 劳斯判据应用中的特殊情况
+** Routh表特殊情况:第一列元素有零元,系统不稳定:
+   * 先用 $\epsilon$ 代替,再令 $\epsilon\rightarrow 0$
+   * 系统升阶: $(s+a)D(s),a>0$
+
+*** 例:								    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+系统特征方程: $D(s)=s^{4}+2s^{3}+s^{2}+2s+1=0$ 判断系统的稳定性,求出不稳定根的个数.
+
+*** Roth表:						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.3
+     :BEAMER_env: block
+     :BEAMER_envargs: <3->
+     :END:
+
+\[
+\begin{matrix}
+s^{4}   &  1  &   1  \\
+s^{3}   &  2  &  2   \\
+s^{2}   &  0(\epsilon)  &  1   \\
+s^{1}   &  \frac{2\epsilon-2}{\epsilon} & 0 \\
+s^{0}   &  1   \\
+\end{matrix}
+\]
+
+*** $(s+1)D(s)=s^{5}+3s^{4}+3s^{3}+3s^{2}+3s+1$		      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.7
+     :BEAMER_env: block
+     :BEAMER_envargs: <4->
+     :END:
+
+\[
+\begin{matrix}
+s^{5} & 1 & 3 & 3 \\
+s^{4} & 3 & 3 & 1 \\
+s^{3} & 2 & \frac{8}{3} \\
+s^{2} & -1 & 1 \\
+s^{1} & \frac{14}{3} & 0 \\
+s^{0} & 1
+\end{matrix}
+\]
+
+** 特殊情况:全行为零时:
+ * 全零行的数值由上一行求导代替
+ * 辅助方程:全零行的上一行可构成辅助方程,辅助方程的解全部为系统特征根
+*** 例:								    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+$D(s)=s^{4}+5s^{3}+5s^{2}-5s-6$ 求系统不稳定根的个数
+
+*** Routh表						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <3->
+     :END:
+\[
+\begin{matrix}
+s^{4} &  1 &  5 & -6 \\
+s^{3} &  5 & -5 \\
+s^{2} &  6 & -6 \\
+s^{1} &  0(12)  & 0 \\
+s^{0} &  -6
+\end{matrix}
+\]
+
+*** 辅助方程						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.65
+     :BEAMER_env: block
+     :BEAMER_envargs: <4->
+     :END:
+ * 对 $6s^{2}-6$ 求导得 $12s$
+ * 辅助方程 $6s^2-6=0$ ,得 $s_{1,2}=\pm 1$ 系统不稳定根为1
+
+* 劳斯判据求解系统参数
+** 例: $D(s)=s^{4}+2s^{3}+ks^{2}+s+2$ 求 $K$ 值稳定范围
+
+解:
+*** Routh表						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\[
+\begin{matrix}
+s^{4} & 1 & K & 2\\
+s^{3} & 2 & 1 \\
+s^{2} & \frac{2K-1}{2} & 2\\
+s^{1} & 1-\frac{8}{2K-1} & 0 \\
+s^{0} & 2 \\
+\end{matrix}
+\]
+\begin{eqnarray*}
+2K-1 & > & 0 \\
+%   K & > 1 \\
+1-\frac{8}{2K-1} &>& 0  
+%   K &> \frac{9}{2} 
+\end{eqnarray*}
+得: $K>\frac{9}{2}$
+
+*** 当 $K=\frac{9}{2}$ 时:				      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.7
+     :BEAMER_env: block
+     :BEAMER_envargs: <3->
+     :END:
+
+Routh表:
+
+$$
+\begin{matrix}
+s^{4} & 1 & 4.5 & 2\\
+s^{3} & 2 & 1 \\
+s^{2} & 4 & 2\\
+s^{1} & 0(8) & 0 \\
+s^{0} & 2 \\
+\end{matrix}
+$$
+其中辅助方程为 $4s^{2}+2=0$ ,可解得 $s=\pm\frac{\sqrt{2}}{2}j$ 
+
+** 例: $D(s)=Ts^{3}+s^{2}+K=0$ 
+*** Routh表						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\[
+\begin{matrix}
+s^{3} & T  & 0\\
+s^{2} & 1  & K \\
+s^{1} & -TK \\
+s^{0} & K 
+\end{matrix}
+\]
+
+*** 无解						      :B_block:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_col: 0.5
+     :BEAMER_envargs: <3->
+     :END:
+\begin{eqnarray*}
+T & > & 0 \\
+K & > & 0 \\
+TK& < & 0 
+\end{eqnarray*}
+
+* 相对稳定性
+** 例:$D(s)=s^{3}+5.5s^{2}+8.5s+3$
+ * 判断系统是否具有相对稳定性:$\sigma=1$
+
+解:
+*** Routh表						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.3
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\[
+\begin{matrix}
+s^{3} & 1 &  8.5 \\
+s^{2} & 5.5  & 3 \\
+s^{1} & 8.5-\frac{3}{5.5} & 0 \\
+s^{0} & 3
+\end{matrix}
+\]
+
+*** 将 $s=z-\sigma$ 代入 $D(s)$ 中			      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.7
+     :BEAMER_env: block
+     :BEAMER_envargs: <3->
+     :END:
+得 $D(z)=z^{3}+2.5z^{2}+0.5z-1$ ,不稳定.
+
+**** Routh表:							    :B_block:
+      :PROPERTIES:
+      :BEAMER_env: block
+      :BEAMER_envargs: <4->
+      :END:
+
+
+\[
+\begin{matrix}
+s^{3} & 1 &  0.5 \\
+s^{2} & 2.5  & -1 \\
+s^{1} & 0.5+\frac{1}{2.5} & 0 \\
+s^{0} & -1
+\end{matrix}
+\]
+
+**** 结论							    :B_block:
+      :PROPERTIES:
+      :BEAMER_env: block
+      :BEAMER_envargs: <5->
+      :END:
+有一个不稳定极点.
+

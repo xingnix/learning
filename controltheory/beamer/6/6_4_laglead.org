@@ -1,0 +1,299 @@
+# +LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \pgfplotsset{compat=1.8}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [table]
+# +LaTeX_CLASS_OPTIONS: [bigger]
+ # +latex_header:  \mode<article>{\usepackage{beamerarticle}}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# +latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  线性系统校正方法
+#+latex_header: \subtitle{串联滞后-超前校正}
+#+AUTHOR:    
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+
+
+
+
+
+
+
+* 串联滞后-超前校正原理与方法
+** 串联滞后-超前校正原理
+ * 滞后部分的幅值衰减特性,提高系统的稳定程度
+ * 超前部分的相角超前特性,提高系统的动态性能
+
+\begin{math}
+G_c = \frac{(1+T_a s)(1+T_b s)}{(1+aT_a s)(1+\frac{T_b}{a}s)}
+\end{math}
+其中 $a>1$ 
+
+*** 校正网络Bode图					      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+
+\begin{tikzpicture}[scale=0.7]
+\draw[->] (-1,0) -- (6,0);
+\draw[->] (0,-1.1) -- (0,1.1);
+\draw (0,0.5) node[above left] {$L_c(\omega)$};
+\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (4,-1) (5,0) (6,0) };
+\draw (1,0) node[above] {$\frac{1}{aT_a}$};
+\draw (2,0) node[above] {$\frac{1}{T_a}$};
+\draw (4,0) node[above] {$\frac{1}{T_b}$};
+\draw (5,0) node[above] {$\frac{a}{T_b}$};
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (6,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$\phi_c(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {
+(0,0) (0.5,-0.1) (1,-0.45) (1.5,-1) (2,-0.45) (2.5,-0.1) (3,0)
+(3.5,0.1) (4,0.45) (4.5,1) (5,0.45) (5.5,0.1) (6,0)};
+\draw (1,0) node[above] {$\frac{1}{aT_a}$};
+\draw (2,0) node[above] {$\frac{1}{T_a}$};
+\draw (4,0) node[below] {$\frac{1}{T_b}$};
+\draw (5,0) node[below] {$\frac{a}{T_b}$};
+\end{scope}
+\end{tikzpicture}
+
+
+*** 滞后校正示意图:					      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <3->
+     :END:
+\begin{tikzpicture}[scale=0.7]
+\coordinate (o) at (0,0);
+\coordinate (ox) at (4.5,0);
+\draw[->] (-1,0) -- (ox);
+\draw[->] (0,-1.1) -- (0,1.5);
+\draw (0,0.5) node[above left] {$L(\omega)$};
+\draw (o) node[below left] {$o$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\coordinate (a) at (0.5,1.5);
+\coordinate (b) at ($(a) +(-20:2)$);
+\coordinate (c) at ($(b)+(-40:2)$);
+\coordinate (w1) at (intersection of b--c and o--ox);
+
+\coordinate (c1) at ($(b)+(-20:2)$);
+
+\coordinate (a1) at ($(a)+(0,-0.5)$);
+\coordinate (c2) at ($(a1)+(-20:4)$);
+\coordinate (an) at ($(a)+(-40:2)$);
+\coordinate (a2) at (intersection of a--an and a1--c2);
+\coordinate (d2) at (intersection of a2--c2 and b--c);
+\coordinate (w2) at (intersection of a2--c2 and o--ox);
+
+\draw[red] (a)--($(a)+(160:0.3)$);
+\draw[red] (a)--(b);
+\draw[red] (b)--(c);
+\draw[blue] (b)--(c1);
+
+\draw[blue] (a)--(a2);
+\draw[blue] (a2)--(d2);
+%\draw[blue] (d2)--(c);
+
+\draw (w1) node[pin=-80:$\omega_c'$] {};
+\draw (w2) node[pin=-100:$\omega_c''$] {};
+
+\begin{scope}[shift={(0,-3)}]
+\draw[->] (-1,0) -- (4.5,0);
+\draw[->] (0,-1.1) -- (0,0.5);
+\draw (0,0.5) node[above left] {$\phi(\omega)$};
+\draw [red,thick] plot [smooth] coordinates {(0,0) (0.3,-0.1) (0.6,-0.25) (1.1,-0.5) (2.5,-0.65) (3,-0.7) (3.7,-0.9) (3.9,-1)};
+\draw [blue,thick] plot [smooth] coordinates {(0,0) (0.3,-0.3) (0.6,-0.55) (1.1,-0.6) (2.5,-0.33) (3,-0.3) (3.7,-0.35) (3.9,-0.4) (4.1,-0.5)};
+\draw[dashed,red] (0,-1) -- (4.5,-1);
+\draw (0,-1) node[left] {$-180^\circ$};
+\end{scope}
+\end{tikzpicture}
+
+** 适用泛围
+  * 系统不稳定,且要求的稳态性能与动态性能较高时
+** 设计步聚
+ * 由 $e_{ss}$ 要求确定开环增益
+ * 绘制未校正系统Bode图,计算 $\omega_c',\gamma',h'$ 
+ * <2->选择  $\frac{1}{T_b}$  为  $L(\omega)$  上斜率由  $-20dB/dec$  至 $-40dB/dec$ 的交接频率(校正后截止频率处斜率为 $-20dB/dec$ ,且有一定宽度)
+ * <3->计算期望的截止频率 $\omega_c''$ ,求解  $L(\omega_c'')+20\lg T_b\omega_c''-20\lg a=0$  得 $a$ 
+ * <4->计算期望相角裕度 $\gamma''$ ,求解:  $180^\circ+\phi_c(\omega_c'')+\phi(\omega_c'')=\gamma''$  ,得 $T_a$ 
+* 串联滞后-超前校正示例
+** 串联滞后-超前校正示例1
+单位负反馈系统  $G(s)=\frac{K}{s(0.1s+1)(0.01s+1)}$  设计校正网絡,满足  $K_v \geq 100,\gamma'>40,\omega_c''\approx 20$ 
+
+解:
+  *  <2->由稳态性能指标得:  $K=100$ 
+      \begin{eqnarray*}
+      L(\omega) & = &\begin{cases}20\lg\frac{100}{\omega} & \omega<10 \\
+                                  20\lg\frac{100}{0.1\omega^2} & 10\leq \omega<100 \\
+                                  20\lg\frac{100}{0.001\omega^3} & \omega \geq 100 \end{cases} \\
+      \omega_c' &=& 31.6 \\
+      \gamma' &=& 180^{\circ}-90^{\circ}-\arctan0.1\omega_c'-\arctan0.01\omega_c' \\
+       &=& 0 
+      \end{eqnarray*}
+
+** 串联滞后-超前校正示例1(续):选用滞后-超前校正
+
+\[G_c = \frac{(1+T_a s)(1+T_b s)}{(1+aT_a s)(1+\frac{T_b}{a}s)}\]
+
+根据截止频率  $\omega_c''$  确定  $T_b,a$ 
+\begin{eqnarray*}
+T_b & = & 0.1\\
+L(\omega_c'') +20\lg0.1\omega_c'' &=& 20\lg\frac{100}{\omega_c''} \\
+&=& 20\lg5\\
+20\lg a &=& 20\lg5 \\
+a &=& 5 
+\end{eqnarray*}
+
+** 串联滞后-超前校正示例1(续):验证相角裕度,确定 $T_{a}$
+  + 原系统: $\phi(\omega_c'') = -90^{\circ}-\arctan 0.1\omega_c''-\arctan 0.01\omega_c''=-165^{\circ}$
+  + 超前校正后: 
+      $180^{\circ}+\phi(\omega_c'')+\arctan0.1\omega_c''-\arctan(\frac{T_b}{a}\omega_c'')= 57^{\circ}\geq\epsilon+\gamma'',(\epsilon=6^{\circ})$
+  + 参数确定: $\frac{1}{T_a} =0.1\omega_c'',T_a = 0.5$
+  + 校正网络: 
+       $G_c=\frac{(1+0.5s)(1+0.1s)}{(1+2.5s)(1+0.02s)}$ 
+
+** 串联滞后-超前校正示例2
+单位负反馈系统开环对数幅频特性曲线如图所示,其中虚线表示校正前的实线表示校正后的.要求
+  1.  确定校正装置类型,写出传递函数
+  2.  确定校正后系统稳定时的开环增益
+  3.  当开环增益  $k=1$  时,求校正后系统的相位裕度  $\gamma$ , 幅值裕度  $h$ 
+
+*** Bode图							      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+\begin{tikzpicture}[scale=0.8]
+\coordinate (o) at (0,0);
+\coordinate (ox) at (3.5,0);
+\draw[->] (-1.1,0) -- (ox);
+\draw[->] (0,-1.1) -- (0,3.5);
+\draw (o) node[above left] {$o$};
+\draw (o) node[below left] {$0.1$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\draw[red,thick] (3,0.5)--+(-1,1)--+(-4,2.5);
+\draw[red,thick] (3,0.5)--+(0.5,-1);
+\draw[dashed,purple,thick] (0,2.5)--(1,2.5)--(2,1.5);
+\draw[dashed,blue] (1,0)--(1,2.5);
+\draw[dashed,blue] (2,0)--(2,1.5);
+\draw[dashed,blue] (3,0)--(3,0.5);
+\draw (1,0) node[below] {$1$};
+\draw (2,0) node[below] {$10$};
+\draw (3,0) node[below] {$100$};
+\draw[red,thick] (0.7,1.5) node[] {$-20dB/dec$};
+\draw[red,thick] (2.7,0.7) node[above right] {$-40dB/dec$};
+\draw[red,thick] (3.3,0) node[below right] {$-60dB/dec$};
+\end{tikzpicture}
+
+*** 解:由图得						      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :BEAMER_envargs: <2->
+    :END:
+ * 采用了串联滞后-超前校正
+ * 校正前传递函数:  $G_1(s)=\frac{K(10s+1)}{s(s+1)^2(0.01s+1)}$ 
+ * 校正后传递函数:  $G_2(s)=\frac{K}{s(0.1s+1)(0.01s+1)}$ 
+ * 校正装置传递函数:  $G_2(s)=\frac{(s+1)^2}{(0.1s+1)(10s+1)}$ 
+
+** 串联滞后-超前校正示例2(续):确定开环增益
+校正前系统闭环特征方程:  
+
+\[D(s)=s(0.1s+1)(0.01s+1)+K\]
+
+Routh表
+
+\[
+\begin{matrix}
+s^3  & 1 & 1000 \\
+s^2  & 110 & 1000K \\
+s^1  & \frac{110000-1000K}{110} & 0 \\
+s^0  & 1000K 
+\end{matrix}\]
+
+得:  $1<K<110$ 
+
+** 串联滞后-超前校正示例2(续):稳定裕度计算
+当  $K=1$  时, 
+\begin{eqnarray*}
+G_2(s) &=& \frac{1}{s(0.1s+1)(0.01s+1)} \\
+L(\omega) & = & \begin{cases} 20\lg\frac{1}{\omega} & \omega<10 \\
+                              20\lg\frac{1}{0.1\omega^2} & 10\leq \omega <100 \\
+                              20\lg\frac{1}{0.001\omega^3} & \omega\geq 100  \end{cases}\\
+\omega_c &=& 1 \\
+\gamma &=& 180^{\circ}+\phi(\omega_c) \\
+ &=& 83.7^{\circ} \\
+\phi(\omega_x) &=& -\pi \\
+\omega_x &=& 31.6\\
+h &=& -20\lg\frac{1}{0.1\omega_x^2} \\
+ &=& 10 dB
+\end{eqnarray*}
+
+** 串联滞后-超前校正示例3
+设待校正系统开环传递函数为： $G_o(s)=\frac{K}{s(\frac{1}{6}s+1)(\frac{1}{2}s+1)}$ ,设计校正装置满足以下指标：
+   +  最大指令速度 $180^{\circ}/s$ 时，位置滞后误差不超过 $1^{\circ}$
+   +  相角裕度为 $45^{\circ}\pm 3^{\circ}$
+   +  幅值裕度不低于 10dB
+   +  动态过程调节时间不超过 3s
+
+解：
+   + <2-> 由稳态性能指标得：  $K=180$
+       \begin{align*}
+        \omega_c' &=12.6 \\
+        \gamma' &= -55.5^{\circ}\\
+        h' &=-30dB
+       \end{align*}
+** 串联滞后-超前校正示例3（续）
+  +  $G_c(j\omega)=\frac{(1+jT_a\omega)(1+jT_b\omega)}{(1+jaT_a\omega)(1+jT_b\omega/a)}$
+  +  分析-20dB/dec与-40dB/dec转折点，得 $T_b=\frac{1}{2}$ 
+  +  由 $t_s,\gamma''$ 指标与 -20dB/dec的范围，得： $\omega_c'' \in [3.2,6]$ 取 $\omega_c'\approx 3.5$
+  +  $L'(\omega_c'')+20\lg T_b\omega_c''-20\lg a=0\to a=50$
+  +  $\gamma'': 180^{\circ}-90^{\circ}-\arctan \frac{\omega_c''}{6}+\arctan T_a\omega_c''-\arctan 50T_a\omega_c''-\arctan\frac{\omega_c''}{100}\to T_a\approx 0.78$
+  +  $G_c(S)=\frac{(1+1.28s)(1+0.5s)}{(1+64s)(1+0.01s)}$ ,验证: $\gamma''=45.5^{\circ},h''=27dB$ ,满足要求。

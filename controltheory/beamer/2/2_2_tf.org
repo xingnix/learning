@@ -1,0 +1,344 @@
+# +LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+ # +latex_header:  \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+# +latex_header: \mode<beamer>{\usetheme{Boadilla}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+#+latex_header: \setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+#+TITLE:  自动控制系统的数学模型
+#+latex_header: \subtitle{控制系统的复域数学模型}
+#+AUTHOR:    
+#+EMAIL: 
+#+DATE:  
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+#+latex_header:\mode<article>{\renewcommand{\labelitemii}{$\cdot$}}
+
+
+
+
+
+
+
+
+
+* Laplace变换
+** 概念
+    * <2->定义
+      \begin{eqnarray*}
+      {\cal L}[F(t)] &=& F(s) \\
+       &=& \int_0^{+\infty}f(t)e^{-st}dt
+      \end{eqnarray*}
+    * <3->作用：将微积分运算变成代数运算
+** 常用函数的Laplace变换 
+ * <2->单位脉冲函数 $f(t)=\delta(t) \rightarrow   F(s)=1$
+ * <3->阶跃函数 $f(t)=A,(t\geq 0) \rightarrow   F(s)=\frac{A}{s}$
+ * <4->斜坡函数（速度）  $f(t)=vt,(t\geq0) \rightarrow F(s)=\frac{v}{s^2}$
+ * <5->加速度函数  $f(t)=\frac{1}{2}at^2,(t\geq 0) \rightarrow  F(s)=\frac{a}{s^3}$
+ * <6->指数函数 $f(t)=e^{at} \rightarrow  F(s)=\frac{1}{s-a}$
+ * <7->正弦函数 $f(t)=A\sin(\omega t)\rightarrow F(s)=\frac{A\omega}{s^2+\omega^2}$
+** Laplace变换的性质
+ * <2->线性: $f(t)=f_1(t)+f_2(t)\rightarrow  F(s)=F_1(s)+F_2(s)$
+ * <3->衰减: $g(t)=f(t)e^{-at} \rightarrow G(s)=F(s+a)$
+ * <4->延迟: $g(t)=f(t-a) \rightarrow  G(s)=F(s)e^{-as}$ , 一个信号经过 $e^{-as}$ 后，相当于对这个信号作延迟运算
+ * <5->积分: $g(t)=\int_0^t f(\tau) d\tau \rightarrow  G(s)=\frac{F(s)}{s}$ , $\frac{1}{s}$ 相当于积分器
+ * <6->微分: $g(t)=f(t)'\rightarrow  G(s)=sF(s)-f(0)$ , 零初始条件下， $G(s)=sF(s)$ , $s$ 相当于微分器
+ * <7->初值定理: 若 $f(t)$ 在 $t=0$ 处无脉冲分量则 $f(0)=\lim_{t->0}f(t)=\lim_{s->\infty}sF(s)$
+ * <8->终值定理: 若 $F(s)$ 极点全部在左半平面，则 $f(\infty)=lim_{t->\infty}f(t)=lim_{s->0}sF(s)$
+
+** 传递函数概念
+ * <2->概念：数学模型，从现阶段来讲，描述的是输入与输出的数学运算关系。 传递函数可以表示出系统的结构，可以用来研究系统结构，参数变化对系统性能的影响。
+ * <3->定义：线性定常系统的传递函数是指在零初始条件下，系统输出量的拉氏变换与输入量的拉氏变换之比，记作：$G(s)=\frac{C(s)}{R(s)}$ 。
+#    * 传递函数 $G(s)$ 与输入信号的关系: 无关
+#    * $G(s)$ 的形式：分子分母多项式
+* 传递函数的零点与极点
+** 传递函数的形式
+ * <2->传递函数有三种表达形式
+   * <3->分子分母多项式
+   * <4->零极点形式
+   * <5->典型环节形式
+** 分子分母多项式
+ *  <2->在零初始条件下，对微分方程两端进行拉氏变换，有
+     \begin{eqnarray*}
+     \only<3->{ a_n c^{(n)}(t)+...+a_0c(t) &=& b_m r^{(m)}(t)+...+b_0r } \\
+     \only<4->{ a_n s^n C(s)+...+a_0C(s) &=& b_m s^m R(s)+...+b_0 R(s) }\\
+     \only<5->{ (a_n s^n+...+a_0)C(s) &=& (b_m s^m+...+b_0)R(s) }\\
+     \only<6->{ G(s) &=& \frac{C(s)}{R(s)} }\\
+     \only<7->{ &=& \frac{b_m s^m+b_{m-1}s^{m-1}+...+b_0}{a_n s^n+a_{n-1}s^{n-1}+...+a_0} }
+     \end{eqnarray*}
+ *  <8->传递函数只与系统的结构和参数有关
+** 零极点形式
+　$$G(s)=\frac{k_g\prod_{i=1}^m(s-z_i)}{\prod_{j=1}^n(s-p_j)}$$
+  * $k_g$ 根轨迹增益
+  * $z_i$ 零点
+  * $p_j$ 极点
+
+** 典型环节形式
+  $$G(s)=\frac{K\prod_{i=1}^m(\tau_i s+1)}{s^{\nu}\prod_{j=1}^n(\tau_j s+1)}$$
+
+ * $K$ :系统增益
+
+** 传递函数的零极点对系统输出的影响
+   * <2-> $N(s)C(s)=M(s)R(s)$
+       * $M(s)=(b_m s^m+b_{m-1}s^{m-1}+...+b_0)$
+       * $N(s)=(a_n s^n+a_{n-1}s^{n-1}+...+a_0)$
+   * <3-> $G(s)=\frac{C(s)}{R(s)}=\frac{M(s)}{N(s)}$
+   * <4-> $M(s)=0$ 求得极点, $N(s)=0$ 求得零点。
+   * <5-> $c(t)=c_1e^{\lambda_1 t}+...+c_ne^{\lambda_n t}$
+   * <6-> 系统运动模态由极点决定
+   * <7-> 各模态所占比例由零点决定
+
+* 典型环节传递函数
+** 比例环节
+\begin{eqnarray*}
+c(t) &=& kr(t) \\
+C(s) &=& kR(s) \\
+G(s) &=& \frac{C(s)}{R(s)} \\
+   &=& k
+\end{eqnarray*}
+
+** 积分环节							    :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_envargs: [t]
+   :END:
+*** 传递函数						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_envargs: <1->
+     :BEAMER_col: 0.65
+     :END:
+
+ * $c(t) = \int r(t)dt$
+ * $C(s) = \frac{R(s)}{s}$
+ * $G(s) = \frac{1}{s}$
+
+\begin{circuitikz}[x=0.7cm]
+\draw
+            (5,.5) node [op amp] (opamp) {}
+           (0,1) node [ left ] {$U_{r}$} 
+            to [R, l=$R$,o-*,i_=$I$] (opamp.-)
+            (opamp.+) to ($( opamp.+)+(0,-0.5)$) node [ground] {}
+           (opamp.out) to [short] +(0,1.5) to   [C, l_=$C$, i_=$I_c$] ($(opamp.-)+(0,1)$) to [short] (opamp.-) 
+           (opamp.out) to [short , *-o] (7,.5) node [ right ] {$U_{c}$};
+\end{circuitikz}
+
+*** 推导						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.35
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+
+ 1. <2-> $U_r    = I R$
+ 1. <3-> $U_r(s) = I(s)R$
+ 1. <2-> $C\frac{dU_c}{dt}    = I_c=-I$
+ 1. <3-> $U_c(s) = -\frac{I(s)}{Cs}$
+ 1. <4-> $U_c(s) = -\frac{U_r(s)}{RCs}$
+ 1. <5-> $\frac{U_c(s)}{U_r(s)} = -\frac{1}{RCs}$
+
+** 微分环节							    :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: fram
+   :BEAMER_envargs: [t]
+   :END:
+*** 传递函数						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <1->
+     :END:
+     * $c(t)=r'(t)$
+     * $C(s)=sR(s)$
+     * $G(s)=s$
+
+\begin{circuitikz}[american voltages,x=0.7cm]
+%       o---c --+-------o
+%               |
+%      U_r      R      U_c
+%               |
+%       o-------+-------o
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$U_c$,-o](5,3)
+  to [short] (3,3)
+  to [R, l=$R$, i_={$I$}] (3,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [C,l=$C$] (3,3);
+\end{circuitikz}
+
+*** 推导						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+\begin{eqnarray*}
+  U_r &= &\frac{1}{C}\int I dt +U_c \\
+  U_r(s) &=& \frac{I(s)}{Cs}+U_c(s) \\
+  IR &=& U_c \\
+  I(s)R&=&U_c(s) \\
+  U_r(s) &=& \frac{U_c(s)}{RCs}+U_c(s)\\
+  \frac{U_c(s)}{U_r(s)} &=&\frac{RCs}{1+RCs} \\
+  &\approx & RCs , \qquad (RC\ll 1)
+\end{eqnarray*}
+\mode<article>{实际物理系统 $n\geq m$ . 其中: $n$ :传递函数分母阶次, $m$ 分子阶次}
+
+** 一阶惯性环节
+*** 传递函数						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :BEAMER_envargs: <1->
+     :END:
+\begin{eqnarray*}
+G(s) &=& \frac{1}{Ts+1}
+\end{eqnarray*}
+其中 $T=RC$ 为时间常数
+
+\begin{circuitikz}[american voltages,x=0.7cm]
+%       o---R --+-------o
+%               |
+%      U_r      C      U_c
+%               |
+%       o-------+-------o
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (5,0)
+  to [open, v^>=$U_c$,-o](5,3)
+  to [short] (3,3)
+  to [C, l_=$C$, i_={$I$}] (3,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [R,l=$R$] (3,3);
+\end{circuitikz}
+
+*** 推导						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+
+\begin{eqnarray*}
+ U_r &= &IR dt +U_c \\
+ U_r(s) &=& I(s)R+U_c(s) \\
+ U_c &=& \frac{1}{C}\int I dt \\
+ I(s)&=&CsU_c \\
+ U_r(s) &=& U_c(s)RCs+U_c(s)\\
+ \frac{U_c(s)}{U_r(s)} &=&\frac{1}{1+RCs} 
+\end{eqnarray*}
+
+** 一阶微分环节
+  $$G(s)=1+\tau s$$
+** 二阶振荡环节
+*** LC振荡电路						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.45
+     :BEAMER_env: block
+     :BEAMER_envargs: <1->
+     :END:
+
+\begin{circuitikz}[american voltages,x=0.7cm]
+%       o-R --L-+-------o
+%               |
+%      U_r      C      U_c
+%               |
+%       o-------+-------o
+\draw
+  % rotor circuit
+  (0,0) to  [short, o-o] (6,0)
+  to [open, v^>=$U_c$,-o](6,3)
+  to [short] (4,3)
+  to [C, l_=$C$, i_={$I$}] (4,0)
+
+  (0,0) to [open, v>=$U_r$,-o] (0,3)
+  to [R,l=$R$] (2,3)
+  to [L,l=$L$] (4,3);
+\end{circuitikz}
+\begin{eqnarray*}
+U_r &= &IR + U_L+ U_c \\
+U_c &=& \frac{1}{C}\int I dt \\
+U_L &=& L\frac{dI}{dt} 
+\end{eqnarray*}
+
+*** 推导						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.55
+     :BEAMER_env: block
+     :BEAMER_envargs: <2->
+     :END:
+
+\begin{eqnarray*}
+ U_r(s) &=& I(s)R+U_L(s)+U_c(s) \\
+ U_c(s) &=& \frac{I(s)}{Cs}\\
+ I(s)&=&CsU_c \\
+ U_L(s) &=& LsI(s) \\
+        &=& LCs^2U_c(s) \\
+ U_r(s) &=& (Rcs+LCs^2+1)U_c(s)\\
+ \frac{U_c(s)}{U_r(s)} &=&\frac{1}{LCs^2+RCs+1}
+\end{eqnarray*}
+
+** 二阶振荡环节标准形式
+ * <2-> 标准形式:
+       \begin{eqnarray*}
+        G(s) &=& \frac{\omega^2}{s^2+2\xi\omega_n s+\omega_n^2}\\
+             &=& \frac{1}{T^2s^2+2\xi Ts+1}
+       \end{eqnarray*}
+        其中 $T\omega_n=1$
+ * <3->术语：
+   * $\omega_n$ : 无阻尼振荡频率或自然频率
+   * $\xi$ : 阻尼比或阻尼系数
+   * $T$ : 时间常数
+
+\mode<article>{例：姿态角、角速度、加速度计等其数学模型均为二阶振荡环节}
+** 二阶微分环节
+　　　$$G(s)=\tau^2s^2+2\xi\tau s + 1$$
+** 延迟环节
+\begin{eqnarray*}
+c(t) &=& r(t-\tau) \\
+C(s) &=& R(s)e^{-\tau s} \\
+G(s) &=&e^{-\tau s}
+\end{eqnarray*}

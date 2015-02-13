@@ -1,0 +1,272 @@
+% Created 2014-11-16 星期日 16:19
+\documentclass[table]{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.5}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{串联综合法校正}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性系统校正方法}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{串联综合法校正原理与方法}
+\label{sec-1}
+\begin{frame}
+\frametitle{串联综合法校正原理}
+\label{sec-1-1}
+
+\begin{itemize}
+\item <2->将性能指标要求转化为期望对数幅频特性,
+\item <3->再与待校正系统的开环对数幅频特性比较,从而确定校正装置的形式和参数.
+\item <4->该方法适用于最小相位系统.
+\item <5->设开环系统期望频率特性为 $G(j\omega)$ ,待求校正装置频率特性为 $G_c(j\omega)$ ,原系统频率特性为 $G_0(j\omega)$ .
+     \begin{eqnarray*}
+     G(s) &= &G_c(s)G_0(s) \\
+     20\lg|G_c(j\omega)| &=& 20\lg|G(j\omega)|-20\lg|G_0(j\omega)|
+     \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{期望频率特性}
+\label{sec-1-2}
+
+\begin{itemize}
+\item 期望对数幅率渐近特性的一般形状为:
+\begin{itemize}
+\item 低频段斜率: $-40 dB/dec$
+\item 中频段斜率: $-20 dB/dec$
+\item 高频段斜率: $-40 dB/dec$
+\end{itemize}
+\item <2->对应的传递函数:  $G(s)=\frac{K(1+\frac{s}{\omega_2})}{s^2(1+\frac{s}{\omega_3})}$ ,其中 $\omega_2<\omega_3$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{期望频率特性分析 $G(s)=\frac{K(1+\frac{s}{\omega_2})}{s^2(1+\frac{s}{\omega_3})}$}
+\label{sec-1-3}
+
+\begin{itemize}
+\item 相频特性:
+     \begin{eqnarray*}
+     \phi_{\omega} &=& -180^{\circ}+\arctan\frac{\omega}{\omega_2}-\arctan\frac{\omega}{\omega_3} \\
+     \gamma(\omega) &=& \arctan\frac{\omega}{\omega_2}-\arctan\frac{\omega}{\omega_3} 
+     \end{eqnarray*}
+\begin{itemize}
+\item 令  $\frac{d\gamma}{d\omega}=0$  得  $\omega_m=\sqrt{\omega_2\omega_3}$  .
+\end{itemize}
+\item <2->定义中频段宽度:  $H=\frac{\omega_3}{\omega_2}$ ,则:
+     \begin{eqnarray*}
+     \gamma(\omega_m) &= &\arcsin\frac{H-1}{H+1} 
+     \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{确定参数 $\omega_2,\omega_3,(\omega_m\approx\omega_c)$}
+\label{sec-1-4}
+
+\begin{align*}
+\omega_c &\approx\omega_m \\
+         &=\sqrt{\omega_2\omega_3}\\
+\sqrt{H} &=\sqrt{\frac{\omega_3}{\omega_2}}\\
+\omega_2 & = \frac{\omega_c}{\sqrt{H}} \\
+\omega_3 & = \sqrt{H}\omega_c
+\end{align*}
+当给出设计指标 $\omega_c,H$ 时，选取
+\begin{align*}
+\omega_2 &\leq \frac{\omega_c}{\sqrt{H}} \\
+\omega_3 &\geq \sqrt{H}\omega_c
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{确定参数 $\omega_2,\omega_3,(\omega_m\approx\omega_r)$}
+\label{sec-1-5}
+
+\begin{align*}
+\omega_r &=\omega_m \\
+M_r &=\frac{1}{\sin\gamma(\omega_r)}&\approx \frac{1}{\sin\gamma} \\
+H &=\frac{M_r+1}{M_r-1}\\
+\frac{\omega_c}{\omega_r} &=|G(j\omega_r)|=\frac{1}{\cos\gamma(\omega_r)}\\
+\omega_c &=0.5(\omega_2+\omega_3)\\
+\omega_2 & \leq \frac{\omega_c(M_r-1)}{M_r} \\
+\omega_3 & \geq \frac{\omega_c(M_r+1)}{M_r} 
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{设计步聚}
+\label{sec-1-6}
+\begin{columns}
+\begin{column}{0.7\textwidth}
+%% 设计步聚
+\label{sec-1-6-1}
+
+\begin{itemize}
+\item 由 $e_{ss}$ 确定开环增益 $K$
+\item 由设计指标确定系统期望  $M_r,\omega_c$
+\end{itemize}
+\begin{itemize}
+\item <2->按要求选取  $\omega_2,\omega_3$
+\item <3->在 $\omega_2$ 处做  $-40dB/dec$ 线与原系统  $L(\omega)$  低频段相交
+\item <4->在 $\omega_3$ 处做  $-40dB/dec$ 线与原系统  $L(\omega)$  高频段相交
+\item <5->写出期望开环传递函数  $G(s)$
+\item <5->$G_c(s)=\frac{G(s)}{G_0(s)}$
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+%% 示意图:
+\label{sec-1-6-2}
+
+\begin{tikzpicture}
+\coordinate (o) at (0,0);
+\coordinate (ox) at (4.5,0);
+\draw[->] (-1,0) -- (ox);
+\draw[->] (0,-1.1) -- (0,2);
+\draw (0,2) node[above left] {$L(\omega)$};
+\draw (o) node[below left] {$o$};
+%\draw [red,thick] plot coordinates {(0,0) (1,0) (2,-1)  (3,-1)};
+\coordinate (s1) at (-0.5,1.5);
+\coordinate (s2) at ($(s1) +(-20:3)$);
+\coordinate (s3) at ($(s2)+(-40:1)$);
+\coordinate (s4) at ($(s3)+(-60:1)$);
+\coordinate (wc) at (2,0);
+\coordinate (w1up) at ($(wc)+(160:1)$);
+\coordinate (w2down) at ($(wc)+(-20:1)$);
+\coordinate (w1upe) at ($(w1up)+(140:5)$);
+\coordinate (w2downe) at ($(w2down)+(-40:5)$);
+\coordinate (w1i) at (intersection of w1up--w1upe and s1--s2);
+\coordinate (w2i) at (intersection of w2down--w2downe and s3--s4);
+%\coordinate (w2) at (intersection of b--c and o--ox);
+\draw[red] (s1)--(s2)--(s3)--(s4);
+\draw[blue,thick] (w1i)--(w1up) (w2down)--(w2i);
+\draw[purple,thick] (w1up)-- (w2down);
+\draw (wc) node[below] {$\omega_c$};
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+\section{串联综合法示例}
+\label{sec-2}
+\begin{frame}
+\frametitle{串联综合法示例1}
+\label{sec-2-1}
+
+   单位负反馈系统开环传递函数 $G_o(s)=\frac{K}{s(0.1s+1)(0.02s+1)(0.01s+1)(0.005s+1)}$ 设计校正装置满足以下指标：
+\begin{itemize}
+\item 动态误差系数 $C_0=0,C_1=1/200$
+\item 单位阶跃响应超调量 $\sigma\%\leq30\%$
+\item 单位阶跃响应调节时间 $t_s\leq 0.7s$
+\item 幅值裕度 $h\geq 6dB$
+\end{itemize}
+解：
+\begin{itemize}
+\item <2-> 期望特性低频段: $K=1/C_1=200$ ,斜率-20dB/dec
+\item <3-> 期望特性中频段: 指标转换 $\sigma\%,t_s\to \gamma>47.8^{\circ},M_r=1.35,\omega_c>12.7$ 取 $\omega_c=13,\omega_2=1.3<3.37,\omega_3=50>22.6$
+\item <4-> 期望特性低、中频衔接段: $\omega_1=0.13$
+\item <5-> 期望特性中、高频衔接段: $\omega_4=100$
+\item <6-> 验算
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{串联综合法示例1(续)}
+\label{sec-2-2}
+
+\begin{align*}
+G_o(s) &=\frac{200}{s(0.1s+1)(0.02s+1)(0.01s+1)(0.005s+1)} \\
+G_E(s) &=\frac{1}{1+\frac{2000}{13^2} s}\frac{200(s/1.3+1)}{s(s/50+1)} \\
+\frac{G_E(s)}{G_o(s)} &=\frac{(s/1.3+1)(0.1s+1)(0.01s+1)(0.005s+1)}{(1+\frac{2000}{13^2}s)} \\
+G_c(s) &\approx \frac{(s/1.3+1)(0.1s+1)}{(1+\frac{2000}{13^2}s)} \\
+&\approx \frac{(s/1.3+1)(0.1s+1)}{(1+\frac{2000}{13^2}s)(0.005s+1)}
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{串联综合法示例1(续)}
+\label{sec-2-3}
+
+解法2：
+\begin{align*}
+G_E(s) &=\frac{13^2}{10}\frac{(s/1.3+1)}{s^2(s/50+1)} \\
+\frac{G_E(s)}{G_o(s)} &=\frac{(s/1.3+1)(0.1s+1)(0.01s+1)(0.005s+1)}{\frac{2000}{13^2}s} \\
+G_c(s) &\approx \frac{(s/1.3+1)(0.1s+1)}{\frac{2000}{13^2}s} \\
+&\approx \frac{(s/1.3+1)(0.1s+1)}{\frac{2000}{13^2}s(0.005s+1)}\\
+&\approx \frac{(s/1.3+1)(0.1s+1)}{(1+\frac{2000}{13^2}s)(0.005s+1)}
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{串联综合法示例２}
+\label{sec-2-4}
+
+设单位反馈系统开环传递函数为
+$G_o(s)=\frac{K}{s(1+0.12s)(1+0.02s)}$ 设计校正装置满足 $K_v\geq 70,t_s\leq1s,\sigma\%\leq 40\%$
+
+解：
+\begin{itemize}
+\item $K=70$
+\item 期望特性中频段: $M_r=1.6,\omega_c=13,\omega_2\leq 4.8,\omega_3\leq 21.13$ 取 $\omega_2=4,\omega_3=45$
+\item 衔接段:  $\omega_1=0.75,\omega_4=50$
+\item $G_E(s)=\frac{70(0.25s+1)}{s(1.33s+1)(0.022s+1)}$
+\item $G_c(s)=\frac{(1+0.25s)(1+0.12s)(1+0.02s)}{(1+1.33s)(1+0.022s)}\approx \frac{(1+0.25s)(1+0.12s)}{(1+1.33s)(1+0.022s)}$
+\item 验算： $\omega_c=13,\gamma=45.6^{\circ},M_r=1.4,\sigma\%=32\%,t_s=0.73s$ 符合要求。
+\end{itemize}
+\end{frame}
+
+\end{document}

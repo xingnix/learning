@@ -1,0 +1,1597 @@
+% Created 2014-11-27 Thu 17:57
+\documentclass[table]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{离散系统介绍}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{线性离散系统分析}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{离散系统基本概念}
+\label{sec-1}
+\subsection{特点}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{离散信号与离散系统}
+\label{sec-1-1-1}
+
+\begin{itemize}
+\item <2->离散信号:脉冲或数码(数字信号)
+\item <3->离散系统:控制系统中有一处或几处信号是一串脉冲或数码
+\end{itemize}
+\end{frame}
+\subsection{采样控制系统}
+\label{sec-1-2}
+\begin{frame}
+\frametitle{采样控制系统}
+\label{sec-1-2-1}
+
+\begin{itemize}
+\item <2->采样: 连续信号转变为离散脉冲序列的过程
+\begin{itemize}
+\item <3->周期采样:离散信号的获取是周期性的
+\item <4->非周期采样:离散信号的获取是非周期的
+\end{itemize}
+\item <5->复现:把脉冲序列转变为连续信号的过程
+\end{itemize}
+\begin{itemize}
+
+\item 连续信号
+\label{sec-1-2-1-1}%
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[smooth,mark=none] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+
+\item 采样:
+\label{sec-1-2-1-2}%
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+
+\item 复现:
+\label{sec-1-2-1-3}%
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[const plot] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{采样器与保持器}
+\label{sec-1-2-2}
+
+\begin{itemize}
+\item 典型采样控制系统中既有连续的模拟信号,又有离散的脉冲信号,因此需要:
+\begin{itemize}
+\item 采样器: 模拟信号转换为脉冲信号
+\item 保持器: 脉冲信号转换为模拟信号
+\end{itemize}
+\end{itemize}
+
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of p1] (s) {}; 
+\draw (s.west)--(s.north east);\draw[->] (s.north west) arc (70:0:1.7em);\draw (s.south) node {$T$};\draw (s.north) node[above] {$S$};
+\path[](p1) edge node[midway] {$e(t)$} (s) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of s] (gh) {$G_h(s)$}; 
+\path[->] (s) edge node[midway] {$e^*(t)$} (gh); 
+\path[red,->] node[draw, inner sep=5pt,right =of gh] (gp) {$G_p(s)$}; 
+\path[->] (gh) edge node[midway] {$e_h(t)$} (gp); 
+\path[->] node[ right =of gp] (o) {$c(t)$}; 
+\path[->] (gp) edge node {} (o); 
+\path[blue,->] node[draw, inner sep=5pt,below =of gh] (h) {$H(s)$}; 
+\path[->, draw] (o.west)+(-1em,0) |-   (h.east); 
+\path[->, draw] (h.west) -| node[very near end] {$-$} (p1); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item $e^*(t)$  :采样信号
+\item $G_h(s)$  :保持器
+\item $e_h(t)$  :复现信号
+\item $S$  :理想采样开关
+\item $T$  :采样周期
+\end{itemize}
+\end{frame}
+\subsection{数字控制系统}
+\label{sec-1-3}
+\begin{frame}
+\frametitle{数字控制系统}
+\label{sec-1-3-1}
+
+\begin{itemize}
+\item 以数字计算机作为控制器控制连续对象
+\item 系统中既有连续信号,又有数字信号,实现两种信号之间的转换装置为A/D,D/A.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{模数转换器(A/D)}
+\label{sec-1-3-2}
+
+\begin{itemize}
+\item 将连续信号转换为数字信号.
+\item <2->工作过程:
+\begin{itemize}
+\item <2->采样过程:  $e(t)\rightarrow e^*(t)$
+\item <3->量化过程:  $e^*(t)\rightarrow \bar{e}^*(t)$
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+
+\item 连续信号
+\label{sec-1-3-2-1}%
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[smooth,mark=none] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+
+\item 采样:
+\label{sec-1-3-2-2}%
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,1.5) (1,1.5)};
+\end{axis}
+\end{tikzpicture}
+
+\item 量化:
+\label{sec-1-3-2-3}%
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{数模转换器(D/A)}
+\label{sec-1-3-3}
+
+\begin{itemize}
+\item 将离散的数字信号转换为连续模拟信号
+\item <2->工作过程:
+\begin{itemize}
+\item 解码过程: 将离散数字信号转换为离散模拟信号
+\item 复现过程: 将离散的模拟信号转换为连续的模拟信号
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+
+\item 数字信号
+\label{sec-1-3-3-1}%
+\begin{tikzpicture}[scale=0.7]
+\begin{axis}[grid=both]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+
+\item 复现:
+\label{sec-1-3-3-2}%
+\begin{tikzpicture}[scale=0.7]
+\begin{axis}[grid=both]
+\addplot+[const plot] plot coordinates
+    {(0,2) (0.1,1) (0.3,1) (0.35,4) (0.5,3)
+     (0.6,2) (0.7,2) (1,2)};
+\end{axis}
+\end{tikzpicture}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{量化方法}
+\label{sec-1-3-4}
+
+\begin{itemize}
+\item <2->只舍不入: 只取量化单位  $q$  的整数部分
+       	\begin{eqnarray*}
+	 E(e) &=& \frac{q}{2} \\
+	 \sigma^2 &=& \frac{q^2}{3}
+       	\end{eqnarray*}
+\item <3->有舍有入: 类似四舍五入
+       	\begin{eqnarray*}
+	 E(e) &=& 0 \\
+	 \sigma^2 &=& \frac{q^2}{12}
+       	\end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{减小量化误差方法}
+\label{sec-1-3-5}
+
+\begin{itemize}
+\item 减小  $q$  , 即增大字长  $i$  :   
+         \[q=\frac{x_{max}-x_{min}}{2^i}\]
+\end{itemize}
+\end{frame}
+\subsection{离散系统研究方法}
+\label{sec-1-4}
+\begin{frame}
+\frametitle{离散系统研究方法}
+\label{sec-1-4-1}
+
+\begin{itemize}
+\item 连续系统: Laplacian 变换
+\item <2->离散系统: Z变换
+\item <3->离散系统学习要点
+\begin{itemize}
+\item <4->离散数学模型
+\item <5->离散系统的稳定性,稳态性能与动态性能分析
+\end{itemize}
+\end{itemize}
+\end{frame}
+\section{信号的采样与保持}
+\label{sec-2}
+\subsection{信号的采样}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{采样信号}
+\label{sec-2-1-1}
+
+\begin{itemize}
+\item <2->\mode<article>{理想采样的结果是脉冲信号，其强度为连续信号在采样时刻的值}若采样开关为理想采样开关,则有:  
+       	\[e^*(t)=e(t)\delta_T(t)\]
+      其中  $\delta_T(t)$  为理想单位脉冲序列:  
+	       \[\delta_T(t)=\sum_{n=0}^{\infty}\delta(t-nT)\]
+\item <3->\mode<article>{将单位脉冲序列乘以连续信号即可完成采样，将连续信号转换成采样信号（加权脉冲序列）。}得:
+      \begin{eqnarray*}
+      e^{*}(t) & = & e(t)\sum_{n=0}^{\infty}\delta(t-nT) \\
+       	&=&  \sum_{n=0}^{\infty}e(t)\delta(t-nT) \\
+       	&=&  \sum_{n=0}^{\infty}e(nT)\delta(t-nT) 
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{采样信号的Laplace变换}
+\label{sec-2-1-2}
+
+      \begin{eqnarray*}
+      {\cal L}(e^{*}(t)) & =  & {\cal L}( \sum_{n=0}^{\infty}e(nT)\delta(t-nT) )\\
+      &=&  \sum_{n=0}^{\infty}e(nT){\cal L}(\delta(t-nT) )\\
+      &=&  \sum_{n=0}^{\infty}e(nT)e^{-nTs}
+      \end{eqnarray*}
+  \mode<article>{直接计算离散信号的Laplace变换时会发现，根据Laplace变换的性质，时域出现延迟会导致复域出现  $s$  的指数函数，而不是关于 $s$ 的有理分式，难以分析。为了能够方便地分析离散信号，需要学习一种新的数学工具--- Z 变换}
+\end{frame}
+\begin{frame}
+\frametitle{采样信号的频谱分析}
+\label{sec-2-1-3}
+
+  \mode<article>{换一种思路计算离散信号的Laplace变换。}
+\begin{itemize}
+\item <2->将  $\delta_T(t)$  以 Fourier 级数表示,得: 
+       \begin{eqnarray*}
+       \delta_T(t) & = &\sum_{n=-\infty}^{\infty}C_n e^{jn\omega_s t} \\
+       C_n &=&\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\delta_T(t)e^{-jn\omega_s t}dt \\
+         &=&\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\delta(t)dt \\ 
+         &=& \frac{1}{T} \\
+       \omega_s &=& \frac{2\pi}{T} 
+     \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{采样信号的频谱分析(续)}
+\label{sec-2-1-4}
+
+\mode<article>{通过Laplace变换或Fourier变换对比分析连续信号与采样信号的频率特性，可以看到采样过程的频域描述：将连续信号的频谱平移后再叠加。 }
+
+\begin{itemize}
+\item 采样
+      \begin{eqnarray*}
+      \delta_T(t) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}e^{jn\omega_s t} \\
+      e^*(t) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}e(t)e^{jn\omega_s t} \\
+      E^*(s) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}E(s+jn\omega_s ) \\
+      E^*(j\omega) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}E(j(\omega+n\omega_s)) 
+      \end{eqnarray*}
+\item <2->$e^*(t)$  的频谱为以  $\omega_s$  为周期的无穷多个频谱之和.
+\item <3->设  $e(t)$ 带宽有限,最高角频率为  $\omega_h$ , 则当  $\omega_s>2\omega_h$  时,  $e^*(t)$  频谱的各部分不会相互重叠.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Nyquist-Shannon sampling theorem}
+\label{sec-2-1-5}
+
+\begin{itemize}
+\item <2->若采样器的输入信号  $e(t)$ 只有有限带宽,且其最高频率分量为  $\omega_h$  ,
+\item <3->当采样周期满足  
+	\[T\leq\frac{2\pi}{2\omega_h}\]  
+    则信号  $e(t)$  可以完全从  $e^*(t)$  中恢复出来.
+\end{itemize}
+\mode<article>{这是连续信号能完全从离散信号复现的保证，即：连续信号转换为离散信号时没有丢失任何信息。}
+\end{frame}
+\begin{frame}
+\frametitle{工程中  $T$  的选取}
+\label{sec-2-1-6}
+
+\mode<article>{为了满足控制系统的性能指标，需要采样频率尽可能大一些。但采样频率过大或过小都有不足之处。}
+\begin{itemize}
+\item <2-> $T$  过小,增加计算量
+\item <3-> $T$  过大,动态性能差,稳定性难保证
+\item <4->经验公式:
+\begin{itemize}
+\item <4->在随动系统中,若校正后系统截止频率为  $\omega_c$ ,则采样频率为  $\omega_s=10\omega_c$  , 即  $T=\frac{\pi}{5\omega_c}$
+\item <5->按  $t_r,t_s$  选取,   $T=\frac{T_r}{10},T=\frac{t_s}{40}$
+\end{itemize}
+\end{itemize}
+\end{frame}
+\subsection{采样函数Laplace变换性质}
+\label{sec-2-2}
+\begin{frame}
+\frametitle{采样函数Laplace变换性质:$G^*(s)=G^*(s+jk\omega_s)$}
+\label{sec-2-2-1}
+
+\mode<article>{这个性质表明采样信号的Laplace变换是周期函数。}
+\begin{itemize}
+\item <2-> 证明:
+     \begin{eqnarray*}
+     G^*(s) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}G(s+jn\omega_s) \\
+     G^*(s+jk\omega_s) &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}G(s+j(n+k)\omega_s) \\
+      &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}G(s+jn\omega_s)\\
+      &=& G^*(s)
+     \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{采样函数Laplace变换性质:$[G(s)E^*(s)]^*=G^*(s)E^*(s)$}
+\label{sec-2-2-2}
+
+\mode<article>{这个性质表明：当一个连续系统的输入信号为采样信号时，如何得到输出信号的采样。}
+\begin{itemize}
+\item <2-> 证明
+     \begin{eqnarray*}
+     [G(s)E^*(s)]^* &= & \frac{1}{T}\sum_{n=-\infty}^{\infty}[G(s+jn\omega_s)E^*(s+jn\omega_s)] \\
+      &=& \frac{1}{T}\sum_{n=-\infty}^{\infty}[G(s+jn\omega_s)E^*(s)] \\
+      &=& (\frac{1}{T}\sum_{n=-\infty}^{\infty}G(s+jn\omega_s))E^*(s) \\
+      &=& G^*(s)E^*(s)
+     \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\subsection{信号的保持}
+\label{sec-2-3}
+\begin{frame}
+\frametitle{信号的保持}
+\label{sec-2-3-1}
+
+\begin{itemize}
+\item <2->将数字信号及脉冲信号转换成连续的模拟信号,采用保持器.主要解决  $nT$  与  $(n+1)T$  之间的插值问题.
+\item <3->保持器是具有外推功能的元件,外推公式为:  
+	  \[e(nT+\Delta t)=a_0+a_1 \Delta t+a_2(\Delta t)^2+\cdots+a_m(\Delta t)^m\]
+    式中  $a_0,\cdots,a_m$  由过去各采样时刻  $(m+1)$ 个离散的信号  $e^*((n-i)T),(i=0,\cdots,m)$  惟一确定.
+\item <4-> $m=0$ 时称为零阶保持器,
+\item <5-> $m=1$ 时称为一阶保持器.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{零阶保持器}
+\label{sec-2-3-2}
+
+\begin{itemize}
+\item <2-> $e(nT+\Delta t)=a_0$  , 当  $\Delta t=0$  时,有  $e(nT)=a_0$ , 即:按常值外推,  $e(t)=e(nT),t\in [ nT,(n+1)T)$
+\item <3-> 设零阶保持器输入为  $r^*(t)=\delta(t)$  ,则输出为  $e(t)=1,t\in [ nT,(n+1)T)$  因此
+      \begin{eqnarray*}
+      {\cal L} (r^*) &=& 1 \\
+      {\cal L} (e) &=& \frac{1}{s}-\frac{e^{-Ts}}{s} \\
+      G_h(s) &=& \frac{E(s)}{R^*(s)}
+	     = \frac{1-e^{-Ts}}{s} \\
+      G_h(j\omega) &= &\frac{1-e^{-jT\omega}}{j\omega} 
+       = \frac{e^{-j\omega T/2}(e^{j\omega T/2}-e^{-j\omega T/2})}{j\omega}\\
+       &=& \frac{2\sin\frac{\omega T}{2}}{\omega}e^{-j\omega T/2} \\
+       &=& \frac{2\sin\frac{\pi\omega}{\omega_s}}{\omega}e^{-j\pi\omega /\omega_s} 
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{零阶保持器频率特性}
+\label{sec-2-3-3}
+\begin{itemize}
+
+\item Bode图
+\label{sec-2-3-3-1}%
+\begin{tikzpicture}[scale=0.5]
+%g=1-e^{-2\pi s}/s
+\begin{axis}[
+%axis x line=middle,axis y line= left, 
+xticklabel=$\pgfmathprintnumber{\tick}\omega_s$ ,
+yticklabel=$\pgfmathprintnumber{\tick}T$ ,
+ylabel=$|G_h(j\omega)|$ ,xlabel=$\omega$ ,
+every axis plot post/.append style={mark=none},
+grid=both,
+ymin=0,ymax=1.1,xmin=0.1,xmax=3]
+\addplot[violet,thick] shell {octave -q --eval "w=[0.1:0.1:3]';m=abs(1/2/pi*(1-exp(-2*pi*j*w))./(j*w));disp([w,m]);" };
+%\legend{$|G_h(j\omega)|$ , $\angle G_h(j\omega)$};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}[scale=0.5]
+%g=1-e^{-2\pi s}/s
+\begin{axis}[
+%axis x line=middle,axis y line= left, 
+xticklabel=$\pgfmathprintnumber{\tick}\omega_s$ ,
+yticklabel=$\pgfmathprintnumber{\tick}\pi$ ,
+ylabel=$\angle G_h(j\omega)$ ,xlabel=$\omega$ ,
+every axis plot post/.append style={mark=none},
+grid=both,
+ymin=-1.5,ymax=0,xmin=0,xmax=3]
+\addplot[blue] plot coordinates  {(0,0) (1,-1) };
+\addplot[blue] plot coordinates  {(1,0) (2,-1) };
+\addplot[blue] plot coordinates  {(2,0) (3,-1) };
+%\addplot plot coordinates  {(0,-1) (1,-1) (1,0)};
+%\legend{$|G_h(j\omega)|$ , $\angle G_h(j\omega)$};
+\end{axis}
+\end{tikzpicture}
+
+
+\item 零阶保持器特性
+\label{sec-2-3-3-2}%
+\begin{itemize}
+\item 低通滤波
+\item 相角迟后
+\item 时间延迟
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{一阶保持器}
+\label{sec-2-3-4}
+
+\begin{eqnarray*}
+ e(nT+\Delta t) &=& a_0+a_1 \Delta t, \qquad (0\leq \Delta t < T) \\
+ a_0& = & e(nT) \\
+ a_1&=& \frac{e(nT)-e((n-1)T)}{T} \\
+G_h(s) &=& T(1+s)\left(\frac{1-e^{-Ts}}{Ts}\right)^2 \\
+G_h(j\omega) &=& \sqrt{1+(\omega T)^2}\left(\frac{2\sin\frac{\omega T}{2}}{\omega }\right)^2e^{-j(\omega T-\arctan\omega T)}
+\end{eqnarray*}
+
+\begin{itemize}
+\item <2-> 高频噪声增大
+\item <3-> 因此一般只用零阶保持器.
+\end{itemize}
+\end{frame}
+\section{Z变换}
+\label{sec-3}
+\subsection{Z变换}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{Z变换定义}
+\label{sec-3-1-1}
+
+\begin{itemize}
+\item 采样信号  $e^*(t)$  的Laplacian变换  
+       \[E^*(s)=\sum_{n=0}^{\infty}e(nT)e^{-nsT}\]
+\item <2->令  $Z=e^{sT}$ ,则  
+       \[e^{-nsT}=Z^{-n}\]
+\item <3->得:  
+       \[E(Z)=\sum_{n=0}^{\infty}e(nT)Z^{-n}\]
+\item <3->记作  
+       \[E(Z)={\cal Z}[e^*(t)]={\cal Z}[e(t)]\]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Z变换方法}
+\label{sec-3-1-2}
+
+\begin{itemize}
+\item 级数求合法
+\begin{itemize}
+\item 按照Z变换的定义求解
+\end{itemize}
+\item 部分分式法:
+\begin{itemize}
+\item 先求出  $e(t)$  的Laplacian变换  $E(s)$  ,将其展开成部分分式之和,使每部分对应的Z变换是已知的.
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{级数求和法示例: 单位阶跃信号 $1(t)$}
+\label{sec-3-1-3}
+
+\begin{itemize}
+\item <2-> 解: 
+       \begin{eqnarray*}
+       e(nT)&=&1 , \\
+       E(z) &=  &\sum_{n=0}^{\infty}e(nT)z^{-n} \\
+       	&=& \sum_{n=0}^{\infty}z^{-n} \\
+       &=& \frac{1}{1-z^{-1}} \\
+       &=& \frac{z}{z-1}
+       \end{eqnarray*}
+       其中  $\qquad |z^{-1}|<1$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{级数求和法示例: $\delta_T(t)=\sum_{n=0}^{\infty}\delta(t-nT)$}
+\label{sec-3-1-4}
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+      e^*(t) & = & \sum_{n=0}^{\infty}e(nT)\delta(t-nT) \\
+       &=& \sum_{n=0}^{\infty}\delta(t-nT) \\
+      e(nT) &=& 1\\
+      E(z) &=& \sum_{n=0}^{\infty}z^{-n}\\
+       &=& \frac{1}{1-z^{-1}} \\
+      &=& \frac{z}{z-1}
+     \end{eqnarray*}
+      其中 $\qquad |z^{-1}|<1$
+\item <3->$1(t)$  与  $\delta_T(t)$  对应的Z变换相同.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{部分分式法示例:  $E(s)=\frac{a}{s(s+a)}$}
+\label{sec-3-1-5}
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+      E(s) & = & \frac{1}{s}-\frac{1}{s+a}\\
+      e(t) &=& 1-e^{-at} \\
+      E(z) &=& \frac{1}{1-z^{-1}} -\frac{1}{1-z^{-1}e^{-aT}}
+      \end{eqnarray*}
+\item <3->Z变换表:
+      \[\begin{matrix}
+      \delta(t) & 1 & 1 \\
+      1(t) & \frac{1}{s} & \frac{1}{1-z^{-1}} \\
+      t & \frac{1}{s^2} & \frac{Tz^{-1}}{(1-z^{-1})^2} \\
+      e^{-at} & \frac{1}{s+a} &\frac{1}{1-e^{-aT}z^{-1}}
+      \end{matrix}\]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Z变换性质}
+\label{sec-3-1-6}
+
+\begin{itemize}
+\item <2->线性定理:    ${\cal Z}[\alpha e_1(t)+\beta e_2(t)]=\alpha E_1(z)+\beta E_2(z)$
+\item <3->实数位移定理:  ${\cal Z}[e(t+kT)] = z^k[E(z)-\sum_{n=0}^{k-1}e(nT)z^{-n}]$
+\item <4->复数位移定理:  ${\cal Z}[e^{\pm at}e(t)] = E(ze^{\mp aT})$
+\item <5->终值定理:  $\lim_{n\rightarrow\infty}e(nT)=\lim_{z\rightarrow 1}(1-z^{-1})E(z)$
+\item <6->卷积定理: 若  $g(nT)=x(nT)*y(nT)$  则  $G(z)=X(z)Y(z)$  . ($x(nT)*y(nT)=\sum_{k=0}^{\infty}x(kT)y((n-k)T)$)
+\end{itemize}
+\end{frame}
+\subsection{Z反变换}
+\label{sec-3-2}
+\begin{frame}
+\frametitle{Z反变换}
+\label{sec-3-2-1}
+
+  \[e(nT)={\cal Z}^{-1}[E(z)]\]
+\begin{itemize}
+\item 幂级数展开法
+\item 部分分式法
+\begin{itemize}
+\item 展开成部分分式后查表
+\end{itemize}
+\item 反演积分法
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{幂级数展开法}
+\label{sec-3-2-2}
+
+\begin{eqnarray*}
+E(z) & = &\frac{b_0+b_1 z^{-1}+\cdots+b_m z^{-m}}{1+a_1 z^{-1}+\cdots+a_n z^{-n}} \\
+ &=& c_0+c_1 z^{-1}+\cdots +c_n z^{-n} \\
+ &=& \sum_{n=0}^{\infty}c_n z^{-n} \\
+e^{*}(t) &=& \sum_{n=0}^{\infty}c_n\delta(t-nT) \\
+e(nT) &=& c_n 
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{反演积分法}
+\label{sec-3-2-3}
+
+\begin{eqnarray*}
+E(z) & = & \sum_{n=0}^{\infty}e(nT)z^{-n} \\
+  &=& e(0)+e(T)z^{-1}+\cdots+e(nT)z^{-n}+\cdots \\
+E(z)z^{n-1} &=& e(0)z^{n-1}+e(T)z^{n-2}+\cdots+e(nT)z^{-1}+\cdots \\
+e(nT)&=& Res(E(z)z^{n-1})
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{反演积分法示例:  $E(z)=\frac{z^2}{(z-1)(z-0.5)}$  求  $e(nT)$}
+\label{sec-3-2-4}
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+      E(z)z^{n-1} & = &\frac{z^{n+1}}{(z-1)(z-0.5)} \\
+      Res_1 &=& \lim_{z\rightarrow 1}\frac{(z-1)z^{n+1}}{(z-1)(z-0.5)} \\
+	 &=& 2 \\
+      Res_2 &=& \lim_{z\rightarrow 0.5}\frac{(z-0.5)z^{n+1}}{(z-1)(z-0.5)} \\
+	 &=& -0.5^n \\
+      e(nT) &=& Res_1+Res_2 \\
+       &=& 2-0.5^n
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\section{离散系统数学模型}
+\label{sec-4}
+\subsection{差分方程}
+\label{sec-4-1}
+\begin{frame}
+\frametitle{差分方程模型}
+\label{sec-4-1-1}
+
+\begin{itemize}
+\item <2->n阶后向差分方程
+      \begin{eqnarray*}
+       & &c(k)+a_1 c(k-1)+\cdots+a_n c(k-n) \\
+       &=& b_0 r(k) +b_1 r(k-1) + \cdots + b_m r(k-m)
+      \end{eqnarray*}
+      即  $k$  时刻的输出  $c(k)$  与k时刻前  $n$  个时刻输出及前  $m$  个输入,当前时刻输入有关.
+\item <3->n阶前向差分方程
+      \begin{eqnarray*}
+    & &  c(k+n)+a_1 c(k+n-1)+\cdots+a_n c(k) \\
+    &=& b_0 r(k+m)+b_1 r(k+m-1)+\cdots+ b_m r(k)
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{差分方程解法: 迭代法}
+\label{sec-4-1-2}
+
+\begin{itemize}
+\item 利用差分方程的递推关系,逐步计算  $c(k)$  的值
+\item <2->例:  $c(k)=r(k)+5 c(k-1) -6 c(k-2)$  输入  $r(k)=1$ , 初始条件:  $c(0)=0,c(1)=1$
+\item <3->解:
+      \begin{eqnarray*}
+      c(2) & = & 6\\
+      c(3) & =& 25 \\
+      c(4) &=& 90
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{z变换法}
+\label{sec-4-1-3}
+
+\begin{itemize}
+\item 将差分方程与输入进行Z变换,得到输出的Z变换,再进行Z反变换.
+\item <2->例: 差分方程  $c(t+2T)+3c(t+T)+2c(t)=0$  初始条件  $c(0)=0,c(1)=1$
+\item <3->解:
+      \begin{align*}
+       &  z^2(c(z)-c(0)-c(1)z^{-1})+3z(c(z)-c(0))+2c(z)  =  0 \\
+       &  (z^2+3z+2)c(z) = z \\
+       &  c(z) = \frac{z}{z^2+3z+2} 
+       	=  \frac{z}{z+1}-\frac{z}{z+2}
+       	=  \frac{1}{1+z^{-1}}-\frac{1}{1+2z^{-1}}\\
+       & c(k) = (-1)^k-(-2)^k
+      \end{align*}
+      其中  $k=0,1,2,\cdots$
+\end{itemize}
+\end{frame}
+\subsection{脉冲传递函数}
+\label{sec-4-2}
+\begin{frame}
+\frametitle{脉冲传递函数定义}
+\label{sec-4-2-1}
+
+\begin{itemize}
+\item 连续系统:传递函数 (s域)
+\item 离散系统:脉冲传递函数 (z域)
+\item <2->定义:输出  $c^*(t)$   的Z变换与输入  $r^*(t)$  的Z变换之比(零初始条件下)叫做系统的脉冲传递函数.记为 
+	 \[G(z)=\frac{C(z)}{R(z)}\]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{脉冲传递函数意义}
+\label{sec-4-2-2}
+
+\begin{itemize}
+\item 加权序列: 输入  $r^*(t)=\delta(t)$  的输出序列称为加权序列,记为  $k^*(t)$
+\item <2->脉冲传递函数: 
+      \begin{eqnarray*}
+      G(z) &=& \frac{{\cal Z}[k^*(t)]}{{\cal Z}[r^*(t)]} \\
+      &=& {\cal Z}[k^*(t)]\\
+      &=& k(z)
+      \end{eqnarray*}
+\item <3-> 脉冲传递函数为加权序列  $k^*(t)$  的Z变换
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{两种模型之间的变换关系:}
+\label{sec-4-2-3}
+
+      \begin{eqnarray*}
+      c(nT)+\sum_{k=1}^n a_k c((n-k)T) &=& \sum_{k=0}^m b_k r((n-k)T) \\
+      G(z) &=& \frac{\sum_{k=0}^{m}b_k z^{-k}}{1+\sum_{k=1}^n a_k z^{-k}}
+      \end{eqnarray*}
+\begin{itemize}
+\item <2-> 差分方程在零初始条件下进行Z变换,得脉冲传递函数.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{脉冲传递函数计算}
+\label{sec-4-2-4}
+
+\begin{itemize}
+\item 差分方程Z变换:  $G(z)=\frac{C(z)}{R(z)}$
+\item 从传递函数  $G(s)$  求解(部分分式法)
+\item <2->例:  $c(nT)=r[(n-k)T]$
+\item <3->解:
+       \begin{eqnarray*}
+       C(z) &=& z^{-k}R(z) \\
+       G(z) &=& \frac{C(z)}{R(z)} \\
+         &=& z^{-k}
+       \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\subsection{开环系统的脉冲传递函数}
+\label{sec-4-3}
+\begin{frame}
+\frametitle{开环系统脉冲传递函数}
+\label{sec-4-3-1}
+
+\mode<article>{按定义求,即:  $G(z)=\frac{{\cal Z} [c^*(t)]}{{\cal Z}[r^*(t)]}$ }
+\begin{itemize}
+
+\item 结构图
+\label{sec-4-3-1-1}%
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+%\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+%\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of r] (s1) {}; 
+\draw (s1.west)--(s1.north east);\draw[->] (s1.north west) arc (70:0:1.7em);\draw (s1.south) node {$T$};%\draw (s1.north) node[above] {$S$};
+\path[](r) edge node[midway] {$   $} (s1) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_1(s)$}; 
+\path[->] (s1) edge node[midway] {$r^*(t)$} (g1); 
+\path[->] node[minimum size=2em,right =of g1] (s2) {}; 
+\draw (s2.west)--(s2.north east);\draw[->] (s2.north west) arc (70:0:1.7em);\draw (s2.south) node {$T$};%\draw (s2.north) node[above] {$S$};
+\path[](g1) edge node[midway] {$d(t)$} (s2) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of s2] (g2) {$G_2(s)$}; 
+\path[->] (s2) edge node[midway] {$d^*(t)$} (g2); 
+\path[->] node[ right =of g2] (o) {$c(t)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[->] node[minimum size=2em,above =of o] (sc) {}; 
+\draw[dashed] (sc.west)--(sc.north east);\draw[dashed,->] (sc.north west) arc (70:0:1.7em);\draw[dashed] (sc.south) node {$T$};%\draw (sc.north) node[above] {$S$};
+\path[dashed,draw](o.west)+(-1em,0) |- (sc.west) ; 
+\path node[ right =of sc] (c) {$c^*(t)$}; 
+\path[dashed,->] (sc) edge node {} (c); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+
+\item 推导
+\label{sec-4-3-1-2}%
+\begin{eqnarray*}
+D(z) &=& R(z)G_1(z) \\
+C(z) & = & D(z)G_2(z) 
+       = G_1(z)G_2(z)R(z) \\
+G(z) &=& G_1(z)G_2(z)
+\end{eqnarray*}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{开环系统脉冲传递函数(续)}
+\label{sec-4-3-2}
+\begin{itemize}
+
+\item 结构图
+\label{sec-4-3-2-1}%
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+%\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+%\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of r] (s1) {}; 
+\draw (s1.west)--(s1.north east);\draw[->] (s1.north west) arc (70:0:1.7em);\draw (s1.south) node {$T$};%\draw (s1.north) node[above] {$S$};
+\path[](r) edge node[midway] {$   $} (s1) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_1(s)$}; 
+\path[->] (s1) edge node[midway] {$r^*(t)$} (g1); 
+\path[red] node[draw, inner sep=5pt,right =of g1] (g2) {$G_2(s)$}; 
+\path[->] (g1) edge node[midway] {$   $} (g2); 
+\path[->] node[ right =of g2] (o) {$c(t)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[->] node[minimum size=2em,above =of o] (sc) {}; 
+\draw[dashed] (sc.west)--(sc.north east);\draw[dashed,->] (sc.north west) arc (70:0:1.7em);\draw[dashed] (sc.south) node {$T$};%\draw (sc.north) node[above] {$S$};
+\path[dashed,draw](o.west)+(-1em,0) |- (sc.west) ; 
+\path node[ right =of sc] (c) {$c^*(t)$}; 
+\path[dashed,->] (sc) edge node {} (c); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\item 推导
+\label{sec-4-3-2-2}%
+\begin{eqnarray*}
+C^*(s) & = & [R^*(s)G_1(s)G_2(s)]^* 
+       = R^*(s)[G_1(s)G_2(s)]^* \\
+C(z) &=& R(z) G_1G_2(z) \\
+G(z) &=& G_1G_2(z)
+\end{eqnarray*}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{开环系统脉冲传递函数(续):有零阶保持器时:}
+\label{sec-4-3-3}
+\begin{itemize}
+
+\item 结构图
+\label{sec-4-3-3-1}%
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+%\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+%\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of r] (s1) {}; 
+\draw (s1.west)--(s1.north east);\draw[->] (s1.north west) arc (70:0:1.7em);\draw (s1.south) node {$T$};%\draw (s1.north) node[above] {$S$};
+\path[](r) edge node[midway] {$   $} (s1) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_h(s)$}; 
+\path[->] (s1) edge node[midway] {$r^*(t)$} (g1); 
+\path[red] node[draw, inner sep=5pt,right =of g1] (g2) {$G_p(s)$}; 
+\path[->] (g1) edge node[midway] {$   $} (g2); 
+\path[->] node[ right =of g2] (o) {$c(t)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[->] node[minimum size=2em,above =of o] (sc) {}; 
+\draw[dashed] (sc.west)--(sc.north east);\draw[dashed,->] (sc.north west) arc (70:0:1.7em);\draw[dashed] (sc.south) node {$T$};%\draw (sc.north) node[above] {$S$};
+\path[dashed,draw](o.west)+(-1em,0) |- (sc.west) ; 
+\path node[ right =of sc] (c) {$c^*(t)$}; 
+\path[dashed,->] (sc) edge node {} (c); 
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\end{tikzpicture} 
+
+\item 推导
+\label{sec-4-3-3-2}%
+\begin{itemize}
+\item <2->   $C^*(s)  =  [R^*(s)\cdot \frac{1-e^{-Ts}}{s}\cdot G_p(s)]^*$
+\item <3->   $C^*(s)  = R^*(s)[(1-e^{-Ts})\cdot\frac{G_p(s)}{s}]^*$
+\item <4->   $C^*(s)  = R^*(s)[\frac{G_p(s)}{s}-e^{-Ts}\cdot\frac{G_p(s)}{s}]^*$
+\item <5->   $C(z) = R(z)\{{\cal Z}[\frac{G_p(z)}{s}]-z^{-1}{\cal Z}[\frac{G_p(z)}{s}]\}$
+\item <6->   $G(z) = (1-z^{-1}){\cal Z}[\frac{G_p(z)}{s}]$
+\end{itemize}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{开环系统脉冲传递函数示例:  $G_p(s)=\frac{a}{s(s+a)}$}
+\label{sec-4-3-4}
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+      G(z) & = &(1-z^{-1}){\cal Z}[\frac{a}{s^2(s+a)}] \\
+       &=& (1-z^{-1}){\cal Z}[\frac{1}{s^2}-\frac{1}{a}(\frac{1}{s}-\frac{1}{s+a})] \\
+       &=& (1-z^{-1})\left[\frac{Tz^{-1}}{(1-z^{-1})^2}-\frac{1}{a}(\frac{1}{1-z^{-1}}-\frac{1}{1-z^{-1}e^{-aT}} )\right]
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\subsection{闭环系统的脉冲传递函数}
+\label{sec-4-4}
+\begin{frame}
+\frametitle{闭环系统的脉冲传递函数}
+\label{sec-4-4-1}
+
+\mode<article>{按定义求:}
+
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of p1] (s1) {}; 
+\draw (s1.west)--(s1.north east);\draw[->] (s1.north west) arc (70:0:1.7em);\draw (s1.south) node {$T$};%\draw (s1.north) node[above] {$S$};
+\path[](p1) edge node[midway] {$e(t)$} (s1) ; 
+%\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_h(s)$}; 
+%\path[->] (s1) edge node[midway] {$r^*(t)$} (g1); 
+\path[red] node[draw, inner sep=5pt,right =of s1] (g2) {$G(s)$}; 
+\path[->] (s1) edge node[midway] {$e^*(t)$} (g2); 
+\path[->] node[ right =of g2] (o) {$c(t)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[->] node[minimum size=2em,above =of o] (sc) {}; 
+\draw[dashed] (sc.west)--(sc.north east);\draw[dashed,->] (sc.north west) arc (70:0:1.7em);\draw[dashed] (sc.south) node {$T$};%\draw (sc.north) node[above] {$S$};
+\path[dashed,draw](o.west)+(-1em,0) |- (sc.west) ; 
+\path node[ right =of sc] (c) {$c^*(t)$}; 
+\path[dashed,->] (sc) edge node {} (c); 
+\path[red] node[draw, inner sep=5pt,below =of g2] (h) {$H(s)$}; 
+\path[->,draw] (g2.east)+(1em,0) |- (h.east);
+\path[->,draw] (h.west) -| node [very near end] {$-$} (p1);
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\path[->] node[minimum size=2em,above =of p1] (sr) {}; 
+\draw[dashed] (sr.west)--(sr.north east);\draw[dashed,->] (sr.north west) arc (70:0:1.7em);\draw[dashed] (sr.south) node {$T$};%\draw (sr.north) node[above] {$S$};
+\path[dashed,draw](r.east)+(1em,0) |- (sr.west) ; 
+\path node[ right =of sr] (i) {$r^*(t)$}; 
+\path[dashed,->] (sr) edge node {} (i); 
+\end{tikzpicture} 
+\begin{itemize}
+
+\item 脉冲传递函数
+\label{sec-4-4-1-1}%
+\begin{eqnarray*}
+\Phi(z) & = & \frac{C(z)}{R(z)}
+ = \frac{{\cal Z}[c^*(t)]}{{\cal Z}[r^*(t)]} \\
+\Phi_e(z) & = & \frac{E(z)}{R(z)}
+    = \frac{{\cal Z}[e^*(t)]}{{\cal Z}[r^*(t)]} 
+\end{eqnarray*}
+
+\item 解:
+\label{sec-4-4-1-2}%
+\begin{eqnarray*}
+C(s) &=& G(s)E^*(s) \\
+E(s) &=& R(s)-H(s)C(s) \\
+     &=& R(s)-H(s)G(s)E^*(s) \\
+\end{eqnarray*}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{闭环系统的脉冲传递函数(续)}
+\label{sec-4-4-2}
+
+\begin{eqnarray*}
+C(s) &=& G(s)E^*(s) \\
+E(s) &=& R(s)-H(s)C(s) \\
+ &=& R(s)-H(s)G(s)E^*(s) \\
+E^*(s) &=& R^*(s)-HG^*(s)E^*(s)\\
+  &=& \frac{R^*(s)}{1+HG^*(s)} \\
+\Phi_e(z) &=& \frac{1}{1+HG(z)} \\
+C^*(s) &=& G^*(s)E^*(s)\\
+ &=& \frac{G^*(s)R^*(s)}{1+HG^*(s)} \\
+\Phi(z) &=& \frac{G(z)}{1+HG(z)}
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{闭环系统的脉冲传递函数示例:}
+\label{sec-4-4-3}
+
+
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick] 
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+%\path[->] node[minimum size=2em,right =of p1] (s1) {}; 
+%\draw (s1.west)--(s1.north east);\draw[->] (s1.north west) arc (70:0:1.7em);\draw (s1.south) node {$T$};%\draw (s1.north) node[above] {$S$};
+%\path[](p1) edge node[midway] {$e(t)$} (s1) ; 
+%\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_h(s)$}; 
+%\path[->] (s1) edge node[midway] {$r^*(t)$} (g1); 
+\path[red] node[draw, inner sep=5pt,right =of p1] (g2) {$G(s)$}; 
+\path[->] (p1) edge node[midway] {$e(t)$} (g2); 
+\path[->] node[minimum size=2em,right =of g2] (sc) {}; 
+\draw (sc.west)--(sc.north east);\draw[->] (sc.north west) arc (70:0:1.7em);\draw (sc.south) node {$T$};%\draw (sc.north) node[above] {$S$};
+\path (g2) edge node[midway] {$c(t)$} (sc); 
+%\path[draw](o.west)+(-1em,0) |- (sc.west) ; 
+%\path node[ right =of sc] (c) {$c^*(t)$}; 
+%\path[dashed,->] (sc) edge node {} (c); 
+\path[->] node[ right =of sc] (o) {$c^*(t)$}; 
+\path[->] (sc) edge node {} (o); 
+
+\path[red] node[draw, inner sep=5pt,below =of g2] (h) {$H(s)$}; 
+\path[->,draw] (o.west)+(-1em,0) |- (h.east);
+\path[->,draw] (h.west) -| node [very near end] {$-$} (p1);
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\path[->] node[minimum size=2em,above =of p1] (sr) {}; 
+\draw[dashed] (sr.west)--(sr.north east);\draw[dashed,->] (sr.north west) arc (70:0:1.7em);\draw[dashed] (sr.south) node {$T$};%\draw (sr.north) node[above] {$S$};
+\path[dashed,draw](r.east)+(1em,0) |- (sr.west) ; 
+\path node[ right =of sr] (i) {$r^*(t)$}; 
+\path[dashed,->] (sr) edge node {} (i); 
+\end{tikzpicture} 
+
+\begin{itemize}
+\item <2->解:
+      \begin{eqnarray*}
+      E(s) &=& R(s)-H(s)C^*(s)\\
+      C(s) & = & G(s)E(s) 
+          = G(s)R(s)-G(s)H(s)C^*(s)\\
+      C^*(s) &=& GR^*(s)-GH^*(s)C^*(s)
+             = \frac{GR^*(s)}{1+GH^*(s)}
+      \end{eqnarray*}
+\item <3->没有闭环脉冲传递函数
+\end{itemize}
+\end{frame}
+\subsection{Z变换局限性与修正Z变换}
+\label{sec-4-5}
+\begin{frame}
+\frametitle{Z变换局限性}
+\label{sec-4-5-1}
+
+\begin{itemize}
+\item <2->采样间隔 $\tau$  要远小于系统最小时间常数
+\item <3->c(nT)不能反映采样间隔中的信息
+\item <4->G(s)要满足:  $n\geq m+2$  ,否则  $c^*(t)$  与  $c(t)$  差别较大.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{修正Z变换}
+\label{sec-4-5-2}
+
+\begin{itemize}
+\item 目的:求取采样间隔中的输出值
+\item 原理:
+\begin{itemize}
+\item <2->将周期为  $T$  的原输入采样信号序列 $r^*(t)$ 再次以周期  $\frac{T}{n}$  采样,即得:  $R'(z)=R(z^n)$
+\item <3->计算在采样周期  $\frac{T}{n}$  下的响应,即得到原采样间隔中的值.
+\end{itemize}
+\item 方法:
+\begin{itemize}
+\item <4->原输入信号Z变换为  $R(z)$ , 将 $z$  替换为:  $z^n$  .
+\item <5->以  $\frac{T}{n}$ 重新计算系统脉冲传递函数.
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+
+\item $R(z)$
+\label{sec-4-5-2-1}%
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[xticklabel=$\pgfmathprintnumber{\tick}T$]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (1,1) (2,0.5) (3,4) (4,3) (5,2) (6,1.5) (7,1.5)};
+\end{axis}
+\end{tikzpicture}
+
+\item $R(z^2)$,($T'=\frac{T}{2}$)
+\label{sec-4-5-2-2}%
+\begin{tikzpicture}[scale=0.5]
+\begin{axis}[ymin=0,xticklabel=$\pgfmathprintnumber{\tick}T$]
+\addplot+[ycomb] plot coordinates
+    {(0,2) (0.5, 0) (1,1) (1.5,0) (2,0.5)(2.5,0) (3,4)(3.5,0) (4,3)(4.5,0) (5,2)(5.5,0) (6,1.5)(6.5,0) (7,1.5)};
+\end{axis}
+\end{tikzpicture}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{修正Z变换示例:}
+\label{sec-4-5-3}
+
+\[G(z)=\frac{z}{z-e^{-T}}\]
+   $T=1$ ,  $r(t)=1(t)$ , 要求每采样周期中间插入两点.
+
+\begin{itemize}
+\item 解:
+      \begin{eqnarray*}
+      G(z) &= & \frac{z}{z-e^{-1/3}} \\
+      r(z) &=& \frac{1}{1-z^{-1}} \\
+      r'(z) &=& r(z^3) \\
+      &=& \frac{1}{1-z^{-3}} \\
+      c'(z) &=& \frac{1}{1-z^{-1}e^{-1/3}}\cdot\frac{1}{1-z^{-3}}
+      \end{eqnarray*}
+\end{itemize}
+\end{frame}
+\section{离散系统稳定性}
+\label{sec-5}
+\subsection{稳定性}
+\label{sec-5-1}
+\begin{frame}
+\frametitle{S域到Z域的映射}
+\label{sec-5-1-1}
+\begin{itemize}
+
+\item $S\leftrightarrow Z$
+\label{sec-5-1-1-1}%
+\begin{eqnarray*}
+z & = & e^{sT}\\
+s &=& \sigma+j\omega \\
+z &=& e^{\sigma T}e^{j\omega T} \\
+|z| &=& e^{\sigma T} \\
+\angle z &=& \omega T
+\end{eqnarray*}
+\begin{itemize}
+
+\item 当  $\sigma=0$  时,\\
+\label{sec-5-1-1-1-1}%
+对应到  $z$  平面的单位圆,此时,  $\omega$  从  $-\infty\rightarrow\infty$ 时,  $z$  平面上的点己绕单位圆运动了无数圈,称  $[-\frac{\omega_s}{2},\frac{\omega_s}{2}]$  为主要带.
+
+\end{itemize} % ends low level
+
+\item 主要映射关系:
+\label{sec-5-1-1-2}%
+\begin{itemize}
+\item 等  $\sigma$  线: 单位圆:   $|z|=e^{\sigma T}$
+\item 等  $\omega$  线: 过原点射线:  $\angle z=\omega T$
+\item 等  $\xi$  线(S平面过原点射线): 对数螺线
+\end{itemize}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{离散系统的稳定性}
+\label{sec-5-1-2}
+
+\begin{itemize}
+\item 稳定性定义:离散系统在有界输入序列下,输出序列也有界.
+\item <2->连续系统中:闭环系统的特征根实部 $\sigma$  小于0.
+\item <3->离散系统中:  $|z|<1$ ,($|z|=e^{\sigma}$)
+\begin{itemize}
+\item 差分方程:特征根的模均小于1
+\item 闭环脉冲传递函数:离散系统闭环特征根在Z平面的单位圆内($|z_i|<1$)
+\end{itemize}
+\end{itemize}
+\end{frame}
+\subsection{稳定性判据}
+\label{sec-5-2}
+
+\mode<article>{解特征方程,根据 $|z_i|<1$ 判断}
+\begin{frame}
+\frametitle{W域的劳斯判据}
+\label{sec-5-2-1}
+
+\begin{itemize}
+\item Z域变换到W域:
+       \begin{eqnarray*}
+       	z & = & x+jy\\
+       	w &= & u+jv \\
+       	z & = &\frac{w+1}{w-1} \\
+       	w &= & \frac{z+1}{z-1} \\
+       \end{eqnarray*}
+\item <2->等价关系:
+       \begin{eqnarray*}
+       u+jv &=& \frac{x^2+y^2-1-2yj}{(x-1)^2+y^2} \\
+       |z|<1 &\Leftrightarrow& u<0 
+       \end{eqnarray*}
+\item <3->可在W域中使用Routh判据.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{W域的劳斯判据示例:}
+\label{sec-5-2-2}
+
+
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of p1] (s1) {}; 
+\draw (s1.west)--(s1.north east);\draw[->] (s1.north west) arc (70:0:1.7em);\draw (s1.south) node {$T$};%\draw (s1.north) node[above] {$S$};
+\path[](p1) edge node[midway] {$e(t)$} (s1) ; 
+%\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_h(s)$}; 
+%\path[->] (s1) edge node[midway] {$r^*(t)$} (g1); 
+\path[red] node[draw, inner sep=5pt,right =of s1] (g2) {$\frac{K}{s(1+0.1s)}$}; 
+\path[->] (s1) edge node[midway] {$e^*(t)$} (g2); 
+\path[->] node[ right =of g2] (o) {$c(t)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[->] node[minimum size=2em,above =of o] (sc) {}; 
+\draw[dashed] (sc.west)--(sc.north east);\draw[dashed,->] (sc.north west) arc (70:0:1.7em);\draw[dashed] (sc.south) node {$T$};%\draw (sc.north) node[above] {$S$};
+\path[dashed,draw](o.west)+(-1em,0) |- (sc.west) ; 
+\path node[ right =of sc] (c) {$c^*(t)$}; 
+\path[dashed,->] (sc) edge node {} (c); 
+\path[red] node[ inner sep=5pt,below =of g2] (h) {$   $}; 
+\path[draw] (g2.east)+(1em,0) |- (h.west);
+\path[->,draw] (h.west) -| node [very near end] {$-$} (p1);
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\path[->] node[minimum size=2em,above =of p1] (sr) {}; 
+\draw[dashed] (sr.west)--(sr.north east);\draw[dashed,->] (sr.north west) arc (70:0:1.7em);\draw[dashed] (sr.south) node {$T$};%\draw (sr.north) node[above] {$S$};
+\path[dashed,draw](r.east)+(1em,0) |- (sr.west) ; 
+\path node[ right =of sr] (i) {$r^*(t)$}; 
+\path[dashed,->] (sr) edge node {} (i); 
+\end{tikzpicture} 
+
+分有无采样开关两种情况讨论为使系统稳定, $K$ 需要满足的条件.
+\begin{itemize}
+
+\item 解:\\
+\label{sec-5-2-2-1}%
+无采样开关时:
+   \[D(s)=0.1s^2+s+k\]
+   得:  $k>0$ 
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{W域的劳斯判据示例(续):有采样开关时:}
+\label{sec-5-2-3}
+
+\begin{eqnarray*}
+G(z) &=  &{\cal Z}[\frac{K}{s(1+0.1s)}] 
+  = \frac{0.632kz}{z^2-1.368z+0.368} \\
+\Phi(z) &=& \frac{G(z)}{1+G(z)} 
+\end{eqnarray*}
+\begin{eqnarray*}
+D(z) &=& z^2+(0.632k-1.368)z+0.368\\
+z &=& \frac{w+1}{w-1} \\
+D(w) &=& 0.632Kw^2+1.264w+(2.736-0.632k)
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{W域的劳斯判据示例(续):有采样开关时:}
+\label{sec-5-2-4}
+
+\begin{itemize}
+\item Routh表:
+      \[\begin{matrix}
+      w^2 & 0.632k & 2.7360-0.632k \\
+      w^1 & 1.264  & 0 \\
+      w^0 & 2.736-0.632k
+      \end{matrix}\]
+\item 得:
+      \begin{eqnarray*}
+      0.632k &>  & 0\\
+      2.736-0.632k& >& 0
+      \end{eqnarray*}
+\item 得:  
+      \[0<k<4.33\]
+\item <2->采样开关对稳定性有很大影响.
+\end{itemize}
+\end{frame}
+\subsection{离散系统稳定性影响因素}
+\label{sec-5-3}
+\begin{frame}
+\frametitle{离散系统稳定性影响因素}
+\label{sec-5-3-1}
+
+\begin{itemize}
+\item <2->系统开环增益
+\begin{itemize}
+\item $k\uparrow$  则离散系统稳定性下降
+\item $k\downarrow$  则离散系统稳定性提高
+\end{itemize}
+\item <3->采样周期
+\begin{itemize}
+\item $T\uparrow$  则离散系统稳定性下降
+\item $T\downarrow$  则离散系统稳定性提高
+\end{itemize}
+\end{itemize}
+\end{frame}
+\section{离散系统稳态误差}
+\label{sec-6}
+\subsection{离散系统稳态误差}
+\label{sec-6-1}
+\begin{frame}
+\frametitle{离散系统稳态误差}
+\label{sec-6-1-1}
+
+\begin{itemize}
+\item 连续系统稳定误差:
+\begin{itemize}
+\item Laplacian 变换的终值定理
+\item 静态误差系数
+\item 动态误差系数
+\end{itemize}
+\item <2->离散系统稳态误差
+\begin{itemize}
+\item Z变换终值定理
+      \begin{eqnarray*}
+      \lim_{t\rightarrow\infty}e^*(t) & = &\lim_{z\rightarrow 1}(z-1)E(z)\\
+       &=& \lim_{z\rightarrow 1}(z-1)\Phi_e(z)R(z)
+      \end{eqnarray*}
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{离散系统稳态误差示例:}
+\label{sec-6-1-2}
+
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of p1] (s1) {}; 
+\draw (s1.west)--(s1.north east);\draw[->] (s1.north west) arc (70:0:1.7em);\draw (s1.south) node {$T$};%\draw (s1.north) node[above] {$S$};
+\path[](p1) edge node[midway] {$e(t)$} (s1) ; 
+%\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_h(s)$}; 
+%\path[->] (s1) edge node[midway] {$r^*(t)$} (g1); 
+\path[red] node[draw, inner sep=5pt,right =of s1] (g2) {$\frac{1}{s(1+0.1s)}$}; 
+\path[->] (s1) edge node[midway] {$e^*(t)$} (g2); 
+\path[->] node[ right =of g2] (o) {$c(t)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[->] node[minimum size=2em,above =of o] (sc) {}; 
+\draw[dashed] (sc.west)--(sc.north east);\draw[dashed,->] (sc.north west) arc (70:0:1.7em);\draw[dashed] (sc.south) node {$T$};%\draw (sc.north) node[above] {$S$};
+\path[dashed,draw](o.west)+(-1em,0) |- (sc.west) ; 
+\path node[ right =of sc] (c) {$c^*(t)$}; 
+\path[dashed,->] (sc) edge node {} (c); 
+\path[red] node[ inner sep=5pt,below =of g2] (h) {$   $}; 
+\path[draw] (g2.east)+(1em,0) |- (h.west);
+\path[->,draw] (h.west) -| node [very near end] {$-$} (p1);
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\path[->] node[minimum size=2em,above =of p1] (sr) {}; 
+\draw[dashed] (sr.west)--(sr.north east);\draw[dashed,->] (sr.north west) arc (70:0:1.7em);\draw[dashed] (sr.south) node {$T$};%\draw (sr.north) node[above] {$S$};
+\path[dashed,draw](r.east)+(1em,0) |- (sr.west) ; 
+\path node[ right =of sr] (i) {$r^*(t)$}; 
+\path[dashed,->] (sr) edge node {} (i); 
+\end{tikzpicture} 
+其中  $T=0.1,r_1(t)=1(t),r_2(t)=t$  求离散系统相应的稳态误差
+\begin{itemize}
+
+\item 解:\\
+\label{sec-6-1-2-1}%
+\begin{eqnarray*}
+      G(z) &=& \frac{z(1-0.368)}{(z-1)(z-0.368)} \\
+      \Phi_e(z) &= &\frac{1}{1+G(z)} 
+       = \frac{(z-1)(z-0.368)}{z^2-0.736z+0.368}
+      \end{eqnarray*}
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{离散系统稳态误差示例(续)}
+\label{sec-6-1-3}
+\begin{itemize}
+
+\item $r_1(t) =  1(t)$ 时\\
+\label{sec-6-1-3-1}%
+\begin{eqnarray*}
+      R_1(z) &=& \frac{1}{1-z^{-1}} \\
+      \lim_{z\rightarrow 1}(1-z^{-1})\Phi_e(z)R(z) &=& 0
+      \end{eqnarray*}
+
+\item $r_2(t) = t(t)$ 时\\
+\label{sec-6-1-3-2}%
+\begin{eqnarray*}
+      R_1(z) &=& \frac{Tz^{-1}}{(1-z^{-1})^2} \\
+      \lim_{z\rightarrow 1}(1-z^{-1})\Phi_e(z)R(z) &=& \lim_{z\rightarrow 1}\frac{T(z-0.368)}{z^2-0.736z+0.368}\\
+       &=& T \\
+       &=& 0.1
+      \end{eqnarray*}
+\end{itemize} % ends low level
+\end{frame}
+\subsection{离散系统型别与静态误差系数}
+\label{sec-6-2}
+\begin{frame}
+\frametitle{离散系统型别}
+\label{sec-6-2-1}
+
+\begin{itemize}
+\item 连续系统型别:  
+       \[G_o(s)=\frac{M(s)}{s^{\nu}N(s)}\]  
+      若  $\nu=0,1,2$  则分别称为0型,I型,II型系统.
+\item <2->离散系统型别:  
+       \[G_o(z)=\frac{M(z)}{(z-1)^{\nu}N(z)}\]  
+      若  $\nu=0,1,2$  则分别称为0型,I型,II型系统.
+       ($G_o(z)$  为单位负反馈开环脉冲传递函数)
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{静态误差系数:0型系统:}
+\label{sec-6-2-2}
+\begin{itemize}
+
+\item 连续系统
+\label{sec-6-2-2-1}%
+\begin{eqnarray*}
+K_p &=& \lim_{s\rightarrow 0}G_o(s)  \\
+r(t)&=& 1 \\
+e_{ss} &=& \frac{1}{1+K_p} 
+\end{eqnarray*}
+
+\item 离散系统
+\label{sec-6-2-2-2}%
+\begin{eqnarray*}
+K_p &=& \lim_{z\rightarrow 1}(1+G_o(z))  \\
+r(t)&=& 1(t) \\
+e_{ss} &=& \frac{1}{K_p} 
+\end{eqnarray*}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{静态误差系数:I型系统:}
+\label{sec-6-2-3}
+\begin{itemize}
+
+\item 连续系统
+\label{sec-6-2-3-1}%
+\begin{eqnarray*}
+K_p &=& \lim_{s\rightarrow 0}sG_o(s)  \\
+r(t)&=& t \\
+e_{ss} &=& \frac{1}{K_v} 
+\end{eqnarray*}
+
+\item 离散系统
+\label{sec-6-2-3-2}%
+\begin{eqnarray*}
+K_p &=& \lim_{z\rightarrow 1} (z-1)G_o(z)  \\
+r(t)&=& t \\
+e_{ss} &=& \frac{T}{K_v} 
+\end{eqnarray*}
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{静态误差系数:II型系统:}
+\label{sec-6-2-4}
+\begin{itemize}
+
+\item 连续系统
+\label{sec-6-2-4-1}%
+\begin{eqnarray*}
+K_p &=& \lim_{s\rightarrow 0}s^2G_o(s)  \\
+r(t)&=& \frac{t^2}{2} \\
+e_{ss} &=& \frac{1}{K_a} 
+\end{eqnarray*}
+
+\item 离散系统
+\label{sec-6-2-4-2}%
+\begin{eqnarray*}
+K_p &=& \lim_{z\rightarrow 0}(z-1)^2G_o(s)  \\
+r(t)&=& \frac{t^2}{2} \\
+e_{ss} &=& \frac{T^2}{K_a} 
+\end{eqnarray*}
+
+\end{itemize} % ends low level
+\end{frame}
+\section{离散系统动态性能分析}
+\label{sec-7}
+
+
+
+
+
+
+
+\mode<article>{连续系统:时域分析,根轨迹法,频域法,离散系统也有类似方法,这里只讨论时域响应}
+\subsection{离散系统时间响应}
+\label{sec-7-1}
+\begin{frame}
+\frametitle{离散系统时间响应计算}
+\label{sec-7-1-1}
+
+\begin{itemize}
+\item 求  $\Phi(z)$  计算  $C(z)=\Phi(z)R(z)$ ,Z反变换求出  $C^*(t)$
+\item 不存在  $\Phi(z)$  时,直接计算 $C(z)$  , Z反变换求出  $C^*(t)$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{离散系统时间响应计算示例:}
+\label{sec-7-1-2}
+\begin{itemize}
+
+\item 结构图
+\label{sec-7-1-2-1}%
+\begin{tikzpicture}[node distance=2.2em,auto,>=latex', thick]
+%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+\path[->] node[] (r) {$r(t)$}; 
+\path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$   $ ,right =of r] (p1) {}; 
+\path[->](r) edge node {} (p1) ; 
+\path[->] node[minimum size=2em,right =of p1] (s1) {}; 
+\draw (s1.west)--(s1.north east);\draw[->] (s1.north west) arc (70:0:1.7em);\draw (s1.south) node {$T$};%\draw (s1.north) node[above] {$S$};
+\path[](p1) edge node[midway] {$e(t)$} (s1) ; 
+\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_h(s)$}; 
+\path[->] (s1) edge node[midway] {$e^*(t)$} (g1); 
+\path[red] node[draw, inner sep=5pt,right =of g1] (g2) {$\frac{K}{s(1+s)}$}; 
+\path[->] (g1) edge node[midway] {$   $} (g2); 
+\path[->] node[ right =of g2] (o) {$c(t)$}; 
+\path[->] (g2) edge node {} (o); 
+\path[->] node[minimum size=2em,above =of o] (sc) {}; 
+\draw[dashed] (sc.west)--(sc.north east);\draw[dashed,->] (sc.north west) arc (70:0:1.7em);\draw[dashed] (sc.south) node {$T$};%\draw (sc.north) node[above] {$S$};
+\path[dashed,draw](o.west)+(-1em,0) |- (sc.west) ; 
+\path node[ right =of sc] (c) {$c^*(t)$}; 
+\path[dashed,->] (sc) edge node {} (c); 
+\path[red] node[ inner sep=5pt,below =of g2] (h) {$   $}; 
+\path[draw] (g2.east)+(1em,0) |- (h.west);
+\path[->,draw] (h.west) -| node [very near end] {$-$} (p1);
+%\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
+\path[->] node[minimum size=2em,above =of p1] (sr) {}; 
+\draw[dashed] (sr.west)--(sr.north east);\draw[dashed,->] (sr.north west) arc (70:0:1.7em);\draw[dashed] (sr.south) node {$T$};%\draw (sr.north) node[above] {$S$};
+\path[dashed,draw](r.east)+(1em,0) |- (sr.west) ; 
+\path node[ right =of sr] (i) {$r^*(t)$}; 
+\path[dashed,->] (sr) edge node {} (i); 
+\end{tikzpicture} 
+
+其中  $r(t)=1(t),T=1s$  求系统动态性能指标.
+
+
+\item 解:\\
+\label{sec-7-1-2-2}%
+\begin{align*}
+\only<2-3>{& G_o(z) = (1-z^{-1}){\cal Z}[\frac{1}{s^2+1}]  = \frac{0.368z+0.264}{(z-1)(z-0.368)} \\}
+\only<3-4>{& \Phi(z)  = \frac{G_o(z)}{1+G_o(z)}  = \frac{0.368z+0.264}{z^2-z+0.632} \\}
+\only<4-5>{& C(z) = \Phi(z)R(z)= \frac{0.368z^{-1}+0.264z^{-2}}{1-2z^{-1}+1.632z^{-2}-0.632z^{-3}} \\}
+\only<5-6>{& C(z) = 0.368z^{-1}+z^{-2}+1.4z^{-3}+1.4z^{-4}1.147z^{-5}+0.895z^{-6}+0.802z^{-7}+0.868z^{-8}+\cdots \\}
+\only<6-7>{& t_r=2s,t_p=4s,t_s=12s,\sigma\%=40\%}
+\end{align*}
+\end{itemize} % ends low level
+\end{frame}
+\subsection{采样器,保持器对系统动态性能的影响}
+\label{sec-7-2}
+\begin{frame}
+\frametitle{采样器,保持器对系统动态性能的影响}
+\label{sec-7-2-1}
+
+\begin{itemize}
+\item 定性说明:
+\begin{itemize}
+\item 采样器: 使系统稳定性下降,使  $\sigma\%\uparrow,t_r\downarrow,t_s\downarrow$
+\item <2->保持器: 使系统稳定性下降,使  $\sigma\%\uparrow,t_r\uparrow,t_s\uparrow$
+\end{itemize}
+\item <3->对大迟延系统,无上述定性结论
+\end{itemize}
+\end{frame}
+\subsection{闭环极点与动态响应的关系}
+\label{sec-7-3}
+\begin{frame}
+\frametitle{闭环极点与动态响应的关系}
+\label{sec-7-3-1}
+
+\begin{eqnarray*}
+z & = & e^{sT}\\
+ &=& e^{\sigma T}e^{j\omega T}
+\end{eqnarray*}
+
+\begin{itemize}
+\item 若闭环极点  $|z|>1$  , 则有  $\sigma>0$  , 系统不稳定.
+\item 若闭环极点  $|z|=1$  , 则有  $\sigma=0$  , 等幅振荡.
+\item 若闭环极点  $|z|<1$  , 则有  $\sigma<0$  , 系统稳定.
+\begin{itemize}
+\item <2->闭环极点为正实数: 单调收敛
+\item <2->闭环极点为负实数: 振荡收敛
+\item <2->闭环极点为具有正实部的复数: 低频振荡收敛
+\item <2->闭环极点为具有负实部的复数: 高频振荡收敛
+\item <2->若  $|z|\rightarrow 0$  ,  $\sigma\rightarrow -\infty$ , 收敛极快
+\item <3->系统期望的闭环极点在Z平面单位圆的右半圆内
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}
