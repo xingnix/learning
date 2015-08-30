@@ -437,7 +437,8 @@ E(s) &=& (sI-A+KC)^{-1}F
 
 合理选择 $K,K_f$ 即可实现状态观测与状态反馈.
 *** 利用传递函数推导
-\begin{pspicture}
+\begin{pspicture}(0em,-15em)(20em,5em)
+\psframe(0em,-15em)(20em,5em)
 \Rnode{u}{\color{purple}$u$}
 {\hskip 3em }\Rnode{p1}{\color{purple}$\circ$}
 {\hskip 1em }\Rnode{a}{\psframebox[framesep=0.1em]{$\frac{1}{s}$}}
@@ -484,7 +485,9 @@ E(s) &=& (sI-A+KC)^{-1}F
 \end{pspicture}
 
 
-\begin{pspicture}
+
+\begin{pspicture}(0em,-15em)(20em,5em)
+\psframe(0em,-15em)(20em,5em)
 \Rnode{u}{\color{purple}$u$}
 {\hskip 3em }\Rnode{p1}{\color{purple}$\circ$}
 {\hskip 1em }\Rnode{a}{\psframebox[framesep=0.1em]{$\frac{1}{s}$}}
@@ -526,7 +529,8 @@ E(s) &=& (sI-A+KC)^{-1}F
 \ncangle[angleA=180,angleB=-90]{->}{k}{p3}
 \end{pspicture}
 
-\begin{pspicture}
+\begin{pspicture}(0em,-15em)(20em,5em)
+\psframe(0em,-15em)(20em,5em)
 \Rnode{u}{\color{purple}$u$}
 {\hskip 3em }\Rnode{p1}{\color{purple}$\circ$}
 {\hskip 1em }\Rnode{a}{\psframebox[framesep=0.1em]{$\frac{1}{s}$}}
@@ -580,7 +584,8 @@ E(s) &=& (sI-A+KC)^{-1}F
 
 系统不稳定时,可以根据观测到的状态构建状态反馈.
 
-\begin{pspicture}
+\begin{pspicture}(0em,-15em)(20em,5em)
+\psframe(0em,-15em)(20em,5em)
 \Rnode{u}{\color{purple}$u$}
 {\hskip 3em }\Rnode{p0}{\color{purple}$\circ$}
 {\hskip 1em }\Rnode{p1}{\color{purple}$\circ$}
@@ -631,7 +636,9 @@ E(s) &=& (sI-A+KC)^{-1}F
 
 可以看到, 有无反馈 $k_f$ 对误差信号 $e$ 无任何影响.即 $e$ 仍按原来的规律趋近于0. 因此,原系统等效于:
 
-\begin{pspicture}
+
+\begin{pspicture}(0em,-5em)(20em,5em)
+\psframe(0em,-5em)(20em,5em)
 \Rnode{u}{\color{purple}$u$}
 {\hskip 3em }\Rnode{p0}{\color{purple}$\circ$}
 {\hskip 1em }\Rnode{p1}{\color{purple}$\circ$}
@@ -659,6 +666,7 @@ E(s) &=& (sI-A+KC)^{-1}F
 \ncangle[angleA=0,angleB=0,armA=1em]{->}{a}{k}
 \ncangle[angleA=180,angleB=-90]{->}{k}{p0}
 \end{pspicture}
+
 
 此系统与未加反馈 $k_f$ 的原系统一起组成新的等效系统.其中信号 $e$ 从原系统中得到,按原系统中的规律趋近于零.因此,若选取的状态反馈 $k_f$ 能使被控对象稳定,则从观测到的状态引出的反馈同样能使系统稳定.
 
