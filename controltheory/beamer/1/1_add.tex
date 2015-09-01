@@ -1,7 +1,5 @@
-% Created 2014-09-19 星期五 12:42
+% Created 2015-09-01 Tue 17:36
 \documentclass{beamer}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
 \usepackage{longtable}
@@ -15,6 +13,7 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \tolerance=1000
+\usepackage{etex}
 \usepackage{amsmath}
 \usepackage[usenames]{color}
 \usepackage[all]{xy}
@@ -120,8 +119,16 @@ C &=& ?
 \includegraphics[width=\textwidth]{image/bridge.pdf}
 \end{frame}
 \begin{frame}
-\frametitle{操纵杆}
+\frametitle{开环控制：笑话：不听话的儿子}
 \label{sec-1-3}
+\end{frame}
+\begin{frame}
+\frametitle{开环控制：声东击西}
+\label{sec-1-4}
+\end{frame}
+\begin{frame}
+\frametitle{操纵杆}
+\label{sec-1-5}
 
 
 飞行员拉动操纵杆，飞机机头上扬，结果减弱了拉动操纵杆的效果，即：拉杆->A增大->机头上扬->A减小
@@ -130,7 +137,7 @@ C &=& ?
 \end{frame}
 \begin{frame}
 \frametitle{油门、刹车}
-\label{sec-1-4}
+\label{sec-1-6}
 
 
 司机踩刹车，汽车减速，司机因为惯性会有前冲的趋势，易导致踩刹车的力度变大。
@@ -280,7 +287,7 @@ f_T(t) & = & \frac{1}{T}\sum_{n=-\infty}^{+\infty}\left[ \int_{- \frac{T}{2} }^{
 f(t) & = & \lim_{T\rightarrow+\infty}\frac{1}{T}\sum_{n=-\infty}^{+\infty}\left[ \int_{- \frac{T}{2} }^{\frac{T}{2}}f_T(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t} \\
 \Delta\omega &=& \frac{2\pi}{T} \\
 f(t) & = & \lim_{\Delta\omega\rightarrow 0}\frac{1}{2\pi}\sum_{n=-\infty}^{+ \infty}\left[ \int_{- \frac{T}{2} }^{\frac{T}{2}}f_T(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t}\Delta\omega \\
-f(t) & = & \frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t}d\omega
+f(t) & = & \frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega\tau}d\tau\right] e^{j\omega t}d\omega
 \end{eqnarray*}
 \end{frame}
 \begin{frame}
@@ -288,7 +295,7 @@ f(t) & = & \frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}
 \label{sec-5-4}
 
 \begin{eqnarray*}
-f(t)& = &\frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega_n\tau}d\tau\right]e^{j\omega_n t}d\omega \\
+f(t)& = &\frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega\tau}d\tau\right]e^{j\omega t}d\omega \\
 F(j\omega)&=& \int_{-\infty}^{ + \infty}f(t)e^{-j\omega t}dt \\
 f(t)  & =& \frac{1}{2\pi} \int_{-\infty}^{+\infty}F(j\omega)e^{j\omega t}d\omega \\
 F(j\omega) &=& {\cal F}[f(t)] \\
@@ -332,7 +339,7 @@ H(j\omega) &=& \int_{-\infty}^{\infty}h(t)e^{-j\omega t}dt \\
            &=& |H(j\omega)|e^{j\phi(\omega)} \\
 y_f(t) &=& e^{j\omega t}*h(t) \\
        &=& \int_{-\infty}^{\infty}h(\tau)e^{j\omega(t-\tau)}d\tau \\
-       &=& e^{j\omega t}\int_{-\infty}^{\infty}h(\tau)e^{-j\omega t}d\tau \\
+       &=& e^{j\omega t}\int_{-\infty}^{\infty}h(\tau)e^{-j\omega\tau}d\tau \\
        &=& H(j\omega)e^{j\omega t} \\
        &=& |H(j\omega)|e^{j(\omega t+\phi(\omega))}
 \end{eqnarray*}
