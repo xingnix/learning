@@ -1,7 +1,5 @@
-% Created 2014-10-09 星期四 09:51
+% Created 2015-09-02 星期三 17:51
 \documentclass{beamer}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
 \usepackage{longtable}
@@ -15,8 +13,8 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \tolerance=1000
+\usepackage{etex}
 \usepackage{amsmath}
-\usepackage[usenames]{color}
 \usepackage{pstricks}
 \usepackage{pgfplots}
 \usepackage{tikz}
@@ -72,7 +70,7 @@
 
 
 
-\section{自动控制历史}
+\section{自动控制装置}
 \label{sec-1}
 \begin{frame}
 \frametitle{Centrifugal governor}
@@ -110,60 +108,104 @@
 
 \includegraphics[width=\textwidth]{image/telautograph.jpg}
 \end{frame}
-\begin{frame}
-\frametitle{控制理论的发展}
-\label{sec-1-7}
-
-\begin{itemize}
-\item <1> Pierre-Simon Laplace (1749-1827) invented the Z-transform in his work on probability theory, now used to solve discrete-time control theory problems. The Z-transform is a discrete-time equivalent of the Laplace transform which is named after him.
-\item <2> Joseph Fourier (21 March 1768 – 16 May 1830) was a French mathematician and physicist born in Auxerre and best known for initiating the investigation of Fourier series and their applications to problems of heat transfer and vibrations. The Fourier transform and Fourier's Law are also named in his honour. Fourier is also generally credited with the discovery of the greenhouse effect.
-\item <3> James Clerk Maxwell (13 June 1831 – 5 November 1879) published a paper On governors in the Proceedings of Royal Society, vol. 16 (1867–1868). This paper is considered a central paper of the early days of control theory. Here ``governors'' refers to the governor or the centrifugal governor used to regulate steam engines.
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{控制理论的发展}
-\label{sec-1-8}
-
-\begin{itemize}
-\item <1> Alexander Lyapunov (1857–1918) in the 1890s marks the beginning of stability theory.
-\item <2> Harold S. Black (1898–1983), invented the concept of negative feedback amplifiers in 1927. He managed to develop stable negative feedback amplifiers in the 1930s.
-\item <3> Norbert Wiener (1894–1964) co-developed the Wiener–Kolmogorov filter and coined the term cybernetics in the 1940s.
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{控制理论的发展}
-\label{sec-1-9}
-
-\begin{itemize}
-\item <1> Harry Nyquist (1889–1976), developed the Nyquist stability criterion for feedback systems in the 1930s.
-\item <2> Claude Elwood Shannon (April 30, 1916 – February 24, 2001) is also credited with the introduction of sampling theory, which is concerned with representing a continuous-time signal from a (uniform) discrete set of samples.
-\end{itemize}
-\begin{itemize}
-\item <3> Hendrik Wade Bode (pronounced Boh-dee in English, Boh-dah in Dutch),(24 December 1905 – 21 June 1982) was an American engineer, researcher, inventor, author and scientist, of Dutch ancestry.
-      He made important contributions to control system theory and mathematical tools for the analysis of stability of linear systems, inventing Bode plots, gain margin and phase margin.
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{控制理论的发展}
-\label{sec-1-10}
-
-\begin{itemize}
-\item <1> John R. Ragazzini (1912–1988) introduced digital control and the use of Z-transform in control theory (invented by Laplace) in the 1950s.
-\item <2> Walter Richard Evans (January 15, 1920 - July 10, 1999) was a noted American control theorist and the inventor of the root locus method in 1948.
-\item <3> In control systems theory, the describing function (DF) method, developed by Nikolay Mitrofanovich Krylov and Nikolay Bogoliubov in the 1930s, and extended by Ralph Kochenburger is an approximate procedure for analyzing certain nonlinear control problems.
-\end{itemize}
-\end{frame}
-\section{自动控制理论}
+\section{控制理论的发展}
 \label{sec-2}
 \begin{frame}
-\frametitle{自动控制}
+\frametitle{Pierre-Simon Laplace}
 \label{sec-2-1}
+
+   Pierre-Simon Laplace (1749-1827) invented the Z-transform in his work on probability theory, now used to solve discrete-time control theory problems. The Z-transform is a discrete-time equivalent of the Laplace transform which is named after him.
+\end{frame}
+\begin{frame}
+\frametitle{Joseph Fourier}
+\label{sec-2-2}
+
+   Joseph Fourier (21 March 1768 – 16 May 1830) was a French mathematician and physicist born in Auxerre and best known for initiating the investigation of Fourier series and their applications to problems of heat transfer and vibrations. The Fourier transform and Fourier's Law are also named in his honour. Fourier is also generally credited with the discovery of the greenhouse effect.
+\end{frame}
+\begin{frame}
+\frametitle{James Clerk Maxwell}
+\label{sec-2-3}
+
+   James Clerk Maxwell (FRS,Fellow of the Royal Society of London. FRSE,Fellow of the Royal Society of Edinburgh)  (13 June 1831 – 5 November 1879) published a paper On governors in the Proceedings of Royal Society, vol. 16 (1867–1868). This paper is considered a central paper of the early days of control theory. Here ``governors'' refers to the governor or the centrifugal governor used to regulate steam engines.
+\end{frame}
+\begin{frame}
+\frametitle{Edward John Routh}
+\label{sec-2-4}
+
+   Edward John Routh (FRS,Fellow of the Royal Society of London) ( 20 January 1831 – 7 June 1907), was an English mathematician, noted as the outstanding coach of students preparing for the Mathematical Tripos examination of the University of Cambridge in its heyday in the middle of the nineteenth century. He also did much to systematise the mathematical theory of mechanics and created several ideas critical to the development of modern control systems theory.
+\end{frame}
+\begin{frame}
+\frametitle{Adolf Hurwitz}
+\label{sec-2-5}
+
+   Adolf Hurwitz (26 March 1859 – 18 November 1919) was a German mathematician who worked on algebra, analysis, geometry and number theory. In the field of control systems and dynamic systems theory he derived the Routh–Hurwitz stability criterion for determining whether a linear system is stable in 1895, independently of Edward John Routh who had derived it earlier by a different method.
+\end{frame}
+\begin{frame}
+\frametitle{Alexander Lyapunov}
+\label{sec-2-6}
+
+   Alexander Lyapunov (1857–1918) in the 1890s marks the beginning of stability theory.
+\end{frame}
+\begin{frame}
+\frametitle{Harry Nyquist}
+\label{sec-2-7}
+
+   Harry Nyquist (1889–1976), developed the Nyquist stability criterion for feedback systems in the 1930s.
+\end{frame}
+\begin{frame}
+\frametitle{Norbert Wiener}
+\label{sec-2-8}
+
+   Norbert Wiener (1894–1964) co-developed the Wiener–Kolmogorov filter and coined the term cybernetics in the 1940s.
+\end{frame}
+\begin{frame}
+\frametitle{Harold S. Black}
+\label{sec-2-9}
+
+   Harold S. Black (1898–1983), invented the concept of negative feedback amplifiers in 1927. He managed to develop stable negative feedback amplifiers in the 1930s.
+\end{frame}
+\begin{frame}
+\frametitle{Hendrik Wade Bode}
+\label{sec-2-10}
+
+   Hendrik Wade Bode (pronounced Boh-dee in English, Boh-dah in Dutch),(24 December 1905 – 21 June 1982) was an American engineer, researcher, inventor, author and scientist, of Dutch ancestry.
+   He made important contributions to control system theory and mathematical tools for the analysis of stability of linear systems, inventing Bode plots, gain margin and phase margin.
+\end{frame}
+\begin{frame}
+\frametitle{Claude Elwood Shannon}
+\label{sec-2-11}
+
+   Claude Elwood Shannon (April 30, 1916 – February 24, 2001) is also credited with the introduction of sampling theory, which is concerned with representing a continuous-time signal from a (uniform) discrete set of samples. 
+\end{frame}
+\begin{frame}
+\frametitle{Walter Richard Evans}
+\label{sec-2-12}
+
+   Walter Richard Evans (January 15, 1920 - July 10, 1999) was a noted American control theorist and the inventor of the root locus method in 1948. 
+\end{frame}
+\begin{frame}
+\frametitle{Samuel Jefferson Mason}
+\label{sec-2-13}
+
+   Samuel Jefferson Mason (1921–1974) was an American electronics engineer. Mason's invariant and Mason's rule are named after him.
+\end{frame}
+\begin{frame}
+\frametitle{describing function (DF) method}
+\label{sec-2-14}
+
+   In control systems theory, the describing function (DF) method, developed by Nikolay Mitrofanovich Krylov and Nikolay Bogoliubov in the 1930s, and extended by Ralph Kochenburger is an approximate procedure for analyzing certain nonlinear control problems.
+\end{frame}
+\section{课程学习}
+\label{sec-3}
+\begin{frame}
+\frametitle{自动控制}
+\label{sec-3-1}
 
  无人工直接参与的情况下，利用控制装置(控制器)使被控对象按照给定的规律变化。
 \end{frame}
 \begin{frame}
 \frametitle{自动控制理论}
-\label{sec-2-2}
+\label{sec-3-2}
 
 \begin{itemize}
 \item <2->经典控制理论
@@ -172,7 +214,7 @@
 \end{frame}
 \begin{frame}
 \frametitle{课程内容：}
-\label{sec-2-3}
+\label{sec-3-3}
 
 \begin{enumerate}
 \item <2->一般概念
@@ -183,7 +225,7 @@
 \item 根轨迹法
 \item 频域分析法
 \end{enumerate}
-\item <5->设计方法
+\item <5->控制器设计方法
 \item <6->离散系统分析
 \item <7->典型非线性系统的分析
 \end{enumerate}
