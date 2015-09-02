@@ -1,7 +1,5 @@
-% Created 2014-10-09 星期四 10:31
+% Created 2015-09-02 星期三 09:10
 \documentclass{beamer}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
 \usepackage{longtable}
@@ -321,14 +319,14 @@
 \path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p1) { }; 
 \path[->](r) edge node {} (p1) ; 
 \path[blue] node[draw, right =of p1] (g) {$K$}; 
-\path[->] (p1) edge node[midway] {E} (g) ; 
+\path[->] (p1) edge node[midway] {$e$} (g) ; 
 \path[->] node[ circle,inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of g] (p2) { }; 
 \path[->] (g) edge node [midway]{$ $} (p2); 
 \path[->] node[ right =of p2] (o) {$c$}; 
 \path[->] (p2) edge node {} (o); 
 
 \path[blue] node[draw, below =of g] (h) {$A$};
-\path[->,draw] (g.east)+(1em,0) |- (h.east) ; 
+\path[->,draw] (p2.east)+(1em,0) |- (h.east) ; 
 \path[->,draw] (h.west) -| (p1) ; 
 
 \path[blue] node[ above =of p2] (f) {$f$};
