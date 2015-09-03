@@ -87,25 +87,145 @@
 [[file:image/telautograph.jpg]]
 
 * 控制理论的发展
-** Pierre-Simon Laplace 
+** Pierre-Simon Laplace	
+*** Laplace					      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+
+[[file:image/Laplace.jpg]]
+
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.7
+    :END:
+
    Pierre-Simon Laplace (1749-1827) invented the Z-transform in his work on probability theory, now used to solve discrete-time control theory problems. The Z-transform is a discrete-time equivalent of the Laplace transform which is named after him.
 ** Joseph Fourier
+*** Fourier					      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :BEAMER_env: ignoreheading
+    :END:
+[[file:image/Fourier.jpg]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
    Joseph Fourier (21 March 1768 – 16 May 1830) was a French mathematician and physicist born in Auxerre and best known for initiating the investigation of Fourier series and their applications to problems of heat transfer and vibrations. The Fourier transform and Fourier's Law are also named in his honour. Fourier is also generally credited with the discovery of the greenhouse effect.
 ** James Clerk Maxwell
+*** Maxwell					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+[[file:image/Maxwell.jpg]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
    James Clerk Maxwell (FRS,Fellow of the Royal Society of London. FRSE,Fellow of the Royal Society of Edinburgh)  (13 June 1831 – 5 November 1879) published a paper On governors in the Proceedings of Royal Society, vol. 16 (1867–1868). This paper is considered a central paper of the early days of control theory. Here "governors" refers to the governor or the centrifugal governor used to regulate steam engines.
 ** Edward John Routh
+*** Routh 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+   [[file:image/Routh.jpg]]
+
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
+
    Edward John Routh (FRS,Fellow of the Royal Society of London) ( 20 January 1831 – 7 June 1907), was an English mathematician, noted as the outstanding coach of students preparing for the Mathematical Tripos examination of the University of Cambridge in its heyday in the middle of the nineteenth century. He also did much to systematise the mathematical theory of mechanics and created several ideas critical to the development of modern control systems theory.
 ** Adolf Hurwitz
+*** Hurwitz 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+[[file:image/Hurwitz.jpg]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
    Adolf Hurwitz (26 March 1859 – 18 November 1919) was a German mathematician who worked on algebra, analysis, geometry and number theory. In the field of control systems and dynamic systems theory he derived the Routh–Hurwitz stability criterion for determining whether a linear system is stable in 1895, independently of Edward John Routh who had derived it earlier by a different method.
 ** Alexander Lyapunov
+*** Lyapunov 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+  [[file:image/lyapunov.png]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
+
    Alexander Lyapunov (1857–1918) in the 1890s marks the beginning of stability theory.
 ** Harry Nyquist
+*** Nyquist 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+   [[file:image/Nyquist.jpg]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
+
    Harry Nyquist (1889–1976), developed the Nyquist stability criterion for feedback systems in the 1930s.
 ** Norbert Wiener
+*** Wiener 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+   [[file:image/Wiener.jpg]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
+
    Norbert Wiener (1894–1964) co-developed the Wiener–Kolmogorov filter and coined the term cybernetics in the 1940s.
 ** Harold S. Black
+*** Black 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+    [[file:image/Black.png]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
+
    Harold S. Black (1898–1983), invented the concept of negative feedback amplifiers in 1927. He managed to develop stable negative feedback amplifiers in the 1930s.
 ** Hendrik Wade Bode
+*** Bode 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+    [[file:image/Bode.png]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
+
    Hendrik Wade Bode (pronounced Boh-dee in English, Boh-dah in Dutch),(24 December 1905 – 21 June 1982) was an American engineer, researcher, inventor, author and scientist, of Dutch ancestry.
    He made important contributions to control system theory and mathematical tools for the analysis of stability of linear systems, inventing Bode plots, gain margin and phase margin.
 #    * Richard Bellman (1920–1984), developed dynamic programming since the 1940s.
@@ -113,8 +233,32 @@
 #    * <3> John R. Ragazzini (1912–1988) introduced digital control and the use of Z-transform in control theory (invented by Laplace) in the 1950s.
 
 ** Claude Elwood Shannon
+*** Shannon 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+   [[file:image/Shannonmouse.PNG]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
+
    Claude Elwood Shannon (April 30, 1916 – February 24, 2001) is also credited with the introduction of sampling theory, which is concerned with representing a continuous-time signal from a (uniform) discrete set of samples. 
 ** Walter Richard Evans
+*** Evans 					      :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.3
+    :END:
+   [[file:image/Evans.jpg]]
+*** Introduction				      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :BEAMER_env: ignoreheading
+    :END:
+
    Walter Richard Evans (January 15, 1920 - July 10, 1999) was a noted American control theorist and the inventor of the root locus method in 1948. 
 ** Samuel Jefferson Mason
    Samuel Jefferson Mason (1921–1974) was an American electronics engineer. Mason's invariant and Mason's rule are named after him.
