@@ -222,7 +222,7 @@
 	*   $E_r=R_1 I_2+E_c$
 	*   $C (E_r-E_c)' = I_1$
  * 消去I,I_1,I_2得：
-	*  $R_1 C E_c'+(R_1+R_2)/R_2 E_c = R_1 E_r'+ E_r$
+	*  $R_1 C E_c'+\frac{R_1+R_2}{R_2} E_c = R_1 C E_r'+ E_r$
 
 ** 电气及机电系统示例2
 *** 电阻、电容网络					      :B_block:BMCOL:
@@ -350,7 +350,7 @@
     * 小车水平方向： $Mr''=F-H$
     * 杆水平方向： $m(r+l sin(\theta))'' = H$
     * 杆竖直方向： $m (l cos(\theta))'' = N-mg$
-    * 杆转动： $J(\theta)''=N l sin(\theta) - H l cos(\theta)$
+    * 杆转动： $J\theta''=N l sin(\theta) - H l cos(\theta)$
   * 整理后：
     *   $(M+m)r''+ml\cos(\theta)\theta''-ml\sin(\theta)(\theta')^2=F$
     *   $ml\cos(\theta)r''+(J+m l^2)\theta''=mgl\sin(\theta)$
