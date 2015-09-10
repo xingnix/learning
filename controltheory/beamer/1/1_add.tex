@@ -1,4 +1,4 @@
-% Created 2015-09-01 Tue 17:36
+% Created 2015-09-10 星期四 16:56
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -146,11 +146,43 @@ C &=& ?
 
 \includegraphics[width=\textwidth]{image/drive.pdf}
 \end{frame}
-\section{稳定性}
+\section{非线性}
 \label{sec-2}
 \begin{frame}
-\frametitle{稳定性与平衡点}
+\frametitle{$x'+1 =u$}
 \label{sec-2-1}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}{方法1}
+\label{sec-2-1-1}
+
+变量代换，为方程右边与输出变量无关的部分指定另一个变量。
+\begin{align*}
+x'+1 &= u \\
+w &= u-1 \\
+x' &= w \\
+\end{align*}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}{方法2}
+\label{sec-2-1-2}
+
+将方程右边与输出变量无关的部分用泰勒级数展开。
+\begin{align*}
+x' &=u-1 \\
+u-1 &= (u-1)|_{u=1}+\Delta u \\
+x' &= \Delta u \\
+\end{align*}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\section{稳定性}
+\label{sec-3}
+\begin{frame}
+\frametitle{稳定性与平衡点}
+\label{sec-3-1}
 
 
 \begin{eqnarray*}
@@ -168,7 +200,7 @@ x(t) &=& -1
 \end{frame}
 \begin{frame}
 \frametitle{正反馈与离散系统稳定性}
-\label{sec-2-2}
+\label{sec-3-2}
 
 \begin{eqnarray*}
 x(n+1)-kx(n) &=& r(n) \\
@@ -178,7 +210,7 @@ x(n) &=& x(0)k^n
 \end{frame}
 \begin{frame}
 \frametitle{正反馈与延迟系统稳定性}
-\label{sec-2-3}
+\label{sec-3-3}
 
 \begin{eqnarray*}
 x(t+a)-kx(t) &=& r(t) \\
@@ -187,10 +219,10 @@ x(na) &=& x(0)k^{n}
 \end{eqnarray*}
 \end{frame}
 \section{卷积}
-\label{sec-3}
+\label{sec-4}
 \begin{frame}
 \frametitle{卷积与脉冲响应}
-\label{sec-3-1}
+\label{sec-4-1}
 
 \begin{itemize}
 \item 卷积
@@ -208,7 +240,7 @@ x(na) &=& x(0)k^{n}
 \end{frame}
 \begin{frame}
 \frametitle{卷积与系统响应}
-\label{sec-3-2}
+\label{sec-4-2}
 
 设输入信号为 $x(t)$ 时，输出为 $y(t)$ :
 \begin{eqnarray*}
@@ -221,10 +253,10 @@ y(t) & =& LTI[x(t)]\\
 \end{eqnarray*}
 \end{frame}
 \section{误差}
-\label{sec-4}
+\label{sec-5}
 \begin{frame}
 \frametitle{阶跃输入}
-\label{sec-4-1}
+\label{sec-5-1}
 
 
 \begin{eqnarray*}
@@ -239,7 +271,7 @@ E &=& e^{-\frac{t}{m}}
 \end{frame}
 \begin{frame}
 \frametitle{斜坡输入}
-\label{sec-4-2}
+\label{sec-5-2}
 
 
 \begin{eqnarray*}
@@ -253,10 +285,10 @@ E &=& (1-m)e^{-\frac{t}{m}}+m
 \end{eqnarray*}
 \end{frame}
 \section{Fourier变换}
-\label{sec-5}
+\label{sec-6}
 \begin{frame}
 \frametitle{Fourier级数(三角形式)}
-\label{sec-5-1}
+\label{sec-6-1}
 
 \begin{eqnarray*}
 f_T(t) & =& \frac{a_0}{2}+\sum_{n=1}^{\infty}(a_n\cos(n\omega t)+b_n\sin(n\omega t))  
@@ -271,7 +303,7 @@ b_n &=& \frac{2}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f_T(t)\sin(n\omega t)dt \\
 \end{frame}
 \begin{frame}
 \frametitle{Fourier级数(复指数形式)}
-\label{sec-5-2}
+\label{sec-6-2}
 
 \begin{eqnarray*}
 f_T(t) & = & \sum_{n=-\infty}^{+ \infty}c_n e^{j\omega_n t} \\
@@ -280,22 +312,22 @@ f_T(t) & = & \frac{1}{T}\sum_{n=-\infty}^{+\infty}\left[ \int_{- \frac{T}{2} }^{
 \end{frame}
 \begin{frame}
 \frametitle{Fourier积分}
-\label{sec-5-3}
+\label{sec-6-3}
 
 \begin{eqnarray*}
 \lim_{T\rightarrow+\infty}f_T(t) &=& f(t) \\
 f(t) & = & \lim_{T\rightarrow+\infty}\frac{1}{T}\sum_{n=-\infty}^{+\infty}\left[ \int_{- \frac{T}{2} }^{\frac{T}{2}}f_T(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t} \\
 \Delta\omega &=& \frac{2\pi}{T} \\
 f(t) & = & \lim_{\Delta\omega\rightarrow 0}\frac{1}{2\pi}\sum_{n=-\infty}^{+ \infty}\left[ \int_{- \frac{T}{2} }^{\frac{T}{2}}f_T(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t}\Delta\omega \\
-f(t) & = & \frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega\tau}d\tau\right] e^{j\omega t}d\omega
+f(t) & = & \frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t}d\omega
 \end{eqnarray*}
 \end{frame}
 \begin{frame}
 \frametitle{Fourier变换定义}
-\label{sec-5-4}
+\label{sec-6-4}
 
 \begin{eqnarray*}
-f(t)& = &\frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega\tau}d\tau\right]e^{j\omega t}d\omega \\
+f(t)& = &\frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega_n\tau}d\tau\right]e^{j\omega_n t}d\omega \\
 F(j\omega)&=& \int_{-\infty}^{ + \infty}f(t)e^{-j\omega t}dt \\
 f(t)  & =& \frac{1}{2\pi} \int_{-\infty}^{+\infty}F(j\omega)e^{j\omega t}d\omega \\
 F(j\omega) &=& {\cal F}[f(t)] \\
@@ -304,7 +336,7 @@ f(t) &=& {\cal F}^{-1}[F(j\omega)]
 \end{frame}
 \begin{frame}
 \frametitle{常用函数的Fourier变换}
-\label{sec-5-5}
+\label{sec-6-5}
 
 \begin{itemize}
 \item 单位脉冲函数 $f(t)=\delta(t) \rightarrow   F(j\omega)=1$
@@ -315,7 +347,7 @@ f(t) &=& {\cal F}^{-1}[F(j\omega)]
 \end{frame}
 \begin{frame}
 \frametitle{性质}
-\label{sec-5-6}
+\label{sec-6-6}
 
 \begin{itemize}
 \item 线性: $f(t)=af_1(t)+bf_2(t)\rightarrow  F(j\omega)=aF_1(j\omega)+bF_2(j\omega)$,其中 $a,b$ 为常数
@@ -328,10 +360,10 @@ f(t) &=& {\cal F}^{-1}[F(j\omega)]
 \end{itemize}
 \end{frame}
 \section{连续系统频域分析}
-\label{sec-6}
+\label{sec-7}
 \begin{frame}
 \frametitle{基本信号 $e^{j\omega t}$ 通过线性系统}
-\label{sec-6-1}
+\label{sec-7-1}
 
 \begin{eqnarray*}
 f(t) & =& e^{j\omega t},\qquad -\infty < t < \infty \\
@@ -339,14 +371,14 @@ H(j\omega) &=& \int_{-\infty}^{\infty}h(t)e^{-j\omega t}dt \\
            &=& |H(j\omega)|e^{j\phi(\omega)} \\
 y_f(t) &=& e^{j\omega t}*h(t) \\
        &=& \int_{-\infty}^{\infty}h(\tau)e^{j\omega(t-\tau)}d\tau \\
-       &=& e^{j\omega t}\int_{-\infty}^{\infty}h(\tau)e^{-j\omega\tau}d\tau \\
+       &=& e^{j\omega t}\int_{-\infty}^{\infty}h(\tau)e^{-j\omega t}d\tau \\
        &=& H(j\omega)e^{j\omega t} \\
        &=& |H(j\omega)|e^{j(\omega t+\phi(\omega))}
 \end{eqnarray*}
 \end{frame}
 \begin{frame}
 \frametitle{正弦（余弦）信号通过线性系统}
-\label{sec-6-2}
+\label{sec-7-2}
 
 \begin{eqnarray*}
 f(t) & =& A\cos\omega t , \qquad  -\infty<t<\infty \\
@@ -358,7 +390,7 @@ y_f(t) &=& \frac{A}{2}(H(j\omega)e^{j\omega t}+H(-j\omega)e^{-j\omega t}) \\
 \end{frame}
 \begin{frame}
 \frametitle{非正弦周期信号通过线性系统}
-\label{sec-6-3}
+\label{sec-7-3}
 
 \begin{eqnarray*}
 f(t) &=& \sum_{n=-\infty}^{\infty}F_n e^{jn\omega t} \\
@@ -371,7 +403,7 @@ y_f(t) &=& \sum_{n=-\infty}^{\infty}F_nH(jn\omega)e^{jn\omega t} \\
 \end{frame}
 \begin{frame}
 \frametitle{系统对非周期信号的响应}
-\label{sec-6-4}
+\label{sec-7-4}
 
 \begin{eqnarray*}
 y(t) & =& f(t)*h(t)\\
@@ -382,7 +414,7 @@ H(j\omega) &=& \frac{Y(j\omega)}{F(j\omega)}
 \end{frame}
 \begin{frame}
 \frametitle{利用Fourier变换计算零状态响应}
-\label{sec-6-5}
+\label{sec-7-5}
 
 某线性时不变系统的脉冲响应 $h(t)=(e^{-2t}-e^{-3t})U(t)$ ，求输入信号 $f(t)=e^{-t}U(t)$ 时系统的零状态响应。其中 $U(t)$ 为单位阶跃函数。
 

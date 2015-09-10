@@ -1,4 +1,5 @@
 # +LaTeX_CLASS: article
+#+LATEX_HEADER: \usepackage{etex}
 #+LATEX_HEADER: \usepackage{amsmath}
 #+LATEX_HEADER: \usepackage[usenames]{color}
 #+LATEX_HEADER: \usepackage[all]{xy}
@@ -120,6 +121,31 @@ C &=& ?
  #+ATTR_LATEX: width=\textwidth
 [[file:image/drive.pdf]]
 
+* 非线性
+** $x'+1 =u$
+*** 方法1						      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+变量代换，为方程右边与输出变量无关的部分指定另一个变量。
+\begin{align*}
+x'+1 &= u \\
+w &= u-1 \\
+x' &= w \\
+\end{align*}
+
+*** 方法2						      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+将方程右边与输出变量无关的部分用泰勒级数展开。
+\begin{align*}
+x' &=u-1 \\
+u-1 &= (u-1)|_{u=1}+\Delta u \\
+x' &= \Delta u \\
+\end{align*}
 * 稳定性
 ** 稳定性与平衡点
 
