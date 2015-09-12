@@ -1,4 +1,4 @@
-% Created 2015-09-10 星期四 16:56
+% Created 2015-09-12 星期六 22:39
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -149,31 +149,75 @@ C &=& ?
 \section{非线性}
 \label{sec-2}
 \begin{frame}
-\frametitle{$x'+1 =u$}
+\frametitle{几个例子}
 \label{sec-2-1}
+
+\begin{align*}
+c &= u\\
+c &= u+1\\
+c &= 1\\
+c &= 0\\
+c &= \sqrt[3]{u} \quad u= x^3 \\
+c+c^2 &= u \quad u=r+c^{2}
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{$x'+1 =u$}
+\label{sec-2-2}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{block}{方法1}
-\label{sec-2-1-1}
+\label{sec-2-2-1}
 
 变量代换，为方程右边与输出变量无关的部分指定另一个变量。
 \begin{align*}
 x'+1 &= u \\
 w &= u-1 \\
-x' &= w \\
+x' &= w 
 \end{align*}
 \end{block}
 \end{column}
 \begin{column}{0.5\textwidth}
 \begin{block}{方法2}
-\label{sec-2-1-2}
+\label{sec-2-2-2}
 
 将方程右边与输出变量无关的部分用泰勒级数展开。
 \begin{align*}
 x' &=u-1 \\
 u-1 &= (u-1)|_{u=1}+\Delta u \\
-x' &= \Delta u \\
+x' &= \Delta u 
 \end{align*}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{$cc'=u$}
+\label{sec-2-3}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}{在 $c_0=1,c'_0=1$ 处线性化}
+\label{sec-2-3-1}
+
+
+\begin{align*}
+(1+\Delta c)(1+\Delta c') &= u \\
+1+\Delta c+ \Delta c' + \Delta c \Delta c' &= u\\
+\Delta c +\Delta c' &= \Delta u
+\end{align*}
+$\Delta u=0,u=1$ 时， $cc'=1$ 。接着随着 $c$ 增大，$c'$ 会减小。
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}{变量代换 $c=t+\Delta c,c'=1+\Delta c'$}
+\label{sec-2-3-2}
+
+\begin{align*}
+(t+\Delta c)(1+\Delta c') &=u \\
+t+\Delta c+t\Delta c'+\Delta c\Delta c' &=u \\
+\Delta c +t\Delta c' &= \Delta u
+\end{align*}
+$\Delta u=0,u=t$ 时， $cc'=t$ 。接着随着 $c$ 增大，$c'$ 不变。
 \end{block}
 \end{column}
 \end{columns}

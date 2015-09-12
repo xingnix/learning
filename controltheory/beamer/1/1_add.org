@@ -122,6 +122,15 @@ C &=& ?
 [[file:image/drive.pdf]]
 
 * 非线性
+** 几个例子
+\begin{align*}
+c &= u\\
+c &= u+1\\
+c &= 1\\
+c &= 0\\
+c &= \sqrt[3]{u} \quad u= x^3 \\
+c+c^2 &= u \quad u=r+c^{2}
+\end{align*}
 ** $x'+1 =u$
 *** 方法1						      :B_block:BMCOL:
     :PROPERTIES:
@@ -132,7 +141,7 @@ C &=& ?
 \begin{align*}
 x'+1 &= u \\
 w &= u-1 \\
-x' &= w \\
+x' &= w 
 \end{align*}
 
 *** 方法2						      :B_block:BMCOL:
@@ -144,8 +153,33 @@ x' &= w \\
 \begin{align*}
 x' &=u-1 \\
 u-1 &= (u-1)|_{u=1}+\Delta u \\
-x' &= \Delta u \\
+x' &= \Delta u 
 \end{align*}
+**  $cc'=u$
+*** 在 $c_0=1,c'_0=1$ 处线性化 				      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+
+\begin{align*}
+(1+\Delta c)(1+\Delta c') &= u \\
+1+\Delta c+ \Delta c' + \Delta c \Delta c' &= u\\
+\Delta c +\Delta c' &= \Delta u
+\end{align*}
+$\Delta u=0,u=1$ 时， $cc'=1$ 。接着随着 $c$ 增大，$c'$ 会减小。
+
+*** 变量代换 $c=t+\Delta c,c'=1+\Delta c'$		      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+\begin{align*}
+(t+\Delta c)(1+\Delta c') &=u \\
+t+\Delta c+t\Delta c'+\Delta c\Delta c' &=u \\
+\Delta c +t\Delta c' &= \Delta u
+\end{align*}
+$\Delta u=0,u=t$ 时， $cc'=t$ 。接着随着 $c$ 增大，$c'$ 不变。
 * 稳定性
 ** 稳定性与平衡点
 
