@@ -1,0 +1,253 @@
+\begin{document}
+%\begin{CJK*}{GBK}{song}
+
+\def\lecturename{嵌入式技术}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[EC]{嵌入式系统概念及应用}{}
+\subtitle{介绍嵌入式系统}
+\date{2014}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}{课程内容}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/content}\end{center}
+\end{frame}
+
+\begin{frame}{与其它课程关系}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/relation}\end{center}
+\end{frame}
+
+
+
+\section{嵌入式技术历史}
+
+\begin{frame}{嵌入式?}
+%The Jacquard loom is a mechanical loom, invented by Joseph Marie Jacquard in 1804, that simplifies the process of manufacturing textiles with complex patterns.
+\begin{center}\pgfimage[width=0.5\textwidth]{image/Jacquard.loom.full.view}\end{center}
+Jacquard loom on display at Museum of Science and Industry in Manchester, England
+\end{frame}
+
+\begin{frame}{嵌入式?}
+%The Jacquard loom was the first machine to use punched cards to control a sequence of operations. 
+\begin{center}\pgfimage[width=0.5\textwidth]{image/Jacquard.loom.cards}\end{center}
+Close-up view of the 8x26 hole punched cards---one card per pick (weft) in the fabric.
+\end{frame}
+
+\begin{frame}{嵌入式?}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/FortranCardPROJ039.agr}\end{center}
+Card from a Fortran program: Z(1) = Y + W(1)
+\end{frame}
+
+\begin{frame}{嵌入式?}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/NOLAPunchCards1938}\end{center}
+"A good operator can turn out 1,500 punch cards daily." Operators compiling hydrographic data for navigation charts on punch cards, New Orleans, 1938.
+\end{frame}
+
+
+\begin{frame}{嵌入式?}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/printer}\end{center}
+\end{frame}
+
+\begin{frame}{嵌入式?}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/postscript}\end{center}
+\end{frame}
+
+
+\section{嵌入式芯片与嵌入式系统}
+
+
+\begin{frame}{嵌入式系统定义}
+\begin{itemize}
+\item 从技术的角度定义：\\
+以应用为中心、以计算机技术为基础、软件硬件可裁剪、适应应用系统对功能、可靠性、成本、体积、功耗严格要求的专用计算机系统。
+\item 从系统的角度定义：\\
+嵌入式系统是设计完成复杂功能的硬件和软件，并使其紧密耦合在一起的计算机系统。
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{嵌入式系统特点}
+\begin{description}
+\item [硬件特性：]
+\begin{itemize}
+\item 体积小，集成效率高
+\item 面向特定应用
+\item 低功耗
+\end{itemize}
+\item[软件特性：]
+\begin{itemize}
+\item 与硬件紧密相关
+\item 代码效率高、高可靠性
+\item 一般固化于Flash/ROM中
+\end{itemize}
+\end{description}
+\end{frame}
+
+\begin{frame}{嵌入式器件}
+\begin{description}
+\item [嵌入式微处理器：]
+\begin{itemize}
+\item PowerPC
+\item ARM
+\end{itemize}
+\item[嵌入式微控制器：]
+\begin{itemize}
+\item 8051
+\item MSP430
+\end{itemize}
+\item[其它]
+\begin{itemize}
+\item DSP(Digital Signal Processor)
+\item FPGA/CPLD
+\item ASIC
+\item 片上系统(SoC)
+\end{itemize}
+\item[开发工具]
+\begin{itemize}
+\item HDL
+\item EDA
+\end{itemize}
+\end{description}
+\end{frame}
+
+\begin{frame}{单片机(SCC: Single Chip Computer)/微控制器(MCU: Micro Controler Unit)}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/mcu}\end{center}
+\end{frame}
+
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/control1}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/0119_2103}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/0119_2104}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/0119_2105}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/0120_2137}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/0120_2137_01}\end{center}
+\end{frame}
+
+\begin{frame}{单板机(SBC: Single Board Computer)}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/sbc}\end{center}
+\end{frame}
+
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/0330_2051}\end{center}
+\end{frame}
+
+\begin{frame}{OMAP3530}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/omap3530}\end{center}
+\end{frame}
+
+\section{嵌入式系统应用}
+
+\begin{frame}{嵌入式系统应用}
+\begin{description}
+\item [日常生活：]
+\begin{itemize}
+\item 机顶盒
+\item 手机/PDA(Personal Digital Assistant)
+\item 微波炉
+\item 汽车
+\item 娱乐视频
+\item 校园报警器
+\end{itemize}
+\item[工业：]
+\begin{itemize}
+\item 过程监控
+\item 分布式系统
+\item 自动化生产线
+\end{itemize}
+\item[科学研究：]
+\begin{itemize}
+\item 国际空间站
+\item 航空/航天飞行器
+\item 机器人/探测器
+\end{itemize}
+\end{description}
+\end{frame}
+
+
+%生活
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/alarm}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}
+\pgfimage[width=0.5\columnwidth]{image/fedoracore2-1}
+\pgfimage[width=0.5\columnwidth]{image/fedoracore2-2}
+\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/monitor}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/video}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/control2}\end{center}
+\end{frame}
+\begin{frame}{}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/control3}\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Consumer Electronics}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/consumer}\end{center}
+\end{frame}
+
+\begin{frame}{基于RTLinux的机器人}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/robot}\end{center}
+\end{frame}
+
+%航天
+\begin{frame}{Spirit/Opportunity}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/spirit1}\end{center}
+\end{frame}
+\begin{frame}{Spirit/Opportunity}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/spirit2}\end{center}
+\end{frame}
+\begin{frame}{Spirit/Opportunity}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/spirit3}\end{center}
+\end{frame}
+
+
+\section{思考}
+\begin{frame}{思考}
+\begin{itemize}
+\item 计算机应用领域发生了哪些变化？
+\item 嵌入式系统有哪些特点，有哪些应用？
+\item 单片机在嵌入式系统中有哪些作用？
+\item 操作系统在嵌入式系统中有哪些作用？
+\end{itemize}
+\end{frame}
+
+
+%\end{CJK*}
+\end{document}
