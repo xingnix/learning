@@ -1,4 +1,4 @@
-% Created 2014-10-15 星期三 11:15
+% Created 2015-09-16 Wed 13:11
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -173,6 +173,7 @@
 \begin{itemize}
 \item $K$ :系统增益
 \end{itemize}
+   
 \end{frame}
 \begin{frame}
 \frametitle{传递函数的零极点对系统输出的影响}
@@ -183,12 +184,14 @@
 \begin{itemize}
 \item $M(s)=(b_m s^m+b_{m-1}s^{m-1}+...+b_0)$
 \item $N(s)=(a_n s^n+a_{n-1}s^{n-1}+...+a_0)$
+\item $G(s)=\frac{C(s)}{R(s)}=\frac{M(s)}{N(s)}$
 \end{itemize}
-\item <3-> $G(s)=\frac{C(s)}{R(s)}=\frac{M(s)}{N(s)}$
-\item <4-> $M(s)=0$ 求得极点, $N(s)=0$ 求得零点。
-\item <5-> $c(t)=c_1e^{\lambda_1 t}+...+c_ne^{\lambda_n t}$
-\item <6-> 系统运动模态由极点决定
-\item <7-> 各模态所占比例由零点决定
+\item <3-> 运动的模态
+\begin{itemize}
+\item 脉冲响应 $c(t)=c_1e^{\lambda_1 t}+...+c_ne^{\lambda_n t}$
+\item 系统运动模态( $e^{\lambda_1 t},\cdots,e^{\lambda_n t}$ )由极点决定
+\item 各模态所占比例与零点有关
+\end{itemize}
 \end{itemize}
 \end{frame}
 \section{典型环节传递函数}
