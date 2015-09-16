@@ -1,6 +1,7 @@
 # +LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
 #+LATEX_HEADER: \usepackage{amsmath}
-#+LATEX_HEADER: \usepackage[usenames]{color}
+# + LATEX_HEADER: \usepackage[usenames]{color}
 #+LATEX_HEADER: \usepackage{pstricks}
 #+LATEX_HEADER: \usepackage{pgfplots}
 #+LATEX_HEADER: \usepackage{tikz}
@@ -24,7 +25,7 @@
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 # +LaTeX_CLASS_OPTIONS: [bigger]
-#+latex_header:  \usepackage{beamerarticle}
+# +latex_header:  \usepackage{beamerarticle}
 # +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
 # +latex_header: \mode<beamer>{\usetheme{Boadilla}}
 #+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
@@ -192,7 +193,7 @@ p_{1,2} &=& -\xi\omega_n\pm\omega_n\sqrt{\xi^2-1}
 ** $\xi=1$
  *  <1-> 闭环极点有两个相同的负实根$p_{1,2}=-\xi\omega_n=-\omega_n$
       \begin{eqnarray*}
-      C(s) & = &\frac{\omega_n^2}{(s+\omega_n^2)}\cdot\frac{1}{s} \\
+      C(s) & = &\frac{\omega_n^2}{(s+\omega_n)^2}\cdot\frac{1}{s} \\
       c(t) &=& 1-e^{-\omega_n t}(1+\omega_n t)
       \end{eqnarray*}
  *  <2-> 且有:
