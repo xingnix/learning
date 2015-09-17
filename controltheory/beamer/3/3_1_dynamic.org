@@ -195,18 +195,16 @@ p_{1,2} &=& -\xi\omega_n\pm\omega_n\sqrt{\xi^2-1}
  *  <1-> 闭环极点有两个相同的负实根$p_{1,2}=-\xi\omega_n=-\omega_n$
       \begin{eqnarray*}
       C(s) & = &\frac{\omega_n^2}{(s+\omega_n)^2}\cdot\frac{1}{s} \\
-      c(t) &=& 1-e^{-\omega_n t}(1+\omega_n t)
+           & = &\frac{1}{s}-\frac{1}{s+\omega_n}-\frac{\omega_n}{(s+\omega_n)^2} \\
+      c(t) &=& 1-e^{-\omega_n t}-\omega_n t e^{-\omega_n t}
       \end{eqnarray*}
  *  <2-> 且有:
       \begin{eqnarray*}
-      \frac{dc(t)}{dt} &=& \omega_ne^{-\omega_n t}(1+\omega_n t)-\omega_n e^{-\omega_n t}
-       =  \omega_n^2 te^{-\omega_n t} 
-       >  0 \\
+      \frac{dc(t)}{dt} &=& \omega_n e^{-\omega_n t}+\omega_n^2 t e^{-\omega_n t}-\omega_n e^{-\omega_n t}  >  0 \\
       c(0) &=&0 \\
       c(\infty)&=&1\\
       \sigma \% &=& 0\\
-      t_s &=& 4.75T \\
-      T &=&\frac{1}{\omega_n}
+      t_s &=& 4.75T \qquad    T =\frac{1}{\omega_n}
       \end{eqnarray*}
 
 ** $0<\xi<1$  
