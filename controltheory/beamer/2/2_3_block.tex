@@ -1,7 +1,5 @@
-% Created 2014-10-09 星期四 12:11
+% Created 2015-09-18 Fri 22:24
 \documentclass{beamer}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
 \usepackage{longtable}
@@ -23,7 +21,7 @@
 \usepackage[europeanresistors,americaninductors]{circuitikz}
 \usepackage{colortbl}
 \usepackage{yfonts}
-\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shapes,arrows,matrix}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows,shapes}
 \usetikzlibrary{intersections}
@@ -280,13 +278,10 @@
 \label{sec-1-7}
 
 \begin{itemize}
-\item <2-> 前向通道及其传递函数：信号从R(s)->C(s)的通道称为前向通道，前向通道上各传递函数的乘积称为前向通道传递函数
-\item <3-> 反馈能道及其传递函数：信号从C(s)->E(s)的通道称为反馈通道，反馈通道上各传递函数的乘积称为反馈通道传递函数
-\item <4-> 反馈连接的等效传递函数：$G(s)=\frac{\text{前向通道传递函数}}{1\pm\text{前向通道传递函数}\times\text{反馈通道传函数}}$
-\item <5-> 开环系统传递函数：$G_{open}(s)=G(s)H(s)$
-\item <6-> 误差传递函数：$\Phi_e(s)=\frac{E(s)}{R(s)}=1-\frac{C(s)H(s)}{R(s)}=\frac{1}{1+G(s)H(s)}$
-\item <7-> 扰动传递函数：$\Phi_f(s)=\frac{C(s)}{N(s)}=\frac{G_2(s)}{1+G_1(s)G_2(s)H(s)}$
-\item <8-> 闭环传递函数：$\Phi(s)=\frac{C(s)}{R(s)}$
+\item <2-> 开环系统传递函数：$G_{open}(s)=G(s)H(s)$
+\item <3-> 误差传递函数：$\Phi_e(s)=\frac{E(s)}{R(s)}=1-\frac{C(s)H(s)}{R(s)}=\frac{1}{1+G(s)H(s)}$
+\item <4-> 扰动传递函数：$\Phi_f(s)=\frac{C(s)}{N(s)}=\frac{G_2(s)}{1+G_1(s)G_2(s)H(s)}$
+\item <5-> 闭环传递函数：$\Phi(s)=\frac{C(s)}{R(s)}$
 \end{itemize}
 \end{frame}
 \section{结构图化简方法}
@@ -641,12 +636,12 @@ G(s) &=& \frac{G_1(s)G_2(s)}{1+G_1(s)G_2(s)} \\
 \path[->, draw] (g3.west) -|  node[very near end] {$-$} (p1); 
 \end{tikzpicture} 
 
-\begin{eqnarray}
+\begin{eqnarray*}
 C(s) &=& R(s)G_1+X(s) \\
 X(s) &=& G_2(R(s)-C(s)G_3) \\
 C(s) &=& R(s)G_1+G_2(R(s)-C(s)G_3) \\
 \frac{C(s)}{R(s)} &=& \frac{G_1+G_2}{1+G_2G_3}
-\end{eqnarray}
+\end{eqnarray*}
 \end{frame}
 \section{信号流图}
 \label{sec-4}
@@ -664,14 +659,14 @@ C(s) &=& R(s)G_1+G_2(R(s)-C(s)G_3) \\
 %\path[->, draw] (r.east) edge node[middle] {$H(s)$}(c.west); 
 \end{tikzpicture} 
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{结构图与信号流图}
 \label{sec-4-2}
 
 \begin{tikzpicture}
 [
-amark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[above]{#1}}},postaction={decorate}},
-bmark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[below]{#1}}},postaction={decorate}},
+amark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[above]{#1};}},postaction={decorate}},
+bmark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[below]{#1};}},postaction={decorate}},
 terminal/.style 2 args={draw,circle,inner sep=2pt,label={#1:#2}},
 ]
 
@@ -687,8 +682,8 @@ terminal/.style 2 args={draw,circle,inner sep=2pt,label={#1:#2}},
 \draw[amark=$s^{-1}$] (c) to (d);
 \draw[amark=$s^{-1}$] (d) to (e);
 \draw[bmark=$-B/M$] (d) to[bend left=45] (c);
-\draw[amark=$1$,label revd] (e) to[bend left=50] (b);
-\draw[amark=$-K/M$,label revd] (e) to[bend right=50] (c);
+\draw[amark=$1$] (e) to[bend left=50] (b);
+\draw[amark=$-K/M$] (e) to[bend right=50] (c);
 \end{tikzpicture}
 \end{frame}
 \section{梅森公式}
@@ -741,7 +736,7 @@ terminal/.style 2 args={draw,circle,inner sep=2pt,label={#1:#2}},
 %\path[->, draw] (g3.east)+(0.7em,0) -- +(0.7em,-7em) -| node[very near end] {$-$} (p1); 
 \end{tikzpicture} 
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{梅森公式示例（信号流图）:}
 \label{sec-5-3}
 
