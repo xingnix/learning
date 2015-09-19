@@ -1,4 +1,4 @@
-% Created 2015-09-18 Fri 22:24
+% Created 2015-09-19 星期六 17:37
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -615,8 +615,133 @@ G(s) &=& \frac{G_1(s)G_2(s)}{1+G_1(s)G_2(s)} \\
 \end{tikzpicture} 
 \end{frame}
 \begin{frame}
-\frametitle{例:求 $\Phi(s)=\frac{C(s)}{R(s)}$}
+\frametitle{例1:化简结构图求 $\Phi(s)=\frac{C(s)}{R(s)}$}
 \label{sec-3-4}
+
+\begin{tikzpicture}[scale=1, thick] 
+\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+\tikzstyle{branch} = [inner sep=0pt,minimum size=0pt]
+\tikzstyle{connector} = [->,thick]
+\matrix[ampersand replacement=\&, row sep=1em, column sep=1em]{
+\node[] (r) {$R(s)$}; \& 
+\node[branch] (r_g1) {} ; \&
+\node[block] (g1) {$G_1(s)$} ; \&
+\node[sum] (p2) {} ; \&
+\node[branch] (p2_c) {} ; \&
+\node[] (o) {$C(s)$}; \\
+\&
+\node[sum] (p1) {} ; \&
+\node[block] (g2) {$G_2(s)$} ; \&
+\\
+\&
+\&
+\node[block] (g3) {$G_3(s)$} ; \&
+\\
+};
+\draw [connector] (r) -- (g1);
+\draw [connector] (g1) -- (p2);
+\draw [connector] (p2) -- (o);
+\draw [connector] (r_g1) -- (p1);   
+\draw [connector] (p1) -- (g2);
+\draw [connector] (g2) -| node[near end, left] {$X(s)$}(p2);
+\draw [connector] (p2_c) |- (g3);
+\draw [connector] (g3) -| node[very near end,left] {$-$} (p1);
+\end{tikzpicture} 
+\begin{block}<2->{移动比较点}
+\label{sec-3-4-1}
+
+\begin{tikzpicture}[scale=1, thick] 
+\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+\tikzstyle{branch} = [inner sep=0pt,minimum size=0pt]
+\tikzstyle{connector} = [->,thick]
+\matrix[ampersand replacement=\&, row sep=1em, column sep=1em]{
+\node[] (r) {$R(s)$}; \& 
+\node[branch] (r_g1) {} ; \&
+\node[block] (g1) {$G_1(s)$} ; \&
+\node[sum] (p2) {} ; \&
+\node[] (aboveg23) {} ; \&
+\node[branch] (p2_c) {} ; \&
+\node[] (o) {$C(s)$}; \\
+\&
+\&
+\node[block] (g2) {$G_2(s)$} ; \&
+\node[sum] (p1) {} ; \&
+\node[block] (g23) {$G_2(s)G_3(s)$} ; \\
+};
+\draw [connector] (r) -- (g1);
+\draw [connector] (g1) -- (p2);
+\draw [connector] (p2) -- (o);
+\draw [connector] (r_g1) |- (g2);   
+\draw [connector] (g2) -- (p1);
+\draw [connector] (p1) -| node[near end, left] {$X(s)$}(p2);
+\draw [connector] (p2_c) |- (g23);
+\draw [connector] (g23) -- node[near end,below] {$-$} (p1);
+\end{tikzpicture} 
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{例1:继续化简}
+\label{sec-3-5}
+\begin{block}<1->{移动比较点}
+\label{sec-3-5-1}
+
+\begin{tikzpicture}[scale=1, thick] 
+\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+\tikzstyle{branch} = [inner sep=0pt,minimum size=0pt]
+\tikzstyle{connector} = [->,thick]
+\matrix[ampersand replacement=\&, row sep=1em, column sep=1em]{
+\node[] (r) {$R(s)$}; \& 
+\node[branch] (r_g1) {} ; \&
+\node[block] (g1) {$G_1(s)$} ; \&
+\node[sum] (p2) {} ; \&
+\node[sum] (p1) {} ; \&
+\node[] (aboveg23) {} ; \&
+\node[branch] (p2_c) {} ; \&
+\node[] (o) {$C(s)$}; \\
+\&
+\&
+\node[block] (g2) {$G_2(s)$} ; \&
+\node[] (belowp2) {} ; \&
+\node[] (belowp1) {} ; \&
+\node[block] (g23) {$G_2(s)G_3(s)$} ; \\
+};
+\draw [connector] (r) -- (g1);
+\draw [connector] (g1) -- (p2);
+\draw [connector] (p2) -- (p1);
+\draw [connector] (p1) -- (o);
+\draw [connector] (r_g1) |- (g2);   
+\draw [connector] (g2) -| (p2);
+\draw [connector] (p2_c) |- (g23);
+\draw [connector] (g23) -| node[very near end,right] {$-$} (p1);
+\end{tikzpicture} 
+\end{block}
+\begin{block}<2->{求解传递函数}
+\label{sec-3-5-2}
+
+
+\begin{tikzpicture}[scale=1, thick] 
+\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+\tikzstyle{branch} = [inner sep=0pt,minimum size=0pt]
+\tikzstyle{connector} = [->,thick]
+\matrix[ampersand replacement=\&, row sep=1em, column sep=1em]{
+\node[] (r) {$R(s)$}; \& 
+\node[block] (g1g2) {$G_1(s)+G_2(s)$} ; \&
+\node[block] (g2g3) {$\frac{1}{1+G_2(s)G_3(s)}$} ; \&
+\node[] (o) {$C(s)$};\\
+};
+\draw [connector] (r) -- (g1g2);
+\draw [connector] (g1g2) -- (g2g3);
+\draw [connector] (g2g3) -- (o);
+\end{tikzpicture} 
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{例1:解方程求解 $\Phi(s)=\frac{C(s)}{R(s)}$}
+\label{sec-3-6}
 
 \begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
 %\path[use as bounding box] (-1,0) rectangle (10,-2); 
