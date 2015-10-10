@@ -27,8 +27,26 @@ end
 plot(xi,c,'r.-');
 x=[0.1:0.01:0.99];
 plot(x,(-log(err)-1/2*log(1-x.^2))./x,'b.-');
-plot(xi,-(log(err)+log(1-0.8^2)/2)./xi,'g.-'); //equals 3.5/\xi/\omega_n when err=0.5
+plot(x,-(log(err)+log(1-0.8^2)/2)./x,'g.-'); //equals 3.5/\xi/\omega_n when err=0.5
 legend(['real','approx(drop sin(...))','coarse(let \xi=0.8)']);
+
+// \omega_d changes while \xi*\omega_n remain constant
+// which is the case for root locus illustration of 2nd order system
+c=[];
+omegad=[0.1:0.1:10]
+for x=omegad;
+    xi=1/sqrt(1+x^2);
+    // exp(-\xi\omega_n t)/sqrt(1-\xi^2) \approx 0.05
+    T=(-log(err)-1/2*log(1-xi^2));
+    for t=T:-0.01:0,
+        if abs(exp(-t)/sqrt(1-xi^2) *sin(x*t+atan(x)))>err,
+            c=[c t];
+            break;
+        end
+    end
+end
+plot(1.0 ./sqrt(1+omegad.^2),c,'k.-');
+legend(['real','approx(drop sin(...))','coarse(let \xi=0.8)','omega_d changes only']);
 
 //s=poly(0,'s');
 // g=1/(s^2+2*1*s+1);
