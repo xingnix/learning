@@ -1,0 +1,161 @@
+\begin{document}
+
+\def\lecturename{嵌入式技术}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[EC]{嵌入式技术}{}
+\subtitle{GNU/Linux文件系统}
+\date{2015}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\section{文件系统}
+\begin{frame}{Linux文件系统种类}
+\begin{itemize}
+\item  romfs
+\item  ramdisk
+\item  tmpfs
+\item  JFFS/JFFS2 ( Journaling Flash File System )
+\item  YAFFS ( Yet Another Flash File System )
+\item  cramfs
+\item  SquashFS
+\item  NFS
+\end{itemize}
+\end{frame}
+
+\subsection{VFS}
+\begin{frame}{VFS}
+\begin{center}\pgfimage[width=1.0\columnwidth]{image/vfs}\end{center}
+\end{frame}
+
+\subsection{EXT2文件系统}
+\begin{frame}{EXT2文件系统}
+\begin{itemize}
+\item 引导块：在文件系统的开头，通常为一个扇区，存放引导程序，用于读入并启动操作系统
+\item 超级块(superblock)：用于记录文件系统的管理信息。特定的文件系统定义了特定超级块
+\item inode区(索引节点)：一个文件(或目录)占据一个索引节点。利用根节点(首个索引节点)，可以把一个文件系统挂在另一个文件系统的非叶节点上
+\item 数据区：用于存放文件数据或者管理数据(如一级间址块、二级间址块等)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{文件存储方式}
+\begin{itemize}
+\item EXT2中文件由逻辑块的序列组成。数据块的长度相同。不同的EXT2系统长度可以不同 。 文件总是整块存储，不足一块的部分也占用一个数据块
+\item EXT2中的每个文件都用一个单独的inode(即stuct ext2\_inode结构)来描述，而每个inode都有一个唯一的标志号。 通过使用inode来定义文件系统的结构以及描述系统中每个文件的管理信息
+\end{itemize}
+\end{frame}
+
+
+\subsection{romfs File System}
+\begin{frame}{romfs文件系统}
+\begin{itemize}
+\item romfs(rom file system)是一种只读文件系统
+\item 管理代码占用的空间比较小
+\item 使用genromfs工具创建
+\item 未完全实现文件访问权限
+\item 如果要进行写操作：
+\begin{itemize}
+\item 在编译的时候加上写访问功能
+\item 或者在运行时另外生成一个RAMdisk送暂存数据。
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{romfs文件系统结构}
+\begin{itemize}
+\item 文件系统结构
+\item 文件结构
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{文件系统结构}
+include/linux/binfmts.h：
+\begin{lstlisting}
+struct romfs_super_block {
+       __u32 word0;     /*   -rom    */
+       __u32 word1;     /*   1fs-   */
+       __u32 size;      /* size of the file system */
+       __u32 checksum;  /* checksum of first 512k */
+       char name[0];    /* volume name */
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{文件头结构}
+include/linux/binfmts.h：
+\begin{lstlisting}
+struct romfs_inode {
+       __u32 next; /* low 4 bits for file type*/
+       __u32 spec; /* spec.info */
+       __u32 size; /* file size */
+       __u32 checksum; /* checksum of file */
+       char name[0];  /* file name */
+};
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{spec.info}
+\begin{itemize}
+\item 0：硬链接，spec.info域的内容用于链接的目标文件
+\item 1：目录，spec.info域的内容为第一个文件的文件头
+\item 2：普通文件，spec.info域的内容无效，应设置为0
+\item 3：符号链接，spec.info域的内容无效，应设置为0
+\item 4：块设备，spec.info域内容为各16bit的主、从设备号 
+\item 5：字符设备，spec.info域的内容无效，设置为0
+\item 6：网络socket套接字spec.info域的内容无效，设置为0
+\item 7：fifo管道文件，spec.info域的内容无效，设置为0
+\end{itemize}
+\end{frame}
+
+\begin{frame}{romfs示例}
+\begin{center}\pgfimage[width=1.0\columnwidth]{image/romfshex}\end{center}
+\end{frame}
+
+\begin{frame}{romfs示例}
+\begin{center}\pgfimage[width=1.0\columnwidth]{image/romfsmap}\end{center}
+\end{frame}
+
+
+\section{文件系统使用}
+\subsection{mount}
+\begin{frame}{文件系统使用}
+\begin{itemize}
+\item etc/fstab
+\item mount/umount
+\end{itemize}
+\end{frame}
+
+\subsection{FHS}
+\begin{frame}{FHS: Filesystem Hierarchy Standard}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/verzeichnisse_baum}\end{center}
+\end{frame}
+
+ \section{思考}
+ \begin{frame}{思考}
+ \begin{itemize}
+ \item GNU/Linux常用哪些文件系统？
+ \item romfs的优缺点？
+ \end{itemize}
+ \end{frame}
+
+
+\end{document}

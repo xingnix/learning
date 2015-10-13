@@ -1,0 +1,969 @@
+\begin{document}
+
+\def\lecturename{嵌入式技术}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[EC]{嵌入式技术}{}
+\subtitle{脚本语言程序设计}
+\date{2015}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{脚本语言介绍}
+\begin{frame}{脚本语言发展}
+\begin{itemize}
+\item Shell
+\begin{itemize}
+\item Bash
+\item Ksh
+\end{itemize}
+\item 快速开发
+\begin{itemize}
+\item Tcl
+\item VB
+\end{itemize}
+\item 高阶编程
+\begin{itemize}
+\item Lua
+\item Guile
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+% \begin{frame}{脚本语言列表}
+% \begin{center}\pgfimage[width=0.9\columnwidth]{image/ComputerLanguagesChart}\end{center}
+% \end{frame}
+
+
+\begin{frame}{脚本语言编程}
+\begin{itemize}
+\item 扩展
+\begin{itemize}
+\item 速度
+\item 系统调用
+\end{itemize}
+\item 嵌入
+\begin{itemize}
+\item 灵活
+\item 方便
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Shell Programming}
+\begin{frame}{Shell}
+\begin{itemize}
+\item Bourne shell (sh)
+\item Korn Shell (ksh)
+\item C Shell (csh)
+\item Bourne-Again SHell (bash)
+\item zsh
+\end{itemize}
+\end{frame}
+
+\begin{frame}{csh}
+\begin{itemize}
+\item 由 Bill Joy 所写
+\item 语法和 C语言的很相似
+\end{itemize}
+\end{frame}
+
+\begin{frame}{ksh}
+\begin{itemize}
+\item Dave Korn 所写
+\item 集合了C shell 和 Bourne shell 的优点
+\item 和 Bourne shell 兼容
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Bash}
+\begin{itemize}
+\item Bourne shell（sh）的一个双关语（Bourne again / born again）
+\item Stephen Bourne在1978年前后编写Bourne shell，并同Version 7 Unix一起发布。
+\item Bash则在1987年由Brian Fox创造
+\item 在1990年，Chet Ramey成为了主要的维护者
+\item POSTIX 2 shell specifications
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Bash's Configuration Files}
+default: \verb+/etc/profile+
+
+home directory:
+\begin{itemize}
+\item  \verb+.bash_profile+: read and the commands in it executed by Bash every time you log in to the system 
+\item  \verb+.bashrc+: read and executed by Bash every time you start a subshell 
+\item  \verb+.bash_logout+: read and executed by Bash every time a login shell exits 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Hello world in bash}
+\lstset{language=ksh}
+\begin{lstlisting}
+            #!/bin/bash          
+            STR="Hello World!"
+            echo $STR    
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]{tar}
+\lstset{language=ksh}
+\begin{lstlisting}
+           #!/bin/bash          
+           OF=/var/my-backup-$(date +%Y%m%d).tgz
+           tar -cZf $OF /home/me/
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Local variables }
+Local variables can be created by using the keyword local. 
+\lstset{language=ksh}
+\begin{lstlisting}
+                #!/bin/bash
+                HELLO=Hello 
+                function hello {
+                        local HELLO=World
+                        echo $HELLO
+                }
+                echo $HELLO
+                hello
+                echo $HELLO
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Local variables }
+\begin{lstlisting}
+            #!/bin/bash
+            T1="foo"
+            T2="bar"
+            if [ "$T1" = "$T2" ]; then
+                echo expression evaluated as true
+            else
+                echo expression evaluated as false
+            fi
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{for}
+\begin{lstlisting}
+        #!/bin/bash
+        for i in $( ls ); do
+            echo item: $i
+        done
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{C-like for}
+\begin{lstlisting}
+        #!/bin/bash
+        for i in `seq 1 10`;
+        do
+                echo $i
+        done    
+\end{lstlisting}
+\end{frame}
+        
+
+\begin{frame}[containsverbatim]{While}
+\begin{lstlisting}
+
+         #!/bin/bash 
+         COUNTER=0
+         while [  $COUNTER -lt 10 ]; do
+             echo The counter is $COUNTER
+             let COUNTER=COUNTER+1 
+         done
+\end{lstlisting}
+\end{frame}
+         
+\begin{frame}[containsverbatim]{Untile}
+\begin{lstlisting}
+         #!/bin/bash 
+         COUNTER=20
+         until [  $COUNTER -lt 10 ]; do
+             echo COUNTER $COUNTER
+             let COUNTER-=1
+         done
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{Functions with parameters}
+\begin{lstlisting}
+         #!/bin/bash 
+         function quit {
+            exit
+         }  
+         function e {
+             echo $1 
+         }  
+         e Hello
+         e World
+         quit
+         echo foo 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{Using the command line}
+\begin{lstlisting}
+          #!/bin/bash        
+          if [ -z "$1" ]; then 
+              echo usage: $0 directory
+              exit
+          fi
+          SRCD=$1
+          TGTD="/var/backups/"
+          OF=home-$(date +%Y%m%d).tgz
+          tar -cZf $TGTD$OF $SRCD
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{User input}
+\begin{lstlisting}
+#!/bin/bash
+echo Please, enter your firstname and lastname
+read FN LN 
+echo "Hi! $LN, $FN !"
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{File renamer (simple)}
+\begin{lstlisting}
+#!/bin/bash
+# renames.sh
+# basic file renamer
+
+criteria=$1
+re_match=$2
+replace=$3
+
+for i in $( ls *$criteria* ); 
+do
+    src=$i
+    tgt=$(echo $i | sed -e "s/$re_match/$replace/")
+    mv $src $tgt
+done
+\end{lstlisting}
+\end{frame}
+
+\section{Tcl/Tk}
+\begin{frame}{Tcl/Tk}
+\begin{itemize}
+\item Creator: John Ousterhout
+\item Tool command language (tickle)
+\item Everything Is A String (EIAS)
+\item http://www.tcl.tk
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Math}
+\lstset{language=tcl}
+\begin{lstlisting}
+% set result [expr (4+6)/4]
+2
+% set result [expr (4.0+6)/4]
+2.5
+% set variable 255
+% puts "The number $variable"
+The number 255
+% puts [format "The number %d is equal to 0x%02X" \
+  $variable $variable]
+The number 255 is equal to 0xFF
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{if}
+\lstset{language=tcl}
+\begin{lstlisting}
+if {$c == "Hell"} {
+   puts "Oh god !"
+} else {
+   puts "Peace !"
+}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{while}
+\lstset{language=tcl}
+\begin{lstlisting}
+% while {$i<4} {
+> puts "$i*$i is [expr $i*$i]"
+> incr i
+> }
+0*0 is 0
+1*1 is 1
+2*2 is 4
+3*3 is 9
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{for}
+\lstset{language=tcl}
+\begin{lstlisting}
+% for {set i 0} {$i<4} {incr i} {
+> puts "$i*$i is [expr $i*$i]"
+> }
+0*0 is 0
+1*1 is 1
+2*2 is 4
+3*3 is 9
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{foreach}
+\lstset{language=tcl}
+\begin{lstlisting}
+% set observations \
+  {Bruxelles 15 22 London 12 19 Paris 18 27}
+Bruxelles 15 22 London 12 19 Paris 18 27
+% foreach {town Tmin Tmax} $observations {
+> set Tavg [expr ($Tmin+$Tmax)/2.0]
+> puts "$town $Tavg"
+> }
+Bruxelles 18.5
+London 15.5
+Paris 22.5
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]{Array}
+%Arrays are always unidimensional but the index is a string. If you use a separator in the index string (such as ',', '-'), you can get the same effect than with a multidimensional array in other languages. 
+\lstset{language=tcl}
+\begin{lstlisting}
+% set observations \
+  {Bruxelles 15 22 London 12 19 Paris 18 27}
+Bruxelles 15 22 London 12 19 Paris 18 27
+% foreach {town Tmin Tmax} $observations {
+set obs($town-min) $Tmin
+set obs($town-max) $Tmax
+}
+% parray obs
+obs(Bruxelles-max) = 22
+obs(Bruxelles-min) = 15
+obs(London-max)    = 19
+obs(London-min)    = 12
+obs(Paris-max)     = 27
+obs(Paris-min)     = 18
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]{Procedures}
+\lstset{language=tcl}
+\begin{lstlisting}
+% proc sum2 {a b} {
+>  return [expr $a+$b]
+> }
+\end{lstlisting}
+
+if a procedure does not contain any 'return' statement, the default return value is the return value of the last evaluated function in this procedure. So the following script is perfectly equivalent : 
+
+\begin{lstlisting}
+% proc sum2 {a b} {
+>   expr $a + $b
+> }
+\end{lstlisting}
+
+To call the 'sum2' function, we do the following : 
+
+\begin{lstlisting}
+% sum2 12 5
+17
+\end{lstlisting}
+\end{frame}
+
+%The special argument name 'args' contains a list with the rest of the arguments 
+
+\begin{frame}[containsverbatim]{}
+\lstset{language=tcl}
+\begin{lstlisting}
+% proc sum {args} {
+>   set result 0
+>   foreach n $args {
+>      set result [expr $result+$n]
+>   }
+>   return $result
+> }
+% sum 12 9 6 4
+31
+\end{lstlisting}
+\end{frame}
+
+%it is also possible to specify default parameters. So, if you don't specify the last parameters, the default values will be substituted. 
+
+\begin{frame}[containsverbatim]{}
+\lstset{language=tcl}
+\begin{lstlisting}
+% proc count {start end {step 1}} {
+>   for {set i $start} {$i<=$end} {incr i $step} {
+>     puts $i
+>   }
+> }
+% count 1 3
+1
+2
+3
+% count 1 5 2
+1
+3
+5
+\end{lstlisting}
+\end{frame}
+
+%If you want to use global variables in a function, you have to declare it as global. 
+
+\begin{frame}[containsverbatim]{}
+\lstset{language=tcl}
+\begin{lstlisting}
+% set global_counter 3
+% proc incr_counter {} {
+>    global global_counter
+>    incr global_counter
+> }
+% incr_counter
+4
+% set global_counter
+4
+\end{lstlisting}
+\end{frame}
+
+%You can also declare a table as global. 
+
+\begin{frame}[containsverbatim]{}
+\lstset{language=tcl}
+\begin{lstlisting}
+% set counter(value) 3
+% set counter(active) 1
+% proc incr_counter {} {
+>    global counter
+>    if {$counter(active)} {
+>       incr counter(value)
+>    }
+> }
+% incr_counter
+4
+% set counter(active) 0
+0
+% incr_counter
+4
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[containsverbatim]{Eval}
+\begin{itemize}
+\item concatenate all its arguments in one string 
+\item splits this string using spaces as separators 
+\item evaluate the command sentence formed by all the substrings 
+\end{itemize}
+%In the following example, we used the function 'sum' that we have already defined. 
+\lstset{language=tcl}
+\begin{lstlisting}
+%  proc average {args} {
+>     return [expr [eval sum $args] / [llength $args]] 
+>  } 
+% average 45.0 65.0 78.0 55.0
+60.75
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{upvar}
+With the 'upvar' command, you can access a variable which belongs to a higher level of the procedure call stack. 
+\begin{lstlisting}
+% proc decr {n steps} {
+>   upvar $n upa
+>   set upa [expr $upa - $steps]
+> }
+% set nb 12
+12
+% decr nb 3
+9
+% puts $nb
+9
+\end{lstlisting}
+%In the previous example, the parameter 'n' gets the value 'nb' (the string 'nb' !) if we type 'decr nb 3'. The command 'upvar $n upa' means that the variable 'upa' becomes a synonym to the variable 'nb' (coming from a higher level of the stack). 
+\end{frame}
+
+\begin{frame}[containsverbatim]{uplevel}
+With the 'uplevel' command, you can evaluate something on higher level in the stack. 
+\begin{lstlisting}
+% proc do {todo condition} {
+>   set ok 1
+>   while {$ok} {
+>     uplevel $todo
+>     if {[uplevel "expr $condition"]==0} {set ok 0}
+>   }
+> }
+% set i 0
+0
+% do {
+puts $i
+incr i
+} {$i<4}
+0
+1
+2
+3
+\end{lstlisting}
+%Inside the procedure 'do', the evaluation of the script 'todo' and the conditional 'condition' has to made on a higher level of stack (in the same way that if they were evaluated from out of 'do'). 
+\end{frame}
+
+
+\section{Perl}
+\begin{frame}{Perl}
+\begin{itemize}
+\item Larry Wall
+\item Practical Extraction and Report Language(实用摘录和报告语言)
+\item Pathologically Eclectic Rubbish Lister(病态折衷垃圾列表器)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Operations and Assignment}
+\lstset{language=perl}
+\begin{lstlisting}
+#Perl uses all the usual C arithmetic operators: 
+$a = 1 + 2;	# Add 1 and 2 and store in $a
+$a = 3 - 4;	# Subtract 4 from 3 and store in $a
+$a = 5 * 6;	# Multiply 5 and 6
+$a = 7 / 8;	# Divide 7 by 8 to give 0.875
+$a = 9 ** 10;	# Nine to the power of 10
+$a = 5 % 2;	# Remainder of 5 divided by 2
+++$a;		# Increment $a and then return it
+$a++;		# Return $a and then increment it
+--$a;		# Decrement $a and then return it
+$a--;		# Return $a and then decrement it
+#and for strings Perl has the following among others: 
+$a = $b . $c;	# Concatenate $b and $c
+$a = $b x $c;	# $b repeated $c times
+#To assign values Perl includes 
+$a = $b;	# Assign $b to $a
+$a += $b;	# Add $b to $a
+$a -= $b;	# Subtract $b from $a
+$a .= $b;	# Append $b onto $a
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{}
+\lstset{language=perl}
+\begin{lstlisting}
+# print apples and pears using concatenation: 
+$a = 'apples';
+$b = 'pears';
+print $a.' and '.$b;
+#It would be nicer to include only one string
+# in the final print statement, but the line 
+print '$a and $b';
+#prints literally $a and $b which isn't very helpful.
+# Instead we can use the double quotes
+# in place of the single quotes: 
+print "$a and $b";
+#The double quotes force interpolation of any codes,
+# including interpreting variables. 
+# This is a much nicer than our original statement.
+# Other codes that are interpolated include
+# special characters such as newline and tab.
+# The code \n is a newline and \t is a tab. 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{Array}
+\lstset{language=perl}
+\begin{lstlisting}
+#The statement 
+@food  = ("apples", "pears", "eels");
+@music = ("whistle", "flute");
+# assigns a list to the array variable @food
+# and a list to the array variable @music. 
+# Array is accessed by using indices starting from 0,
+# and square brackets are used to specify the index.
+# The expression 
+$food[2]
+# returns eels. Notice that the @ has changed to a $
+# because eels is a scalar. 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{push}
+\lstset{language=perl}
+\begin{lstlisting}
+# The first assignment below explodes the @music
+# variable so that it is equivalent to the second. 
+@moremusic = ("organ", @music, "harp");
+@moremusic = ("organ", "whistle", "flute", "harp");
+# A neater way of adding elements is to use:
+push(@food, "eggs");
+# which pushes eggs onto the end of the array @food.
+# To push two or more items onto the array use
+# one of the following forms: 
+push(@food, "eggs", "lard");
+push(@food, ("eggs", "lard"));
+push(@food, @morefood);
+# "push" function returns the length of the new list. 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{pop}
+\lstset{language=perl}
+\begin{lstlisting}
+# To remove the last item from a list
+# and return it use the pop function.
+# From our original list "pop" function returns eels
+# and @food now has two elements: 
+$grub = pop(@food);	# Now $grub = "eels"
+# It is also possible to assign an array to a scalar.
+# As usual context is important. The line 
+$f = @food;
+# assigns the length of @food, but 
+$f = "@food";
+# turns the list into a string with a space
+# between each element. 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{}
+\lstset{language=perl}
+\begin{lstlisting}
+# Arrays can also be used to 
+# make multiple assignments to scalar variables: 
+($a, $b) = ($c, $d);# Same as $a=$c; $b=$d;
+($a, $b) = @food;# $a and $b are the first two
+		 # items of @food.
+($a, @somefood) = @food;# $a is the first item of
+			#  @food, @somefood is a
+			#  list of the others.
+(@somefood, $a) = @food;# @somefood is @food and
+			# $a is undefined.
+# The last assignment occurs
+# because arrays are greedy,
+# and @somefood will swallow up
+# as much of @food as it can.
+# Therefore that form is best avoided. 
+# Finally, you may want to find the index of
+# the last element of a list.
+# To do this for the @food array use:
+$#food
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Associative arrays}
+\lstset{language=perl}
+\begin{lstlisting}
+%ages = ("Michael Caine", 39,
+         "Dirty Den", 34,
+         "Angie", 27,
+         "Willy", "21 in dog years",
+         "The Queen Mother", 108);
+$ages{"Michael Caine"};	# Returns 39
+$ages{"Dirty Den"}; # Returns 34
+$ages{"Angie"};	# Returns 27
+$ages{"Willy"};	# Returns "21 in dog years"
+$ages{"The Queen Mother"};# Returns 108
+
+@info = %ages;	# @info is a list array. It
+		# now has 10 elements
+$info[5];	# Returns the value 27 from
+		# the list array @info
+%moreages = @info;# %moreages is an associative
+		  # array. It is the same as %ages
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{Testing}
+\lstset{language=perl}
+%The next few structures rely on a test being true or false. In Perl any non-zero number and non-empty string is counted as true. The number zero, zero by itself in a string, and the empty string are counted as false. Here are some tests on numbers and strings. 
+\begin{lstlisting}
+Testing
+$a == $b # Is $a numerically equal to $b?
+	 # Beware: Don't use the = operator.
+$a != $b # Is $a numerically unequal to $b?
+$a eq $b # Is $a string-equal to $b?
+$a ne $b # Is $a string-unequal to $b?
+
+#You can also use logical and, or and not: 
+
+($a && $b) # Is $a and $b true?
+($a || $b) # Is either $a or $b true?
+!($a)      # is $a false?
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Conditionals}
+% Of course Perl also allows if/then/else statements. These are of the following form: 
+% if ($a){ print "The string is not empty\n"; }
+% else{	print "The string is empty\n";}
+% For this, remember that an empty string is considered to be false. It will also give an "empty" result if $a is the string 0. 
+% It is also possible to include more alternatives in a conditional statement: 
+\lstset{language=perl}
+\begin{lstlisting}
+if (!$a) # The ! is the not operator
+{
+  print "The string is empty\n";
+}
+elsif (length($a) == 1)	# If above fails, try this
+{
+  print "The string has one character\n";
+}
+elsif (length($a) == 2)	# If that fails, try this
+{
+  print "The string has two characters\n";
+}
+else  # Now, everything has failed
+{
+  print "The string has lots of characters\n";
+}
+\end{lstlisting}
+% In this, it is important to notice that the elsif statement really does have an "e" missing. 
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{foreach}
+%To go through each line of an array or other list-like structure (such as lines in a file) Perl uses the foreach structure. This has the form 
+\lstset{language=perl}
+\begin{lstlisting}
+foreach $morsel (@food)	# Visit each item in turn
+			# and call it $morsel
+{
+	print "$morsel\n";# Print the item
+	print "Yum yum\n";# That was nice
+}
+\end{lstlisting}
+%The actions to be performed each time are enclosed in a block of curly braces. The first time through the block $morsel is assigned the value of the first item in the array @food. Next time it is assigned the value of the second item, and so until the end. If @food is empty to start with then the block of statements is never executed. 
+\end{frame}
+
+\begin{frame}[containsverbatim]{for}
+First of all the statement initialise is executed. Then while test is true the block of actions is executed. After each time the block is executed inc takes place. Here is an example for loop to print out the numbers 0 to 9. 
+\lstset{language=perl}
+\begin{lstlisting}
+for ($i = 0; $i < 10; ++$i)
+# Start with $i = 1
+# Do it while $i < 10
+# Increment $i before repeating
+{
+	print "$i\n";
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{while}
+%Here is a program that reads some input from the keyboard and won't continue until it is the correct password 
+\lstset{language=perl}
+\begin{lstlisting}
+#!/usr/local/bin/perl
+print "Password? ";		# Ask for input
+$a = <STDIN>;			# Get input
+chop $a;			# Remove the newline at end
+while ($a ne "fred")		# While input is wrong...
+{
+    print "sorry. Again? ";	# Ask again
+    $a = <STDIN>;		# Get input again
+    chop $a;			# Chop off newline again
+}
+\end{lstlisting}
+\end{frame}
+
+% The curly-braced block of code is executed while the input does not equal the password. The while structure should be fairly clear, but this is the opportunity to notice several things. First, we can we read from the standard input (the keyboard) without opening the file first. Second, when the password is entered $a is given that value including the newline character at the end. The chop function removes the last character of a string which in this case is the newline. 
+% To test the opposite thing we can use the until statement in just the same way. This executes the block repeatedly until the expression is true, not while it is true. 
+
+% Another useful technique is putting the while or until check at the end of the statement block rather than at the beginning. This will require the presence of the do operator to mark the beginning of the block and the test at the end. If we forgo the sorry. Again message in the above password program then it could be written like this. 
+
+\begin{frame}[containsverbatim]{while}
+\lstset{language=perl}
+\begin{lstlisting}
+#!/usr/local/bin/perl
+do
+{
+	"Password? ";		# Ask for input
+	$a = <STDIN>;		# Get input
+	chop $a;		# Chop off newline
+}
+while ($a ne "fred")		# Redo while wrong input
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Subroutines}
+%Like any good programming langauge Perl allows the user to define their own functions, called subroutines. They may be placed anywhere in your program but it's probably best to put them all at the beginning or all at the end. A subroutine has the form 
+\lstset{language=perl}
+\begin{lstlisting}
+sub mysubroutine
+{
+	print "Not a very interesting routine\n";
+	print "This does the same thing every time\n";
+}
+\end{lstlisting}
+%regardless of any parameters that we may want to pass to it. All of the following will work to call this subroutine. Notice that a subroutine is called with an & character in front of the name: 
+\lstset{language=python}
+\begin{lstlisting}
+&mysubroutine;		# Call the subroutine
+&mysubroutine($_);	# Call it with a parameter
+&mysubroutine(1+2, $_);	# Call it with two parameters
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Parameters}
+%In the above case the parameters are acceptable but ignored. When the subroutine is called any parameters are passed as a list in the special @_ list array variable. This variable has absolutely nothing to do with the $_ scalar variable. The following subroutine merely prints out the list that it was called with. It is followed by a couple of examples of its use. 
+\lstset{language=perl}
+\begin{lstlisting}
+sub printargs
+{
+	print "@_\n";
+}
+
+&printargs("perly", "king");
+# Example prints "perly king"
+&printargs("frog", "and", "toad"); 
+# Prints "frog and toad"
+\end{lstlisting}
+%Just like any other list array the individual elements of @_ can be accessed with the square bracket notation: 
+\lstset{language=perl}
+\begin{lstlisting}
+sub printfirsttwo
+{
+  print "Your first argument was $_[0]\n";
+  print "and $_[1] was your second\n";
+}
+\end{lstlisting}
+%Again it should be stressed that the indexed scalars $_[0] and $_[1] and so on have nothing to with the scalar $_ which can also be used without fear of a clash. 
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{Returning values}
+%Result of a subroutine is always the last thing evaluated. This subroutine returns the maximum of two input parameters. An example of its use follows. 
+\lstset{language=perl}
+\begin{lstlisting}
+sub maximum
+{
+	if ($_[0] > $_[1])
+	{
+		$_[0];
+	}
+	else
+	{
+		$_[1];
+	}
+}
+
+$biggest = &maximum(37, 24);# Now $biggest is 37
+\end{lstlisting}
+\end{frame}
+
+%The &printfirsttwo subroutine above also returns a value, in this case 1. This is because the last thing that subroutine did was a print statement and the result of a successful print statement is always 1. 
+
+
+\begin{frame}[containsverbatim]{Local variables}
+%The @_ variable is local to the current subroutine, and so of course are $_[0], $_[1], $_[2], and so on. Other variables can be made local too, and this is useful if we want to start altering the input parameters. The following subroutine tests to see if one string is inside another, spaces not withstanding. An example follows. 
+\lstset{language=perl}
+\begin{lstlisting}
+$a=1;
+$b=1;
+sub local_test
+{
+  local($a, $b); # Make local variables
+  ($a, $b) = ($_[0], $_[1]);# Assign values
+}
+&local_test(2,2);
+\end{lstlisting}
+In fact, it can even be tidied up by replacing the first two lines with 
+\lstset{language=python}
+\begin{lstlisting}
+local($a, $b) = ($_[0], $_[1]);
+\end{lstlisting}
+\end{frame}
+
+
+
+\section{Python}
+\begin{frame}{Python}
+\begin{itemize}
+\item Guido van Rossum
+\item Monty Python's Flying Circus
+\item Indentation
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{}
+\lstset{language=python}
+\begin{lstlisting}
+# Fibonacci numbers, imperative style
+N=10
+
+first = 0    # seed value fibonacci(0)
+second = 1   # seed value fibonacci(1)
+fib_number = first + second     
+# calculate fibonacci(2)
+for position in range(N-2):     
+# iterate N-2 times to give Fibonacci number
+    first = second              
+# update the value of the 'previous' variables
+    second = fib_number
+    fib_number = first + second 
+# update the result value to fibonacci(position)
+print fib_number
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{}
+\lstset{language=python}
+\begin{lstlisting}
+# Fibonacci numbers, functional style
+N=10
+ 
+# Fibonacci numbers, functional style
+def fibonacci(position):  
+# Fibonacci number N (for N >= 0)
+    if position == 0: return 0    
+# seed value fibonacci(0)
+    elif position == 1: return 1  
+# seed value fibonacci(1)
+    else: return fibonacci(position-1) 
+                 + fibonacci(position-2)   
+# calculate fibonacci(position)
+ 
+fib_number = fibonacci(N)
+print fib_number
+\end{lstlisting}
+\end{frame}
+
+
+
+
+ \section{思考}
+ \begin{frame}{思考}
+ \begin{itemize}
+ \item 当前有哪些脚本语言，它们的特点是什么？
+ \end{itemize}
+ \end{frame}
+
+
+\end{document}
