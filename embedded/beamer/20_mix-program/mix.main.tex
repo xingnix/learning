@@ -1,0 +1,498 @@
+\begin{document}
+
+\def\lecturename{嵌入式技术}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[EC]{嵌入式技术}{}
+\subtitle{混合语言程序设计}
+\date{2015}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{计算机程序设计语言}
+\begin{frame}{程序设计发展}
+\begin{itemize}
+\item 纸带
+\item 汇编
+\item 高级语言
+\begin{itemize}
+\item 函数式语言(Functional language)：
+\begin{itemize}
+\item Lisp ( LISt Processing )
+\item Haskell
+\item Caml ( Objective Caml )
+\end{itemize}
+\item 命令式语言(Imperative language)：
+\begin{itemize}
+\item Fortran
+\item C
+\item Pascal
+\end{itemize}
+\item 脚本语言(Descript language)：
+\begin{itemize}
+\item HTML
+\item Javascript
+\item Postscript
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{程序设计语言列表}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/ComputerLanguagesChart}\end{center}
+\end{frame}
+
+\begin{frame}{混合语言组合与通信}
+\begin{itemize}
+\item 组合方式
+\begin{itemize}
+\item 多个程序
+\item 单个程序
+\end{itemize}
+\item 通信方式
+\begin{itemize}
+\item 文件
+\item 管道
+\item 网络
+\item 共享库
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{数据类型与编码}
+\begin{itemize}
+\item IEEE 754 float
+\item Big/Little Endian
+\item 数组
+\end{itemize}
+\end{frame}
+
+
+\section{混合语言编程}
+\begin{frame}{混合语言编程类型}
+\begin{itemize}
+\item 基础
+\begin{itemize}
+\item C/C++
+\item Java
+\end{itemize}
+\item 扩展/嵌入
+\begin{itemize}
+\item 汇编
+\item Fortran
+\item MATLAB/SIMULINK
+\item Scilab/Scicos
+\item Lua, Python, Perl
+\item Lisp, Scheme, Ocaml
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{语言平台}
+\begin{center}
+\pgfimage[height=0.2\textheight]{image/java}
+\pgfimage[height=0.2\textheight]{image/dotnet}
+\end{center}
+\begin{itemize}
+\item Java Platform
+\begin{itemize}
+\item Java
+\item JNI
+\end{itemize}
+\item .Net Framework
+\begin{itemize}
+\item C\#
+\item CLR
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{C与Fortran}
+\begin{itemize}
+\item C调用Fortran过程
+\item Fortran调用C函数
+\end{itemize}
+\end{frame}
+
+\def\lstlistingname{例}
+\begin{frame}[containsverbatim]{Fortran,main}
+\lstset{language=fortran}
+\begin{lstlisting}
+program main
+  implicit none
+  integer i,j,M,N;
+  integer, external:: r2;
+  real A(3,3),B(3,3),C(5,3);
+  real, allocatable,dimension(:,:)::D;
+
+  A=1;  B=2;  B(1:3:2,1:3:2)=3;
+  B(3:2:-1,2:1:-1)=A(1:2,2:3);
+  B(int(A(:,1)),1)=(/4,5,6/);
+  where(B==3)
+     B=5
+  endwhere
+  C= reshape((/ ((sin(PI/M)*cos(PI/N), 
+     M=1,5), N=1,3) /),(/5,3/));
+  allocate (D(size(C,1),size(C,2)));
+  D= reshape((/ ((M+N*10, M=1,5), N=1,3) /),(/5,3/));
+  print *, D;
+  write(*,*) r2(1)
+end program main
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Fortran, subroutine}
+\lstset{language=fortran}
+\begin{lstlisting}
+recursive integer function r2(i) result(r)
+integer i
+integer r
+write(*,*) 'recurseive...',i;
+r=r2(i+1);
+end function
+
+subroutine s(a)
+integer a
+a=a+1;
+end subroutine
+\end{lstlisting}
+\end{frame}
+
+\def\lstlistingname{例}
+\begin{frame}[containsverbatim]{Fortran调用C函数}
+\lstset{language=fortran}
+\begin{lstlisting}
+PROGRAM MAIN
+use iso_c_binding
+INTERFACE
+  subroutine fact(n)  bind(C,name="Fact")
+     INTEGER(4) n(2,2)
+   END subroutine
+END INTERFACE
+INTEGER(4) n(2,2)
+write(*,*) 'before : ' , N 
+call fact(N)
+write(*,*) 'after : ' , N 
+END
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Fortran调用C函数}
+\lstset{language=C}
+\begin{lstlisting}
+void Fact(int a[2][2])
+{
+ 	int i,j;
+  /*
+  for(i=0;i<4;i++)  *(a[0]+i)=i;
+  */
+  for(i=0;i<2;i++)for(j=0;j<2;j++) a[i][j]=i*2+j;
+  /*
+  for(i=0;i<2;i++)for(j=0;j<2;j++) *(a[0]+i*2+j)=1;
+  */
+}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}{脚本语言编程}
+\begin{itemize}
+\item 扩展
+\begin{itemize}
+\item 速度
+\item 系统调用
+\end{itemize}
+\item 嵌入
+\begin{itemize}
+\item 灵活
+\item 方便
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{C与Lua}
+\begin{itemize}
+\item C调用Lua函数
+\item 回调函数的实现
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]{C调用Lua}
+\begin{lstlisting}
+int main (void){
+  char buff[256];
+  int width,height;
+  lua_State *L = lua_open();
+  luaL_openlibs(L);
+  luaL_loadfile(L,"lua.txt");
+  lua_getglobal(L, "width");
+  lua_getglobal(L, "height");
+  width = (int)lua_tonumber(L, -2);
+  height = (int)lua_tonumber(L, -1);
+  printf("width is %d,height is %d.\n",width,height);
+  lua_getglobal(L, "f"); /* function to be called */
+  lua_pushnumber(L, 1.0);
+  lua_pushnumber(L, 2.0);
+  lua_pcall(L, 2, 2, 0);
+  printf("double: %f %f \n ", 
+      lua_tonumber(L, -2), lua_tonumber(L, -1)); 
+  lua_close(L);
+  return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{Lua程序lua.txt}
+\lstset{language=c}
+\begin{lstlisting}
+width = 200
+height = 300
+
+function f(x1,x2)
+return x1,x2
+end
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{Callback}
+\lstset{language=c}
+\begin{lstlisting}
+static int f(lua_State *L){
+  double a = lua_tonumber(L, -1);
+  lua_pushnumber(L, a);
+  return 0;
+}
+int main(void){
+    lua_State *L=lua_open();
+    lua_register(L,"f",f);
+    double a = 1;
+    char *p = "f(a)";
+    lua_pushnumber(L,a);
+    lua_setglobal(L,"a");
+    luaL_loadstring(L,p);
+    lua_pcall(L,1,1,0);
+    lua_close(L);
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}{C与Scheme}
+\begin{itemize}
+\item C调用Scheme函数
+\item 回调函数的实现
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Tinyscheme}
+\lstset{language=c}
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+#include "dynload.h"
+
+int main(int argc, char *argv[])
+{
+        scheme scmenv;
+        scheme_init(&scmenv);
+        scheme_set_output_port_file(&scmenv, stdout);
+        scheme_load_string(&scmenv,
+"(display (+ 1 2 3 4 5 6))(newline)" );
+        scheme_deinit(&scmenv);
+        exit(EXIT_SUCCESS);
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Foreign Functions}
+\begin{lstlisting}
+pointer square(scheme *sc, pointer args) {
+ if(args!=sc->NIL) {
+     if(sc->isnumber(sc->pair_car(args))) {
+          double v=sc->rvalue(sc->pair_car(args));
+          return sc->mk_real(sc,v*v);
+     }
+ }
+ return sc->NIL;
+}
+\end{lstlisting}
+
+Foreign functions are defined as closures: 
+
+\begin{lstlisting}
+sc->interface->scheme_define( 
+     sc, 
+     sc->global_env, 
+     sc->interface->mk_symbol(sc,"square"), 
+     sc->interface->mk_foreign_func(sc, square)); 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Simplified Wrapper and Interface Generator (SWIG)}
+\begin{itemize}
+\item Building more powerful C/C++ programs. % Using SWIG, you can replace the main() function of a C program with a scripting interpreter from which you can control the application. This adds quite a lot of flexibility and makes the program "programmable." That is, the scripting interface allows users and developers to easily modify the behavior of the program without having to modify low-level C/C++ code. The benefits of this are numerous. In fact think of all of the large software packages that you use every day---nearly all of them include special a macro language, configuration language, or even a scripting engine that allows users to make customizations.
+\item Rapid prototyping and debugging.%SWIG allows C/C++ programs to be placed in a scripting environment that can be used for testing and debugging. For example, you might test a library with a collection of scripts or use the scripting interpreter as an interactive debugger. Since SWIG requires no modifications to the underlying C/C++ code, it can be used even if the final product does not rely upon scripting.
+\item Systems integration. %Scripting languages work fairly well for controlling and gluing loosely-coupled software components together. With SWIG, different C/C++ programs can be turned into scripting language extension modules. These modules can then be combined together to create new and interesting applications.
+\item Construction of scripting language extension modules. %SWIG can be used to turn common C/C++ libraries into components for use in popular scripting languages. Of course, you will still want to make sure that no-one else has already created a module before doing this.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Compared with interface definition language (IDL)}
+\begin{itemize}
+\item ANSI C/C++ syntax. %SWIG parses ANSI C++ that has been extended with a number of special directives. As a result, interfaces are usually built by grabbing a header file and tweaking it a little bit. This particular approach is especially useful when the underlying C/C++ program undergoes frequent modification.
+\item SWIG is not a stub generator. %SWIG produces code that you simply compile and run. You don't have to fill in any stubs or write special client/server code as you do with RPC-like systems.
+\item SWIG does not define a protocol nor is it a component framework. %SWIG does not define mechanisms or enforce rules regarding the way in which software components are supposed to interact with each other. Nor is it a specialized runtime library or alternative scripting language API. SWIG is merely a code generator that provides the glue necessary to hook C/C++ to other languages.
+\item Designed to work with existing C/C++ code. %SWIG requires little, if any, modifications to existing code. For the most part, it encourages you to keep a clean separation between C/C++ and its scripting interface.
+\item Extensibility. %SWIG provides a variety of customization options that allow you to blow your whole leg off if that's what you want to do. SWIG is not here to enforce programming morality.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{C file}
+%So you want to get going in a hurry? To illustrate the use of SWIG, suppose you have some C functions you want added to Tcl, Perl, Python, Java and C#. Specifically, let's say you have them in a file 'example.c'
+\begin{lstlisting}
+ /* File : example.c */
+ #include <time.h>
+ double My_variable = 3.0;
+ int fact(int n) {
+     if (n <= 1) return 1;
+     else return n*fact(n-1);
+ }
+ int my_mod(int x, int y) {
+     return (x%y);
+ }
+ char *get_time()
+ {
+     time_t ltime;
+     time(&ltime);
+     return ctime(&ltime);
+ }
+\end{lstlisting}
+\end{frame}
+\begin{frame}[containsverbatim]{Interface file}
+%Now, in order to add these files to your favorite language, you need to write an "interface file" which is the input to SWIG. An interface file for these C functions might look like this :
+\begin{lstlisting}
+ /* example.i */
+ %module example
+ %{
+ /*Put header files here or function declarations*/
+ extern double My_variable;
+ extern int fact(int n);
+ extern int my_mod(int x, int y);
+ extern char *get_time();
+ %}
+ 
+ extern double My_variable;
+ extern int fact(int n);
+ extern int my_mod(int x, int y);
+ extern char *get_time();
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}[containsverbatim]{Building a Tcl module}
+%At the UNIX prompt, type the following (shown for Linux, see the SWIG Wiki Shared Libraries page for help with other operating systems):
+\begin{lstlisting}
+ unix % swig -tcl example.i
+ unix % gcc -fpic -c example.c example_wrap.c \
+        -I/usr/local/include 
+ unix % gcc -shared example.o example_wrap.o \
+        -o example.so
+ unix % tclsh
+ % load ./example.so example
+ % puts $My_variable
+ 3.0
+ % fact 5
+ 120
+ % my_mod 7 3
+ 1
+ % get_time
+ Sun Feb 11 23:01:07 1996
+ % 
+\end{lstlisting}
+
+%The swig command produces a file example_wrap.c that should be compiled and linked with the rest of the program. In this case, we have built a dynamically loadable extension that can be loaded into the Tcl interpreter using the 'load' command.
+Building a Python module
+
+\end{frame} 
+
+\begin{frame}[containsverbatim]{Python module}
+%Turning C code into a Python module is also easy. Simply do the following (shown for Irix, see the SWIG Wiki Shared Libraries page for help with other operating systems):
+\begin{lstlisting} 
+ unix % swig -python example.i
+ unix % gcc -c example.c example_wrap.c \
+        -I/usr/local/include/python2.1
+ unix % ld -shared example.o example_wrap.o \
+          -o _example.so 
+\end{lstlisting} 
+We can now use the Python module as follows :
+\begin{lstlisting} 
+ >>> import example
+ >>> example.fact(5)
+ 120
+ >>> example.my_mod(7,3)
+ 1
+ >>> example.get_time()
+ 'Sun Feb 11 23:01:07 1996'
+ >>>
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}[containsverbatim]{Building a Perl module}
+%You can also build a Perl5 module as follows (shown for Solaris, see the SWIG Wiki Shared Libraries page for help with other operating systems):
+
+\begin{lstlisting} 
+ unix % swig -perl5 example.i
+ unix % gcc -c example.c example_wrap.c \
+        `perl -MExtUtils::Embed -e ccopts`
+ unix % ld -G example.o example_wrap.o \
+         -o example.so
+ unix % perl
+ use example;
+ print $example::My_variable,"\n";
+ print example::fact(5),"\n";
+ print example::get_time(),"\n";
+ <ctrl-d>
+ 3.0
+ 120
+ Sun Feb 11 23:01:07 1996
+ unix % 
+\end{lstlisting}
+\end{frame}
+
+\section{思考}
+\begin{frame}{思考}
+\begin{itemize}
+\item 混合语言程序设计有哪些方法？
+\item 混合语言程序设计有哪些优缺点？
+\end{itemize}
+\end{frame}
+
+\end{document}
