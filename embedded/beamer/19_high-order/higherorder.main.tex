@@ -1,0 +1,174 @@
+\begin{document}
+
+\def\lecturename{嵌入式技术}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[EC]{嵌入式技术}{}
+\subtitle{高阶编程}
+\date{2013}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{Standard Template Library (STL)}
+\begin{frame}[containsverbatim]{Expression Template}
+\lstset{language=c++}
+\begin{lstlisting}
+template <int dim, class T>
+struct inner_product
+{
+    T operator()(T* a, T* b)
+    {
+        return inner_product<dim - 1, T>()(a + 1, b + 1) +
+               inner_product<1, T>()(a, b);
+    }
+};
+
+template <class T>
+struct inner_product<1, T>
+{
+    T operator()(T* a, T* b)
+    { return (*a) * (*b); }
+};
+
+inner_product<4, int>()(a, b);
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Fibonacci Sequence at compile time}
+\lstset{language=c++}
+\begin{lstlisting}
+#include <iostream>
+#include <cassert>
+using namespace std;
+ 
+template<int stage> struct Fib {
+  static const uint64_t value =
+              Fib<stage-1>::value + Fib<stage-2>::value;
+   static inline uint64_t getValue(int i)
+  {
+    if (i == stage) 
+    {
+      return value; 
+    } else {
+      return Fib<stage-1>::getValue(i); 
+    }
+  }
+};
+\end{lstlisting}
+\end{frame}
+ 
+\begin{frame}[containsverbatim]{Fibonacci Sequence at compile time}
+\lstset{language=c++}
+\begin{lstlisting}
+template<> // Template specialization for the 0's case.
+struct Fib<0>
+{
+  static const uint64_t value = 1;
+ 
+  static inline uint64_t getValue(int i)
+  {
+    assert(i == 0);
+    return 1;
+  }
+};
+\end{lstlisting}
+\end{frame}
+ 
+\begin{frame}[containsverbatim]{Fibonacci Sequence at compile time}
+\lstset{language=c++}
+\begin{lstlisting}
+template<> // Template specialization for the 1's case
+struct Fib<1>
+{
+  static const uint64_t value = 1;
+ 
+  static inline uint64_t getValue(int i)
+  {
+    if (i == 1)
+    {
+      return value;
+    } else {
+      return Fib<0>::getValue(i);
+    }
+  }
+};
+\end{lstlisting}
+\end{frame}
+ 
+\begin{frame}[containsverbatim]{Fibonacci Sequence at compile time}
+\lstset{language=c++}
+\begin{lstlisting}
+int main(int, char *[])
+{
+  //Generate (at compile time) 100 places of the Fib sequence.
+  //Then, (at runtime) output the 100 calculated places.
+  //Note: a 64 bit int overflows at place 92
+  for (int i = 0; i < 100; ++i)
+  {
+    cout << "n:=" << i << " => " << Fib<100>::getValue(i) << endl;
+  }
+}
+
+\end{lstlisting}
+\end{frame}
+
+\section{Lisp Macro}
+\begin{frame}{Lisp Macro}
+\begin{itemize}
+\item comp.lang.lisp and any other comp.lang.* group with macro in the subject
+\begin{itemize}
+\item Lispnik: “Lisp is the best because of its macros!”
+\item Othernik: “You think Lisp is good because of macros?! But macros are horrible and evil; Lisp must be horrible and evil.”
+\end{itemize}
+\item Usage
+\begin{itemize}
+\item function
+\item lazy evaluation
+\item syntax
+\item Domain Specific Language (DSL)
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{defmacro}
+\lstset{language=lisp}
+\begin{lstlisting}
+(defmacro backwards (expr) (reverse expr))
+(macroexpand `(backwards ("hello world!" t format)))
+\end{lstlisting}
+\end{frame}
+
+\section{camlp4}
+
+Caml Preprocessor and Pretty-Printer
+one of its most important applications is the definition of domain-specific extensions of the syntax of OCaml
+author: Daniel de Rauglaudre
+\section{思考}
+\begin{frame}{思考}
+\begin{itemize}
+\item 当前常见程序设计语言的新特性是什么？
+\item 高阶编程的优缺点是什么？
+\end{itemize}
+\end{frame}
+
+\end{document}
