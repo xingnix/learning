@@ -63,7 +63,7 @@
 
 
 
-* Nyquit稳定性判据
+* Nyquist稳定性判据
 ** 辐角原理
  * 设  $s$  为复变量,  $F(s)$  为  $s$  的有理分式函数.对于  $s$  平面上任意一点  $s$  , 通过复变函数  $F(s)$  的映射关系,可以确定  $s$  的象.
  * 在  $s$  平面上任选一条闭合曲线  $\Gamma$  ,且不通过  $F(s)$  任一零点和极点,  $s$  沿闭合曲线  $\Gamma$  运动一周,则相应地  $F(s)$  形成一条闭合曲线  $\Gamma_F$ .
@@ -215,7 +215,7 @@ Z &=& P-2N \\
  *  $\Gamma_1$ : $s=j\omega,\omega\in[-\infty,0^-]$ 
  *  $\Gamma_2$ : $s=j\omega,\omega\in[0^+,\infty]$ 
  *  $\Gamma_3$ : $s=\lim_{R\rightarrow\infty}Re^{j\theta},\theta\in[-\frac{\pi}{2},\frac{\pi}{2}]$ 
- *  $\Gamma_0$ : $s=\lim_{\epsilon\rightarrow 0}\epsilon^{j\theta}$ , $\theta$ 从 $\frac{\pi}{2}$ 到 $-\frac{\pi}{2}$ 
+ *  $\Gamma_0$ : $s=\lim_{\epsilon\rightarrow 0}\epsilon^{j\theta},\theta\in[-\frac{\pi}{2},\frac{\pi}{2}]$ 
  *  <3->对增补后的Nyquist图可使用Nyquist判据.
 
 ** 穿越次数

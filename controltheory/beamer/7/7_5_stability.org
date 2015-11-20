@@ -128,7 +128,7 @@ z &=& e^{\sigma T}e^{j\omega T} \\
 \path[](p1) edge node[midway] {$e(t)$} (s1) ; 
 %\path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_h(s)$}; 
 %\path[->] (s1) edge node[midway] {$r^*(t)$} (g1); 
-\path[red] node[draw, inner sep=5pt,right =of s1] (g2) {$\frac{K}{s(1+0.1s)}$}; 
+\path[red] node[draw, inner sep=5pt,right =of s1] (g2) {$\frac{k}{s(1+0.1s)}$}; 
 \path[->] (s1) edge node[midway] {$e^*(t)$} (g2); 
 \path[->] node[ right =of g2] (o) {$c(t)$}; 
 \path[->] (g2) edge node {} (o); 
@@ -137,7 +137,7 @@ z &=& e^{\sigma T}e^{j\omega T} \\
 \path[dashed,draw](o.west)+(-1em,0) |- (sc.west) ; 
 \path node[ right =of sc] (c) {$c^*(t)$}; 
 \path[dashed,->] (sc) edge node {} (c); 
-\path[red] node[ inner sep=5pt,below =of g2] (h) {$   $}; 
+\path[red] node[ inner sep=5pt,below =of g2] (h) {$ $}; 
 \path[draw] (g2.east)+(1em,0) |- (h.west);
 \path[->,draw] (h.west) -| node [very near end] {$-$} (p1);
 %\path[->, draw] (g.east)+(1em,0) -- +(1em,-3em) -| node[very near end] {$-$} (p1); 
@@ -148,7 +148,7 @@ z &=& e^{\sigma T}e^{j\omega T} \\
 \path[dashed,->] (sr) edge node {} (i); 
 \end{tikzpicture} 
 
-分有无采样开关两种情况讨论为使系统稳定, $K$ 需要满足的条件.
+分有无采样开关($T=0.1s$)两种情况分析使系统稳定的 $k$ 需要满足的条件.
 
 *** 解:								    :B_block:
     :PROPERTIES:
@@ -160,7 +160,7 @@ z &=& e^{\sigma T}e^{j\omega T} \\
   得:  $k>0$ 
 ** W域的劳斯判据示例(续):有采样开关时:
 \begin{eqnarray*}
-G(z) &=  &{\cal Z}[\frac{K}{s(1+0.1s)}] 
+G(z) &=  &{\cal Z}[\frac{k}{s(1+0.1s)}] 
   = \frac{0.632kz}{z^2-1.368z+0.368} \\
 \Phi(z) &=& \frac{G(z)}{1+G(z)} 
 \end{eqnarray*}

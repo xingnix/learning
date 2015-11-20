@@ -77,7 +77,7 @@
 
 ** $\omega_c$ 近似计算
  例: $G_o(s)=\frac{100(s+4)}{s(s+1)(s+2)(s+3)}$ 近似计算求解 $\omega_c$ 
-   *  <3->$\omega_c<1$   时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c}$ , $\omega_c=\frac{200}{3}>2$ 矛盾.
+   *  <3->$\omega_c<1$   时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c}$ , $\omega_c=\frac{200}{3}>1$ 矛盾.
    *  <4->$1<\omega_c<2$ 时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c\cdot\omega_c}$ , $\omega_c=\sqrt{\frac{200}{3}}>2$ 矛盾.
    *  <5->$2<\omega_c<3$ 时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c\cdot\omega_c\cdots\frac{\omega_c}{2}}$ , $\omega_c=\sqrt[3]{\frac{400}{3}}>3$ 矛盾.
    *  <6->$3<\omega_c<4$ 时, $A(\omega)=\frac{200}{3}\cdot\frac{1}{\omega_c\cdot\omega_c\cdots\frac{\omega_c}{2}\cdots\frac{\omega_c}{3}}$ , $\omega_c=\sqrt[4]{400}>4$ 矛盾.

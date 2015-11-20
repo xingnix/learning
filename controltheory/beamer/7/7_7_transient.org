@@ -83,7 +83,7 @@
 \path[](p1) edge node[midway] {$e(t)$} (s1) ; 
 \path[red,->] node[draw, inner sep=5pt,right =of s1] (g1) {$G_h(s)$}; 
 \path[->] (s1) edge node[midway] {$e^*(t)$} (g1); 
-\path[red] node[draw, inner sep=5pt,right =of g1] (g2) {$\frac{K}{s(1+s)}$}; 
+\path[red] node[draw, inner sep=5pt,right =of g1] (g2) {$\frac{k}{s(1+s)}$}; 
 \path[->] (g1) edge node[midway] {$   $} (g2); 
 \path[->] node[ right =of g2] (o) {$c(t)$}; 
 \path[->] (g2) edge node {} (o); 
@@ -103,7 +103,7 @@
 \path[dashed,->] (sr) edge node {} (i); 
 \end{tikzpicture} 
 
-其中  $r(t)=1(t),T=1s$  求系统动态性能指标.
+其中  $r(t)=1(t),T=1s,k=1$  求系统动态性能指标.
 
 *** 解:								    :B_block:
      :PROPERTIES:
@@ -111,11 +111,11 @@
      :END:
 
 \begin{align*}
-\only<2-3>{& G_o(z) = (1-z^{-1}){\cal Z}[\frac{1}{s^2+1}]  = \frac{0.368z+0.264}{(z-1)(z-0.368)} \\}
+\only<2-3>{& G_o(z) = (1-z^{-1}){\cal Z}[\frac{1}{s^2(s+1)}]  = \frac{0.368z+0.264}{(z-1)(z-0.368)} \\}
 \only<3-4>{& \Phi(z)  = \frac{G_o(z)}{1+G_o(z)}  = \frac{0.368z+0.264}{z^2-z+0.632} \\}
 \only<4-5>{& C(z) = \Phi(z)R(z)= \frac{0.368z^{-1}+0.264z^{-2}}{1-2z^{-1}+1.632z^{-2}-0.632z^{-3}} \\}
-\only<5-6>{& C(z) = 0.368z^{-1}+z^{-2}+1.4z^{-3}+1.4z^{-4}1.147z^{-5}+0.895z^{-6}+0.802z^{-7}+0.868z^{-8}+\cdots \\}
-\only<6-7>{& t_r=2s,t_p=4s,t_s=12s,\sigma\%=40\%}
+\only<5-6>{& C(z) = 0.368z^{-1}+z^{-2}+1.4z^{-3}+1.4z^{-4}+1.147z^{-5}+0.895z^{-6}+0.802z^{-7}+0.868z^{-8}+\cdots \\}
+\only<6-7>{& t_r=2s,t_s=12s,\sigma\%=40\%}
 \end{align*}
 * 采样器,保持器对系统动态性能的影响
 ** 采样器,保持器对系统动态性能的影响
