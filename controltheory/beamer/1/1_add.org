@@ -1,4 +1,5 @@
 # +LaTeX_CLASS: article
+#+LATEX_HEADER: \usepackage{etex}
 #+LATEX_HEADER: \usepackage{amsmath}
 #+LATEX_HEADER: \usepackage[usenames]{color}
 #+LATEX_HEADER: \usepackage[all]{xy}
@@ -224,11 +225,11 @@ f_T(t) & = & \frac{1}{T}\sum_{n=-\infty}^{+\infty}\left[ \int_{- \frac{T}{2} }^{
 f(t) & = & \lim_{T\rightarrow+\infty}\frac{1}{T}\sum_{n=-\infty}^{+\infty}\left[ \int_{- \frac{T}{2} }^{\frac{T}{2}}f_T(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t} \\
 \Delta\omega &=& \frac{2\pi}{T} \\
 f(t) & = & \lim_{\Delta\omega\rightarrow 0}\frac{1}{2\pi}\sum_{n=-\infty}^{+ \infty}\left[ \int_{- \frac{T}{2} }^{\frac{T}{2}}f_T(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t}\Delta\omega \\
-f(t) & = & \frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t}d\omega
+f(t) & = & \frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega\tau}d\tau\right] e^{j\omega t}d\omega
 \end{eqnarray*}
 ** Fourier变换定义
 \begin{eqnarray*}
-f(t)& = &\frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega_n\tau}d\tau\right]e^{j\omega_n t}d\omega \\
+f(t)& = &\frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega\tau}d\tau\right]e^{j\omega t}d\omega \\
 F(j\omega)&=& \int_{-\infty}^{ + \infty}f(t)e^{-j\omega t}dt \\
 f(t)  & =& \frac{1}{2\pi} \int_{-\infty}^{+\infty}F(j\omega)e^{j\omega t}d\omega \\
 F(j\omega) &=& {\cal F}[f(t)] \\
@@ -256,7 +257,7 @@ H(j\omega) &=& \int_{-\infty}^{\infty}h(t)e^{-j\omega t}dt \\
            &=& |H(j\omega)|e^{j\phi(\omega)} \\
 y_f(t) &=& e^{j\omega t}*h(t) \\
        &=& \int_{-\infty}^{\infty}h(\tau)e^{j\omega(t-\tau)}d\tau \\
-       &=& e^{j\omega t}\int_{-\infty}^{\infty}h(\tau)e^{-j\omega t}d\tau \\
+       &=& e^{j\omega t}\int_{-\infty}^{\infty}h(\tau)e^{-j\omega\tau}d\tau \\
        &=& H(j\omega)e^{j\omega t} \\
        &=& |H(j\omega)|e^{j(\omega t+\phi(\omega))}
 \end{eqnarray*}
