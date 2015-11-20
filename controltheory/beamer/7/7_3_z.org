@@ -1,4 +1,5 @@
 # #+LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
 #+LATEX_HEADER: \usepackage{amsmath}
 #+LATEX_HEADER: \usepackage[usenames]{color}
 #+LATEX_HEADER: \usepackage{pstricks}

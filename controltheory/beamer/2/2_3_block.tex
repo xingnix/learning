@@ -1,7 +1,5 @@
-% Created 2014-10-09 星期四 12:11
+% Created 2015-09-19 星期六 17:37
 \documentclass{beamer}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
 \usepackage{longtable}
@@ -23,7 +21,7 @@
 \usepackage[europeanresistors,americaninductors]{circuitikz}
 \usepackage{colortbl}
 \usepackage{yfonts}
-\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shapes,arrows,matrix}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows,shapes}
 \usetikzlibrary{intersections}
@@ -280,13 +278,10 @@
 \label{sec-1-7}
 
 \begin{itemize}
-\item <2-> 前向通道及其传递函数：信号从R(s)->C(s)的通道称为前向通道，前向通道上各传递函数的乘积称为前向通道传递函数
-\item <3-> 反馈能道及其传递函数：信号从C(s)->E(s)的通道称为反馈通道，反馈通道上各传递函数的乘积称为反馈通道传递函数
-\item <4-> 反馈连接的等效传递函数：$G(s)=\frac{\text{前向通道传递函数}}{1\pm\text{前向通道传递函数}\times\text{反馈通道传函数}}$
-\item <5-> 开环系统传递函数：$G_{open}(s)=G(s)H(s)$
-\item <6-> 误差传递函数：$\Phi_e(s)=\frac{E(s)}{R(s)}=1-\frac{C(s)H(s)}{R(s)}=\frac{1}{1+G(s)H(s)}$
-\item <7-> 扰动传递函数：$\Phi_f(s)=\frac{C(s)}{N(s)}=\frac{G_2(s)}{1+G_1(s)G_2(s)H(s)}$
-\item <8-> 闭环传递函数：$\Phi(s)=\frac{C(s)}{R(s)}$
+\item <2-> 开环系统传递函数：$G_{open}(s)=G(s)H(s)$
+\item <3-> 误差传递函数：$\Phi_e(s)=\frac{E(s)}{R(s)}=1-\frac{C(s)H(s)}{R(s)}=\frac{1}{1+G(s)H(s)}$
+\item <4-> 扰动传递函数：$\Phi_f(s)=\frac{C(s)}{N(s)}=\frac{G_2(s)}{1+G_1(s)G_2(s)H(s)}$
+\item <5-> 闭环传递函数：$\Phi(s)=\frac{C(s)}{R(s)}$
 \end{itemize}
 \end{frame}
 \section{结构图化简方法}
@@ -620,8 +615,133 @@ G(s) &=& \frac{G_1(s)G_2(s)}{1+G_1(s)G_2(s)} \\
 \end{tikzpicture} 
 \end{frame}
 \begin{frame}
-\frametitle{例:求 $\Phi(s)=\frac{C(s)}{R(s)}$}
+\frametitle{例1:化简结构图求 $\Phi(s)=\frac{C(s)}{R(s)}$}
 \label{sec-3-4}
+
+\begin{tikzpicture}[scale=1, thick] 
+\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+\tikzstyle{branch} = [inner sep=0pt,minimum size=0pt]
+\tikzstyle{connector} = [->,thick]
+\matrix[ampersand replacement=\&, row sep=1em, column sep=1em]{
+\node[] (r) {$R(s)$}; \& 
+\node[branch] (r_g1) {} ; \&
+\node[block] (g1) {$G_1(s)$} ; \&
+\node[sum] (p2) {} ; \&
+\node[branch] (p2_c) {} ; \&
+\node[] (o) {$C(s)$}; \\
+\&
+\node[sum] (p1) {} ; \&
+\node[block] (g2) {$G_2(s)$} ; \&
+\\
+\&
+\&
+\node[block] (g3) {$G_3(s)$} ; \&
+\\
+};
+\draw [connector] (r) -- (g1);
+\draw [connector] (g1) -- (p2);
+\draw [connector] (p2) -- (o);
+\draw [connector] (r_g1) -- (p1);   
+\draw [connector] (p1) -- (g2);
+\draw [connector] (g2) -| node[near end, left] {$X(s)$}(p2);
+\draw [connector] (p2_c) |- (g3);
+\draw [connector] (g3) -| node[very near end,left] {$-$} (p1);
+\end{tikzpicture} 
+\begin{block}<2->{移动比较点}
+\label{sec-3-4-1}
+
+\begin{tikzpicture}[scale=1, thick] 
+\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+\tikzstyle{branch} = [inner sep=0pt,minimum size=0pt]
+\tikzstyle{connector} = [->,thick]
+\matrix[ampersand replacement=\&, row sep=1em, column sep=1em]{
+\node[] (r) {$R(s)$}; \& 
+\node[branch] (r_g1) {} ; \&
+\node[block] (g1) {$G_1(s)$} ; \&
+\node[sum] (p2) {} ; \&
+\node[] (aboveg23) {} ; \&
+\node[branch] (p2_c) {} ; \&
+\node[] (o) {$C(s)$}; \\
+\&
+\&
+\node[block] (g2) {$G_2(s)$} ; \&
+\node[sum] (p1) {} ; \&
+\node[block] (g23) {$G_2(s)G_3(s)$} ; \\
+};
+\draw [connector] (r) -- (g1);
+\draw [connector] (g1) -- (p2);
+\draw [connector] (p2) -- (o);
+\draw [connector] (r_g1) |- (g2);   
+\draw [connector] (g2) -- (p1);
+\draw [connector] (p1) -| node[near end, left] {$X(s)$}(p2);
+\draw [connector] (p2_c) |- (g23);
+\draw [connector] (g23) -- node[near end,below] {$-$} (p1);
+\end{tikzpicture} 
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{例1:继续化简}
+\label{sec-3-5}
+\begin{block}<1->{移动比较点}
+\label{sec-3-5-1}
+
+\begin{tikzpicture}[scale=1, thick] 
+\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+\tikzstyle{branch} = [inner sep=0pt,minimum size=0pt]
+\tikzstyle{connector} = [->,thick]
+\matrix[ampersand replacement=\&, row sep=1em, column sep=1em]{
+\node[] (r) {$R(s)$}; \& 
+\node[branch] (r_g1) {} ; \&
+\node[block] (g1) {$G_1(s)$} ; \&
+\node[sum] (p2) {} ; \&
+\node[sum] (p1) {} ; \&
+\node[] (aboveg23) {} ; \&
+\node[branch] (p2_c) {} ; \&
+\node[] (o) {$C(s)$}; \\
+\&
+\&
+\node[block] (g2) {$G_2(s)$} ; \&
+\node[] (belowp2) {} ; \&
+\node[] (belowp1) {} ; \&
+\node[block] (g23) {$G_2(s)G_3(s)$} ; \\
+};
+\draw [connector] (r) -- (g1);
+\draw [connector] (g1) -- (p2);
+\draw [connector] (p2) -- (p1);
+\draw [connector] (p1) -- (o);
+\draw [connector] (r_g1) |- (g2);   
+\draw [connector] (g2) -| (p2);
+\draw [connector] (p2_c) |- (g23);
+\draw [connector] (g23) -| node[very near end,right] {$-$} (p1);
+\end{tikzpicture} 
+\end{block}
+\begin{block}<2->{求解传递函数}
+\label{sec-3-5-2}
+
+
+\begin{tikzpicture}[scale=1, thick] 
+\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+\tikzstyle{branch} = [inner sep=0pt,minimum size=0pt]
+\tikzstyle{connector} = [->,thick]
+\matrix[ampersand replacement=\&, row sep=1em, column sep=1em]{
+\node[] (r) {$R(s)$}; \& 
+\node[block] (g1g2) {$G_1(s)+G_2(s)$} ; \&
+\node[block] (g2g3) {$\frac{1}{1+G_2(s)G_3(s)}$} ; \&
+\node[] (o) {$C(s)$};\\
+};
+\draw [connector] (r) -- (g1g2);
+\draw [connector] (g1g2) -- (g2g3);
+\draw [connector] (g2g3) -- (o);
+\end{tikzpicture} 
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{例1:解方程求解 $\Phi(s)=\frac{C(s)}{R(s)}$}
+\label{sec-3-6}
 
 \begin{tikzpicture}[node distance=2em,auto,>=latex', thick] 
 %\path[use as bounding box] (-1,0) rectangle (10,-2); 
@@ -641,12 +761,12 @@ G(s) &=& \frac{G_1(s)G_2(s)}{1+G_1(s)G_2(s)} \\
 \path[->, draw] (g3.west) -|  node[very near end] {$-$} (p1); 
 \end{tikzpicture} 
 
-\begin{eqnarray}
+\begin{eqnarray*}
 C(s) &=& R(s)G_1+X(s) \\
 X(s) &=& G_2(R(s)-C(s)G_3) \\
 C(s) &=& R(s)G_1+G_2(R(s)-C(s)G_3) \\
 \frac{C(s)}{R(s)} &=& \frac{G_1+G_2}{1+G_2G_3}
-\end{eqnarray}
+\end{eqnarray*}
 \end{frame}
 \section{信号流图}
 \label{sec-4}
@@ -664,14 +784,14 @@ C(s) &=& R(s)G_1+G_2(R(s)-C(s)G_3) \\
 %\path[->, draw] (r.east) edge node[middle] {$H(s)$}(c.west); 
 \end{tikzpicture} 
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{结构图与信号流图}
 \label{sec-4-2}
 
 \begin{tikzpicture}
 [
-amark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[above]{#1}}},postaction={decorate}},
-bmark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[below]{#1}}},postaction={decorate}},
+amark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[above]{#1};}},postaction={decorate}},
+bmark/.style={decoration={markings,mark=at position {0.5} with {\arrow{stealth}, \node[below]{#1};}},postaction={decorate}},
 terminal/.style 2 args={draw,circle,inner sep=2pt,label={#1:#2}},
 ]
 
@@ -687,8 +807,8 @@ terminal/.style 2 args={draw,circle,inner sep=2pt,label={#1:#2}},
 \draw[amark=$s^{-1}$] (c) to (d);
 \draw[amark=$s^{-1}$] (d) to (e);
 \draw[bmark=$-B/M$] (d) to[bend left=45] (c);
-\draw[amark=$1$,label revd] (e) to[bend left=50] (b);
-\draw[amark=$-K/M$,label revd] (e) to[bend right=50] (c);
+\draw[amark=$1$] (e) to[bend left=50] (b);
+\draw[amark=$-K/M$] (e) to[bend right=50] (c);
 \end{tikzpicture}
 \end{frame}
 \section{梅森公式}
@@ -741,7 +861,7 @@ terminal/.style 2 args={draw,circle,inner sep=2pt,label={#1:#2}},
 %\path[->, draw] (g3.east)+(0.7em,0) -- +(0.7em,-7em) -| node[very near end] {$-$} (p1); 
 \end{tikzpicture} 
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{梅森公式示例（信号流图）:}
 \label{sec-5-3}
 

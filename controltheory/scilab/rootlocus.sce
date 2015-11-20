@@ -24,4 +24,4 @@ evans(g*gc);
 
 phi=10*g*gc/(1+10*g*gc);
 roots(numer(phi))
-roots(denom(phi)) 
+roots(denom(phi))

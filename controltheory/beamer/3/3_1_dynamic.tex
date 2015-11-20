@@ -1,7 +1,5 @@
-% Created 2014-09-24 星期三 12:37
+% Created 2015-09-17 Thu 16:12
 \documentclass{beamer}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
 \usepackage{longtable}
@@ -15,8 +13,9 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \tolerance=1000
+\usepackage{etex}
 \usepackage{amsmath}
-\usepackage[usenames]{color}
+\usepackage{amssymb}
 \usepackage{pstricks}
 \usepackage{pgfplots}
 \usepackage{tikz}
@@ -34,7 +33,6 @@
 \usepackage{pst-node}
 \usepackage{pst-plot}
 \psset{unit=5mm}
-\usepackage{beamerarticle}
 \mode<beamer>{\usetheme{Frankfurt}}
 \mode<beamer>{\usecolortheme{dove}}
 \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
@@ -193,7 +191,7 @@ p_{1,2} &=& -\xi\omega_n\pm\omega_n\sqrt{\xi^2-1}
 \item <3-> $\xi=0$ 时有两个纯虚根,无阻尼,临界稳定,等幅振荡,频率为$\omega_n$,
         \begin{eqnarray*}
         C(s) & = & \frac{\omega_n^2}{s^2+\omega_n^2}\cdot \frac{1}{s}  \\
-             & =& \frac{-s}{s^2+\omega_2}+\frac{1}{s} \\
+             & =& \frac{-s}{s^2+\omega_n^2}+\frac{1}{s} \\
         c(t) &=& 1-\cos\omega_n t
         \end{eqnarray*}
 \end{itemize}
@@ -216,19 +214,17 @@ p_{1,2} &=& -\xi\omega_n\pm\omega_n\sqrt{\xi^2-1}
 \begin{itemize}
 \item <1-> 闭环极点有两个相同的负实根$p_{1,2}=-\xi\omega_n=-\omega_n$
       \begin{eqnarray*}
-      C(s) & = &\frac{\omega_n^2}{(s+\omega_n^2)}\cdot\frac{1}{s} \\
-      c(t) &=& 1-e^{-\omega_n t}(1+\omega_n t)
+      C(s) & = &\frac{\omega_n^2}{(s+\omega_n)^2}\cdot\frac{1}{s} \\
+           & = &\frac{1}{s}-\frac{1}{s+\omega_n}-\frac{\omega_n}{(s+\omega_n)^2} \\
+      c(t) &=& 1-e^{-\omega_n t}-\omega_n t e^{-\omega_n t}
       \end{eqnarray*}
 \item <2-> 且有:
       \begin{eqnarray*}
-      \frac{dc(t)}{dt} &=& \omega_ne^{-\omega_n t}(1+\omega_n t)-\omega_n e^{-\omega_n t}
-       =  \omega_n^2 te^{-\omega_n t} 
-       >  0 \\
+      \frac{dc(t)}{dt} &=& \omega_n e^{-\omega_n t}+\omega_n^2 t e^{-\omega_n t}-\omega_n e^{-\omega_n t}  >  0 \\
       c(0) &=&0 \\
       c(\infty)&=&1\\
       \sigma \% &=& 0\\
-      t_s &=& 4.75T \\
-      T &=&\frac{1}{\omega_n}
+      t_s &=& 4.75T \qquad    T =\frac{1}{\omega_n}
       \end{eqnarray*}
 \end{itemize}
 \end{frame}
@@ -236,15 +232,23 @@ p_{1,2} &=& -\xi\omega_n\pm\omega_n\sqrt{\xi^2-1}
 \frametitle{$0<\xi<1$}
 \label{sec-2-5}
 
-   系统有一对实部小于零的共轭复根, $p_{1,2}  =  -\xi\omega_n\pm j\omega_n\sqrt{1-\xi^2}$
+系统有一对实部小于零的共轭复根, $p_{1,2}  =  -\xi\omega_n\pm j\omega_n\sqrt{1-\xi^2}$
 \begin{eqnarray*}
 C(s) &=& \frac{\omega_n^2}{s^2+2\xi\omega_n s+\omega_n^2}\cdot\frac{1}{s} \\
-     &=& \frac{1}{s}-\frac{s+\xi\omega_n}{(s+\xi\omega_n)^2+(1-\xi^2)\omega_n^2}-\frac{\xi\omega_n}{(s+\xi\omega_n)^2+(1-\xi^2)\omega_n^2} \\
-c(t) &=& 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}(\sqrt{1-\xi^2}\sin\sqrt{1-\xi^2}\omega_n t \\
-     & &+\xi\cos\sqrt{1-\xi^2}\omega_n t)\\
-     &=& 1-\frac{1}{\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+\beta)\\
-\beta & = & \tan^{-1}\frac{\sqrt{1-\xi^2}}{\xi} \\
-\omega_d &=& \sqrt{1-\xi^2}\omega_n
+     &=& \frac{1}{s}+\frac{p_2}{(p_1-p_2)(s-p_1)}+\frac{p_1}{(p_2-p_1)(s-p_2)} 
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{$0<\xi<1$}
+\label{sec-2-6}
+
+\begin{eqnarray*}
+c(t) &=& 1+\frac{p_2}{p_1-p_2}e^{p_1 t}+\frac{p_1}{p_2-p_1}e^{p_2 t}\\
+     &=& 1+2\Re\left[ \frac{p_2}{p_1-p_2}e^{p_1 t} \right]\\
+     &=& 1+2\Re\left[ \frac{-\omega_n e^{j\beta}}{2j\omega_d}e^{-\xi\omega_n t}e^{j\omega_d t} \right]\\
+     &=& 1-e^{-\xi\omega_n t}\Re\left[ \frac{\omega_n }{j\omega_d}e^{j(\omega_d t+\beta)} \right]\\
+     &=& 1-\frac{\omega_n }{\omega_d}e^{-\xi\omega_n t}\sin(\omega_d t+\beta)\\
+\beta & = & \tan^{-1}\frac{\sqrt{1-\xi^2}}{\xi} \qquad   \omega_d = \sqrt{1-\xi^2}\omega_n
 \end{eqnarray*}
 \end{frame}
 \section{二阶系统阶跃响应指标计算}
@@ -347,15 +351,49 @@ e(t) &=& c(\infty)-c(t) \\
 \item <2->$\sigma\%=0$
 \item <3->$\xi=1$ 时, 
        \[t_s=\frac{4.75}{\omega_n}\]
-\item <4->$\xi>1,|p_1|\gg |p_2|$ 时,系统降阶,去掉极点 $p_2$ , 
+\item <4->$\xi>1,|p_1|\ll |p_2|$ 时,系统降阶,去掉极点 $p_2$ , 
       \[t_s=\frac{3}{|p_1|}\]
 \end{itemize}
 \end{frame}
-\section{高阶系统时域分析（3阶及以上系统）}
+\section{二阶系统单位斜坡响应}
 \label{sec-4}
 \begin{frame}
-\frametitle{三阶系统}
+\frametitle{欠阻尼单位斜坡响应}
 \label{sec-4-1}
+
+\begin{eqnarray*}
+C(s) & =& \frac{\omega_n^2}{s^2(s^2+2\xi\omega_n s+\omega_n^2)}\\
+&=&\frac{1}{s^2}-\frac{2\xi}{\omega_n s}+\frac{2\xi(s+\xi\omega_n)+\omega_n(2\xi^2-1)}{\omega_n(s^2+2\xi\omega_n s+\omega_n^2)}\\
+c(t)&=&t-\frac{2\xi}{\omega_n}+\frac{1}{\omega_n\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+2\beta)\\
+e(t)&=&\frac{2\xi}{\omega_n}\left[1-\frac{1}{2\xi\sqrt{1-\xi^2}}e^{-\xi\omega_n t}\sin(\omega_d t+2\beta)\right]
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{临界阻尼单位斜坡响应}
+\label{sec-4-2}
+
+\begin{eqnarray*}
+c(t) & =& t-\frac{2}{\omega_n}+\frac{2}{\omega_n}(1+\frac{1}{2}\omega_n t)e^{-\omega_n t} \\
+e(t) &=& \frac{2}{\omega_n}\left[1-(1+\frac{1}{2}\omega_n t)e^{-\omega_n t}\right] 
+\end{eqnarray*}
+\end{frame}
+\begin{frame}
+\frametitle{过阻尼单位斜坡响应}
+\label{sec-4-3}
+
+\begin{eqnarray*}
+C(s) &= &\frac{1}{s^2}-\frac{2\xi}{\omega_n s}+\frac{2\xi(s+\xi\omega_n)+\omega_n(2\xi^2-1)}{\omega_n(s-p_1)(s-p_2)} \\
+p_1 &=& -\omega_n\xi+\omega_n\sqrt{\xi^2-1} \\
+p_2 &=& -\omega_n\xi-\omega_n\sqrt{\xi^2-1} \\
+c(t) &=& t-\frac{2\xi}{\omega_n}+\frac{2\xi^2-1+2\xi\sqrt{\xi^2-1}}{2\omega_n\sqrt{\xi^2-1}}e^{p_1 t} \\
+     & & -\frac{2\xi^2-1-2\xi\sqrt{\xi^2-1}}{2\omega_n\sqrt{\xi^2-1}}e^{p_2 t} 
+\end{eqnarray*}
+\end{frame}
+\section{高阶系统时域分析（3阶及以上系统）}
+\label{sec-5}
+\begin{frame}
+\frametitle{三阶系统}
+\label{sec-5-1}
 
 \begin{itemize}
 \item <2-> 根的几种情况
@@ -369,7 +407,7 @@ e(t) &=& c(\infty)-c(t) \\
 \end{frame}
 \begin{frame}
 \frametitle{三阶系统($\Phi(s)$) 单位阶跃响应($C(s)$)}
-\label{sec-4-2}
+\label{sec-5-2}
 
 \begin{eqnarray*}
  \Phi(s) & = & \frac{s_0\omega_n^2}{(s+s_0)(s^2+2\xi\omega_n s+\omega_n^2)} \\
@@ -382,14 +420,14 @@ e(t) &=& c(\infty)-c(t) \\
 \end{frame}
 \begin{frame}
 \frametitle{$b$ 对 $c(t)$ 的影响}
-\label{sec-4-3}
+\label{sec-5-3}
 
 
 \begin{itemize}
 \item <2->复根比实根离虚轴近得多
      \begin{eqnarray*}
      b & \gg & 1\\
-     c(t) &\approx & 1-e^{-\xi\omega_n t}\left(\cos\omega_d t + \frac{1}{\sqrt{1-\xi^2}}\sin\omega_d t\right) 
+     c(t) &\approx & 1-e^{-\xi\omega_n t}\left(\cos\omega_d t + \frac{\xi}{\sqrt{1-\xi^2}}\sin\omega_d t\right) 
      \end{eqnarray*}
      近似看作2阶欠阻尼系统.
 \item <3->实根比复根离虚轴近得多
@@ -407,7 +445,7 @@ e(t) &=& c(\infty)-c(t) \\
 \end{frame}
 \begin{frame}
 \frametitle{主导极点法}
-\label{sec-4-4}
+\label{sec-5-4}
 
 \begin{itemize}
 \item <2->目的:分析高阶系统的性能

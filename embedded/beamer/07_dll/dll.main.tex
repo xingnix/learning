@@ -1,0 +1,161 @@
+\begin{document}
+
+\def\lecturename{嵌入式技术}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[EC]{嵌入式技术}{}
+\subtitle{静态库与共享库}
+\date{2015}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{简介}
+\begin{frame}[containsverbatim]{程序生成过程}
+\begin{itemize}
+\item 编辑(源文件)
+\item 编译(汇编文件，中间代码文件)
+\lstset{language=c++}
+\begin{lstlisting}
+gcc -S hello.cpp
+\end{lstlisting}
+\item 汇编(目标文件，机器指令码文件)
+\lstset{language=c++}
+\begin{lstlisting}
+gcc -c hello.cpp
+\end{lstlisting}
+\item 链接(可执行文件)
+\lstset{language=c++}
+\begin{lstlisting}
+gcc hello.cpp
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{链接}
+\begin{itemize}
+\item 静态链接
+\lstset{language=c++}
+\begin{lstlisting}
+\end{lstlisting}
+\item 动态链接
+\lstset{language=c++}
+\begin{lstlisting}
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\section{静态库/动态库生成}
+
+\begin{frame}[containsverbatim]{源程序}
+\lstset{language=c++}
+\begin{lstlisting}
+/******  say.c   *******/
+#include "stdio.h"
+void say()
+{
+	printf("Say!");
+}
+/****** test.c  *******/
+#include "stdio.h"
+void say();
+main(){
+	say();
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{命令}
+\lstset{language=ksh}
+\begin{lstlisting}
+gcc -c say.c
+ar -r say.a say.o
+gcc test.c say.a -o test
+ldd test
+gcc -fPIC -shared say.c -o say.so
+gcc test.c ./say.so -o test
+ldd test
+\end{lstlisting}
+\end{frame}
+
+
+\section{动态库使用}
+ 
+\begin{frame}[containsverbatim]{动态库位置}
+\begin{itemize}
+\item 
+\lstset{language=c++}
+\begin{lstlisting}
+LD_LIBRARY_PATH
+\end{lstlisting}
+\item 
+/etc/ld.so.cache
+\begin{itemize}
+\item ldconfig
+\item /etc/ld.so.conf
+\end{itemize}
+\item 默认路径
+\begin{itemize}
+\item /lib
+\item /usr/lib
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{动态加载}
+\lstset{language=c++,escapeinside=``}
+\begin{lstlisting}
+#include <stdlib.h>
+#include <stdio.h>
+#include <dlfcn.h>
+int main(int argc,char **argv){
+  void *handle;     char *error;
+  double (*cosine)(double);
+  handle = dlopen("/lib/libm.so.6",RTLD_LAZY);
+  if(!handle){printf("%s\n",dlerror());exit(1);}
+  printf("opened /lib/libm.so.6\n");
+  cosine = dlsym(handle,"cos");
+  if((error = dlerror())!=NULL){
+    printf("%s\n",error);dlclose(handle);
+    printf("closed /lib/libm.so.6\n");exit(1);}
+  printf("%f\n",(*cosine)(2.0));
+  dlclose(handle);
+  printf("closed /lib/libm.so.6\n");
+  return 0;}
+/* gcc -o test test.c -ldl
+/lib/libm.so.6`是动态加载库`
+/usr/lib/libdl.so`是共享库` */
+\end{lstlisting}
+\end{frame}
+
+
+%\section{静态库/动态库转换}
+
+\section{思考}
+\begin{frame}{思考}
+\begin{itemize}
+\item 静态库与共享库/动态库在程序设计中有哪些作用？
+\item 利用GNU/Linux中静态库与共享/动态库设计一个程序。
+\end{itemize}
+\end{frame}
+
+
+\end{document}

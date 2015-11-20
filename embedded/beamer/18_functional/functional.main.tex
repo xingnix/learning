@@ -1,0 +1,159 @@
+\begin{document}
+
+\def\lecturename{嵌入式技术}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[EC]{嵌入式技术}{}
+\subtitle{函数式程序设计}
+\date{2012}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{函数式语言介绍}
+\begin{frame}[containsverbatim]{命令式语言imperative language}
+\begin{itemize}
+\item 结果与运算次序有关
+\item 副作用side effect
+\end{itemize}
+\begin{lstlisting}
+int a;
+int f(int x){
+a=x;
+return x;
+}
+int main(int argc, char ** argv){
+f(0);
+f(1);
+return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{函数式语言}
+\begin{itemize}
+\item immutable data
+\item Pure function
+\item First class function
+\item Recursion
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Tail Recursion}
+\begin{lstlisting}
+#include <sys/time.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+long long fib0(long long n, long long fib_n){
+  if(n>2) return fib0(n-1)+fib0(n-2);
+  else return 1;
+}
+
+long long fib(long long n, long long N,
+          long long fib_ns1, long long fib_n){
+  if(n<N) return fib(n+1,N,fib_n,fib_ns1+fib_n);
+  else return fib_n;
+}
+int main(int argc, char **argv){
+   fib0(atoi(argv[1]));
+   fib(2,atoi(argv[1]),1,1);
+return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{函数式语言列表}
+\begin{center}\pgfimage[width=0.9\columnwidth]{image/ComputerLanguagesChart}\end{center}
+\end{frame}
+
+\section{Lisp}
+\section{Scheme}
+\section{Ocaml}
+\begin{frame}[containsverbatim]{curry}
+\lstset{language=[objective]caml}
+\begin{lstlisting}
+# let rec fact n = if n<2 then 1 else n*fact(n-1) ;;
+val fact : int -> int = <fun>
+# fact 8 ;;
+- : int = 40320
+# let next x = x+1;;
+val next : int -> int = <fun>
+# let compose f g x = f(g(x));;
+val compose : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b = <fun>
+# let weird = compose fact next;;
+val weird : int -> int = <fun>
+# weird 7;;
+- : int = 40320
+# compose fact next 7;;
+- : int = 40320
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[containsverbatim]{pattern matching}
+\lstset{language=[objective]caml}
+\begin{lstlisting}
+$ ledit ocaml
+        Objective Caml version 3.06
+# let rec sum lst =
+    match lst with
+      [] -> 0
+    | head :: tail -> head + sum tail ;;
+val sum : int list -> int = <fun>
+# sum [ 1; 2; 3 ] ;;
+- : int = 6
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{List}
+\lstset{language=[objective]caml}
+\begin{lstlisting}
+# List.map ((+) 2)  [1 ; 2 ; 3];;
+- : int list = [3; 4; 5]
+# List.fold_left (+) 0 [1 ;2; 3] / 3;;
+- : int = 2
+# List.filter ((>) 5) [1;2;9;10];;
+- : int list = [1; 2]
+
+let rec fold_right f a lst = match lst with
+  | [] -> a
+  | x :: xs -> f x (fold_right f a xs);;
+(* fold_right f 0 [1;2;3] = f 1 (f 2 (f 3 0)) *)
+let rec fold_left f a lst = match lst with
+  | [] -> a
+  | x :: xs -> fold_left f (f a x) xs
+(* fold_left f 0 [1;2;3] = f (f (f 0 1) 2) 3 *)
+\end{lstlisting}
+\end{frame}
+
+\section{Haskell}
+
+
+\section{思考}
+\begin{frame}{思考}
+\begin{itemize}
+\item 常见的函数式程序设计语言有哪些？特点是什么？
+\item 如何利用函数式语言的优点更好地设计C/C++程序？
+\end{itemize}
+\end{frame}
+
+\end{document}

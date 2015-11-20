@@ -99,11 +99,11 @@
 
  * 系统的传递函数
      \begin{eqnarray*}
-     \Phi(s) & = & \frac{C(s)}{R(s)} = \frac{k_{g}\prod_{i=1}^{m}(s-z_{i})}{\sum_{j=1}^{n}(s-p_{j})} 
+     \Phi(s) & = & \frac{C(s)}{R(s)} = \frac{k_{g}\prod_{i=1}^{m}(s-z_{i})}{\prod_{j=1}^{n}(s-p_{j})} 
      \end{eqnarray*}
  * 设系统输入为单位脉冲信号: $r(t)=\delta(t),R(s)=1$
      \begin{eqnarray*}
-     C(s) & = & \Phi(s)R(s) =  \frac{k_{g}\prod_{i=1}^{m}(s-z_{i})}{\sum_{j=1}^{n}(s-p_{j})} \\
+     C(s) & = & \Phi(s)R(s) =  \frac{k_{g}\prod_{i=1}^{m}(s-z_{i})}{\prod_{j=1}^{n}(s-p_{j})} \\
 	  & = &  k_{g}\sum_{j=1}^{n}\frac{k_{j}}{s-p_{j}} \\
      c(t) & = & k_{g}\sum_{j=1}^{n}k_{j}e^{p_{j}t}
      \end{eqnarray*}
@@ -154,7 +154,7 @@ N(s) & =& a_{0}s^{n}+\cdots+a_{n}
      \end{equation*}
  * <3->劳斯判据:
    *  <4->系统稳定的充要条件:劳斯表中第一列元素均大于零
-   *  <5->若第一列元素有小于零的,则系统不稳定,且不稳定根的个数等于第一列元素变号的次数.
+   *  <5->若第一列元素有小于零的,则系统不稳定,且正实部根的个数等于第一列元素变号的次数.
 ** 劳斯表与多项式除法
 \begin{equation*}
      \begin{matrix}
@@ -271,7 +271,7 @@ K & >  & 0
      :BEAMER_env: block
      :BEAMER_envargs: <2->
      :END:
-系统特征方程: $D(s)=s^{4}+2s^{3}+s^{2}+2s+1=0$ 判断系统的稳定性,求出不稳定根的个数.
+系统特征方程: $D(s)=s^{4}+2s^{3}+s^{2}+2s+1=0$ 判断系统的稳定性,求出正实部根的个数.
 
 *** Roth表:						      :BMCOL:B_block:
      :PROPERTIES:
@@ -282,8 +282,8 @@ K & >  & 0
 
 \[
 \begin{matrix}
-s^{4}   &  1  &   1  \\
-s^{3}   &  2  &  2   \\
+s^{4}   &  1  &   1  & 1 \\
+s^{3}   &  2  &  2  \\
 s^{2}   &  0(\epsilon)  &  1   \\
 s^{1}   &  \frac{2\epsilon-2}{\epsilon} & 0 \\
 s^{0}   &  1   \\

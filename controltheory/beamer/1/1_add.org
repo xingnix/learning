@@ -121,6 +121,65 @@ C &=& ?
  #+ATTR_LATEX: width=\textwidth
 [[file:image/drive.pdf]]
 
+* 非线性
+** 几个例子
+\begin{align*}
+c &= u\\
+c &= u+1\\
+c &= 1\\
+c &= 0\\
+c &= \sqrt[3]{u} \quad u= x^3 \\
+c+c^2 &= u \quad u=r+c^{2}
+\end{align*}
+** $x'+1 =u$
+*** 方法1						      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+变量代换，为方程右边与输出变量无关的部分指定另一个变量。
+\begin{align*}
+x'+1 &= u \\
+w &= u-1 \\
+x' &= w 
+\end{align*}
+
+*** 方法2						      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+将方程右边与输出变量无关的部分用泰勒级数展开。
+\begin{align*}
+x' &=u-1 \\
+u-1 &= (u-1)|_{u=1}+\Delta u \\
+x' &= \Delta u 
+\end{align*}
+**  $cc'=u$
+*** 在 $c_0=1,c'_0=1$ 处线性化 				      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+
+\begin{align*}
+(1+\Delta c)(1+\Delta c') &= u \\
+1+\Delta c+ \Delta c' + \Delta c \Delta c' &= u\\
+\Delta c +\Delta c' &= \Delta u
+\end{align*}
+$\Delta u=0,u=1$ 时， $cc'=1$ 。接着随着 $c$ 增大，$c'$ 会减小。
+
+*** 变量代换 $c=t+\Delta c,c'=1+\Delta c'$		      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+\begin{align*}
+(t+\Delta c)(1+\Delta c') &=u \\
+t+\Delta c+t\Delta c'+\Delta c\Delta c' &=u \\
+\Delta c +t\Delta c' &= \Delta u
+\end{align*}
+$\Delta u=0,u=t$ 时， $cc'=t$ 。接着随着 $c$ 增大，$c'$ 不变。
 * 稳定性
 ** 稳定性与平衡点
 
@@ -298,3 +357,70 @@ Y(j\omega) &=& F(j\omega)H(j\omega) = \frac{1}{(j\omega+1)(j\omega+2)(j\omega+3)
            &=& \frac{1/2}{j\omega+1}+\frac{-1}{j\omega+2}+\frac{1/2}{j\omega+3}\\
 y(t) &=& (\frac{1}{2}e^{-t}-e^{-2t}+\frac{1}{2}e^{-3t})U(t)
 \end{eqnarray*}
+
+* 部分分式分解求解差分方程
+** $C(n+2)-6C(n+2)+8C(n)=U(n)$ 零状态阶跃响应
+部分分式分解方法有两种,求和限不同，但结果相同。
+\begin{align*}
+(z^2-6z+8)C(z)&=\frac{z}{z-1} \\
+C(z) &= \frac{z}{(z-1)(z-2)(z-4)}\\
+C(z) &=\frac{1}{3(z-1)}-\frac{1}{z-2}+\frac{2}{3(z-4)} \\
+ &=\sum_{n=1}^{\infty}[\frac{1}{3}z^{-n}-\frac{1}{2}2^n z^{-n}+\frac{1}{6}4^n z^{-n}] \\
+C(z) &=\frac{z}{3(z-1)}-\frac{z}{2(z-2)}+\frac{z}{6(z-4)}\\
+ &=\sum_{n=0}^{\infty}[\frac{1}{3}z^{-n}-\frac{1}{2}2^n z^{-n}+\frac{1}{6}4^n z^{-n}] 
+\end{align*}
+
+
+** $C_{n+2}+3C_{n+1}+2C_{n}=0$ 求 $C(0)=0,C(1)=1$ 时的响应
+部分分式分解有两种，可以看到，第一种分解计算时，如果 $n$ 的取值范围没有限定好，会出现错误。（如：求和时设定 $n$ 从1开始。）
+\begin{align*}
+& z^2C(z)-z^2+3(zC(z)-z)+2C(z)=0 \\
+% (z^2+3z+2)C(z) &= z^2+3z \\
+C(z) &= \frac{2}{z+2}-\frac{2}{z+1}+1 \\
+     &= \sum_{n=1}^{\infty}[-(-2)^{n} z^{-n}]+\sum_{n=1}^{\infty}[2(-1)^n z^{-n}]+1 \\
+     &= 1+0z^{-1}+\cdots \\
+C(z) &=\frac{2z}{z+1}-\frac{z}{z+2} \\
+     &=\sum_{n=0}^{\infty}[2(-1)^n z^{-n}]-\sum_{n=0}^{\infty}(-2)^n z^{-n}\\
+C(n) &= 2(-1)^n-(-2)^n
+\end{align*}
+
+** 两种部分分式分解之间的关系
+从上面的例子可以看出，两种部分分式都可以求解出差分方程的解，但一个能够直接利用z反变换求解出时域函数，另一个要用到z变换的性质 ${\cal Z}[e(t-T)]=E(z)z^{-1}$ 。因此，解的范围不同，一个是 $n\geq 0$ ,一个是 $n\geq 1$ 。这两个解中包含共同的项（对应于差分方程的特征根），它们在 $n\leq 1$ 时是一致的。由于第一种方法的解从 $n=1$ 开始求和，因此它们只是在 $n=0$ 时相差一个常数。而分析第二种方法的解，可以从其它部分推导出来。
+
+对于n阶差分方程，知道通解、特解与初始条件即可惟一确定其解。而初始条件可以替换为任意n个时刻的值。当两个函数满足通解与特解条件，并且在两个时刻的值相等时，可以断定这两个函数相等，都是方程的解。
+
+* 最少拍控制
+** 最小拍
+为使误差信号在有限拍内变为0，设 $X(z)$ 为关于 $z^{-1}$ 的有限多项式：
+\begin{align*}
+\frac{1}{1+D(z)G(z)}\cdot\frac{A(z)}{(1-z^{-1})^m} &=A(z)X(z) \\
+\frac{1}{1+D(z)G(z)} &=X(z){(1-z^{-1})^m} \\
+D(z)G(z) &= \frac{1}{X(z)(1-z^{-1})^m}-1 \\
+D(z) &= \frac{1-X(z)(1-z^{-1})^m}{X(z)(1-z^{-1})^m G(z)} 
+\end{align*}
+
+** 无纹波最少拍
+为使误差信号在有限拍内变为0，且控制器 $D(z)$ 的输出在有限拍内为常值，设 $X(z)$ 为关于 $z^{-1}$ 的有限多项式，$Y(z)$ 为关于 $z^{-1}$ 的有限多项式，或有一个极点 $z=1$ 
+\begin{align*}
+\frac{1}{1+D(z)G(z)}\cdot\frac{A(z)}{(1-z^{-1})^m} &=A(z)X(z) \\
+\frac{D(z)}{1+D(z)G(z)}\cdot\frac{A(z)}{(1-z^{-1})^m} &=A(z)Y(z) \\
+D(z) &= \frac{Y(z)}{X(z)}\\
+(1+\frac{Y(z)}{X(z)}G(z))(1-z^{-1})^m &=\frac{1}{X(z)}\\
+(X(z)+Y(z)G(z))(1-z^{-1})^m &=1\\
+\end{align*}
+
+** 无纹波最少拍示例
+\begin{align*}
+G(z) &=\frac{3.68z^{-1}(1+0.717z^{-1})}{(1-z^{-1})(1-0.368z^{-1})} \\
+R(z) &=\frac{Tz^{-1}}{(1-z^{-1})^2} \\
+X(z) &= 1+cz^{-1}\\
+Y(z) &= \frac{(1-0.368z^{-1})(a+bz^{-1})}{1-z^{-1}}\\
+b &=-0.22435314655638\\
+c &=-0.59196923837781\\
+a &=0.38261705478864
+\end{align*}
+#+begin_src maxima
+  e:3.68*z*(1+0.717*z)*(a+b*z)+(1-c*z)*(1-z)^2;
+  m:map(lambda([i],coeff((taylor(e,z,0,3)),z,i)),[1,2,3]);
+  float(solve(m));
+#+end_src

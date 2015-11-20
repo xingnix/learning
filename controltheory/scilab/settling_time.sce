@@ -1,18 +1,52 @@
 // g(s)=omegan^2/(s^2+2*xi*omegan*s+omegan^2)
-// omegan=1;xi changes from 1/sqrt(2) to 1
-// calculating settling time ts
+// omegan=1;xi changes from 0.1 to 1.1
+// calculating real settling time ts, approximate ts and the usually used ts
 y0=[0,0]';
 x=0.999;
 c=[];
-xi=[0.71:0.001:0.999];
+xi=[0.1:0.01:1.1];
+err=0.05;
 for x=xi;
-deff("[ydot]=f(t,y)","ydot=[y(2) ; -2*"+string(x)+"*y(2)-y(1) + 1]");
-deff("[z]=g(t,y)","z=y(1)-0.95");
-ng=1;
-[y,rd]=ode("roots",y0,0,[0:0.001:10],f,ng,g);
-c=[c rd(1)*x];
+  if x >=1
+    deff("[ydot]=f(t,y)","ydot=[y(2) ; -2*"+string(x)+"*y(2)-y(1) + 1]");
+    deff("[z]=g(t,y)","z=y(1)-(1-err)");
+    ng=1;
+    [y,rd]=ode("roots",y0,0,[0:0.001:50],f,ng,g);
+    c=[c rd(1)];
+  else
+    // exp(-\xi\omega_n t)/sqrt(1-\xi^2) \approx 0.05
+    T=(-log(err)-1/2*log(1-x^2))/x;
+    for t=T:-0.01:0,
+        if abs(exp(-x*t)/sqrt(1-x^2) *sin(sqrt(1-x^2)*t+acos(x)))>err,
+            c=[c t];
+            break;
+        end
+    end
+  end
 end
-plot(xi,c);
+plot(xi,c,'r.-');
+x=[0.1:0.01:0.99];
+plot(x,(-log(err)-1/2*log(1-x.^2))./x,'b.-');
+plot(x,-(log(err)+log(1-0.8^2)/2)./x,'g.-'); //equals 3.5/\xi/\omega_n when err=0.5
+legend(['real','approx(drop sin(...))','coarse(let \xi=0.8)']);
+
+// \omega_d changes while \xi*\omega_n remain constant
+// which is the case for root locus illustration of 2nd order system
+c=[];
+omegad=[0.1:0.1:10]
+for x=omegad;
+    xi=1/sqrt(1+x^2);
+    // exp(-\xi\omega_n t)/sqrt(1-\xi^2) \approx 0.05
+    T=(-log(err)-1/2*log(1-xi^2));
+    for t=T:-0.01:0,
+        if abs(exp(-t)/sqrt(1-xi^2) *sin(x*t+atan(x)))>err,
+            c=[c t];
+            break;
+        end
+    end
+end
+plot(1.0 ./sqrt(1+omegad.^2),c,'k.-');
+legend(['real','approx(drop sin(...))','coarse(let \xi=0.8)','omega_d changes only']);
 
 //s=poly(0,'s');
 // g=1/(s^2+2*1*s+1);
