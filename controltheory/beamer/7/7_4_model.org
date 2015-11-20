@@ -358,7 +358,7 @@ C^*(s) &=& G^*(s)E^*(s)\\
       C(s) & = & G(s)E(s) 
           = G(s)R(s)-G(s)H(s)C^*(s)\\
       C^*(s) &=& GR^*(s)-GH^*(s)C^*(s)
-             = \frac{GR^*(s)}{1+GH^*(s)C^*(s)}
+             = \frac{GR^*(s)}{1+GH^*(s)}
       \end{eqnarray*}
  * <3->没有闭环脉冲传递函数
 * 修正Z变换

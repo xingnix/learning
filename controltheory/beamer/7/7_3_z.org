@@ -1,4 +1,5 @@
 # #+LaTeX_CLASS:  article
+#+LATEX_HEADER: \usepackage{etex}
 #+LATEX_HEADER: \usepackage{amsmath}
 #+LATEX_HEADER: \usepackage[usenames]{color}
 #+LATEX_HEADER: \usepackage{pstricks}
@@ -73,11 +74,11 @@
  * <3->记作  
       \[E(Z)={\cal Z}[e^*(t)]={\cal Z}[e(t)]\]
 ** Z变换计算
-  * 级数求合法
+  * 级数求和法
      * 按照Z变换的定义求解
   * 部分分式法:
      * 先求出  $e(t)$  的Laplace变换  $E(s)$  ,将其展开成部分分式之和,使每部分对应的Z变换是已知的.
-** 级数求合法示例: $\delta_T(t)=\sum_{n=0}^{\infty}\delta(t-nT)$
+** 级数求和法示例: $\delta_T(t)=\sum_{n=0}^{\infty}\delta(t-nT)$
   * <2->解:
      \begin{eqnarray*}
      e^*(t) & = & \sum_{n=0}^{\infty}e(nT)\delta(t-nT) \\
@@ -89,7 +90,7 @@
      \end{eqnarray*}
      其中 $\qquad |z^{-1}|<1$ 
   * <3->$1(t)$  与  $\delta_T(t)$  对应的Z变换相同.
-** 级数求合法示例: 单位阶跃信号 $1(t)$
+** 级数求和法示例: 单位阶跃信号 $1(t)$
  * <2-> 解: 
       \begin{eqnarray*}
       e(nT)&=&1 , \\
