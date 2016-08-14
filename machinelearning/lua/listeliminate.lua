@@ -194,3 +194,17 @@ end
 --  second attempt end ----------------------------------------
 
 
+function treeview(tree,space)
+print(space .. "{")
+for k,v in pairs(tree) do
+   if type(v)=="table" then
+       print(space .. k)
+       treeview(v,  space .. ".......")
+   else
+      print(space .. k , v)
+   end
+end
+print(space .. "}")
+end
+
+treeview(remains,"")
