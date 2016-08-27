@@ -144,6 +144,11 @@ where
 
 最小的  $w_{i}$ 。其中 $D$ 训练样例集合。
 
+
+[[./image/parabola-floor.png]]
+#  [[./image/parabola-slope-fat.png
+
+
 梯度下降算法
 
 \[ \nabla E[\vec{w}] \equiv \left[\frac{\partial E}{\partial w_{0}},
