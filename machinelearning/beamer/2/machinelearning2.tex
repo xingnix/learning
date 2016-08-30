@@ -1,0 +1,449 @@
+% Created 2016-08-30 Tue 22:25
+\documentclass{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+\setbeamercovered{transparent}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{概念学习}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+\section{概念学习}
+\label{sec-1}
+\begin{frame}
+\frametitle{什么是概念学习}
+\label{sec-1-1}
+\begin{block}{定义}
+\label{sec-1-1-1}
+
+概念学习是指从有关某个布尔函数的输入输出训练样例中，推断出该布尔函数。
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{示例}
+\label{sec-1-2}
+
+
+\begin{center}
+\begin{tabular}{lllllll}
+ Sky    &  AirTemp  &  Humid   &  Wind    &  Water  &  Forecst  &  EnjoySpt  \\
+\hline
+ Sunny  &  Warm     &  Normal  &  Strong  &  Warm   &  Same     &  Yes       \\
+ Sunny  &  Warm     &  High    &  Strong  &  Warm   &  Same     &  Yes       \\
+ Rainy  &  Cold     &  High    &  Strong  &  Warm   &  Change   &  No        \\
+ Sunny  &  Warm     &  High    &  Strong  &  Cool   &  Change   &  Yes       \\
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{假设}
+\label{sec-1-3}
+
+
+\begin{itemize}
+\item 考虑各属性约束的合取式 $h$
+\item 每个属性可取值为：
+\begin{itemize}
+\item 由“?”表示任意值
+\item 明确指定的属性值（如 Water=Warm）
+\item 由“ $\emptyset$ ”表示不接受任何值(如 Water=$\emptyset$ )
+\end{itemize}
+\item 例如：
+
+\begin{center}
+\begin{tabular}{llllll}
+ Sky              &  AirTemp  &  Humid  &  Wind      &  Water  &  Forecst         \\
+\hline
+ $\langle Sunny$  &  $?$      &  $?$    &  $Strong$  &  $?$    &  $Same \rangle$  \\
+\end{tabular}
+\end{center}
+
+
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{任务}
+\label{sec-1-4}
+
+
+\begin{itemize}
+\item 已知：
+\begin{itemize}
+\item 实例集X：可能的日子，每个日子由下面的属性描述：
+\begin{itemize}
+\item Sky（可取值为Sunny，Cloudy和Rainy）
+\item AirTemp（可取值为Warm和Cold）
+\item Humidity（可取值为Normal和High）
+\item Wind（可取值为Strong和Weak）
+\item Water（可取值为Warm和Cool）
+\item Forecast（可取值为Same和Change）
+\end{itemize}
+\item 假设集H：每个假设描述为6个属性Sky，AirTemp，Humidity，Wind，Water和Forecast的值约束的合取。约束可以为“?”（表示接受任意值），“ $\emptyset$ ”（表示拒绝所有值），或一特定值。
+\item 目标概念c: EnjoySport:  $X\rightarrow \{0, 1\}$
+\item 训练样例集D：目标函数的正例和反例  $\langle x_1, c(x_1) \rangle , \ldots \langle x_m, c(x_m) \rangle$
+\end{itemize}
+\item 求解：
+\begin{itemize}
+\item $H$ 中的一假设 $h$ ，使对于 $X$ 中任意 $x$ ， $h(x)=c(x)$ 。
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{归纳学习假设}
+\label{sec-1-5}
+
+
+任一假设如果在足够大的训练样例集中很好地逼近目标函数，它也能在未见实例中很好地逼近目标函数。
+\end{frame}
+\begin{frame}
+\frametitle{more-general-than-or-equal-to}
+\label{sec-1-6}
+
+
+\center
+\includegraphics[width=\textwidth]{./image/vs-gen-spec.png}
+\end{frame}
+\begin{frame}
+\frametitle{more-general-than-or-equal-to}
+\label{sec-1-7}
+
+
+定义： 令 $h_j$ 和 $h_k$ 为在 $X$ 上定义的布尔函数。定义一个 more-general-than-or-equal-to 关系，记做 $\geq_g$ 。 称 $h_j \geq_g h_k$ 当且仅当
+
+$$(\forall x\in X)[(h_k(x)=1)\rightarrow (h_j(x)=1)]$$
+\end{frame}
+\section{FIND-S}
+\label{sec-2}
+\begin{frame}
+\frametitle{FIND-S 算法}
+\label{sec-2-1}
+
+
+\begin{itemize}
+\item 将 $h$ 初始化为 $H$ 中最特殊假设
+\item 对每个正例 $x$
+\begin{itemize}
+\item 对h的每个属性约束 $a_i$
+\begin{itemize}
+\item 如果 $x$ 满足 $a_i$
+        那么 不做任何事
+\item 否则将 $h$ 中 $a_i$ 替换为满足 $x$ 的紧邻的更一般约束
+\end{itemize}
+\end{itemize}
+\item 输出假设h
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{FIND-S 的假设空间搜索}
+\label{sec-2-2}
+
+\center
+\includegraphics[width=0.7\textwidth]{./image/finds-gen-spec.png}
+\end{frame}
+\section{变型空间和候选消除算法}
+\label{sec-3}
+\begin{frame}
+\frametitle{表示}
+\label{sec-3-1}
+
+
+\begin{itemize}
+\item 一致(Consistent)： 一个假设h与训练样例集合D一致(consistent)，当且仅当对 $\langle x, c(x) \rangle$ in $D$ 都有 h(x)=c(x)。
+\end{itemize}
+
+\[Consistent(h,D) \equiv (\forall \langle x, c(x) \rangle \in D)\  h(x)=c(x) \]
+
+\begin{itemize}
+\item 变型空间(version space)： 关于假设空间 $H$ 和训练样例集 $D$ 的变型空间(version space)，标记为 $VS_{H,D}$ ，是 $H$ 中与训练样例 $D$ 一致的所有假设构成的子集。
+\end{itemize}
+
+\[VS_{H,D} \equiv \{h \in H|Consistent(h,D)\} \]
+\end{frame}
+\begin{frame}
+\frametitle{列表后消除算法(List-Then-Eliminate)}
+\label{sec-3-2}
+
+
+\begin{itemize}
+\item 变型空间 $VersionSpace\leftarrow$ 包含H中所有假设的列表
+\item 对每个训练样例 $\langle x, c(x)\rangle$
+\begin{itemize}
+\item 从变型空间中移除所有 $h(x)\neq c(x)$ 的假设h
+\end{itemize}
+\item 输出 $VersionSpace$ 中的假设列表
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{变型空间的更简洁表示}
+\label{sec-3-3}
+
+
+\begin{itemize}
+\item 定义： 关于假设空间H和训练数据D的一般边界（General boundary）G，是在H中与D相一致的极大一般（maximally general）成员的集合。
+    $S\equiv\{ g\in H | Consistent(g, D)\land(\neg\exists g'\in H)[(g' >_g g)\land Consistent(g', D)]\}$
+\item 定义： 关于假设空间H和训练数据D的特殊边界（Specific boundary）S，是在H中与D相一致的极大特殊（maximally specific）成员的集合。
+    $S\equiv\{ s\in H | Consistent(s, D)\land(\neg\exists s'\in H)[(s >_g s')\land Consistent(s', D)]\}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{例}
+\label{sec-3-4}
+
+\center
+\includegraphics[width=0.8\textwidth]{./image/figure-vs3.png}
+\end{frame}
+\begin{frame}
+\frametitle{变型空间表示定理}
+\label{sec-3-5}
+
+
+令 $X$ 为一任意的实例集合， $H$ 与为 $X$ 上定义的布尔假设的集合。令 $c: X\rightarrow\{0, 1\}$ 为 $X$ 上定义的任一目标概念，并令 $D$ 为任一训练样例的集合 $\{\langle x, c(x)\rangle\}$ 。对所有的 $X,H,c,D$ 以及良好定义的 $S$ 和 $G$ ：
+ $$VS_{H,D} = \{ h\in H | (\exists s\in S) (\exists g\in G) (g\geq_g h \geq_g s)\}$$
+\end{frame}
+\begin{frame}
+\frametitle{候选消除算法(Candidate Elimination Algorithm)}
+\label{sec-3-6}
+
+将G集合初始化为H中极大一般假设
+
+将S集合初始化为H中极大特殊假设
+
+对每个训练样例d，进行以下操作：
+
+如果d是一正例
+\begin{itemize}
+\item 从G中移去所有与d不一致的假设
+\item 对S中每个与d不一致的假设s
+\begin{itemize}
+\item 从S中移去s
+\item 把s的所有的极小泛化式h加入到S中，其中h满足
+\begin{itemize}
+\item h与d一致，而且G的某个成员比h更一般
+\end{itemize}
+\item 从S中移去所有这样的假设：它比S中另一假设更一般
+\end{itemize}
+\end{itemize}
+
+如果d是一个反例
+\begin{itemize}
+\item 从S中移去所有与d不一致的假设
+\item 对G中每个与d不一致的假设g
+               -从G中移去g
+\begin{itemize}
+\item 把g的所有的极小特化式h加入到G中，其中h满足
+\begin{itemize}
+\item h与d一致，而且S的某个成员比h更特殊
+\end{itemize}
+\end{itemize}
+\item 从G中移去所有这样的假设：它比G中另一假设更特殊
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{算法示例}
+\label{sec-3-7}
+
+\center
+\includegraphics[width=0.6\textwidth]{./image/vsexamp-initialize.png}
+\end{frame}
+\begin{frame}
+\frametitle{算法示例}
+\label{sec-3-8}
+
+\center
+\includegraphics[width=0.6\textwidth]{./image/vsexamp0.png}
+\end{frame}
+\begin{frame}
+\frametitle{算法示例}
+\label{sec-3-9}
+
+\center
+\includegraphics[width=0.6\textwidth]{./image/vsexamp1.png}
+\end{frame}
+\begin{frame}
+\frametitle{算法示例}
+\label{sec-3-10}
+
+\center
+\includegraphics[width=0.7\textwidth]{./image/vsexamp2.png}
+\end{frame}
+\begin{frame}
+\frametitle{算法示例}
+\label{sec-3-11}
+
+\center
+\includegraphics[width=0.7\textwidth]{./image/vsexamp3.png}
+\end{frame}
+\begin{frame}
+\frametitle{算法示例}
+\label{sec-3-12}
+
+\center
+\includegraphics[width=0.7\textwidth]{./image/figure-vs3.png}
+\end{frame}
+\section{归纳偏置}
+\label{sec-4}
+\begin{frame}
+\frametitle{一个有偏的假设空间}
+\label{sec-4-1}
+
+EnjoySportw例子中，假设空间限制为只包含属性值的合取。不能够表示最简单的析取形式的目标概念，如“Sky=Sunny or Sky=Cloudy”。
+给定以下三个训练样例，它们来自于该析取式假设，我们的算法将得到一个空的变型空间。
+
+\samll
+
+\begin{center}
+\begin{tabular}{lllllll}
+ Sky     &  AirTemp  &  Humidity  &  Wind    &  Water  &  Forecast  &  EnjoySport  \\
+\hline
+ Sunny   &  Warm     &  Normal    &  Strong  &  Cool   &  Change    &  Yes         \\
+ Cloudy  &  Warm     &  Normal    &  Strong  &  Cool   &  Change    &  Yes         \\
+ Rainy   &  Warm     &  Normal    &  Strong  &  Cool   &  Change    &  No          \\
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{无法生成变型空间的原因}
+\label{sec-4-2}
+
+
+与头两个样例一致，并且能在给定假设空间H中表示的最特殊的假设是：
+
+S2: <?, Warm, Nornal, Strong, Cool, Change>
+
+将第三个样例错误地划为正例。
+\end{frame}
+\begin{frame}
+\frametitle{无偏的学习器}
+\label{sec-4-3}
+
+为EnjoySport学习任务定义一个新的假设空间H'，允许使用前面的假设的任意析取、合取和否定式。例如目标概念“Sky=Sunny  or Sky=Cloudy”可被描述为：
+
+<Sunny, ?, ?, ?, ?, ?> ∨ <Cloudy, ?, ?, ?, ?, ?>
+
+排除了表达能力的问题，但概念学习算法将完全无法从训练样例中泛化！
+\end{frame}
+\begin{frame}
+\frametitle{无法泛化的原因}
+\label{sec-4-4}
+
+如下，假定我们提供了3个正例（x1，x2，x3）以及两个反例（x4，x5）给学习器。这时，变型空间的S边界包含的假设正好是三个正例的析取：
+
+$$S: \{ (x_1 \lor x_2 \lor x_3) \}$$
+
+因为这是能覆盖3个正例的最特殊假设。相似地，G边界将由那些刚好能排除掉反例的那些假设组成。
+$G: \{\neg (x_4\lor x_5)\}$
+\end{frame}
+\begin{frame}
+\frametitle{归纳编置}
+\label{sec-4-5}
+
+定义：考虑对于实例集合X的概念学习算法  $L$  ， 令
+\begin{itemize}
+\item $c$  为 $X$ 上定义的任一概念,
+\item $D_c = \{\langle x, c(x) \rangle \}$ 为 $c$ 的任意训练样例集合。
+\item $L(x_i,D_c)$ 表示经过数据 $D_c$ 的训练后 $L$ 赋予实例 $x_i$ 的分类。
+\end{itemize}
+
+$L$ 的归纳偏置是最小断言集合 $B$ ，它使任意目标概念 $c$ 和相应的训练样例 $D_c$ 满足
+
+\[
+(\forall x_i \in X) [(B \land D_c \land x_i) \vdash L(x_i,D_c)]
+\]
+
+ $A \vdash B$ 表示 $A$  逻辑蕴涵 $B$
+\end{frame}
+\begin{frame}
+\frametitle{归纳系统与等价的演绎系统}
+\label{sec-4-6}
+
+\center
+\includegraphics[width=0.7\textwidth]{./image/figure-vs-bias-new.png}
+\end{frame}
+\begin{frame}
+\frametitle{归纳偏置不同的学习器}
+\label{sec-4-7}
+
+\begin{itemize}
+\item 机械学习器（Rote-Learner）
+\begin{itemize}
+\item 简单地将每个观察到的训练样例存储下来。
+\item 后续的实例的分类通过在内存中匹配进行。
+\begin{itemize}
+\item 如果实例在内存中找到了，存储的分类结果被输出。
+\item 否则系统拒绝进行分类。
+\end{itemize}
+\end{itemize}
+\item 候选消除算法
+\begin{itemize}
+\item 新的实例只在变型空间所有成员都进行同样分类时才输出分类结果
+\item 否则系统拒绝分类。
+\end{itemize}
+\item Find-S
+\begin{itemize}
+\item 算法寻找与训练样例一致的最特殊的假设
+\item 用这一假设来分类后续实例。
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}

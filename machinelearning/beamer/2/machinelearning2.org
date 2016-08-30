@@ -48,7 +48,7 @@
 #+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 
 #+latex_header:\setbeamercovered{transparent}
-#+BEAMER_FRAME_LEVEL: 3
+#+BEAMER_FRAME_LEVEL: 2
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
 
 
@@ -57,11 +57,14 @@
 
 
 
-* 什么是概念学习
 
-定义： 概念学习是指从有关某个布尔函数的输入输出训练样例中，推断出该布尔函数。
-
-* 概念学习任务
+* 概念学习
+** 什么是概念学习
+*** 定义							    :B_block:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :END:
+概念学习是指从有关某个布尔函数的输入输出训练样例中，推断出该布尔函数。
 
 ** 示例
 | Sky   | AirTemp | Humid  | Wind   | Water | Forecst | EnjoySpt |
@@ -73,18 +76,15 @@
 
 ** 假设
 
-考虑各属性约束的合取式 $h$
-
-每个属性可取值为：
-- 由“?”表示任意值
-- 明确指定的属性值（如 Water=Warm）
-- 由“ $\emptyset$ ”表示不接受任何值(如 Water=$\emptyset$ ) 
-
-例如：
-
-| Sky             | AirTemp | Humid | Wind     | Water | Forecst        |
-|-----------------+---------+-------+----------+-------+----------------|
-| $\langle Sunny$ | $?$     | $?$   | $Strong$ | $?$   | $Same \rangle$ |
+- 考虑各属性约束的合取式 $h$
+- 每个属性可取值为：
+    - 由“?”表示任意值
+    - 明确指定的属性值（如 Water=Warm）
+    - 由“ $\emptyset$ ”表示不接受任何值(如 Water=$\emptyset$ ) 
+- 例如：
+     | Sky             | AirTemp | Humid | Wind     | Water | Forecst        |
+     |-----------------+---------+-------+----------+-------+----------------|
+     | $\langle Sunny$ | $?$     | $?$   | $Strong$ | $?$   | $Same \rangle$ |
 
 ** 任务
 
@@ -97,35 +97,41 @@
        - Water（可取值为Warm和Cool）
        - Forecast（可取值为Same和Change）
    - 假设集H：每个假设描述为6个属性Sky，AirTemp，Humidity，Wind，Water和Forecast的值约束的合取。约束可以为“?”（表示接受任意值），“ $\emptyset$ ”（表示拒绝所有值），或一特定值。
-   - 目标概念c: EnjoySport:  $X\rightarrow \{0, 1\} $ 
+   - 目标概念c: EnjoySport:  $X\rightarrow \{0, 1\}$ 
    - 训练样例集D：目标函数的正例和反例  $\langle x_1, c(x_1) \rangle , \ldots \langle x_m, c(x_m) \rangle$
 - 求解：
-   - H中的一假设h，使对于X中任意x，h(x)=c(x)。
+   - $H$ 中的一假设 $h$ ，使对于 $X$ 中任意 $x$ ， $h(x)=c(x)$ 。
 
 ** 归纳学习假设
 
 任一假设如果在足够大的训练样例集中很好地逼近目标函数，它也能在未见实例中很好地逼近目标函数。
 
 ** more-general-than-or-equal-to
+
+#+attr_latex: width=\textwidth
+\center
 [[./image/vs-gen-spec.png]]
 
-定义： 令hj和hk为在X上定义的布尔函数。定义一个more-general-than-or-equal-to关系，记做 $\geq_g$ 。 称 $h_j \geq_q h_k$ 当且仅当
+** more-general-than-or-equal-to
+
+定义： 令 $h_j$ 和 $h_k$ 为在 $X$ 上定义的布尔函数。定义一个 more-general-than-or-equal-to 关系，记做 $\geq_g$ 。 称 $h_j \geq_g h_k$ 当且仅当
 
 $$(\forall x\in X)[(h_k(x)=1)\rightarrow (h_j(x)=1)]$$
 
-
 * FIND-S
+** FIND-S 算法
 
-1. 将h初始化为H中最特殊假设
-2. 对每个正例x
-   对h的每个属性约束 $a_i$
-     - 如果 x满足 $a_i$
-       那么 不做任何事
-     - 否则 将 h 中 $a_i$ 替换为满足 x 的紧邻的更一般约束
-3. 输出假设h
+- 将 $h$ 初始化为 $H$ 中最特殊假设
+- 对每个正例 $x$
+   - 对h的每个属性约束 $a_i$
+      - 如果 $x$ 满足 $a_i$
+        那么 不做任何事
+      - 否则将 $h$ 中 $a_i$ 替换为满足 $x$ 的紧邻的更一般约束
+- 输出假设h
 
 ** FIND-S 的假设空间搜索
-
+\center
+#+attr_latex: width=0.7\textwidth
 [[./image/finds-gen-spec.png]]
 
 * 变型空间和候选消除算法
@@ -136,43 +142,50 @@ $$(\forall x\in X)[(h_k(x)=1)\rightarrow (h_j(x)=1)]$$
 
 \[Consistent(h,D) \equiv (\forall \langle x, c(x) \rangle \in D)\  h(x)=c(x) \]
 
-- 变型空间(version space)： 关于假设空间H和训练样例集D的变型空间(version space)，标记为VSH,D，是H中与训练样例D一致的所有假设构成的子集。
+- 变型空间(version space)： 关于假设空间 $H$ 和训练样例集 $D$ 的变型空间(version space)，标记为 $VS_{H,D}$ ，是 $H$ 中与训练样例 $D$ 一致的所有假设构成的子集。
 
 \[VS_{H,D} \equiv \{h \in H|Consistent(h,D)\} \]
 
 ** 列表后消除算法(List-Then-Eliminate)
 
-1. 变型空间VersionSpace←包含H中所有假设的列表
-2. 对每个训练样例<x, c(x)> 
-   - 从变型空间中移除所有h(x)≠c(x)的假设h
-3. 输出VersionSpace中的假设列表
+- 变型空间 $VersionSpace\leftarrow$ 包含H中所有假设的列表
+- 对每个训练样例 $\langle x, c(x)\rangle$
+   - 从变型空间中移除所有 $h(x)\neq c(x)$ 的假设h
+- 输出 $VersionSpace$ 中的假设列表
 
 ** 变型空间的更简洁表示
 
 - 定义： 关于假设空间H和训练数据D的一般边界（General boundary）G，是在H中与D相一致的极大一般（maximally general）成员的集合。
-    $S\equiv\{ g\in H | Consistent(g, D)\land(\neg\exists g´\in H)[(g' >_g g)\land Consistent(g´, D)]\}$
+    $S\equiv\{ g\in H | Consistent(g, D)\land(\neg\exists g'\in H)[(g' >_g g)\land Consistent(g', D)]\}$
 - 定义： 关于假设空间H和训练数据D的特殊边界（Specific boundary）S，是在H中与D相一致的极大特殊（maximally specific）成员的集合。
-    $S\equiv\{ s\in H | Consistent(s, D)\land(\neg\exists s´\in H)[(s >_g s´)\land Consistent(s´, D)]\}$
+    $S\equiv\{ s\in H | Consistent(s, D)\land(\neg\exists s'\in H)[(s >_g s')\land Consistent(s', D)]\}$
 
+** 例
+\center
+#+attr_latex: width=0.8\textwidth
 [[./image/figure-vs3.png]]
 
 ** 变型空间表示定理
 
-令X为一任意的实例集合，H与为X上定义的布尔假设的集合。令c: X→{0, 1}为X上定义的任一目标概念，并令D为任一训练样例的集合 {<x, c(x)>}。对所有的X，H，c，D以及良好定义的S和G：
- $VS_{H,D} = \{ h\in H | (\exist s\in S) (\exist g\in G) (g\geq_g h \geq_g s)}$
+令 $X$ 为一任意的实例集合， $H$ 与为 $X$ 上定义的布尔假设的集合。令 $c: X\rightarrow\{0, 1\}$ 为 $X$ 上定义的任一目标概念，并令 $D$ 为任一训练样例的集合 $\{\langle x, c(x)\rangle\}$ 。对所有的 $X,H,c,D$ 以及良好定义的 $S$ 和 $G$ ：
+ $$VS_{H,D} = \{ h\in H | (\exists s\in S) (\exists g\in G) (g\geq_g h \geq_g s)\}$$
 
 ** 候选消除算法(Candidate Elimination Algorithm)
-- 将G集合初始化为H中极大一般假设
-- 将S集合初始化为H中极大特殊假设
-- 对每个训练样例d，进行以下操作：
-    - 如果d是一正例
+将G集合初始化为H中极大一般假设
+
+将S集合初始化为H中极大特殊假设
+
+对每个训练样例d，进行以下操作：
+
+如果d是一正例
          - 从G中移去所有与d不一致的假设
          - 对S中每个与d不一致的假设s
                - 从S中移去s
                - 把s的所有的极小泛化式h加入到S中，其中h满足
                       - h与d一致，而且G的某个成员比h更一般
                - 从S中移去所有这样的假设：它比S中另一假设更一般
-    - 如果d是一个反例
+
+如果d是一个反例
         - 从S中移去所有与d不一致的假设
         - 对G中每个与d不一致的假设g
                -从G中移去g
@@ -181,47 +194,61 @@ $$(\forall x\in X)[(h_k(x)=1)\rightarrow (h_j(x)=1)]$$
         - 从G中移去所有这样的假设：它比G中另一假设更特殊
 
 ** 算法示例
-
+\center
+#+attr_latex: width=0.6\textwidth
 [[./image/vsexamp-initialize.png]]
-
+** 算法示例
+\center
+#+attr_latex: width=0.6\textwidth
 [[./image/vsexamp0.png]]
-
+** 算法示例
+\center
+#+attr_latex: width=0.6\textwidth
 [[./image/vsexamp1.png]]
-
+** 算法示例
+\center
+#+attr_latex: width=0.7\textwidth
 [[./image/vsexamp2.png]]
-
+** 算法示例
+\center
+#+attr_latex: width=0.7\textwidth
 [[./image/vsexamp3.png]]
-
+** 算法示例
+\center
+#+attr_latex: width=0.7\textwidth
 [[./image/figure-vs3.png]]
-
 
 * 归纳偏置
 ** 一个有偏的假设空间
-EnjoySportw例子中，假设空间限制为只包含属性值的合取。不能够表示最简单的析取形式的目标概念，如“Sky=Sunny或Sky=Cloudy”。
+EnjoySportw例子中，假设空间限制为只包含属性值的合取。不能够表示最简单的析取形式的目标概念，如“Sky=Sunny or Sky=Cloudy”。
 给定以下三个训练样例，它们来自于该析取式假设，我们的算法将得到一个空的变型空间。
 
-| Example | Sky    | AirTemp | Humidity | Wind   | Water | Forecast | EnjoySport |
-|---------+--------+---------+----------+--------+-------+----------+------------|
-|       1 | Sunny  | Warm    | Normal   | Strong | Cool  | Change   | Yes        |
-|       2 | Cloudy | Warm    | Normal   | Strong | Cool  | Change   | Yes        |
-|       3 | Rainy  | Warm    | Normal   | Strong | Cool  | Change   | No         |
+\samll
+| Sky    | AirTemp | Humidity | Wind   | Water | Forecast | EnjoySport |
+|--------+---------+----------+--------+-------+----------+------------|
+| Sunny  | Warm    | Normal   | Strong | Cool  | Change   | Yes        |
+| Cloudy | Warm    | Normal   | Strong | Cool  | Change   | Yes        |
+| Rainy  | Warm    | Normal   | Strong | Cool  | Change   | No         |
 
-之所以不存在与这3个样例一致的假设的原因是，与头两个样例一致，并且能在给定假设空间H中表示的最特殊的假设是：
+** 无法生成变型空间的原因
+
+与头两个样例一致，并且能在给定假设空间H中表示的最特殊的假设是：
 
 S2: <?, Warm, Nornal, Strong, Cool, Change>
 
 将第三个样例错误地划为正例。
 
 ** 无偏的学习器
-为EnjoySport学习任务定义一个新的假设空间H´，允许使用前面的假设的任意析取、合取和否定式。例如目标概念“Sky=Sunny 或Sky=Cloudy”可被描述为：
+为EnjoySport学习任务定义一个新的假设空间H'，允许使用前面的假设的任意析取、合取和否定式。例如目标概念“Sky=Sunny  or Sky=Cloudy”可被描述为：
 
 <Sunny, ?, ?, ?, ?, ?> ∨ <Cloudy, ?, ?, ?, ?, ?>
 
 排除了表达能力的问题，但概念学习算法将完全无法从训练样例中泛化！
 
-其原因如下，假定我们提供了3个正例（x1，x2，x3）以及两个反例（x4，x5）给学习器。这时，变型空间的S边界包含的假设正好是三个正例的析取：
+** 无法泛化的原因
+如下，假定我们提供了3个正例（x1，x2，x3）以及两个反例（x4，x5）给学习器。这时，变型空间的S边界包含的假设正好是三个正例的析取：
 
-$S: \{ (x_1 \lor x_2 \lor x_3) \}$
+$$S: \{ (x_1 \lor x_2 \lor x_3) \}$$
 
 因为这是能覆盖3个正例的最特殊假设。相似地，G边界将由那些刚好能排除掉反例的那些假设组成。
 $G: \{\neg (x_4\lor x_5)\}$
@@ -232,7 +259,6 @@ $G: \{\neg (x_4\lor x_5)\}$
 - $D_c = \{\langle x, c(x) \rangle \}$ 为 $c$ 的任意训练样例集合。
 -  $L(x_i,D_c)$ 表示经过数据 $D_c$ 的训练后 $L$ 赋予实例 $x_i$ 的分类。
 
-
 $L$ 的归纳偏置是最小断言集合 $B$ ，它使任意目标概念 $c$ 和相应的训练样例 $D_c$ 满足
 
 \[
@@ -242,7 +268,8 @@ $L$ 的归纳偏置是最小断言集合 $B$ ，它使任意目标概念 $c$ 和
  $A \vdash B$ 表示 $A$  逻辑蕴涵 $B$
 
 ** 归纳系统与等价的演绎系统
-
+\center
+#+attr_latex: width=0.7\textwidth
 [[./image/figure-vs-bias-new.png]]
 
 ** 归纳偏置不同的学习器

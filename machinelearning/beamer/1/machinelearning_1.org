@@ -274,6 +274,7 @@ LMS 权值更新法则(LMS Weight update rule)
       $c$ 是一个小常数, 如 0.1, 用来调整权值更新的幅度
 
 ** 最终设计
+\center
 #+attr_latex: width=0.7\textwidth
 [[./image/intro-final-design.png]]
 
@@ -328,12 +329,25 @@ LMS 权值更新法则(LMS Weight update rule)
 - http://mlpack.org/ 
 - http://torch.ch
 - https://github.com/torchnet/
+- http://www.cs.waikato.ac.nz/ml/weka/index.html
+- http://spark.apache.org/mllib/
+- https://mahout.apache.org/
+- http://www.h2o.ai/
+- https://www.tensorflow.org
+- http://caffe.berkeleyvision.org
+- http://deeplearning4j.org/
 - http://www.deeplearning.net/software/theano/
 - http://opencv.org/
 
 ** 资料
-
-- http://philschatz.com/biology-book/  a  freedom book about biology
-- http://www.cs.cmu.edu/~tom/mlbook-chapter-slides.html   Machine Learning slide (LaTeX source )
-- http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/mlbook/latex-support.html Machine Learning slide (LaTeX source )
-- https://learnxinyminutes.com 各种程序设计语言快速入门
+#+begin_example:
+  - http://philschatz.com/biology-book/  
+    a  freedom book about biology
+  - http://www.cs.cmu.edu/~tom/mlbook-chapter-slides.html   
+    Machine Learning slide (LaTeX source )
+  - http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/
+          www/mlbook/latex-support.html 
+     Machine Learning slide (LaTeX source )
+  - https://learnxinyminutes.com 
+    各种程序设计语言快速入门
+#+end_example:
