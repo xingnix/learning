@@ -16,8 +16,8 @@ def gradient_descent_linear_perceptron(training_examples,eta):
 		w=wnew
 		print(w)
 training_examples=[([1,1,1],1),([-1,-1,1],-1),([1,-1,1],-1),([-1,1,1],-1)]
-print("gradient descent method for linear perceptron ")
-gradient_descent_linear_perceptron(training_examples,0.1)
+#print("gradient descent method for linear perceptron ")
+#gradient_descent_linear_perceptron(training_examples,0.1)
 
 
 
@@ -31,6 +31,7 @@ def gradient_descent_sigmoid(training_examples,eta):
 			o=1/(1+np.exp(-sum(w*x)))
 			e+=(t-o)**2
 			dw+=eta*(t-o)*o*(1-o)*np.array(x)
+			# dw+=eta*(t-o)*np.array(x)   #maximum likelihood
 		wnew=w+dw
 		if np.linalg.norm(wnew-w)<0.001 :
 		   break 
@@ -59,5 +60,5 @@ def gradient_descent_sigmoid_like(training_examples,eta):
 		w=wnew
 		print(w)
 training_examples=[([1,1,1],1),([-1,-1,1],-1),([1,-1,1],-1),([-1,1,1],-1)]
-print("gradient descent method for sigmoid like perceptron ")
-gradient_descent_sigmoid_like(training_examples,0.1)
+#print("gradient descent method for sigmoid like perceptron ")
+#gradient_descent_sigmoid_like(training_examples,0.1)

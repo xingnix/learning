@@ -322,32 +322,51 @@ LMS 权值更新法则(LMS Weight update rule)
 - http://open.163.com/special/opencourse/machinelearning.html  斯坦福大学公开课 ：机器学习课程（网易公开课）
 - http://open.163.com/special/opencourse/learningfromdata.html 加州理工学院公开课：机器学习与数据挖掘
 
-** 工具
-
-- http://scikit-learn.org/
-- http://dlib.net 
-- http://mlpack.org/ 
-- http://torch.ch
-- https://github.com/torchnet/
-- http://www.cs.waikato.ac.nz/ml/weka/index.html
-- http://spark.apache.org/mllib/
-- https://mahout.apache.org/
-- http://www.h2o.ai/
-- https://www.tensorflow.org
-- http://caffe.berkeleyvision.org
-- http://deeplearning4j.org/
-- http://www.deeplearning.net/software/theano/
-- http://opencv.org/
 
 ** 资料
-#+begin_example:
+  - https://www.kaggle.com/
+    数据科学竞赛平台、社区
   - http://philschatz.com/biology-book/  
     a  freedom book about biology
-  - http://www.cs.cmu.edu/~tom/mlbook-chapter-slides.html   
+  - [[http://www.cs.cmu.edu/~tom/mlbook-chapter-slides.html][http://www.cs.cmu.edu/\textasciitilde tom/mlbook-chapter-slides.html]]
     Machine Learning slide (LaTeX source )
-  - http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/
-          www/mlbook/latex-support.html 
-     Machine Learning slide (LaTeX source )
-  - https://learnxinyminutes.com 
+  - http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/mlbook/latex-support.html 
+    Machine Learning slide (LaTeX source )
+  - https://learnxinyminutes.com  \
     各种程序设计语言快速入门
-#+end_example:
+  - http://cos.name/
+    统计技术社区
+
+
+* 工具
+** C/C++
+   - http://dlib.net 
+   - http://mlpack.org/ 
+   - http://opencv.org/
+   - http://caffe.berkeleyvision.org
+   - http://mxnet.io/
+
+** Lua
+   - http://torch.ch
+   - https://github.com/torchnet/
+
+** Python
+   - http://scikit-learn.org/
+   - https://www.tensorflow.org
+   - http://www.deeplearning.net/software/theano/
+   - https://github.com/NervanaSystems/neon
+** Java
+     - http://www.cs.waikato.ac.nz/ml/weka/index.html
+     - http://moa.cms.waikato.ac.nz/
+     - http://spark.apache.org/mllib/
+     - https://mahout.apache.org/
+     - http://www.h2o.ai/
+     - http://deeplearning4j.org/
+     - http://neuroph.sourceforge.net/
+     - http://airbnb.io/aerosolve/
+** 科学计算
+- R
+- Matlab/Octave
+- Scilab
+- Sage
+- Julia
