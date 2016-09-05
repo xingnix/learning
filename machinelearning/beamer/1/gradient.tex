@@ -1,0 +1,122 @@
+\documentclass{article}
+ \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+
+\usepackage{amsmath}
+
+
+\begin{document}
+
+\title{线性代数中的梯度计算}
+\author{邢超(xingnix@live.com)}
+\maketitle
+
+
+\section{从定义出发}
+
+\subsection{$Y=X^T A X , A^T=A,dim(A)=(N,N)dim(X)=(N,1)$}
+\begin{eqnarray*}
+	Y+dY &=&(X+dX)^T A (X+dX) \\
+	dY &=& dX^T A X+X^T A dX+dX^T A dX \\
+	dY &=& dX^T A X+X^T A dX+O(dX) \\
+	dY &=&  X^T A dX+X^T A dX \\
+	dY &=&  2 X^T A dX\\
+	\frac{dY}{dX} &=&  2 X^T A \\
+\end{eqnarray*}
+
+\subsection{$E=(Y-AX)^T (Y-AX) , dim(A)=(M,N)dim(X)=(N,1)$}
+\begin{eqnarray*}
+E+dE &=& (Y-A(X+dX))^T(Y-A(X+dX)) \\
+ &=& (Y-AX - A dX)^T(Y-AX - A dX) \\
+dE &=& (- A dX)^T(Y-AX) + (Y-AX)^T (-A dX)  + (A dX)^T( A dX) \\
+ &=& (- A dX)^T(Y-AX ) + (Y-AX )^T (-A dX)  + O(dX) \\
+ &=& (Y-AX )^T(-A dX) + (Y-AX )^T (-A dX)  \\
+ &=& 2(AX-Y)^T A dX \\
+\frac{dE}{dX} &=& 2(AX-Y)^T A
+\end{eqnarray*}
+
+\section{各分量偏导数}
+
+\subsection{$Y=X^T A X,A^T=A,dim(A)=(N,N)dim(X)=(N,1)$}
+
+%\newcommand{\pd}[1]{\partial #1}
+
+\begin{eqnarray*}
+Y &= &\sum_{i=1}^{N}\sum_{j=1}^{N}x_i a_{i,j} x_j \\
+\frac{\partial Y}{\partial x_k} &=& \sum_{i=1}^{N}\sum_{j=1}^{N}\frac{\partial (x_i a_{i,j} x_j)}{\partial x_k} \\
+&=& \sum_{i=1}^{N}\sum_{j=1}^{N}(\frac{\partial x_i}{\partial x_k}a_{i,j} x_j+
+x_i a_{i,j} \frac{\partial x_j}{\partial x_k} )\\
+&=& \sum_{i=1}^{N}\sum_{j=1}^{N}\frac{\partial x_i}{\partial x_k}a_{i,j} x_j+ 
+\sum_{i=1}^{N}\sum_{j=1}^{N} x_i a_{i,j}\frac{\partial x_j}{\partial x_k}\\
+&=& \sum_{j=1}^{N}a_{k,j} x_j+\sum_{i=1}^{N} x_i a_{i,k}\\
+&=& \sum_{i=1}^{N}a_{k,i} x_i+\sum_{i=1}^{N} x_i a_{i,k}\\
+&=& \sum_{i=1}^{N}(a_{k,i} +a_{i,k})x_i\\
+&=& 2\sum_{i=1}^{N}a_{k,i}x_i\\
+\end{eqnarray*}
+
+
+\subsection{$E=(Y-AX)^T (Y-AX) , dim(A)=(M,N)dim(X)=(N,1)$}
+\begin{eqnarray*}
+E &=& \sum_{i=1}^{M}(y_i-\sum_{j=1}^{N}a_{i,j}x_j)^2 \\
+\frac{E}{x_k}&=&\sum_{i=1}^{M}\frac{\partial (y_i-\sum_{j=1}^{N}a_{i,j}x_j)^2}{\partial x_k} \\
+&=&2\sum_{i=1}^{M}(y_i-\sum_{j=1}^{N}a_{i,j}x_j)\frac{\partial (y_i-\sum_{j=1}^{N}a_{i,j}x_j)}{\partial x_k} \\
+&=&2\sum_{i=1}^{M}(y_i-\sum_{j=1}^{N}a_{i,j}x_j)\frac{\partial (-\sum_{j=1}^{N}a_{i,j}x_j)}{\partial x_k} \\
+&=&2\sum_{i=1}^{M}(\sum_{j=1}^{N}a_{i,j}x_j-y_i)\sum_{j=1}^{N}\frac{\partial (a_{i,j}x_j)}{\partial x_k} \\
+&=&2\sum_{i=1}^{M}(\sum_{j=1}^{N}a_{i,j}x_j-y_i)\sum_{j=1}^{N}a_{i,j}\frac{\partial x_j}{\partial x_k} \\
+&=&2\sum_{i=1}^{M}(\sum_{j=1}^{N}a_{i,j}x_j-y_i)a_{i,k} \\
+\end{eqnarray*}
+
+\section{向量求导}
+
+\subsection{$Y = AX$}
+
+\begin{eqnarray*}
+  \frac{dY}{dX} & = & A
+\end{eqnarray*}
+
+\subsection{$Y=AU+BV,dim(U)=(N,1),dim(V)=(M,1)$}
+
+\begin{eqnarray*}
+  \frac{\partial Y}{\partial U} & = & A\\
+  \frac{\partial Y}{\partial V} & = & B
+\end{eqnarray*}
+
+\subsection{$Y=AU+BV,U=CX,V=DX,dim(X)=(N,1)$}
+
+\begin{eqnarray*}
+  \frac{d Y}{d X } & = & \frac{\partial Y}{\partial U}\frac{d U}{d X}+
+                          \frac{\partial Y}{\partial V}\frac{d V}{d X}\\
+  &=&AC+BD
+\end{eqnarray*}
+
+\subsection{$Y = X^T AX,A^T =A,dim(X)=(N,1)$}
+
+设
+\begin{eqnarray*}
+X^{T} AX & = & U^{T} AV\\
+  U & = & X\\
+  V & = & X
+\end{eqnarray*}
+得
+\begin{eqnarray*}
+  \frac{dY}{dX} & = & \frac{\partial( U^T AV)}{\partial U}\frac{d U}{dX} +
+                \frac{\partial( U^T AV)}{\partial V} \frac{dV}{dX}\\
+  & = & \frac{\partial ( V^{T} A^{T} U)}{\partial U} \frac{dU}{dX} +
+           U^{T} A \frac{dV}{dX}\\
+  &=& \frac{\partial ( V^{T} A U)}{\partial U} \frac{dU}{dX} +
+           U^{T} A \frac{dV}{dX}\\
+  & = & V^{T} A + X^{T} A\\
+  & = & X^{T} A + X^{T} A\\
+  & = & 2X^T A
+\end{eqnarray*}
+
+\subsection{$E=(Y-AX)^T (Y-AX) , dim(A)=(M,N)dim(X)=(N,1)$}
+\begin{eqnarray*}
+  \frac{dY}{dX} &=& \left(\frac{d(Y-AX)}{dX}\right) ^T (Y-AX)+  (Y-AX)^T\frac{d(Y-AX)}{dX}\\
+  &=&(-A) ^T (Y-AX)+  (Y-AX)^T(-A)\\
+  &=&(Y-AX)^T (-A)+  (Y-AX)^T(-A)\\
+  &=&2(AX-Y)^T A
+\end{eqnarray*}
+
+
+\end{document}
