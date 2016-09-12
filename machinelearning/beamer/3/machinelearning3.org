@@ -1,4 +1,19 @@
  # +LaTeX_CLASS: article
+     
+
+#+LATEX_HEADER: \usepackage{enumitem}
+#+LATEX_HEADER: \setlistdepth{9}
+#+LATEX_HEADER: \setlist[itemize,1]{label=$\diamond$}
+#+LATEX_HEADER: \setlist[itemize,2]{label=$\star$}
+#+LATEX_HEADER: \setlist[itemize,3]{label=$\ast$}
+#+LATEX_HEADER: \setlist[itemize,4]{label=$\circ$}
+#+LATEX_HEADER: \setlist[itemize,5]{label=$\cdot$}
+#+LATEX_HEADER: \setlist[itemize,6]{label=$\bullet$}
+#+LATEX_HEADER: \setlist[itemize,7]{label=$\bullet$}
+#+LATEX_HEADER: \setlist[itemize,8]{label=$\bullet$}
+#+LATEX_HEADER: \setlist[itemize,9]{label=$\bullet$}
+#+LATEX_HEADER: \renewlist{itemize}{itemize}{9}
+
 #+LATEX_HEADER: \usepackage{etex}
 #+LATEX_HEADER: \usepackage{amsmath}
  # +LATEX_HEADER: \usepackage[usenames]{color}
@@ -48,7 +63,7 @@
 #+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 
 #+latex_header:\setbeamercovered{transparent}
-#+BEAMER_FRAME_LEVEL: 3
+#+BEAMER_FRAME_LEVEL: 2
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
 
 
@@ -56,15 +71,15 @@
 
 
 
-
-* 决策树表示法
+* 决策树介绍
+** 决策树表示法
 
 - 决策树通过把实例从根结点排列（sort）到某个叶子结点来分类实例，叶子结点即为实例所属的分类。
 - 树上的每一个结点指定了对实例的某个属性（attribute）的测试，并且该结点的每一个后继分支对应于该属性的一个可能值。
 - 分类实例的方法是从这棵树的根结点开始，测试这个结点指定的属性，然后按照给定实例的该属性值对应的树枝向下移动。
 - 这个过程再在以新结点为根的子树上重复。
 
-* 决策树学习的适用问题
+** 决策树学习的适用问题
 
 - 实例是由“属性-值”对（pair）表示的。实例是用一系列固定的属性（例如，Temperature）和它们的值（例如，Hot）来描述的。
    最简单的决策树学习中，每一个属性取少数的分离的值（例如，Hot、Mild、Cold）。
@@ -80,10 +95,8 @@
 
 ** A Tree to Predict C-Section Risk 
 
-Learned from medical records of 1000 women
-
-Negative examples are C-sections
-
+- Learned from medical records of 1000 women
+- Negative examples are C-sections
 #+BEGIN_EXAMPLE
   [833+,167-] .83+ .17-
   Fetal_Presentation = 1: [822+,116-] .88+ .12-
@@ -101,24 +114,28 @@ Negative examples are C-sections
 
 
 * 基本的决策树学习算法
-** ID3(Examples，Target_attribute，Attributes)
-    Examples即训练样例集。
-    Target_attribute是这棵树要预测的目标属性。
-    Attributes是除目标属性外供学习到的决策树测试的属性列表。
-    返回能正确分类给定Examples的决策树。
-- 创建树的Root结点
-- 如果Examples都为正，那么返回label =+ 的单结点树Root
-- 如果Examples都为反，那么返回label =- 的单结点树Root
-- 如果Attributes为空，那么返回单结点树Root，label=Examples中最普遍的Target_attribute值
-- 否则
-   - A←Attributes中分类Examples能力最好的属性
-   - Root的决策属性←A
-   - 对于A的每个可能值 $v_i$
-          - 在Root下加一个新的分支对应测试 $A=v_i$
-          - 令Examples_{v_i}为Examples中满足A属性值为 $v_i$ 的子集
-             -  Examples_{v_i}是否为空？
-                -  是则在这个新分支下加一个叶子结点，结点的label=Examples中最普遍的Target_attribute值
-                -  否则在这个新分支下加一个子树ID3（, Target_attribute, Attributes-{A}）
+** ID3(Examples，Target.Attribute，Attributes)
+-  Examples: 训练样例集。
+-  Target.Attribute: 要预测的目标属性。
+-  Attributes: 除目标属性外供学习到的决策树测试的属性列表。
+-  返回值：能分类给定Examples的决策树。
+
+** ID3(Examples，Target.Attribute，Attributes)
+-  创建树的Root结点
+-  若Examples都为正，返回 $label =+$ 的单结点树Root
+-  若Examples都为反，返回 $label =-$ 的单结点树Root
+-  如果Attributes为空，那么返回单结点树Root，label=Examples中最普遍的Target.Attribute值
+
+** ID3(Examples，Target.Attribute，Attributes)
+-  否则
+   -  A←Attributes中分类Examples能力最好的属性
+   -  Root的决策属性←A
+   -  对于A的每个可能值 $v_i$
+          -  在Root下加一个新的分支对应测试 $A=v_i$
+          -  令 $Examples_{v_i}$ 为Examples中满足A属性值为 $v_i$ 的子集
+          -  $Examples_{v_i}$ 是否为空？
+                -  是则在这个新分支下加一个叶子结点，结点的label=Examples中最普遍的Target.Attribute值
+                -  否则在这个新分支下加一个子树ID3（ $Examples_{v_i}$ , Target.Attribute, Attributes-{A}）
 
 ** 最佳分类属性
 
@@ -133,10 +150,12 @@ Negative examples are C-sections
 - $p_{\oplus}$ 是 $S$ 中正例的比例
 - $p_{\ominus}$ 是 $S$ 中反例的比例 
 
-[[./image/dt-fig-entropy-new.png]]
-
 熵确定了要编码集合 S 中任意成员（即以均匀的概率随机抽出的一个成员）的分类所需要的最少二进制位数。
 
+** 熵（entropy）
+\center
+#+attr_latex: width=0.6\textwidth
+[[./image/dt-fig-entropy-new.png]]
 
 
 ** 信息增益度量
@@ -146,8 +165,9 @@ Negative examples are C-sections
 
 \[ Gain(S,A) \equiv Entropy(S)\ - \sum_{v \in Values(A)} \frac{|S_{v}|}{|S|}Entropy(S_{v}) \]
 
-其中 Values(A)是属性A所有可能值的集合，是S中属性A的值为v的子集（也就是， $S_v=\{s\in S|A(s)=v\}$）
+其中 Values(A)是属性A所有可能值的集合，是S中属性A的值为v的子集（也就是， $S_v=\{s\in S|A(s)=v\}$ ）
 
+** 信息增益度量
 
 [[./image/dt-s1.png]]
 
@@ -172,17 +192,21 @@ Negative examples are C-sections
 
 
 ** Selecting the Next Attribute
-
+   
 [[./image/dt-inf.png]]
 
+** Selecting the Next Attribute
+\center
+#+attr_latex: width=0.6\textwidth
 [[./image/dt-t.png]]
 
-
-entropy(x)=-x*log2(x)-(1-x)*log2(1-x)
-Gain(S,Outlook)=entropy(5/14)-5/14*entropy(2/5)-5/14*entropy(3/5)
+ # entropy(x)=-x*log2(x)-(1-x)*log2(1-x)
+ # Gain(S,Outlook)=entropy(5/14)-5/14*entropy(2/5)-5/14*entropy(3/5)
 
 ** Hypothesis Space Search by ID3
 
+\center
+#+attr_latex: width=0.5\textwidth
 [[./image/dt-search.png]]
 
 
@@ -190,19 +214,21 @@ Gain(S,Outlook)=entropy(5/14)-5/14*entropy(2/5)-5/14*entropy(3/5)
 
 
 * ID3算法的搜索空间和搜索策略
+** ID3算法的搜索空间
 - ID3算法中的假设空间包含所有的决策树，它是相对于现有属性的有限离散值函数的一个完整空间。
-   因为每个有限离散值函数可被表示为某个决策树，所以ID3算法避免了搜索不完整假设空间（例如那些仅考虑合取假设的方法）的一个主要风险：假设空间可能不包含目标函数。
+   - 因为每个有限离散值函数可被表示为某个决策树，所以ID3算法避免了搜索不完整假设空间（例如那些仅考虑合取假设的方法）的一个主要风险：假设空间可能不包含目标函数。
 - 当遍历决策树空间时，ID3仅维护单一的当前假设。
-   这与变型空间候选消除方法不同，后者维护了与当前的训练样例一致的所有假设的集合。
-   因为仅考虑单一的假设，ID3算法失去了表示所有一致假设所带来的优势。
-   例如，它不能判断有多少个其他的决策树也是与现有的训练数据一致的，或者使用新的实例查询来最优地区分这些竞争假设。
+   - 这与变型空间候选消除方法不同，后者维护了与当前的训练样例一致的所有假设的集合。
+   - 因为仅考虑单一的假设，ID3算法失去了表示所有一致假设所带来的优势。
+   - 例如，它不能判断有多少个其他的决策树也是与现有的训练数据一致的，或者使用新的实例查询来最优地区分这些竞争假设。
+** ID3算法的搜索策略
 - 基本的ID3算法在搜索中不进行回溯。每当在树的某一层次选择了一个属性进行测试，它不会再回溯重新考虑这个选择。
-   所以，它易受无回溯的爬山搜索中常见风险影响：收敛到局部最优的答案，但不是全局最优的。
-   对于ID3算法，一个局部最优的答案对应着它在一条搜索路径上探索时选择的决策树。然而，这个局部最优的答案可能不如沿着另一条分支搜索到的更令人满意。
+   - 所以，它易受无回溯的爬山搜索中常见风险影响：收敛到局部最优的答案，但不是全局最优的。
+   - 对于ID3算法，一个局部最优的答案对应着它在一条搜索路径上探索时选择的决策树。然而，这个局部最优的答案可能不如沿着另一条分支搜索到的更令人满意。
 - ID3算法在搜索的每一步都使用当前的所有训练样例，以统计为基础决定怎样精化当前的假设。
-   这与那些基于单独的训练样例递增作出决定的方法（例如，Find-S或候选消除法）不同。
-   使用所有样例的统计属性（例如，信息增益）的一个优点是大大减小了对个别训练样例错误的敏感性。
-   因此，通过修改ID3算法的终止准则以接受不完全拟合训练数据的假设，它可以被很容易地扩展到处理含有噪声的训练数据。
+   - 这与那些基于单独的训练样例递增作出决定的方法（例如， Find-S 或候选消除法）不同。
+   - 使用所有样例的统计属性（例如，信息增益）的一个优点是大大减小了对个别训练样例错误的敏感性。
+   - 因此，通过修改ID3算法的终止准则以接受不完全拟合训练数据的假设，它可以被很容易地扩展到处理含有噪声的训练数据。
 
 * ID3算法归纳偏置
 
@@ -256,8 +282,6 @@ What effect on earlier tree?
 
 [[./image/dt-f1.png]]
 
-
-\slidehead{Overfitting \red \ } \bk
 
 **  过拟合（Overfitting）数据
 
@@ -373,15 +397,18 @@ What if some examples missing values of $A$?
 ** 处理代价不同的属性(Attributes with Costs)
 
 Consider
+
 - 医疗诊断,  $BloodTest$ 代价 \$150
 - 机器人, $Width\_from\_1ft$ 代价 23 秒
 
 优先选择尽可能使用低代价属性的决策树，仅当需要产生可靠的分类时才依赖高代价属性。
 
 - Tan and Schlimmer (1990)
-    \[\frac{Gain^{2}(S,A)}{Cost(A)}\]
+
+   \[\frac{Gain^{2}(S,A)}{Cost(A)}\]
 
 - \item Nunez (1988)
+
     \[\frac{2^{Gain(S,A)} - 1}{(Cost(A) + 1)^{w}} \]
      其中 $w \in [0,1]$ 决定代价的重要性
 
