@@ -1,0 +1,89 @@
+\documentclass{article}
+ \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+
+\usepackage{amsmath}
+
+
+\begin{document}
+
+\title{误差反传算法}
+\author{邢超(xingnix@live.com)}
+\maketitle
+
+
+\section{ $\Delta W$ 计算}
+% 利用梯度推导反传公式的过程中可以采用小扰动方法简化推导步骤
+
+误差函数： 
+\[E=(\vec{Y_E}-\vec{Y_o})^T(\vec{Y_E}-\vec{Y_o})\]
+
+
+
+每层输出：  
+\begin{align*}
+\vec{X_o} &=F(W\vec X_i+\vec b)\\
+&=\begin{bmatrix}
+f(\vec w_1 \vec X_i+b_1)  &  f(\vec w_2 x_i+b_2) & \cdots & f(\vec w_n \vec X_i +b_n)
+\end{bmatrix}^T
+\end{align*}
+其中 $\vec w_i$ 为 W 矩阵的第i行。
+
+对于W的一个微小变化 $\Delta W$ ，得：
+\begin{align*}
+\Delta \vec X_o &=\begin{bmatrix}
+f'(\vec w_1 \vec X_i+b_1)\Delta \vec w_1 \vec X_i  &  f'(\vec w_2 \vec X_i+b_2)\Delta \vec w_2 \vec X_i & \cdots & f'(\vec w_n \vec X_i +b_n)\Delta \vec w_n \vec X_i
+\end{bmatrix}^T \\
+&=diag[F'(W\vec{X_i}+\vec{b})]\Delta W\vec X_i \\
+&=diag(F')\Delta W \vec X_i
+\end{align*}
+
+
+其中 $diag(F)$ 表示主对角元素为向量 F的元素的方阵。
+
+误差函数的增量：
+\begin{align*}
+\Delta E &=\Delta E =-2(\vec Y_E-\vec Y_o)^T\cdot diag(F')\Delta (W \vec X_o+b)\\
+& =-2(\vec Y_E-\vec Y_o)^T\cdot diag(F')\Delta W \vec X_o
+\end{align*}
+
+
+
+
+\section{反向传播}
+根据链式法则：
+\begin{align*}
+\Delta \vec X_o&=diag(F')\Delta (W \vec X_i+\vec b)\\
+&=diag(F')W \Delta\vec X_i\\
+\Delta E &= 2(\vec{Y_o}-\vec{Y_E})^T\cdot diag(F') \cdot W \cdot \Delta \vec X_o\\
+&=2(\vec{Y_o}-\vec{Y_E})^T\cdot diag(F') \cdot W \cdot diag(F')\cdot \Delta W\cdot \vec{X_i}
+\end{align*}
+
+对于多层网络权值的更新：
+\begin{align*}
+\Delta E &= \vec{a}^T\cdot\Delta W\cdot \vec{b} \\
+\frac{\partial E}{\partial W} &= \vec{a}\cdot\vec b^T
+\end{align*}
+其中：
+\begin{align*}
+\vec{a}^T&=2(\vec Y_o-\vec Y_E)^T\cdot \prod_{n=1}^{N}[diag(F') \cdot W ]\cdot diag(F') \qquad (n=0,1,2,\ldots)\\
+\vec{b}&=\vec{X_i}\qquad (\text{ inputs of the layer})
+\end{align*}
+
+
+\section{偏置向量}
+对偏置向量的更新可考虑增广权植矩阵 $[W|b]$ ,增广输入 $\begin{bmatrix} \vec X_o  \\ 1\end{bmatrix}$ 。令 $b=\begin{bmatrix} \vec X_o \\ 1\end{bmatrix}$ 即可得到增广权值矩阵的更新公式。
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
