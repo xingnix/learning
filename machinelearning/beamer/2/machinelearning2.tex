@@ -1,4 +1,4 @@
-% Created 2016-08-30 Tue 22:25
+% Created 2016-09-13 Tue 10:58
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -198,7 +198,7 @@ $$(\forall x\in X)[(h_k(x)=1)\rightarrow (h_j(x)=1)]$$
 \label{sec-2-2}
 
 \center
-\includegraphics[width=0.7\textwidth]{./image/finds-gen-spec.png}
+\includegraphics[width=0.8\textwidth]{./image/finds-gen-spec.png}
 \end{frame}
 \section{变型空间和候选消除算法}
 \label{sec-3}
@@ -264,38 +264,34 @@ $$(\forall x\in X)[(h_k(x)=1)\rightarrow (h_j(x)=1)]$$
 \frametitle{候选消除算法(Candidate Elimination Algorithm)}
 \label{sec-3-6}
 
-将G集合初始化为H中极大一般假设
-
-将S集合初始化为H中极大特殊假设
-
-对每个训练样例d，进行以下操作：
-
-如果d是一正例
+\begin{itemize}
+\item 将G集合初始化为H中极大一般假设
+\item 将S集合初始化为H中极大特殊假设
+\item 对每个训练样例d，进行以下操作：
+\item 如果d是一正例
 \begin{itemize}
 \item 从G中移去所有与d不一致的假设
 \item 对S中每个与d不一致的假设s
 \begin{itemize}
 \item 从S中移去s
-\item 把s的所有的极小泛化式h加入到S中，其中h满足
-\begin{itemize}
-\item h与d一致，而且G的某个成员比h更一般
-\end{itemize}
+\item 把s的所有的极小泛化式h加入到S中，其中h满足:
+
+                 h与d一致，而且G的某个成员比h更一般
 \item 从S中移去所有这样的假设：它比S中另一假设更一般
 \end{itemize}
 \end{itemize}
-
-如果d是一个反例
+\item 如果d是一个反例
 \begin{itemize}
 \item 从S中移去所有与d不一致的假设
 \item 对G中每个与d不一致的假设g
-               -从G中移去g
 \begin{itemize}
-\item 把g的所有的极小特化式h加入到G中，其中h满足
-\begin{itemize}
-\item h与d一致，而且S的某个成员比h更特殊
-\end{itemize}
+\item 从G中移去g
+\item 把g的所有的极小特殊化式h加入到G中，其中h满足:
+
+                h与d一致，而且S的某个成员比h更特殊
 \end{itemize}
 \item 从G中移去所有这样的假设：它比G中另一假设更特殊
+\end{itemize}
 \end{itemize}
 \end{frame}
 \begin{frame}
