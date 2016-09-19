@@ -1,0 +1,128 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\cdummy}{\cdot}
+\newcommand{\nosymbol}{}
+\newcommand{\tmaffiliation}[1]{\thanks{\textit{Affiliation:} #1}}
+\newcommand{\tmdate}[1]{\today}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+\title{Back Propogation Explanation}
+
+\author{
+  Xing Chao
+  \tmaffiliation{North Western Polytechnical University, xingnix@live.com}
+}
+
+\date{\tmdate{}}
+
+\maketitle
+
+\section{Scalar $f$ , $w$ and $x$ }
+
+\subsection{Single layer}
+
+\begin{eqnarray*}
+  o & = & f (wx-b)\\
+  \frac{do}{dw} & = & f'  \frac{d}{dw}  (wx)\\
+  & = & f' x\\
+  e & = & (t-o)^{2}\\
+  \frac{de}{dw} & = & 2 (o-t)  \frac{\tmop{do}}{dw}\\
+  & = & 2 (o-t) f' x\\
+  \Delta w & = & - \eta \frac{de}{dw}\\
+  & = & -2 \eta (o-t) f' x
+\end{eqnarray*}
+
+\subsection{Double layers}
+
+\begin{eqnarray*}
+  o^{(2)} & = & f_{2}  (w^{(2)} o^{(1)} -b_{\nosymbol}^{(2)} )\\
+  o^{(1)} & = & f_{1}  (w^{(1)} x-b^{(1)} )\\
+  e & = & (t-o^{(2)} )^{2}\\
+  \frac{\partial e}{\partial w^{(1)}} & = & \frac{\partial e}{\partial
+  o^{(2)}} \cdummy \frac{\partial o^{(2)}}{\partial o^{(1)}} \cdummy
+  \frac{\partial o^{(1)}}{\partial w^{(1)}}\\
+  & = & 2 (o^{(2)} -t) f_{2}' w^{(2)} f_{1}' x\\
+  \Delta w^{(1)} & = & - \eta \frac{\partial e}{\partial w^{(1)}}\\
+  & = & -2 \eta (o^{(2)} -t) f_{2}' w^{(2)} f_{1}' x
+\end{eqnarray*}
+
+\subsection{Multi layers}
+
+\begin{eqnarray*}
+  o^{(i)} & = & f_{i}  (w^{(i)} o^{(i-1)} -b_{\nosymbol}^{(i)} )\\
+  e & = & (t-o^{(n)} )^{2}\\
+  \frac{\partial e}{\partial w^{(i)}} & = & \dfrac{\partial e}{\partial
+  o^{(n)}} \cdummy \frac{\partial o^{(n)}}{\partial o^{(n-1)}} \cdots
+  \frac{\partial o^{(i)}}{\partial w^{(i)}}\\
+  & = & 2 (o^{(n)} -t)  \prod_{k=i+1}^{n} [f_{k}' w^{(k)} ]^{\nosymbol}
+  \cdummy f_{i}' o^{(i-1)}\\
+  \Delta w^{(i)} & = & - \eta \frac{\partial e}{\partial w^{(i)}}\\
+  & = & -2 \eta (o^{(n)} -t)  \prod_{k=i+1}^{n} [f_{k}' w^{(k)} ]^{\nosymbol}
+  \cdummy f_{i}' o^{(i-1)}
+\end{eqnarray*}
+
+\section{Multi nodes}
+
+\subsection{Matrix $W$ , vector $X,O$ and $F$}
+
+\begin{eqnarray*}
+  O^{(i)} & = & F_{i}  (W^{(i)} O^{(i-1)} )\\
+  e & = & (T-O^{(n)} )^{T}  (T-O^{(n)} )\\
+  \frac{\partial e}{\partial W^{(i)}} & = & \dfrac{\partial e}{\partial
+  O^{(n)}} \cdummy \frac{\partial O^{(n)}}{\partial O^{(n-1)}} \cdots
+  \frac{\partial O^{(i)}}{\partial W^{(i)}}\\
+  & = & 2 (O^{(n)} -T)^{T}  \prod^{n}_{k=i+1} [ \tmop{diag} (F_{k} )' W^{(k)}
+  ] \cdummy \tmop{diag} (F'_{i} ) O^{(i-1)}
+\end{eqnarray*}
+where
+\begin{eqnarray*}
+  F_{i} (X) & = & F_{i} \left( \left( \begin{array}{cccc}
+    x_{1} & x_{2} & \cdots & x_{n}
+  \end{array} \right)^{T} \right)\\
+  & = & \left( \begin{array}{cccc}
+    f_{i} (x_{1} ) & f_{i} (x_{2} ) & \cdots & f_{i} (x_{n} )
+  \end{array} \right)^{T}\\
+  \frac{\partial}{\partial X} F_{i} (X) & = & \left( \begin{array}{cccc}
+    f'_{i} (x_{1} ) &  &  & \\
+    & f'_{i} (x_{2} ) &  & \\
+    &  & \ddots & \\
+    &  &  & f'_{i} (x_{2} )
+  \end{array} \right)\\
+  & = & \tmop{diag} (F'_{i} )
+\end{eqnarray*}
+
+\subsection{Summation notation}
+
+\begin{eqnarray*}
+  o_{j}^{(i)} & = & f_{i,j}  \left( \sum^{N_{i-1}}_{k=1} w_{j,k}^{(i)}
+  o_{k}^{(i-1)} -b_{j}^{(i)} \right)\\
+  e & = & \sum^{N_{n}}_{j=1} (t_{j} -o_{j}^{(n)} )^{2}\\
+  \frac{\partial e}{\partial w^{(i)}_{j,k}} & = & \sum_{k_{n} =1}^{N_{n}}
+  \dfrac{\partial e}{\partial o_{k_{n}}^{(n)}} \cdummy \sum_{k_{n-1}
+  =1}^{N_{n-1}} \frac{\partial o_{k_{n}}^{(n)}}{\partial o_{k_{n-1}}^{(n-1)}}
+  \cdots \frac{\partial o_{j}^{(i)}}{\partial w_{j,k}^{(i)}}\\
+  & = & 2 \sum^{N_{n}}_{k_{n} =1} (o_{k_{n}}^{(n)} -t_{k_{n}} ) 
+  \sum_{k_{n-1} =1}^{N_{n-1}} f_{n,k_{n}}' w_{k_{n} ,k_{n-1}}^{(n)} \cdots
+  f_{i}' o_{k}^{(i-1)}\\
+  & = & 2 \sum^{N_{n}}_{k_{n} =1} \sum_{k_{n-1} =1}^{N_{n-1}} \sum_{k_{n-2}
+  =1}^{N_{n-2}} \cdots\\
+  &  & (o_{k_{n}}^{(n)} -t_{k_{n}} ) f_{n,k_{n}}' w_{k_{n} ,k_{n-1}}^{(n)}
+  f_{n-1,k_{n-1}}' w^{(n-1)}_{k_{n-1} ,k_{n-2}} \cdots f_{i}' o_{k}^{(i-1)}\\
+  & = & 2 \sum^{N_{n}}_{k_{n} =1} (o_{k_{n}}^{(n)} -t_{k_{n}} ) 
+  \prod^{i+1}_{m=n} \left[ \sum_{k_{m-1} =1}^{N_{m-1}} f_{m,k_{m}}' w_{k_{m}
+  ,k_{m-1}}^{(m)} \right] f_{i}' o_{k}^{(i-1)}\\
+  \Delta w^{(i)} & = & - \eta \frac{\partial e}{\partial w^{(i)}_{j,k}}\\
+  & = & -2 \eta \sum^{N_{n}}_{k_{n} =1} (o_{k_{n}}^{(n)} -t_{k_{n}} ) 
+  \prod^{i+1}_{m=n} \left[ \sum_{k_{m-1} =1}^{N_{m-1}} f_{m,k_{m}}' w_{k_{m}
+  ,k_{m-1}}^{(m)} \right] f_{i}' o_{k}^{(i-1)}\\
+  &  & \\
+  &  & 
+\end{eqnarray*}
+
+\end{document}

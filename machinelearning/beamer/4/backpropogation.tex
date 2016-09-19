@@ -59,20 +59,20 @@ f'(\vec w_1 \vec X_i+b_1)\Delta \vec w_1 \vec X_i  &  f'(\vec w_2 \vec X_i+b_2)\
 &=2(\vec{Y_o}-\vec{Y_E})^T\cdot diag(F') \cdot W \cdot diag(F')\cdot \Delta W\cdot \vec{X_i}
 \end{align*}
 
-对于多层网络权值的更新：
+多层网络：
 \begin{align*}
-\Delta E &= \vec{a}^T\cdot\Delta W\cdot \vec{b} \\
-\frac{\partial E}{\partial W} &= \vec{a}\cdot\vec b^T
+\Delta E &= \vec{\alpha}^T\cdot\Delta W\cdot \vec{\beta} \\
+\frac{\partial E}{\partial W} &= \vec{\alpha}\cdot\vec \beta^T
 \end{align*}
 其中：
 \begin{align*}
-\vec{a}^T&=2(\vec Y_o-\vec Y_E)^T\cdot \prod_{n=1}^{N}[diag(F') \cdot W ]\cdot diag(F') \qquad (n=0,1,2,\ldots)\\
-\vec{b}&=\vec{X_i}\qquad (\text{ inputs of the layer})
+\vec{\alpha}^T&=2(\vec Y_o-\vec Y_E)^T\cdot \prod_{n=i+1}^{N}[diag(F') \cdot W ]\cdot diag(F') \\
+\vec{\beta}&=\vec{X_i}\qquad (\text{ inputs of the layer})
 \end{align*}
 
 
 \section{偏置向量}
-对偏置向量的更新可考虑增广权植矩阵 $[W|b]$ ,增广输入 $\begin{bmatrix} \vec X_o  \\ 1\end{bmatrix}$ 。令 $b=\begin{bmatrix} \vec X_o \\ 1\end{bmatrix}$ 即可得到增广权值矩阵的更新公式。
+对偏置向量的更新可考虑增广权植矩阵 $[W|b]$ ,增广输入 $\begin{bmatrix} \vec X_o  \\ 1\end{bmatrix}$ 。令 $\beta=\begin{bmatrix} \vec X_o \\ 1\end{bmatrix}$ 即可得到增广权值矩阵的更新公式。
 
 
 
