@@ -2,7 +2,7 @@
 filename       :finds.cpp
 author         :maksyuki
 created time   :2016年09月21日 星期三 08时16分16秒
-last modified  :2016年09月21日 星期三 09时14分16秒
+last modified  :2016年09月21日 星期三 20时23分51秒
 file location  :/home/maksyuki/Documents/github/learning/machinelearning/cpp
 ***************************************************/
 
@@ -26,7 +26,7 @@ void Init()
         ans[i] = "NULL";
 }
 
-void Finds()
+void FindS()
 {
     for(int i = 1; i < 5; i++)
     {
@@ -34,11 +34,8 @@ void Finds()
         {
             for(int j = 1; j < 7; j++)
             {
-                if(ans[j] == "NULL")
-                    ans[j] = data[i][j];
-
-                else if(ans[j] != data[i][j])
-                    ans[j] = "?";
+                if(ans[j] == "NULL") ans[j] = data[i][j];
+                else if(ans[j] != data[i][j]) ans[j] = "?";
             }
         }
     }
@@ -46,14 +43,18 @@ void Finds()
 
 int main()
 {
-    //CFF;
-    //CPPFF;
     Init();
-    Finds();
-    cout << "{  ";
+    FindS();
     for(int i = 1; i < 7; i++)
-        cout << data[0][i] << ": " << "\"" << ans[i] << "\"" << "  ";
-    cout << "}"<< endl;
+    {
+        cout << data[0][i];
+        if(i == 1)      cout << ":      ";
+        else if(i == 2) cout << ":  ";
+        else if(i == 4) cout << ":     ";
+        else if(i == 5) cout << ":    ";
+        else            cout << ": ";
+        cout << "\"" << ans[i] << "\"" << endl;
+    }
 
     return 0;
 }
