@@ -1,4 +1,4 @@
-% Created 2016-09-18 Sun 11:10
+% Created 2016-09-21 Wed 08:48
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -252,18 +252,10 @@ $$P(r)  = \frac{n!}{r!(n-r)!}\ p^{r} (1- p)^{n-r}$$
 置信区间(confidence interval)： 某个参数 p 的 N\% 置信区间是一个以 N\% 的概率包含p的区间。
 
 \begin{itemize}
-\item $X$ 落入区间 $(a,b)$ 的概率为：
-    $$\int_{a}^{b} p(x) dx$$
-\item 其望：
-    $$E[X] = \mu$$
-\item 方差：
-    $$Var(X) = \sigma^{2}$$
-\item 标准差：
-    $$\sigma_{X} = \sigma$$
-\end{itemize}
-
-
-\begin{itemize}
+\item $X$ 落入区间 $(a,b)$ 的概率为：  $\int_{a}^{b} p(x) dx$
+\item 其望： $E[X] = \mu$
+\item 方差： $Var(X) = \sigma^{2}$
+\item 标准差： $\sigma_{X} = \sigma$
 \item 80\% 的概率位于 $\mu \pm 1.28 \sigma$ 之间
 \item N\% 的概率位于 $\mu \pm z_{N} \sigma$ 之间
 
@@ -303,6 +295,14 @@ $$error_{\cal{D}}(h) \pm 1.96 \sqrt{\frac{error_{\cal{D}}(h) (1 - error_{\cal{D}
 \begin{frame}
 \frametitle{双侧和单侧边界}
 \label{sec-3-6}
+
+\begin{itemize}
+\item 双侧边界：给出了估计量的上界和下界
+\item 单侧边界：
+\begin{itemize}
+\item 只限定 $h$  的最大借误率
+\end{itemize}
+\end{itemize}
 \end{frame}
 \section{推导置信区间的一般方法}
 \label{sec-4}
@@ -312,7 +312,7 @@ $$error_{\cal{D}}(h) \pm 1.96 \sqrt{\frac{error_{\cal{D}}(h) (1 - error_{\cal{D}
 
 
 考虑独立同分布的随机变量 $Y_{1} \ldots Y_{n}$ 的集合，它们服从一任意的概率分布，均值为 $\mu$ ，有限方差 $\sigma^{2}$ 。定义样本均值
-\[\bar{Y}\equiv\frac{1}{n}\sum_{i=1}^{n}Y_{i} \]  。
+\[\bar{Y}\equiv\frac{1}{n}\sum_{i=1}^{n}Y_{i} \]  
 则当 $n \rightarrow \infty$ 时
 $\bar{Y}$ 服从正态分布，均值为 $\mu$ 且标准差为 $\frac{\sigma^{2}}{n}$ 。
 \end{frame}
