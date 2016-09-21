@@ -1,5 +1,4 @@
  # +LaTeX_CLASS: article
-     
 
 #+LATEX_HEADER: \usepackage{enumitem}
 #+LATEX_HEADER: \setlistdepth{9}
@@ -39,11 +38,12 @@
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 # +LaTeX_CLASS_OPTIONS: [bigger]
-#+latex_header: \usepackage{beamerarticle}
+ # +latex_header: \usepackage{beamerarticle}
 # +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
 #+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
 #+latex_header: \mode<beamer>{\usecolortheme{dove}}
 #+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+#+latex_header: \usepackage{underscore}
 
 #+TITLE:  决策树学习
 #+AUTHOR:    
@@ -52,7 +52,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -80,13 +80,18 @@
 - 这个过程再在以新结点为根的子树上重复。
 
 ** 决策树学习的适用问题
+- 实例是由“属性---值”对（pair）表示的。
+    - 实例是用一系列固定的属性（例如，Temperature）和它们的值（例如，Hot）来描述的。
+    - 最简单的决策树学习中，每一个属性取少数的分离的值（例如，Hot、Mild、Cold）。
+- 目标函数具有离散的输出值。
+    - 决策树可给每个实例赋予一个布尔型的分类（例如，yes或no）。
+    - 决策树方法很容易扩展到学习有两个以上输出值的函数。
+    - 一种更强有力的扩展算法允许学习具有实数值输出的函数，尽管决策树在这种情况下的应用不太常见。
 
-- 实例是由“属性-值”对（pair）表示的。实例是用一系列固定的属性（例如，Temperature）和它们的值（例如，Hot）来描述的。
-   最简单的决策树学习中，每一个属性取少数的分离的值（例如，Hot、Mild、Cold）。
-- 目标函数具有离散的输出值。决策树可给每个实例赋予一个布尔型的分类（例如，yes或no）。决策树方法很容易扩展到学习有两个以上输出值的函数。
-   一种更强有力的扩展算法允许学习具有实数值输出的函数，尽管决策树在这种情况下的应用不太常见。
+** 决策树学习的适用问题
 - 可能需要析取的描述（disjunctive description）。
-- 训练数据可以包含错误。决策树学习对错误有很好的鲁棒性，无论是训练样例所属的分类错误还是描述这些样例的属性值错误。
+- 训练数据可以包含错误。
+    - 决策树学习对错误有很好的鲁棒性，无论是训练样例所属的分类错误还是描述这些样例的属性值错误。
 - 训练数据可以包含缺少属性值的实例。
 
 ** Decision Tree for $PlayTennis$
@@ -112,30 +117,31 @@
   Fetal_Presentation = 3: [8+,22-] .27+ .73-
 #+END_EXAMPLE
 
-
 * 基本的决策树学习算法
-** ID3(Examples，Target.Attribute，Attributes)
+** ID3(Examples，Target_Attribute，Attributes)
 -  Examples: 训练样例集。
--  Target.Attribute: 要预测的目标属性。
+-  Target_Attribute: 要预测的目标属性。
 -  Attributes: 除目标属性外供学习到的决策树测试的属性列表。
 -  返回值：能分类给定Examples的决策树。
 
-** ID3(Examples，Target.Attribute，Attributes)
+** ID3(Examples，Target_Attribute，Attributes)
 -  创建树的Root结点
 -  若Examples都为正，返回 $label =+$ 的单结点树Root
 -  若Examples都为反，返回 $label =-$ 的单结点树Root
--  如果Attributes为空，那么返回单结点树Root，label=Examples中最普遍的Target.Attribute值
+-  如果Attributes为空，那么返回单结点树Root，label=Examples中最普遍的Target_Attribute值
 
-** ID3(Examples，Target.Attribute，Attributes)
--  否则
+** ID3(Examples，Target_Attribute，Attributes)
+-  否则:
    -  A←Attributes中分类Examples能力最好的属性
    -  Root的决策属性←A
    -  对于A的每个可能值 $v_i$
           -  在Root下加一个新的分支对应测试 $A=v_i$
           -  令 $Examples_{v_i}$ 为Examples中满足A属性值为 $v_i$ 的子集
           -  $Examples_{v_i}$ 是否为空？
-                -  是则在这个新分支下加一个叶子结点，结点的label=Examples中最普遍的Target.Attribute值
-                -  否则在这个新分支下加一个子树ID3（ $Examples_{v_i}$ , Target.Attribute, Attributes-{A}）
+                -  是则在这个新分支下加一个叶子结点，结点的label=Examples中最普遍的Target_Attribute值
+                -  否则在这个新分支下加一个子树: 
+
+                      ID3( $Examples_{v_i}$ ,Target_Attribute,Attributes-{A})
 
 ** 最佳分类属性
 
@@ -143,14 +149,14 @@
 
 ** 熵（entropy）
 
-给定包含关于某个目标概念的正反样例的样例集S，那么S相对这个布尔型分类的熵为：
+- 给定包含关于某个目标概念的正反样例的样例集S，那么S相对这个布尔型分类的熵为：
 
-\[ Entropy(S) \equiv  - p_{\oplus} \log_{2} p_{\oplus} -  p_{\ominus} \log_{2}p_{\ominus} \]
+  \[ Entropy(S) \equiv  - p_{\oplus} \log_{2} p_{\oplus} -  p_{\ominus} \log_{2}p_{\ominus} \]
 
-- $p_{\oplus}$ 是 $S$ 中正例的比例
-- $p_{\ominus}$ 是 $S$ 中反例的比例 
+  - $p_{\oplus}$ 是 $S$ 中正例的比例
+  - $p_{\ominus}$ 是 $S$ 中反例的比例 
 
-熵确定了要编码集合 S 中任意成员（即以均匀的概率随机抽出的一个成员）的分类所需要的最少二进制位数。
+- 熵确定了要编码集合 S 中任意成员（即以均匀的概率随机抽出的一个成员）的分类所需要的最少二进制位数。
 
 ** 熵（entropy）
 \center
@@ -160,12 +166,14 @@
 
 ** 信息增益度量
 
-一个属性的信息增益就是由于使用这个属性分割样例而导致的期望熵降低。
-一个属性A相对样例集合S的信息增益Gain(S,A)被定义为
+- 一个属性的信息增益就是由于使用这个属性分割样例而导致的期望熵降低。
+- 一个属性A相对样例集合S的信息增益Gain(S,A)定义为:
 
-\[ Gain(S,A) \equiv Entropy(S)\ - \sum_{v \in Values(A)} \frac{|S_{v}|}{|S|}Entropy(S_{v}) \]
+   \[ Gain(S,A) \equiv Entropy(S)\ - \sum_{v \in Values(A)} \frac{|S_{v}|}{|S|}Entropy(S_{v}) \]
 
-其中 Values(A)是属性A所有可能值的集合，是S中属性A的值为v的子集（也就是， $S_v=\{s\in S|A(s)=v\}$ ）
+   其中 
+     - Values(A)是属性A所有可能值的集合，
+     - $S_v$ 是S中属性A的值为v的子集（即： $S_v=\{s\in S|A(s)=v\}$ ）
 
 ** 信息增益度量
 
@@ -216,7 +224,9 @@
 * ID3算法的搜索空间和搜索策略
 ** ID3算法的搜索空间
 - ID3算法中的假设空间包含所有的决策树，它是相对于现有属性的有限离散值函数的一个完整空间。
-   - 因为每个有限离散值函数可被表示为某个决策树，所以ID3算法避免了搜索不完整假设空间（例如那些仅考虑合取假设的方法）的一个主要风险：假设空间可能不包含目标函数。
+   - 因为每个有限离散值函数可被表示为某个决策树，所以ID3算法避免了搜索不完整假设空间（例如那些仅考虑合取假设的方法）的一个主要风险：
+
+     假设空间可能不包含目标函数。
 - 当遍历决策树空间时，ID3仅维护单一的当前假设。
    - 这与变型空间候选消除方法不同，后者维护了与当前的训练样例一致的所有假设的集合。
    - 因为仅考虑单一的假设，ID3算法失去了表示所有一致假设所带来的优势。
@@ -225,6 +235,7 @@
 - 基本的ID3算法在搜索中不进行回溯。每当在树的某一层次选择了一个属性进行测试，它不会再回溯重新考虑这个选择。
    - 所以，它易受无回溯的爬山搜索中常见风险影响：收敛到局部最优的答案，但不是全局最优的。
    - 对于ID3算法，一个局部最优的答案对应着它在一条搜索路径上探索时选择的决策树。然而，这个局部最优的答案可能不如沿着另一条分支搜索到的更令人满意。
+** ID3算法的搜索策略
 - ID3算法在搜索的每一步都使用当前的所有训练样例，以统计为基础决定怎样精化当前的假设。
    - 这与那些基于单独的训练样例递增作出决定的方法（例如， Find-S 或候选消除法）不同。
    - 使用所有样例的统计属性（例如，信息增益）的一个优点是大大减小了对个别训练样例错误的敏感性。

@@ -84,6 +84,7 @@
 
 - 概率与数理统计
 - 人工智能
+- 模式识别
 - 数据挖掘
 - 最优化理论与方法
 - 控制理论
@@ -336,7 +337,8 @@ LMS 权值更新法则(LMS Weight update rule)
     各种程序设计语言快速入门
   - http://cos.name/
     统计技术社区
-
+  - https://databricks.com/
+    Spark在线学习
 
 * 工具
 ** C/C++
@@ -365,8 +367,10 @@ LMS 权值更新法则(LMS Weight update rule)
      - http://neuroph.sourceforge.net/
      - http://airbnb.io/aerosolve/
 ** 科学计算
-- R
+- Rstudio(R)
 - Matlab/Octave
 - Scilab
 - Sage
 - Julia
+- Spyder(Python)
+- RapidMiner https://rapidminer.com/
