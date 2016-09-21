@@ -15,22 +15,46 @@
   <\eqnarray*>
     <tformat|<table|<row|<cell|o>|<cell|=>|<cell|f<around*|(|w
     x-b|)>>>|<row|<cell|<frac|d o|d w>>|<cell|=>|<cell|f<rprime|'><frac|d |d
-    w><around*|(|w x|)>>>|<row|<cell| >|<cell|=>|<cell|f<rprime|'>x>>|<row|<cell|e>|<cell|=>|<cell|<around*|(|t-o|)><rsup|2>>>|<row|<cell|<frac|d
-    e|d w>>|<cell|=>|<cell|2<around*|(|o-t|)><frac|do|d
-    w>>>|<row|<cell|>|<cell|=>|<cell|2<around*|(|o-t|)>f<rprime|'>x>>|<row|<cell|\<Delta\>w>|<cell|=>|<cell|-\<eta\><frac|d
-    e|d w>>>|<row|<cell|>|<cell|=>|<cell|-2\<eta\><around*|(|o-t|)>f<rprime|'>x>>>>
+    w><around*|(|w x|)>>>|<row|<cell| >|<cell|=>|<cell|f<rprime|'>x>>|<row|<cell|e>|<cell|=>|<cell|<frac|1|2><around*|(|t-o|)><rsup|2>>>|<row|<cell|<frac|d
+    e|d w>>|<cell|=>|<cell|<around*|(|o-t|)><frac|do|d
+    w>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|o-t|)>f<rprime|'>x>>|<row|<cell|\<Delta\>w>|<cell|=>|<cell|-\<eta\><frac|d
+    e|d w>>>|<row|<cell|>|<cell|=>|<cell|-\<eta\><around*|(|o-t|)>f<rprime|'>x>>>>
   </eqnarray*>
 
   <subsection|Double layers>
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|o<rsup|<around*|(|2|)>>>|<cell|=>|<cell|f<rsub|2><around*|(|w<rsup|<around*|(|2|)>>o<rsup|<around*|(|1|)>>-b<rsub|><rsup|<around*|(|2|)>>|)>>>|<row|<cell|o<rsup|<around*|(|1|)>>>|<cell|=>|<cell|f<rsub|1><around*|(|w<rsup|<around*|(|1|)>>x-b<rsup|<around*|(|1|)>>|)>>>|<row|<cell|e>|<cell|=>|<cell|<around*|(|t-o<rsup|<around*|(|2|)>>|)><rsup|2>>>|<row|<cell|<frac|\<partial\>e|\<partial\>w<rsup|<around*|(|1|)>>>>|<cell|=>|<cell|<frac|\<partial\>e|\<partial\>o<rsup|<around*|(|2|)>>>\<cdummy\><frac|\<partial\>o<rsup|<around*|(|2|)>>|\<partial\>o<rsup|<around*|(|1|)>>>\<cdummy\><frac|\<partial\>o<rsup|<around*|(|1|)>>|\<partial\>w<rsup|<around*|(|1|)>>>>>|<row|<cell|>|<cell|=>|<cell|2<around*|(|o<rsup|<around*|(|2|)>>-t|)>f<rsub|2><rprime|'>w<rsup|<around*|(|2|)>>f<rsub|1><rprime|'>x>>|<row|<cell|\<Delta\>w<rsup|<around*|(|1|)>>>|<cell|=>|<cell|-\<eta\><frac|\<partial\>e|\<partial\>w<rsup|<around*|(|1|)>>>>>|<row|<cell|>|<cell|=>|<cell|-2\<eta\><around*|(|o<rsup|<around*|(|2|)>>-t|)>f<rsub|2><rprime|'>w<rsup|<around*|(|2|)>>f<rsub|1><rprime|'>x>>>>
+    <tformat|<table|<row|<cell|o<rsup|<around*|(|2|)>>>|<cell|=>|<cell|f<rsub|2><around*|(|w<rsup|<around*|(|2|)>>o<rsup|<around*|(|1|)>>-b<rsub|><rsup|<around*|(|2|)>>|)>>>|<row|<cell|o<rsup|<around*|(|1|)>>>|<cell|=>|<cell|f<rsub|1><around*|(|w<rsup|<around*|(|1|)>>x-b<rsup|<around*|(|1|)>>|)>>>|<row|<cell|e>|<cell|=>|<cell|<frac|1|2><around*|(|t-o<rsup|<around*|(|2|)>>|)><rsup|2>>>|<row|<cell|<frac|\<partial\>e|\<partial\>w<rsup|<around*|(|1|)>>>>|<cell|=>|<cell|<frac|\<partial\>e|\<partial\>o<rsup|<around*|(|2|)>>>\<cdummy\><frac|\<partial\>o<rsup|<around*|(|2|)>>|\<partial\>o<rsup|<around*|(|1|)>>>\<cdummy\><frac|\<partial\>o<rsup|<around*|(|1|)>>|\<partial\>w<rsup|<around*|(|1|)>>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|o<rsup|<around*|(|2|)>>-t|)>f<rsub|2><rprime|'>w<rsup|<around*|(|2|)>>f<rsub|1><rprime|'>x>>|<row|<cell|\<Delta\>w<rsup|<around*|(|1|)>>>|<cell|=>|<cell|-\<eta\><frac|\<partial\>e|\<partial\>w<rsup|<around*|(|1|)>>>>>|<row|<cell|>|<cell|=>|<cell|-\<eta\><around*|(|o<rsup|<around*|(|2|)>>-t|)>f<rsub|2><rprime|'>w<rsup|<around*|(|2|)>>f<rsub|1><rprime|'>x>>>>
+  </eqnarray*>
+
+  let\ 
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<delta\><rsup|<around*|(|2|)>>>|<cell|=>|<cell|<around*|(|o<rsup|<around*|(|2|)>>-t|)>f<rprime|'><rsub|2>>>|<row|<cell|\<delta\><rsup|<around*|(|1|)>>>|<cell|=>|<cell|\<delta\><rsup|<around*|(|2|)>>w<rsup|<around*|(|2|)>>f<rprime|'><rsub|1>>>>>
+  </eqnarray*>
+
+  then
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<Delta\>w<rsup|<around*|(|1|)>>>|<cell|=>|<cell|-\<eta\>\<delta\><rsup|<around*|(|1|)>>x>>>>
   </eqnarray*>
 
   <subsection|Multi layers>
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|o<rsup|<around*|(|i|)>>>|<cell|=>|<cell|f<rsub|i><around*|(|w<rsup|<around*|(|i|)>>o<rsup|<around*|(|i-1|)>>-b<rsub|><rsup|<around*|(|i|)>>|)>>>|<row|<cell|e>|<cell|=>|<cell|<around*|(|t-o<rsup|<around*|(|n|)>>|)><rsup|2>>>|<row|<cell|<frac|\<partial\>e|\<partial\>w<rsup|<around*|(|i|)>>>>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>o<rsup|<around*|(|n|)>>>\<cdummy\><frac|\<partial\>o<rsup|<around*|(|n|)>>|\<partial\>o<rsup|<around*|(|n-1|)>>>\<cdots\><frac|\<partial\>o<rsup|<around*|(|i|)>>|\<partial\>w<rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|2<around*|(|o<rsup|<around*|(|n|)>>-t|)><big|prod><rsub|k=i+1><rsup|n><around*|[|f<rsub|k><rprime|'>w<rsup|<around*|(|k|)>>|]><rsup|>\<cdummy\>f<rsub|i><rprime|'>o<rsup|<around*|(|i-1|)>>>>|<row|<cell|\<Delta\>w<rsup|<around*|(|i|)>>>|<cell|=>|<cell|-\<eta\><frac|\<partial\>e|\<partial\>w<rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|-2\<eta\><around*|(|o<rsup|<around*|(|n|)>>-t|)><big|prod><rsub|k=i+1><rsup|n><around*|[|f<rsub|k><rprime|'>w<rsup|<around*|(|k|)>>|]><rsup|>\<cdummy\>f<rsub|i><rprime|'>o<rsup|<around*|(|i-1|)>>>>>>
+    <tformat|<table|<row|<cell|o<rsup|<around*|(|i|)>>>|<cell|=>|<cell|f<rsub|i><around*|(|w<rsup|<around*|(|i|)>>o<rsup|<around*|(|i-1|)>>-b<rsub|><rsup|<around*|(|i|)>>|)>>>|<row|<cell|e>|<cell|=>|<cell|<frac|1|2><around*|(|t-o<rsup|<around*|(|n|)>>|)><rsup|2>>>|<row|<cell|<frac|\<partial\>e|\<partial\>w<rsup|<around*|(|i|)>>>>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>o<rsup|<around*|(|n|)>>>\<cdummy\><frac|\<partial\>o<rsup|<around*|(|n|)>>|\<partial\>o<rsup|<around*|(|n-1|)>>>\<cdots\><frac|\<partial\>o<rsup|<around*|(|i|)>>|\<partial\>w<rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|o<rsup|<around*|(|n|)>>-t|)>f<rprime|'><rsub|n><around*|[|<big|prod><rsub|k=i+1><rsup|n>w<rsup|<around*|(|k|)>>f<rprime|'><rsub|k-1>|]>o<rsup|<around*|(|i-1|)>>>>|<row|<cell|\<Delta\>w<rsup|<around*|(|i|)>>>|<cell|=>|<cell|-\<eta\><frac|\<partial\>e|\<partial\>w<rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|-\<eta\><around*|(|o<rsup|<around*|(|n|)>>-t|)>f<rsub|n><rprime|'><around*|[|<big|prod><rsub|k=i+1><rsup|n>w<rsup|<around*|(|k|)>>\<cdummy\>f<rsub|k-1><rprime|'>|]>\<cdummy\>o<rsup|<around*|(|i-1|)>>>>>>
+  </eqnarray*>
+
+  let\ 
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<delta\><rsup|<around*|(|n|)>>>|<cell|=>|<cell|2<around*|(|o<rsup|<around*|(|n|)>>-t|)>f<rprime|'><rsub|n>>>|<row|<cell|\<delta\><rsup|<around*|(|k|)>>>|<cell|=>|<cell|\<delta\><rsup|<around*|(|k+1|)>>w<rsup|<around*|(|k+1|)>>f<rprime|'><rsub|k>>>>>
+  </eqnarray*>
+
+  then
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<Delta\>w<rsup|<around*|(|i|)>>>|<cell|=>|<cell|-\<eta\>\<delta\><rsup|<around*|(|k|)>>o<rsup|<around*|(|i-1|)>>>>>>
   </eqnarray*>
 
   <section|Multi nodes>
@@ -38,7 +62,7 @@
   <subsection|Matrix <math|W> , vector <math|X,O> and <math|F>>
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|O<rsup|<around*|(|i|)>>>|<cell|=>|<cell|F<rsub|i><around*|(|W<rsup|<around*|(|i|)>>O<rsup|<around*|(|i-1|)>>|)>>>|<row|<cell|e>|<cell|=>|<cell|<around*|(|T-O<rsup|<around*|(|n|)>>|)><rsup|T><around*|(|T-O<rsup|<around*|(|n|)>>|)>>>|<row|<cell|<frac|\<partial\>e|\<partial\>W<rsup|<around*|(|i|)>>>>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>O<rsup|<around*|(|n|)>>>\<cdummy\><frac|\<partial\>O<rsup|<around*|(|n|)>>|\<partial\>O<rsup|<around*|(|n-1|)>>>\<cdots\><frac|\<partial\>O<rsup|<around*|(|i|)>>|\<partial\>W<rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|2<around*|(|O<rsup|<around*|(|n|)>>-T|)><rsup|T><big|prod><rsup|n><rsub|k=i+1><around*|[|diag<around*|(|F<rsub|k>|)><rprime|'>W<rsup|<around*|(|k|)>>|]>\<cdummy\>diag<around*|(|F<rprime|'><rsub|i>|)>O<rsup|<around*|(|i-1|)>>>>>>
+    <tformat|<table|<row|<cell|O<rsup|<around*|(|i|)>>>|<cell|=>|<cell|F<rsub|i><around*|(|W<rsup|<around*|(|i|)>>O<rsup|<around*|(|i-1|)>>|)>>>|<row|<cell|e>|<cell|=>|<cell|<frac|1|2><around*|(|T-O<rsup|<around*|(|n|)>>|)><rsup|T><around*|(|T-O<rsup|<around*|(|n|)>>|)>>>|<row|<cell|\<Delta\>e>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>O<rsup|<around*|(|n|)>>>\<cdummy\><frac|\<partial\>O<rsup|<around*|(|n|)>>|\<partial\>O<rsup|<around*|(|n-1|)>>>\<cdots\><frac|\<partial\>O<rsup|<around*|(|i+1|)>>|\<partial\>O<rsup|<around*|(|i|)>>>\<Delta\>O<rsup|<around*|(|i|)>>>>|<row|<cell|\<Delta\>O<rsup|<around*|(|i|)>>>|<cell|=>|<cell|diag<around*|(|F<rprime|'><rsub|i>|)>\<Delta\>W<rsup|<around*|(|i|)>>O<rsup|<around*|(|i-1|)>>>>|<row|<cell|\<Delta\>e>|<cell|=>|<cell|<around*|(|O<rsup|<around*|(|n|)>>-T|)><rsup|T>diag<around*|(|F<rprime|'><rsub|n>|)><around*|[|<big|prod><rsup|n><rsub|k=i+1>W<rsup|<around*|(|k|)>>\<cdummy\>diag<around*|(|F<rprime|'><rsub|k-1>|)>|]>\<Delta\>W<rsup|<around*|(|i|)>>O<rsup|<around*|(|i-1|)>>>>|<row|<cell|<frac|\<partial\>e|\<partial\>W<rsup|<around*|(|i|)>>>>|<cell|=>|<cell|<around*|[|<big|prod><rsup|n><rsub|k=i+1>diag<around*|(|F<rprime|'><rsub|k-1>|)><around*|[|W<rsup|<around*|(|k|)>>|]><rsup|T>|]>diag<around*|(|F<rprime|'><rsub|n>|)><around*|(|O<rsup|<around*|(|n|)>>-T|)><around*|[|O<rsup|<around*|(|i-1|)>>|]><rsup|T>>>>>
   </eqnarray*>
 
   where
@@ -47,10 +71,42 @@
     <tformat|<table|<row|<cell|F<rsub|i><around*|(|X|)>>|<cell|=>|<cell|F<rsub|i><around*|(|<matrix|<tformat|<table|<row|<cell|x<rsub|1>>|<cell|x<rsub|2>>|<cell|\<cdots\>>|<cell|x<rsub|<rsub|n>>>>>>><rsup|T>|)>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|f<rsub|i><around*|(|x<rsub|1>|)>>|<cell|f<rsub|i><around*|(|x<rsub|2>|)>>|<cell|\<cdots\>>|<cell|f<rsub|i><around*|(|x<rsub|<rsub|n>>|)>>>>>><rsup|T>>>|<row|<cell|<frac|\<partial\>|\<partial\>X>F<rsub|i><around*|(|X|)>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|f<rprime|'><rsub|i><around*|(|x<rsub|1>|)>>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|f<rprime|'><rsub|i><around*|(|x<rsub|2>|)>>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|\<ddots\>>|<cell|>>|<row|<cell|>|<cell|>|<cell|>|<cell|f<rprime|'><rsub|i><around*|(|x<rsub|2>|)>>>>>>>>|<row|<cell|>|<cell|=>|<cell|diag<around*|(|F<rprime|'><rsub|i>|)>>>>>
   </eqnarray*>
 
-  <subsection|Summation notation>
+  let\ 
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|o<rsub|j><rsup|<around*|(|i|)>>>|<cell|=>|<cell|f<rsub|i,j><around*|(|<big|sum><rsup|N<rsub|i-1>><rsub|k=1>w<rsub|j,k><rsup|<around*|(|i|)>>o<rsub|k><rsup|<around*|(|i-1|)>>-b<rsub|><rsub|j><rsup|<around*|(|i|)>>|)>>>|<row|<cell|e>|<cell|=>|<cell|<big|sum><rsup|N<rsub|n>><rsub|j=1><around*|(|t<rsub|j>-o<rsub|j><rsup|<around*|(|n|)>>|)><rsup|2>>>|<row|<cell|<frac|\<partial\>e|\<partial\>w<rsup|<around*|(|i|)>><rsub|j,k>>>|<cell|=>|<cell|<big|sum><rsub|k<rsub|n>=1><rsup|N<rsub|n>><dfrac|\<partial\>e|\<partial\>o<rsub|k<rsub|n>><rsup|<around*|(|n|)>>>\<cdummy\><big|sum><rsub|k<rsub|n-1>=1><rsup|N<rsub|n-1>><frac|\<partial\>o<rsub|k<rsub|n>><rsup|<around*|(|n|)>>|\<partial\>o<rsub|k<rsub|n-1>><rsup|<around*|(|n-1|)>>>\<cdots\><frac|\<partial\>o<rsub|j><rsup|<around*|(|i|)>>|\<partial\>w<rsub|j,k><rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|2<big|sum><rsup|N<rsub|n>><rsub|k<rsub|n>=1><around*|(|o<rsub|k<rsub|n>><rsup|<around*|(|n|)>>-t<rsub|k<rsub|n>>|)><big|sum><rsub|k<rsub|n-1>=1><rsup|N<rsub|n-1>><rsup|>f<rsub|n,k<rsub|n>><rprime|'>w<rsub|k<rsub|n>,k<rsub|n-1>><rsup|<around*|(|n|)>>\<cdots\>f<rsub|i><rprime|'>o<rsub|k><rsup|<around*|(|i-1|)>>>>|<row|<cell|>|<cell|=>|<cell|2<big|sum><rsup|N<rsub|n>><rsub|k<rsub|n>=1><big|sum><rsub|k<rsub|n-1>=1><rsup|N<rsub|n-1>><rsup|><big|sum><rsub|k<rsub|n-2>=1><rsup|N<rsub|n-2>><rsup|>\<cdots\>>>|<row|<cell|>|<cell|>|<cell|<around*|(|o<rsub|k<rsub|n>><rsup|<around*|(|n|)>>-t<rsub|k<rsub|n>>|)>f<rsub|n,k<rsub|n>><rprime|'>w<rsub|k<rsub|n>,k<rsub|n-1>><rsup|<around*|(|n|)>>f<rsub|n-1,k<rsub|n-1>><rprime|'>w<rsup|<around*|(|n-1|)>><rsub|k<rsub|n-1>,k<rsub|n-2>>\<cdots\>f<rsub|i><rprime|'>o<rsub|k><rsup|<around*|(|i-1|)>>>>|<row|<cell|>|<cell|=>|<cell|2<big|sum><rsup|N<rsub|n>><rsub|k<rsub|n>=1><around*|(|o<rsub|k<rsub|n>><rsup|<around*|(|n|)>>-t<rsub|k<rsub|n>>|)><big|prod><rsup|i+1><rsub|m=n><around*|[|<big|sum><rsub|k<rsub|m-1>=1><rsup|N<rsub|m-1>><rsup|>f<rsub|m,k<rsub|m>><rprime|'>w<rsub|k<rsub|m>,k<rsub|m-1>><rsup|<around*|(|m|)>>|]>f<rsub|i><rprime|'>o<rsub|k><rsup|<around*|(|i-1|)>>>>|<row|<cell|\<Delta\>w<rsup|<around*|(|i|)>>>|<cell|=>|<cell|-\<eta\><frac|\<partial\>e|\<partial\>w<rsup|<around*|(|i|)>><rsub|j,k>>>>|<row|<cell|>|<cell|=>|<cell|-2\<eta\><big|sum><rsup|N<rsub|n>><rsub|k<rsub|n>=1><around*|(|o<rsub|k<rsub|n>><rsup|<around*|(|n|)>>-t<rsub|k<rsub|n>>|)><big|prod><rsup|i+1><rsub|m=n><around*|[|<big|sum><rsub|k<rsub|m-1>=1><rsup|N<rsub|m-1>><rsup|>f<rsub|m,k<rsub|m>><rprime|'>w<rsub|k<rsub|m>,k<rsub|m-1>><rsup|<around*|(|m|)>>|]>f<rsub|i><rprime|'>o<rsub|k><rsup|<around*|(|i-1|)>>>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|>>>>
+    <tformat|<table|<row|<cell|\<delta\><rsup|<around*|(|n|)>>>|<cell|=>|<cell|diag<around*|(|F<rprime|'><rsub|n>|)>\<cdummy\>2<around*|(|O<rsup|<around*|(|n|)>>-T|)>>>|<row|<cell|\<delta\><rsup|<around*|(|k|)>>>|<cell|=>|<cell|diag<around*|(|F<rprime|'><rsub|k>|)><around*|[|W<rsup|<around*|(|k+1|)>>|]><rsup|T>\<cdummy\>\<delta\><rsup|<around*|(|k+1|)>>>>>>
+  </eqnarray*>
+
+  then
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<Delta\>W<rsup|<around*|(|i|)>>>|<cell|=>|<cell|-\<eta\>\<delta\><rsup|<around*|(|i|)>><around*|[|O<rsup|<around*|(|i-1|)>>|]><rsup|T>>>>>
+  </eqnarray*>
+
+  <subsection|Summation notation>
+
+  Output of the j'th unit in the i'th layer:
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|o<rsub|j><rsup|<around*|(|i|)>>>|<cell|=>|<cell|f<rsub|i,j><around*|(|y<rsup|<around*|(|i|)>><rsub|j>|)>>>|<row|<cell|y<rsup|<around*|(|i|)>><rsub|j>>|<cell|=>|<cell|<big|sum><rsup|K><rsub|k=1>w<rsub|j,k><rsup|<around*|(|i|)>>o<rsub|k><rsup|<around*|(|i-1|)>>-b<rsub|><rsub|j><rsup|<around*|(|i|)>>>>|<row|<cell|<dfrac|\<partial\>y<rsub|p><rsup|<around*|(|i+1|)>>|\<partial\>y<rsub|<rsub|j>><rsup|<around*|(|i|)>>>>|<cell|=>|<cell|<frac|\<partial\>y<rsub|p><rsup|<around*|(|i+1|)>>|\<partial\>o<rsub|j><rsup|<around*|(|i|)>>>\<cdummy\><frac|\<partial\>o<rsub|j><rsup|<around*|(|i|)>>|\<partial\>y<rsub|j><rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|w<rsup|<around*|(|i+1|)>><rsub|p,j>\<cdummy\>f<rsub|i,j><rprime|'>>>|<row|<cell|<frac|\<partial\>y<rsub|j><rsup|<around*|(|i|)>>|\<partial\>w<rsub|j,k><rsup|<around*|(|i|)>>>>|<cell|=>|<cell|o<rsup|<around*|(|i-1|)>><rsub|k>>>>>
+  </eqnarray*>
+
+  \;
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|e>|<cell|=>|<cell|<frac|1|2><big|sum><rsup|J><rsub|j=1><around*|(|t<rsub|j>-o<rsub|j><rsup|<around*|(|n|)>>|)><rsup|2>>>|<row|<cell|<dfrac|\<partial\>e|\<partial\>y<rsub|<rsub|j>><rsup|<around*|(|n|)>>>>|<cell|=>|<cell|<frac|\<partial\>e|\<partial\>o<rsub|j><rsup|<around*|(|n|)>>>\<cdummy\><frac|\<partial\>o<rsub|j><rsup|<around*|(|n|)>>|\<partial\>y<rsub|j><rsup|<around*|(|n|)>>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|o<rsup|<around*|(|n|)>><rsub|j>-t<rsub|j>|)>\<cdummy\>f<rsub|n,j><rprime|'>>>|<row|<cell|<dfrac|\<partial\>e|\<partial\>y<rsub|<rsub|j>><rsup|<around*|(|i|)>>>>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>o<rsub|<rsub|j>><rsup|<around*|(|i|)>>>\<cdummy\><frac|\<partial\>o<rsub|j><rsup|<around*|(|i|)>>|\<partial\>y<rsub|j><rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsup|P><rsub|P=1><dfrac|\<partial\>e|\<partial\>o<rsub|<rsub|p>><rsup|<around*|(|i+1|)>>>\<cdummy\><dfrac|\<partial\>o<rsub|p><rsup|<around*|(|i+1|)>>|\<partial\>o<rsub|<rsub|j>><rsup|<around*|(|i|)>>>\<cdummy\><frac|\<partial\>o<rsub|j><rsup|<around*|(|i|)>>|\<partial\>y<rsub|j><rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsup|P><rsub|P=1><dfrac|\<partial\>e|\<partial\>o<rsub|<rsub|p>><rsup|<around*|(|i+1|)>>>\<cdummy\><frac|\<partial\>o<rsup|<around*|(|i+1|)>><rsub|p>|\<partial\>y<rsup|<around*|(|i+1|)>><rsub|p>>\<cdummy\><dfrac|\<partial\>y<rsub|p><rsup|<around*|(|i+1|)>>|\<partial\>o<rsub|<rsub|j>><rsup|<around*|(|i|)>>>\<cdummy\><frac|\<partial\>o<rsub|j><rsup|<around*|(|i|)>>|\<partial\>y<rsub|j><rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsup|P><rsub|P=1><dfrac|\<partial\>e|\<partial\>y<rsup|<around*|(|i+1|)>><rsub|p>>\<cdummy\><dfrac|\<partial\>y<rsub|p><rsup|<around*|(|i+1|)>>|\<partial\>y<rsub|j><rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsup|P><rsub|p=1><dfrac|\<partial\>e|\<partial\>y<rsub|<rsub|p>><rsup|<around*|(|i+1|)>>>\<cdummy\>w<rsup|<around*|(|i+1|)>><rsub|p,j>f<rsub|i,j><rprime|'>>>|<row|<cell|<frac|\<partial\>e|\<partial\>w<rsup|<around*|(|i|)>><rsub|j,k>>>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>y<rsub|<rsub|j>><rsup|<around*|(|i|)>>>\<cdummy\><frac|\<partial\>y<rsub|j><rsup|<around*|(|i|)>>|\<partial\>w<rsub|j,k><rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>y<rsub|<rsub|j>><rsup|<around*|(|i|)>>>\<cdummy\>o<rsub|k><rsup|<around*|(|i-1|)>>>>>>
+  </eqnarray*>
+
+  let
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<delta\><rsub|j><rsup|<around*|(|n|)>>>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>y<rsub|<rsub|j>><rsup|<around*|(|n|)>>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|o<rsup|<around*|(|n|)>><rsub|j>-t<rsub|j>|)>\<cdummy\>f<rsub|n,j><rprime|'>>>|<row|<cell|\<delta\><rsub|j><rsup|<around*|(|i|)>>>|<cell|=>|<cell|<dfrac|\<partial\>e|\<partial\>y<rsub|<rsub|j>><rsup|<around*|(|i|)>>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsup|P><rsub|p=1>\<delta\><rsup|<around*|(|i+1|)>><rsub|p>\<cdummy\>w<rsup|<around*|(|i+1|)>><rsub|p,j>f<rsub|i,j><rprime|'>>>>>
+  </eqnarray*>
+
+  then
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<Delta\>w<rsub|j,k><rsup|<around*|(|i|)>>>|<cell|=>|<cell|-\<eta\><frac|\<partial\>e|\<partial\>w<rsup|<around*|(|i|)>><rsub|j,k>>>>|<row|<cell|>|<cell|=>|<cell|-\<eta\>\<delta\><rsup|<around*|(|i|)>><rsub|j>o<rsup|<around*|(|i-1|)>><rsub|k>>>>>
   </eqnarray*>
 </body>
 
