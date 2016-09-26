@@ -11,8 +11,8 @@
 \author{邢超(xingnix@live.com)}
 \maketitle
 
-
-\section{ $\Delta E,\Delta O,\Delta W$}
+\section{向量描述}
+\subsection{ $\Delta E,\Delta O,\Delta W$}
 % 利用梯度推导反传公式的过程中可以采用小扰动方法简化推导步骤
 
 对于第i层网络：
@@ -56,7 +56,7 @@ f'_i(\vec w_1 \vec X_i+b_{i,1})\Delta \vec w_1 \vec X_i  &  f'_i(\vec w_2 \vec X
 \frac{\partial E}{\partial W_N}&=-2 diag(F'_N)\cdot(\vec Y-\vec O_N)\cdot \vec X_N^T
 \end{align*}
 
-\section{反向传播}
+\subsection{反向传播}
 根据链式法则：
 \begin{align*}
 \Delta \vec O_i&=\begin{bmatrix}
@@ -87,19 +87,69 @@ f'_i(\vec w_1 \vec X_i+b_{i,1}) \vec w_1 \Delta\vec X_i  &  f'_i(\vec w_2 \vec X
 \end{align*}
 
 
-\section{偏置向量}
+\subsection{偏置向量}
 对偏置向量的更新可考虑增广权植矩阵 $[W|b]$ ,增广输入 $\begin{bmatrix} \vec X_o  \\ 1\end{bmatrix}$ 。令 $\beta=\begin{bmatrix} \vec X_o \\ 1\end{bmatrix}$ 即可得到增广权值矩阵的更新公式。
 
 
 
+\section{递推描述}
+
+\subsection{符号表示}
+考虑神经元 $q$ ，有：
+\begin{align*}
+q_x &= \sum_{p \in \{p'|p'\rightarrow q\}}w_{qp}p_o \\
+q_o &= f(q_x) \\
+\end{align*}
+其中：
+\begin{itemize}
+	\item $q_x$ 表示神经元 $q$ 的输入
+	\item $q_o$ 表示神经元 $q$ 的输出
+	\item $p_o$ 表示神经元 $p$ 的输出
+	\item $f(\cdot)$ 表示神经元的非线性函数
+	\item $w_{qp}$ 表示连接神经元 $q$ 输出端到 $p$ 输入端 的网络权值
+	\item $\{p'|p'\rightarrow q\}$ 表示神经元 $p'$ 的集合， $p'$ 的输出端连接到 $q$ 输入端的
+\end{itemize}
+
+\subsection{输出层神经元 $t$：}
+\begin{align*}
+\frac{\partial E}{\partial t_x} &=\frac{\partial E}{\partial t_o} \frac{\partial t_o}{\partial t_x}\\
+&=\frac{\partial }{\partial t_o}[\frac{1}{2}(t_o-t_y)^2] \frac{\partial t_o}{\partial t_x}\\
+&=(t_o-t_y) \frac{\partial t_o}{\partial t_x}\\
+&=(t_o-t_y) f'(t_x)\\
+\frac{\partial E}{\partial w_{tq}} &=\frac{\partial E}{\partial t_x}\frac{\partial t_x}{\partial w_{tq}}\\
+&=\frac{\partial E}{\partial t_x}q_o
+\end{align*}
+
+其中：
+\begin{itemize}
+	\item $t_y$ 为输出神经元 $t$ 的期望输出
+	\item $f'(t_x)=\left.\frac{df(t_x)}{dt_x}\right|_{t_x}$
+	\item $q$ 为输出端连接到 $t$ 的输入端的某个神经元
+\end{itemize}
 
 
+\subsection{其它神经元 $q$:}
+\begin{align*}
+\frac{\partial E}{\partial q_x}&=\sum_{r\in\{r'|q\rightarrow r'\}}\frac{\partial E}{\partial r_x}\frac{\partial r_x}{\partial q_x}\\
+&=\sum_{r\in\{r'|q\rightarrow r'\}}\frac{\partial E}{\partial r_x}\frac{\partial r_x}{\partial q_o}\frac{\partial q_o}{\partial q_x} \\
+&=\sum_{r\in\{r'|q\rightarrow r'\}}\frac{\partial E}{\partial r_x}w_{rq}f'(q_x) \\
+\frac{\partial E}{\partial w_{qp}} &=\frac{\partial E}{\partial q_x}\frac{\partial q_x}{\partial w_{qp}} \\
+&=\frac{\partial E}{\partial q_x}p_o
+\end{align*}
 
-
-
-
-
-
+\subsection{反向传播}
+输出层神经元：
+\begin{align*}
+t_{\delta}&=\frac{\partial E}{\partial t_x}\\
+&=(t_o-t_y) f'(t_x)\\
+\Delta w_{tq}&=-\eta t_{\delta}q_o
+\end{align*}
+其它神经元：
+\begin{align*}
+q_{\delta}&=\frac{\partial E}{\partial q_x}\\
+&=\sum_{\{r|q\rightarrow r\}}r_{\delta}w_{rq}f'(q_x)\\
+\Delta w_{qp}&=-\eta q_{\delta}p_o
+\end{align*}
 
 
 \end{document}
