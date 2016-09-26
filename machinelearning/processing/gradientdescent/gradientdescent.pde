@@ -65,7 +65,10 @@ void setup(){
       f=createImage(width, height, RGB);
       for(int i=0;i<width;i++){
         for(int j=0;j<height;j++){
-            f.set(i,j,color(255-(int)M.f(new double[]{((double)i-p)/s,((double)j-p)/s})*15));
+            int r=min(255,50*(int)M.f(new double[]{((double)i-p)/s,((double)j-p)/s}));
+            int blue=r;
+            int red=r;
+            f.set(i,j,color(0,0,blue));
         }
       }
       //set(0,0,f);
