@@ -38,7 +38,7 @@ class Quadratic{
 Quadratic M;
 ArrayList<double[]> X;
 PImage f;
-float s=100;
+float s=50;
 float p=250;
 int flag=0;      
 int j=0;
@@ -67,7 +67,7 @@ void setup(){
       color to = color(random(0,255),random(0,255),random(0,255));
       for(int i=0;i<width;i++){
         for(int j=0;j<height;j++){
-            int r=min(255,50*(int)M.f(new double[]{((double)i-p)/s,((double)j-p)/s}));
+            int r=min(255,10*(int)M.f(new double[]{((double)i-p)/s,((double)j-p)/s}));
             int blue=r;
             int red=r;
             f.set(i,j,color(0,0,blue));
