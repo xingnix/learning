@@ -1,0 +1,353 @@
+<?xml version="1.0"?>
+
+<TeXmacs version="1.0.7.21">
+  <style><tuple><tm-arg>article</tm-arg><tm-arg>chinese</tm-arg></tuple></style>
+  
+  <body>
+    <tm-par>
+      <doc-data>
+        <tm-arg><doc-title><strong>Note on Randomized Response
+        Technique，RRT</strong></doc-title></tm-arg>
+        <tm-arg>
+          <doc-author>
+            <author-data>
+              <tm-arg><author-name>邢超</author-name></tm-arg>
+              <tm-arg>
+                <tm-par>
+                  
+                </tm-par>
+              </tm-arg>
+              <tm-arg>
+                <tm-par>
+                  
+                </tm-par>
+              </tm-arg>
+              <tm-arg>
+                <tm-par>
+                  
+                </tm-par>
+              </tm-arg>
+            </author-data>
+          </doc-author>
+        </tm-arg>
+        <tm-arg><doc-misc>xingnix@live.com</doc-misc></tm-arg>
+      </doc-data>
+    </tm-par>
+    
+    <tm-par>
+      对敏感性问题的调查方案，为了能保护个人秘密,使被调查者愿意做出真实回答，产生了相应的统计分析方法——随机化回答技术，包括：
+    </tm-par>
+    
+    <tm-par>
+      <itemize>
+        <tm-par>
+          <item/>Warner model
+        </tm-par>
+        
+        <tm-par>
+          <item/>Simmons model
+        </tm-par>
+        
+        <tm-par>
+          
+        </tm-par>
+      </itemize>
+    </tm-par>
+    
+    <tm-par>
+      <section>Warner model</section>
+    </tm-par>
+    
+    <tm-par xml:space="preserve">    由美国统计学家Warner提出,针对要调查的敏感性问题，列出正反两个问题。如：调查考试作弊问题时，出示两个问题：</tm-par>
+    
+    <tm-par xml:space="preserve">A：你考试作弊？ </tm-par>
+    
+    <tm-par xml:space="preserve">B：你考试没有作弊？ </tm-par>
+    
+    <tm-par>
+      然后由被调查者按照给定的概率随机选择一个问题，与自己情况一致则回答"是"，否则回答"否"。
+      调查者不知道被调查者在回答哪个问题，保证了被调查者个人秘密不被泄露。需要注意的是：选择问题A的概率是确定的。
+    </tm-par>
+    
+    <tm-par>
+      理论分析如下：
+    </tm-par>
+    
+    <tm-par>
+      设：
+    </tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></math>:选择问题A的概率,
+    </tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>B</tm-arg><tm-arg>)</tm-arg></around_42_></math>:选择问题B的概率,
+    </tm-par>
+    
+    <tm-par>
+      则有：
+    </tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>+P<around_42_><tm-arg>(</tm-arg><tm-arg>B</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>1</cell></tm-arg></row>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+    
+    <tm-par xml:space="preserve">      设：</tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></math>:回答''是''的概率，
+    </tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></math>:选择问题A并回答''是''的概率,
+    </tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|B</tm-arg><tm-arg>)</tm-arg></around_42_></math>:选择问题B并回答''是''的概率,
+    </tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_>+P<around_42_><tm-arg>(</tm-arg><tm-arg>T|B</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>1</cell></tm-arg></row>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+    
+    <tm-par xml:space="preserve">      如果对n个人进行调查，调查结果中有<math>m</math>个人回答"是"，有<math>n-m</math>个人回答"否"，可得：</tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <tm-arg><row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>+P<around_42_><tm-arg>(</tm-arg><tm-arg>T|B</tm-arg><tm-arg>)</tm-arg></around_42_>P<around_42_><tm-arg>(</tm-arg><tm-arg>B</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>+<around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_><around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_>+P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>-1</tm-arg><tm-arg>2P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>-1</tm-arg></frac></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_>+P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>-1</tm-arg><tm-arg>2P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>-1</tm-arg></frac></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell><tm-arg></tm-arg></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg><frac><tm-arg><rsub>m</rsub></tm-arg><tm-arg>n</tm-arg></frac>+P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>-1</tm-arg><tm-arg>2P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>-1</tm-arg></frac></cell></tm-arg></row></tm-arg>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+    
+    <tm-par>
+      
+    </tm-par>
+    
+    <tm-par>
+      根据二项分布质可得：
+    </tm-par>
+    
+    <tm-par>
+      <strong>期望</strong>
+    </tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <tm-arg><row><tm-arg><cell>E<around_42_><tm-arg>[</tm-arg><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>]</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell>E<around_42_><tm-arg>[</tm-arg><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>]</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg></row></tm-arg>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+    
+    <tm-par xml:space="preserve">      方差</tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <tm-arg><row><tm-arg><cell>Var<around_42_><tm-arg>[</tm-arg><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>]</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_><around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>n</tm-arg></frac></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell>Var<around_42_><tm-arg>[</tm-arg><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>]</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_><around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>n<around_42_><tm-arg>(</tm-arg><tm-arg>2P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>-1</tm-arg><tm-arg>)</tm-arg></around_42_><rsup>2</rsup></tm-arg></frac></cell></tm-arg></row></tm-arg>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+    
+    <tm-par>
+      <section>Simmons model</section>
+    </tm-par>
+    
+    <tm-par xml:space="preserve">    Warner的方法中回答A的人数比例不能为<math><frac><tm-arg>1</tm-arg><tm-arg>2</tm-arg></frac></math>。1967年Simmons对Warner模型进行了改进。调查人员提出两个不相关的问题，其中一个为敏感性问题A,另一个为非敏感性问题B。如：调查考试作弊问题时，出示两个问题：</tm-par>
+    
+    <tm-par xml:space="preserve">A：你考试作弊？ </tm-par>
+    
+    <tm-par>
+      B：在心里想一个数字，它是否是奇数？
+    </tm-par>
+    
+    <tm-par>
+      然后由被调查者按照给定的概率随机选择一个问题。
+    </tm-par>
+    
+    <tm-par>
+      理论分析如下：
+    </tm-par>
+    
+    <tm-par>
+      设：
+    </tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></math>:选择问题A的概率,
+    </tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>B</tm-arg><tm-arg>)</tm-arg></around_42_></math>:选择问题B的概率,
+    </tm-par>
+    
+    <tm-par>
+      得：
+    </tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>+P<around_42_><tm-arg>(</tm-arg><tm-arg>B</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>1</cell></tm-arg></row>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+    
+    <tm-par xml:space="preserve">      设：</tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></math>:回答''是''的概率，
+    </tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></math>:选择问题A并回答''是''的概率,
+    </tm-par>
+    
+    <tm-par>
+      <math>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|B</tm-arg><tm-arg>)</tm-arg></around_42_></math>:选择问题B并回答''是''的概率,
+    </tm-par>
+    
+    <tm-par>
+      得：
+    </tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <tm-arg><row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>+P<around_42_><tm-arg>(</tm-arg><tm-arg>T|B</tm-arg><tm-arg>)</tm-arg></around_42_>P<around_42_><tm-arg>(</tm-arg><tm-arg>B</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_>+P<around_42_><tm-arg>(</tm-arg><tm-arg>T|B</tm-arg><tm-arg>)</tm-arg></around_42_><around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_>-P<around_42_><tm-arg>(</tm-arg><tm-arg>T|B</tm-arg><tm-arg>)</tm-arg></around_42_><around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg></frac></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T<around_42_><tm-arg>|</tm-arg><tm-arg>A</tm-arg><tm-arg>|</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_>-P<around_42_><tm-arg>(</tm-arg><tm-arg>T|B</tm-arg><tm-arg>)</tm-arg></around_42_><around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg></frac></cell></tm-arg></row></tm-arg>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+    
+    <tm-par xml:space="preserve">       二项分布质可得：</tm-par>
+    
+    <tm-par>
+      <strong>期望</strong>
+    </tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <row><tm-arg><cell>E<around_42_><tm-arg>[</tm-arg><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T<around_42_><tm-arg>|</tm-arg><tm-arg>A</tm-arg><tm-arg>|</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>]</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell>P<around_42_><tm-arg>(</tm-arg><tm-arg>T|A</tm-arg><tm-arg>)</tm-arg></around_42_></cell></tm-arg></row>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+    
+    <tm-par xml:space="preserve">       方差</tm-par>
+    
+    <tm-par>
+      <eqnarray_42_>
+        <tm-par>
+          <tformat>
+            <table>
+              <tm-arg><row><tm-arg><cell>Var<around_42_><tm-arg>[</tm-arg><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>]</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_><around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>n</tm-arg></frac></cell></tm-arg></row></tm-arg>
+              <tm-arg><row><tm-arg><cell>Var<around_42_><tm-arg>[</tm-arg><tm-arg><wide><tm-arg>P</tm-arg><tm-arg>^</tm-arg></wide><around_42_><tm-arg>(</tm-arg><tm-arg>T<around_42_><tm-arg>|</tm-arg><tm-arg>A</tm-arg><tm-arg>|</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>]</tm-arg></around_42_></cell></tm-arg><tm-arg><cell>=</cell></tm-arg><tm-arg><cell><frac><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_><around_42_><tm-arg>(</tm-arg><tm-arg>1-P<around_42_><tm-arg>(</tm-arg><tm-arg>T</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>n<around_42_><tm-arg>(</tm-arg><tm-arg>P<around_42_><tm-arg>(</tm-arg><tm-arg>A</tm-arg><tm-arg>)</tm-arg></around_42_></tm-arg><tm-arg>)</tm-arg></around_42_><rsup>2</rsup></tm-arg></frac></cell></tm-arg></row></tm-arg>
+            </table>
+          </tformat>
+        </tm-par>
+      </eqnarray_42_>
+    </tm-par>
+  </body>
+  
+  <initial>
+    <collection>
+      <associate>
+        <tm-arg>font</tm-arg>
+        <tm-arg>wqy-zenhei</tm-arg>
+      </associate>
+    </collection>
+  </initial>
+  
+  <references>
+    <collection>
+      <tm-arg>
+        <associate>
+          <tm-arg>auto-1</tm-arg>
+          <tm-arg><tuple><tm-arg>1</tm-arg><tm-arg>1</tm-arg></tuple></tm-arg>
+        </associate>
+      </tm-arg>
+      <tm-arg>
+        <associate>
+          <tm-arg>auto-2</tm-arg>
+          <tm-arg><tuple><tm-arg>2</tm-arg><tm-arg>2</tm-arg></tuple></tm-arg>
+        </associate>
+      </tm-arg>
+    </collection>
+  </references>
+  
+  <auxiliary>
+    <collection>
+      <associate>
+        <tm-arg>toc</tm-arg>
+        <tm-arg>
+          <tm-par>
+            <vspace_42_>1fn</vspace_42_><with font-series="bold" math-font-series="bold">1<space>2spc</space>Warner
+            model</with>
+            <datoms><tm-arg><macro><tm-arg>x</tm-arg><tm-arg><repeat><tm-arg><arg>x</arg></tm-arg><tm-arg><with
+            font-series="medium"><with font-size="1"><space>0.2fn</space>.<space>0.2fn</space></with></with></tm-arg></repeat></tm-arg></macro></tm-arg><tm-arg><htab>5mm</htab></tm-arg></datoms>
+            <no-break/><pageref>auto-1</pageref><vspace>0.5fn</vspace>
+          </tm-par>
+          
+          <tm-par>
+            <vspace_42_>1fn</vspace_42_><with font-series="bold" math-font-series="bold">2<space>2spc</space>Simmons
+            model</with>
+            <datoms><tm-arg><macro><tm-arg>x</tm-arg><tm-arg><repeat><tm-arg><arg>x</arg></tm-arg><tm-arg><with
+            font-series="medium"><with font-size="1"><space>0.2fn</space>.<space>0.2fn</space></with></with></tm-arg></repeat></tm-arg></macro></tm-arg><tm-arg><htab>5mm</htab></tm-arg></datoms>
+            <no-break/><pageref>auto-2</pageref><vspace>0.5fn</vspace>
+          </tm-par>
+        </tm-arg>
+      </associate>
+    </collection>
+  </auxiliary>
+</TeXmacs>
