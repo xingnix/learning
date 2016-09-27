@@ -1,0 +1,1010 @@
+% Created 2016-09-27 Tue 20:08
+\documentclass{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{enumitem}
+\setlistdepth{9}
+\setlist[itemize,1]{label=$\diamond$}
+\setlist[itemize,2]{label=$\star$}
+\setlist[itemize,3]{label=$\ast$}
+\setlist[itemize,4]{label=$\circ$}
+\setlist[itemize,5]{label=$\cdot$}
+\setlist[itemize,6]{label=$\bullet$}
+\setlist[itemize,7]{label=$\bullet$}
+\setlist[itemize,8]{label=$\bullet$}
+\setlist[itemize,9]{label=$\bullet$}
+\renewlist{itemize}{itemize}{9}
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+\setbeamercovered{transparent}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{贝叶斯学习}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+\section{简介}
+\label{sec-1}
+\begin{frame}
+\frametitle{贝叶斯学习方法的特性：}
+\label{sec-1-1}
+
+\begin{itemize}
+\item 观察到的每个训练样例可以增量式地降低或升高某假设的估计概率。这提供了一种比其他算法更合理的学习途径。其他算法会在某个假设与任一样例不一致时完全去掉该假设。
+\item 先验知识可以与观察数据一起决定假设的最终概率。在贝叶斯学习中，先验知识的形式可以是（1）每个候选假设的先验概率（2）每个可能假设在可观察数据上的概率分布。
+\item 贝叶斯方法可允许假设做出不确定性的预测。（比如这样的假设：这一肺炎病人有 93\% 的机会康复）。
+\item 新的实例分类可由多个假设一起作出预测，以它们的概率为权重。
+\item 即使在贝叶斯方法计算复杂度较高时，它们仍可做为一个最优的决策的标准衡量其他方法。
+\end{itemize}
+\end{frame}
+\section{贝叶斯法则}
+\label{sec-2}
+\begin{frame}
+\frametitle{贝叶斯公式}
+\label{sec-2-1}
+
+
+\[ P(h|D) = \frac{P(D|h) P(h)}{P(D)} \]
+
+
+\begin{itemize}
+\item $P(h)$ = 还没有训练数据前，假设 $h$ 的概率。
+\item $P(D)$ = 训练数据D的先验概率
+\item $P(h|D)$ = $D$ 时 $h$ 成立的概率。
+\item $P(D|h)$ = 给定假设 \$h 时观察到数据 $D$ 的概率
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{最大后验 (Maximum a posteriori)}
+\label{sec-2-2}
+
+
+\[ P(h|D) = \frac{P(D|h) P(h)}{P(D)} \]
+
+通常，学习器考虑候选假设集合 $H$ 并在其中寻找给定数据 $D$ 时可能性最大的假设 $h\in H$ 。
+
+这样的具有最大可能性的假设被称为极大后验（maximum a posteriori, MAP）假设：
+
+\begin{eqnarray}
+& h_{MAP} & = \arg \max_{h \in H} P(h|D)\nonumber \\
+& & = \arg \max_{h \in H} \frac{P(D|h) P(h)}{P(D)} \nonumber \\
+& & = \arg \max_{h \in H}P(D|h) P(h) \nonumber
+\end{eqnarray}
+\end{frame}
+\begin{frame}
+\frametitle{极大似然（ Maximum likelihood，ML）}
+\label{sec-2-3}
+
+
+假定 $P(h_{i})=P(h_{j})$ 则可进一步简化，选取极大似然假设：
+
+$$h_{ML}=\arg \max_{h \in H}P(D|h)$$
+\end{frame}
+\begin{frame}
+\frametitle{基本公式}
+\label{sec-2-4}
+
+
+\begin{itemize}
+\item 乘法公式(Product rule)：两事件A和B的交的概率 $P(A \land B)$
+  $$P(A \land B) = P(A|B) P(B) = P(B|A) P(A)$$
+\item 加法公式(Sum Rule)：两事件A和B的并的概率 $P(A\lor B)$
+  $$P(A \lor B) = P(A) + P(B) - P(A \land B)$$
+\item 全概率公式(Theorem of total probability)：如果事件 $A_{1}, \ldots, A_{n}$ 互斥且 $\sum_{i = 1}^{n} P(A_{i}) = 1$ ，则：
+  $$P(B) = \sum_{i = 1}^{n} P(B|A_{i}) P(A_{i})$$
+\end{itemize}
+\end{frame}
+\section{贝叶斯法则和概念学习}
+\label{sec-3}
+\begin{frame}
+\frametitle{概念}
+\label{sec-3-1}
+
+\begin{itemize}
+\item 假定学习器考虑的是定义在实例空间 $X$ 上的有限的假设空间 $H$ ，
+\item 任务是学习某个目标概念 $c:X\rightarrow \{0,1\}$ 。
+\item 为简化讨论，假定实例序列 $\langle x_{1}, \ldots, x_{m}\rangle$ 是固定不变的，
+\item 训练数据 $D$ 可被简单地写作目标函数值序列： $D = \langle c(x_{1}),\ldots, c(x_{m})\rangle$  。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Brute-Force MAP学习算法}
+\label{sec-3-2}
+
+\begin{itemize}
+\item 对于 $H$ 中每个假设 $h$ ，计算后验概率：
+  $$P(h|D) = \frac{P(D|h) P(h)}{P(D)}$$
+\item 输出有最高后验概率的假设 $h_{MAP}$ 
+  $$h_{MAP} = \arg \max_{h \in H} P(h|D)$$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Brute-Force MAP学习算法（续）}
+\label{sec-3-3}
+
+选择P(h)和P(D|h)的概率分布，以描述该学习任务的先验知识：
+\begin{itemize}
+\item 训练数据 $D$ 是无噪声的（即 $d_i=c(x_i)$ ）；
+\item 目标概念 $c$ 包含在假设空间H中；
+\item 没有任何理由认为某假设比其他的假设的可能性大。
+\item 选取 $P(D|h)$ :
+\begin{itemize}
+\item $P(D|h)=1$ , 若 $h$ 与 $D$ 一致
+\item $P(D|h)=0$ , 其它情况
+\end{itemize}
+\item 选取 $P(h)$ 服从均匀分布
+\begin{itemize}
+\item $P(h) = \frac{1}{|H|}$ , 对 $H$ 中的所有 $h$
+\end{itemize}
+\end{itemize}
+
+则：
+
+\begin{equation*}
+P(h|D) = \left\{ \begin{array}{cl}
+  \frac{1}{|VS_{H,D}|} & \mbox{if $h$ is consistent with $D$} \\
+\\
+  0  & \mbox{otherwise} 
+\end{array} \right.
+\end{equation*}
+\end{frame}
+\begin{frame}
+\frametitle{贝叶斯法则}
+\label{sec-3-4}
+
+\includegraphics[width=.9\linewidth]{./image/bayes-vs.png}
+\end{frame}
+\begin{frame}
+\frametitle{贝叶斯学习}
+\label{sec-3-5}
+
+
+\includegraphics[width=0.7\textwidth]{./image/vs-map-equivalent.png}
+\end{frame}
+\begin{frame}
+\frametitle{MAP假设和一致学习器}
+\label{sec-3-6}
+
+\begin{itemize}
+\item 在给定条件下，与D一致的每个假设都是MAP假设。
+\begin{itemize}
+\item 根据这一结论可直接得到一类普遍的学习器，称为一致学习器。
+\item 某学习算法被称为一致学习器，说明它输出的假设在训练例上有零错误率。
+\end{itemize}
+\item 假定H上有均匀的先验概率（即P(hi)=P(hj)，对所有的i,j），
+\item 且训练数据是确定性的和无噪声的（即当D和h一致时，P(D|h)=1），否则为0）时，
+\item 任意一致学习器将输出一个MAP假设。
+\item 例如第2章讨论的Find-S概念学习算法。
+\begin{itemize}
+\item Find-S按照特殊到一般的顺序搜索假设空间H，
+\item 并输出一个极大特殊性的一致假设，
+\item 可知在上面定义的P(h)和P(D|h)概率分布下，它输出MAP假设。
+\end{itemize}
+\end{itemize}
+\end{frame}
+\section{极大似然和最小误差平方假设}
+\label{sec-4}
+\begin{frame}
+\frametitle{学习实值函数}
+\label{sec-4-1}
+
+\includegraphics[width=0.7\textwidth]{./image/bayes-linear.png}
+\end{frame}
+\begin{frame}
+\frametitle{考虑实值函数 $f$}
+\label{sec-4-2}
+
+\begin{itemize}
+\item 训练样例 $\langle x_{i}, d_{i} \rangle$, 其中
+   $$d_{i} = f(x_{i}) + e_{i}$$
+\begin{itemize}
+\item $e_{i}$ 是随机变量， 与 $x_{i}$ 独立， 服从零均值高斯分布
+\end{itemize}
+\item 最大似然估计 $h_{ML}$ ：
+  $$h_{ML} = \arg \min_{h \in H} \sum_{i=1}^{m} \left(d_{i} -h(x_{i})\right)^{2}$$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{推导：}
+\label{sec-4-3}
+
+
+\begin{eqnarray}
+h_{ML} &= &\arg \max_{h \in H} p(D|h) \nonumber \\
+ &= &\arg \max_{h \in H} \prod_{i=1}^{m} p(d_{i}|h) \nonumber \\
+&= &\arg \max_{h \in H} \prod_{i=1}^{m} \frac{1}{\sqrt{2 \pi \sigma^{2}}}
+e^{-\frac{1}{2}(\frac{d_{i} - h(x_{i})}{\sigma})^{2}} \nonumber
+\end{eqnarray}
+\end{frame}
+\begin{frame}
+\frametitle{用自然对数替换，得：}
+\label{sec-4-4}
+
+
+\begin{eqnarray}
+h_{ML}  &= &\arg \max_{h \in H}
+\sum_{i=1}^{m} \ln \frac{1}{\sqrt{2 \pi \sigma^{2}}} -
+\frac{1}{2}\left(\frac{d_{i} - h(x_{i})}{\sigma}\right)^{2} \nonumber \\
+  &= &\arg \max_{h \in H} \sum_{i=1}^{m} -
+\frac{1}{2}\left(\frac{d_{i} - h(x_{i})}{\sigma}\right)^{2} \nonumber \\
+ &= &\arg \max_{h \in H} \sum_{i=1}^{m} - \left(d_{i} - h(x_{i})\right)^{2}
+ \nonumber \\
+ &= &\arg \min_{h \in H} \sum_{i=1}^{m} \left(d_{i} - h(x_{i})\right)^{2}  \nonumber
+\end{eqnarray}
+\end{frame}
+\begin{frame}
+\frametitle{用于预测概率的极大似然假设}
+\label{sec-4-5}
+
+
+ 考虑从数据中预测概率
+\begin{itemize}
+\item 训练样例 $\langle x_{i}, d_{i} \rangle$, 其中 $d_{i}$ 为 1 或 0
+\item 训练神经网络根据给定的 $x_i$ 输出一个概率
+    $$h_{ML} = \arg \max_{h \in H} \sum_{i=1}^{m} d_{i} \ln h(x_{i}) + (1-d_{i})\ln (1 - h(x_{i}))$$
+\item sigmoid单元的权值更新:
+    $$w_{jk} \leftarrow w_{jk} +  \Delta w_{jk}$$
+    其中：
+     $$\Delta w_{jk} = \eta \sum_{i=1}^{m} (d_{i} - h(x_{i})) \  x_{ijk}$$
+\end{itemize}
+\end{frame}
+\section{最小描述长度准则}
+\label{sec-5}
+\begin{frame}
+\frametitle{奥坎坶剃刀 （Occam's razor）}
+\label{sec-5-1}
+
+\begin{itemize}
+\item “为观察到的数据选择最短的解释”。（优先选择短的假设）
+\item 最小描述长度准则（Minimum Description Length, MDL）:
+\begin{itemize}
+\item 优先选择最小化
+      $$h_{MDL} = \arg \min_{h \in H} L_{C_{1}}(h) + L_{C_{2}}(D|h)$$
+     的假设 $h$
+\item 其中 $L_{C}(x)$ 是在编码 $C$ 下 $x$ 的描述长度
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{示例：}
+\label{sec-5-2}
+
+\begin{itemize}
+\item $H$ = 决策树
+\item $D$ = 训练数据
+\item $L_{C_{1}}(h)$  是 $h$ 的编码长度
+\item $L_{C_{2}}(D|h)$ 给定 $h$ 时， $D$ 的编码长度
+\item 当样例被 $h$ 完美分类时， $L_{C_{2}}(D|h)=0$
+\item $h_{MDL}$ 考虑了树的大小与训练误差
+\end{itemize}
+
+\begin{eqnarray}
+h_{MAP} &= &\arg \max_{h \in H}P(D|h) P(h) \nonumber \\
+&= &\arg \max_{h \in H} \log_{2} P(D|h) + \log_{2} P(h)  \nonumber \\
+&= &\arg \min_{h \in H} - \log_{2} P(D|h) - \log_{2} P(h) 
+\end{eqnarray}
+\end{frame}
+\begin{frame}
+\frametitle{由信息论可得：}
+\label{sec-5-3}
+
+\begin{quote}
+针对以概率 $p$ 发生的事件，最优 (最短期望编码长度)编码是 $- \log_{2} p$ 位.
+\end{quote}
+
+\begin{itemize}
+\item $- \log_{2} P(h)$ 是 $h$ 的最优编码长度
+\item $- \log_{2} P(D|h)$ 是给定 $h$ 后 $D$ 的最优编码长度
+\end{itemize}
+
+$\rightarrow$ 优先选择最小化
+$$length(h) + length(misclassifications)$$
+的假设
+\end{frame}
+\section{贝叶斯最优分类器}
+\label{sec-6}
+\begin{frame}
+\frametitle{新实例的最大可能分类}
+\label{sec-6-1}
+
+
+\begin{itemize}
+\item 给定训练数据 $D$ ,最可能的假设是什么?( $h_{MAP}$)
+\item 给定训练数据 $D$ ,对新实例 $x$ 的最可能分类是什么？
+\end{itemize}
+
+考虑三个假设：
+\begin{itemize}
+\item $P(h_{1}|D)=.4, \  P(h_{2}|D)=.3, \  P(h_{3}|D)=.3$
+\end{itemize}
+
+对于新的实例 $x$, 
+\begin{itemize}
+\item $h_{1}(x)=+, \ h_{2}(x)=-, \ h_{3}(x)=-$
+\item $x$ 的最大可能分类是什么?
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{贝叶斯最优分类器}
+\label{sec-6-2}
+
+
+$$\arg \max_{v_{j} \in V} \sum_{h_{i} \in H} P(v_{j}|h_{i}) P(h_{i}|D)$$
+\end{frame}
+\begin{frame}
+\frametitle{示例:}
+\label{sec-6-3}
+
+
+\begin{eqnarray}
+P(h_{1}|D)=.4, & P(-|h_{1})=0, & P(+|h_{1})=1 \nonumber \\
+P(h_{2}|D)=.3, & P(-|h_{2})=1, & P(+|h_{2})=0 \nonumber \\
+P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber 
+\end{eqnarray}
+因此
+\begin{eqnarray}
+\sum_{h_{i} \in H} P(+|h_{i}) P(h_{i}|D) & = & .4 \nonumber \\
+\sum_{h_{i} \in H} P(-|h_{i}) P(h_{i}|D) & = & .6 \nonumber
+\end{eqnarray}
+与
+\begin{eqnarray}
+\arg \max_{v_{j} \in V} \sum_{h_{i} \in H} P(v_{j}|h_{i}) P(h_{i}|D) & = & -
+\nonumber 
+\end{eqnarray}
+\end{frame}
+\section{GIBBS 算法}
+\label{sec-7}
+\begin{frame}
+\frametitle{GIBBS 算法}
+\label{sec-7-1}
+
+\begin{itemize}
+\item 虽然贝叶斯最优分类器能从给定训练数据中获得最好的性能，应用此算法的开销可能很大。
+\item 原因在于它要计算H中每个假设的后验概率，然后合并每个假设的预测，以分类新实例。
+\item 一个替代的、非最优的方法是Gibbs算法，定义如下：
+ 
+  当有一待分类新实例时，Gibbs算法简单地按照当前的后验概率分布，使用一随机抽取的假设。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Gibbs算法:}
+\label{sec-7-2}
+
+
+\begin{itemize}
+\item 按照 $H$ 上的后验概率分布 $P(h|D)$ ，从 $H$ 中随机选择假设 $h$ 。
+\item 使用h来预言下一实例x的分类。
+\item 可证明在一定条件下Gibbs算法的误分类率的期望值最多为贝叶斯最优分类器的两倍。
+\item 更精确地讲，期望值是在随机抽取的目标概念上作出，抽取过程按照学习器假定的先验概率。
+\item 在此条件下，Gibbs算法的错误率期望值最差为贝叶斯分类器的两倍。
+   \[ E[error_{Gibbs}] \leq 2 E[error_{Bayes Optimal}] \]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{概念学习问题分析：}
+\label{sec-7-3}
+
+\begin{itemize}
+\item 如果学习器假定 $H$ 上有均匀的先验概率，而且如果目标概念实际上也按该分布抽取
+\item 那么当前变型空间中随机抽取的假设对下一实例分类的期望误差最多为贝叶斯分类器的两倍。
+\end{itemize}
+\end{frame}
+\section{朴素贝叶斯分类器（ Naive Bayes Classifier ）}
+\label{sec-8}
+\begin{frame}
+\frametitle{朴素贝叶斯分类器（ Naive Bayes Classifier ）}
+\label{sec-8-1}
+
+\begin{itemize}
+\item 贝叶斯学习方法中实用性很高的一种为朴素贝叶斯学习器，常被称为朴素贝叶斯分类器（naive Bayes classifier）。在某些领域内其性能可与神经网络和决策树学习相当。
+\begin{itemize}
+\item 何时使用：
+\begin{itemize}
+\item 中等或大训练集
+\item 描述实例的属性在给定类别后条件独立
+\end{itemize}
+\end{itemize}
+\item 已成功应用于
+\begin{itemize}
+\item 诊断
+\item 文本分类
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{描述}
+\label{sec-8-2}
+
+
+\begin{itemize}
+\item 假定目标函数 $f: X \rightarrow V$, 其中每个实例 $x$ 由属性 $\langle a_{1}, a_{2} \ldots a_{n} \rangle$ 描述.
+\item $f(x)$ 的最大可能值为:
+     \begin{eqnarray}
+     v_{MAP} &= &\arg \max_{v_{j} \in V} P(v_{j} | a_{1}, a_{2} \ldots a_{n})  \nonumber \\ 
+     v_{MAP} &= &\arg \max_{v_{j} \in V} \frac{P(a_{1}, a_{2} \ldots a_{n}|v_{j})
+     P(v_{j})}{P(a_{1}, a_{2} \ldots a_{n})} \nonumber \\ 
+     &= &\arg \max_{v_{j} \in V} P(a_{1}, a_{2} \ldots a_{n}|v_{j}) P(v_{j}) \nonumber
+     \end{eqnarray}
+\item Naive Bayes 假定:
+   \[ P(a_{1}, a_{2} \ldots a_{n}|v_{j}) = \prod_{i} P(a_{i} | v_{j}) \]
+\item 可得： 
+   \[\mbox{\bf Naive Bayes classifier: } v_{NB} = \arg \max_{v_{j} \in V} P(v_{j})\prod_{i} P(a_{i} | v_{j}) \]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{算法}
+\label{sec-8-3}
+
+
+\begin{itemize}
+\item Naive\_Bayes\_Learn($examples$)
+  对每个目标值 $v_j$
+\begin{itemize}
+\item $\hat{P}(v_j) \leftarrow$ 估计 $P(v_j)$
+\item 对每个属性 $a$ 的 每个可能 取值 $a_i$
+\begin{itemize}
+\item $\hat{P}(a_i|v_j) \leftarrow$ 估计 $P(a_i|v_j)$
+\end{itemize}
+\end{itemize}
+\item Classify\_New\_Instance($x$)
+  $$v_{NB} = \arg \max_{v_{j} \in V} \hat{P}(v_{j}) \prod_{a_i \in x} \hat{P}(a_{i} | v_{j})$$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{示例}
+\label{sec-8-4}
+
+
+\begin{itemize}
+\item PlayTennis中, 新实例： 
+  $$\langle Outlk=sun, Temp=cool, Humid=high, Wind=strong \rangle$$
+\item 不同目标值的概率可以基于这14个训练样例的频率很容易地估计出：
+\begin{itemize}
+\item $P(PlayTennis=yes)=9/14=0.64$
+\item $P(PlayTennis=no)=5/14=0.36$
+\end{itemize}
+\item 相似地，可以估计出条件概率，例如对于Wind=Strong有：
+\begin{itemize}
+\item $P(Wind=strong|PlayTennis=yes)=3/9=0.33$
+\item $P(Wind=strong|PlayTennis=no)=3/5=0.60$
+\end{itemize}
+\item 计算:
+    $$v_{NB} = \arg \max_{v_{j} \in V} P(v_{j}) \prod_{i} P(a_{i} | v_{j})$$
+    \[P(y)\ P(sun|y)\ P(cool|y)\ P(high|y)\ P(strong|y) = .005 \]
+    \[P(n)\ P(sun|n)\ P(cool|n)\ P(high|n)\ P(strong|n) = .021 \]
+    \[ \rightarrow v_{NB} = n \]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Naive Bayes: Subtleties}
+\label{sec-8-5}
+
+\begin{itemize}
+\item 通常不满足独立性假定
+    $$P(a_{1}, a_{2} \ldots a_{n}|v_{j}) = \prod_{i} P(a_{i} | v_{j})$$
+\item 但还是会有很好的表现。注意：不需要估计到的后验概率 $\hat{P}(v_j|x)$ 是正确的，只需要：
+    $$\arg\max_{v_{j}\in V}\hat{P}(v_{j})\prod_{i}\hat{P}(a_{i}|v_{j})=\arg\max_{v_{j} \in V}  P(v_{j}) P(a_{1} \ldots, a_n | v_{j})$$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{当目标值为 $v_j$ 的所有训练实例都没有属性值 $a_i$? 时}
+\label{sec-8-6}
+
+    $$\hat{P}(a_i|v_j) = 0 \mbox{, and...}$$
+    $$\hat{P}(v_{j}) \prod_{i} \hat{P}(a_{i} | v_{j}) = 0$$
+    典型的解决方法是对 $\hat{P}(a_{i} | v_{j})$ 进行贝叶斯估计
+       $$\hat{P}(a_{i} | v_{j}) \leftarrow \frac{n_{c} + mp}{n + m}$$
+    其中：
+\begin{itemize}
+\item $n$ 是 $v=v_j$ 的训练样例的数量number of training examples for which
+\item $n_c$ 是 $v=v_j$ 且 $a=a_i$ 的样例数量
+\item $p$ 是对 $\hat{P}(a_{i} | v_{j})$ 的先验估计
+\item $m$ 是对先验的权重 (等效样本大小)
+\end{itemize}
+\end{frame}
+\section{学习分类文本}
+\label{sec-9}
+\begin{frame}
+\frametitle{学习分类文本}
+\label{sec-9-1}
+
+\begin{itemize}
+\item 学习将文本按兴趣分类
+\item 学习将网页按主题分类
+\end{itemize}
+
+
+目标概念： $Interesting? : Document \rightarrow \{+,-\}$
+\end{frame}
+\begin{frame}
+\frametitle{将文档表示为单词向量}
+\label{sec-9-2}
+
+\begin{itemize}
+\item one attribute per word position in document
+\item Learning: Use training examples to estimate
+\begin{itemize}
+\item $P(+)$
+\item $P(-)$
+\item $P(doc|+)$
+\item $P(doc|-)$
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{相素贝叶斯条件独立假定}
+\label{sec-9-3}
+
+
+$$P(doc|v_j) = \prod_{i=1}^{length(doc)} P(a_i=w_k | v_j)$$
+
+其中 $P(a_i=w_k| v_j)$ 是给定 $v_j$ 时， 位置 $i$ 的单词是 $w_k$ 的概率。
+
+另一假定: $P(a_i=w_k|v_j) = P(a_m=w_k|v_j), \forall i,m$
+\end{frame}
+\begin{frame}
+\frametitle{算法流程}
+\label{sec-9-4}
+
+Learn\_{}naive\_{}Bayes\_{}text( $Examples, V$ )
+\begin{itemize}
+\item Examples为一组文本文档以及它们的目标值。
+\item V为所有可能目标值的集合。
+\item 此函数作用是学习概率项 $P(w_k|v_j)$ ，
+\item 它描述了从类别 $v_j$ 中的一个文档中随机抽取的一个单词为英文单词 $w_k$ 的概率。该函数也学习类别的先验概率 $P(v_j)$ 。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{算法流程(续)}
+\label{sec-9-5}
+
+\begin{itemize}
+\item 收集Examples中所有的单词、标点符号以及其他记号
+\begin{itemize}
+\item $Vocabulary \leftarrow$ 在Examples中任意文本文档中出现的所有单词及记号的集合
+\end{itemize}
+\item 计算所需要的概率项 $P(v_j)$ 和 $P(w_k|v_j)$
+\begin{itemize}
+\item 对V中每个目标值 $v_j$
+\begin{itemize}
+\item $docs_{j} \leftarrow$ Examples中目标值为 $v_j$ 的文档子集
+\item $P(v_{j}) \leftarrow \frac{|docs_{j}|}{|Examples|}$
+\item $Text_{j} \leftarrow$ 将 $docs_j$ 中所有成员连接起来建立的单个文档
+\item $n \leftarrow$ 在 $Text_j$ 中不同单词位置的总数(重复单词多次计算)
+\item 对 $Vocabulary$ 中每个单词 $w_k$
+\begin{itemize}
+\item $n_{k} \leftarrow$ 单词 $w_k$ 出现在 $Text_j$ 中的次数
+\item $P(w_{k}|v_{j}) \leftarrow \frac{n_{k} + 1}{n + |Vocabulary|}$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{算法流程(续)}
+\label{sec-9-6}
+
+Classify\_{}naive\_{}Bayes\_{}text($Doc$)
+\begin{itemize}
+\item 对文档 $Doc$ 返回其估计的目标值。$a_i$ 代表在 $Doc$ 中的第 $i$ 个位置上出现的单词。
+\begin{itemize}
+\item $positions \leftarrow$ 在 $Doc$ 中包含的能在 $Vocabulary$ 中找到的记号的所有单词位置
+\item 返回
+     $$v_{NB} = \arg\max_{v_{j} \in V} P(v_{j}) \prod_{i \in positions}P(a_{i}|v_{j})$$
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Twenty NewsGroups}
+\label{sec-9-7}
+
+
+\small
+
+Given 1000 training documents from each group
+
+Learn to classify new documents according to which newsgroup it came from
+
+\bigskip
+\begin{center}
+\begin{tabular}{cc}
+comp.graphics & misc.forsale\\
+comp.os.ms-windows.misc & rec.autos \\
+comp.sys.ibm.pc.hardware & rec.motorcycles \\
+comp.sys.mac.hardware & rec.sport.baseball \\
+comp.windows.x & rec.sport.hockey \\
+\ & \ \\
+alt.atheism & sci.space \\
+soc.religion.christian  & sci.crypt\\
+talk.religion.misc & sci.electronics\\
+talk.politics.mideast & sci.med \\
+talk.politics.misc & \ \\
+talk.politics.guns & \ \\
+\end{tabular}
+\end{center}
+
+
+Naive Bayes: 89\% classification accuracy
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Article from rec.sport.hockey}
+\label{sec-9-8}
+
+\small
+
+\begin{verbatim}
+Path: cantaloupe.srv.cs.cmu.edu!das-news.harvard.edu!ogicse!uwm.edu
+From: xxx@yyy.zzz.edu (John Doe)
+Subject: Re: This year's biggest and worst (opinion)...
+Date: 5 Apr 93 09:53:39 GMT
+
+I can only comment on the Kings, but the most 
+obvious candidate for pleasant surprise is Alex
+Zhitnik. He came highly touted as a defensive 
+defenseman, but he's clearly much more than that. 
+Great skater and hard shot (though wish he were 
+more accurate). In fact, he pretty much allowed 
+the Kings to trade away that huge defensive 
+liability Paul Coffey. Kelly Hrudey is only the 
+biggest disappointment if you thought he was any 
+good to begin with. But, at best, he's only a 
+mediocre goaltender. A better choice would be 
+Tomas Sandstrom, though not through any fault of 
+his own, but because some thugs in Toronto decided
+\end{verbatim}
+\end{frame}
+\begin{frame}
+\frametitle{Learning Curve for 20 Newsgroups}
+\label{sec-9-9}
+
+\includegraphics[width=0.8\textwidth]{./image/bayes-text-results.png}
+
+\centerline{Accuracy vs. Training set size (1/3 withheld for test)}
+\end{frame}
+\section{贝叶斯信念网(Bayesian Belief Networks)}
+\label{sec-10}
+\begin{frame}
+\frametitle{贝叶斯信念网(Bayesian Belief Networks)}
+\label{sec-10-1}
+
+
+\begin{itemize}
+\item 贝叶斯置信网描述的是一组变量所遵从的概率分布，它通过一组条件概率来指定一组条件独立性假定。
+\item 朴素贝叶斯分类器假定所有变量在给定目标变量值时为条件独立的，与此不同，贝叶斯置信网中可表述应用到变量的一个子集上的条件独立性假定。
+\item 因此，贝叶斯置信网提供了一种中间的方法，它比朴素贝叶斯分类器中条件独立性的全局假定的限制更少，又比在所有变量中计算条件依赖更可行。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{条件独立}
+\label{sec-10-2}
+
+
+\begin{quote}
+{\bf 定义:} 若给定 $Z$ 的值， $X$ 的概率分布独立于 $Y$的值，即：
+
+$$(\forall x_i,y_j,z_k) \ P(X = x_i | Y = y_j, Z = z_k) =   P(X = x_i | Z = z_k)$$
+
+则称 $X$ 在给定 $Z$ 时条件独立于 $Y$ . 记作：
+$$P(X | Y,Z) = P(X | Z)$$
+\end{quote}
+\end{frame}
+\begin{frame}
+\frametitle{示例:}
+\label{sec-10-3}
+
+给定 $Lightning$ 则 $Thunder$ 条件独立于 $Rain$, 
+$$P(Thunder | Rain, Lightning) = P(Thunder | Lightning)$$
+
+Naive Bayes 推导中使用了条件独立：
+\begin{eqnarray}
+P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
+ &= &P(X|Z) P(Y|Z)  \nonumber
+\end{eqnarray}
+\end{frame}
+\begin{frame}
+\frametitle{网络}
+\label{sec-10-4}
+
+
+\includegraphics[width=.9\linewidth]{./image/bayesnet.png}
+\end{frame}
+\begin{frame}
+\frametitle{说明}
+\label{sec-10-5}
+
+
+\begin{itemize}
+\item 贝叶斯网表示联合概率分布的方法是指定一组条件独立性假定（有向无环图），以及一组局部条件概率集合。
+\item 联合空间中每个变量在贝叶斯网中表示为一结点。
+\item 对每一变量需要两种类型的信息。首先，网络弧表示断言“此变量在给定其立即前驱时条件独立于其非后继”。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{表示联合概率 ：}
+\label{sec-10-6}
+
+\begin{itemize}
+\item 例如： $P(Storm, BusTourGroup, \ldots, ForestFire)$
+\item 对网络变量的元组 $(Y_1, \ldots, Y_n)$ 取值 $(y_1, \ldots, y_n)$ 的联合概率：
+   $$P(y_1, \ldots, y_n) = \prod_{i=1}^{n} P(y_i | Parents(Y_i))$$
+\end{itemize}
+其中 $Parents(Y_i)$ 表示网络中 $Y_i$ 的立即前驱的集合。注意 $P(y_i|Parents(Y_i))$ 的值等于与结点Yi关联的条件概率表中的值。
+\end{frame}
+\begin{frame}
+\frametitle{贝叶斯网络推理}
+\label{sec-10-7}
+
+
+\begin{itemize}
+\item 可以用贝叶斯网在给定其他变量的观察值时推理出某些目标变量（如ForestFire）的值。
+\item 由于所处理的是随机变量，所以一般不会赋予目标变量一个确切的值。
+\item 真正需要推理的是目标变量的概率分布，它指定了在给与其他变量的观察值条件下，目标变量取每一可能值的概率。
+\item 在网络中所有其他变量都确切知道了以后，这一推理步骤是很简单的。
+\item 在更通常的情况下,我们希望在知道一部分变量的值（比如Thunder 和BusTourGroup为仅有可用的观察值）时获得某变量的概率分布（如ForestFire）。
+\item 一般地，贝叶斯网络可用于在知道某些变量的值或分布时计算网络中另一部分变量的概率分布。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{学习贝叶斯网络}
+\label{sec-10-8}
+
+
+\begin{itemize}
+\item 网络结构预先给出，或可由训练数据中推得。
+\item 所有的网络变量可以直接从每个训练样例中观察到，或某些变量不能观察到。
+\item 在网络结构的预先已知，并且变量可以从训练样例中完全获得时，通过学习得到条件概率表就比较简单了。只需要象在朴素贝叶斯分类器中那样估计表中的条件概率项。
+\end{itemize}
+
+若网络结构已知，但只有一部分变量值能在数据中观察到。
+\begin{itemize}
+\item 这一问题在某种程度上类似于在人工神经网络中学习隐藏单元的权值，其中输入和输出结点值由训练样例给出，但隐藏单元的值未指定。
+\item 梯度上升过程可以学习条件概率表中的项。梯度上升过程搜索一个假设空间，它对应于条件概率表中所有可能的项。
+\item 在梯度上升中最大化的目标函数是给定假设 $h$ 下观察到训练数据 $D$ 的概率 $P(D|h)$ 。按照定义，它对应于对表项搜索极大似然假设。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{梯度上升算法}
+\label{sec-10-9}
+
+
+\begin{itemize}
+\item 令 $w_{ijk}$ 代表一个条件概率表的一个表项。确切地讲，令 $w_{ijk}$  为在给定父结点 $U_i$ 取值 $u_{ik}$ 时，网络变量 $Y_i$ 值为 $y_{ij}$ 的概率。
+    $$w_{ijk} = P(Y_i=y_{ij} | Parents(Y_i) = \mbox{the list $u_{ik}$ of values)}$$
+
+    若  $Y_i = Campfire$ 则 $u_{ik}$ 可能是 $\langle Storm=T, BusTourGroup=F \rangle$
+    例如，若 $w_{ijk}$ 为图中条件概率表中最右上方的表项，那么 $Y_i$ 为变量 $Campfire$ ， 
+    $U_i$ 是其父结点的元组 $<Storm, BusTourGroup>$ ， $y_{ij}=True$ ， 并且 $u_{ik}=<False, False>$ 。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{梯度上升算法(续)}
+\label{sec-10-10}
+
+\begin{itemize}
+\item 通过 $\ln P(D|h)$ 的梯度来使 $P(D|h)$ 最大化。
+\item 重复执行梯度上升
+\begin{itemize}
+\item 使用训练数据 $D$ 更新所有 $w_{ijk}$ 
+    $$w_{ijk} \leftarrow w_{ijk} + \eta \sum_{d \in D} \frac{P_h(y_{ij}, u_{ik} |d)}{w_{ijk}}$$
+\item 重新归一化 $w_{ijk}$ ， 保证
+\begin{itemize}
+\item $\sum_{j} w_{ijk} = 1$
+\item $0 \leq w_{ijk} \leq 1$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{More on Learning Bayes Nets}
+\label{sec-10-11}
+
+
+可使用 EM 算法
+\begin{itemize}
+\item 假定 $h$ 计算未观测到的变量概率
+\item 计算新的 $w_{ijk}$ 最大化 $E[\ln P(D|h)]$ ，其中 $D$ 已包含观测到的与未观测到（但计算出了概率）的变量now includes
+\end{itemize}
+
+当结构未知时
+\begin{itemize}
+\item 可使用贪婪搜索增/删结点与边
+\end{itemize}
+\end{frame}
+\section{Expectation Maximization (EM)}
+\label{sec-11}
+\begin{frame}
+\frametitle{Expectation Maximization (EM)}
+\label{sec-11-1}
+
+\begin{itemize}
+\item 观测到部分数据
+\item 实例的部分属性未知
+\item 无监督聚类
+\item 训练 Bayesian Belief Networks
+\item 学习 Hidden Markov Models
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Generating Data from Mixture of $k$ Gaussians}
+\label{sec-11-2}
+
+
+\includegraphics[width=.9\linewidth]{./image/two-gaussians.png}
+
+
+每个实例 $x$ 按如下方式产生：
+\begin{itemize}
+\item 按均匀分布选取 $k$ 个高斯分布之一
+\item 按此高斯分布随机产生一个实例
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{EM for Estimating $k$ Means}
+\label{sec-11-3}
+
+
+已知:
+\begin{itemize}
+\item 从 $k$ 个高斯分布产生的实例 $x$
+\item $k$ 个高斯 分布的 均值 $\langle \mu_1, \ldots, \mu_k \rangle$ 未知
+\item 不知实例 $x_i$ 从哪个高斯分布产生
+\end{itemize}
+
+求解:
+\begin{itemize}
+\item $\langle \mu_1, \ldots, \mu_k \rangle$ 的最大似然估计
+\end{itemize}
+
+将实例完整描述为 $y_i = \langle x_i, z_{i1}, z_{i2}\rangle$, 其中
+\begin{itemize}
+\item $z_{ij}$ 为 1 ，当 $x_i$ 由第 $j$ 个高斯分布产生
+\item $x_i$ 可观测
+\item $z_{ij}$ 不可观测
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{EM Algorithm:}
+\label{sec-11-4}
+
+随机选取初始值 $h = \langle \mu_1, \mu_2 \rangle$, 然后迭代：
+\begin{itemize}
+\item E step:
+\begin{itemize}
+\item 计算每个隐藏变量 $z_{ij}$ 的期望值 $E[z_{ij}]$ ，假定当前假设 $h = \langle \mu_1, \mu_2 \rangle$ 成立
+     \begin{eqnarray}
+      E[z_{ij}] & = & \frac{p(x=x_i | \mu = \mu_j)}{\sum_{n=1}^{2} p(x = x_i | \mu=\mu_n)} \nonumber \\
+      & = & \frac{e^{-\frac{1}{2 \sigma^2} (x_i -  \mu_j)^2}}{\sum_{n=1}^{2} e^{-\frac{1}{2 \sigma^2} (x_i - \mu_n)^2}} \nonumber
+     \end{eqnarray}
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{EM Algorithm:}
+\label{sec-11-5}
+
+\begin{itemize}
+\item M step:
+\begin{itemize}
+\item 计算一个新的极大似然假设 $h' = \langle \mu_1', \mu_2' \rangle$ ，
+\item 假定由每个隐藏变量 $z_{ij}$ 所取的值为 E step 中得到的期望值 $E[z_{ij}]$ ，
+\item 然后将假设 $h =\langle \mu_1, \mu_2 \rangle$ 替换为新的假设 $h' = \langle \mu_1', \mu_2' \rangle$ ，
+      $$\mu_j \leftarrow \frac{\sum_{i=1}^m E[z_{ij}] \ \  x_i}{\sum_{i=1}^m E[z_{ij}]}$$
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{EM Algorithm}
+\label{sec-11-6}
+
+
+\begin{itemize}
+\item Converges to local maximum likelihood $h$
+\item and provides estimates of hidden variables $z_{ij}$
+\item In fact, local maximum in $E[\ln P(Y|h)]$
+\begin{itemize}
+\item $Y$ is complete (observable plus unobservable variables) data
+\item Expected value is taken over possible values of unobserved variables in $Y$
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{General  EM Problem}
+\label{sec-11-7}
+
+
+已知:
+\begin{itemize}
+\item 观测数据 $X=\{x_1, \ldots, x_m\}$
+\item 未观测数据 $Z=\{z_1, \dots, z_m\}$
+\item 参数化概率分布 $P(Y|h)$, 其中  $Y=\{y_1, \dots, y_m\}$ 是数据 $y_i = x_i \cup z_i$ ，  $h$ 是参数
+\end{itemize}
+
+求解:
+\begin{itemize}
+\item (局部)最大化 $E[\ln P(Y|h)]$ 的 $h$
+\end{itemize}
+
+
+用于:
+\begin{itemize}
+\item Train Bayesian belief networks
+\item Unsupervised clustering (e.g., $k$ means)
+\item Hidden Markov Models
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{General  EM Problem}
+\label{sec-11-8}
+
+定义似然函数 $Q(h' | h)$ ， 使用观测到的 $X$ 与当前参数 $h$ 估计 $Z$, 计算 $Y = X \cup Z$
+$$Q(h' | h) \leftarrow E[ \ln P(Y | h') | h, X ]$$
+
+EM Algorithm:
+
+\begin{itemize}
+\item Estimation (E) step: 
+    使用当前假设 $h$ 和观察到的数据 $X$ 来估计 $Y$ 上的概率分布以计算 \$Q(h'|h)\$。
+    $$Q(h' | h) \leftarrow E[ \ln P(Y | h') | h, X ]$$
+\item Maximization (M) step:\} 
+    将假设 $h$ 替换为使 $Q$ 函数最大化的假设 $h'$ ：
+    $$h \leftarrow \arg \max_{h'}  Q(h' | h)$$
+\end{itemize}
+\end{frame}
+
+\end{document}
