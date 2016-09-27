@@ -81,7 +81,7 @@ def run_trace_file(filename1='./error_surface_index.txt',filename2='./train_proc
     for i in x.transpose():
        f.write(str(i[0,0])+" "+str(i[0,1])+" "+str(m.f(i.transpose())[0,0]) +" \n")
     f.close()
-    os.system('gnuplot -e \'splot "'+filename1+'" w pm3d , "'+filename2+'" w lp;pause -1;\'')
+    os.system('gnuplot -e \'set contour base;set cntrparam levels incremental  0,0.2,8;splot "'+filename1+'" w pm3d , "'+filename2+'" w lp lt rgb "white";pause -1;\'')
 
 def usage():
 	print("usage:\n python linearregression.py train \n or \n python linearregression.py errorspace")
