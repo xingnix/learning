@@ -52,7 +52,7 @@ void setup(){
         X = new ArrayList<double[]>();
         //X.add(new double[]{0,3});
         X.add(new double[]{random(600)/100-3,random(600)/100-3});
-        print(X.get(0)[0],X.get(0)[1],'\n');
+        //print(X.get(0)[0],X.get(0)[1],'\n');
       for (int i = 0; i < 100; i++) {
             double[] x=X.get(i);
             double[] y=M.gradientdescent(x,eta);
@@ -63,12 +63,16 @@ void setup(){
         line((float)X.get(i-1)[0],(float)X.get(i-1)[1],(float)X.get(i)[0],(float)X.get(i)[1]);
       }
       f=createImage(width, height, RGB);
+      color from = color(random(0,255), random(0,255), random(0,255));
+      color to = color(random(0,255),random(0,255),random(0,255));
       for(int i=0;i<width;i++){
         for(int j=0;j<height;j++){
             int r=min(255,50*(int)M.f(new double[]{((double)i-p)/s,((double)j-p)/s}));
             int blue=r;
             int red=r;
             f.set(i,j,color(0,0,blue));
+            color inter = lerpColor(from, to, (float)blue/255);
+            f.set(i,j,inter);
         }
       }
       //set(0,0,f);
