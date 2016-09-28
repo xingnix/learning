@@ -1,4 +1,4 @@
-% Created 2016-09-27 Tue 20:08
+% Created 2016-09-28 Wed 09:09
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -93,11 +93,9 @@
 \item 即使在贝叶斯方法计算复杂度较高时，它们仍可做为一个最优的决策的标准衡量其他方法。
 \end{itemize}
 \end{frame}
-\section{贝叶斯法则}
-\label{sec-2}
 \begin{frame}
 \frametitle{贝叶斯公式}
-\label{sec-2-1}
+\label{sec-1-2}
 
 
 \[ P(h|D) = \frac{P(D|h) P(h)}{P(D)} \]
@@ -107,12 +105,12 @@
 \item $P(h)$ = 还没有训练数据前，假设 $h$ 的概率。
 \item $P(D)$ = 训练数据D的先验概率
 \item $P(h|D)$ = $D$ 时 $h$ 成立的概率。
-\item $P(D|h)$ = 给定假设 \$h 时观察到数据 $D$ 的概率
+\item $P(D|h)$ = 给定假设 $h$ 时观察到数据 $D$ 的概率
 \end{itemize}
 \end{frame}
 \begin{frame}
 \frametitle{最大后验 (Maximum a posteriori)}
-\label{sec-2-2}
+\label{sec-1-3}
 
 
 \[ P(h|D) = \frac{P(D|h) P(h)}{P(D)} \]
@@ -129,7 +127,7 @@
 \end{frame}
 \begin{frame}
 \frametitle{极大似然（ Maximum likelihood，ML）}
-\label{sec-2-3}
+\label{sec-1-4}
 
 
 假定 $P(h_{i})=P(h_{j})$ 则可进一步简化，选取极大似然假设：
@@ -138,7 +136,7 @@ $$h_{ML}=\arg \max_{h \in H}P(D|h)$$
 \end{frame}
 \begin{frame}
 \frametitle{基本公式}
-\label{sec-2-4}
+\label{sec-1-5}
 
 
 \begin{itemize}
@@ -150,11 +148,11 @@ $$h_{ML}=\arg \max_{h \in H}P(D|h)$$
   $$P(B) = \sum_{i = 1}^{n} P(B|A_{i}) P(A_{i})$$
 \end{itemize}
 \end{frame}
-\section{贝叶斯法则和概念学习}
-\label{sec-3}
+\section{贝叶斯学习}
+\label{sec-2}
 \begin{frame}
 \frametitle{概念}
-\label{sec-3-1}
+\label{sec-2-1}
 
 \begin{itemize}
 \item 假定学习器考虑的是定义在实例空间 $X$ 上的有限的假设空间 $H$ ，
@@ -165,7 +163,7 @@ $$h_{ML}=\arg \max_{h \in H}P(D|h)$$
 \end{frame}
 \begin{frame}
 \frametitle{Brute-Force MAP学习算法}
-\label{sec-3-2}
+\label{sec-2-2}
 
 \begin{itemize}
 \item 对于 $H$ 中每个假设 $h$ ，计算后验概率：
@@ -176,7 +174,7 @@ $$h_{ML}=\arg \max_{h \in H}P(D|h)$$
 \end{frame}
 \begin{frame}
 \frametitle{Brute-Force MAP学习算法（续）}
-\label{sec-3-3}
+\label{sec-2-3}
 
 选择P(h)和P(D|h)的概率分布，以描述该学习任务的先验知识：
 \begin{itemize}
@@ -206,20 +204,20 @@ P(h|D) = \left\{ \begin{array}{cl}
 \end{frame}
 \begin{frame}
 \frametitle{贝叶斯法则}
-\label{sec-3-4}
+\label{sec-2-4}
 
 \includegraphics[width=.9\linewidth]{./image/bayes-vs.png}
 \end{frame}
 \begin{frame}
 \frametitle{贝叶斯学习}
-\label{sec-3-5}
+\label{sec-2-5}
 
 
 \includegraphics[width=0.7\textwidth]{./image/vs-map-equivalent.png}
 \end{frame}
 \begin{frame}
 \frametitle{MAP假设和一致学习器}
-\label{sec-3-6}
+\label{sec-2-6}
 
 \begin{itemize}
 \item 在给定条件下，与D一致的每个假设都是MAP假设。
@@ -227,28 +225,28 @@ P(h|D) = \left\{ \begin{array}{cl}
 \item 根据这一结论可直接得到一类普遍的学习器，称为一致学习器。
 \item 某学习算法被称为一致学习器，说明它输出的假设在训练例上有零错误率。
 \end{itemize}
-\item 假定H上有均匀的先验概率（即P(hi)=P(hj)，对所有的i,j），
-\item 且训练数据是确定性的和无噪声的（即当D和h一致时，P(D|h)=1），否则为0）时，
+\item 假定H上有均匀的先验概率（即 $P(h_i)=P(h_j)$ ，对所有的 $i,j$ ），
+\item 且训练数据是确定性的和无噪声的（即当D和h一致时， $P(D|h)=1）$ ，否则为0）时，
 \item 任意一致学习器将输出一个MAP假设。
 \item 例如第2章讨论的Find-S概念学习算法。
 \begin{itemize}
-\item Find-S按照特殊到一般的顺序搜索假设空间H，
+\item Find-S按照特殊到一般的顺序搜索假设空间 $H$ ，
 \item 并输出一个极大特殊性的一致假设，
-\item 可知在上面定义的P(h)和P(D|h)概率分布下，它输出MAP假设。
+\item 可知在上面定义的 $P(h)$ 和 $P(D|h)$ 概率分布下，它输出MAP假设。
 \end{itemize}
 \end{itemize}
 \end{frame}
-\section{极大似然和最小误差平方假设}
-\label{sec-4}
+\section{极大似然}
+\label{sec-3}
 \begin{frame}
 \frametitle{学习实值函数}
-\label{sec-4-1}
+\label{sec-3-1}
 
 \includegraphics[width=0.7\textwidth]{./image/bayes-linear.png}
 \end{frame}
 \begin{frame}
 \frametitle{考虑实值函数 $f$}
-\label{sec-4-2}
+\label{sec-3-2}
 
 \begin{itemize}
 \item 训练样例 $\langle x_{i}, d_{i} \rangle$, 其中
@@ -262,7 +260,7 @@ P(h|D) = \left\{ \begin{array}{cl}
 \end{frame}
 \begin{frame}
 \frametitle{推导：}
-\label{sec-4-3}
+\label{sec-3-3}
 
 
 \begin{eqnarray}
@@ -274,7 +272,7 @@ e^{-\frac{1}{2}(\frac{d_{i} - h(x_{i})}{\sigma})^{2}} \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{用自然对数替换，得：}
-\label{sec-4-4}
+\label{sec-3-4}
 
 
 \begin{eqnarray}
@@ -290,7 +288,7 @@ h_{ML}  &= &\arg \max_{h \in H}
 \end{frame}
 \begin{frame}
 \frametitle{用于预测概率的极大似然假设}
-\label{sec-4-5}
+\label{sec-3-5}
 
 
  考虑从数据中预测概率
@@ -305,10 +303,10 @@ h_{ML}  &= &\arg \max_{h \in H}
 \end{itemize}
 \end{frame}
 \section{最小描述长度准则}
-\label{sec-5}
+\label{sec-4}
 \begin{frame}
 \frametitle{奥坎坶剃刀 （Occam's razor）}
-\label{sec-5-1}
+\label{sec-4-1}
 
 \begin{itemize}
 \item “为观察到的数据选择最短的解释”。（优先选择短的假设）
@@ -323,7 +321,7 @@ h_{ML}  &= &\arg \max_{h \in H}
 \end{frame}
 \begin{frame}
 \frametitle{示例：}
-\label{sec-5-2}
+\label{sec-4-2}
 
 \begin{itemize}
 \item $H$ = 决策树
@@ -342,7 +340,7 @@ h_{MAP} &= &\arg \max_{h \in H}P(D|h) P(h) \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{由信息论可得：}
-\label{sec-5-3}
+\label{sec-4-3}
 
 \begin{quote}
 针对以概率 $p$ 发生的事件，最优 (最短期望编码长度)编码是 $- \log_{2} p$ 位.
@@ -358,10 +356,10 @@ $$length(h) + length(misclassifications)$$
 的假设
 \end{frame}
 \section{贝叶斯最优分类器}
-\label{sec-6}
+\label{sec-5}
 \begin{frame}
 \frametitle{新实例的最大可能分类}
-\label{sec-6-1}
+\label{sec-5-1}
 
 
 \begin{itemize}
@@ -382,14 +380,14 @@ $$length(h) + length(misclassifications)$$
 \end{frame}
 \begin{frame}
 \frametitle{贝叶斯最优分类器}
-\label{sec-6-2}
+\label{sec-5-2}
 
 
 $$\arg \max_{v_{j} \in V} \sum_{h_{i} \in H} P(v_{j}|h_{i}) P(h_{i}|D)$$
 \end{frame}
 \begin{frame}
 \frametitle{示例:}
-\label{sec-6-3}
+\label{sec-5-3}
 
 
 \begin{eqnarray}
@@ -409,10 +407,10 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{eqnarray}
 \end{frame}
 \section{GIBBS 算法}
-\label{sec-7}
+\label{sec-6}
 \begin{frame}
 \frametitle{GIBBS 算法}
-\label{sec-7-1}
+\label{sec-6-1}
 
 \begin{itemize}
 \item 虽然贝叶斯最优分类器能从给定训练数据中获得最好的性能，应用此算法的开销可能很大。
@@ -424,7 +422,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{Gibbs算法:}
-\label{sec-7-2}
+\label{sec-6-2}
 
 
 \begin{itemize}
@@ -438,18 +436,18 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{概念学习问题分析：}
-\label{sec-7-3}
+\label{sec-6-3}
 
 \begin{itemize}
 \item 如果学习器假定 $H$ 上有均匀的先验概率，而且如果目标概念实际上也按该分布抽取
 \item 那么当前变型空间中随机抽取的假设对下一实例分类的期望误差最多为贝叶斯分类器的两倍。
 \end{itemize}
 \end{frame}
-\section{朴素贝叶斯分类器（ Naive Bayes Classifier ）}
-\label{sec-8}
+\section{朴素贝叶斯分类器}
+\label{sec-7}
 \begin{frame}
 \frametitle{朴素贝叶斯分类器（ Naive Bayes Classifier ）}
-\label{sec-8-1}
+\label{sec-7-1}
 
 \begin{itemize}
 \item 贝叶斯学习方法中实用性很高的一种为朴素贝叶斯学习器，常被称为朴素贝叶斯分类器（naive Bayes classifier）。在某些领域内其性能可与神经网络和决策树学习相当。
@@ -469,7 +467,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{描述}
-\label{sec-8-2}
+\label{sec-7-2}
 
 
 \begin{itemize}
@@ -489,7 +487,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{算法}
-\label{sec-8-3}
+\label{sec-7-3}
 
 
 \begin{itemize}
@@ -508,7 +506,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{示例}
-\label{sec-8-4}
+\label{sec-7-4}
 
 
 \begin{itemize}
@@ -533,7 +531,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{Naive Bayes: Subtleties}
-\label{sec-8-5}
+\label{sec-7-5}
 
 \begin{itemize}
 \item 通常不满足独立性假定
@@ -544,7 +542,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{当目标值为 $v_j$ 的所有训练实例都没有属性值 $a_i$? 时}
-\label{sec-8-6}
+\label{sec-7-6}
 
     $$\hat{P}(a_i|v_j) = 0 \mbox{, and...}$$
     $$\hat{P}(v_{j}) \prod_{i} \hat{P}(a_{i} | v_{j}) = 0$$
@@ -558,11 +556,9 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \item $m$ 是对先验的权重 (等效样本大小)
 \end{itemize}
 \end{frame}
-\section{学习分类文本}
-\label{sec-9}
 \begin{frame}
 \frametitle{学习分类文本}
-\label{sec-9-1}
+\label{sec-7-7}
 
 \begin{itemize}
 \item 学习将文本按兴趣分类
@@ -574,7 +570,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{将文档表示为单词向量}
-\label{sec-9-2}
+\label{sec-7-8}
 
 \begin{itemize}
 \item one attribute per word position in document
@@ -589,7 +585,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{frame}
 \begin{frame}
 \frametitle{相素贝叶斯条件独立假定}
-\label{sec-9-3}
+\label{sec-7-9}
 
 
 $$P(doc|v_j) = \prod_{i=1}^{length(doc)} P(a_i=w_k | v_j)$$
@@ -600,7 +596,7 @@ $$P(doc|v_j) = \prod_{i=1}^{length(doc)} P(a_i=w_k | v_j)$$
 \end{frame}
 \begin{frame}
 \frametitle{算法流程}
-\label{sec-9-4}
+\label{sec-7-10}
 
 Learn\_{}naive\_{}Bayes\_{}text( $Examples, V$ )
 \begin{itemize}
@@ -612,7 +608,7 @@ Learn\_{}naive\_{}Bayes\_{}text( $Examples, V$ )
 \end{frame}
 \begin{frame}
 \frametitle{算法流程(续)}
-\label{sec-9-5}
+\label{sec-7-11}
 
 \begin{itemize}
 \item 收集Examples中所有的单词、标点符号以及其他记号
@@ -638,7 +634,7 @@ Learn\_{}naive\_{}Bayes\_{}text( $Examples, V$ )
 \end{frame}
 \begin{frame}
 \frametitle{算法流程(续)}
-\label{sec-9-6}
+\label{sec-7-12}
 
 Classify\_{}naive\_{}Bayes\_{}text($Doc$)
 \begin{itemize}
@@ -652,7 +648,7 @@ Classify\_{}naive\_{}Bayes\_{}text($Doc$)
 \end{frame}
 \begin{frame}
 \frametitle{Twenty NewsGroups}
-\label{sec-9-7}
+\label{sec-7-13}
 
 
 \small
@@ -684,7 +680,7 @@ Naive Bayes: 89\% classification accuracy
 \end{frame}
 \begin{frame}[fragile]
 \frametitle{Article from rec.sport.hockey}
-\label{sec-9-8}
+\label{sec-7-14}
 
 \small
 
@@ -711,17 +707,17 @@ his own, but because some thugs in Toronto decided
 \end{frame}
 \begin{frame}
 \frametitle{Learning Curve for 20 Newsgroups}
-\label{sec-9-9}
+\label{sec-7-15}
 
 \includegraphics[width=0.8\textwidth]{./image/bayes-text-results.png}
 
 \centerline{Accuracy vs. Training set size (1/3 withheld for test)}
 \end{frame}
-\section{贝叶斯信念网(Bayesian Belief Networks)}
-\label{sec-10}
+\section{贝叶斯信念网}
+\label{sec-8}
 \begin{frame}
 \frametitle{贝叶斯信念网(Bayesian Belief Networks)}
-\label{sec-10-1}
+\label{sec-8-1}
 
 
 \begin{itemize}
@@ -732,7 +728,7 @@ his own, but because some thugs in Toronto decided
 \end{frame}
 \begin{frame}
 \frametitle{条件独立}
-\label{sec-10-2}
+\label{sec-8-2}
 
 
 \begin{quote}
@@ -746,7 +742,7 @@ $$P(X | Y,Z) = P(X | Z)$$
 \end{frame}
 \begin{frame}
 \frametitle{示例:}
-\label{sec-10-3}
+\label{sec-8-3}
 
 给定 $Lightning$ 则 $Thunder$ 条件独立于 $Rain$, 
 $$P(Thunder | Rain, Lightning) = P(Thunder | Lightning)$$
@@ -759,14 +755,14 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{网络}
-\label{sec-10-4}
+\label{sec-8-4}
 
 
 \includegraphics[width=.9\linewidth]{./image/bayesnet.png}
 \end{frame}
 \begin{frame}
 \frametitle{说明}
-\label{sec-10-5}
+\label{sec-8-5}
 
 
 \begin{itemize}
@@ -777,7 +773,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{表示联合概率 ：}
-\label{sec-10-6}
+\label{sec-8-6}
 
 \begin{itemize}
 \item 例如： $P(Storm, BusTourGroup, \ldots, ForestFire)$
@@ -788,7 +784,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{贝叶斯网络推理}
-\label{sec-10-7}
+\label{sec-8-7}
 
 
 \begin{itemize}
@@ -802,7 +798,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{学习贝叶斯网络}
-\label{sec-10-8}
+\label{sec-8-8}
 
 
 \begin{itemize}
@@ -820,7 +816,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{梯度上升算法}
-\label{sec-10-9}
+\label{sec-8-9}
 
 
 \begin{itemize}
@@ -834,7 +830,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{梯度上升算法(续)}
-\label{sec-10-10}
+\label{sec-8-10}
 
 \begin{itemize}
 \item 通过 $\ln P(D|h)$ 的梯度来使 $P(D|h)$ 最大化。
@@ -852,7 +848,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{More on Learning Bayes Nets}
-\label{sec-10-11}
+\label{sec-8-11}
 
 
 可使用 EM 算法
@@ -866,11 +862,11 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \item 可使用贪婪搜索增/删结点与边
 \end{itemize}
 \end{frame}
-\section{Expectation Maximization (EM)}
-\label{sec-11}
+\section{EM}
+\label{sec-9}
 \begin{frame}
 \frametitle{Expectation Maximization (EM)}
-\label{sec-11-1}
+\label{sec-9-1}
 
 \begin{itemize}
 \item 观测到部分数据
@@ -882,7 +878,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{Generating Data from Mixture of $k$ Gaussians}
-\label{sec-11-2}
+\label{sec-9-2}
 
 
 \includegraphics[width=.9\linewidth]{./image/two-gaussians.png}
@@ -896,7 +892,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{EM for Estimating $k$ Means}
-\label{sec-11-3}
+\label{sec-9-3}
 
 
 已知:
@@ -920,7 +916,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{EM Algorithm:}
-\label{sec-11-4}
+\label{sec-9-4}
 
 随机选取初始值 $h = \langle \mu_1, \mu_2 \rangle$, 然后迭代：
 \begin{itemize}
@@ -936,7 +932,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{EM Algorithm:}
-\label{sec-11-5}
+\label{sec-9-5}
 
 \begin{itemize}
 \item M step:
@@ -950,7 +946,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{EM Algorithm}
-\label{sec-11-6}
+\label{sec-9-6}
 
 
 \begin{itemize}
@@ -965,7 +961,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{General  EM Problem}
-\label{sec-11-7}
+\label{sec-9-7}
 
 
 已知:
@@ -990,7 +986,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \end{frame}
 \begin{frame}
 \frametitle{General  EM Problem}
-\label{sec-11-8}
+\label{sec-9-8}
 
 定义似然函数 $Q(h' | h)$ ， 使用观测到的 $X$ 与当前参数 $h$ 估计 $Z$, 计算 $Y = X \cup Z$
 $$Q(h' | h) \leftarrow E[ \ln P(Y | h') | h, X ]$$
@@ -999,7 +995,7 @@ EM Algorithm:
 
 \begin{itemize}
 \item Estimation (E) step: 
-    使用当前假设 $h$ 和观察到的数据 $X$ 来估计 $Y$ 上的概率分布以计算 \$Q(h'|h)\$。
+    使用当前假设 $h$ 和观察到的数据 $X$ 来估计 $Y$ 上的概率分布以计算 $Q(h'|h)$ 。
     $$Q(h' | h) \leftarrow E[ \ln P(Y | h') | h, X ]$$
 \item Maximization (M) step:\} 
     将假设 $h$ 替换为使 $Q$ 函数最大化的假设 $h'$ ：
