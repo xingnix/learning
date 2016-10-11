@@ -1,4 +1,4 @@
-% Created 2016-09-28 Wed 09:09
+% Created 2016-10-10 Mon 17:55
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -109,7 +109,7 @@
 \end{itemize}
 \end{frame}
 \begin{frame}
-\frametitle{最大后验 (Maximum a posteriori)}
+\frametitle{最大后验 (Maximum a posteriori,MAP)}
 \label{sec-1-3}
 
 
@@ -226,9 +226,9 @@ P(h|D) = \left\{ \begin{array}{cl}
 \item 某学习算法被称为一致学习器，说明它输出的假设在训练例上有零错误率。
 \end{itemize}
 \item 假定H上有均匀的先验概率（即 $P(h_i)=P(h_j)$ ，对所有的 $i,j$ ），
-\item 且训练数据是确定性的和无噪声的（即当D和h一致时， $P(D|h)=1）$ ，否则为0）时，
+\item 且训练数据是确定性的和无噪声的 (即当D和h一致时， $P(D|h)=1$ ,否则为0）时，
 \item 任意一致学习器将输出一个MAP假设。
-\item 例如第2章讨论的Find-S概念学习算法。
+\item 例如第2章讨论的Find-S概念学习算法:
 \begin{itemize}
 \item Find-S按照特殊到一般的顺序搜索假设空间 $H$ ，
 \item 并输出一个极大特殊性的一致假设，
@@ -314,7 +314,7 @@ h_{ML}  &= &\arg \max_{h \in H}
 \begin{itemize}
 \item 优先选择最小化
       $$h_{MDL} = \arg \min_{h \in H} L_{C_{1}}(h) + L_{C_{2}}(D|h)$$
-     的假设 $h$
+      的假设 $h$
 \item 其中 $L_{C}(x)$ 是在编码 $C$ 下 $x$ 的描述长度
 \end{itemize}
 \end{itemize}
@@ -550,7 +550,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
        $$\hat{P}(a_{i} | v_{j}) \leftarrow \frac{n_{c} + mp}{n + m}$$
     其中：
 \begin{itemize}
-\item $n$ 是 $v=v_j$ 的训练样例的数量number of training examples for which
+\item $n$ 是 $v=v_j$ 的训练样例的数量
 \item $n_c$ 是 $v=v_j$ 且 $a=a_i$ 的样例数量
 \item $p$ 是对 $\hat{P}(a_{i} | v_{j})$ 的先验估计
 \item $m$ 是对先验的权重 (等效样本大小)
@@ -584,7 +584,7 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 \end{itemize}
 \end{frame}
 \begin{frame}
-\frametitle{相素贝叶斯条件独立假定}
+\frametitle{朴素贝叶斯条件独立假定}
 \label{sec-7-9}
 
 
@@ -780,7 +780,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 \item 对网络变量的元组 $(Y_1, \ldots, Y_n)$ 取值 $(y_1, \ldots, y_n)$ 的联合概率：
    $$P(y_1, \ldots, y_n) = \prod_{i=1}^{n} P(y_i | Parents(Y_i))$$
 \end{itemize}
-其中 $Parents(Y_i)$ 表示网络中 $Y_i$ 的立即前驱的集合。注意 $P(y_i|Parents(Y_i))$ 的值等于与结点Yi关联的条件概率表中的值。
+其中 $Parents(Y_i)$ 表示网络中 $Y_i$ 的立即前驱的集合。注意 $P(y_i|Parents(Y_i))$ 的值等于与结点 $Y_i$ 关联的条件概率表中的值。
 \end{frame}
 \begin{frame}
 \frametitle{贝叶斯网络推理}
@@ -854,7 +854,7 @@ P(X,Y|Z) &= &P(X|Y,Z) P(Y|Z)  \nonumber \\
 可使用 EM 算法
 \begin{itemize}
 \item 假定 $h$ 计算未观测到的变量概率
-\item 计算新的 $w_{ijk}$ 最大化 $E[\ln P(D|h)]$ ，其中 $D$ 已包含观测到的与未观测到（但计算出了概率）的变量now includes
+\item 计算新的 $w_{ijk}$ 最大化 $E[\ln P(D|h)]$ ，其中 $D$ 已包含观测到的与未观测到（但计算出了概率）的变量
 \end{itemize}
 
 当结构未知时
