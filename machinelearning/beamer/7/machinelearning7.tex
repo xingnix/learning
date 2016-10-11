@@ -1,0 +1,465 @@
+% Created 2016-10-10 Mon 21:05
+\documentclass{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+\setbeamercovered{transparent}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{计算学习理论}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+\section{简介}
+\label{sec-1}
+\begin{frame}
+\frametitle{简介}
+\label{sec-1-1}
+
+\begin{itemize}
+\item 学习器（机器的或非机器的）应遵循什么样的规则?
+\item 学习器所考虑的假设空间的大小和复杂度
+\item 目标概念须近似到怎样的精度
+\item 学习器输出成功的假设的可能性
+\item 训练样例提供给学习器的方式
+\end{itemize}
+
+目标是为了回答以下的问题：
+\begin{itemize}
+\item 样本复杂度（Sample complexity）。学习器要收敛到成功假设（以较高的概率），需要多少训练样例？
+\item 计算复杂度(Computational complexity)。学习器要收敛到成功假设（以较高的概率）需要多大的计算量？
+\item 出错界限（Mistake bound）。在成功收敛到一个假设前，学习器对训练样例的误分类有多少次？
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{概念学习任务}
+\label{sec-1-2}
+
+已知：
+\begin{itemize}
+\item 实例集合 $X$: 实例以其属性表示：\\
+\{\em Sky, AirTemp, Humidity, Wind, Water, Forecast\}
+\item 目标函数 $c$: $EnjoySport: X \rightarrow \{0,1 \}$
+\item 假设空间 $H$: 布尔文字合取，如
+    $$\langle ?, Cold, High, ?, ?, ? \rangle.$$
+\item 训练样例集合 $D$: 目标函数的正/负样例
+    $$\langle x_1, c(x_1) \rangle , \ldots \langle x_m, c(x_m) \rangle$$
+\end{itemize}
+
+求：
+\begin{itemize}
+\item $H$ 中的假设 $h$ ， 使 $D$ 中的所有 $x$ 满足 $h(x)=c(x)$
+\item $H$ 中的假设 $h$ ， 使 $X$ 中的所有 $x$ 满足 $h(x)=c(x)$
+\end{itemize}
+\end{frame}
+\section{样本复杂度}
+\label{sec-2}
+\begin{frame}
+\frametitle{样本复杂度}
+\label{sec-2-1}
+
+需要多少样例才能学习目标概念？
+
+\begin{itemize}
+\item 学习器提出实例，询问施教者
+\begin{itemize}
+\item 学习器提出实例 $x$, 施教者提供 $c(x)$
+\end{itemize}
+\item 施教者提供训练样例
+\begin{itemize}
+\item 施教者提供样例序列： $\langle x, c(x) \rangle$
+\end{itemize}
+\item 以随机过程提出实例
+\begin{itemize}
+\item 随机产生实例 $x$ , 施教者提供 $c(x)$
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{样本复杂度 1}
+\label{sec-2-2}
+
+
+学习器提出实例 $x$, 施教者提供 $c(x)$
+
+(假定 $c$ 在学习器的假设空间 $H$ 中)
+
+最优询问策略: play 20 questions
+\begin{itemize}
+\item 选取实例 $x$ ， 使得 $VS$ 中一半的假设将 $x$ 分类为正，一半分类为负
+\begin{itemize}
+\item 可行时，需要 $\lceil \log_2 |H| \rceil$ 次查询可学习 $c$
+\item 不可行时，需要更多样例
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{样本复杂度 2}
+\label{sec-2-3}
+
+
+施教者提供样例序列： $\langle x, c(x) \rangle$
+
+(假定 $c$ 在学习器的假设空间 $H$ 中)
+
+最优施教策略: 依赖学习器使用的 $H$
+
+\begin{itemize}
+\item 考虑 $H=$ 最多 $n$ 个布尔文字及其否定的合取
+\begin{itemize}
+\item 如： $(AirTemp = Warm) \land (Wind = Strong)$ , 其中 $AirTemp, Wind,\ldots$ 各有两个可能取值。
+\end{itemize}
+\item 若 $H$ 中有 $n$ 个可能布尔属性 $H$, 只需 $n + 1$ 个样例
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{样本复杂度 3}
+\label{sec-2-4}
+
+
+已知:
+\begin{itemize}
+\item 实例集合 $X$
+\item 假设集合 $H$
+\item 目标概念集合 $C$
+\item 训练实例由一个 $X$ 上的固定但未知的概率分布  $\cal{D}$ 产生
+\end{itemize}
+
+针对一些目标概念 $c \in C$ ， 学习器观察到训练样例（形如 $\langle x, c(x) \rangle$ ）序列 $D$  , 
+\begin{itemize}
+\item 实例 $x$ 从分布  $\cal{D}$ 中抽取
+\item 施教者提供 $c(x)$
+\end{itemize}
+
+
+学习器必须输出一个假设 $h$ 来估计 $c$
+\begin{itemize}
+\item 在后续按 $\cal{D}$ 抽取的实例上评估 $h$ 的性能
+\end{itemize}
+
+
+注意: 随机抽取实例，类别无噪声
+\end{frame}
+\section{假设的错误率}
+\label{sec-3}
+\begin{frame}
+\frametitle{假设的错误率}
+\label{sec-3-1}
+
+\includegraphics[width=.9\linewidth]{./image/pac-err.png}
+\end{frame}
+\begin{frame}
+\frametitle{假设的错误率}
+\label{sec-3-2}
+
+\begin{quote}
+定义： 假设 $h$ 关于目标概念 $c$ 和分布 $\cal{D}$ 的真实错误率(true error)为 $h$ 误分类实例（按 $\cal{D}$ 随机抽取）的概率。
+$$error_{\cal{D}}(h) \equiv \Pr_{x \in \cal{D}}[c(x) \neq h(x)]$$
+\end{quote}
+
+这里符号 $\Pr_{x \in \cal{D}}$ 代表在实例分布 $\cal{D}$ 上计算概率。
+\end{frame}
+\begin{frame}
+\frametitle{两种错误率}
+\label{sec-3-3}
+
+
+\begin{itemize}
+\item 针对目标概念 $c$ , 假设 $h$ 的训练错误率
+\begin{itemize}
+\item 在训练实例中 $h(x) \neq c(x)$ 的比例
+\end{itemize}
+\item 针对目标概念 $c$ , 假设 $h$ 的真实错误率
+\begin{itemize}
+\item 未来抽取的随机实例中 $h(x) \neq c(x)$ 的比例
+\end{itemize}
+\item 给定 $h$ 的训练错误率是否可确定 $h$ 的真实错误率的界限
+\begin{itemize}
+\item 先考虑 $h$ 的训练错误率为0的情况 (如, $h \in VS_{H,D}$ )
+\end{itemize}
+\end{itemize}
+\end{frame}
+\section{变型空间详尽化}
+\label{sec-4}
+\begin{frame}
+\frametitle{变型空间详尽化}
+\label{sec-4-1}
+
+\includegraphics[width=.9\linewidth]{./image/pac-vs-exhausted.png}
+\centerline{($r =$ training error, $error = $ true error)}
+\end{frame}
+\begin{frame}
+\frametitle{变型空间详尽化}
+\label{sec-4-2}
+
+\begin{quote}
+定义： 考虑一假设空间 $H$ ，目标概念 $c$ ，实例分布 $\cal{D}$ 以及 $c$ 的一组训练样例 $D$ 。
+当 $VS_{H，D}$ 中每个假设h关于c和 $\cal{D}$ 错误率小于 $\epsilon$ 时，变型空间被称为关于 $c$ 和 $\cal{D}$ 是 $\epsilon$ - 详尽的（ $\epsilon$ -exhausted）。
+\end{quote}
+\end{frame}
+\begin{frame}
+\frametitle{多少样例可使变型空间  $\epsilon$ - 详尽化}
+\label{sec-4-3}
+
+
+\{\bf Theorem:\} [Haussler, 1988].
+\begin{quote}
+变型空间的 $\epsilon$ -详尽化 ( $\epsilon$ -exhausting the version space)： 若假设空间 $H$ 有限，且 $D$ 为目标概念 $c$ 的一系列 $m\geq 1$ 个独立随机抽取的样例，
+那么对于任意 $0 \leq\epsilon \leq 1$ ，变型空间 $VS_{H，D}$ 不是 $\epsilon$ -详尽（关于 $c$ ）的概率小于或等于：
+$$|H|e^{-\epsilon m}$$
+\end{quote}
+\end{frame}
+\begin{frame}
+\frametitle{多少样例可使变型空间  $\epsilon$ - 详尽化}
+\label{sec-4-4}
+
+\begin{itemize}
+\item 定理限定了任何一致学习器输出的假设 $h$ 满足 $error(h) \geq \epsilon$ 的概率。
+\item 若要使此概率小于 $\delta$
+  $$|H|e^{- \epsilon m} \leq \delta$$
+  则
+  $$m \geq \frac{1}{\epsilon}(\ln|H| + \ln(1/\delta))$$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{学习布尔文字的合取}
+\label{sec-4-5}
+
+
+\begin{itemize}
+\item 需要多少样例足够保证至少以概率 $(1 - \delta)$ 使得
+\begin{itemize}
+\item 每个 $VS_{H,D}$ 中的 $h$ 满足 $error_{\cal D}(h) \leq \epsilon$
+\end{itemize}
+\item 使用定理:
+ $$m \geq \frac{1}{\epsilon}(\ln|H| + \ln(1/\delta))$$
+ 假设空间 $H$ 定义为 $n$ 个布尔文字的合取，则假设空间 $H$ 的大小为 $|H| = 3^n$, 则
+ $$m \geq \frac{1}{\epsilon}(\ln 3^n + \ln(1/\delta))$$
+ 或
+ $$m \geq \frac{1}{\epsilon}(n \ln 3 + \ln(1/\delta))$$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{$EnjoySport$?}
+\label{sec-4-6}
+
+
+
+\[m \geq \frac{1}{\epsilon}(\ln|H| + \ln(1/\delta)) \]
+
+
+若 $H$ 象 $EnjoySport$ 中那样， 则 $|H| = 973$, 且
+
+$$m \geq \frac{1}{\epsilon}(\ln 973 + \ln(1/\delta))$$
+
+
+若想保证以 95\% 的概率使变型空间 $VS$ 只包含 $error_{\cal D}(h) \leq .1$ 的假设, 需要 $m$ 个样例：
+
+\[m \geq \frac{1}{.1}(\ln 973 + \ln(1/.05)) \]
+\[m \geq 10 (\ln 973 + \ln 20) \]
+\[m \geq 10 (6.88 + 3.00) \]
+\[m \geq 98.8 \]
+\end{frame}
+\begin{frame}
+\frametitle{PAC Learning}
+\label{sec-4-7}
+
+
+\begin{quote}
+定义： 考虑一概念类别 $C$ 定义在长度为 $n$ 的实例集合 $X$ 上，学习器 $L$ 使用假设空间 $H$ 。
+称 $C$ 是使用 $H$ 的 $L$ 可 PAC 学习的，
+若对所有 $c\in C$ ， $X$ 上的分布 $\cal D$ ， $\epsilon$ 满足 $0<\epsilon<1/2$ ，以及 $\delta$ 满足 $0 < \delta < 1/2$ ，
+学习器 $L$ 将以至少 $1-\delta$ 的概率输出一假设 $h\in H$ ，使 $error_{\cal D}(h) \leq \epsilon$ ，
+所使用的时间为 $1/\epsilon$, $1/\delta$, $n$ 以及 $size(c)$ 的多项式函数。
+\end{quote}
+\end{frame}
+\begin{frame}
+\frametitle{Agnostic Learning}
+\label{sec-4-8}
+
+
+\begin{itemize}
+\item 目前为止，假定 $c \in H$
+\item 不可知学习设定：不假定 $c \in H$
+\item 寻找具有最小训练错误率的 $h$
+\item 此时的样本复杂度
+   从 Hoeffding 边界
+   $$Pr[error_{\cal D}(h) > error_D(h) + \epsilon] \leq e^{-2m\epsilon^{2}}$$
+   求得
+   $$m \geq \frac{1}{2 \epsilon^{2}}(\ln|H| + \ln(1/\delta))$$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Shattering a Set of Instances}
+\label{sec-4-9}
+
+
+\begin{quote}
+定义：将集合 $S$ 分成不相交的两个子集的划分称为集合 $S$ 的二分法划分（dichotomy）
+\end{quote}
+
+\bigskip
+
+\begin{quote}
+定义： 一实例集 $S$ 被假设空间 $H$ 拆散(shatter) ，当且仅当对 $S$ 的每个二分法划分，存在 $H$ 中的某假设与此划分一致。
+\end{quote}
+\end{frame}
+\begin{frame}
+\frametitle{Three Instances Shattered}
+\label{sec-4-10}
+
+
+\includegraphics[width=.9\linewidth]{./image/pac-shatter.png}
+\end{frame}
+\begin{frame}
+\frametitle{Vapnik-Chervonenkis Dimension}
+\label{sec-4-11}
+
+
+\begin{quote}
+定义： 定义在实例空间 $X$ 上的假设空间 $H$ 的 Vapnik-Chervonenkis 维 ， 或 $VC(H)$ ，是可被 $H$ 拆散的 $X$ 的最大有限子集的大小。
+如果 $X$ 的任意有限大的子集可被 $H$ 拆散，那么 $VC(H) \equiv \infty$ 。
+\end{quote}
+\end{frame}
+\begin{frame}
+\frametitle{VC Dim. of Linear Decision Surfaces}
+\label{sec-4-12}
+
+
+\includegraphics[width=.9\linewidth]{./image/pac-pts.png}
+\end{frame}
+\begin{frame}
+\frametitle{Sample Complexity from VC Dimension}
+\label{sec-4-13}
+
+
+需要多少样例足够以至少 $(1 - \delta)$ 的概率 $\epsilon$ -详尽 $VS_{H,D}$ ？
+
+$$m \geq \frac{1}{\epsilon}(4\log_2(2/\delta) + 8 VC(H) \log_2 (13/\epsilon))$$
+\end{frame}
+\section{出错界限 (Mistake Bounds)}
+\label{sec-5}
+\begin{frame}
+\frametitle{出错界限 (Mistake Bounds)}
+\label{sec-5-1}
+
+\begin{itemize}
+\item 已分析: 需要多少样本来学习？
+\item 问题: 出多少次错误才能收敛？
+\item 与PAC问题框架相同，考虑：
+\begin{itemize}
+\item 实例依分布 ${\cal D}$ 从 $X$ 中随机抽取
+\item 学习器必须先预测目标值c(x)，之后再由施教者给出正确的目标值。
+\item 在学习器学习到目标概念前，它的预测会有多少次出错？
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Mistake Bounds: Find-S}
+\label{sec-5-2}
+
+
+考虑 Find-S 算法 ， $H=$ 布尔文字合取
+
+Find-S：
+\begin{itemize}
+\item 将 $h$ 被始化为最特殊假设 $l_{1} \land \neg l_{1} \land l_{2} \land \neg l_{2} \ldots l_{n} \land \neg l_{n}$
+\item 对每个正例 $x$
+\begin{itemize}
+\item 从 $h$ 中移去任何不满足 $x$ 的文字
+\end{itemize}
+\item 输出假设 $h$
+\end{itemize}
+
+收敛到正确的 $h$ 前出错几次？
+\end{frame}
+\begin{frame}
+\frametitle{Mistake Bounds: Halving Algorithm}
+\label{sec-5-3}
+
+
+考虑 Halving 算法:
+\begin{itemize}
+\item 使用变型空间候选消除（Candidate-Elimination）算法学习概念
+\item 变型空间成员投票分类新样例
+\end{itemize}
+
+收敛到正确的 $h$ 前出错几次？
+\begin{itemize}
+\item $\lfloor \log_2 |H| \rfloor$
+\item 0
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Optimal Mistake Bounds}
+\label{sec-5-4}
+
+
+对任意学习算法 $A$ 和任意目标概念 $c$ ，令 $M_{A}(C)$ 代表 $A$ 为了确切学到 $c$ ， 在所有可能训练样例序列中出错的最大值。
+现在对于任意非空概念类 $C$ ，令
+$$M_{A}(C) \equiv \max_{c \in C} M_{A}(c)$$
+
+定义： 令 $C$ 为任意非空概念类。$C$ 的最优出错界限（optimal mistake bound） $Opt(C)$ ，是所有可能学习算法 $A$ 中 $M_{A}(C)$ 的最小值。
+$$Opt(C) \equiv \min_{A \in learning\  algorithms} M_{A}(C)$$
+
+对任意概念类 $C$ , $C$ 的最优出错边界， Halving算法出错边界和 $C$ 的 VC 维之间关系:
+
+$$VC(C) \leq Opt(C) \leq M_{Halving}(C) \leq log_{2}(|C|)$$
+\end{frame}
+
+\end{document}
