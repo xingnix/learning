@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+
+%%%%%%%%%% Start TeXmacs macros
+\catcode`\|=\active \def|{
+\fontencoding{T1}\selectfont\symbol{124}\fontencoding{\encodingdefault}}
+\newcommand{\nin}{\not\in}
+\newcommand{\tmaffiliation}[1]{\thanks{\textit{Affiliation:} #1}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+\title{Notes on VC Dimension of Sin/Cos Function}
+
+\author{
+  Xing Chao
+  \tmaffiliation{xingnix@live.com}
+}
+
+\maketitle
+
+\section{Problem}
+
+can be assigned to arbitrary values according to VC dimension definition. The
+problem is how to choose these values to meat the all kinds of dichotomy with
+sine or cosine funtion?
+
+Consider three point, $x_{1} =0,x_{2} =2,x_{3} =3$ , and the corrysponding
+category label $c ( x_{i} ) \in \{ 0,1 \}$. It is eany to draw a sine/cosine
+function cure to shatter the three ponts:
+\begin{eqnarray*}
+  c ( x_{1} ) =1,c ( x_{2} ) =0,c ( x_{3} ) =0 & \rightarrow & \cos \left( 2
+  \pi   \frac{x}{5} \right) -1+ \Delta\\
+  c ( x_{1} ) =1,c ( x_{2} ) =1,c ( x_{3} ) =0 & \rightarrow & \cos \left( 2
+  \pi   \frac{x}{2} \right) -1+ \Delta\\
+  c ( x_{1} ) =1,c ( x_{2} ) =0,c ( x_{3} ) =1 & \rightarrow & \cos \left( 2
+  \pi   \frac{x}{3} \right) -1+ \Delta
+\end{eqnarray*}
+where $\Delta$ is a small number.
+
+\section{Basic Idea}
+
+In order to extend the previous example of three points to more points, let's
+choose the value of three point again to see if there is any clue. If we can
+choose period of cosine function to be exactly divisible by some $x_{i} \in \{
+x_{i} |c ( x_{i} ) =1 \}$, and not exactly divisible by other $x_{i} \in \{
+x_{i} |c ( x_{i} ) =0 \}$, the cosine function can be used to classify the
+points according to $c ( x_{i} )$. It is possible to shatter these points if
+we choose $x_{i}$ carefully to make such period exist for evry category label
+$c ( x_{i} )$.
+
+Let
+\begin{eqnarray*}
+  x_{1} & = & 2 \times 7 \times 13\\
+  x_{2} & = & 3 \times 7 \times 11\\
+  x_{3} & = & 5 \times 11 \times 13
+\end{eqnarray*}
+then
+\begin{eqnarray*}
+  c ( x_{1} ) =1,c ( x_{2} ) =0,c ( x_{3} ) =0 & \rightarrow & \cos \left( 2
+  \pi   \frac{x}{2} \right) -1+ \Delta\\
+  c ( x_{1} ) =1,c ( x_{2} ) =1,c ( x_{3} ) =0 & \rightarrow & \cos \left( 2
+  \pi   \frac{x}{7} \right) -1+ \Delta\\
+  c ( x_{1} ) =1,c ( x_{2} ) =0,c ( x_{3} ) =1 & \rightarrow & \cos \left( 2
+  \pi   \frac{x}{13} \right) -1+ \Delta
+\end{eqnarray*}
+
+\section{Algorithm}
+
+Each $x_{i}$ is a production of prime numbers and for each subset $\{ x_{i} |c
+( x_{i} ) =1 \}$ of $\{ x_{i} \}$,there is a prime number in each $x_{i} \in
+\{ x_{i} |c ( x_{i} ) =1 \}$ and not in $x_{i} \nin \{ x_{i} |c ( x_{i} ) =1
+\}$. That prime number is the period of the cosine function.
+
+Now it is time to find a way to generate $x_{i}$. First let's count the amount
+of prime numbers we need. Each subset of $\{ x_{i} \}$ need one prime number
+and there is $2^{N}$ subset, where $N= | \{ x_{i} \} |$ is the number of
+elements in $\{ x_{i} \}$. The number ``2'' is a clue that binary number may
+give some help. A dichotomy can be represented by $c ( x_{1} ) c ( x_{2} )
+\cdots c ( x_{n} )$, where each $c ( x_{i} )$ is 0 or 1 and it can be used to
+represent the index of \ the dichotomy. Then a corresponding prime is choosen
+to put in $x_{i}$ whose $c ( x_{i} ) =1$ in the binary number.
+
+Example
+\begin{eqnarray*}
+  c ( x_{1} ) =1,c ( x_{2} ) =0,c ( x_{3} ) =0 & \rightarrow & 001\\
+  &  & x_{1} = \tmop{prod} ( [ \tmop{prime} ( 1 )   ] ) = \tmop{prod} ( [ 2 ]
+  )\\
+  &  & x_{2} = [ ]\\
+  &  & x_{3} = [ ]\\
+  c ( x_{1} ) =0,c ( x_{2} ) =1,c ( x_{3} ) =0 & \rightarrow & 010\\
+  &  & x_{1} = \tmop{prod} ( [ 2  ] )\\
+  &  & x_{2} = \tmop{prod} ( [ \tmop{prime} ( 2 )   ] ) = \tmop{prod} ( [ 3 ]
+  )\\
+  &  & x_{3} = [ ]\\
+  c ( x_{1} ) =1,c ( x_{2} ) =1,c ( x_{3} ) =0 & \rightarrow & 011\\
+  &  & x_{1} = \tmop{prod} ( [ 2, \tmop{prime} ( 3 ) ] ) = \tmop{prod} ( [
+  2,5 ] )\\
+  &  & x_{2} = \tmop{prod} ( [ 3, \tmop{prime} ( 3 ) ] ) = \tmop{prod} ( [
+  3,5 ] )\\
+  &  & x_{3} = [ ]\\
+  c ( x_{1} ) =0,c ( x_{2} ) =0,c ( x_{3} ) =1 & \rightarrow & 100\\
+  &  & x_{1} = \tmop{prod} ( [ 2,5 ] )\\
+  &  & x_{2} = \tmop{prod} ( [ 3,5 ] )\\
+  &  & x_{3} = \tmop{prod} ( [ \tmop{prime} ( 4 )   ] ) = \tmop{prod} ( [ 7 ]
+  )\\
+  c ( x_{1} ) =1,c ( x_{2} ) =0,c ( x_{3} ) =1 & \rightarrow & 101\\
+  &  & x_{1} = \tmop{prod} ( [ 2,5, \tmop{prime} ( 5 ) ] ) = \tmop{prod} ( [
+  2,5,11 ] )\\
+  &  & x_{2} = \tmop{prod} ( [ 3,5 ] )\\
+  &  & x_{3} = \tmop{prod} ( [ 7, \tmop{prime} ( 5 )   ] ) = \tmop{prod} ( [
+  7,11 ] )\\
+  c ( x_{1} ) =0,c ( x_{2} ) =1,c ( x_{3} ) =1 & \rightarrow & 101\\
+  &  & x_{1} = \tmop{prod} ( [ 2,5,11 ] )\\
+  &  & x_{2} = \tmop{prod} ( [ 3,5, \tmop{prime} ( 7 ) ] ) = \tmop{prod} ( [
+  3,5,13 ] )\\
+  &  & x_{3} = \tmop{prod} ( [ 7,11, \tmop{prime} ( 7 )   ] ) = \tmop{prod} (
+  [ 7,11,13 ] )
+\end{eqnarray*}
+then
+\begin{eqnarray*}
+  x_{1} & = & 2 \times 5 \times 11\\
+  x_{2} & = & 3 \times 5 \times 13\\
+  x_{3} & = & 7 \times 11 \times 13
+\end{eqnarray*}
+For each dichotomy a period can be choosen according to the binary number of
+$c ( x_{1} ) c ( x_{2} ) \cdots c ( x_{n} )$
+\[ \tmop{period} = \tmop{prime} ( c ( x_{1} ) c ( x_{2} ) \cdots c ( x_{n} ) )
+\]
+
+
+\end{document}
