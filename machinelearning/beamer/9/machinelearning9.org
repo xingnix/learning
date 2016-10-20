@@ -24,7 +24,7 @@
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 # +LaTeX_CLASS_OPTIONS: [bigger]
-#+latex_header: \usepackage{beamerarticle}
+ # +latex_header: \usepackage{beamerarticle}
 # +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
 #+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
 #+latex_header: \mode<beamer>{\usecolortheme{dove}}
@@ -37,7 +37,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -233,7 +233,7 @@
 
 ** 遗传算法（变量说明）
 - $Fitness$ ：适应度评分函数，为给定假设赋予一个评估得分。
-- $Fitness_threshold$ ：指定终止判据的阈值。
+- $Fitness\_threshold$ ：指定终止判据的阈值。
 - $p$ ：群体中包含的假设数量。
 - $r$ ：每一步中通过交叉取代群体成员的比例。
 - $m$ ：变异率。
@@ -242,7 +242,7 @@
 GA( $Fitness, Fitness\_threshold, p, r, m$ )
 - 初始化群体：$P \leftarrow$  随机产生 $p$ 个假设
 - 评估：对于 $P$ 中的每一个 $h$ ，计算 $Fitness(h)$
-- 当 $[\max_{h}Fitness(h)] < Fitness\_threshold$ ，产生新的一代 $P_S$ ：
+- 当 $\displaystyle \max_{h}[Fitness(h)]} < Fitness\_threshold$ ，产生新的一代 $P_S$ ：
       - 选择：用概率方法选择 $P$ 的 $(1-r)p$ 个成员加入 $P_S$ 。从 $P$ 中选择假设 $h_i$ 的概率 $\Pr(h_i)$ 通过下面公式计算：
           $$\Pr(h_{i}) = \frac{Fitness(h_{i})}{\sum_{j=1}^{p} Fitness(h_{j})}$$
       - 交叉：根据上面给出的 $\Pr(h_i)$ ，从 $P$ 中按概率选择 $\frac{r \cdot p}{2}$ 对假设。
@@ -285,7 +285,7 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } PlayTennis=yes$$
 ** 假设选择
 - 适应度比例选择（Fitness proportionate selection）
     \[ \Pr(h_{i}) = \frac{Fitness(h_{i})}{\sum_{j=1}^{p} Fitness(h_{j})} \]
-    (易导致拥挤({\em crowding}))
+    (易导致拥挤( *crowding* ))
 - 锦标赛选择（Tournament selection）
    - 按均匀分布随机选取两个假设 $h_1, h_2$
    - 按事先定义的概率 $p$, 选择适应度较高的假设。按 $1-p$ 选择适应度较低的假设
@@ -296,9 +296,9 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } PlayTennis=yes$$
 * 示例
 ** GABIL [DeJong et al. 1993]
 - 学习以命题规则的析取集合表示的布尔概念
-- 适应度（{\bf Fitness}）
+- 适应度（ *Fitness* ）
   \[ Fitness(h) = (correct(h))^2 \]
-- 表示假设（{\bf Representation:}）
+- 表示假设（ *Representation* ）
    \[\mbox{IF  } a_{1} = T \land a_{2}=F \mbox{\ THEN\ } c = T 
    \mbox{; \ IF  } a_{2} = T  \mbox{\  THEN\  } c = F  \]
     表示为

@@ -1,4 +1,4 @@
-% Created 2016-08-27 Sat 17:22
+% Created 2016-10-20 Thu 15:22
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -32,7 +32,6 @@
 \usepackage{pst-node}
 \usepackage{pst-plot}
 \psset{unit=5mm}
-\usepackage{beamerarticle}
 \mode<beamer>{\usetheme{Frankfurt}}
 \mode<beamer>{\usecolortheme{dove}}
 \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
@@ -338,7 +337,7 @@
 
 \begin{itemize}
 \item $Fitness$ ：适应度评分函数，为给定假设赋予一个评估得分。
-\item $Fitness_threshold$ ：指定终止判据的阈值。
+\item $Fitness\_threshold$ ：指定终止判据的阈值。
 \item $p$ ：群体中包含的假设数量。
 \item $r$ ：每一步中通过交叉取代群体成员的比例。
 \item $m$ ：变异率。
@@ -352,7 +351,7 @@ GA( $Fitness, Fitness\_threshold, p, r, m$ )
 \begin{itemize}
 \item 初始化群体：$P \leftarrow$  随机产生 $p$ 个假设
 \item 评估：对于 $P$ 中的每一个 $h$ ，计算 $Fitness(h)$
-\item 当 $[\max_{h}Fitness(h)] < Fitness\_threshold$ ，产生新的一代 $P_S$ ：
+\item 当 $\displaystyle \max_{h}[Fitness(h)]} < Fitness\_threshold$ ，产生新的一代 $P_S$ ：
 \begin{itemize}
 \item 选择：用概率方法选择 $P$ 的 $(1-r)p$ 个成员加入 $P_S$ 。从 $P$ 中选择假设 $h_i$ 的概率 $\Pr(h_i)$ 通过下面公式计算：
           $$\Pr(h_{i}) = \frac{Fitness(h_{i})}{\sum_{j=1}^{p} Fitness(h_{j})}$$
@@ -426,7 +425,7 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } PlayTennis=yes$$
 \begin{itemize}
 \item 适应度比例选择（Fitness proportionate selection）
     \[ \Pr(h_{i}) = \frac{Fitness(h_{i})}{\sum_{j=1}^{p} Fitness(h_{j})} \]
-    (易导致拥挤(\{\em crowding\}))
+    (易导致拥挤( \textbf{crowding} ))
 \item 锦标赛选择（Tournament selection）
 \begin{itemize}
 \item 按均匀分布随机选取两个假设 $h_1, h_2$
@@ -447,9 +446,9 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } PlayTennis=yes$$
 
 \begin{itemize}
 \item 学习以命题规则的析取集合表示的布尔概念
-\item 适应度（\{\bf Fitness\}）
+\item 适应度（ \textbf{Fitness} ）
   \[ Fitness(h) = (correct(h))^2 \]
-\item 表示假设（\{\bf Representation:\}）
+\item 表示假设（ \textbf{Representation} ）
    \[\mbox{IF  } a_{1} = T \land a_{2}=F \mbox{\ THEN\ } c = T 
    \mbox{; \ IF  } a_{2} = T  \mbox{\  THEN\  } c = F  \]
     表示为
