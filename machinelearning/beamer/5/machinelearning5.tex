@@ -1,4 +1,4 @@
-% Created 2016-09-21 Wed 08:48
+% Created 2016-09-29 Thu 16:02
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -136,7 +136,7 @@
 \begin{itemize}
 \item 偏差 (Bias) :
 \begin{itemize}
-\item 当 $S$ 为训练集, $error_{S}(h)$ 为：   \#is optimistically biased
+\item 当 $S$ 为训练集, $error_{S}(h)$ 为：
         \[bias \equiv E[ error_{S}(h)] - error_{\cal{D}}(h)\]
 \item 对于无偏估计， $h$ 与 $S$ 必需独立选取。
 \end{itemize}
@@ -253,7 +253,7 @@ $$P(r)  = \frac{n!}{r!(n-r)!}\ p^{r} (1- p)^{n-r}$$
 
 \begin{itemize}
 \item $X$ 落入区间 $(a,b)$ 的概率为：  $\int_{a}^{b} p(x) dx$
-\item 其望： $E[X] = \mu$
+\item 期望： $E[X] = \mu$
 \item 方差： $Var(X) = \sigma^{2}$
 \item 标准差： $\sigma_{X} = \sigma$
 \item 80\% 的概率位于 $\mu \pm 1.28 \sigma$ 之间
@@ -364,7 +364,7 @@ error_{S_{2}}(h_{2}))}{n_{2}} }$
 \label{sec-6-1}
 
 
-对于两个学习算法 $L_{A}$ 与 \$L$_{B}$\$\}
+对于两个学习算法 $L_{A}$ 与 $L_{B}$
 
 估计:
 
@@ -447,7 +447,10 @@ $d$ 的 $N\%$ 置信区间:
 \item $s_{\bar{\delta}} \equiv \sqrt{\frac{1}{k(k-1)} \sum_{i=1}^{k}(\delta_{i} -\bar{\delta})^{2}}$
 \end{itemize}
 
-\{ $\delta_{i}$ 近似正态分布\}
+其中：
+\begin{itemize}
+\item $\delta_{i}$ 近似正态分布
+\end{itemize}
 \end{frame}
 
 \end{document}

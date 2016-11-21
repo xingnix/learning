@@ -94,7 +94,7 @@
 ** 偏差与方差
 
 - 偏差 (Bias) :
-   -  当 $S$ 为训练集, $error_{S}(h)$ 为：   #is optimistically biased
+   -  当 $S$ 为训练集, $error_{S}(h)$ 为：
         \[bias \equiv E[ error_{S}(h)] - error_{\cal{D}}(h)\]
    - 对于无偏估计， $h$ 与 $S$ 必需独立选取。
 
@@ -161,7 +161,7 @@ $$P(r)  = \frac{n!}{r!(n-r)!}\ p^{r} (1- p)^{n-r}$$
 置信区间(confidence interval)： 某个参数 p 的 N% 置信区间是一个以 N% 的概率包含p的区间。
 
 - $X$ 落入区间 $(a,b)$ 的概率为：  $\int_{a}^{b} p(x) dx$
-- 其望： $E[X] = \mu$
+- 期望： $E[X] = \mu$
 - 方差： $Var(X) = \sigma^{2}$
 - 标准差： $\sigma_{X} = \sigma$
 - 80% 的概率位于 $\mu \pm 1.28 \sigma$ 之间
@@ -229,7 +229,7 @@ error_{S_{2}}(h_{2}))}{n_{2}} }$
 * 学习算法比较
 ** 学习算法比较
 
-对于两个学习算法 $L_{A}$ 与 $L_{B}$}
+对于两个学习算法 $L_{A}$ 与 $L_{B}$
 
 估计:
 
@@ -285,4 +285,5 @@ $d$ 的 $N\%$ 置信区间:
 - $\bar{\delta} \pm t_{N,k-1} \ s_{\bar{\delta}}$
 - $s_{\bar{\delta}} \equiv \sqrt{\frac{1}{k(k-1)} \sum_{i=1}^{k}(\delta_{i} -\bar{\delta})^{2}}$
 
-{ $\delta_{i}$ 近似正态分布}
+其中：
+  - $\delta_{i}$ 近似正态分布
