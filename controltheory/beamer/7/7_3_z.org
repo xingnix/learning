@@ -97,7 +97,7 @@
       E(z) &=  &\sum_{n=0}^{\infty}e(nT)z^{-n} \\
        &=& \sum_{n=0}^{\infty}z^{-n} \\
       &=& \frac{1}{1-z^{-1}} \\
-      &=& \frac{1}{z-1}
+      &=& \frac{z}{z-1}
       \end{eqnarray*}
       其中  $\qquad |z^{-1}|<1$ 
 
