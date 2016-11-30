@@ -90,7 +90,7 @@ z &=& e^{\sigma T}e^{j\omega T} \\
       :BEAMER_env: block
       :BEAMER_envargs: <3->
       :END:
- * 等  $\sigma$  线: 单位圆:   $|z|=e^{\sigma T}$ 
+ * 等  $\sigma$  线: 圆:   $|z|=e^{\sigma T}$ 
  * 等  $\omega$  线: 过原点射线:  $\angle z=\omega T$ 
  * 等  $\xi$  线(S平面过原点射线): 对数螺线
 
@@ -162,12 +162,12 @@ z &=& e^{\sigma T}e^{j\omega T} \\
 \begin{eqnarray*}
 G(z) &=  &{\cal Z}[\frac{k}{s(1+0.1s)}] 
   = \frac{0.632kz}{z^2-1.368z+0.368} \\
-\Phi(z) &=& \frac{G(z)}{1+G(z)} 
+\Phi(z) &=& \frac{G(z)}{1+G(z)}
 \end{eqnarray*}
 \begin{eqnarray*}
 D(z) &=& z^2+(0.632k-1.368)z+0.368\\
 z &=& \frac{w+1}{w-1} \\
-D(w) &=& 0.632Kw^2+1.264w+(2.736-0.632k)
+D(w) &=& 0.632kw^2+1.264w+(2.736-0.632k)
 \end{eqnarray*}
 ** W域的劳斯判据示例(续):有采样开关时:
  * Routh表:
