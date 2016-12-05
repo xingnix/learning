@@ -1,4 +1,4 @@
-% Created 2016-11-21 Mon 18:44
+% Created 2016-11-30 Wed 11:49
 \documentclass[table]{article}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -926,8 +926,8 @@ G(z) &=& G_1G_2(z)
 \item <2->   $C^*(s)  =  [R^*(s)\cdot \frac{1-e^{-Ts}}{s}\cdot G_p(s)]^*$
 \item <3->   $C^*(s)  = R^*(s)[(1-e^{-Ts})\cdot\frac{G_p(s)}{s}]^*$
 \item <4->   $C^*(s)  = R^*(s)[\frac{G_p(s)}{s}-e^{-Ts}\cdot\frac{G_p(s)}{s}]^*$
-\item <5->   $C(z) = R(z){\cal Z}[\frac{G_p(z)}{s}]-z^{-1}{\cal Z}[\frac{G_p(z)}{s}]$
-\item <6->   $G(z) = (1-z^{-1}){\cal Z}[\frac{G_p(z)}{s}]$
+\item <5->   $C(z) = R(z){\cal Z}[\frac{G_p(s)}{s}]-z^{-1}{\cal Z}[\frac{G_p(s)}{s}]$
+\item <6->   $G(z) = (1-z^{-1}){\cal Z}[\frac{G_p(s)}{s}]$
 \end{itemize}
 \end{itemize} % ends low level
 \end{frame}
@@ -1160,7 +1160,7 @@ z &=& e^{\sigma T}e^{j\omega T} \\
 \item 主要映射关系:
 \label{sec-5-1-1-2}%
 \begin{itemize}
-\item 等  $\sigma$  线: 单位圆:   $|z|=e^{\sigma T}$
+\item 等  $\sigma$  线: 圆:   $|z|=e^{\sigma T}$
 \item 等  $\omega$  线: 过原点射线:  $\angle z=\omega T$
 \item 等  $\xi$  线(S平面过原点射线): 对数螺线
 \end{itemize}
@@ -1257,12 +1257,12 @@ z &=& e^{\sigma T}e^{j\omega T} \\
 \begin{eqnarray*}
 G(z) &=  &{\cal Z}[\frac{k}{s(1+0.1s)}] 
   = \frac{0.632kz}{z^2-1.368z+0.368} \\
-\Phi(z) &=& \frac{G(z)}{1+G(z)} 
+\Phi(z) &=& \frac{G(z)}{1+G(z)}
 \end{eqnarray*}
 \begin{eqnarray*}
 D(z) &=& z^2+(0.632k-1.368)z+0.368\\
 z &=& \frac{w+1}{w-1} \\
-D(w) &=& 0.632Kw^2+1.264w+(2.736-0.632k)
+D(w) &=& 0.632kw^2+1.264w+(2.736-0.632k)
 \end{eqnarray*}
 \end{frame}
 \begin{frame}
@@ -1391,7 +1391,7 @@ D(w) &=& 0.632Kw^2+1.264w+(2.736-0.632k)
 \item $r_2(t) = t(t)$ 时\\
 \label{sec-6-1-3-2}%
 \begin{eqnarray*}
-      R_1(z) &=& \frac{Tz^{-1}}{(1-z^{-1})^2} \\
+      R_2(z) &=& \frac{Tz^{-1}}{(1-z^{-1})^2} \\
       \lim_{z\rightarrow 1}(1-z^{-1})\Phi_e(z)R(z) &=& \lim_{z\rightarrow 1}\frac{T(z-0.368)}{z^2-0.736z+0.368}\\
        &=& T \\
        &=& 0.1
