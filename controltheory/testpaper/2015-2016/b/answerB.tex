@@ -1,0 +1,131 @@
+\documentclass[12pt,a4paper,oneside]{article}
+
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{etex}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+%\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+%\usepackage{hyperref}
+\tolerance=1000
+\usepackage{amsmath}
+\usepackage[usenames]{color}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows,matrix}
+\usetikzlibrary{positioning}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+%\usetikzlibrary{external}
+%\tikzset{external/system call={xelatex \tikzexternalcheckshellescape -halt-on-error -shell-escape -interaction=batchmode -jobname "\image" "\texsource"}}
+%\tikzexternalize
+\usepackage[BoldFont,SlantFont,CJKchecksingle,CJKnumber]{xeCJK}
+\setCJKmonofont{Evermore Kai}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Song}
+\setCJKfamilyfont{hei}{Evermore Hei}
+%\usepackage{CJKnumb}
+%\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+%\pdfcompresslevel=9
+\DeclareGraphicsExtensions{.jpg,.pdf,.mps,.png}
+
+%\usepackage{CJK,CJKnumb}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{indentfirst}                % 首行缩进宏包
+\usepackage{color}                      % 支持彩色
+\usepackage{listings}                   % 源代码宏包
+\usepackage[perpage,symbol]{footmisc}   % 脚注控制
+\usepackage{lastpage}                   % 自动记录总页数宏包，计数器为LastPage
+\usepackage{fancyhdr}                   % fancyhdr宏包 页眉和页脚的相关定义
+\pagestyle{empty}
+\topmargin -5mm \oddsidemargin -5mm \evensidemargin -5mm \textwidth 170mm \textheight 235mm
+\headsep 1em
+\pagestyle{fancyplain}                  % 要在\usepackage{pageno}之前，不然页眉有一条黑线去不掉
+\renewcommand{\headrulewidth}{0pt}
+%\usepackage{pageno}                     % 章首页的页眉处理, 可以改为自己想要的形式 
+
+\allowdisplaybreaks
+
+
+\begin{document}
+
+
+
+%---------------------------------------源代码------------------------------------------------
+\lstset{xleftmargin=1em,xrightmargin=1em}
+\lstset{commentstyle=\textit,keywordstyle=\textbf,breaklines=true,columns=flexible,mathescape=true}
+\lstdefinestyle{numbers}{numbers=left,stepnumber=1,numberstyle=\small,numbersep=1em}
+\lstset{language=C++}
+  \lstset{%
+numbers=left,stepnumber=1,numberstyle=\tiny,
+  %basicstyle=\footnotesize\ttfamily,
+  basicstyle=\ttfamily,
+  commentstyle=\textit,
+  keywordstyle=\textbf,
+  identifierstyle=\slshape,
+  stringstyle=\small,
+  %stringstyle=\color{orange},
+  breaklines=true,
+%    escapechar=\#,
+    emphstyle=\bfseries\color{red}
+}
+\renewcommand{\lstlistingname}{程序}
+
+%\CJKcaption{GB}
+
+\newcounter{question}
+\usecounter{question}
+\setcounter{question}{1}
+\newcommand{\question}{{\flushleft\CJKnumber{\arabic{question}}、}\stepcounter{question}}
+
+\begin{center}
+\textbf{ \fontsize{18pt}{\baselineskip}\selectfont{西北工业大学考试试题（卷）评分标准}}\\
+2015 －2016 学年第 1 学期
+\end{center}
+
+%\renewcommand{\baselinestretch}{1.0}  %会使 Tikz  画的结构图出现间断
+
+{
+\flushleft
+
+\begin{tabular}{lll}
+开课学院 \underline {\hspace{2em} 航天学院\hspace{2em} }& 课程\underline {\hspace{2em} 自动控制理论1\hspace{2em} }& 学时\underline {\hspace{2em} 48\hspace{2em} }\\
+考试日期\underline {\hspace{8eM} }& 考试时间\underline {\hspace{2em} \hspace{2em} }小时 & 考试形式
+$\left(\begin{array}{c}
+%\mbox{开}\\
+\mbox{闭}
+\end{array} \right)$
+$\left(\begin{array}{*{10}c}
+% \mbox{A} \\
+ \mbox{A} 
+\end{array} \right)$卷 
+\end{tabular}
+}
+
+
+\newcommand{\onlytest}[1]{}
+\newcommand{\onlyanswer}{ }
+
+%-----------------内容放在这里--------------------------
+\input{B.main.tex}
+%-------------------------------------------------------
+\clearpage
+
+
+\end{document}
