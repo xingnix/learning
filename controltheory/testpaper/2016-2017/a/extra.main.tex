@@ -1,0 +1,48 @@
+ 
+\question（20分）{已知控制系统结构图如下所示， 已知$r(t)=1,(t>0)$ 求解 $Y(z)$  。
+	
+	\begin{tikzpicture}[node distance=3em,auto,>=latex', thick]
+	%\path[use as bounding box] (-1,0) rectangle (10,-2); 
+	\tikzstyle{block} = [draw,rectangle,thick,minimum height=1em,minimum width=1em]
+	\tikzstyle{sum} = [draw,circle,inner sep=0mm,minimum size=2mm]
+	\tikzstyle{branch} = [circle,fill,inner sep=0pt,minimum size=1mm]
+	\tikzstyle{connector} = [->,thick]
+	
+	\def\r{\node(r){$r(t)$};}
+	\def\rd{\node(rd){$r^*(t)$};}
+	\def\b(#1){\node[branch](b#1){};}
+	\def\p(#1){\node[sum](p#1){};}
+	\def\s(#1){\path[->] node[minimum size=2em] (s#1) {}; \draw (s#1.west)--(s#1.north east);\draw[->] (s#1.north west) arc (70:0:1.7em);\draw (s#1.south) node {$T$};}
+	\def\sd(#1){\path[->] node[minimum size=2em] (sd#1) {}; \draw[dashed] (sd#1.west)--(sd#1.north east);\draw[dashed,->] (sd#1.north west) arc (70:0:1.7em);\draw[dashed] (sd#1.south) node {$T$};}
+	\def\ga{\node[block](g1){$\dfrac{1}{s+1}$};}
+	\def\gb{\node[block](gh){$\dfrac{1-e^{-Ts}}{s}$};}
+	\def\c{\node(c){$y(t)$};}
+	\def\cd{\node(cd){$y^*(t)$};}
+	\def\h(#1){\node[block](h#1){$1$};}
+	
+	\matrix[ampersand replacement=\&, row sep=1em, column sep=2em]{
+		\&         \& \sd(r)  \& \rd      \&  \&     \&          \&    \&  \\
+		\r  \& \b(r)   \& \p(e)   \& \s(e) \& \gb \& \ga \&  \b(c)  \&  \s(c) \& \cd \\
+		\&         \& \           \& \h(1) \\
+	};
+	\draw [connector](r) -- (pe) ; 
+	\draw [dashed](br)  |- (sdr) ; 
+	\draw [connector,dashed](sdr) -- (rd) ; 
+	\path[](pe) edge node[midway] {$e(t)$} (se) ; 
+	\draw [connector] (se) -- node[midway] {$e^*(t)$} (gh); 
+	\draw [connector] (gh) -- (g1); 
+	\draw  (g1) -- node[midway] {$   $} (sc); 
+
+	\draw [connector] (sc)-- (cd); 
+	%\draw [dashed](bc)  |- (sdc) ; 
+	%\draw [connector,dashed](sdc) -- (cd) ; 
+	\draw [connector](bc)  |- (h1) ; 
+	\draw [connector](h1) -|  node[near end,left]{$-$} (pe) ; 
+	\end{tikzpicture} 
+	
+	\onlyanswer
+	{
+		答：
+		
+
+	}
