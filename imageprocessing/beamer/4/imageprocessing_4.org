@@ -1,0 +1,201 @@
+ # +LaTeX_CLASS: article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header: \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+
+#+TITLE:  频域滤波
+#+AUTHOR:    
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+
+#+latex_header:\setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+
+
+
+
+
+
+
+
+
+* 背景
+** 傅里叶与傅里叶变换
+- 法国数学家傅里叶(生于1768年)在1822年出版的《热分析理论》一书中指出:任何周期函数都可以表达为不同频率的正弦和或余弦和的形式,即傅立叶级数。
+- 20世纪50年代后期,快速傅立叶变换算法出现,得到了广泛的应用。
+** Joseph Fourier
+#+BEGIN_CENTER
+#+attr_latex: width=0.3\textwidth
+[[./image/Fourier2.jpg]]
+#+END_CENTER
+** 函数表示
+- $f(x)$
+- $f(x)=f(0)+f'(0)x+f''(0)\frac{t^2}{2!}+\cdots$
+
+* 一维傅里叶变换及其反变换
+** 连续傅里叶变换
+- 连续函数f(x)的傅立叶变换F(u):
+\[ F(u) = \int_{-\infty}^{\infty}f(x) e^{-j2\pi ux}dx \]
+- 傅立叶变换F(u)的反变换:
+\[ f(u) = \int_{-\infty}^{\infty}F(u) e^{j2\pi ux}du \]
+
+** 离散傅里叶变换
+- 离散函数 $f(x)$ (其中 $x,u=0,1,2,\cdots,M-1$ )的傅里叶变换:
+  \[ F(u) = \frac{1}{M}\sum_{x=0}^{M-1}f(x)e^{\frac{-j2\pi u x}{M}}\]
+- 反变换
+  \[ f(x) = \sum_{u=0}^{M-1}F(u)e^{\frac{-j2\pi u x}{M}}\]
+
+** 频谱
+\[ F(u) = |F(u)|e^{-j\phi(u)} \]
+- 频率谱
+\[ |F(u)| =\sqrt{R^2(u)+I^2(u)} \]
+- 相位谱
+\[ \phi(u) = \arctan\frac{I(u)}{R(u)} \]
+- 功率谱
+\[ P(u) =R^2(u)+I^2(u) \]
+
+* 二维离散傅里叶变换
+** 二维离散傅里叶变换与反变换
+- 一个图像尺寸为 $M\times N$ 的函数 $f(x,y)$ 的离散傅立叶变换 $F(u,v)$ :
+\[ F(u,v) =\frac{1}{MN}\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}f(x,y)e^{-j2\pi(\frac{ux}{M}+\frac{vy}{N})}\]
+- 反变换:
+\[ f(x,y) =\sum_{u=0}^{M-1}\sum_{v=0}^{N-1}F(u,v)e^{j2\pi(\frac{ux}{M}+\frac{vy}{N})}\]
+** 频谱
+\[ F(u,v) = |F(u,v)|e^{-j\phi(u,v)} \]
+- 频率谱
+\[ |F(u,v)| =\sqrt{R^2(u,v)+I^2(u,v)} \]
+- 相位谱
+\[ \phi(u,v) = \arctan\frac{I(u,v)}{R(u,v)} \]
+- 功率谱
+\[ P(u,v) =R^2(u,v)+I^2(u,v) \]
+* 二维傅里叶变换的性质
+** 线性
+\[af_1 (x,y)+bf_2(x,y) \Leftrightarrow aF_1(u,v)+bF_2(u,v) \]
+** 平移特性
+\begin{align*}
+f(x,y)e^{j2\pi(\frac{u_0 x}{M}+\frac{v_0 y}{N})} &\Leftrightarrow F(u-u_0,v-v_0) \\
+f(x-x_0,y-y_0) &\Leftrightarrow F(u,v)e^{-j2\pi(\frac{u x_0}{M}+\frac{v y_0}{N})}
+\end{align*}
+当 $u_0=\frac{M}{2},v_0=\frac{N}{2}$ 时，
+\begin{align*}
+f(x,y)e^{j2\pi(\frac{u_0 x}{M}+\frac{v_0 y}{N})} &= f(x,y)e^{-j\pi(x+y)} \\
+&=f(x,y)(-1)^{x+y} \\
+{\cal F}[f(x,y)(-1)^{x+y}] &= F(u-\frac{M}{2},v-\frac{N}{2})
+\end{align*}
+** 共轭对称性
+\begin{align*}
+F(u,v)&=F^{*}(-u,-v)\\
+|F(u,v)|&=|F(-u,-v)|
+\end{align*}
+** 比例
+\[f(ax,by) \Leftrightarrow \frac{1}{|ab|}F(\frac{u}{a},\frac{v}{b})\]
+** 微分
+\begin{align*}
+\frac{\partial^n f(x,y)}{\partial x^n} &\Leftrightarrow (ju)^n F(u,v) \\
+(-jx)^n f(x,y) &\Leftrightarrow \frac{\partial^n F(x,y)}{\partial x^n}
+\end{align*}
+拉普拉斯算子：
+\[\nabla^2 f(x,y) =\frac{\partial^2 f}{\partial x^2}+\frac{\partial^2 f}{\partial y^2} \Leftrightarrow -(u^2+v^2)F(u,v)  \]
+
+** 卷积
+\begin{align*}
+f(x,y)*h(x,y) &= \frac{1}{MN}\sum_{m=0}^{M-1}\sum_{n=0}^{N-1}f(m,n)h(x-m,y-n) \\
+\mathcal{F}[f(x,y)*h(x,y)] &= F(u,v)H(u,v)\\
+f(x,y)h(x,y) &= \mathcal{F}^{-1}[F(u,v)*H(u,v)]
+\end{align*}
+
+* 频域滤波
+** 频率域的基本性质
+- 低频对应图像中变化平缓的区域
+- 高频对应图像中变化剧烈的区域（噪声、边缘等）
+** 频域滤波步骤
+- 计算图像的DFT $F(u,v)=\mathcal{F}[f(u,v)]$
+- 滤波, 滤波器为 $H(u,v)$
+  \[G(u,v) = H(u,v) F(u,v)\]
+- 反变换  $g(u,v)=\mathcal{F}^{-1}[G(u,v)]$
+** 基本滤波器性质
+- 低通滤波器：通低频阻高频，用于图像平滑，消除高频噪声
+- 高通滤波器：通高频阻低频，用于图像锐化，检测边缘
+** 空间域滤波与频率域滤波关系
+- 在频域指定滤波器
+- 反变换
+- 在空域执行卷积完成滤波
+
+* 基于高斯函数的滤波
+** 高斯函数低通滤波器
+- 高斯滤波器函数(低通):
+\[ H(u)=Ae^{\frac{-u^2}{2\delta^2}} \]
+- 对应的空间域函数：
+\[ h(x)=\sqrt{2\pi}\delta Ae^{-2\pi^2\delta^2 x^2}\]
+
+** 高斯滤波器特性
+- 频域和空域高斯滤波器都是实函数
+- 高斯曲线直观，易于操作
+- 高斯滤波器参数： $\delta$ 增大，则 $H(u)$ 变宽 $h(x)$ 变窄
+   \begin{align*}
+   \lim_{\delta\to\infty} H(u) &=A \\
+   \lim_{\delta\to\infty} h(x) &=\infty
+   \end{align*}
+
+* 低通滤波器
+
+** 理想低通滤波器
+- 理想低通滤波器函数
+\[ H(u,v) =\begin{cases} 1, \qquad D(u,v) \leq D_0 \\ 0, \qquad D(u,v) > D_0 \end{cases} \]
+- 振铃现象示例：
+#+BEGIN_EXAMPLE
+f(x)=[1,1,0,0,0,0,0,0,0,0,0,0]
+h(x)=[1,1,1,1,0,0,0,0,0,1,1,1]
+g(x)=[0.89,0.89,0.23,0.17,0.0,0.11,
+      0.06,0.06,0.11,0.0,0.17,0.23]
+#+END_EXAMPLE
+* 频域锐化滤波器
+** 理想高通滤波器
+- 理想高通滤波器函数
+\[ H(u,v) = \begin{cases} 0, \qquad D(u,v)\leq D_0 \\    1, \qquad D(u,v) > D_0 \end{cases} \]
+** 陷波滤波器
+\[ H(u,v) = \begin{cases} 0, \qquad (u,v)=(0,0) \\    1, \qquad \text{其它} \end{cases} \]
+
+
+

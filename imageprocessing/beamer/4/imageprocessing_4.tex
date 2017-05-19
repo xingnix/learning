@@ -1,0 +1,346 @@
+% Created 2017-05-18 Thu 19:21
+\documentclass{beamer}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{etex}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+\setbeamercovered{transparent}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{频域滤波}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+\frametitle{Outline}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{背景}
+\label{sec-1}
+\begin{frame}
+\frametitle{傅里叶与傅里叶变换}
+\label{sec-1-1}
+
+\begin{itemize}
+\item 法国数学家傅里叶(生于1768年)在1822年出版的《热分析理论》一书中指出:任何周期函数都可以表达为不同频率的正弦和或余弦和的形式,即傅立叶级数。
+\item 20世纪50年代后期,快速傅立叶变换算法出现,得到了广泛的应用。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Joseph Fourier}
+\label{sec-1-2}
+
+\begin{center}
+\includegraphics[width=0.3\textwidth]{./image/Fourier2.jpg}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{函数表示}
+\label{sec-1-3}
+
+\begin{itemize}
+\item $f(x)$
+\item $f(x)=f(0)+f'(0)x+f''(0)\frac{t^2}{2!}+\cdots$
+\end{itemize}
+\end{frame}
+\section{一维傅里叶变换及其反变换}
+\label{sec-2}
+\begin{frame}
+\frametitle{连续傅里叶变换}
+\label{sec-2-1}
+
+\begin{itemize}
+\item 连续函数f(x)的傅立叶变换F(u):
+\end{itemize}
+\[ F(u) = \int_{-\infty}^{\infty}f(x) e^{-j2\pi ux}dx \]
+\begin{itemize}
+\item 傅立叶变换F(u)的反变换:
+\end{itemize}
+\[ f(u) = \int_{-\infty}^{\infty}F(u) e^{j2\pi ux}du \]
+\end{frame}
+\begin{frame}
+\frametitle{离散傅里叶变换}
+\label{sec-2-2}
+
+\begin{itemize}
+\item 离散函数 $f(x)$ (其中 $x,u=0,1,2,\cdots,M-1$ )的傅里叶变换:
+  \[ F(u) = \frac{1}{M}\sum_{x=0}^{M-1}f(x)e^{\frac{-j2\pi u x}{M}}\]
+\item 反变换
+  \[ f(x) = \sum_{u=0}^{M-1}F(u)e^{\frac{-j2\pi u x}{M}}\]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{频谱}
+\label{sec-2-3}
+
+\[ F(u) = |F(u)|e^{-j\phi(u)} \]
+\begin{itemize}
+\item 频率谱
+\end{itemize}
+\[ |F(u)| =\sqrt{R^2(u)+I^2(u)} \]
+\begin{itemize}
+\item 相位谱
+\end{itemize}
+\[ \phi(u) = \arctan\frac{I(u)}{R(u)} \]
+\begin{itemize}
+\item 功率谱
+\end{itemize}
+\[ P(u) =R^2(u)+I^2(u) \]
+\end{frame}
+\section{二维离散傅里叶变换}
+\label{sec-3}
+\begin{frame}
+\frametitle{二维离散傅里叶变换与反变换}
+\label{sec-3-1}
+
+\begin{itemize}
+\item 一个图像尺寸为 $M\times N$ 的函数 $f(x,y)$ 的离散傅立叶变换 $F(u,v)$ :
+\end{itemize}
+\[ F(u,v) =\frac{1}{MN}\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}f(x,y)e^{-j2\pi(\frac{ux}{M}+\frac{vy}{N})}\]
+\begin{itemize}
+\item 反变换:
+\end{itemize}
+\[ f(x,y) =\sum_{u=0}^{M-1}\sum_{v=0}^{N-1}F(u,v)e^{j2\pi(\frac{ux}{M}+\frac{vy}{N})}\]
+\end{frame}
+\begin{frame}
+\frametitle{频谱}
+\label{sec-3-2}
+
+\[ F(u,v) = |F(u,v)|e^{-j\phi(u,v)} \]
+\begin{itemize}
+\item 频率谱
+\end{itemize}
+\[ |F(u,v)| =\sqrt{R^2(u,v)+I^2(u,v)} \]
+\begin{itemize}
+\item 相位谱
+\end{itemize}
+\[ \phi(u,v) = \arctan\frac{I(u,v)}{R(u,v)} \]
+\begin{itemize}
+\item 功率谱
+\end{itemize}
+\[ P(u,v) =R^2(u,v)+I^2(u,v) \]
+\end{frame}
+\section{二维傅里叶变换的性质}
+\label{sec-4}
+\begin{frame}
+\frametitle{线性}
+\label{sec-4-1}
+
+\[af_1 (x,y)+bf_2(x,y) \Leftrightarrow aF_1(u,v)+bF_2(u,v) \]
+\end{frame}
+\begin{frame}
+\frametitle{平移特性}
+\label{sec-4-2}
+
+\begin{align*}
+f(x,y)e^{j2\pi(\frac{u_0 x}{M}+\frac{v_0 y}{N})} &\Leftrightarrow F(u-u_0,v-v_0) \\
+f(x-x_0,y-y_0) &\Leftrightarrow F(u,v)e^{-j2\pi(\frac{u x_0}{M}+\frac{v y_0}{N})}
+\end{align*}
+当 $u_0=\frac{M}{2},v_0=\frac{N}{2}$ 时，
+\begin{align*}
+f(x,y)e^{j2\pi(\frac{u_0 x}{M}+\frac{v_0 y}{N})} &= f(x,y)e^{-j\pi(x+y)} \\
+&=f(x,y)(-1)^{x+y} \\
+{\cal F}[f(x,y)(-1)^{x+y}] &= F(u-\frac{M}{2},v-\frac{N}{2})
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{共轭对称性}
+\label{sec-4-3}
+
+\begin{align*}
+F(u,v)&=F^{*}(-u,-v)\\
+|F(u,v)|&=|F(-u,-v)|
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{比例}
+\label{sec-4-4}
+
+\[f(ax,by) \Leftrightarrow \frac{1}{|ab|}F(\frac{u}{a},\frac{v}{b})\]
+\end{frame}
+\begin{frame}
+\frametitle{微分}
+\label{sec-4-5}
+
+\begin{align*}
+\frac{\partial^n f(x,y)}{\partial x^n} &\Leftrightarrow (ju)^n F(u,v) \\
+(-jx)^n f(x,y) &\Leftrightarrow \frac{\partial^n F(x,y)}{\partial x^n}
+\end{align*}
+拉普拉斯算子：
+\[\nabla^2 f(x,y) =\frac{\partial^2 f}{\partial x^2}+\frac{\partial^2 f}{\partial y^2} \Leftrightarrow -(u^2+v^2)F(u,v)  \]
+\end{frame}
+\begin{frame}
+\frametitle{卷积}
+\label{sec-4-6}
+
+\begin{align*}
+f(x,y)*h(x,y) &= \frac{1}{MN}\sum_{m=0}^{M-1}\sum_{n=0}^{N-1}f(m,n)h(x-m,y-n) \\
+\mathcal{F}[f(x,y)*h(x,y)] &= F(u,v)H(u,v)\\
+f(x,y)h(x,y) &= \mathcal{F}^{-1}[F(u,v)*H(u,v)]
+\end{align*}
+\end{frame}
+\section{频域滤波}
+\label{sec-5}
+\begin{frame}
+\frametitle{频率域的基本性质}
+\label{sec-5-1}
+
+\begin{itemize}
+\item 低频对应图像中变化平缓的区域
+\item 高频对应图像中变化剧烈的区域（噪声、边缘等）
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{频域滤波步骤}
+\label{sec-5-2}
+
+\begin{itemize}
+\item 计算图像的DFT $F(u,v)=\mathcal{F}[f(u,v)]$
+\item 滤波, 滤波器为 $H(u,v)$
+  \[G(u,v) = H(u,v) F(u,v)\]
+\item 反变换  $g(u,v)=\mathcal{F}^{-1}[G(u,v)]$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{基本滤波器性质}
+\label{sec-5-3}
+
+\begin{itemize}
+\item 低通滤波器：通低频阻高频，用于图像平滑，消除高频噪声
+\item 高通滤波器：通高频阻低频，用于图像锐化，检测边缘
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{空间域滤波与频率域滤波关系}
+\label{sec-5-4}
+
+\begin{itemize}
+\item 在频域指定滤波器
+\item 反变换
+\item 在空域执行卷积完成滤波
+\end{itemize}
+\end{frame}
+\section{基于高斯函数的滤波}
+\label{sec-6}
+\begin{frame}
+\frametitle{高斯函数低通滤波器}
+\label{sec-6-1}
+
+\begin{itemize}
+\item 高斯滤波器函数(低通):
+\end{itemize}
+\[ H(u)=Ae^{\frac{-u^2}{2\delta^2}} \]
+\begin{itemize}
+\item 对应的空间域函数：
+\end{itemize}
+\[ h(x)=\sqrt{2\pi}\delta Ae^{-2\pi^2\delta^2 x^2}\]
+\end{frame}
+\begin{frame}
+\frametitle{高斯滤波器特性}
+\label{sec-6-2}
+
+\begin{itemize}
+\item 频域和空域高斯滤波器都是实函数
+\item 高斯曲线直观，易于操作
+\item 高斯滤波器参数： $\delta$ 增大，则 $H(u)$ 变宽 $h(x)$ 变窄
+   \begin{align*}
+   \lim_{\delta\to\infty} H(u) &=A \\
+   \lim_{\delta\to\infty} h(x) &=\infty
+   \end{align*}
+\end{itemize}
+\end{frame}
+\section{低通滤波器}
+\label{sec-7}
+\begin{frame}[fragile]
+\frametitle{理想低通滤波器}
+\label{sec-7-1}
+
+\begin{itemize}
+\item 理想低通滤波器函数
+\end{itemize}
+\[ H(u,v) =\begin{cases} 1, \qquad D(u,v) \leq D_0 \\ 0, \qquad D(u,v) > D_0 \end{cases} \]
+\begin{itemize}
+\item 振铃现象示例：
+\end{itemize}
+
+\begin{verbatim}
+f(x)=[1,1,0,0,0,0,0,0,0,0,0,0]
+h(x)=[1,1,1,1,0,0,0,0,0,1,1,1]
+g(x)=[0.89,0.89,0.23,0.17,0.0,0.11,
+      0.06,0.06,0.11,0.0,0.17,0.23]
+\end{verbatim}
+\end{frame}
+\section{频域锐化滤波器}
+\label{sec-8}
+\begin{frame}
+\frametitle{理想高通滤波器}
+\label{sec-8-1}
+
+\begin{itemize}
+\item 理想高通滤波器函数
+\end{itemize}
+\[ H(u,v) = \begin{cases} 0, \qquad D(u,v)\leq D_0 \\    1, \qquad D(u,v) > D_0 \end{cases} \]
+\end{frame}
+\begin{frame}
+\frametitle{陷波滤波器}
+\label{sec-8-2}
+
+\[ H(u,v) = \begin{cases} 0, \qquad (u,v)=(0,0) \\    1, \qquad \text{其它} \end{cases} \]
+\end{frame}
+
+\end{document}

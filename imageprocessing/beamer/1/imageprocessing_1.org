@@ -1,0 +1,240 @@
+ # +LaTeX_CLASS: article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header: \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+
+#+TITLE:  数字图像处理绪论
+#+AUTHOR:    
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+
+#+latex_header:\setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+
+
+
+
+
+
+
+
+
+* 数字图像处理的概念
+** 数字图像处理
+*** 什么是数字图像处理 						    :B_block:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :END:
+数字图像处理（Digital Image Processing）又称为计算机图像处理，它是指将图像信号转换成数字信号并利用计算机对其进行处理的过程。
+
+** 数字图像特点
+- 数字图像，又称数码图像或数位图像，是二维图像用有限数字数值像素的表示。
+- 由数组或矩阵表示，其光照位置和强度都是离散的。
+- 数字图像是由模拟图像数字化得到的、以像素为基本元素的、可以用数字计算机或数字电路存储和处理的图像。
+
+** 数字图像示例
+
+*** 图像						      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :END:
+#+ATTR_LATEX: width=\textwidth
+[[./image/a.png]]
+
+*** 内容						      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+#+BEGIN_EXAMPLE
+   72  208   93  106  212
+    2   73   69  178  234
+   18  228  244   99   75
+  223  245  221  100   52
+   84  239  238  105   69
+#+END_EXAMPLE
+
+** 数字图像类别
+- 二值图像 (Binary Image): 图像中每个像素的亮度值(Intensity)仅可以取自0到1的图像。 
+- 灰度图像 (Gray Scale Image)，也称为灰阶图像: 图像中每个像素可以由0(黑)到255(白)的亮度值表示。0-255之间表示不同的灰度级。 
+- 彩色图像 (Color Image)：每幅彩色图像是由三幅不同颜色的灰度图像组合而成，一个为红色，一个为绿色，另一个为蓝色。 
+- 伪彩色图像（false-color） 
+- 多光谱图像（multi-spectral thematic ）
+- 立体图像 (Stereo Image)：立体图像是一物体由不同角度拍摄的一对图像，通常情况下我们可以用立体像计算出图像的深度信息。 
+- 三维图像 (3D Image):三维图像是由一组堆栈的二维图像组成。每一幅图像表示该物体的一个横截面。
+
+** 数字图像存储格式
+- BMP
+- JPG
+- PNG
+- GIF
+- TIFF
+- Netpbm
+
+** 课程主要内容
+
+- 数字图像基础
+- 空间域图像增强
+- 频率域图像增强
+- 图像复原
+- 彩色图像处理
+- 图像分割
+- 目标识别
+
+** 与其它课程关系
+
+- 模式识别
+- 机器视觉
+- 最优化理论与方法
+- 控制理论
+- 生物学
+- 心理学
+- 哲学
+
+** 数字图像处理历史
+- Bartlane cable picture transmission system, 1920s
+- improve images from a space probe, JPL, 1964
+- Computerized tomography(CT), 1970s
+
+* 数字图像处理应用
+** 数字图像处理示例
+- 无人驾驶汽车
+- 手写识别
+- 人脸识别
+
+** ALVINN [Pomerleau] drives 70 mph on highways
+
+#+attr_latex: width=0.3\textwidth
+[[./image/nl5-interior-front-color.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/alvinn1.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/alvinn2.png]]
+
+* 数字图像处理技术
+** 数字图像处理的基本内容
+- 图像获取
+- 图像增强
+- 图像恢复
+- 彩色图像处理
+- 图像压缩
+- 形态学处理
+- 图像分割
+- 表示与描述
+- 识别
+** 数字图像处理系统的组成
+- 传感器
+- 专用图像处理器件
+- 通用计算器件
+- 图像处理软件
+- 存储器
+- 显示器
+- 网络
+* 数字图像处理相关资源
+** 课程
+- https://www.coursera.org/learn/digital  Fundamentals of Digital Image and Video Processing(coursera)
+- https://www.coursera.org/learn/image-processing  Image and Video Processing: From Mars to Hollywood with a Stop at the Hospital(coursera)
+- https://www.coursera.org/learn/machine-learning  Machine Learning Stanford University (coursera)
+- http://open.163.com/special/opencourse/machinelearning.html  斯坦福大学公开课 ：机器学习课程（网易公开课）
+- http://open.163.com/special/opencourse/learningfromdata.html 加州理工学院公开课：机器学习与数据挖掘
+
+** 资料
+  - https://www.kaggle.com/
+    数据科学竞赛平台、社区
+  - http://philschatz.com/biology-book/  
+    a  freedom book about biology
+  - [[http://www.cs.cmu.edu/~tom/mlbook-chapter-slides.html][http://www.cs.cmu.edu/\textasciitilde tom/mlbook-chapter-slides.html]]
+    Machine Learning slide (LaTeX source )
+  - http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/mlbook/latex-support.html 
+    Machine Learning slide (LaTeX source )
+  - https://learnxinyminutes.com  \
+    各种程序设计语言快速入门
+  - http://cos.name/
+    统计技术社区
+  - https://databricks.com/
+    Spark在线学习
+
+* 工具
+** 图像处理工具
+- GIMP(GNU Image Manipulation Program):  http://www.gimp.org
+- ImageMagick:  http://www.imagemagick.org/script/index.php
+- ImageJ:   https://imagej.nih.gov/ij/
+- VLFEET: http://www.vlfeat.org/
+** C/C++
+   - http://opencv.org/
+   - http://cimg.org
+   - http://dlib.net 
+   - http://mlpack.org/ 
+   - http://caffe.berkeleyvision.org
+   - http://mxnet.io/
+** Lua
+   - http://torch.ch
+   - https://github.com/torchnet/
+** Python
+   - http://scikit-learn.org/
+   - http://scikit-image.org/
+   - https://www.tensorflow.org
+   - http://www.deeplearning.net/software/theano/
+   - https://github.com/NervanaSystems/neon
+** Java
+     - https://imagej.nih.gov/ij/
+     - http://www.cs.waikato.ac.nz/ml/weka/index.html
+     - http://moa.cms.waikato.ac.nz/
+     - http://spark.apache.org/mllib/
+     - https://mahout.apache.org/
+     - http://www.h2o.ai/
+     - http://deeplearning4j.org/
+     - http://neuroph.sourceforge.net/
+     - http://airbnb.io/aerosolve/
+** 科学计算
+- R(Rstudio)
+  - R https://www.r-project.org/
+  - Rstudio(R)  https://www.rstudio.com/
+- Matlab/Octave 
+- Scilab
+- Sage
+- Julia
+- Spyder(Python)
+- RapidMiner https://rapidminer.com/

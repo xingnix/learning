@@ -1,0 +1,523 @@
+ # +LaTeX_CLASS: article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \DeclareMathOperator*{\median}{median}
+#+LATEX_HEADER: \usepackage{clrscode}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header: \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+
+#+TITLE:  彩色图像处理
+#+AUTHOR:    
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+
+#+latex_header:\setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+
+
+
+
+
+
+
+
+
+* 彩色基础
+** 为什么要研究彩色图像处理?
+  - 符合人类视觉特点
+     -  人类可以辨别几千种颜色色调和亮度
+     -  只能辨别几十种灰度层次
+  - 特征描述
+     -  简化目标物的区分
+     -  目标识别:根据目标的颜色特征
+** 研究领域
+- 全彩色处理：全彩色传感器获取
+   - 彩色相机
+   - 彩色扫描仪
+- 伪彩色处理： 对不同的灰度或灰度范围赋予不同的颜色
+
+** 颜色特性
+描述彩色光的3个基本量:
+  -  辐射率:从光源流出能量的总量,用瓦特(W)度量
+  -  光强:观察者从光源接收的能量总和
+  -  亮度:主观描绘子
+
+** 颜色分解与合成
+-  三原色 :  红色(Red)、绿色(Green)、蓝色(Blue)
+-  原色相加可产生二次色
+ - 深红色:红+蓝
+ - 青色:绿+蓝
+ - 黄色:红+绿
+
+* 彩色模型
+** 彩色空间
+- RGB
+-  CMY和CMYK
+- HSI
+- YIQ
+- YUV
+- YCbCr
+
+** RGB
+ - CCD技术直接感知R,G,B三个分量
+ - 是图像成像、显示、打印等设备的基础
+#+attr_latex: width=0.3\textwidth
+[[./image/light_r.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/light_g.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/light_b.png]]
+
+** RGB颜色空间
+#+attr_latex: width=0.5\textwidth
+[[./image/rgb_cube.png]]
+#+attr_latex: width=0.5\textwidth
+[[./image/CIE1931xy_blank.png]]
+
+** CMY和CMYK彩色空间
+- CMY(青、深红、黄)、CMYK (青、深红、黄、黑)
+- 运用在大多数在纸上沉积彩色颜料的设备,如彩色打印机和复印机
+- CMYK
+ -  打印中的主要颜色是黑色
+ -  等量的CMY原色产生黑色,但不纯
+ - 在CMY基础上,加入黑色,形成CMYK彩色空间
+
+** HSI(色调、饱和度、亮度)
+ - 特点:
+   - I分量与图像的彩色信息无关
+   - H和S分量与人感受颜色的方式是紧密相连的
+ - 广泛用于计算机视觉、图像检索和视频检索
+    - 将亮度(I)与色调(H)和饱和度(S)分开
+    - 避免颜色受到光照明暗(I)等条件的干扰
+    - 可分析反映色彩本质的色调和饱和度
+** HSI
+\centering
+[[./image/HSIColorModel.jpg]]
+
+** YIQ
+- Y指亮度(Brightness),即灰度值
+- I和Q指色调,描述色彩及饱和度
+- 用于彩色电视广播,被北美的电视系统所采用(属于NTSC系统)
+-  Y分量可提供黑白电视机的所有影像信息
+
+** YUV
+- Y指亮度,与YIQ的Y相同
+- U和V也指色调,不同于YIQ的I和Q
+- 用于彩色电视广播,被欧洲的电视系统所采用(属于PAL系统)
+-  Y分量也可提供黑白电视机的所有影像信息
+
+** YCbCr
+- Y指亮度,与YIQ和YUV的Y相同
+- Cb和Cr由U和V调整得到
+- JPEG采用的彩色空间
+
+* 颜色空间转换
+** 颜色空间转换
+- RGB $\leftrightarrow$   CMY  
+- RGB $\leftrightarrow$	 HSI  
+- RGB $\leftrightarrow$	 YIQ  
+- RGB $\leftrightarrow$	 YUV  
+- RGB $\leftrightarrow$   YCbCr
+
+** RGB-CMY
+
+RGB和CMY值都归一化到  $[0,1]$
+
+\[ \begin{bmatrix}
+C \\
+M\\
+Y
+\end{bmatrix}=
+\begin{bmatrix}
+1\\
+1\\
+1
+\end{bmatrix}-
+\begin{bmatrix}
+R\\
+G\\
+B
+\end{bmatrix} \]
+
+** RGB $\to$ HSI
+\begin{align*}
+\theta &=\arccos\frac{\frac{1}{2}((R-G)+(R-B))}{((R-G)^2+(R-G)(G-B))^{\frac{1}{2}}}\\
+H &=
+\begin{cases}
+\theta, \qquad B\leq G \\
+360-\theta, \qquad B>G
+\end{cases} \\
+S &= 1 - \frac{3}{R+G+B}\min(R,G,B) \\
+I &= \frac{1}{3}(R+G+B)
+\end{align*}
+
+** HSI $\to$ RGB
+- $0^{\circ}\leq H<120^{\circ}$ 时
+   \[ R = I\left(1+\frac{S\cos H}{\cos(60^{\circ}-H)}\right),B = I(1-S),G = 1-(R+B) \]
+- $120^{\circ}\leq H<240^{\circ}$ 时
+   \begin{align*}
+    &H =H-120^{\circ} \\
+    &G = I\left(1+\frac{S\cos H}{\cos(60^{\circ}-H)}\right), R = I(1-S), B = 1-(R+G)
+    \end{align*}  
+- $240^{\circ}\leq H<360^{\circ}$ 时
+   \begin{align*}
+   &H =H-240^{\circ}\\ 
+   &B = I\left(1+\frac{S\cos H}{\cos(60^{\circ}-H)}\right), G = I(1-S), R = 1-(B+G)
+  \end{align*}  
+
+** RGB-YIQ
+\begin{align*}
+\begin{bmatrix}
+Y\\
+I\\
+Q
+\end{bmatrix}
+&=
+\begin{bmatrix}
+ 0.299 & 0.587 & 0.114 \\ 
+ 0.596 & -0.274 & -0.322 \\
+ 0.211 & -0.523 & 0.312 
+\end{bmatrix}
+\begin{bmatrix}
+R\\
+G\\
+B\\
+\end{bmatrix}\\
+\begin{bmatrix}
+R\\
+G\\
+B\\
+\end{bmatrix}
+&=
+\begin{bmatrix}
+ 1  & 0.956 &  0.621 \\
+ 1  & -0.272 &  -0.647 \\
+ 1  & -1.106 &  1.703 
+\end{bmatrix}
+\begin{bmatrix}
+Y\\
+I\\
+Q
+\end{bmatrix}
+\end{align*}
+
+* 彩色图像处理
+** 伪彩色图像处理
+
+-  也叫假彩色图像处理
+-  根据一定的准则对灰度值赋以彩色的处理
+-  区分:伪彩色图像、真彩色图像、单色图像
+-  为什么需要伪彩色图像处理?
+    -  人类可以辨别上千种颜色和强度
+    -  只能辨别二十几种灰度
+- 应用
+  - 为人们观察和解释图像中的灰度目标
+
+** 怎样进行伪彩色图像处理?
+-  强度分层技术
+-  灰度级到彩色转换技术
+
+** 强度分层技术
+- 令 $[0,L-1]$ 表示灰度级,使 $l_0$ 代表黑色 $(f(x,y)=0)$, $l_{L-1}$ 代表白色 ($f(x,y)=L-1$)。
+- 假设垂直于强度轴的 $P$ 个平面定义为量级 $l_1,l_2,\cdots,l_P$ 。$0<P<L-1$ , $P$ 个平面将灰度级分为 $P+1个$ 间隔, $V_1,V_2,\cdots,V_{P+1}$ ,
+- 则灰度级到彩色的赋值关系:
+   \[ f(x,y)=c_k,  \qquad f(x,y)\in V_k \]
+- $c_k$ 是与强度间隔
+- $V_k$ 第 $K$ 级强度有关的颜色
+- $V_k$ 是由在 $l=k-1$ 和 $l=k$ 分割平面定义的
+
+** 灰度级到彩色的转换
+- 对任何输入像素的灰度级执行3个独立变换
+- 3个变换结果分别送入彩色监视器的红、绿、蓝三个通道
+- 合成彩色图像
+
+** 伪彩色处理
+#+attr_latex: width=0.3\textwidth
+[[./image/timg.jpeg]]
+#+attr_latex: width=0.3\textwidth
+[[./image/rgblut.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/timgcolor.png]]
+
+** 全彩色图像处理
+- 全彩色图像处理研究分为两大类:
+ -  分别处理每一分量图像,然后,合成彩色图像
+ -  直接对彩色像素处理:3个颜色分量表示像素向量。
+
+* 彩色变换
+** 彩色变换函数
+
+   \[ g(x,y)=T[f(x,y)] \]
+
+- $f(x,y)$ 是彩色输入图像
+- $g(x,y)$ 是变换或处理过的彩色输出图像
+- $T$ 是在 $(x,y)$ 的空间邻域上对 $f(x,y)$ 的操作
+
+** 亮度变换
+*** 亮度变换示例						    :B_block:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :END:
+#+attr_latex: width=0.3\textwidth
+[[./image/coffee.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/coffeebright.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/coffeedark.png]]
+
+*** 程序 							    :B_block:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :END:
+#+begin_src python
+from skimage import data,io
+import  numpy as np
+image=data.coffee()
+brighter=np.uint8(image*0.5)
+darker=np.uint8(image*0.5+255*0.5)
+invert=255-image
+#+end_src
+
+** 补色
+#+attr_latex: width=0.45\textwidth
+[[./image/coffee.png]]
+#+attr_latex: width=0.45\textwidth
+[[./image/coffeeinvert.png]]
+
+** 彩色分层
+#+attr_latex: width=0.25\textwidth
+[[./image/trafficlight.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/lightred.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/lightgreen.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/lightyellow.png]]
+
+** 色调和彩色校正
+*** 调整饱和度							    :B_block:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :END:
+#+attr_latex: width=0.3\textwidth
+[[./image/astronaut.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautlight.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautdark.png]]
+
+*** 程序 							    :B_block:
+   :PROPERTIES:
+   :BEAMER_env: block
+   :END:
+#+begin_src python
+image=data.astronaut()
+h1=color.rgb2hsv(image)
+h2=h1.copy()
+h1[:,:,1]=h1[:,:,1]*0.5
+h2[:,:,1]=h2[:,:,1]*0.5+0.5
+#+end_src
+
+** 色调和彩色校正
+*** 改变颜色分量						    :B_block:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :END:
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautred.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautyellow.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautblue.png]]
+*** 程序 							    :B_block:
+   :PROPERTIES:
+   :BEAMER_env: block
+   :END:
+#+begin_src python
+imagered[:,:,0]=image[:,:,0]*127.0/255+128
+imageyellow[:,:,0]=image[:,:,0]*127.0/255+128
+imageyellow[:,:,1]=image[:,:,1]*127.0/255+128
+imageblue[:,:,2]=image[:,:,2]*127.0/255+128
+#+end_src
+
+** HSI颜色空间下的直方图均衡
+#+attr_latex: width=0.5\textwidth
+[[./image/astronaut.png]]
+#+attr_latex: width=0.5\textwidth
+[[./image/astronautequal.png]]
+
+* 彩色图像平滑、锐化
+** 彩色图像平滑
+令 $S_{xy}$ 表示 $(x,y)$ 邻域的坐标集, ,在该邻域中RGB分量的平均值为
+
+\begin{align*}
+\bar c(x,y) &=\frac{1}{k}\sum_{(x,y)\in S_{xy}}c(x,y) \\
+ c(x,y) &=
+\begin{bmatrix}
+R(x,y)\\
+G(x,y)\\
+B(x,y)
+\end{bmatrix}
+\end{align*}
+
+** 彩色图像平滑
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautgaussian3.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautgaussian9.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautgaussian15.png]]
+
+** 彩色图像锐化(拉普拉斯微分)
+RGB彩色空间,分别计算每一分量图像的拉普拉斯变换
+\begin{align*}
+\nabla^2c(x,y) &=
+\begin{bmatrix}
+\nabla^2 R(x,y)\\
+\nabla^2 G(x,y)\\
+\nabla^2 B(x,y)
+\end{bmatrix}\\
+g(x,y) ={} & f(x,y)-\nabla^2 f(x,y) \\
+ = {} & f(x,y)-(f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1) \\
+  & - 4f(x,y)) \\
+={} & 5f(x,y)-(f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1))
+\end{align*}
+
+** 锐化示例(RGB分量锐化与HSV空间V分量锐化)
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautgaussian3.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautsharprgb.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautsharphsv.png]]
+
+* 彩色分割
+** 彩色分割
+- RGB彩色空间——直接
+- HSI彩色空间分割——物理意义明确
+   -  H色调图像方便描述彩色
+   -  S饱和度图像做模板分离感兴趣的特征区
+   -  I强度图像不携带彩色信息
+
+** RGB彩色空间分割
+令z代表RGB空间中的任意一点,a是分割颜色样本集的平均颜色向量
+\begin{align*}
+ D(z,a) &= ||z-a|| \\
+&= \sqrt{(z_R-a_R)^2+(z_G-a_G)^2+(z_B-a_b)^2}
+\end{align*}
+
+- $D_0$ 是距离阈值
+- 如果 $D(z,a) \leq D_0$ , 则z和a相似
+- 如果 $D(z,a) > D_0$ , 则z和a不相似
+
+** RGB颜色分割
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautsegr.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautsegg.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautsegb.png]]
+
+** 彩色边缘检测
+\begin{align*}
+\vec{u} &= \frac{\partial R}{\partial x}\vec{r}+\frac{\partial G}{\partial x}\vec{g}+\frac{\partial B}{\partial x}\vec{b} \\
+\vec{v} &= \frac{\partial R}{\partial y}\vec{r}+\frac{\partial G}{\partial y}\vec{g}+\frac{\partial B}{\partial y}\vec{b} \\
+g_{xx} &= \vec{u}\cdot \vec{u}=\left(\frac{\partial R}{\partial x}\right)^2+\left(\frac{\partial G}{\partial x}\right)^2+\left(\frac{\partial B}{\partial x}\right)^2\\
+g_{yy} &= \vec{v}\cdot \vec{v}=\left(\frac{\partial R}{\partial y}\right)^2+\left(\frac{\partial G}{\partial y}\right)^2+\left(\frac{\partial B}{\partial y}\right)^2\\
+g_{xy} &= \vec{u}\cdot \vec{v}= \frac{\partial R}{\partial x}\frac{\partial R}{\partial y}+\frac{\partial G}{\partial x}\frac{\partial G}{\partial y}+\frac{\partial B}{\partial x}\frac{\partial B}{\partial y}\\
+\theta &= \frac{1}{2}\arctan\left(\frac{2g_{xy}}{g_{xx}-g_{yy}}\right)\\
+F(\theta) &=\left(\frac{1}{2}((g_{xx}+g_{yy})+(g_{xx}-g_{yy})\cos 2\theta +2g_{xy}\sin 2\theta)\right)^{\frac{1}{2}}
+\end{align*}
+
+** 彩色边缘检测
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautedger.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautedgeg.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/astronautedgeb.png]]
+
+* 彩色图像的噪声
+** 彩色图像的噪声
+#+attr_latex: width=0.5\textwidth
+[[./image/astronautnoiseg.png]]
+#+attr_latex: width=0.5\textwidth
+[[./image/astronautnoisei.png]]
+
+** RGB分量
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoiseg.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoisegr.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoisegg.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoisegb.png]]
+
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoisei.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoiseir.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoiseig.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoiseib.png]]
+
+** HSV分量
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoiseg.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoisegh.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoisegs.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoisegv.png]]
+
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoisei.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoiseih.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoiseis.png]]
+#+attr_latex: width=0.25\textwidth
+[[./image/astronautnoiseiv.png]]
