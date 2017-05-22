@@ -1,4 +1,4 @@
-% Created 2017-05-18 Thu 17:55
+% Created 2017-05-22 Mon 09:15
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -453,8 +453,8 @@ Q
 from skimage import data,io
 import  numpy as np
 image=data.coffee()
-brighter=np.uint8(image*0.5)
-darker=np.uint8(image*0.5+255*0.5)
+brighter=np.uint8(image*0.5+255*0.5)
+darker=np.uint8(image*0.5)
 invert=255-image
 \end{verbatim}
 \end{block}
@@ -665,7 +665,7 @@ F(\theta) &=\left(\frac{1}{2}((g_{xx}+g_{yy})+(g_{xx}-g_{yy})\cos 2\theta +2g_{x
 \includegraphics[width=0.25\textwidth]{./image/astronautnoiseib.png}
 \end{frame}
 \begin{frame}
-\frametitle{HSI分量}
+\frametitle{HSV分量}
 \label{sec-8-3}
 
 \includegraphics[width=0.25\textwidth]{./image/astronautnoiseg.png}

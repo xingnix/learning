@@ -313,8 +313,8 @@ Q
 from skimage import data,io
 import  numpy as np
 image=data.coffee()
-brighter=np.uint8(image*0.5)
-darker=np.uint8(image*0.5+255*0.5)
+brighter=np.uint8(image*0.5+255*0.5)
+darker=np.uint8(image*0.5)
 invert=255-image
 #+end_src
 
