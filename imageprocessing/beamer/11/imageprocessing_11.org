@@ -1,0 +1,326 @@
+ # +LaTeX_CLASS: article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \DeclareMathOperator*{\median}{median}
+#+LATEX_HEADER: \usepackage{clrscode}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header: \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+
+#+TITLE:  表示与描述
+#+AUTHOR:    
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+
+#+latex_header:\setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+
+
+
+
+
+
+
+
+
+* 表示与描述简介
+** 表示与描述
+ * 表示方法
+ * 边界描述子
+ * 区域描述子
+ * 关系描述子
+** 概述
+  * 图像分割结果是得到了区域内的像素集合,或位于区域边界上的像素集合,这两个集合是互补的
+  * 与分割类似,图像中的区域可用其内部(如组成区域的像素集合)表示,也可用其外部(如组成区域边界的像素集合)表示
+  * 一般来说,如果关心的是区域的反射性质,如灰度、颜色、纹理等,常用内部表示法;如果关心的是区域形状,则选用外部表示法
+  * 表示是直接具体地表示目标,好的表示方法应具有节省存储空间、易于特征计算等优点
+** 概述
+  * 描述是较抽象地表示目标。好的描述应在尽可能区别不同目标的基础上对目标的尺度、平移、旋转等不敏感,这样的描述比较通用
+  * 描述可分为对边界的描述和对区域的描述。此外,边界和边界或区域和区域之间的关系也常需要进行描述
+  * 表示和描述是密切联系的。表示的方法对描述很重要,因为它限定了描述的精确性;而通过对目标的描述,各种表示方法才有实际意义
+  * 表示和描述又有区别,表示侧重于数据结构,而描述侧重于区域特性以及不同区域间的联系和差别
+
+**  概述
+  * 对目标特征的测量是要利用分割结果进一步从图像中获取有用信息,为达到这个目的需要解决两个关键问题:
+      *  选用什么特征来描述目标
+      *  如何精确地测量这些特征
+  * 常见的目标特征分为灰度(颜色)、纹理和几何形状特征等。其中,灰度和纹理属于内部特征,几何形状属于外部特征
+
+* 表示方法
+** 表示方法
+  * 链码
+  * 多边形近似
+  * 外形特征
+  * 边界分段
+  * 区域骨架
+
+** 链码
+  * 链码用于表示由顺序连接的具有指定长度和方向的直线段组成的边界线
+  * 这种表示方法基于线段的4或8连接
+  * 每一段的方向使用数字编号方法进行编码
+     #+begin_example
+        1         3  2 1
+      2 . 0       4  . 0
+        3         5  6 7
+     #+end_example
+
+** 链码算法:
+  * 给每一个线段边界一个方向编码
+  * 有4链码和8链码两种编码方法
+  * 从起点开始,沿边界编码,至起点被重新碰到,结束一个对象的编码
+
+** 链码
+ * 问题:
+   * 链码相当长
+   * 噪音会产生不必要的链码
+ * 改进:
+   * 加大网格空间
+   * 依据原始边界与结果的接近程度,来确定新点的位置
+
+** 循环差分链码
+  * 用相邻链码的差代替链码
+  * 例如:4-链码 10103322 
+  * 循环差分为: 33133030
+  * 循环差分:
+#+BEGIN_EXAMPLE
+  1 - 2 = -1(3) 3 - 0 = 3
+  0 - 1 = -1(3) 3 - 3 = 0
+  1 - 0 = 1
+   2 - 3 = -1(3)
+  0 - 1 = -1(3) 2 - 2 = 0
+#+END_EXAMPLE
+
+** 多边形近似
+  * 基本思想:用最少的多边形线段,获取边界形状的本质
+  * 寻找最小基本多边形的方法一般有两种:
+     * 点合成法
+     * 边分裂法
+
+** 点合成算法
+  * 重复执行：
+      * 沿着边界选两个相邻的点对,计算首尾连接直线段与原始折线段的误差R。
+      * 如果误差R小于预先设置的阈值T。去掉中间点,选新点对与下一相邻点对;
+      * 否则,存储线段的参数,置误差为0,选被存储线段的终点为起点。
+  * 直到当程序的第一个起点被遇到,算法结束。
+
+** 点合成算法的问题:
+ * 顶点一般不对应于边界的拐点(如拐角)。因为新的线段直到超过误差的阈值才开始画
+ * 例如:如果沿着一条长的直线追踪,而它出现了一个拐角,在超过阈值之前,拐角上的一些点会被丢弃
+
+** 分裂边算法:
+   * 重复执行：
+      * 连接边界线段的两个端点(如果是封闭边界,连接最远点);
+      * 如果最大正交距离大于阈值,将边界分为两段,最大值点定位一个顶点;
+   * 如果没有超过阈值的正交距离,结束。
+
+** 标记图
+ * 基本思想:
+
+     是一种用一维函数表达边界的方法。基本思想是把边界的表示降到一维函数
+
+** 标记图
+   函数定义——质心角函数:边上的点到质心的距离 $r$ ,作为夹角 $\theta$ 的函数 $r(\theta)$
+
+** 标记图
+  * 问题:函数依赖于旋转和比例缩放变换
+  * 改进: 
+    * 对于旋转——两种改进:
+       - 选择离质心最远的点作为起点
+       - 选择从质心到主轴最远的点作为起点
+    * 对于比例变换:
+       - 对函数进行正则化,使函数值总是分布在相同的值域里,比如 $[0,1]$
+** 边界分段
+  * 基本概念:
+    * 一个任意集合S(区域)的凸外缘H是:包含S的最小凸集合
+    * H与S的差(H-S)的集合被称为集合S的凸补集D
+** 边界分段
+  * 分段算法:
+    * 给进入和离开凸起补集D的变换点打标记来划分边界段。
+    * 优点:不依赖于方向和比例的变化
+** 边界分段
+  * 问题: 噪音的影响,导致出现零碎的划分。
+  * 解决的方法:先平滑边界,或用多边形逼近边界,然后再分段
+** 区域骨架
+  * 基本思想
+     * 表示一个平面区域结构形状的重要方法是把它削减成图形。这种削减可以通过细化(也称为抽骨架)算法,获取区域的骨架来实现
+     * Blum的中轴变换方法(MAT)
+
+         设:R是一个区域,B为R的边界点,对于R中的点p,找p在B上“最近”的邻居。如果p有多于一个的邻居,称它属于R的中轴(骨架)
+** 区域骨架
+ * 问题:计算量大:包括计算区域的每个内部点到其边界点的距离
+ * 算法改进思想:在保证产生正确骨架的同时,改进算法的效率。比较典型的是一类细化算法,它们不断删除区域边界点,但保证删除满足:
+    * 不删除端点
+    * 不破坏连通性
+    * 不造成对区域的过度腐蚀
+
+* 边界描述
+** 边界描述
+  * 一些简单的描述子
+
+  * 形状数
+  * 傅里叶描述子
+  * 统计矩
+
+** 简单描述子
+ *  边界的周长:是最简单的描述符之一。沿轮廓线计算像素的个数,给出了一个长度的近似估计
+ *  边界的直径:边界B的直径是:
+    \[ Diam(B)=\max_{i,j}  D(p_i,p_j) \]
+     $D$ 是欧氏距离或几何距离, $p_i,p_j$ 是边界上的点。直径的长度和直径的两个端点连线(这条线被称为边界的主轴)的方向,是关于边界的有用的描述。
+
+**  简单描述子
+  * 边界的曲率:曲率被描述为斜率的变化率。
+  * 近似:用相邻边界线段(描述为直线)的斜率差作为在边界线交点处的曲率描述子。
+
+**  形状数
+  * 形状数定义:最小循环首差链码
+  * 循环首差链码:用相邻链码的差代替链码,例如:
+     * 4链码 10103322
+     * 循环首差为:33133030
+     * 形状数 :03033133
+#+BEGIN_EXAMPLE
+1 - 2 = -1(3)     3 - 0 = 3
+0 - 1 = -1(3)     3 - 3 = 0
+1 - 0 = 1         2 - 3 = -1(3)
+0 - 1 = -1(3)     2 - 2 = 0
+#+END_EXAMPLE
+
+**  傅里叶描述子
+  - 将一个二维问题简化成一个一维问题
+  - 基本思想:
+     - 对于XY平面上的每个边界点,将其坐标用复数表示为: 
+       \[ s(k) = x(k) + jy(k),\qquad  k=0,1,\cdots,N-1 \]
+     - 进行离散傅里叶变换
+          \[ a(U) = \frac{1}{N}\sum_{u=0}^{N-1}e^{-\frac{j2\pi u}{N} }\qquad  u=0,1,\cdots,N-1 \]
+     - 系数 $a(u)$ 被称为边界的傅里叶描述子
+
+**  傅里叶描述子
+ * 选取整数 $P\leq N-1$ ,进行逆傅里叶变换
+   \[ s’(k) = \sum_{u=0}^{P-1}a(u)e^{\frac{j2\pi uk}{N}}\qquad k=0,1,\qquad,N-1\]
+    这时,对应于边界的点数没有改变,但在重构每一个点所需要的计算项大大减少了。如果边界点数很大,P一般选为2的指数次方的整数。
+**  傅里叶描述子
+  * P的选取与描述符的关系
+      * 在上述方法中,相当于对于 $u>P-1$ 的部分舍去不予计算。由于傅里叶变换中高频部分对应于图像的细节描述,因此P取得越小,细节部分丢失得越多。
+  * 使用价值
+      * 较少的傅里叶描述子(如4个),就可以获取边界本质的整体轮廓
+      * 这些带有边界信息的描述子,可以用来区分明显不同的边界
+
+** 傅里叶描述子
+  * 优点
+     * 使用复数作为描述符,对于旋转、平移、缩放等操作和起始点的选取不十分敏感。
+     * 几何变换的描述子可通过对函数作简单变换来获得
+| 几何变换 | 傅里叶描述子                              |
+| 原形     | $a(u)$                                    |
+| 旋转     | $a_r(u) = a(u) e^{j\theta}$               |
+| 平移     | $a_t(u) = a(u) + \Delta_{xy}\delta(u)$    |
+| 缩放     | $a_s(u) = \alpha a(u)$                    |
+| 起点     | $a_p(u) = a(u) e^{-\frac{j2\pi k_0u}{N}}$ |
+
+** 统计矩
+  * 基本思想:将描述形状的任务减少至描述一个一维函数,边界段和特征的形状可以用矩量来量化地描述
+  * 矩的定义: 把边界当作直方图函数:g(r)
+     \[\mu_n(r) = \sum_{i=1}^L(r_i-m)^ng(r_i)\]
+    其中 
+       $m=\sum_{i=1}^L r_i g(r_i)$ , 
+  * $L$ 是边界上点的数目, $\mu_n(r)$ 是边界的矩
+
+** 统计矩
+ *  矩的优点:
+   * 实现是直接的
+   * 附带了一种关于边界形状的“物理”解释
+   * 对于旋转的不敏感性
+   * 为了使大小比例不敏感,可以通过伸缩 $r$ 的范围来将大小正则化。
+
+* 区域描述子
+** 一些简单的描述子
+- 几何：
+   - 面积: $A$ ,周长: $L$ , 致密性: $\frac{L^2}{A}$
+- 灰度：
+  - 均值、中值、最大值、最小值，大于和小于均值的像素数
+** 拓朴描述子
+- 区域内孔洞数: $H$
+- 连通分量的数目: $C$
+- 欧拉数:  $E=C-H$
+** 纹理
+- 统计方法
+- 结构方法
+- 频谱方法
+** 统计方法
+- 统计矩
+- 直方图
+- 平滑度: $R=1-\frac{1}{1+\sigma^2(z)}$
+- 一致性: $U=\sum_{i-0}^{L-1}p^2(z_i)$
+- 平均熵: $e=-\sum_{i=0}^{L-1}p(z_i)\log_2p (z_i)$
+** 二维函数的矩
+ - 对于二维连续函数 $f(x,y)$ , $(p+q)$ 阶矩定义为：
+   \[ m_{pq} =\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x^p y^q f(x,y)dxdy \]
+ - 中心矩定义为：
+    \begin{align*}
+      \mu_{pq} &=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}(x-\bar x)^p(y-\bar y)^q f(x,y)dxdy \\
+       \bar x &= \frac{m_{10}}{m_{00}} \\
+       \bar y &= \frac{m_{01}}{m_{00}}
+    \end{align*}
+** 主分量
+ - 总体均值向量：  $m_x = E|x|$
+ - 总体方差：  $C_x = |(x-m_x)(x-m_x)^T|$
+ - 均值向量近似: $m_x= \frac{1}{K}\sum_{k=1}^K x_k$
+ - 协方差矩阵近似: $C_x=\frac{1}{K}\sum_{k=1}^K x_k x_k^T-m_x m_x^T$
+ - K-L变换(Karhunen-Loeve):  $y=A(x-m_x)$
+** K-L变换
+\begin{align*}
+x &= A^T y+m_x \\
+m_y & =E(y)=0 \\
+C_y &=AC_xA^T \\
+C_y &=\begin{bmatrix}
+\lambda_1 & & & 0 \\
+ & \lambda_2 & & \\
+ & & \ddots & \\
+0 & & & \lambda_n 
+\end{bmatrix}\\
+\hat x &= A_k^T y+m_x \\
+e &= x-\hat x = \sum_{j=1}^n \lambda_j -\sum_{j=1}^k \lambda_j \\
+  &= \sum_{j=k+1}^n \lambda_j
+\end{align*}
+* 关系描述子
+** 关系描述子
+- 规则
+- 串
+- 树
