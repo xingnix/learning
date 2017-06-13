@@ -1,0 +1,175 @@
+\begin{document}
+%\begin{CJK*}{GBK}{song}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\def\lecturename{系统辨识}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[]{系统结构辨识}{}
+\subtitle{}
+\date{2012}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{简介}
+
+\begin{frame}{模型阶的确定}
+\begin{enumerate}
+\item 按残差方差定阶
+\item AIC准则
+\item 按残差白色定阶
+\item 零点—极点消去检验定阶
+\item 利用行列式比定阶
+\item 利用Hankel矩阵定阶
+\end{enumerate}
+\end{frame}
+
+\section{按残差方差定阶}
+\begin{frame}{按残差方差定阶}
+计算不同阶次n辨识结果的估计误差方差，按估计误差方差最小或最显著变化原则来确定模型阶次n。
+
+\begin{enumerate}
+\item 按估计误差方差最小定阶
+\item F检验法
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{按估计误差方差最小定阶}
+\begin{eqnarray*}
+a(z^{-1})y_k &=& b(z^{-1})u_k+\varepsilon_k \\
+Y &=& \Phi \theta + \varepsilon \\
+e &=& Y-\Phi\hat\theta \\
+\hat\theta &=& (\Phi^T\Phi)^{-1}\Phi^T Y \\
+J &=& e^T e =\sum_{k=n+1}^N e_k^2
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{F检验法}
+\begin{eqnarray*}
+t(n_i,n_{i+1}) &=& \frac{J_i-J_{i+1}}{J_{i+1}}\frac{N-2n_{i+1}}{2(n_{i+1}-n_i)}\\
+&\sim& F(2n_{i+1}-2n_i,N-2n_{i+1})\\
+t(n,n+1) &=& \frac{J_n-J_{n+1}}{J_{n+1}}\frac{N-2n-2}{2}\\
+&=& \sim F(2,N-2n-2)
+\end{eqnarray*}
+\end{frame}
+
+\section{AIC信息准则}
+\begin{frame}{AIC信息准则（akaike）}
+\begin{eqnarray*}
+AIC &=& -2\ln L + 2p
+\end{eqnarray*}
+其中：
+\begin{description}
+\item[$L$]模型的似然函数；
+\item[$p$]模型中的参数个数。
+\end{description}
+\end{frame}
+
+\begin{frame}{计算公式：白噪声情况}
+\begin{eqnarray*}
+Y &=& \Phi\theta+\varepsilon  \\
+L(Y|\theta) &=& (2\pi\sigma_\varepsilon^2)^{-N/2}exp\left[-\frac{(Y-\Phi\theta)^T(Y-\Phi\theta)}{2\sigma_\varepsilon^2}\right] \\
+\ln L(Y|\theta) &=& -\frac{N}{2}\ln 2\pi -\frac{N}{2}\ln\sigma_\varepsilon^2-\frac{(Y-\Phi\theta)^T(Y-\Phi\theta)}{2\sigma_\varepsilon^2}
+\end{eqnarray*}
+由
+\begin{eqnarray*}
+\frac{\partial \ln L}{\partial\theta} &=& 0 \\
+\frac{\partial \ln L}{\partial\sigma_\varepsilon^2} &=& 0 
+\end{eqnarray*}
+得：
+\begin{eqnarray*}
+\hat\theta &=& (\Phi^T\Phi)^{-1}\Phi^T Y \\
+\hat\sigma_\varepsilon^2 &=& \frac{(Y-\Phi\hat\theta)^T(Y-\Phi\hat\theta)}{N} \\
+\end{eqnarray*}
+所以
+\begin{eqnarray*}
+\ln L &=& -\frac{N}{2}\ln\hat\sigma_\varepsilon^2+const \\
+AIC &=& N\ln\hat\sigma_\varepsilon^2+2(n_1+n_2)
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{有色噪声情况}
+\begin{eqnarray*}
+Y&=&\Phi_a\theta_a+\Phi_b\theta_b+\Phi_c\theta_c+\varepsilon \\
+AIC &=& N\ln\hat\sigma_\varepsilon^2+2(n_a+n_b+n_c) \\
+\hat\sigma_\varepsilon^2 &=& \frac{1}{N}\sum_{k=n+1}^{n+N}\hat\varepsilon^2(k) \\
+\hat\varepsilon(k) &=& y_k+\sum_{i=1}^{n_a}\hat a_i y_{k-i}-\sum_{i=0}^{n_b}\hat b_i u_{k-i}-\sum_{i=1}^{n_c}\hat c_i \hat\varepsilon_{k-i}
+\end{eqnarray*}
+\end{frame}
+
+
+\section{按残差白色定阶}
+\begin{frame}{按残差白色定阶}
+若阶次n设计合适，则残差近似为白噪声。因此可利用计算残差e(k)的自相关函数来检查白色性。 
+\begin{eqnarray*}
+\hat R(i) &=& \frac{1}{N}\sum_{k=n+1}^{n+N}e(k)e(k+1) \\
+\hat r(i) &=& \frac{\hat R(i) }{\hat R(0)}
+\end{eqnarray*}
+\end{frame}
+
+\section{零点—极点消去检验}
+\begin{frame}{零点—极点消去检验}
+\begin{eqnarray*}
+a(z^{-1})y(k) &=& b(z^{-1})u(k)+\varepsilon(k) \\
+G(z) &=& \frac{b(z^{-1})}{a(z^{-1})}
+\end{eqnarray*}
+根据$G(z)$中是否存在零极点对消确定系统阶数。
+\end{frame}
+
+\section{行列式比定阶}
+\begin{frame}{行列式比定阶}
+\begin{eqnarray*}
+Y &=& \Phi\theta \\
+Q &=& \frac{\Phi^T\Phi}{N} \\
+DR(n) &=& \frac{\det Q(n)}{\det Q(n+1)}
+\end{eqnarray*}
+\end{frame}
+
+\section{Hankel矩阵定阶}
+\begin{frame}{Hankel矩阵定阶}
+\begin{eqnarray*}
+D &=& \frac{\sum \det H(n,k)}{\sum \det H(n+1),k)} \\
+H(n,k) &=& \begin{bmatrix}
+g_k & g_{k+1} & \cdots & g_{k+n-1} \\
+g_{k+1} & g_{k+2} & \cdots & g_{k+n} \\
+\vdots &  \vdots  &       & \vdots \\
+g_{k+n-1} & g_{k+n} & \cdots & g_{k+2n-2} 
+\end{bmatrix}
+\end{eqnarray*}
+还可以将$g_k$替换为$\rho_k$：
+\begin{eqnarray*}
+\rho_k &=& \frac{\hat R(k)}{\hat R(0)} \\
+\hat R(k) &=& \frac{1}{N}\sum_{i=n+1}^N g_i g_{k-i}
+\end{eqnarray*}
+\end{frame}
+
+% \section{思考}
+% \begin{frame}{思考}
+% \begin{itemize}
+% \item 极大似然法辨识思想
+% \end{itemize}
+% \end{frame}
+
+
+%\end{CJK*}
+\end{document}

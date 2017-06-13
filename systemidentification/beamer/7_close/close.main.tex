@@ -1,0 +1,96 @@
+\begin{document}
+%\begin{CJK*}{GBK}{song}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\def\lecturename{系统辨识}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[]{闭环系统辨识}{}
+\subtitle{}
+\date{2012}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{可辨识性概念}
+\begin{frame}{可辨识性概念}
+闭环系统可辨识性与控制器的结构、阶次和反馈通道的噪声有关。
+例：
+\begin{eqnarray*}
+y_k &=& -ay_{k-1}+b u_{k-1}+\varepsilon_k \\
+\end{eqnarray*}
+反馈1：
+\begin{eqnarray*}
+u_k &=&  y_k \\
+y_k &=& -ay_{k-1}+b y_{k-1}+\varepsilon_k \\
+y_k &=& (-a+b) y_{k-1}+\varepsilon_k \\
+\end{eqnarray*}
+反馈2：
+\begin{eqnarray*}
+u_k &=&  y_{k-1} \\
+y_k &=& -ay_{k-1}+b y_{k-2}+\varepsilon_k \\
+Y &=& \Phi \theta +\varepsilon
+\end{eqnarray*}
+\end{frame}
+
+\section{SISO闭环系统辨识}
+\begin{frame}{闭环系统}
+\begin{eqnarray*}
+y_k &=& -\sum_{i=1}^{n_a} a_i y_{k-i} + \sum_{i=q}^{n_b} b_i u_{k-i} + \varepsilon_k \\
+u_k &=& -\sum_{i=1}^{n_c} c_i u_{k-i} + \sum_{i=p}^{n_d} d_i y_{k-i} + s_k  \\
+Y &=& \Phi\theta \\
+\Phi &=& \begin{bmatrix}
+-y_{n} & \cdots & -y_{n+1-n_a} & u_{n+1-q} &\cdots & u_{n+1-n_b} \\
+-y_{n+1} & \cdots & -y_{n+2-n_a} & u_{n+2-q} &\cdots & u_{n+2-n_b} \\
+\vdots &        &\vdots         &  \vdots  &       &\vdots \\
+-y_{n+N-1} & \cdots & -y_{n+N-n_a} & u_{n+N-q} &\cdots & u_{n+N-n_b} 
+\end{bmatrix} \\
+\theta &=& \begin{bmatrix}a_1 & \cdots & a_{n_a} & b_q &\cdots & b_{n_b} \end{bmatrix}^T  \\
+Y &=& \begin{bmatrix} Y_{n+1} & \cdots  & Y_{n+N} \end{bmatrix}^T
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{直接辨识}
+\begin{itemize}
+\item 当$s(k)$为白噪声时:
+\begin{itemize}
+\item 前向通道最小二乘估计为惟一性估计。 
+\item 如果$\varepsilon(k)=0$或者是与$s(k)$无关的白噪声：则前向通道最小二乘估计为一致性与惟一性估计。
+\end{itemize}
+\item 当$s(k)=0$时,如果$n_c>n_b-q$或$n_d>n_a-q$：
+\begin{itemize}
+\item 则最小二乘估计为惟一性估计。
+\item $\varepsilon(k)=0$或为白噪声时，若满足 $q>0$ 或 $p>0$ ，前向通道最小二乘估计为一致估计。
+\end{itemize}
+\item 若$\varepsilon(k)$为有色噪声，最小二乘估计不是一致性估计，可用改进的最小二乘估计方法得到一致性估计。
+\end{itemize}
+\end{frame}
+
+% \section{思考}
+% \begin{frame}{思考}
+% \begin{itemize}
+% \item 极大似然法辨识思想
+% \end{itemize}
+% \end{frame}
+
+
+%\end{CJK*}
+\end{document}

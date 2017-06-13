@@ -1,0 +1,637 @@
+\DeclareMathOperator*{\argmin}{arg\,min}
+\begin{document}
+%\begin{CJK*}{GBK}{song}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\def\lecturename{系统辨识}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[LS]{最小二乘法辨识}{}
+\subtitle{白噪声情况}
+\date{2012}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\section{最小二乘估计}
+
+\begin{frame}{基于输入/输出数据的系统模型描述}
+SISO系统的差分方程为
+$$
+y_k+a_1 y_{k-1}+\cdots + a_n y_{k-n}=b_0 u_k+\cdots + b_n u_{k-n}+\xi_k
+$$
+在时刻$k=n+1,n+2,\cdots,n+N$，有
+\begin{gather*}
+y_{n+1}+a_1 y_n+\cdots + a_n y_1 = b_0 u_{n+1}+\cdots + b_n u_1+\xi_{n+1}  \\
+y_{n+2}+a_1 y_{n+1}+\cdots + a_n y_2 = b_0 u_{n+2}+\cdots + b_n u_{2}+\xi_{n+2}  \\
+\cdots    \\
+y_{n+N}+a_1 y_{n+N-1}+\cdots + a_n y_{N} = b_0 u_{n+N}+\cdots + b_n u_{N}+\xi_{n+N}
+\end{gather*}
+\end{frame}
+
+\begin{frame}{向量形式}
+\begin{eqnarray*}
+Y &=& \Phi \theta + \xi \\
+Y &=& \begin{bmatrix}  y_{n+1} & y_{n+2} & \cdots & y_{n+N}  \end{bmatrix}^T  \\
+\Phi &=& \begin{bmatrix}
+-y_{n}    & \cdots & -y_{1}   & u_{n+1} & \cdots & u_{1}  \\
+-y_{n+1}  & \cdots & -y_{2}   & u_{n+2} & \cdots & u_{2}  \\
+\vdots   &        & \vdots  & \vdots &        & \vdots \\
+-y_{n+N-1} & \cdots & -y_{N}   & u_{n+N} & \cdots & u_{N}
+\end{bmatrix} \\
+\theta &=& \begin{bmatrix}a_1 & \cdots & a_n & b_0 & \cdots & b_n \end{bmatrix}^T\\
+\xi &=& \begin{bmatrix}  \xi_{n+1} &  \xi_{n+2} & \cdots & \xi_{n+N} \end{bmatrix}^T
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{基本的最小二乘法:辨识准则}
+辨识准则：残差平方和最小。
+
+%\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\begin{eqnarray*}
+J &=& \sum_{k=n+1}^{n+N}e^2(k)  \\
+&=& (Y-\Phi\hat\theta)^T(Y-\Phi\hat\theta) \\
+\hat\theta_{LS} &=& \argmin_{\hat\theta} J
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{基本的最小二乘法：求导}
+\begin{eqnarray*}
+\frac{\partial J}{\partial \hat\theta_k} &=& \frac{\partial \sum_i(Y_i-\sum_m\Phi_{i,m}\hat\theta_m)^2}{\partial\hat\theta_k}  \\
+&=& 2\sum_i(Y_i-\sum_m\Phi_{i,m}\hat\theta_m)\frac{\partial (Y_i-\sum_m\Phi_{i,m}\hat\theta_m)}{\partial\hat\theta_k} \\
+&=& 2\sum_i(Y_i-\sum_m\Phi_{i,m}\hat\theta_m)\frac{\partial(-\sum_m\Phi_{i,m}\hat\theta_m)}{\partial\hat\theta_k} \\
+&=& -2\sum_i(Y_i-\sum_m\Phi_{i,m}\hat\theta_m)\Phi_{i,k} \\
+\frac{\partial J}{\partial \hat\theta}&=& (-2(Y-\Phi\hat\theta)^T\Phi)^T \\
+&=& -2\Phi^T(Y-\Phi\hat\theta) 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{基本的最小二乘法：求解}
+\begin{eqnarray*}
+-2\Phi^T(Y-\Phi\hat\theta_{LS}) &=&0\\
+\Phi^T Y-\Phi^T\Phi\hat\theta_{LS} &=&0\\
+\Phi^T Y &=& \Phi^T\Phi\hat\theta_{LS} \\
+\hat\theta_{LS}&=& (\Phi^T\Phi)^{-1}\Phi^T Y 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{基本的最小二乘法：二阶导数}
+\begin{eqnarray*}
+\frac{\partial^2 J}{\partial\hat\theta^2} &=& \frac{\partial (-2\Phi^T(Y-\Phi\hat\theta))}{\partial\hat\theta} \\
+\frac{\partial \frac{\partial J}{\partial\hat\theta}}{\partial \hat\theta_s}&=& \frac{\partial (-2\sum_i(Y_i-\sum_m\Phi_{i,m}\hat\theta_m)\Phi_{i,k})}{\partial \hat\theta_s} \\
+&=& 2\sum_i\frac{\partial \sum_m\Phi_{i,m}\hat\theta_m}{\partial \hat\theta_s}\Phi_{i,k} \\
+&=& 2\sum_i\Phi_{i,s}\Phi_{i,k} \\
+\frac{\partial^2 J}{\partial\hat\theta^2} &=& 2\Phi^T\Phi
+\end{eqnarray*}
+\end{frame}
+
+
+\begin{frame}{最小二乘法对输入信号的要求:$\begin{bmatrix} Y_{N \times n} &  U_{N\times(n+1)}\end{bmatrix}$}
+\begin{eqnarray*}
+\Phi^T\Phi &=&\begin{bmatrix} Y_{N \times n} &  U_{N\times(n+1)}\end{bmatrix}^T\begin{bmatrix} Y_{N\times n} &  U_{N\times(n+1)}\end{bmatrix} \\
+&=& \begin{bmatrix}
+Y_{N \times n}^T Y_{N\times n}  & Y_{N \times n}^T U_{N\times(n+1)}  \\
+U_{N\times(n+1)}^T Y_{N\times n}  &  U_{N\times(n+1)}^T U_{N\times(n+1)}
+\end{bmatrix}
+\end{eqnarray*}
+其中：
+\begin{eqnarray*}
+Y_{N\times n} &=& 
+\begin{bmatrix}
+-y_{n}    & \cdots & -y_{1}    \\
+-y_{n+1}  & \cdots & -y_{2}    \\
+\vdots    &        & \vdots   \\
+y_{n+N-1} & \cdots & -y_{N}  
+\end{bmatrix} \\
+U_{N\times(n+1)} &=&
+\begin{bmatrix}
+u_{n+1} & \cdots & u_{1} \\
+u_{n+2} & \cdots & u_{2} \\
+\vdots &         & \vdots \\
+u_{n+N} & \cdots & u_{N} 
+\end{bmatrix} 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{最小二乘法对输入信号的要求:$\begin{bmatrix} Y_{N \times n} &  U_{N\times(n+1)}\end{bmatrix}$}
+\begin{eqnarray*}
+(Y_{N\times n}^T Y_{N\times n})_{i,j} &=& \sum_{k=1}^{N-1+\min\{i,j\}}y_{n-i+k}y_{n-j+k} \\
+(Y_{N\times n}^T U_{N\times (n+1)})_{i,j} &=& -\sum_{k=1}^{N-1+\min\{i,j-1\}}y_{n-i+k}u_{n+1-j+k} \\
+(U_{N\times (n+1)}^T Y_{N\times n}^T )_{i,j} &=& -\sum_{k=1}^{N-1+\min\{j,i-1\}}y_{n-j+k}u_{n+1-i+k} \\
+(U_{N\times (n+1)}^T U_{N\times (n+1)})_{i,j} &=& \sum_{k=1}^{N-2+\min\{i,j\}}u_{n+1-i+k}u_{n+1-j+k}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{最小二乘法对输入信号的要求:$\begin{bmatrix}R_y & R_{yu} \\ R_{uy} & R_{u}\end{bmatrix}$}
+\begin{eqnarray*}
+\lim_{N\rightarrow\infty}\frac{\Phi^T\Phi}{N} &=& 
+\frac{1}{N}
+\begin{bmatrix}
+Y_{N \times n}^T Y_{N\times n}  & Y_{N \times n}^T U_{N\times(n+1)}  \\
+U_{N\times(n+1)}^T Y_{N\times n}  &  U_{N\times(n+1)}^T U_{N\times(n+1)} 
+\end{bmatrix}\\
+&=& \begin{bmatrix} R_y & R_{yu} \\ R_{uy} & R_u\end{bmatrix}
+\end{eqnarray*}
+其中：
+\begin{eqnarray*}
+R_y &=& 
+\begin{bmatrix}
+R_y(0) & R_y(1) & \cdots & R_y(n-1) \\
+R_y(1) & R_y(0) & \cdots & R_y(n-2) \\
+\vdots & \vdots &        & \vdots   \\
+R_y(n-1) & R_y(n-2) & \cdots & R_y(0) \\
+\end{bmatrix}\\
+R_{yu} &=&
+\begin{bmatrix}
+-R_{yu}(1) & -R_{yu}(0) & \cdots & -R_{yu}(1-n) \\
+-R_{yu}(2) & -R_{yu}(1) & \cdots & -R_{yu}(2-n) \\
+\vdots     & \vdots     &        &\vdots \\
+-R_{yu}(n) & -R_{yu}(n-1) & \cdots & -R_{yu}(0) 
+\end{bmatrix} \\
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{最小二乘法对输入信号的要求:$\begin{bmatrix}R_y & R_{yu} \\ R_{uy} & R_{u}\end{bmatrix}$}
+\begin{eqnarray*}
+R_{uy} &=& R_{yu}^T \\
+R_{uu} &=&
+\begin{bmatrix}
+R_u(0) & R_u(1) & \cdots & R_u(n) \\
+R_u(1) & R_u(0) & \cdots & R_u(n-1) \\
+\vdots     & \vdots     &        &\vdots \\
+R_u(n) & R_u(n-1) & \cdots & R_u(0)
+\end{bmatrix}
+\end{eqnarray*}
+
+%于是有：J取得极小值→φTφ正定→R正定→Ru正定。
+
+%因此：J取得极小值的必要条件为Ru为正定阵。
+\end{frame}
+
+\begin{frame}{(n+1)阶持续激励信号}
+\begin{itemize}
+\item 定义：如果序列$\{u(k)\}$的(n+1)阶方阵$R_u$是正定的，则称序列
+$\{u(k)\}$为$(n+1)$阶持续激励信号。
+\item 最小二乘法对输入信号的要求为：$\{u(k)\}$为$(n+1)$阶持续激励信号
+\item 若$R_u$为强对角线占优矩阵，则$R_u$正定。以下输入信号均能满足$R_u$正定的要求：
+\begin{itemize}
+\item 白噪声序列；
+\item 伪随机二位式噪声序列；
+\item 有色噪声随机信号序列。
+\end{itemize}
+\item 工程上常用“伪随机二位式噪声序列”、“有色噪声随机信号序列”作为输入信号。
+\end{itemize}
+\end{frame}
+
+\mode<beamer>{
+\begin{frame}{最小二乘估计的概率性质}
+%最小二乘估计的概率性质主要有以下四方面：
+\begin{itemize}
+\item 估计的无偏性；
+\item 估计的一致性；
+\item 估计的有效性；
+\item 估计的渐进正态性。
+\end{itemize}
+%我们主要讨论前两项：无偏性和一致性。
+\end{frame}
+}
+
+\begin{frame}{估计的无偏性}
+若$E\{\hat\theta\}=\theta$则称$\hat\theta$是参数$\theta$的无偏估计。
+\begin{eqnarray*}
+Y &=& \Phi\theta +\xi \\
+\hat\theta &=& (\Phi^T\Phi)^{-1}\Phi^T Y \\
+E[\hat\theta] &=& E[(\Phi^T\Phi)^{-1}\Phi^T Y] \\
+&=& E[(\Phi^T\Phi)^{-1}\Phi^T (\Phi\theta+\xi)] \\
+&=& E[(\Phi^T\Phi)^{-1}\Phi^T \Phi\theta+(\Phi^T\Phi)^{-1}\Phi^T \xi] \\
+&=& E[\theta+(\Phi^T\Phi)^{-1}\Phi^T \xi] 
+\end{eqnarray*}
+LS无偏估计的充要条件为：
+\begin{eqnarray*}
+ E[(\Phi^T\Phi)^{-1}\Phi^T \xi] &=& 0
+\end{eqnarray*}
+%LS无偏估计的充分条件为：$\{\xi(k)\}$为零均值不相关随机序列，且与$\{u(k)\}$无关。
+\end{frame}
+
+\begin{frame}{一致性估计}
+\article{若参数估计值以概率1收敛于真值$\theta$，则称估计值具有一致性。定义：}
+$$
+\lim_{N\rightarrow\infty}P\{|\hat\theta-\theta\}=1
+$$
+设$\xi\{(k)\}$为与$\{u(k)\}$无关的零均值独立同分布随机序列:
+\begin{eqnarray*}
+ E(\hat\theta-\theta)^2 &=& E[(\Phi^T\Phi)^{-1}\Phi^T\xi\xi^T\Phi(\Phi^T\Phi)^{-1}] \\
+ &=& E[\frac{1}{N^2}(\frac{1}{N}\Phi^T\Phi)^{-1}\Phi^T\xi\xi^T \Phi(\frac{1}{N}\Phi^T\Phi)^{-1}] \\
+   \lim_{N\rightarrow\infty}E(\hat\theta-\theta)^2  &=& \frac{1}{N^2}R^{-1}E[\Phi^T\xi\xi^T\Phi] R^{-1} \\
+  &=& \frac{1}{N^2}R^{-1}\sigma^2 E[\Phi^T\Phi] R^{-1} \\
+  &=& \frac{1}{N^2}R^{-1}\sigma^2 N R R^{-1} \\
+  &=& \frac{\sigma^2}{N}R^{-1} \\
+  &=& 0
+\end{eqnarray*}
+\end{frame}
+
+\mode<beamer>{
+\begin{frame}{估计值的有效性}
+\article{若参数估计误差的方差达到最小值，则称该估计值是有效估计值。}
+%若$\{\xi(k)\}$是零均值且服从正态分布的白噪声序列。则最小二乘参数估计值$\hat\theta$为有效估计值，参数估计偏差的方差达到Cramer-Rao不等式的下界
+Cramer-Rao不等式：
+$$
+D\hat\theta = M^{-1}
+$$
+其中：
+$$
+M=E\left[\left(\frac{\partial\ln p(y|\theta)}{\partial\theta}\right)^T\left(\frac{\partial\ln p(y|\theta)}{\partial\theta}\right)\right]
+$$
+\end{frame}
+}
+\mode<beamer>{
+\begin{frame}{估计值的有效性}
+\begin{eqnarray*}
+y &=& \Phi\theta+\xi \\
+y &\sim& N(\Phi\theta,\sigma^2 I) \\
+p(y|\theta) &=& (2\pi\sigma^2)^{-\frac{N}{2}} exp\left[-\frac{1}{2\sigma^2}(y-\Phi\theta)^T(y-\Phi\theta)\right] \\
+\frac{\partial \ln p(y|\theta)}{\partial \theta} &=& -\frac{1}{\sigma^2}(y-\Phi\theta)^T\Phi \\
+M &=& E\left[\frac{1}{\sigma^4}\Phi^T(y-\Phi\theta)(y-\Phi\theta)^T\Phi \right]\\
+ &=& \frac{1}{\sigma^4}E[\Phi^T \xi \xi^T \Phi ]\\
+\lim_{N\to\infty}M^{-1} &=& \sigma^4(\sigma^2 E[\Phi^T \Phi ])^{-1}\\
+&=& \frac{\sigma^2}{N}R^{-1} 
+\end{eqnarray*}
+\end{frame}
+}
+\mode<beamer>{
+\begin{frame}{估计值的渐近正态性}
+设$\{\xi(k)\}$是零均值且服从正态分布的白噪声序列。则：
+\begin{eqnarray*}
+y &=& \Phi\theta+\xi \\
+y &\sim& N(\Phi\theta,\sigma^2 I) \\
+\hat\theta &=& (\Phi^T\Phi)^{-1}\Phi^T y 
+\end{eqnarray*}
+\end{frame}
+}
+
+\section{模型阶次递增算法}
+\begin{frame}{模型阶次递增算法:算法特点}
+\begin{itemize}
+\item 按模型阶次$n$递推的算法；
+\item 适合模型阶次$n$未知的情况下应用
+\item 辨识精度与基本最小二乘相同
+\item 辨识速度比基本最小二乘有较大提高
+\item 不需计算高阶矩阵的逆
+\end{itemize}
+\end{frame}
+
+\begin{frame}{系统模型}
+\begin{eqnarray*}
+Y &=& \Phi_n\theta_n +\xi \\
+\Phi_n &=& \begin{bmatrix}
+u_{n+1}  &   -y_{n}    & u_{n}      & \cdots & -y_{1}  & u_{1}  \\
+u_{n+2}  &   -y_{n+1}  & u_{n+1}    & \cdots & -y_{2}  & u_{2}  \\
+\vdots   &   \vdots    & \vdots     &        & \vdots  & \vdots \\
+u_{n+N}  &   -y_{n+N-1} & u_{n+N-1} & \cdots & -y_{N}  & u_{N}
+\end{bmatrix} \\
+&=& \begin{bmatrix}X_1 & \cdots & X_{2n+1} \end{bmatrix} \\
+\theta_n &=& \begin{bmatrix}b_0 & a_1 & b_1 & \cdots & a_n & b_n \end{bmatrix}^T \\
+\xi &=& \begin{bmatrix}\xi_{n+1} &\cdots & \xi_{n+N}\end{bmatrix}^T  \\
+Y &=& \begin{bmatrix}y_{n+1} &\cdots & y_{n+N}\end{bmatrix}^T 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{从$n=0$开始辨识}
+\begin{eqnarray*}
+\Phi_0 &=& X_1 \\
+\hat\theta_0 &=& (\Phi_0^T\Phi_0)^{-1}\Phi_0^T Y \\
+&=& \frac{\displaystyle \sum_{i=n+1}^{n+N}u_iy_i}{\displaystyle \sum_{i=n+1}^{n+N}u_i^2}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{从$n$到$n+1$}
+根据模型阶次为$n$时的参数辨识结果，求模型阶次为n+1时的辨识结果。
+求解时分两步进行，首先求解$\tilde P_n$，其次求解$ P_{n+1}$。
+\begin{eqnarray*}
+\Phi_{n+1} &=& \begin{bmatrix} \Phi_{n} & X_{2n+2} & X_{2n+3} \end{bmatrix} \\
+ &=& \begin{bmatrix} \tilde\Phi_{n} & X_{2n+3} \end{bmatrix} \\
+\tilde\Phi_n &\triangleq& \begin{bmatrix} \Phi_{n} & X_{2n+2} \end{bmatrix}  \\
+P_n &\triangleq& (\Phi_{n}^T\Phi_{n})^{-1} \\
+\tilde{P}_n &\triangleq& (\tilde\Phi_{n}^T\tilde\Phi_{n})^{-1}  \\
+P_{n+1} &=& (\Phi_{n+1}^T\Phi_{n+1})^{-1} 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{从$n$到$n+1$：$P_{n+1}$}
+\begin{eqnarray*}
+P_{n+1} &=& 
+\begin{bmatrix}
+\tilde\Phi_n^T\tilde\Phi_n & \tilde\Phi_n^T X_{2n+3} \\
+X_{2n+3}^T\tilde\Phi_n    & X_{2n+3}^T X_{2n+3}
+\end{bmatrix}^{-1} \\
+&=& \begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix} \\
+A_{22} &=& (X_{2n+3}^T X_{2n+3}-X_{2n+3}^T\tilde\Phi_n\tilde{P}_n\tilde\Phi_n^T X_{2n+3})^{-1} \\
+A_{12} &=& A_{21}^T \\
+&=& -\tilde{P}_n\tilde\Phi_n^T X_{2n+3} A_{22} \\
+A_{11} &=& \tilde{P}_n- A_{12} X_{2n+3}^T\tilde\Phi_n \tilde{P}_n^T
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{从$n$到$n+1$：$\tilde P_n$}
+\begin{eqnarray*}
+\tilde{P}_n &=& 
+\begin{bmatrix}
+\Phi_n^T\Phi_n & \Phi_n^T X_{2n+2} \\
+X_{2n+2}^T\Phi_n    & X_{2n+2}^T X_{2n+3}
+\end{bmatrix}^{-1} \\
+&=& \begin{bmatrix} B_{11} & B_{12} \\ B_{21} & B_{22} \end{bmatrix} \\
+B_{22} &=& (X_{2n+2}^T X_{2n+2}-X_{2n+2}^T\Phi_n P_n\Phi_n^T X_{2n+2})^{-1} \\
+B_{12} &=& B_{21}^T \\
+&=& -P_n \Phi_n^T X_{2n+2} B_{22} \\
+B_{11} &=& P_n- B_{12} X_{2n+2}^T\Phi_n P_n^T
+\end{eqnarray*}
+\end{frame}
+
+
+\begin{frame}{计算步聚}
+\begin{itemize}
+\item  初始化,计算$P_0=(\Phi_0^T\Phi_0)^{-1}$
+\item  计算$\hat\theta_0=P_0\Phi_0^T Y$
+\item 迭代
+\begin{itemize}
+\item  根据$P_n$计算$\tilde{P}_n$
+\item  根据$\tilde{P}_n$计算$P_{n+1}$
+\item  计算$\hat\theta_{n+1}=P_{n+1}\Phi_{n+1}^T Y$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{递推最小二乘法}
+%\article{解决问题：(n+N)组观测数据时的参数估计值已知，现在又得到了一组新的观测值(u(n+N+1),y(n+N+1))，如何采用最小二乘法进行在线估计新的估计值问题}
+
+\begin{frame}{递推算法推导：模型}
+假设已获取了数据长度为$N$的输入输出数据，则由最小二乘估计有：
+\begin{eqnarray*}
+Y_N &=& \Phi_N\theta+\xi_N \\
+\hat\theta_N &=& (\Phi_N^T\Phi_N)^{-1}\Phi_N^T Y_N \\
+\tilde\theta_N &=& \theta-\tilde\theta_N \\
+&=& -(\Phi_N^T\Phi_N)^{-1}\Phi_N^T\xi_N
+\end{eqnarray*}
+获得新的数据$u_{n+N+1},y_{n+N+1}$后，有：
+\begin{eqnarray*}
+y_{(n+N+1)} &=& \Psi^T\theta+\xi_{(n+N+1)} \\
+y_{N+1} &=& \Psi^T\theta+\xi_{N+1} \\
+\Psi_i &=& \begin{bmatrix} -y_{(n+i-1)} & \cdots & -y_{(i)} & u_{(n+i)} & \cdots & u_{(i)} \end{bmatrix}^T  \\
+\begin{bmatrix} Y_N \\ y_{N+1} \end{bmatrix} &=& 
+\begin{bmatrix} \Phi_N \\ \Psi_{N+1}^T \end{bmatrix} \theta +
+\begin{bmatrix} \xi_N \\ \xi_{N+1} \end{bmatrix} 
+\end{eqnarray*}
+\end{frame}
+
+\bgroup
+\setbeamertemplate{sidebar right}{}
+\begin{frame}{递推算法推导:$P_{N+1}$}
+\begin{eqnarray*}
+\hat\theta_{N+1} &=&
+\left(
+\begin{bmatrix} \Phi_N \\ \Psi_{N+1}^T\end{bmatrix}^T
+\begin{bmatrix} \Phi_N \\ \Psi_{N+1}^T\end{bmatrix}
+\right)^{-1}
+\begin{bmatrix} \Phi_N \\ \Psi_{N+1}^T\end{bmatrix}^T
+\begin{bmatrix} Y_N \\ y_{N+1}\end{bmatrix} \\
+&=& (\Phi_N^T\underbrace{\Phi_N}_{N,2n+1}+\underbrace{\Psi_{N+1}}_{2n+1,1}\Psi_{N+1}^T)^{-1}(\Phi_N^T \underbrace{Y_N}_{N,1} +\Psi_{N+1}\underbrace{y_{N+1}}_{1,1})  \\
+\hat\theta_{N+1} &=& P_{N+1}(\Phi_N^T Y_N + \Psi_{N+1} y_{N+1}) 
+\end{eqnarray*}
+其中：
+\begin{eqnarray*}
+P_{N+1} &=&(P_N^{-1}+\Psi_{N+1}\Psi_{N+1}^T)^{-1} \\
+P_{N} &=& (\Phi_N^T\Phi_N)^{-1}
+\end{eqnarray*}
+\end{frame}
+\egroup
+
+\begin{frame}{递推算法推导:矩阵求逆引理}
+若相应矩阵的逆均存在，则有:
+$$
+(A+BC^T)^{-1}=A^{-1}-A^{-1}B(I+C^T A^{-1} B)^{-1} C^T A^{-1}
+$$
+所以：
+\begin{eqnarray*}
+P_{N+1} &=&(P_N^{-1}+\Psi_{N+1}\Psi_{N+1}^T)^{-1} \\
+&=& P_N -P_N\Psi_{N+1}(1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}\Psi_{N+1}^T P_N \\
+\hat\theta_{N+1} &=& A+B \\
+A&=&P_{N+1}\Phi_N^T Y_N \\
+B&=&P_{N+1}\Psi_{N+1} y_{N+1} \\
+i&=& 1+\Psi_{N+1}^T P_N \Psi_{N+1}
+\end{eqnarray*}
+\end{frame}
+
+\bgroup
+\setbeamertemplate{sidebar right}{}
+\begin{frame}{递推算法推导:化简}
+\begin{eqnarray*}
+A &=& (P_N -P_N\Psi_{N+1}i^{-1}\Psi_{N+1}^T P_N )\Phi_N^T Y_N\\
+&=& P_N\Phi_N^T Y_N -P_N\Psi_{N+1}i^{-1}\Psi_{N+1}^T P_N \Phi_N^T Y_N\\
+&=& \hat\theta_N-P_N\Psi_{N+1}i^{-1}\Psi_{N+1}^T \hat\theta_N\\
+B &=& (P_N -P_N\Psi_{N+1}i^{-1}\Psi_{N+1}^T P_N )\Psi_{N+1}y_{N+1}\\
+&=& i^{-1}(P_N(1+\Psi_{N+1}^T P_N \Psi_{N+1}) -P_N\Psi_{N+1}\Psi_{N+1}^T P_N )\Psi_{N+1}y_{N+1}\\
+&=& i^{-1}(P_N+P_N\Psi_{N+1}^T P_N \Psi_{N+1} -P_N\Psi_{N+1}\Psi_{N+1}^T P_N )\Psi_{N+1}y_{N+1}\\
+&=& i^{-1}(P_N\Psi_{N+1}+P_N\Psi_{N+1}^T P_N \Psi_{N+1}\Psi_{N+1} \\
+&&  -P_N\Psi_{N+1}\Psi_{N+1}^T P_N \Psi_{N+1})y_{N+1}\\
+&=& i^{-1}(P_N\Psi_{N+1}+P_N\Psi_{N+1}\Psi_{N+1}^T P_N \Psi_{N+1} \\
+&& -P_N\Psi_{N+1}\Psi_{N+1}^T P_N \Psi_{N+1})y_{N+1}\\
+&=& i^{-1}P_N\Psi_{N+1}y_{N+1}
+% A &=& (P_N -P_N\Psi_{N+1}(1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}\Psi_{N+1}^T P_N )\Phi_N^T Y_N\\
+% &=& P_N\Phi_N^T Y_N -P_N\Psi_{N+1}(1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}\Psi_{N+1}^T P_N \Phi_N^T Y_N\\
+% &=& \hat\theta_N-P_N\Psi_{N+1}(1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}\Psi_{N+1}^T \hat\theta_N\\
+% B &=& (P_N -P_N\Psi_{N+1}(1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}\Psi_{N+1}^T P_N )\Psi_{N+1}y_{N+1}\\
+%  &=& (1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}(P_N(1+\Psi_{N+1}^T P_N \Psi_{N+1}) -P_N\Psi_{N+1}\Psi_{N+1}^T P_N )\Psi_{N+1}y_{N+1}\\
+%  &=& (1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}(P_N+P_N\Psi_{N+1}^T P_N \Psi_{N+1} -P_N\Psi_{N+1}\Psi_{N+1}^T P_N )\Psi_{N+1}y_{N+1}\\
+%  &=& (1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}(P_N\Psi_{N+1}y_{N+1}+P_N\Psi_{N+1}^T P_N \Psi_{N+1}\Psi_{N+1}y_{N+1} -P_N\Psi_{N+1}\Psi_{N+1}^T P_N \Psi_{N+1}y_{N+1})\\
+%  &=& (1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}(P_N\Psi_{N+1}+P_N\Psi_{N+1}\Psi_{N+1}^T P_N \Psi_{N+1} -P_N\Psi_{N+1}\Psi_{N+1}^T P_N \Psi_{N+1})y_{N+1}\\
+%  &=& (1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1}P_N\Psi_{N+1}y_{N+1}\\
+\end{eqnarray*}
+\article{提示：$\Psi_{N+1}^T P_N \Psi_{N+1}$为标量}
+\end{frame}
+\egroup
+
+\begin{frame}{递推算法推导：结果}
+\begin{eqnarray*}
+\hat\theta_{N+1} &=& \hat\theta_N-P_N\Psi_{N+1}i^{-1}\Psi_{N+1}^T \hat\theta_N +i^{-1}P_N\Psi_{N+1}y_{N+1} \\
+&=& \hat\theta_N+i^{-1}P_N\Psi_{N+1}(-\Psi_{N+1}^T \hat\theta_N +y_{N+1}) \\
+&=& \hat\theta_N+ K_{N+1}(y_{N+1}-\Psi_{N+1}^T\hat\theta_N) \\
+K_{N+1} &=& P_N\Psi_{N+1}(1+\Psi_{N+1}^T P_N \Psi_{N+1})^{-1} \\
+P_{N+1} &=& P_N -K_{N+1}\Psi_{N+1}^T P_N 
+\end{eqnarray*}
+
+初值获取方法:
+\begin{itemize}
+\item 基本最小二乘估计
+\item $\hat\theta_0=0,P_0=c^2I$,其中$c$为充分大的常数。
+\end{itemize}
+\end{frame}
+
+\begin{frame}{收敛性:$P_N$}
+\begin{eqnarray*}
+P_N &=& (P_{N-1}^{-1}+\Psi_N\Psi_N^T)^{-1} \\
+P_N^{-1} &=& P_{N-1}^{-1}+\Psi_N\Psi_N^T  \\
+P_{N-1}^{-1} &=& P_{N-2}^{-1}+\Psi_{N-1}\Psi_{N-1}^T  \\
+P_{N-2}^{-1} &=& P_{N-3}^{-1}+\Psi_{N-2}\Psi_{N-2}^T  \\
+P_{N-3}^{-1} &=& P_{N-4}^{-1}+\Psi_{N-3}\Psi_{N-3}^T  \\
+& \vdots & \\
+P_1^{-1} &=& P_0^{-1}+\Psi_1\Psi_1^T  \\
+P_N^{-1} &=& P_0^{-1}+\sum_{i=1}^{N}\Psi_i\Psi_i^T \\
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{收敛性}
+\article{$\Psi_{i}$对应的是$\Phi_{N}$的第$i$行}
+\begin{eqnarray*}
+\Phi_N &=& \begin{bmatrix} \Psi_{1}^T \\ \Psi_{2}^T \\ \vdots \\ \Psi_{N}^T \end{bmatrix}  \\
+P_N^{-1} &=& \frac{1}{c^2}I+
+\begin{bmatrix} \Psi_{1} & \Psi_{2} & \cdots & \Psi_{N} \end{bmatrix}
+\begin{bmatrix} \Psi_{1}^T \\ \Psi_{2}^T \\ \vdots \\ \Psi_{N}^T \end{bmatrix}  \\
+&=& \frac{1}{c^2}I+\Phi^T\Phi \\
+\lim_{c\to\infty}P_N^{-1} &=& \Phi_N^T\Phi_N  \\
+\hat\theta_N &=& P_N\Phi_N^T Y_N \\
+ &=& (\Phi_N^T\Phi_N)^{-1}\Phi_N^T Y_N 
+\end{eqnarray*}
+\end{frame}
+
+\section{问题讨论}
+\begin{frame}{残差与新息的关系}
+新息(Innovation)$\tilde y_i = y_i - \Psi_i^T \hat\theta_{i-1}$用来描述$i$时刻的预报误差。
+残差$\varepsilon_i = y_i - \Psi_i^T\hat\theta_i$用来描述$i$时刻的输出偏差。
+\begin{eqnarray*}
+\varepsilon &=& y_i - \Psi_i^T\hat\theta_i  \\
+&=& y_i - \Psi_i^T(\hat\theta_{i-1}+K_i \tilde y_i) \\
+&=& \tilde y_i -\Psi_i^T K_i \tilde y_i \\
+&=& (1-\Psi_i^T K_i) \tilde y_i \\
+&=& (1-\Psi_i^T P_{i-1} \Psi_i(\Psi_i^T P_{i-1} \Psi_i+1)^{-1}) \tilde y_i \\
+&=& \frac{\Psi_i^T P_{i-1} \Psi_i+1-\Psi_i^T P_{i-1} \Psi_i}{\Psi_i^T P_{i-1} \Psi_i+1} \tilde y_i \\
+&=& \frac{\tilde y_i}{\Psi_i^T P_{i-1} \Psi_i+1}  
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{准则函数的递推计算}
+\begin{eqnarray*}
+J_{i} &=& (Y_i-\Phi_i\theta_i)^T (Y_i-\Phi_i\theta_i)   \\
+J_{i-1} &=& (Y_{i-1}-\Phi_{i-1}\theta_{i-1})^T (Y_{i-1}-\Phi_{i-1}\theta_{i-1}) \\
+Y_i-\Phi_i\theta_i &=& Y_i - \Phi_i (\hat\theta_{i-1}+K_i \tilde y_i) \\
+&=& \begin{bmatrix}  Y_{i-1}  \\  y_i \end{bmatrix} -\begin{bmatrix}\Phi_{i-1} \\ \Psi_i^T \end{bmatrix} (\hat\theta_{i-1}+ K_i \tilde y_k)  \\
+&=& \begin{bmatrix} Y_{i-1}-\Phi_{i-1}\hat\theta_{i-1}  \\ \tilde y_i \end{bmatrix} -\begin{bmatrix}\Phi_{i-1} \\ \Psi_i^T \end{bmatrix}  K_i \tilde y_k  \\
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{准则函数的递推计算}
+\begin{eqnarray*}
+J_i &=& J_{i-1} - 2 K_i^T\Phi_{i-1}^T(Y_{i-1}-\Phi_{i-1}\hat\theta_{i-1})\tilde y_i + K_i^T \Phi_{i-1}^T\Phi_{i-1} K_i \tilde y_i^2  \\
+&& +(1-2K_i^T\Psi_i+K_i^T\Psi_i\Psi_i^T K_i)\tilde y_i^2   \\
+&=& J_{i-1} - 2 K_i^T(\Phi_{i-1}^TY_{i-1}-\Phi_{i-1}^T\Phi_{i-1}\hat\theta_{i-1})\tilde y_i  \\
+&&  +(1-2K_i^T\Psi_i+K_i^T\Phi_i\Phi_i^T K_i)\tilde y_i^2   \\
+&=& J_{i-1}  +  (1-2K_i^T\Psi_i+K_i^T\Phi_i\Phi_i^T K_i)\tilde y_i^2   \\
+&=& J_{i-1}  +  (1-2K_i^T\Psi_i+K_i^T P_i^{-1} K_i)\tilde y_i^2   \\
+&=& J_{i-1}  +  (1-2K_i^T\Psi_i+K_i^T \Psi_i)\tilde y_i^2   \\
+&=& J_{i-1}  +  (1-K_i^T\Psi_i)\tilde y_i^2   \\
+&=& J_{i-1}  +  (1-\Psi_i^T P_{i-1} \Psi_i(\Psi_i^T P_{i-1} \Psi_i+1)^{-1}) \tilde y_i^2 \\
+&=& J_{i-1}  +  \frac{\Psi_i^T P_{i-1} \Psi_i+1-\Psi_i^T P_{i-1} \Psi_i}{\Psi_i^T P_{i-1} \Psi_i+1} \tilde y_i^2 \\
+&=& J_{i-1}  +  \frac{\tilde y_i^2}{\Psi_i^T P_{i-1} \Psi_i+1}  
+\end{eqnarray*}
+\end{frame}
+\begin{frame}{增益矩阵$K_i$的计算误差对$P_i$的影响}
+当$K_i$存在误差$\delta K_i$时：
+\begin{eqnarray*}
+\delta P_i &=& \delta K_i \Psi_i^T P_{i-1}
+\end{eqnarray*}
+计算$P_i$的新形式：
+\begin{eqnarray*}
+P_i &=& (I-K_i\Psi_i^T)P_{i-1}  \\
+&=& (I-K_i\Psi_i^T)P_{i-1} -P_{i-1}\Psi_i K_i^T+P_{i-1}\Psi_i K_i^T \\
+&=& (I-K_i\Psi_i^T)P_{i-1} -P_{i-1}\Psi_i K_i^T+K_i(\Psi_i^T P_{i-1}\Psi_i+1)K_i^T \\
+&=& (I-K_i\Psi_i^T)P_{i-1} -(I-K_i\Psi_i^T)P_{i-1}\Psi_i K_i^T+K_i K_i^T \\
+&=& (I-K_i\Psi_i^T)(P_{i-1} -P_{i-1}\Psi_i K_i^T)+K_i K_i^T \\
+&=& (I-K_i\Psi_i^T)P_{i-1} (I-\Psi_i K_i^T)+K_i K_i^T 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{增益矩阵$K_i$的计算误差对$P_i$的影响}
+当$K_i$存在误差$\delta K_i$时：
+\begin{eqnarray*}
+\delta P_i  &=& (I-(K_i+\delta K_i)\Psi_i^T)P_{i-1} (I-\Psi_i (K_i+\delta K_i)^T) \\
+&& +(K_i+\delta K_i) (K_i+\delta K_i)^T -P_i  \\
+ &=& -\delta K_i\Psi_i^T P_{i-1} (I-\Psi_i K_i^T)+K_i \delta K_i^T  \\
+ && -(I-K_i\Psi_i^T)P_{i-1} \Psi_i \delta K_i^T+\delta K_i K_i^T   \\
+ && + \delta K_i\Psi_i^T P_{i-1} \Psi_i \delta K_i^T+\delta K_i \delta K_i^T  \\
+ && +(I-K_i\Psi_i^T)P_{i-1} (I-\Psi_i K_i^T)+K_i K_i^T -P_i  \\
+ &=& -\delta K_i\Psi_i^T P_{i-1} (I-\Psi_i K_i^T)+K_i \delta K_i^T  \\
+ && -(I-K_i\Psi_i^T)P_{i-1} \Psi_i \delta K_i^T+\delta K_i K_i^T  +O(\delta K_i) \\
+ &=& -\delta K_i\Psi_i^T P_i^T+\delta K_i K_i^T -P_i \Psi_i \delta K_i^T+ K_i \delta K_i^T +O(\delta K_i) \\
+ &=& -\delta K_i K_i^T +\delta K_i K_i^T -K_i \delta K_i^T+ K_i \delta K_i^T +O(\delta K_i) \\
+ &=& O(\delta K_i) 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{递推算法的稳定性:差分方程}
+\begin{eqnarray*}
+y_i &=& \Psi_i^T \theta+\xi_i \\
+\tilde\theta_i &\stackrel{def}{=}&\theta-\hat\theta_i \\
+&=& \theta-[\hat\theta_{i-1} + K_i (y_i-\Psi_i^T\hat\theta_{i-1})] \\
+&=& \tilde\theta_{i-1}-K_i (y_i-\Psi_i^T\hat\theta_{i-1}) \\
+&=& \tilde\theta_{i-1}-K_i (\Psi_i^T\theta + \xi_i -\Psi_i^T\hat\theta_{i-1}) \\
+&=& \tilde\theta_{i-1}-K_i (\Psi_i^T\tilde\theta_{i-1} + \xi_i ) \\
+&=& (I-K_i \Psi_i^T)\tilde\theta_{i-1} - K_i\xi_i \\
+&=& P_i P_{i-1}^{-1}\tilde\theta_{i-1} - K_i\xi_i \\
+&=& A_i \tilde\theta_{i-1} - K_i\xi_i \\
+A_i &=& P_i P_{i-1}^{-1} 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{递推算法的稳定性：特征值}
+\begin{eqnarray*}
+A_i x &=& \lambda x \\
+(P_{i-1}^{-1}+\Psi_i\Psi_i^T)^{-1} P_{i-1}^{-1}x &=& \lambda x \\
+P_{i-1}^{-1}x &=& [P_{i-1}^{-1}+\Psi_i\Psi_i^T]\lambda x \\
+(1-\lambda)P_{i-1}^{-1}x &=& \lambda \Psi_i\Psi_i^T x \\
+(1-\lambda) x^T P_{i-1}^{-1}x &=& \lambda x^T \Psi_i\Psi_i^T x 
+\end{eqnarray*}
+其中：$ P_{i-1}^{-1} $正定，与$\Psi_i\Psi_i^T$非负定，所以$0<\lambda \leq 1$。即：$\tilde\theta_i\leq\tilde\theta_0$。
+\end{frame}
+
+\begin{frame}{最小二乘估计与Kalman滤波的关系}
+状态模型：
+\begin{eqnarray*}
+\theta_{i+1} &=& \theta_i \\
+y_i &=& \Psi_i^T\theta_i +\xi_i
+\end{eqnarray*}
+Kalman滤波器：
+\begin{eqnarray*}
+\hat\theta_i &=& \hat\theta_{i-1} +K_i(y_i-\Psi_i^T\hat\theta_{i-1})  \\
+K_i &=& S_i\Psi_i(\Psi_i^T S_i\Psi_i+\sigma^2)^{-1}  \\
+S_i &=&  P_{i-1} \\
+P_i &=&   (I-K_i\Psi_i^T)P_{i-1} \\
+\hat\theta_0 &=& 0 \\
+\end{eqnarray*}
+\end{frame}
+
+%\begin{frame}{作业}
+%\begin{itemize}
+%\item 复习自相关函数、互相关函数概念
+%\item 推导基本最小二乘辨识算法
+%\item 推导可辨识条件
+%\item 推导课本中关于最小二乘概率性质的结论
+%\end{itemize}
+%\end{frame}
+%\end{CJK*}
+\end{document}

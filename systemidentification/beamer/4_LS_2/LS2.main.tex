@@ -1,0 +1,513 @@
+\DeclareMathOperator*{\argmin}{arg\,min}
+\begin{document}
+%\begin{CJK*}{GBK}{song}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\def\lecturename{系统辨识}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[LS]{最小二乘法辨识}{}
+\subtitle{改进算法}
+\date{2012}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}{主要内容}
+\tableofcontents
+\end{frame}
+
+\section{辅助变量法}
+\begin{frame}{辅助变量法}
+\begin{itemize}
+\item 辨识精度高于基本最小二乘估计法；
+\item 计算简单；
+\item 渐近无偏估计；
+\item 需构造辅助变量矩阵。
+\end{itemize}
+\end{frame}
+
+\begin{frame}{辅助变量法原理}
+\begin{eqnarray*}
+Y &=& \Phi \theta+\xi  \\
+\only<1>{
+\Phi^T Y &=& \Phi^T \Phi \theta+\Phi^T\xi  \\
+(\Phi^T \Phi)^{-1} \Phi^T Y &=& (\Phi^T \Phi)^{-1}\Phi^T \Phi \theta+(\Phi^T \Phi)^{-1}\Phi^T\xi \\
+(\Phi^T \Phi)^{-1} \Phi^T Y &=& \theta+(\Phi^T \Phi)^{-1}\Phi^T\xi \\
+}
+\only<2>{
+Z^T Y &=& Z^T \Phi \theta+Z^T\xi  \\
+(Z^T \Phi)^{-1} \Phi^T Y &=& (Z^T \Phi)^{-1}\Phi^T \Phi \theta+(Z^T \Phi)^{-1}Z^T\xi \\
+(Z^T \Phi)^{-1} \Phi^T Y &=& \theta+(Z^T \Phi)^{-1}Z^T\xi 
+}
+\end{eqnarray*}
+\only<2>{
+其中：
+\begin{eqnarray*}
+E(Z^T\xi) &=& 0 \\
+E(Z^T\Phi) &=& Q 
+\end{eqnarray*}
+其中$Q$非奇异。
+}
+\end{frame}
+
+\begin{frame}{渐近无偏性}
+\begin{eqnarray*}
+E[\hat\theta_{IV}] &=& E[(Z^T\Phi)^{-1}Z^T Y] \\
+&=& E[(Z^T\Phi)^{-1}Z^T (\Phi\theta +\xi)] \\
+&=& \theta+E[(Z^T\Phi)^{-1}Z^T \xi] \\
+\lim_{N\to\infty}E[\hat\theta_{IV}] &=& \theta+ E[(Z^T\Phi)^{-1}]E[Z^T \xi] \\
+&=& \theta 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{辅助变量法的构造方法}
+\begin{itemize}
+\item 递推辅助变量参数估计法 
+\item 自适应滤波法
+\item 纯滞后法 
+\item 塔利原理法
+\end{itemize}
+\end{frame}
+
+\begin{frame}{递推辅助变量参数估计法:$Z$}
+\begin{eqnarray*}
+\hat Y &=& Z \hat\theta  \\
+Z &=& \begin{bmatrix}
+-\hat y_n   & \cdots &  -\hat y_1  & u_{n+1} & \cdots & u_1 \\
+\vdots      &        & \vdots      & \vdots  &        & \vdots \\
+-\hat y_{n+N-1}   & \cdots &  -\hat y_N  & u_{n+N} & \cdots & u_N 
+\end{bmatrix}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{递推辅助变量参数估计法:具体步骤}
+\begin{itemize}
+\item 初始化：应用基本最小二乘法估计$\hat\theta$,取$Z=\Phi$，
+\item 递推：
+\begin{itemize}
+\item 更新$Z$
+$$\hat Y=Z\hat\theta$$
+\item 计算$\hat\theta$
+$$\hat\theta = (Z^T\Phi)^{-1}Z^T Y$$
+\item 重复迭代，直至$\hat\theta$收敛。
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{自适应滤波法}
+在递推辅助变量参数估计法基础上取:
+$$\hat\theta_k=(1-\alpha)\hat\theta_{k-1}+\alpha\hat\theta_{k-d}$$
+\begin{description}
+\item[$\alpha$:] $\in [0.01,0.1]$
+\item[$d$:] $\in [0,10],$
+\end{description}
+\end{frame}
+
+\begin{frame}{纯滞后法}
+\begin{eqnarray*}
+\hat y_k &=& u_{k-m}
+\end{eqnarray*}
+$d=n$时，有：
+
+\begin{eqnarray*}
+Z&=&\begin{bmatrix}
+-u_0 & \cdots & -u_{1-n} & u_{n+1} & \cdots & u_1 \\
+-u_1 & \cdots & -u_{2-n} & u_{n+2} & \cdots & u_2 \\
+\vdots &      & \vdots   &  \vdots &        \vdots \\
+-u_{N-1} & \cdots & -u_{N-n} & u_{n+N} & \cdots & u_2 
+\end{bmatrix}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{塔利（Tally）原理}
+若噪声$\xi_k$可看作模型:
+$$\xi_k = c(z^{-1})n_k$$
+的输出，其中$n_k$是0均值不相关随机噪声。且：
+$$c(z^{-1}) = 1+c_1 z^{-1}+\cdots +c_m z^{-m}$$
+则可取：
+\begin{eqnarray*}
+\hat y_k &=& y_{k-m}\\
+Z&=&\begin{bmatrix}
+-y_{n-m} & \cdots & -y_{1-m} & u_{n+1} & \cdots & u_1 \\
+-y_{n+1-m} & \cdots & -y_{2-m} & u_{n+2} & \cdots & u_2 \\
+\vdots &      & \vdots   &  \vdots &        \vdots \\
+-y_{n+N-1-m} & \cdots & -y_{N-m} & u_{n+N} & \cdots & u_2 
+\end{bmatrix}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{递推辅助变量法}
+\begin{eqnarray*}
+\onslide<1->{
+\hat\theta_N &=& P_N Z_N^T Y_N \\
+P_N &=& (Z_N^T\Phi_N)^{-1} \\
+\hat\theta_{N+1} &=& P_{N+1} Z_{N+1}^T Y_{N+1} \\
+}
+\onslide<2>{
+P_{N+1} &=& \left(\begin{bmatrix}Z_N^T  & Z_{N+1}\end{bmatrix}\begin{bmatrix}\Phi_N \\ \Psi_{N+1}^T \end{bmatrix}\right)^{-1} \\
+&=& (P_N^{-1}+Z_{N+1}\Psi_{N+1}^T)^{-1} \\
+\Psi_{N+1} &=& \begin{bmatrix}-y_{n+N} & \cdots & -y_{N+1} & u_{n+N+1} & \cdots & u_{N+1}\end{bmatrix}^T \\
+z_{N+1} &=& \begin{bmatrix}-\hat y_{n+N} & \cdots & -\hat y_{N+1} & u_{n+N+1} & \cdots & u_{N+1}\end{bmatrix}^T 
+}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{递推辅助变量法}
+利用矩阵求逆引理可推导出递推计算公式：
+\begin{eqnarray*}
+\hat\theta_{N+1} &=& \hat\theta_{N}+K_{N+1}(y_{N+1}-\psi_{N+1}^T\hat\theta_N) \\
+P_{N+1} &=& P_N - K_{N+1}\Psi_{N+1}^T P_N \\
+K_{N+1} &=& P_N z_{N+1}(1+\Psi_{N+1}^T P_N z_{N+1})^{-1} 
+\end{eqnarray*}
+\begin{itemize}
+\item 初始参数参照递推最小二乘法选取
+\item 对初始值$P_0$的选取比较敏感，最好在前50\textasciitilde 100个点采用递推最小二乘，然后转换到辅助变量法
+\end{itemize}
+\end{frame}
+
+\section{广义最小二乘法}
+\begin{frame}{广义最小二乘法}
+\begin{itemize}
+\item 建立滤波模型，对数据进行白化处理
+\item 方法较复杂，计算量较大
+%\item 渐近无偏估计，估计效果较好
+\item 迭代算法收敛性未证明
+\end{itemize}
+\end{frame}
+
+\begin{frame}{广义最小二乘法:系统模型}
+\begin{eqnarray*}
+\only<1>{
+a(z^{-1}) y_k &=& b(z^{-1}) u_k + \xi_k \\
+f(z^{-1}) &=& 1+f_1 z^{-1}+\cdots+f_m z^{-m}  \\
+\xi_k &=& \frac{1}{f(z^{-1})}\varepsilon_k \\
+f(z^{-1})\xi_k &=& \varepsilon_k \\
+\xi_k &=& -f_1\xi_{k-1} -\cdots -f_m\xi_{k-m}+\varepsilon_k \\
+}
+\only<2>{
+a(z^{-1}) f(z^{-1})y_k &=& b(z^{-1}) f(z^{-1}) u_k + \varepsilon_k \\
+a(z^{-1}) \bar y_k &=& b(z^{-1}) \bar u_k  + \varepsilon_k \\
+\bar y_k &=& f(z^{-1})y_k \\
+&=& y_k+f_1 y_{k-1}+\cdots + f_m y_{k-m}\\
+\bar u_k &=& f(z^{-1}) u_k \\
+&=& u_k + f_1 u_{k-1} + \cdots + f_m u_{k-m}
+}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{广义最小二乘法:噪声模型参数估计}
+\begin{eqnarray*}
+\xi &=&\Omega f + \varepsilon \\
+\xi &=& \begin{bmatrix}\xi_{n+1} & \xi_{n+2} & \cdots & \xi_{n+N}\end{bmatrix}^T \\
+f &=& \begin{bmatrix}f_1 & f_2 & \cdots & f_m\end{bmatrix}^T \\
+\varepsilon &=& \begin{bmatrix}\varepsilon_{n+1} & \varepsilon_{n+2} &\cdots& \varepsilon_{n+N}\end{bmatrix}^T \\
+\Omega &=& \begin{bmatrix}
+-\xi_n & \cdots & -\xi_{n+1-m} \\
+-\xi_{n+1} & \cdots & -\xi_{n+2-m} \\
+\vdots &        &\vdots \\
+-\xi_{n+N-1} & \cdots & -\xi_{n+N-m} 
+\end{bmatrix} \\
+\hat f &=& (\Omega^T\Omega)^{-1}\Omega^T\xi
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{广义最小二乘法:步骤}
+\begin{itemize}
+\item 初始化，取$$\hat f(z^{-1}) =1$$
+\item 迭代
+\begin{itemize}
+\item 滤波：
+\begin{eqnarray*}
+\bar y_k &=& \hat f(z^{-1}) y_k \\
+\bar u_k &=& \hat f(z^{-1}) u_k
+\end{eqnarray*}
+\item 最小二乘估计：$$\hat\theta = (\bar\Phi^T\bar\Phi)^{-1}\bar\Phi^T \bar Y  $$
+\item 残差：$$\hat\xi = Y-\Phi\hat\theta  $$
+\item 用残差$\hat\xi$代替$\xi$计算$\hat f$：$$\hat f = (\hat\Omega^T\hat\Omega)^{-1}\hat\Omega^T e $$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{递推广义最小二乘法}
+\begin{itemize}
+\item 包括参数$\hat\theta$的递推及噪声模型参数$\hat f$的递推
+\item 离线与递推计算结果不完全一样
+\item 主要步聚：
+\begin{itemize}
+\item 初始化，参照递推最小二乘选取初始值
+\item 滤波，计算新的$\bar y_k,\bar u_k$
+\item 按递推最小二乘算法计算$\hat\theta$与$\hat f$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{递推广义最小二乘法}
+\begin{itemize}
+\item 初始化：\
+\begin{eqnarray*}
+\hat\theta_0 &=& 0 \\
+P_0^{(\theta)} &=& c_1^2 I \\
+\hat f_{(0)} &=& 0 \\
+P_0^{(f)} &=& c_2^2 I \\
+\end{eqnarray*}
+\item 滤波
+\begin{eqnarray*}
+\bar y_{N+1} &=& \hat f_{(N)}(z^{-1}) y_{N+1} \\
+&=& \hat f_{(N)}(z^{-1}) y_{(n+N+1)} \\
+\bar u_{N+1} &=& \hat f_{(N)}(z^{-1}) u_{N+1} \\
+&=& \hat f_{(N)}(z^{-1}) u_{(n+N+1)} 
+\end{eqnarray*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{递推广义最小二乘法}
+\begin{itemize}
+\item 计算$\hat\theta$
+\begin{eqnarray*}
+\hat\theta_{N+1} &=& \hat\theta_N+K_{N+1}^{(\theta)}(\bar y_{N+1}-\bar\Psi_{N+1}^T\hat\theta_N) \\
+K_{N+1}^{(\theta)}&=& P_N^{(\theta)}\bar\Psi_{N+1}(1+\bar\Psi_{N+1}^T P_N^{(\theta)}\bar\Psi_{N+1})^{-1} \\
+P_{N+1}^{(\theta)} &=& P_N^{(\theta)}-K_{N+1}^{(\theta)}\bar\Psi_{N+1}^T P_N^{(\theta)} \\
+\bar\Psi_{N+1} &=& \begin{bmatrix}-\bar y_{n+N} &\cdots & -\bar y_{N+1} & \bar u_{n+N+1} &\cdots & \bar u_{N+1} \end{bmatrix}^T 
+\end{eqnarray*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{递推广义最小二乘法}
+\begin{itemize}
+\item 计算残差$\hat\xi_{N+1}$
+\begin{eqnarray*}
+\hat\xi_{N+1}&=& y_{N+1}-\Psi_{N+1}\hat\theta_{N+1}
+\end{eqnarray*}
+\item 计算$\hat f$
+\begin{eqnarray*}
+\hat f_{N+1} &=& \hat f_N+K_{N+1}^{(f)}(\hat\xi_{N+1}-\hat\omega_{N+1}^T\hat f_N) \\
+K_{N+1}^{(f)}&=& P_N^{(f)}\hat\omega_{N+1}(1+\hat\omega_{N+1}^T P_N^{(f)}\hat\omega_{N+1})^{-1} \\
+P_{N+1}^{(f)} &=& P_N^{(f)}-K_{N+1}^{(f)}\hat\omega_{N+1}^T P_N^{(f)}  \\
+\hat\omega_{N+1} &=& \begin{bmatrix}-\hat\xi_{n+N} &\cdots & -\hat\xi_{n+N+1-m}\end{bmatrix}
+\end{eqnarray*}
+\end{itemize}
+\end{frame}
+
+\section{夏氏法}
+
+\begin{frame}{夏氏法}
+\begin{itemize}
+\item  交替求解系统模型与噪声模型参数
+\item  分为夏式修正法和夏式改良法两种
+\item  递推算法可推广至MIMO系统
+\item  不需对数据进行反复过滤，计算效率较高
+\item  估计结果较好
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{夏氏法:系统模型}
+\begin{eqnarray*}
+\onslide<1->{
+a(z^{-1})y(k) &=& b(z^{-1})u(k)+\xi_{k}\\
+\xi_{k} &=& \frac{\varepsilon(k)}{f(z^{-1})} \\
+a(z^{-1}) &=& 1 + a_1 z^{-1} + \cdots + a_n z^{-n} \\
+b(z^{-1}) &=& b_0 + b_1 z^{-1} + \cdots + b_n z^{-n} \\
+f(z^{-1}) &=& 1 + f_1 z^{-1} + \cdots + f_m z^{-m}  \\
+}
+\onslide<2>{
+\xi_{k} &=& (1-f( z^{-1})\xi_k+\varepsilon_k \\
+a(z^{-1})y(k) &=& b(z^{-1})u(k)+(1-f(z^{-1}))\xi_{k}+\varepsilon_k
+}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{夏氏法：系统模型向量表示}
+\begin{eqnarray*}
+y_{N} &=& y_{(n+N)} \\
+&=& \Psi_N^T\theta + \omega_N^T f+\varepsilon_{N} \\
+f &=&\begin{bmatrix} f_1 &\cdots & f_m\end{bmatrix}^T \\
+\Psi_N &=&\begin{bmatrix}-y_{(n+N-1)} & \cdots & -y_{(N)} & u_{(n+N)} &\cdots & u_{(N)} \end{bmatrix}^T \\
+\omega_N &=&\begin{bmatrix} -\xi_{(n+N-1)} & \cdots & -\xi_{(n+N-m)} \end{bmatrix}^T  
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{夏氏法：参数求解}
+\begin{eqnarray*}
+\begin{bmatrix} y_1 \\ \vdots \\ y_{N} \end{bmatrix}&=& 
+\begin{bmatrix} \Psi_1^T & \omega_1^T  \\
+\vdots & \vdots \\
+\Psi_N^T & \omega_N^T
+\end{bmatrix} \begin{bmatrix}\theta \\ f \end{bmatrix} + 
+\begin{bmatrix} \varepsilon_1 \\ \vdots \\ \varepsilon_N \end{bmatrix}\\
+Y &=& \begin{bmatrix} \Phi & \Omega \end{bmatrix} \begin{bmatrix}\theta \\ f \end{bmatrix} + \varepsilon \\
+\begin{bmatrix}\hat\theta \\ \hat f \end{bmatrix} &=& \begin{bmatrix}\Phi^T\Phi & \Phi^T\Omega \\ \Omega^T\Phi & \Omega^T\Omega \end{bmatrix}^{-1}\begin{bmatrix}\Phi^T Y \\ \Omega^T Y\end{bmatrix}
+\end{eqnarray*}
+\end{frame}
+
+
+\begin{frame}{夏氏法：夏式偏差修正法}
+由分块矩阵求逆：
+\begin{eqnarray*}
+\begin{bmatrix}\hat\theta \\ \hat f \end{bmatrix} &=& \begin{bmatrix}\Phi^T\Phi & \Phi^T\Omega \\ \Omega^T\Phi & \Omega^T\Omega \end{bmatrix}^{-1}\begin{bmatrix}\Phi^T Y \\ \Omega^T Y\end{bmatrix} \\
+&=& \begin{bmatrix}P_N \Phi^T Y - P_N\Phi^T \Omega D^{-1} \Omega^T M Y \\ D^{-1}\Omega^T M Y\end{bmatrix} \\
+&=& \begin{bmatrix}\hat\theta_{LS} - P_N\Phi^T \Omega \hat f \\ D^{-1}\Omega^T M Y\end{bmatrix} \\
+P_N &=& (\Phi^T\Phi)^{-1} \\
+M &=& I-\Phi(\Phi^T\Phi)^{-1}\Phi^T \\
+D &=& \Omega^T M \Omega
+\end{eqnarray*}
+\end{frame}
+
+
+\begin{frame}{夏氏法：夏式偏差修正法迭代步骤}
+\begin{itemize}
+\item 初始化：计算基本最小二乘估计
+\begin{eqnarray*}
+\hat\theta &=& (\Phi^T\Phi)^{-1} \Phi^T Y
+\end{eqnarray*}
+\item 迭代
+\begin{itemize}
+\item 计算残差$\hat\xi$构造$\hat\Omega$
+\begin{eqnarray*}
+\hat\xi &=& Y- \Phi\hat\theta
+\end{eqnarray*}
+\item 计算$\hat f$,对$\hat\theta$进行修正
+\begin{eqnarray*}
+\hat f &=& D^{-1}\hat\Omega^T M Y \\
+\hat\theta &=& \hat\theta-(\Phi^T\Phi)^{-1} \Phi^T \hat\Omega \hat f
+\end{eqnarray*}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{夏氏法：夏氏改良法}
+用$\hat\theta$代替$\theta$：
+\begin{eqnarray*}
+Y &=& \begin{bmatrix} \Phi & \Omega \end{bmatrix} \begin{bmatrix}\hat\theta \\ f \end{bmatrix} + \varepsilon \\
+&=& \Phi \hat\theta+ \Omega  f  + \varepsilon \\
+Y- \Phi \hat\theta &=& \Omega f  + \varepsilon 
+\end{eqnarray*}
+可得$f $的最小二乘估计：
+\begin{eqnarray*}
+\hat f &=& (\hat\Omega^T \hat\Omega)^{-1}\hat\Omega^T(Y- \Phi \hat\theta) \\
+\hat\theta &=& \hat\theta-(\Phi^T\Phi)^{-1} \Phi^T \Omega \hat f
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{夏氏法：夏式改良法迭代步骤}
+\begin{itemize}
+\item 初始化：计算基本最小二乘估计
+\begin{eqnarray*}
+\hat\theta &=& (\Phi^T\Phi)^{-1} \Phi^T Y
+\end{eqnarray*}
+\item 迭代
+\begin{itemize}
+\item 计算残差$\hat\xi$构造$\hat\Omega$
+\begin{eqnarray*}
+\hat\xi &=& Y- \Phi\hat\theta
+\end{eqnarray*}
+\item 计算$\hat f$,对$\hat\theta$进行修正
+\begin{eqnarray*}
+\hat f &=& (\hat\Omega^T \hat\Omega)^{-1}\hat\Omega^T(Y- \Phi \hat\theta) \\
+\hat\theta &=& \hat\theta-(\Phi^T\Phi)^{-1} \Phi^T \hat\Omega \hat f
+\end{eqnarray*}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{夏氏法：递推夏氏法}
+\begin{eqnarray*}
+\tilde\Phi &=&\begin{bmatrix}\Phi & \hat\Omega\end{bmatrix} \\
+\tilde\theta &=&\begin{bmatrix}\hat\theta \\ f \end{bmatrix} \\
+\tilde\theta_{N+1}^T &=& \tilde\theta_N + K_{N+1} (y_{N+1}-\tilde\Psi_{N+1}^T\tilde\theta_N) \\
+P_{N+1} &=& P_N -K_{N+1}\tilde\Psi_{N+1}^T P_N \\
+K_{N+1} &=& P_N \tilde\Psi_{N+1}^T (1+\tilde\Psi_{N+1}^T P_N \tilde\Psi_{N+1})^{-1}
+\end{eqnarray*}
+其中：
+\begin{eqnarray*}
+y_{N} &=& \tilde \Psi_N^T\tilde\theta + \hat\varepsilon_{(n+N)} \\
+\tilde\Psi_N &=&\begin{bmatrix}\Psi_N^T & \hat\omega_N^T \end{bmatrix}^T \\
+\Psi_N &=& \begin{bmatrix} -y_{(n+N-1)} & \cdots & -y_{(N)} & u_{(n+N)} &\cdots & u_{(N)} \end{bmatrix}^T \\
+\hat\omega_N &=&\begin{bmatrix} \hat\xi_{(n+N-1)} & \cdots & \hat\xi_{(n+N-m)} \end{bmatrix}^T \\
+\hat\xi_k &=& y_k-\Psi_k \hat\theta
+\end{eqnarray*}
+\end{frame}
+
+\section{增广矩阵法}
+\begin{frame}{增广矩阵法}
+\begin{itemize}
+\item  将噪声模型参数扩充到被辨识参数向量中
+\item  系统参数与噪声参数同时辨识
+%\item  无偏估计方法
+\item  应用广泛，算法收敛性好
+\item  实际算法中常采用递推方法
+\end{itemize}
+\end{frame}
+
+\begin{frame}{增广矩阵法:系统模型}
+\begin{eqnarray*}
+a(z^{-1})y(k) &=& b(z^{-1})u(k)+c(z^{-1})\varepsilon(k) \\
+a(z^{-1}) &=& 1 + a_1 z^{-1} + \cdots + a_n z^{-n} \\
+b(z^{-1}) &=& b_0 + b_1 z^{-1} + \cdots + b_n z^{-n} \\
+c(z^{-1}) &=& 1 + c_1 z^{-1} + \cdots + c_n z^{-n} 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{增广矩阵法：系统模型向量表示}
+\begin{eqnarray*}
+y_{N} &=& y_{(n+N)} \\
+&=& \Psi_N^T\theta +\varepsilon_{(n+N)} \\
+&=& \begin{bmatrix} \Psi_{N,(y,u)}^T & \Psi_{N,\xi}^T\end{bmatrix}\begin{bmatrix}\theta_{(y,u)} \\ \theta_\xi \end{bmatrix} + \varepsilon_N \\
+\theta &=&\begin{bmatrix}\theta_{(y,u)} & \theta_\xi\end{bmatrix}^T \\
+\theta_{(y,u)} &=&\begin{bmatrix}a_1 & \cdots & a_n & & b_0 & \cdots & b_n \end{bmatrix}^T \\
+\theta_\xi &=&\begin{bmatrix} c_1 &\cdots & c_n\end{bmatrix}^T \\
+\Psi_N &=&\begin{bmatrix} \Psi_{N,(y,u)} &\Psi_{N,\xi} \end{bmatrix}^T \\
+\Psi_{N,(y,u)} &=&\begin{bmatrix}-y_{(n+N-1)} & \cdots & -y_{(N)} & u_{(n+N)} &\cdots & u_{(N)} \end{bmatrix}^T \\
+\Psi_{N,\xi} &=&\begin{bmatrix} \varepsilon_{(n+N-1)} & \cdots & \varepsilon_{(N)} \end{bmatrix}^T  
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{增广矩阵法：参数求解}
+\begin{eqnarray*}
+\begin{bmatrix} y_1 \\ \vdots \\ y_{N} \end{bmatrix}&=& 
+\begin{bmatrix} \Psi_{1,(y,u)}^T & \Psi_{1,\xi}^T  \\
+\vdots & \vdots \\
+\Psi_{N,(y,u)}^T & \Psi_{N,\xi}^T
+\end{bmatrix} \begin{bmatrix}\theta_{(y,u)} \\ \theta_\xi \end{bmatrix} + 
+\begin{bmatrix} \varepsilon_1 \\ \vdots \\ \varepsilon_N \end{bmatrix}\\
+Y &=& \begin{bmatrix} \Phi_{(y,u)} & \Phi_\xi \end{bmatrix} \begin{bmatrix}\theta_{(y,u)} \\ \theta_\xi \end{bmatrix} + \varepsilon \\
+\begin{bmatrix}\hat\theta_{(y,u)} \\ \hat\theta_\xi \end{bmatrix} &=& \begin{bmatrix}\Phi_{(y,u)}^T\Phi_{(y,u)} & \Phi_{(y,u)}^T\Phi_\xi \\ \Phi_\xi^T\Phi_{(y,u)} & \Phi_\xi^T\Phi_\xi \end{bmatrix}^{-1}\begin{bmatrix}\Phi_{(y,u)}^T Y \\ \Phi_\xi^T Y\end{bmatrix}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{增广矩阵法：递推方程}
+以$\hat\varepsilon$代替$\varepsilon$：
+\begin{eqnarray*}
+y_{N} &=& \hat \Psi_N^T\hat\theta +\hat\varepsilon_{(n+N)} \\
+\hat\Psi_N &=&\begin{bmatrix}-y_{(n+N-1)} & \cdots & -y_{(N)} & u_{(n+N)} &\cdots & u_{(N)} & \hat\epsilon_N^T \end{bmatrix}^T \\
+\hat\epsilon_N &=&\begin{bmatrix} \hat\varepsilon_{(n+N-1)} & \cdots & \hat\varepsilon_{(N)} \end{bmatrix}^T \\
+\end{eqnarray*}
+可得递推公式：
+\begin{eqnarray*}
+\hat\theta_{N+1}^T &=& \hat\theta_N + K_{N+1} (y_{N+1}-\hat\Psi_{N+1}^T\hat\theta_N) \\
+P_{N+1} &=& P_N -K_{N+1}\hat\Psi_{N+1}^T P_N \\
+K_{N+1} &=& P_N \hat\Psi_{N+1}^T (1+\hat\Psi_{N+1}^T P_N \hat\Psi_{N+1})^{-1}
+\end{eqnarray*}
+\end{frame}
+
+
+%\end{CJK*}
+\end{document}
