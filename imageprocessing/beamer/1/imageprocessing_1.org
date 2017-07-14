@@ -205,10 +205,12 @@
 ** C/C++
    - http://opencv.org/
    - http://cimg.org
+   - https://itk.org/
    - http://dlib.net 
    - http://mlpack.org/ 
    - http://caffe.berkeleyvision.org
    - http://mxnet.io/
+
 ** Lua
    - http://torch.ch
    - https://github.com/torchnet/

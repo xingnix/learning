@@ -197,5 +197,11 @@ g(x)=[0.89,0.89,0.23,0.17,0.0,0.11,
 ** 陷波滤波器
 \[ H(u,v) = \begin{cases} 0, \qquad (u,v)=(0,0) \\    1, \qquad \text{其它} \end{cases} \]
 
-
+** 周期噪声滤波
+#+attr_latex: width=0.3\textwidth
+[[./image/coins.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/coins_periodic_noise.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/coins_periodic_filted.png]]
 

@@ -1,4 +1,4 @@
-% Created 2017-05-10 Wed 18:55
+% Created 2017-06-02 Fri 18:01
 \documentclass{beamer}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -376,10 +376,10 @@ G(u,v)&=F(u,v)+N(u,v)
      \[ \hat f(x,y) = \frac{\sum_{(s,t)\in S_{xy}}g(s,t)^{Q+1}}{\sum_{(s,t)\in S_{xy}}g(s,t)^Q} \]
 \item 其中Q称为滤波器的阶数。这种滤波器适合减少或是在实际中消除椒盐噪声的影响。
 \begin{itemize}
-\item 当Q值为正数时，滤波器用于消除“胡椒”噪声;
-\item 当Q值为负数时，滤波器用于消除“盐”噪声。
-\item 当Q=0时，逆谐波均值滤波器退变为算术均值滤波器;
-\item 当Q=-1时，逆谐波均值滤波器退变为谐波均值滤波器。
+\item 当 $Q$ 值为正数时，滤波器用于消除“胡椒”噪声;
+\item 当 $Q$ 值为负数时，滤波器用于消除“盐”噪声。
+\item 当 $Q=0$ 时，逆谐波均值滤波器退变为算术均值滤波器;
+\item 当 $Q=-1$ 时，逆谐波均值滤波器退变为谐波均值滤波器。
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -664,6 +664,254 @@ H_{np}(u,v)=1-H_{nr}(u,v)
 
 
 当 $u_0=v_0$ 时， 陷波带通滤波器变为低通滤波器。
+\end{frame}
+\section{线性位置不变退化}
+\label{sec-9}
+\begin{frame}
+\frametitle{线性位置不变退化模型}
+\label{sec-9-1}
+
+\begin{align*}
+ H[af_1(x,y)+bf_2(x,y)] &= aH[f_1(x,y)]+bH[f_2(x,y)] \\
+  H[f(x,y)] &= g(x,y) \\
+ H[f(x-\alpha,y-\beta)] &= g(x-\alpha,y-\beta)
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{脉冲响应}
+\label{sec-9-2}
+
+\begin{align*}
+H[\delta(x,y)] &= h(x,y) \\
+H[\delta(x-\alpha,y-\beta)] &= h(x-\alpha,y-\beta) \\
+H[f(\alpha,\beta)\delta(x-\alpha,y-\beta)] &=f(\alpha,\beta)h(x-\alpha,y-\beta) \\
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{卷积}
+\label{sec-9-3}
+
+\begin{align*}
+g(x,y) &=H[f(x,y)] \\
+&= H[f(x,y)*\delta(x,y)] \\
+&= H\left[\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(\alpha,\beta)\delta(x-\alpha,y-\beta) d\alpha d\beta\right] \\
+&= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} H[f(\alpha,\beta)\delta(x-\alpha,y-\beta)] d\alpha d\beta \\
+&= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(\alpha,\beta)H[\delta(x-\alpha,y-\beta)] d\alpha d\beta \\
+&= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(\alpha,\beta)h(x-\alpha,y-\beta)d\alpha d\beta \\
+&= f(x,y)*h(x,y)
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{有噪声退化模型}
+\label{sec-9-4}
+
+\begin{align*}
+g(x,y) &=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(\alpha,\beta)h(x-\alpha,y-\beta) d\alpha d\beta +n(x,y)\\
+G(u,v) &= H(u,v)F(u,v)+N(u,v)
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{估计退化函数}
+\label{sec-9-5}
+
+\begin{itemize}
+\item 图像观察估计法
+\item 试验估计法
+\item 模型估计法
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{图像观测估计法}
+\label{sec-9-6}
+
+
+\[ H_s(u,v) = \frac{G_s(u,v)}{\hat F_s(u,v)} \]
+
+其中：
+\begin{itemize}
+\item $G_s(u,v)$ 为特征明显的部分图像
+\item $\hat F_s(u,v)$ 是对原始图像的估计
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{试验估计法}
+\label{sec-9-7}
+
+
+\[ H(u,v)=\frac{G(u,v)}{A} \]
+
+\begin{itemize}
+\item 如果使用与获取退化图像的设备相似的装置，理论上可以得到准确的退化估计。
+\item 利用相同的系统设置， 通过对一个脉冲(小亮点)成像可得到退化的脉冲响应。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{模型估计法}
+\label{sec-9-8}
+
+
+\begin{itemize}
+\item 根据导致模糊的物理过程（先验知识）来确定 $h(x,y)$ 或 $H(u,v)$ 。
+\item 长时间曝光下大气湍流造成的转移函数
+   \[ H(u,v) = e^{-k(u^2+v^2)^{\frac{5}{6}}} \]
+\item $k$ 是常数，它与湍流的性质有关。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{运动模糊}
+\label{sec-9-9}
+
+\begin{itemize}
+\item 假设 $T$ 为曝光时间（快门时间）， $x_0(t),y_0(t)$ 是位移的 $x$ 分量和 $y$ 分量。
+\end{itemize}
+\begin{align*}
+g(x,y) &= \int_0^T f(x-x_0(t),y-y_0(t)) dt \\
+g(x,y) &= \int_0^T f(x,y)*\delta(x-x_0(t),y-y_0(t)) dt \\
+g(x,y) &= f(x,y)* \int_0^T \delta(x-x_0(t),y-y_0(t)) dt \\
+G(u,v) &= F(u,v) \int_0^T \mathcal{F}[\delta(x-x_0(t),y-y_0(t))] dt \\
+G(u,v) &= F(u,v) \int_0^T e^{-j2\pi(ux_0(t)+vy_0(t))} dt 
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{直线运动模糊}
+\label{sec-9-10}
+
+当
+\begin{align*}
+x_0(t) &=\frac{at}{T} \\
+y_0(t) &=0
+\end{align*}
+时
+\begin{align*}
+H(u,v) &=\int_0^T e^{-j2\pi u \frac{at}{T}} dt \\
+&=\frac{T}{\pi u a} \sin(\pi u a) e^{-j\pi u a}
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{逆滤波}
+\label{sec-9-11}
+
+
+\begin{align*}
+ \hat F(u,v) &= \frac{G(u,v)}{H(u,v)} \\
+ \hat F(u,v) &= F(u,v)+\frac{N(u,v)}{H(u,v)} \\
+\end{align*}
+
+\begin{itemize}
+\item 即使知道退化函数，也不能准确地复原未退化的图像。因为噪声是一个随机函数，其傅氏变换未知。
+\item 实际应用逆滤波复原方法时存在病态的问题，即如果退化为零或非常小的值，则 $\frac{N(u,v)}{H(u,v)}$ 很容易决定复原函数的值。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{最小均方误差滤波(维纳滤波)}
+\label{sec-9-12}
+
+\begin{itemize}
+\item 最小均方误差滤波是综合退化函数和噪声统计特征两方面进行复原处理的方法。
+\item 目标是找一个未污染图像f的估计值，使它们之间的均方误差最小。误差度量由下式给出：
+  \[ e^2 = E((f-\hat f)^2) \]
+\item 假定：噪声和图像不相关；其中一个有零均值；估计的灰度级是退化图像灰度级的线性函数。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{最小均方误差滤波(维纳滤波)}
+\label{sec-9-13}
+
+
+\begin{align*}
+\hat F(u,v) &= \frac{H^{* } S_f(u,v)}{S_f(u,v)|H(u,v)|^2+S_n(u,v)}G(u,v) \\
+&= \frac{H^{* } }{|H(u,v)|^2+\frac{S_n(u,v)}{S_f(u,v)}}G(u,v) \\
+&= \frac{1}{H(u,v)}\frac{|H(u,v)|^2 }{|H(u,v)|^2+\frac{S_n(u,v)}{S_f(u,v)}}G(u,v)
+\end{align*}
+
+其中：
+\begin{itemize}
+\item $H(u,v),H^{*}(u,v)$ 退化函数及其共轭复数
+\item $S_n(u,v)=|N(u,v)|^2$ 噪声功率谱
+\item $S_f(u,v)=|F(u,v)|^2$ 未退化图像的功率谱
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{最小均方误差滤波(维纳滤波)}
+\label{sec-9-14}
+
+
+\begin{itemize}
+\item 当处理白噪声时，谱 $|N(u,v)|^2$ 是一个常数，大大简化了处理过程。
+\item 未退化图像的功率谱很少是已知。当这些值未知或不能估计时，经常使用的方法是用下面的表达式近似：
+   \[ \hat F(u,v) = \frac{1}{H(u,v)}\frac{|H(u,v)|^2 }{|H(u,v)|^2+K}G(u,v) \]
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{约束最小二乘方滤波器}
+\label{sec-9-15}
+
+
+\begin{align*}
+\hat F(u,v) &= \frac{H^{* }(u,v) }{|H(u,v)|^2+\gamma|P(u,v)|^2}G(u,v)\\
+P(u,v)&=\mathcal{F}[p(x,y)]\\
+p(x,y)&=
+\begin{bmatrix}
+0 & -1 & 0 \\
+-1 & 4 & -1 \\
+0 & -1 & 0 
+\end{bmatrix}
+\end{align*}
+\begin{itemize}
+\item 噪声方差和均值经常能从一个给定的退化图像计算出来，这是一个很重要的优点。
+\item 维纳滤波建立在最小化统计准则的基础上，在平均意义上它是最优的。
+\item 约束最小二乘方滤波器对于处理的每一幅图像它都能产生最优结果。因此，算法的选择往往由结果图像的感知视觉质量决定(至少部分是这样)。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{几何均值滤波}
+\label{sec-9-16}
+
+\[ \hat F(u,v) =\left(\frac{H^{*}(u,v)}{|H(u,v)|^2}\right)^{\alpha}\left(\frac{H^{ *}(u,v)}{|H(u,v)|^2+\beta \frac{S_n(u,v)}{S_f(u,v)}}\right)^{1-\alpha}G(u,v) \]
+\end{frame}
+\section{几何变换}
+\label{sec-10}
+\begin{frame}
+\frametitle{几何变换}
+\label{sec-10-1}
+
+\begin{itemize}
+\item 几何变换可在一幅图像中的像素间修改空间关系。
+\item 几何变换通常又叫做橡皮片变换，因为它们可以被看做在一片橡皮片上打印图像，然后根据预先确定的规则拉伸这个橡皮片的过程。
+\item 在数字图像处理中，几何变换由两个基本操作组成：
+\begin{itemize}
+\item 空间变换，它定义了图像平面上像素的重新安排；
+\item 灰度级插补，处理空间变换后图像中像素灰度级的赋值。
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{空间变换}
+\label{sec-10-2}
+
+\begin{itemize}
+\item 空间变换中对应的连接点可用多种不同技术建立。例如，一些图像生成系统有物理的人为缺陷(如金属点)，镶嵌在图像传感器上。这产生了一个已知点集(叫做网状标记)，在图像被获取时直接镶在图像上。
+\item 如果图像由于一些其它处理(如图像显示或图像重建处理)失真了，图像可以用这项技术校正。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{灰度级插补}
+\label{sec-10-3}
+
+\begin{itemize}
+\item 空间变换方法遍历坐标 $(x,y)$ 的整数值得到复原图像 。然而，根据系数 $c_i$ 的值，根据前边两个式子能产生非整数的 $x',y'$ 。
+\item 因为失真图像 $g(x,y)$ 是数字的，它的像素值只定义在整数坐标。因此，对 $x',y'$ 用非整数值会导致一个到 $g$ 位置的映射，在这些位置没有灰度定义，所以有必要基于整数坐标的灰度值去推断那些位置的灰度值。
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{双线性插补}
+\label{sec-10-4}
+
+\begin{itemize}
+\item 定义在坐标上 $(x',y')$ 的灰度级 $v(x',y')$ 用下面的关系从它的邻点值被插补。
+\end{itemize}
+
+\[ v(x',y')=a x'+by'+cx'y'+d \]
 \end{frame}
 
 \end{document}
