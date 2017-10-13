@@ -1,0 +1,295 @@
+% !TeX root = rules.beamer.tex
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usetikzlibrary{shapes,arrows,positioning,decorations}
+\usetikzlibrary{decorations.pathmorphing} 
+\usetikzlibrary{decorations.shapes} 
+\usetikzlibrary{decorations.fractals} 
+\usetikzlibrary{spy} % L A T EX and plain T E X
+\begin{document}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\def\lecturename{自动控制原理}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[]{线性系统的根轨迹法}{}
+\subtitle{根轨迹绘制基本法则}
+\date{2014}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{根轨迹分支数、对称性和连续性}
+\begin{frame}{根轨迹分支数、对称性和连续性}
+\begin{itemize}
+\item 根轨迹分支数等于开环零点数与开环极点数中的较大者，即$\max(m,n)$\only<article>{(多项式的阶数为$\max(m,n)$)}
+\item 根轨迹关于实轴对称\only<article>{(实系数多项式的根为实数或共轭复数)}
+\item 根轨迹是连续的\only<article>{(参考隐函数存在定理)}
+\end{itemize}
+\end{frame}
+
+\section{根轨迹的起点和终点}
+\begin{frame}{开环零极点数相等时}
+\begin{eqnarray}
+K^{\ast}\frac{\prod\limits_{j=1}^m(s-z_j)}{\prod\limits_{i=1}^n(s-p_i)} &=& -1  \\
+{\prod\limits_{i=1}^n(s-p_i)}+K^{*}{\prod\limits_{j=1}^m(s-z_j)} &=& 0 \\
+\frac{1}{K^{*}}{\prod\limits_{i=1}^n(s-p_i)}+{\prod\limits_{j=1}^m(s-z_j)} &=& 0
+\end{eqnarray}
+\begin{itemize}
+\item 起点：开环极点
+\item 终点：开环零点
+\end{itemize}
+\only<article>{此时根轨迹只存在于有限区域内。}
+\end{frame}
+
+\begin{frame}{开环极点数大于零点数}
+\begin{eqnarray}
+K^* &=& \frac{\prod\limits_{i=1}^n|s-p_i|}{\prod\limits_{j=1}^m|s-z_j|} \\
+K^* &=& \frac{|s|^{n-m}\prod\limits_{i=1}^n|1-\frac{p_i}{s}|}{\prod\limits_{j=1}^m|1-\frac{z_j}{s}|} 
+\end{eqnarray}
+\only<article>{此时根轨迹随$K^*$的增大而趋于无穷远，且远处的根轨迹趋近于$\frac{K^*}{(s-c)^{n-m}}$。}
+\end{frame}
+
+
+\section{根轨迹的渐近线}
+\only<article>{当$n>m$时，根轨迹随$K^*$的增大趋于无穷远，且远处的根轨迹趋近于$\frac{K^*}{(s-c)^{n-m}}$。此时，$\frac{K^*}{(s-c)^{n-m}}$的根轨迹可看作渐近线。}
+% \begin{frame}{根轨迹的渐近线(方向)}
+% \only<article>{将$\frac{K^*}{(s-c)^{n-m}}$简化为$\frac{K^*}{s^{n-m}}$，求渐近线方向}
+% \begin{eqnarray}
+% K^{\ast}\frac{\prod\limits_{j=1}^m(s-z_j)}{\prod\limits_{i=1}^n(s-p_i)} &=& -1  \\
+% K^{\ast}\frac{\prod\limits_{j=1}^m(1-\frac{z_j}{s})}{s^{n-m}\prod\limits_{i=1}^n(1-\frac{p_i}{s})} &=& -1  \\
+% K^{\ast}\frac{1}{s^{n-m}} &\approx& -1  
+% \end{eqnarray}
+% \end{frame}
+
+\begin{frame}{根轨迹的渐近线}
+\begin{eqnarray}
+K^{\ast}\frac{1}{(s-c)^{n-m}} &\approx& -1  \\
+K^{\ast}\frac{\prod\limits_{j=1}^m(1-\frac{z_j}{s})}{s^{n-m}\prod\limits_{i=1}^n(1-\frac{p_i}{s})} &\approx& \frac{K^*}{s^{n-m}(1-\frac{c}{s})^{n-m}} \\
+(1-\frac{c}{s})^{n-m}\prod\limits_{j=1}^m(1-\frac{z_j}{s}) &\approx& \prod\limits_{i=1}^n(1-\frac{p_i}{s})  
+\end{eqnarray}
+\end{frame}
+
+\begin{frame}{根轨迹的渐近线}
+\begin{eqnarray}
+(1-\frac{c}{s})^{n-m} &=&\only<2,5->{ 1-\frac{(n-m)c}{s}+\cdots    }\\
+\prod\limits_{j=1}^m(1-\frac{z_j}{s}) &=&\only<3,5-> { 1-\frac{\sum\limits_{j=1}^m z_j }{s}+\cdots }\\
+\prod\limits_{i=1}^n(1-\frac{p_i}{s}) &=& \only<4-> { 1-\frac{\sum\limits_{i=1}^n p_i}{s}+\cdots }
+\end{eqnarray}
+\end{frame}
+
+\begin{frame}{根轨迹的渐近线}
+\begin{eqnarray}
+\only<article>{(1-\frac{(n-m)c}{s}+\cdots)(1-\frac{\sum_{j=1}^{m}z_j}{s}+\cdots) &=& 1-\frac{\sum_{i=1}^n p_i}{s}+\cdots \\ }
+1-\frac{(n-m)c}{s}-\frac{\sum_{j=1}^{m}z_j}{s}+\cdots &\approx& 1-\frac{\sum_{i=1}^n }{s}+\cdots \nonumber \\ 
+-(n-m)c-\sum_{j=1}^{m}z_j &=& \sum_{i=1}^n p_i \\
+c &=& \frac{\sum\limits_{i=1}^n p_i -\sum\limits_{j=1}^{m}z_j}{n-m}
+\end{eqnarray}
+\end{frame}
+
+\section{根轨迹在实轴上的分布}
+\begin{frame}{根轨迹在实轴上的分布$s \in R$(开环零极点全为实数)}
+\begin{eqnarray}
+K^{\ast}\frac{\prod\limits_{j=1}^m(s-z_j)}{\prod\limits_{i=1}^n(s-p_i)} &=& -1 \\
+K^{\ast}\frac{\prod\limits_{j=1}^m\rho_j}{\prod\limits_{i=1}^n A_i} &=& -1 \\
+K^{\ast}\frac{\prod\limits_{j=1}^m |\rho_j| }{\prod\limits_{i=1}^n |A_i|} \frac{{j=1}(-1)^q}{(-1)^r}&=& -1 
+\end{eqnarray}
+实轴上某区域，若其右边开环实数零、极点个数之和为奇数，则该区域必是根轨迹。
+\end{frame}
+
+\begin{frame}{根轨迹在实轴上的分布$s\in R$(开环零极点存在共轭复数)}
+\begin{eqnarray}
+K^{\ast}G_q(s)(s-z_q)(s-\bar z_q) &=& -1 \\
+K^{\ast}G_i(s)(s-a-jb_q)(s-a+jb_q) &=& -1 \\
+K^{\ast}G_i(s)((s-a)^2+b_q^2) &=& -1 
+\end{eqnarray}
+实轴上某区域，若其右边开环实数零、极点个数之和为奇数，则该区域必是根轨迹。
+\end{frame}
+
+\section{根轨迹的起始角与终止角}
+
+\begin{frame}{根轨迹的起始角与终止角}
+\begin{center}
+\begin{tikzpicture}
+\draw[blue] (-1,2) 
+\foreach \x/\y in { -1/2,-0.9987409/1.9962392,-0.9974632/1.9924566,-0.9961665/1.9886519,-0.9948504/1.9848249,-0.9935143/1.9809754,-0.9921578/1.9771032,-0.9907804/1.9732078,-0.9893816/1.9692893,-0.9879609/1.9653471,-0.9865176/1.9613812,-0.9707099/1.9203577,-0.9518765/1.8766821,-0.9290213/1.8301611,-0.9007159/1.7807913,-0.8649497/1.7290805,-0.8191523/1.6767276,-0.7610164/1.6276691,-0.6909830/1.5882514,-0.6145415/1.5638845,-0.539338/1.5546278,-0.4701030/1.5564299,-0.4080364/1.5650218,-0.3526261/1.5774586,-0.3029050/1.5919735,-0.2579303/1.6075439,-0.2169078/1.6235776,-0.1791978/1.6397288,-0.1442911/1.6557936,-0.1117808/1.6716525,-0.0813397/1.6872366,-0.0527020/1.702508,-0.0256491/1.7174482,0.0243972/1.746317,0.0476707/1.7602527,0.0699300/1.7738666,0.0912690/1.7871691,0.1117689/1.8001713,0.1315006/1.812885,0.1505260/1.8253217,0.1688999/1.8374928,0.1866707/1.8494093,0.2038815/1.861082,0.2205707/1.8725209,0.2367730/1.8837359,0.2525195/1.8947361,0.2678384/1.9055303,0.2827553/1.9161268,0.2972934/1.9265334,0.3114740/1.9367575,0.3253166/1.9468062,0.3388391/1.9566862,0.3520578/1.9664036,0.3649879/1.9759645,0.3776435/1.9853745,0.3900376/1.9946389,0.4021822/2.0037628,0.4140885/2.012751,0.425767/2.0216081}
+{
+-- (\x,\y)
+}
+;
+\draw [help lines] (-3,-2) grid (1,3);
+\draw[->] (-5,0)--(2,0) node[right] {$ $} ;
+\draw[->] (0,-2)--(0,3.2) node[above] {$j$} ;
+\foreach \x/\y in {0/0,-3/0,-1/2,-1/-2}
+{
+\draw  (\x,\y) node[red,thick] {$\times$};
+}
+\only<beamer>{
+	\foreach \ii/\sx/\sy/\sxx/\syy in 
+%{1/0.2972934/1.9265334/-0.0015997/1.9434599, 2/0.2205707/1.8725209/-0.0054099/1.8961228, 3/0.1315006/1.812885/-0.0133992/1.8368469, 4/0.0243972/1.746317/-0.0293212/1.7596199, 5/-0.1117808/1.6716525/-0.0620373/1.6532639, 6/-0.3029050/1.5919735/-0.1369698/1.4948477, 7/-0.6145415/1.5638845/-0.33775/1.250717, 8/-0.9007159/1.7807913/-0.5874244/1.0890766, 9/-0.9879609/1.9653471/-0.6718206/1.0553846, 10/-0.9948504/1.9848249/-0.6786501/1.0530395}
+	{1/0.1315006/1.812885/-0.0133992/1.8368469,  2/-0.3029050/1.5919735/-0.1369698/1.4948477, 3/-0.6145415/1.5638845/-0.33775/1.250717, 4/-0.9007159/1.7807913/-0.5874244/1.0890766, 5/-0.9879609/1.9653471/-0.6718206/1.0553846 }
+	{
+		\foreach \x/\y in {0/0,-3/0,-1/-2}
+		{
+			\draw<\ii>[->] (\x,\y)--(\sx,\sy);
+			%\filldraw[fill=green!20,draw=red] (\x,\y) -- +(0.5,0) arc(0:\pgfmathatantwo{\sx-\x}{\sy-\y}:5mm);
+			%\pgfmathparse{atan2(\sx-\x,\sy-\y)}\pgfmathresult
+				%\filldraw[fill=green!20,draw=red] (\x,\y) -- +(0.5,0) arc(0:\pgfmathatan2{\sx-\x}{\sy-\y}:5mm);
+			\begin{scope}
+			\clip<\ii> (\x,\y)--+(10,0)--(\sx,\sy)--cycle;
+			%\clip[draw] (\x,\y)--+(1,0)--+(\sx-\x,\sy-\y)--cycle;
+			\filldraw<\ii>[fill=green!20,draw=red] (\x,\y) -- +(0.5,0) arc(0:360:5mm);
+			\end{scope}
+		}
+		\foreach \x/\y in {-1/2}{
+			\begin{scope}
+			\clip<\ii> (\x,\y)--+(10,0)--(\sxx,\syy)--cycle;
+			\draw<\ii>[thick,red] (\x,\y) -- +(0.5,0) arc(0:360:5mm);
+			\end{scope}
+			\draw<\ii>[->,thick,red] (\x,\y) --(\sxx,\syy);
+			\draw<\ii>[->] (\x,\y)--(\sx,\sy);
+		}
+	}
+}
+\only<article>{
+  \foreach \x/\y in {0/0,-3/0,-1/-2}{
+    \draw[->] (\x,\y)--(-1,2);
+      \begin{scope}
+        \clip (\x,\y)--+(10,0)--(-0.9879609,1.9653471)--cycle;
+        \filldraw[fill=green!20,draw=red] (\x,\y) -- +(0.5,0) arc(0:360:5mm);
+      \end{scope} }
+  \draw[->,thick,red] (-1,2) --(-0.6718206,1.0553846);}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\bgroup
+\setbeamertemplate{sidebar right}{}
+
+\begin{frame}{起始角}
+\begin{eqnarray*}
+\sum_{l=1}^{m}\angle(s-z_{l})-\sum_{i=1}^{n}\angle(s-p_{i}) & = & (2k+1)\pi\\
+s & = & p_{q}+\delta re^{j\theta}\\
+\sum_{l=1}^{m}\angle(p_{q}+\delta re^{j\theta}-z_{l})-\sum_{i=1}^{n}\angle(p_{q}+\delta re^{j\theta}-p_{i}) & = & (2k+1)\pi\\
+\lim_{\delta r\rightarrow0}\sum_{l=1}^{m}\angle(p_{q}+\delta re^{j\theta}-z_{l})-\sum_{i=1}^{n}\angle(p_{q}+\delta re^{j\theta}-p_{i}) & = & (2k+1)\pi\\
+\sum_{l=1}^{m}\angle(p_{q}-z_{l})-\sum_{p_{q}=p_{i}}\theta-\sum_{p_{q}\not=p_{i}}\angle(p_{q}-p_{i}) & = & (2k+1)\pi
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{终止角}
+\begin{eqnarray*}
+\sum_{l=1}^{m}\angle(s-z_{l})-\sum_{i=1}^{n}\angle(s-p_{i}) & = & (2k+1)\pi\\
+s & = & z_{q}+\delta re^{j\theta}\\
+\sum_{l=1}^{m}\angle(z_{q}+\delta re^{j\theta}-z_{l})-\sum_{i=1}^{n}\angle(z_{q}+\delta re^{j\theta}-p_{i}) & = & (2k+1)\pi\\
+\lim_{\delta r\rightarrow0}\sum_{l=1}^{m}\angle(z_{q}+\delta re^{j\theta}-z_{l})-\sum_{i=1}^{n}\angle(z_{q}+\delta re^{j\theta}-p_{i}) & = & (2k+1)\pi\\
+\sum_{z_{q}\not=z_{l}}\angle(z_{q}-z_{l})+\sum_{z_{q}=z_{l}}\theta-\sum_{i=1}^{n}\angle(z_{q}-p_{i}) & = & (2k+1)\pi
+\end{eqnarray*}
+\end{frame}
+
+\egroup
+
+\section{根轨迹的分离点与分离角}
+
+\begin{frame}{分离点与分离角}
+\begin{itemize}
+ \item<2->分离点: 两条或两条以上根轨迹分支在  $S$  平面上相交后又分开的点称为根轨迹的分离点。
+ \item<3->分离角: 根轨迹进入分离点的切线方向与离开分离点的切线方向之间的夹角
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{分离点计算}
+\begin{align*}
+G(s) &=  \frac{K^* M(s)}{N(s)}\\
+D(s) &= N(s)+K^* M(s) \\
+N(s) &= - K^* M(s) & D(s) &= 0 \\
+N'(s) &= -K^* M'(s) & D'(s) &= 0 \\
+\frac{N'(s)}{N(s)} &=\frac{M'(s)}{M(s)} \\
+\frac{\frac{d}{ds}\prod_{i=1}^{n}(s-p_i)}{\prod_{i=1}^{n}(s-p_i)} &=\frac{\frac{d}{ds}\prod_{j=1}^{m}(s-z_j)}{\prod_{j=1}^{m}(s-z_j)} \\
+\sum_{i=1}^n\frac{1}{s-p_i} &= \sum_{j=1}^m\frac{1}{s-z_j}
+\end{align*}
+\end{frame}
+
+\begin{frame}{分离角计算:}
+设 $K^*=K_0$时有重极点。可将原特征方程变换
+\begin{align*}
+D(s)&=N(s)+K^*M(S)\\
+D(s)&=N(s)+(K'+K_0)M(S)\\
+D(s)&=N(s)+K_0M(S)+K'M(s)\\
+D'(s)&=N'(s)+K'M(s)
+\end{align*}
+\mode<article>{
+新系统 $\frac{M(s)}{N'(s)}$ 的开环极点（N'(S)=0的根）与 $K^*=K_0$ 时原系统闭环特征方程的根相同。可得：}
+\begin{itemize}
+\item 原系统的分离点等于新系统的起始点
+\item 分离角等于 $180^\circ$ 根轨迹与0度根轨迹起始角之差
+\begin{itemize}
+\item $180^\circ$ 根轨迹起始角： $\theta_1$
+\item 0度根轨迹起始角： $\theta_2$
+\item 其它零（极）点到分离点的辐角之和（差）： $\theta_2$
+\end{itemize}
+\begin{align*}
+L\theta_1  &= \theta_0+(2k_1+1)\pi\\
+L\theta_2 &= \theta_0+2k_2\pi\\
+L\Delta\theta &=(2(k_1-k_2)+1)\pi\\
+\Delta\theta &=\frac{(2k+1)\pi}{L}
+\end{align*}
+\end{itemize}
+
+\end{frame}
+
+\section{根轨迹与虚轴的交点}
+\begin{frame}{根轨迹与虚轴的交点}
+\begin{eqnarray*}
+1+G(s)H(s) & = & 0\\
+s & = & j\omega\\
+1+G(j\omega)H(j\omega) & = & 0
+\end{eqnarray*}
+
+\end{frame}
+
+\section{根之和($n-1>m$)}
+\begin{frame}{根之和($n-1>m$)}
+\begin{eqnarray*}
+\prod_{i=1}^{n}(s-p_{i})+K^{*}\prod_{j=1}^{m}(s-z_{j}) & = & 0\\
+\prod_{i=1}^{n}(s-p_{i}) & = & s^{n}+\sum_{i=1}^{n}(-p_{i})s^{n-1}+\cdots\\
+\prod_{j=1}^{m}(s-z_{j}) & = & s^{m}+\sum_{j=1}^{m}(-z_{j})s^{m-1}+\cdots\\
+\prod_{i=1}^{n}(s-p_{i})+K^{*}\prod_{j=1}^{m}(s-z_{j}) & = & s^{n}+\sum_{i=1}^{n}(-p_{i})s^{n-1}+\cdots
+\end{eqnarray*}
+
+\end{frame}
+
+\begin{frame}{根之和($n-1>m$)}
+\begin{eqnarray*}
+\prod_{i=1}^{n}(s-p_{i})+K^{*}\prod_{j=1}^{m}(s-z_{j}) & = & s^{n}+\sum_{i=1}^{n}(-p_{i})s^{n-1}+\cdots\\
+\prod_{i=1}^{n}(s-p_{i})+K^{*}\prod_{j=1}^{m}(s-z_{j}) & = & \prod_{i=1}^{n}(s-s_{i})\\
+\prod_{i=1}^{n}(s-s_{i}) & = & s^{n}+\sum_{i=1}^{n}(-s_{i})s^{n-1}+\cdots\\
+\sum_{i=1}^{n}(-p_{i})s^{n-1} & = & \sum_{i=1}^{n}(-s_{i})s^{n-1}\\
+\sum_{i=1}^{n}(-p_{i}) & = & \sum_{i=1}^{n}(-s_{i})\\
+\sum_{i=1}^{n}p_{i} & = & \sum_{i=1}^{n}s_{i}
+\end{eqnarray*}
+
+\end{frame}
+\end{document}
+	
+
+%%% Local Variables:
+%%% TeX-master: "rules.beamer"
+%%% End:

@@ -1,0 +1,416 @@
+% !TeX root = special.beamer.tex
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usetikzlibrary{shapes,arrows,positioning,decorations}
+\usetikzlibrary{decorations.pathmorphing} 
+\usetikzlibrary{decorations.shapes} 
+\usetikzlibrary{decorations.fractals} 
+\usetikzlibrary{spy} % L A T EX and plain T E X
+\begin{document}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\def\lecturename{自动控制原理}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[]{线性系统的根轨迹法}{}
+\subtitle{特殊的根轨迹}
+\date{2014}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\section{一阶系统}
+
+\begin{frame}{$G(s)H(s)=\frac{K^*}{s}$}
+\begin{eqnarray}
+1+\frac{K^*}{s} &=& 0 \\
+\frac{K^*}{s} &=& -1 \\
+\angle{s}&=&(2k+1)\pi \\
+s+K^* &=& 0 \\
+s &=& -K^* 
+\end{eqnarray}
+\end{frame}
+
+\begin{frame}{$G(s)H(s)=\frac{K^*}{s-c}$}
+\begin{eqnarray}
+1+\frac{K^*}{s-c} &=& 0 \\
+\frac{K^*}{s-c} &=& -1 \\
+\angle{s-c}&=&(2k+1)\pi \\
+s-c+K^* &=& 0 \\
+s &=& c-K^*
+\end{eqnarray}
+\end{frame}
+
+\section{二阶系统}
+\subsection{无开环零点}
+\begin{frame}{$G(s)H(s)\frac{K^*}{(s+a)(s+b)}$}
+\begin{center}
+
+\begin{tikzpicture}[scale=3]
+% The graphic
+\draw[style=help lines,step=0.2cm] (-1.2,-1) grid (0,1);
+%\draw (0,0) circle (1cm);
+\begin{scope}
+\draw[->] (-1.2,0) -- (0.2,0) node[right] {$ $};
+\draw[->] (0,-1) -- (0,1) node[above] {$j$};
+\foreach \x/\xtext in {-1, -0.5, 0}
+\draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+\foreach \y/\ytext in {-1, -0.5, 0.5, 1}
+\draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white]{$\ytext$};
+\end{scope}
+
+\mode<beamer>{
+\foreach \i/\a/\b in {1/-1/0,2/-0.8/-0.2,3/-0.6/-0.4,4/-0.5/-0.5}
+{
+\draw<\i>[thick,-,red] (\a,0)--(\b,0);
+\draw<\i>[thick,<->,red] (-0.5,-1.3)--(-0.5,1.3);
+\draw<\i> (\a,0) node[red]{$\times$};
+\draw<\i> (\b,0) node[red]{$\times$};
+\draw<\i> (0.7,0.3) node[green,fill=white]{$a=\a$};
+\draw<\i> (0.7,0.1) node[green,fill=white]{$b=\b$};
+}
+\foreach \i/\a in {5/0.2,6/0.4,7/0.6,8/0.8,9/1}
+{
+\draw<\i>[->,red,thick] (-0.5,\a)--(-0.5,1.3);
+\draw<\i>[->,red,thick] (-0.5,-\a)--(-0.5,-1.3);
+\draw<\i> (-0.5,\a) node[red]{$\times$};
+\draw<\i> (-0.5,-\a) node[red]{$\times$};
+\draw<\i> (0.7,0.3) node[green,fill=white]{$a=-0.5+\a j$};
+\draw<\i> (0.7,0.1) node[green,fill=white]{$b=-0.5-\a j$};
+}
+}
+\mode<article>{
+\draw[thick,-,red] (-1,0)--(0,0);
+\draw[thick,<->,red] (-0.5,-1.3)--(-0.5,1.3);
+\draw (-1,0) node[red]{$\times$};
+\draw (0,0) node[red]{$\times$};
+\draw (0.7,0.3) node[green,fill=white]{$a=-1$};
+\draw (0.7,0.1) node[green,fill=white]{$b=0$};
+}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\subsection{有开环零点}
+\begin{frame}{$G(s)H(s)=\frac{K^*(s+c)}{(s+a)(s+b)}$}
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+% The graphic
+% \draw[style=help lines,step=0.2cm] (-3,-2) grid (4.2,2);
+\begin{scope}
+\draw[->] (-3,0) -- (4.2,0) node[right] {$ $};
+\draw[->] (0,-2.1) -- (0,2.1) node[above] {$j$};
+% \foreach \x/\xtext in {-2,  0, 1,2,4}
+% \draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+% \foreach \y/\ytext in {-2, -1, 1, 2}
+% \draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white]{$\ytext$};
+\end{scope}
+
+\mode<beamer>{
+\foreach \i/\a/\b in {1/1/4,2/1.5/3,3/2/2}
+{
+\draw<\i>[thick,-,red] (\a,0)--(\b,0);
+\draw<\i>[thick,<->,red] (-3,0)--(0,0);
+\draw<\i>[thick,red] (0,0) circle (2cm);
+\draw<\i> (\a,0) node[red,thick]{$\times$};
+\draw<\i> (\b,0) node[red,thick]{$\times$};
+\draw<\i> (0,0) node[red,thick]{$\circ$};
+\draw<\i> (\a,0) node[below  left,green]{$a$};
+\draw<\i> (\b,0) node[below  right,green]{$b$};
+}
+\foreach \i/\a in {4/30,5/60,6/90,7/145,8/180}
+{
+\draw<\i>[thick,<->,red] (-3,0)--(0,0);
+\draw<\i>[-,red,thick] (\a:2cm)  arc (\a:360-\a:2cm);
+\draw<\i> (\a:2cm) node[red]{$\times$};
+\draw<\i> (-\a:2cm) node[red]{$\times$};
+\draw<\i> (0,0) node[red,thick]{$o$};
+\draw<\i> (\a:2cm) node[above  right,green]{$a$};
+\draw<\i> (-\a:2cm) node[below  right,green]{$b$};
+}
+}
+\mode<article>{
+\draw[thick,-,red] (1,0)--(4,0);
+\draw[thick,<->,red] (-3,0)--(0,0);
+\draw[thick,red] (0,0) circle (2cm);
+\draw (1,0) node[red,thick]{$\times$};
+\draw (4,0) node[red,thick]{$\times$};
+\draw (0,0) node[red,thick]{$\circ$};
+\draw (1,0) node[below  left,green]{$a$};
+\draw (4,0) node[below  right,green]{$b$};
+}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{根轨迹为圆的证明(重极点)}
+\begin{center}
+\begin{tikzpicture}[scale=1]
+% The graphic
+% \draw[style=help lines,step=0.2cm] (-3,-2) grid (4.2,2);
+\begin{scope}
+\draw[->] (-3,0) -- (4.2,0) node[right] {$ $};
+\draw[->] (0,-2.1) -- (0,2.1) node[above] {$j$};
+% \foreach \x/\xtext in {-2,  0, 1,2,4}
+% \draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+% \foreach \y/\ytext in {-2, -1, 1, 2}
+% \draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white]{$\ytext$};
+\end{scope}
+
+\draw[thick,red] (0,0) circle (2cm);
+\draw (0:2cm) node[red,thick]{$\times$};
+\draw (60:2cm) node[red, above right,thick]{$S$};
+\draw (0,0) node[red,thick]{$o$};
+\draw (0,0) node[red,below,thick]{$O$};
+\draw[->] (0,0)--(60:2cm);
+\draw[->] (2,0)--(60:2cm);
+\draw<2->[->,dashed] (2,0)--(2,2);
+\draw<2-> (2cm,2cm) node[red,right,thick]{$Y$};
+\draw (4.2,0) node[red, right,thick]{$X$};
+\draw (2,0) node[red, below ,thick,fill=white]{$A$};
+\end{tikzpicture}
+\end{center}
+\begin{align*}
+\angle{(s-a)}+\angle{(s-b)}-\angle{(s-O)} &= 2\angle{SAX}-\angle{SOX} \\
+\uncover<2->{ \angle{SAX}} &\uncover<2->{=\angle{SAY}+\frac{\pi}{2} \\}
+\uncover<2->{ 2\angle{SAY}} & \uncover<2->{=\angle{SOX}}
+\end{align*}
+\end{frame}
+
+\begin{frame}{根轨迹为圆的证明(共轭极点)}
+\begin{center}
+\begin{tikzpicture}[scale=1]
+% The graphic
+% \draw[style=help lines,step=0.2cm] (-3,-2) grid (4.2,2);
+\begin{scope}
+\draw[->] (-3,0) -- (4.2,0) node[right] {$ $};
+\draw[->] (0,-2.1) -- (0,2.1) node[above] {$j$};
+% \foreach \x/\xtext in {-2,  0, 1,2,4}
+% \draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+% \foreach \y/\ytext in {-2, -1, 1, 2}
+% \draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white]{$\ytext$};
+\end{scope}
+
+\draw[red,thick] (60:2cm)  arc (60:300:2cm);
+\draw (60:2cm) node[red,thick]{$\times$};
+\draw (-60:2cm) node[red,thick]{$\times$};
+\draw (100:2cm) node[red, above left,thick]{$S$};
+\draw (0,0) node[red]{$o$};
+\draw (0,0) node[red,below,thick]{$O$};
+\draw[->] (60:2cm)--(100:2cm);
+\draw[->] (-60:2cm)--(100:2cm);
+\draw[dashed] (-60:2cm)--+(0,4.5cm);
+\draw[dashed] (0,0)--(60:2cm);
+\draw[dashed] (60:2cm)--+(2cm,0);
+\draw[dashed] (-60:2cm)--+(2cm,0);
+\draw (60:2cm)+(2cm,0) node[red,right]{$A'$};
+\draw (-60:2cm)+(2cm,0) node[red,right]{$B'$};
+\draw[->] (0,0)--(100:2cm);
+\draw (-60:2cm)+(0,4.5cm) node[red,above right,thick]{$Y$};
+\draw (4.2,0) node[red, right,thick]{$X$};
+\draw (60:2cm) node[red, above right ,thick,fill=white]{$A$};
+\draw (-60:2cm) node[red, below right ,thick,fill=white]{$B$};
+\end{tikzpicture}
+\end{center}
+\begin{eqnarray*}
+\angle{SAY}&=&\angle{SBY}+\angle{BSA} \\
+\angle{BSA}&=&\angle{AOX}\\
+2\angle{SBA}&=&\angle{SOA}
+\end{eqnarray*}
+\end{frame}
+
+\section{开环重极点}
+\subsection{原点为极点}
+\begin{frame}{$G(s)H(s)=\frac{K^*}{s^n}$}
+\begin{eqnarray}
+1+K^{\ast}\frac{1}{s^n} &=& 0  \\
+K^{\ast}\frac{1}{s^n} &=& -1  \\
+\angle{s^n} &=& (2k+1)\pi \\
+n\angle{s} &=& (2k+1)\pi \\
+\angle{s} &=& \frac{(2k+1)\pi}{n} \\
+s^n &=& -K^* \\
+s &=& \sqrt[n]{K^*}e^{j\frac{(2k+1)\pi}{n}}
+\end{eqnarray}
+\end{frame}
+
+\begin{frame}{示例$G(s)H(s)=\frac{K^*}{s^3}$}
+\begin{center}
+\begin{tikzpicture}[scale=1]
+% The graphic
+% \draw[style=help lines,step=0.2cm] (-3,-2) grid (4.2,2);
+\begin{scope}
+\draw[->] (-3,0) -- (4.2,0) node[right] {$ $};
+\draw[->] (0,-2.1) -- (0,2.1) node[above] {$j$};
+% \foreach \x/\xtext in {-2,  0, 1,2,4}
+% \draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+% \foreach \y/\ytext in {-2, -1, 1, 2}
+% \draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white]{$\ytext$};
+\end{scope}
+
+\draw[red,thick,->] (0:0)--(60:3cm);
+\draw[red,thick,->] (0:0)--(180:3cm);
+\draw[red,thick,->] (0:0)--(-60:3cm);
+\draw (0:0cm) node[red,thick]{$\times$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{示例$G(s)H(s)=\frac{K^*}{s^3}, K^*\in (-\infty,0)$}
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\begin{scope}
+\draw[->] (-3,0) -- (4.2,0) node[right] {$ $};
+\draw[->] (0,-2.1) -- (0,2.1) node[above] {$j$};
+\end{scope}
+
+\draw[green,thick,->] (0:0)--(0:3cm);
+\draw[green,thick,->] (0:0)--(120:3cm);
+\draw[green,thick,->] (0:0)--(-120:3cm);
+\draw (0:0cm) node[red,thick]{$\times$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\subsection{极点平移}
+\begin{frame}{$G(s)=\frac{K^*}{(s-c)^n}$}
+\begin{eqnarray}
+1+K^{\ast}\frac{1}{(s-c)^n} &=& 0  \\
+K^{\ast}\frac{1}{(s-c)^n} &=& -1  \\
+\angle{(s-c)^n} &=& (2k+1)\pi \\
+n\angle{(s-c)} &=& (2k+1)\pi \\
+\angle{(s-c)} &=& \frac{(2k+1)\pi}{n} \\
+(s-c)^n &=& -K^* \\
+s &=& c+\sqrt[n]{K^*}e^{j\frac{(2k+1)\pi}{n}}
+\end{eqnarray}
+\end{frame}
+
+\begin{frame}{示例$G(s)H(s)=\frac{K^*}{(s-1)^3}$}
+\begin{center}
+\begin{tikzpicture}[scale=1]
+% The graphic
+% \draw[style=help lines,step=0.2cm] (-3,-2) grid (4.2,2);
+\begin{scope}
+\draw[->] (-3,0) -- (4.2,0) node[right] {$ $};
+\draw[->] (0,-2.1) -- (0,2.1) node[above] {$j$};
+% \foreach \x/\xtext in {-2,  0, 1,2,4}
+% \draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+% \foreach \y/\ytext in {-2, -1, 1, 2}
+% \draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white]{$\ytext$};
+\end{scope}
+
+\draw[red,thick,->] (0:1cm)-- +(60:3cm);
+\draw[red,thick,->] (0:1cm)-- +(180:3cm);
+\draw[red,thick,->] (0:1cm)-- +(-60:3cm);
+\draw (0:1cm) node[red,thick]{$\times$};
+\draw (0:1cm) node[red,below]{$1$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\section{$G(s+a)H(s+a)$}
+\begin{frame}{$G(s+a)H(s+a)$的根轨迹}
+\begin{eqnarray*}
+s' &=& s+a \\
+1+K^* G(s')H(s') &=& 0 \\
+s' &=& f(K^*) \\
+s &=& f(K^*)-a
+\end{eqnarray*}
+\end{frame}
+
+\section{$1+(K^*+a)G(s)H(s)$}
+
+\begin{frame}{$1+(K^*+a)G(s)H(s)$的根轨迹}
+\begin{eqnarray*}
+K' &=& K^*+a \\
+s &=& f(K') \\
+s &=& f(K^*+a)
+\end{eqnarray*}
+\end{frame}
+
+
+\begin{frame}{$\frac{K^*}{s^3+1}$的根轨迹}
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\begin{scope}
+\draw[->] (-3,0) -- (3,0) node[right] {$ $};
+\draw[->] (0,-2.1) -- (0,2.1) node[above] {$j$};
+\end{scope}
+
+\draw[red,thick,->] (60:1cm)--(60:3cm);
+\draw[red,thick,->] (180:1cm)-- (180:3cm);
+\draw[red,thick,->] (-60:1cm)-- (-60:3cm);
+\draw (60:1cm) node[red,thick]{$\times$};
+\draw (180:1cm) node[red,thick]{$\times$};
+\draw (-60:1cm) node[red,thick]{$\times$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{ 当 $K^*\in(1,\infty)$ 时， $\frac{K^*}{s^3}$ 的根轨迹}
+\begin{align*}
+\frac{K^*}{s^3+1}&=-1 \\
+K^* &=-s^3-1 \\
+K^*+1 &=-s^3 \\
+\frac{K^*+1}{s^3} &=-1 \qquad (K^*\in (0,+\infty))\\
+\frac{K'}{s^3} &=-1 \qquad (K'\in (1,+\infty))\\
+s &=\sqrt[3]{K'}e^{j\frac{(2k+1)\pi}{3}} \qquad (K'\in (1,+\infty))\\
+\end{align*}
+\end{frame}
+
+\begin{frame}{$\frac{K^*}{s^3-1}$的根轨迹}
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\begin{scope}
+\draw[->] (-3,0) -- (3,0) node[right] {$ $};
+\draw[->] (0,-2.1) -- (0,2.1) node[above] {$j$};
+\end{scope}
+
+\draw[green,thick] (0:0cm)--(0:1cm);
+\draw[green,thick] (0:0cm)-- (120:1cm);
+\draw[green,thick] (0:0cm)-- (-120:1cm);
+\draw[red,thick,->] (0:0cm)--(60:3cm);
+\draw[red,thick,->] (0:0cm)-- (180:3cm);
+\draw[red,thick,->] (0:0cm)-- (-60:3cm);
+\draw (0:1cm) node[red,thick]{$\times$};
+\draw (120:1cm) node[red,thick]{$\times$};
+\draw (-120:1cm) node[red,thick]{$\times$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{当 $K^*\in(-1,\infty)$ 时 $\frac{K^*}{s^3}$ 的根轨迹}
+\begin{align*}
+\frac{K^*}{s^3-1}&=-1 \\
+K^* &=-s^3+1 \\
+K^* -1 &=-s^3 \\
+\frac{K^*-1}{s^3} &=-1 \qquad (K^*\in (0,+\infty))\\
+\frac{K'}{s^3} &=-1 \qquad (K'\in (-1,+\infty))\\
+s &=\begin{cases}
+\sqrt[3]{-K'}e^{j\frac{2k\pi}{3}} & \qquad (K'\in (-1,0))\\
+\sqrt[3]{K'} e^{j\frac{(2k+1)\pi}{3}}  & \qquad (K'\in [0,+\infty))\\
+\end{cases}
+\end{align*}
+\end{frame}
+
+\end{document}
+	
+
+%%% Local Variables:
+%%% TeX-master: "sepcial.beamer"
+%%% End:

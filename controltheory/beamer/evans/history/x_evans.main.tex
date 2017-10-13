@@ -1,0 +1,365 @@
+\DeclareMathOperator*{\argmin}{arg\,min}
+\begin{document}
+\usetikzlibrary{shapes,arrows,positioning}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\def\lecturename{自动控制原理}
+
+\title{\insertlecture}
+
+\author{邢超}
+
+\institute
+{
+  西北工业大学航天学院
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[]{线性系统的根轨迹法}{}
+\subtitle{根轨迹法的基本概念}
+\date{2013}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{问题的提出}
+
+\subsection{历史背景}
+\begin{frame}{历史背景}
+\begin{itemize}
+\item 经典读物
+\begin{itemize}
+\item \textbf{Principles of Servomechanisms}, Gordon Brown and Don Campbell, MIT, 1948
+\item \textbf{Mathematics of Modern Engineering}, Robert Doherty and Ernest Keller, 1936
+\end{itemize}
+\item<2-> Evans的考虑
+\begin{itemize}
+\item<3-> 掌握原理来解决问题而不是死记条目
+\item<4-> 从简单情况循序渐进地解决复杂问题
+\item<5-> \color{red}{绘制图形使数学方程形象化}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{参数的影响}
+\begin{frame}{参数变化对系统性能的影响}
+%考虑系统：
+%\begin{figure}
+%\usetikzlibrary{automata}
+%\usetikzlibrary{shapes,arrows,positioning}
+\tikzstyle{format}=[draw,thin,fill=blue!20]
+\begin{tikzpicture}[node distance=3em,auto,>=latex', thick]
+\path[use as bounding box] (0,0.5) rectangle (5,-1.5);
+%\path[draw](0,1) rectangle (5,-2);
+\path<1->[->] node[] (r) {$r$};
+\path<2->[->] node[circle, inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p)  {};
+\path<1>[->] node[ inner sep=2pt,minimum size=1pt,label=below left:$ $,right =of r] (p)  {};
+\path<2->[->] (r) edge node {} (p);
+\path<1->[->] node[format, inner sep=5pt,right =of p]  (g)  {$G(s)$};
+\mode<beamer>{\path<1>[->] (r) edge node {} (g);}
+\path<2->[->] (p) edge node {} (g) ;
+\path<1->[->] node[right =of g] (f) {$\cdot$};
+\path<1->[->] node[right =of f] (o) {$o$};
+\path<1->[->] (g) edge node {} (o) ;
+\path<2->[->,draw] (f.center) -- +(0,-1) -| node [very near end] {$-$} (p);
+\end{tikzpicture}
+%\end{figure}
+
+\only<1->{其中：
+\begin{gather*}
+G(S)=\frac{K}{s^2+s}=\frac{K}{s(s+1)}
+\end{gather*}}
+\only<3->{用所学知识分析系统性能：}
+\begin{itemize}
+\item<4->稳定性：\only<5->{构造劳斯表分析}
+\item<6->稳态误差：\only<7->{按稳态误差公式计算}
+\item<8->动态性能：\only<9->{按二阶系统调节时间、超调量公式计算}
+\end{itemize}
+\end{frame}
+
+\subsection{零极点到根轨迹}
+\begin{frame}{从零极点到根轨迹,例：$\Phi(s)=\frac{k}{s^2+s+k},s_{1,2}=\frac{-1\pm\sqrt{1-4K}}{2}$}
+\begin{center}
+\begin{tikzpicture}[scale=3,cap=round]
+
+% Colors
+\colorlet{anglecolor}{green!50!black}
+\colorlet{sincolor}{red}
+\colorlet{tancolor}{orange!80!black}
+\colorlet{coscolor}{blue}
+
+% Styles
+\tikzstyle{axes}=[]
+\tikzstyle{important line}=[very thick]
+\tikzstyle{information text}=[rounded corners,fill=red!10,inner sep=1ex]
+
+% The graphic
+\draw[style=help lines,step=0.2cm] (-1.2,-1) grid (0,1);
+
+%\draw (0,0) circle (1cm);
+
+\begin{scope}[style=axes]
+\draw[->] (-1.2,0) -- (0.2,0) node[right] {$ $};
+\draw[->] (0,-1) -- (0,1) node[above] {$j$};
+
+\foreach \x/\xtext in {-1, -0.5, 0}
+\draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+
+\foreach \y/\ytext in {-1, -0.5, 0.5,1}
+\draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white]
+{$\ytext$};
+\end{scope}
+
+\foreach \x/\y/\xx/\yy/\ii in {%
+%-1/0/0/0/1,-0.8/0/-0.2/0/2,-0.5/0/-0.5/0/3,-0.5/0.5/-0.5/-0.5/4}
+0/0/-1/0/1,-0.05/0/-0.95/0/2,-0.1/0/-0.9/0/3,-0.15/0/-0.85/0/4,-0.2/0/-0.8/0/5,-0.25/0/-0.75/0/6,-0.3/0/-0.7/0/7,-0.35/0/-0.65/0/8,-0.4/0/-0.6/0/9,-0.45/0/-0.55/0/10,-0.5/0/-0.5/0/11,-0.5/0.05/-0.5/-0.05/12,-0.5/0.1/-0.5/-0.1/13,-0.5/0.15/-0.5/-0.15/14,-0.5/0.2/-0.5/-0.2/15,-0.5/0.25/-0.5/-0.25/16,-0.5/0.3/-0.5/-0.3/17,-0.5/0.35/-0.5/-0.35/18,-0.5/0.4/-0.5/-0.4/19,-0.5/0.45/-0.5/-0.45/20,-0.5/0.5/-0.5/-0.5/21}
+{
+\draw<\ii> (\x,\y) node[red,thick]{$\times$};
+\draw<\ii> (\xx,\yy) node[red,thick]{$\times$};
+%\filldraw[fill=green!20,draw=anglecolor] (0,0) -- +(3mm,0pt) arc(0:30:3mm);
+%\draw (15:2mm) node[anglecolor] {$\alpha$};
+}
+\draw<22>[-,red,thick] (-1,0)--(0,0);
+\draw<22>[<->,red,thick] (-0.5,-1)--(-0.5,1);
+%\draw[style=important line,sincolor]
+%(30:1cm) -- node[left=1pt,fill=white] {$\sin \alpha$} +(0,-.5);
+
+%\draw[style=important line,coscolor]
+%(0,0) -- node[below=2pt,fill=white] {$\cos \alpha$} (\costhirty,0);
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\subsection{Evans}
+\begin{frame}{Walter R. Evans}
+\begin{center}
+\pgfimage[width=0.9\columnwidth]{image/evans_history}
+\end{center}
+%\begin{itemize}
+%\end{itemize}
+\end{frame}
+
+\subsection{本章内容}
+\begin{frame}{本章主要内容}
+\begin{itemize}
+\item<2-> 根轨迹法的基本概念
+\item<3-> 根轨迹绘制的基本法则
+\item<4-> 广义根轨迹
+\item<5-> 零度根轨迹
+\item<6-> 系统性能的分析
+\end{itemize}
+\end{frame}
+
+\section{根轨迹与系统性能}
+\subsection{分析}
+\begin{frame}{根轨迹与系统性能}
+\begin{description}
+\item<2->[稳定性：] 根轨迹在左半平面的部分所对应的$K$值，使闭环系统稳定。根轨迹在右半平面的部分所对应的$K$值，使闭环系统不稳定。
+\item<3->[稳态性能：] 根据坐标原点的根数确定系统型别，根据$K$值确定对应的静态误差系数。
+\item<4->[动态性能：] 根据根是否为实数可判断系统是否为过阻尼。根据根实部与虚部的大小可以分析调节时间与超调量
+\end{description}
+\end{frame}
+
+\subsection{示例}
+\begin{frame}{例：$\Phi(s)=\frac{k}{s^2+s+k},s_{1,2}=\frac{-1\pm\sqrt{1-4K}}{2}$}
+\begin{center}
+\begin{tikzpicture}[scale=3,cap=round]
+
+% Colors
+\colorlet{anglecolor}{green!50!black}
+\colorlet{sincolor}{red}
+\colorlet{tancolor}{orange!80!black}
+\colorlet{coscolor}{blue}
+
+% Styles
+\tikzstyle{axes}=[]
+\tikzstyle{important line}=[very thick]
+\tikzstyle{information text}=[rounded corners,fill=red!10,inner sep=1ex]
+
+% The graphic
+\filldraw[green!10] (-1.2,-1)--(0,-1)--(0,1)--(-1.2,1);
+\filldraw[red!10] (1,1)--(0,1)--(0,-1)--(1,-1);
+\draw[style=help lines,step=0.2cm] (-1.2,-1) grid (0,1);
+
+%\draw (0,0) circle (1cm);
+
+\begin{scope}[style=axes]
+\draw[->] (-1.2,0) -- (0.2,0) node[right] {$ $};
+\draw[->] (0,-1) -- (0,1) node[above] {$j$};
+
+\foreach \x/\xtext in {-1, -0.5, 0}
+\draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below] {$\xtext$};
+
+\foreach \y/\ytext in {-1, -0.5, 0.5,1}
+\draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left]
+{$\ytext$};
+\end{scope}
+
+\foreach \x/\y/\xx/\yy/\ii in {%
+%-1/0/0/0/1,-0.8/0/-0.2/0/2,-0.5/0/-0.5/0/3,-0.5/0.5/-0.5/-0.5/4}
+0/0/-1/0/1,-0.05/0/-0.95/0/2,-0.1/0/-0.9/0/3,-0.15/0/-0.85/0/4,-0.2/0/-0.8/0/5,-0.25/0/-0.75/0/6,-0.3/0/-0.7/0/7,-0.35/0/-0.65/0/8,-0.4/0/-0.6/0/9,-0.45/0/-0.55/0/10,-0.5/0/-0.5/0/11,-0.5/0.05/-0.5/-0.05/12,-0.5/0.1/-0.5/-0.1/13,-0.5/0.15/-0.5/-0.15/14,-0.5/0.2/-0.5/-0.2/15,-0.5/0.25/-0.5/-0.25/16,-0.5/0.3/-0.5/-0.3/17,-0.5/0.35/-0.5/-0.35/18,-0.5/0.4/-0.5/-0.4/19,-0.5/0.45/-0.5/-0.45/20,-0.5/0.5/-0.5/-0.5/21}
+{
+\draw<\ii> (\x,\y) node[red,thick]{$\times$};
+\draw<\ii> (\xx,\yy) node[red,thick]{$\times$};
+}
+\draw[-,red,thick] (-1,0)--(0,0);
+\draw[<->,red,thick] (-0.5,-1)--(-0.5,1);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+\section{零极点关系}
+\subsection{系统模型}
+\begin{frame}{闭环零极点与开环零极点之间的关系：系统模型}
+
+%\begin{figure}
+%\usetikzlibrary{automata}
+\usetikzlibrary{shapes,arrows,positioning}
+\tikzstyle{format}=[draw,thin,fill=blue!20]
+\begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
+\path[use as bounding box] (0,0.5) rectangle (5,-2);
+%\path[draw](0,0.5) rectangle (5,-2);
+\path[->] node[] (r) {$r$};
+\path[->] node[circle, inner sep=2pt,minimum size=1pt,draw,label=below left:$ $,right =of r] (p)  {};
+\path[->] (r) edge node {} (p);
+\path[->] node[format, inner sep=5pt,right =of p]  (g)  {$G(s)$};
+\path[->] (p) edge node {} (g) ;
+\path[->] node[right =of g] (f) {$\cdot$};
+\path[->] node[right =of f] (o) {$o$};
+\path[->] (g) edge node {} (o) ;
+\path[->] node[format, inner sep=5pt,below = of g]  (h)  {$H(s)$};
+\path[->,draw] ( f.center) |-  (h.east);
+\path[->,draw] ( h.west) -| node [very near end] {$-$} (p);
+\end{tikzpicture}
+%\end{figure}
+
+%设前向通道传递函数：
+\begin{eqnarray*}
+G(s) &=& \frac{K_G(\tau_1 s+1)(\tau_2^2s^2+2\zeta_1\tau_2 s+1)\cdots}{s^{\upsilon}(T_1 s+1)(T_2^2 s^2+2\zeta_2 T_2 s+1)\cdots}\\
+&=&K_G^{*}\frac{\prod\limits_{i=1}^f(s-z_i)}{\prod\limits_{i=1}^q(s-p_i)}\\
+H(S) &=& K_H^{*}\frac{\prod\limits_{j=1}^l(s-z_j)}{\prod\limits_{j=1}^h(s-p_j)}
+\end{eqnarray*}
+\end{frame}
+
+\subsection{开环传递函数}
+\begin{frame}{闭环零极点与开环零极点之间的关系：开环传递函数}
+\pause
+开环传递函数为：
+\pause
+\begin{eqnarray*}
+G(s)H(s)&=&K_G^{*}K_H^{*}\frac{\prod\limits_{i=1}^f(s-z_i)\prod\limits_{j=1}^l(s-z_j)}{\prod\limits_{i=1}^q(s-p_i)\prod\limits_{j=1}^h(s-p_j)}\\ \pause
+&=& K^{\ast}\frac{\prod\limits_{i=1}^f(s-z_i)\prod\limits_{j=1}^l(s-z_j)}{\prod\limits_{i=1}^q(s-p_i)\prod\limits_{j=1}^h(s-p_j)}\\ \pause
+&=& K^{\ast}\frac{\prod\limits_{j=1}^m(s-z_j)}{\prod\limits_{i=1}^n(s-p_i)} 
+\end{eqnarray*}
+\end{frame}
+
+\subsection{闭环传递函数}
+\begin{frame}{闭环零极点与开环零极点之间的关系：闭环传递函数}
+\pause 闭环传递函数为：
+\pause
+\begin{eqnarray*}
+\Phi(s)&=&\frac{G(s)}{1+G(S)H(s)}\\  \pause
+&=& \frac{K_G^{*}\prod\limits_{i=1}^f(s-z_i)\prod\limits_{j=1}^h(s-p_j)}{\prod\limits_{i=1}^q(s-p_i)\prod\limits_{j=1}^h(s-p_j)+K^{*}\prod\limits_{i=1}^f(s-z_i)\prod\limits_{j=1}^l(s-z_j)}\pause
+\end{eqnarray*}
+\end{frame}
+
+\subsection{结论}
+\begin{frame}{闭环零极点与开环零极点之间的关系:结论}
+\begin{itemize}
+\item<2-> 闭环系统根轨迹增益，等于开环系统前向通路根轨迹增益。对于单位反馈系统，闭环系统根轨迹增益就等于开环系统根轨迹增益；
+\item<3-> 闭环零点由开环前向通道传递函数的零点和反馈通道传递函数的极点组成。对于单位反馈系统，闭环零点就是开环零点；
+\item<4-> 闭环极点与开环零点、开环极点以及根轨迹增益$K^*$有关。
+\end{itemize}
+\end{frame}
+
+\section{根轨迹方程}
+\subsection{根轨迹方程的建立}
+\begin{frame}{根轨迹方程}
+\only<2->{从闭环系统特征方程：}
+\begin{eqnarray*}
+\only<3>{ \prod\limits_{i=1}^q(s-p_i)\prod\limits_{j=1}^h(s-p_j)+K^{*}\prod\limits_{i=1}^f(s-z_i)\prod\limits_{j=1}^l(s-z_j)&=&0 \\}
+\only<4->{ 1+G(s)H(s) &=& 0 }
+\end{eqnarray*}
+\only<5->{可得根轨迹方程：}
+\begin{eqnarray*}
+\only<6-> {K^{\ast}\frac{\prod\limits_{j=1}^m(s-z_j)}{\prod\limits_{i=1}^n(s-p_i)} &=& -1}
+\end{eqnarray*}
+\end{frame}
+
+\subsection{幅值辐角形式}
+\begin{frame}{幅值辐角形式}
+\only<2->{将复数方程以幅值与幅角形式表示，由于}
+\only<3->{$$-1=e^{i(2k+1)\pi},k=0,\pm 1,\pm 2, \cdots$$}
+\only<4->{可得：}
+\begin{eqnarray*}
+\only<5->{\sum_{j=1}^m \angle (s-z_j) -\sum_{i=1}^n\angle (s-p_i) &=&  (2k+1)\pi \\}
+\only<6->{K^* &=& \frac{\prod\limits_{i=1}^n|s-p_i|}{\prod\limits_{j=1}^m|s-z_j|}}
+\end{eqnarray*}
+\end{frame}
+
+\subsection{示例}
+\begin{frame}{示例}
+\begin{center}
+\begin{tikzpicture}[scale=3,cap=round]
+
+% Colors
+\colorlet{anglecolor}{green!50!black}
+\colorlet{sincolor}{red}
+\colorlet{tancolor}{orange!80!black}
+\colorlet{coscolor}{blue}
+
+% Styles
+\tikzstyle{axes}=[]
+\tikzstyle{important line}=[very thick]
+\tikzstyle{information text}=[rounded corners,fill=red!10,inner sep=1ex]
+
+% The graphic
+\draw[style=help lines,step=0.2cm] (-1.2,-1) grid (0,1);
+
+%\draw (0,0) circle (1cm);
+
+\begin{scope}[style=axes]
+\draw[->] (-1.2,0) -- (0.2,0) node[right] {$ $};
+\draw[->] (0,-1) -- (0,1) node[above] {$j$};
+
+\foreach \x/\xtext in {-1, -0.5, 0}
+\draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+
+\foreach \y/\ytext in {-1, -0.5, 0.5, 1}
+\draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white]
+{$\ytext$};
+\end{scope}
+
+\draw[-,red] (-1,0)--(0,0);
+\draw[<->,red] (-0.5,-1)--(-0.5,1);
+\foreach \a/\ii in {0/1,10/2,20/3,30/4,40/5,50/6,60/7}
+{
+\draw<\ii>[->] -- (intersection of 0,0 -- \a:1cm and 0.5,0 -- 0.5,1) coordinate (t);
+\draw<\ii> (-1,0)-- +(t) node[red]{$\times$} coordinate (q);
+\draw<\ii> (0,0) -- (q) node[red]{$\times$};
+\filldraw<\ii>[fill=green!20,draw=red] (-1,0) -- +(1mm,0pt) arc(0:\a:1mm);
+\filldraw<\ii>[fill=green!20,draw=red] (0,0) -- +(1mm,0pt) arc(0:180-\a:1mm);
+}
+
+%\draw[style=important line,sincolor]
+%(30:1cm) -- node[left=1pt,fill=white] {$\sin \alpha$} +(0,-.5);
+
+%\draw[style=important line,coscolor]
+%(0,0) -- node[below=2pt,fill=white] {$\cos \alpha$} (\costhirty,0);
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\end{document}
