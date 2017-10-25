@@ -1,0 +1,532 @@
+\begin{document}
+%\begin{CJK*}{GBK}{song}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\def\lecturename{System Identification}
+
+\title{\insertlecture}
+
+\author{Xing Chao}
+
+\institute
+{
+Schoool of Astronautics, Northwestern Polytechnical University
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[MLE]{Maximum likelihood identification}{}
+\subtitle{}
+\date{2017}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section{Introduction}
+
+\begin{frame}{Basic Concept}
+\begin{description}
+\item[ Identification criterion ]   The probability of the observed value is the largest  
+\item[ likelihood function ]  Probability density function of observed values 
+\end{description}
+\end{frame}
+
+\begin{frame}{Features of Method}
+\begin{enumerate}
+%\item 无偏估计方法；
+\item  It can be applied to correlated noises $\xi(k)$；
+\item  When the system SNR is relatively small, it has a better estimation effect ；
+\item  The algorithm has good stability ；
+\item  There is recursive calculation method ；
+\item  It is widely used in practical engineering 
+\end{enumerate}
+\end{frame}
+
+\section{Maximum likelihood principle}
+
+\begin{frame}{Likelihood function}
+A discrete stochastic process $\{V_k\}$ is related to $\theta$, parameters to be identified. The  probability distribution density  $f(V_k|\theta)$ is known.  If $n$ independent observations are measured  as $V_1,V_2,\cdots,V_n$，  Its distribution density is $f(V_1|\theta),\cdots,f(V_n|\theta)$ ， Define likelihood function $L$ as：
+$$L(V_1,\cdots,V_n|\theta)=f(V_1|\theta)\cdot f(V_2|\theta)\cdots f(V_n|\theta)$$
+\end{frame}
+
+\begin{frame}{ Maximum likelihood estimation }
+The principle of identifying $\theta$is to make the $L$reach the maximum: 
+$$\frac{\partial L}{\partial \theta}=0$$
+ Usually the logarithm of the $L$ is taken: 
+$$\ln L = \ln f(V_1|\theta)+\cdots + \ln f(V_n|\theta)$$
+result is：
+$$\frac{\partial \ln L}{\partial \theta}$$
+Obtained $\theta$ is  maximum likelihood estimation $\hat\theta_{ML}$
+\end{frame}
+
+\section{ Maximum likelihood identification }
+\subsection{White noise}
+\begin{frame}{Maximum likelihood identification of difference equations: system model (white noise case) }
+System difference equation：
+$$a(z^{-1})y(k)=b(z^{-1})u(k)+\xi(k)$$
+where $\xi(k)$ is  Gauss white noise sequence and is uncorrelated to $u(k)$. Represented in vector form：
+$$\vect{Y_N}=\Phi_N\vect{\theta}+\vect{\xi}$$
+\end{frame}
+
+\begin{frame}{ Maximum likelihood identification of difference equations: residual (white noise) }
+ System estimation residual: 
+\begin{eqnarray*}
+\vect{e_N} &=& \vect{Y_N}-\Phi_N\vect{\hat\theta} \\
+\vect{e_N} &=& [e(n+1),  e(n+2), \cdots, e(n+N)]^T
+\end{eqnarray*}
+Since $\xi(k)$ is gaussion white noise, it is assumed that $e(k)$ is also the Gauss white noise.
+Let $e(k)$ variance be $\sigma^2$. Probability density function is: 
+$$p(e(k)|\hat\theta)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{e^2(k)}{2\sigma^2}}$$
+\end{frame}
+
+\begin{frame}{ Maximum likelihood identification of difference equations: likelihood function (white noise case) }
+likelihood function is,
+\begin{eqnarray*}
+L(Y_N|\hat\theta)&=&\prod_{k=n+1}^{n+N}p(e(k)|\hat\theta) \\
+&=&\frac{1}{(2\pi\sigma^2)^{N/2}}exp[-\frac{\sum e^2(k)}{2\sigma^2}] \\
+&=&\frac{1}{(2\pi\sigma^2)^{N/2}}exp[-\frac{(Y_N-\Phi_N\hat\theta)^T(Y_N-\Phi_N\hat\theta)}{2\sigma^2}] \\
+\ln L(Y_N|\hat\theta)&=& -\frac{N}{2}\ln 2\pi-\frac{N}{2}\ln\sigma^2-\frac{(Y_N-\Phi_N\hat\theta)^T(Y_N-\Phi_N\hat\theta)}{2\sigma^2}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{ Maximum likelihood identification of difference equations: likelihood function (white noise case) }
+According to the principle of maximum likelihood identification: 
+\begin{eqnarray*}
+\frac{\partial\ln L(Y_N|\hat{\theta})}{\partial\hat{\theta}} &=& \frac{\Phi^T_N\vect{Y}_N-\Phi^T_N\Phi_N\hat{\vect{\theta}}}{\sigma^2}=0  \\
+\frac{\partial\ln L(Y_N|\hat{\theta})}{\partial\hat{\sigma^2}} &=&-\frac{N}{2\sigma^2}+\frac{(\vect{Y}_N-\Phi_N\hat{\vect{\theta}})^T(\vect{Y}_N-\Phi_N\hat{\vect{\theta}})}{2\sigma^4}=0
+\end{eqnarray*}
+ solve equations : 
+\begin{eqnarray*}
+\vect{\hat\theta_{ML}} &=& (\vect\Phi^T_N\vect\Phi_N)^{-1}\vect\Phi^T_N\vect{Y}_N   \\
+\sigma^2 &=& \frac{(\vect{Y}_N-\Phi_N\hat{\vect{\theta}})^T(\vect{Y}_N-\Phi_N\hat{\vect{\theta}})}{N}
+\end{eqnarray*}
+It is shown that in the special case of $\xi(k)$ being Gauss white noise sequence, the maximum likelihood identification has the same result as the general least squares identification. 
+\end{frame}
+
+\subsection{ Colored noise situation }
+
+\begin{frame}{ Maximum likelihood identification of difference equations: a system model (colored noise case) }
+$$a(z^{-1})y(k) = b (z^{-1})u(k)+c(z^{-1})\varepsilon(k)$$
+其中：
+\begin{eqnarray*}
+a(z^{-1}) &=&  1+a_1z^{-1}+ \cdots +a_n z^{-n} \\
+b(z^{-1}) &=&  b_0+b_1z^{-1}+ \cdots +b_n z^{-n} \\
+c(z^{-1}) &=&  1+c_1z^{-1}+ \cdots +c_n z^{-n} 
+\end{eqnarray*}
+\end{frame}
+
+\bgroup
+\setbeamertemplate{sidebar right}{}
+\begin{frame}{ Maximum likelihood identification of difference equations: prediction error (colored noise case) }
+prediction error：
+$$
+e(k)=y(k)-\hat y(k)
+$$
+vector form is：
+$$
+e_N=\vect{Y}_N-\Phi_N\hat\theta
+$$
+where：
+\begin{eqnarray*}
+\vect{\hat\theta} &=& [\hat a_1, \cdots, \hat a_n, \hat b_0 , \cdots, \hat b_n, \hat c_1, \cdots, \hat c_n]^T \\
+\vect{Y}_N &=& [y(n+1), \cdots, y(n+N)]^T \\
+\vect{e}_N &=& [e(n+1), \cdots, e(n+N)]^T \\
+\Phi_N &=& 
+%\begin{bmatrix}
+%-y(n) & \cdots & -y(1) & u(n+1) & \cdots & u(1)  & e(n) & \cdots & e(1) \\
+%-y(n+1) & \cdots & -y(2) & u(n+2) & \cdots & u(2)  & e(n+1) & \cdots & e(2) \\
+%\vdots &        & \vdots &   \vdots &      &\vdots & \vdots & \vdots & \vdots \\
+%-y(n+N-1) & \cdots & -y(N) & u(n+N) & \cdots & u(N)  & e(n+N-1) & \cdots & e(N)
+%\end{bmatrix}
+\begin{bmatrix}
+-y_n & \cdots & -y_1 & u_{n+1} & \cdots & u_1  & e_n & \cdots & e_1 \\
+-y_{n+1} & \cdots & -y_2 & u_{n+2} & \cdots & u_2  & e_{n+1} & \cdots & e_2 \\
+\vdots &        & \vdots &   \vdots &      &\vdots & \vdots & \vdots & \vdots \\
+-y_{n+N-1} & \cdots & -y_N & u_{n+N} & \cdots & u_N  & e_{n+N-1} & \cdots & e_N
+\end{bmatrix}
+\end{eqnarray*}
+\end{frame}
+\egroup
+
+\begin{frame}{ Maximum likelihood identification of difference equations: likelihood function (colored noise case) }
+Since $\varepsilon(k)$ is Gauss white noise, $e (k) $ can be assumed to be the zero mean Gauss white noise. Then the likelihood function is: 
+\begin{eqnarray*}
+L(Y_N|\hat{\theta}) &=& \frac{1}{(2\pi\sigma^2)^{N/2}}exp[-\frac{(\vect{Y}_N-\phi_N\hat{\vect\theta})^T(\vect{Y}_N-\phi_N\hat{\vect\theta})}{2\sigma^2}] \\
+\ln L(Y_N|\hat{\theta}) &=& - \frac{N}{2}\ln{2\pi}-\frac{N}{2}\ln\sigma^2-\frac{1}{2\sigma^2}\sum^{n+N}_{k=n+1}e^2(k)
+\end{eqnarray*}
+From $\frac{\partial\ln L(Y_N|\hat{\theta})}{\partial\sigma^2}=0$：
+$$
+\hat\sigma^2=\frac{1}{N}\sum^{n+N}_{k=n+1}e^2(k)
+$$
+\end{frame}
+
+\begin{frame}{ Maximum likelihood identification of difference equations: criteria (colored noise case) }
+\begin{eqnarray*}
+J &=& \frac{1}{2}\sum_{k=n+1}^{n+N}e^2(k)  \\
+\sigma^2 &=& \frac{2}{N}J  \\
+\ln L(Y_N|\hat{\theta}) &=& - \frac{N}{2}\ln{2\pi}-\frac{N}{2}\ln(\frac{2J}{N})-\frac{N}{2}
+\end{eqnarray*}
+\begin{itemize}
+\item $J$ is a quadratic form function of parameter $a_1,a_2,\cdots,a_n;b_0,b_1,\cdots,b_n;c_1,c_2,\cdots,c_n $。
+\item The maximum $L$ of $\hat\theta$, is equivalent to find $\hat\theta$ with minimum $J$ under the constraint conditions,
+$$
+\hat c(z^{-1})e(k)=\hat a(z^{-1})y(k)-\hat b(z^{-1})u(k)
+$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{ The difference of maximum likelihood identification equation: Newton-Raphson}
+Newton-Raphson iteration：
+$$
+\hat\theta_1=\hat\theta_0-\left.\left[\left(\frac{\partial^2J}{\partial\theta^2}\right)^{-1}\frac{\partial J}{\partial\theta}\right]\right|_{\theta=\hat\theta_0}
+$$
+where：
+\begin{itemize}
+\item $\frac{\partial J}{\partial\theta}$ is gradient
+\item $\frac{\partial^2J}{\partial\theta^2}$is Hessian matrix 
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Newton-Raphson iterative procedure: initial value selection }
+$$
+\hat\theta_0=[\hat a_1,\cdots,\hat a_n,\hat b_0,\cdots,\hat b_n,\hat c_1,\cdots,\hat c_n]^T
+$$
+where：
+\begin{itemize}
+\item  $\hat a_1,\cdots,\hat a_n,\hat b_0,\cdots,\hat b_n$ can be obtained by least squares method
+\item  $\hat c_1,\cdots,\hat c_n$ can be zeros or arbitrarily assumed
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Newton-Raphson iterative procedure:  prediction errors }
+\begin{itemize}
+\item    Prediction error, cost function and estimation of error variance: 
+\begin{eqnarray*}
+e(k) &=& y(k)-\hat y(k)   \\
+J &=& \frac{\sum_{k=n+1}^{n+N}e^2(k)}{2}    \\
+\sigma^2 &=& \frac{2J}{N}
+\end{eqnarray*}
+\end{itemize}
+\end{frame}
+
+\bgroup
+\setbeamertemplate{sidebar right}{}
+\begin{frame}{Newton-Raphson iterative procedure: gradient matrix and Hessian matrix }
+\begin{eqnarray*}
+\frac{\partial J}{\partial\theta} &=& \sum_{k=n+1}^{n+N}e(k)\frac{\partial e(k)}{\partial\theta}  \\
+\frac{\partial^2 J}{\partial\theta^2} &=& \sum_{k=n+1}^{n+N}\frac{\partial e(k)}{\partial\theta}\left[\frac{\partial e(k)}{\partial\theta}\right]^T+\sum_{k=n+1}^{n+N}e(k)\frac{\partial^2 e(k)}{\partial\theta^2}  \\
+ &\approx& \sum_{k=n+1}^{n+N}\frac{\partial e(k)}{\partial\theta}\left[\frac{\partial e(k)}{\partial\theta}\right]^T
+\end{eqnarray*}
+where：
+$$
+\frac{\partial e(k)}{\partial\theta}=\left[\frac{\partial e(k)}{\partial a_1},\cdots,\frac{\partial e(k)}{\partial a_n},\frac{\partial e(k)}{\partial b_0},\cdots,\frac{\partial e(k)}{\partial b_n},\frac{\partial e(k)}{\partial c_1},\cdots,\frac{\partial e(k)}{\partial c_n}\right]^T
+$$
+\end{frame}
+\egroup
+
+\begin{frame}{Newton-Raphson iterative procedure:new estimates}
+$$
+\hat{\vect\theta}_1 = \hat{\vect\theta}_0 - \left.\left[ \left(\frac{\partial^2 J}{\partial\vect\theta^2}\right)^{-1}\frac{\partial J}{\partial\vect\theta}\right]\right|_{\vect\theta=\hat{\vect\theta}_0}
+$$
+stop criterion：
+$$
+\frac{\hat\sigma^2_{r+1}-\hat\sigma^2_r}{\hat\sigma^2_r}< \delta
+$$
+where $\delta$ can be small number，i.e. $\delta=10^{-4}$.
+\end{frame}
+
+
+\section{Recursive Maximum Likelihood Method }
+\subsection{Approximately Recursive Maximum Likelihood Method}
+\begin{frame}{ System difference equation }
+$$
+a(z^{-1})y(k) = b(z^{-1})u(k)+c(z^{-1})\varepsilon(k)
+$$
+where：
+\begin{eqnarray*}
+a(z^{-1}) &=&  1+a_1 z^{-1}+\cdots+a_nz^{-n} \\
+b(z^{-1}) &=&  b_0+b_1 z^{-1}+\cdots+b_n z^{-n} \\
+c(z^{-1}) &=&  1+c_1 z^{-1}+\cdots+c_n z^{-n} 
+\end{eqnarray*}
+can be writen as：
+$$
+\varepsilon(k) = c^{-1}(z^{-1})[a(z^{-1})y(k)-b(z^{-1})u(k)]
+$$
+\end{frame}
+
+\begin{frame}{quadratic cost function}
+The cost function is approximately represented as a quadratic form：
+\begin{eqnarray*}
+J_N &=& \sum_{k=n+1}^{n+N}\varepsilon^2(k)\\
+&\approx & (\vect\theta-\hat{\vect\theta}_N)^Tp^{-1}_N(\vect\theta-\hat{\vect\theta}_N)+\beta_N\\
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}
+Using Taylor series expand $\varepsilon(k)$ at estimated $\hat\theta$：
+$$
+\varepsilon(k)\approx \varepsilon(k,\hat{\vect\theta})+\left.\left[\frac{\partial \varepsilon(k,\vect\theta)}{\partial\vect\theta}\right]^T\right|_{\hat\theta}(\vect\theta-\hat{\vect\theta})
+$$
+where：
+\begin{eqnarray*}
+\varepsilon(k,\hat{\vect\theta}) &=& e(k) \\
+e(k) &=& \hat c^{-1}(z^{-1})[\hat a(z^{-1})y(k)-\hat b(z^{-1})u(k)]
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}
+Result：
+\begin{eqnarray*}
+J_{N+1} &=& \sum_{k=n+1}^{n+N+1}\varepsilon^2(k) \\
+&\approx & (\vect\theta-\hat{\vect\theta}_N)^Tp^{-1}_N(\vect\theta-\hat{\vect\theta}_N) \\
+&&+\beta_N+[e_{N+1}+\vect\psi^T_{N+1}(\vect\theta-\hat{\vect\theta}_N)]^2 
+\end{eqnarray*}
+where：
+\begin{eqnarray*}
+e_{N+1} &=& e(n+N+1) \\
+\vect\psi_{N+1} &=& \frac{\partial e_{N+1}}{\partial\hat{\vect\theta}}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}
+Let：
+$$\vect\theta-\hat{\vect\theta}=\Delta$$
+result：
+\begin{eqnarray*}
+J_{N+1}(\vect\theta) &=& \vect\Delta^T(\vect{P}_N^{-1} +\vect\Psi_{N+1}\vect\Psi_{N+1}^T)\vect\Delta \\
+&& +2e_{N+1}\vect\Psi^T_{N+1}\vect\Delta+e^2_{N+1}+\beta_N \\
+ &=& (\vect\Delta+\vect{r}_{N+1})^T\vect{P}_{N+1}^{-1}(\vect\Delta+\vect{r}_{N+1})+\beta_{N+1}
+\end{eqnarray*}
+where：
+\begin{eqnarray*}
+\vect{P}_{N+1}^{-1} &=& P_N^{-1}+\vect\Psi_{N+1}\vect\Psi_{N+1}^T  \\
+\vect{r}_{N+1} &=& \vect{P}_{N+1}\vect\Psi_{N+1}e_{N+1} \\
+\beta_{N+1} &=& e_{N+1}^2+\beta_N-e_{N+1}\vect\Psi_{N+1}^T\vect{P}_{N+1}\vect\Psi_{N+1}e_{N+1}
+\end{eqnarray*}
+$\beta_{N+1}$ is known, so  $J_{N+1}$ is minimum when:
+$$
+\hat{\vect\theta}_{N+1}=\hat{\vect\theta}_N-\vect{r}_{N+1}
+$$
+\end{frame}
+
+\bgroup
+\setbeamertemplate{sidebar right}{}
+\begin{frame}{update $P_{N+1},\hat\theta_{N+1}$}
+ By using the inverse lemma of matrices, we obtain: 
+\begin{eqnarray*}
+\vect{P}_{N+1}^{-1} &=& P_N^{-1}+\vect\Psi_{N+1}\vect\Psi_{N+1}^T  \\
+P_{N+1}&=& P_N\left[I-\frac{\Psi_{N+1}\Psi_{N+1}^T P_N}{1+\Psi_{N+1}^T P_N \Psi_{N+1}}\right] \\
+r_{N+1}&=&P_{N+1}\Psi_{N+1}e_{N+1} \\
+&=&P_N\left[I-\frac{\Psi_{N+1}\Psi_{N+1}^T P_N}{1+\Psi_{N+1}^T P_N\Psi_{N+1}}\right]\Psi_{N+1}e_{N+1} \\
+&=&P_N\left[\frac{1+\Psi_{N+1}\Psi_{N+1}^T P_N\Psi_{N+1}-\Psi_{N+1}\Psi_{N+1}^T P_N \Psi_{N+1}}{1+\Psi_{N+1}^T P_N\Psi_{N+1}}\right]e_{N+1} \\
+&=&\frac{P_N\Psi_{N+1}e_{N+1}}{1+\Psi_{N+1}^T P_N \Psi_{N+1}} \\
+\hat\theta_{N+1}&=&\hat\theta_N-r_{N+1}\\
+&=&\hat\theta_N-P_N\Psi_{N+1}(1+\Psi_{N+1}^T P_N \Psi{N+1})^{-1}e_{N+1}
+\end{eqnarray*}
+\end{frame}
+\egroup
+
+\begin{frame}{update $\Psi_{N+1}$}
+$$
+\Psi_{N+1}=
+\begin{bmatrix}
+A  & 0 & 0 \\
+0  & B & 0 \\
+0  & 0 & C
+\end{bmatrix}
+\Psi_N+ D
+$$
+where：
+$$
+A=\begin{bmatrix}
+-\hat c_1 & \cdots & \cdots & -\hat c_n  \\
+1         & \cdots & \cdots &  0          \\
+          & \ddots &        &  \vdots     \\
+          &        &   1    &   0       
+\end{bmatrix}
+$$
+\end{frame}
+\begin{frame}
+\begin{eqnarray*}
+B &=& \begin{bmatrix}
+-\hat c_1 & \cdots & \cdots & -\hat c_n &  0     \\
+  1         & \cdots & \cdots &  0      &  0     \\
+            & \ddots &        &  \vdots & \vdots \\
+            &        &   1    &   0     &  0    
+\end{bmatrix} \\
+C &=& \begin{bmatrix}
+-\hat c_1 & \cdots & \cdots & -\hat c_n \\
+  1       & \cdots & \cdots &  0    \\
+          & \ddots &        &  \vdots  \\
+           &       &   1    &   0   
+\end{bmatrix}\\
+D &=& [ y_{n+N} ,  0 , \cdots , 0 ,  -u_{n+N+1} , 0 ,  \cdots ,  0 ,-e_{n+N} , 0 , \cdots , 0 ]^T
+\end{eqnarray*}
+\end{frame}
+% $$
+% \scriptscriptstyle
+% \Psi_{N+1} =
+% \left[
+% \begin{array}{ccccccccccccc}
+% -\hat c_1 & \cdots & \cdots & -\hat c_n & & & & & & & & &  \\
+% 1         & \cdots & \cdots &  0        & & & & & & & & &  \\
+%           & \ddots &        &  \vdots   & & & & & & & & &  \\
+%           &        &   1    &   0       &           &        &        &           &        & & & &  \\
+%           &        &        &           & -\hat c_1 & \cdots & \cdots & -\hat c_n &  0     & & & &  \\
+%           &        &        &           &   1         & \cdots & \cdots &  0      &  0     & & & &  \\
+%           &        &        &           &             & \ddots &        &  \vdots & \vdots & & & &  \\
+%           &        &        &           &             &        &   1    &   0     &  0     & & & &   \\
+%           &        &        &           &             &        &        &         &        & -\hat c_1 & \cdots & \cdots & -\hat c_n \\
+%           &        &        &           &             &        &        &         &        &   1       & \cdots & \cdots &  0    \\
+%           &        &        &           &             &        &        &         &        &           & \ddots &        &  \vdots  \\
+%           &        &        &           &             &        &        &         &        &            &       &   1    &   0   
+% \end{array}
+% \right]
+% \Psi_N+
+% \begin{bmatrix}
+% y(n+N) \\
+% 0 \\
+% \vdots \\
+% 0   \\
+% -u(n+N+1) \\
+% 0 \\
+% \vdots \\
+% 0  \\
+% -e(n+N) \\
+% 0 \\
+% \vdots \\
+% 0
+% \end{bmatrix}
+% $$
+
+\begin{frame}{deduction of $A,B,C$}
+from
+$$
+e(k) = \hat c^{-1}(z^{-1})[\hat a(z^{-1})y(k)-\hat b(z^{-1})u(k)]
+$$
+get：
+\begin{eqnarray*}
+\frac{\partial e(k)}{\partial \hat a_i} &=& \hat c^{-1}(z^{-1})y(k-i) \\
+\frac{\partial e(k)}{\partial \hat b_i} &=& -\hat c^{-1}(z^{-1})u(k-i) \\
+\frac{\partial e(k)}{\partial \hat c_i} &=& -\hat c^{-1}(z^{-1})e(k-i) 
+\end{eqnarray*}
+then：
+\begin{eqnarray*}
+\frac{\partial e(k)}{\partial \hat a_i} &=& \frac{\partial e(k-i+j)}{\partial \hat a_j} \\
+\frac{\partial e(k)}{\partial \hat b_i} &=& \frac{\partial e(k-i+j)}{\partial \hat b_j} \\
+\frac{\partial e(k)}{\partial \hat c_i} &=&  \frac{\partial e(k-i+j)}{\partial \hat c_j} 
+\end{eqnarray*}
+
+\end{frame}
+
+\subsection{Newton-Raphson resursive formular}
+
+\begin{frame}{Resursive formular using Newton-Raphson method: system difference equation}
+$$
+a(z^{-1})y(k) = b(z^{-1})u(k)+\frac{1}{d(z^{-1})}\varepsilon(k)
+$$
+where：
+\begin{eqnarray*}
+a(z^{-1}) &=&  1+a_1 z^{-1}+\cdots+a_nz^{-n} \\
+b(z^{-1}) &=&  b_0+b_1 z^{-1}+\cdots+b_n z^{-n} \\
+d(z^{-1}) &=&  1+d_1 z^{-1}+\cdots+d_n z^{-n} 
+\end{eqnarray*}
+parameter vectors are：
+\begin{eqnarray*}
+\vect{a} &=& [a_1,a_2,\cdots,a_n]^T   \\
+\vect{b} &=& [b_o,b_1,\cdots,b_n]^T   \\
+\vect{d} &=& [d_1,d_2,\cdots,d_n]^T   \\
+\vect\theta &=& [\vect{a}^T,\vect{b}^T,\vect{d}^T]^T
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{compute $\frac{\partial\varepsilon(k)}{\partial\vect\theta}$}
+rewrite system difference equation as：
+$$
+\varepsilon(k) = d(z^{-1})[a(z^{-1})y(k)-b(z^{-1})u(k)]
+$$
+result：
+\begin{eqnarray*}
+\frac{\partial\varepsilon(k)}{\partial a_j} &=& d(z^{-1})y(k-j)=y^F_{k-j},j=1,2,\cdots,n\\
+\frac{\partial\varepsilon(k)}{\partial b_j} &=& -d(z^{-1})u(k-j)=u^F_{k-j},j=0,1,2,\cdots,n\\
+\frac{\partial\varepsilon(k)}{\partial d_j} &=& a(z^{-1})y(k-j)-b(z^{-1})u(k-j)=-\mu_{k-j},j=1,2,\cdots,n 
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{compute $\frac{\partial\varepsilon(k)}{\partial\vect\theta}$}
+$$
+\frac{\partial\varepsilon(k)}{\partial\vect\theta} = 
+\begin{bmatrix}
+\bar{\vect y}^F_{(n)} \\
+-\bar{\vect u}^F_{(n+1)} \\
+-\bar{\vect \mu}_{(n)}
+\end{bmatrix}
+$$
+where：
+\begin{eqnarray*}
+\bar{\vect y}^F_{(n)} &=& [y^F_{k-1}, y^F_{k-2}, \cdots , y^F_{k-n}]^T \\
+-\bar{\vect u}^F_{(n+1)} &=& [u^F_k,  u^F_{k-1},\cdots, u^F_{k-n}]^T  \\
+-\bar{\vect \mu}_{(n)}  &=& [\mu_{k-1},\mu_{k-2},\cdots, \mu_{k-n}]^T
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{compute $\frac{\partial^2\varepsilon(k)}{\partial\vect\theta^2}$}
+$$
+\frac{\partial^2\varepsilon(k)}{\partial\theta^2} = 
+\begin{bmatrix}
+\frac{\partial^2\varepsilon(k)}{\partial\vect{a}^2} & \frac{\partial^2\varepsilon(k)}{\partial\vect{a}\partial\vect{b}} & \frac{\partial^2\varepsilon(k)}{\partial\vect{a}\partial\vect{d}}  \\
+\frac{\partial^2\varepsilon(k)}{\partial\vect{b}\partial\vect{a}} &\frac{\partial^2\varepsilon(k)}{\partial\vect{b}^2} &  \frac{\partial^2\varepsilon(k)}{\partial\vect{b}\partial\vect{d}} \\
+\frac{\partial^2\varepsilon(k)}{\partial\vect{d}\partial\vect{a}} &  \frac{\partial^2\varepsilon(k)}{\partial\vect{d}\partial\vect{b}} &\frac{\partial^2\varepsilon(k)}{\partial\vect{d}^2} 
+\end{bmatrix}
+$$
+where：
+\begin{eqnarray*}
+\frac{\partial^2\varepsilon(k)}{\partial a_j\partial d_m} &=& \frac{\partial^2\varepsilon(k)}{\partial d_m\partial a_j} = y(k-j-m)  \\
+\frac{\partial^2\varepsilon(k)}{\partial b_j\partial d_m} &=& \frac{\partial^2\varepsilon(k)}{\partial d_m\partial b_j} = -u(k-j-m)  \\
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{ Estimation criterion }
+$$
+J=\frac{\sum_{k=n+1}^{n+N}e(k)}{2}
+$$
+gradient：
+$$\frac{\partial J}{\partial\hat\theta} = \sum_{k=n+1}^{n+N}e(k)\frac{\partial e(k)}{\partial\hat\theta}=\vect{q}(N)$$
+Hessian Matrix：
+$$
+\frac{\partial^2 J}{\partial\hat\theta^2} = \sum_{k=n+1}^{n+N}\left[\frac{\partial e(k)}{\partial\hat\theta}\left(\frac{\partial e(k)}{\partial \hat\theta}\right)^T + e(k)\frac{\partial^2 e(k)}{\partial \hat\theta^2} \right]=\vect{R}(N)
+$$
+\end{frame}
+
+\begin{frame}{iteration formular}
+Newton-Raphson formular:
+$$
+\hat{\vect\theta}_r=\hat{\vect\theta}_{r-1}-R^{-1}(N)q(N)
+$$
+iteration formular for $q$ and $R$ ：
+\begin{eqnarray*}
+q(N) &=& q(N-1)+e(n+N)\frac{\partial e(n+N)}{\partial\hat\theta}\\
+R(N) &=& R(N-1) +\frac{\partial e(n+N)}{\partial\hat\theta}\left(\frac{\partial e(n+N)}{\partial\hat\theta}\right)^T \\
+&& +e(n+N)\frac{\partial^2 e(n+N)}{\partial\hat\theta^2} 
+\end{eqnarray*}
+\end{frame}
+
+% \section{思考}
+% \begin{frame}{思考}
+% \begin{itemize}
+% \item 极大似然法辨识思想
+% \end{itemize}
+% \end{frame}
+
+
+%\end{CJK*}
+\end{document}
