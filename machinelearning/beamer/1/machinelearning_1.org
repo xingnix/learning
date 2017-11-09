@@ -232,7 +232,7 @@ Then Profitable-Customer? = Yes
     - 如果b是一最终的胜局，那么V(b)=100
     - 如果b是一最终的负局，那么V(b)=-100
     - 如果b是一最终的和局，那么V(b)=0
-    - 如果b不是最终棋局，那么V(b)=V(b′)，其中b′是从b开始双方都采取最优对弈后可达到的终局。
+    - 如果b不是最终棋局，那么V(b)=V(b')，其中b'是从b开始双方都采取最优对弈后可达到的终局。
 - 注：正确，但不可操作
 
 ** 选择目标函数表示
@@ -253,7 +253,7 @@ Then Profitable-Customer? = Yes
          on black's next turn)
 - $rt(b)$:  number of black pieces threatened by red
 
-** 诂计训练值
+** 估计训练值
 
 - $V(b)$: 真实目标函数
 - $\hat{V}(b)$ : 学习到的函数
