@@ -1,5 +1,8 @@
 import re
 import math
+import sys
+if sys.version > '3':
+    from functools import reduce
 
 input_string = """
 Day Outlook   Temperature  Humidity   Wind   PlayTennis
@@ -18,11 +21,11 @@ D12 Overcast  Mild         High       Strong Yes
 D13 Overcast  Hot          Normal     Weak   Yes
 D14 Rain      Mild         High       Strong No"""
 
-lines = map(lambda x: filter(lambda y: y != '',
-                             re.split(' +', x))[1:],  # drop first item "Example"
-            filter(lambda x: x != '', re.split('\n', input_string)))
+lines = list(map(lambda x: list(filter(lambda y: y != '',
+                             re.split(' +', x)))[1:],  # drop first item "Example"
+            list(filter(lambda x: x != '', re.split('\n', input_string)))))
 names, data = lines[0], lines[1:]
-data_lines = map(lambda x: dict(zip(names, x)), data)
+data_lines = list(map(lambda x: dict(zip(names, x)), data))
 values = dict(zip(names,
                   reduce(lambda x, y:
                          map(lambda z:
@@ -73,7 +76,7 @@ def bestattribute(indices,attributes):
     return A
 
 def subindices(indices,name,v):
-    return filter(lambda x: data_lines[x][name]==v,indices)
+    return list(filter(lambda x: data_lines[x][name]==v,indices))
 
 def id3(indices,attributes):
     p,n,majority=pncount(indices)
@@ -94,7 +97,7 @@ def id3(indices,attributes):
 
 tree=id3(range(14),names)
 def prettytreeview(tree,space):
-    if not tree.has_key("label"):
+    if not "label" in tree:
         print(space + "|--" + "decision : " + tree["decision"] + tree['p/n'])
         for v in values[tree["decision"]]:
             print( space + "|--" + v)
