@@ -1,0 +1,82 @@
+#strokes
+#window list without drag
+Stroke 0 0 R N WindowList
+
+#button 3 gesture with Ctrl starts programs in any context
+Stroke N5456 0 A C Exec exec xkill
+Stroke N65456 0 A C Exec exec xkill
+Stroke N9874123 0 A C Exec exec xkill
+#"r" like gesture to popup Root Menu
+Stroke N7414789 0 A C Menu RootMenu 
+#"G" like gesture to start gnome terminal
+Stroke N987412363 0 A C Exec exec gnome-terminal
+#"f" like gesture to start FvwmConsole
+Stroke N98521456 0 A C Module FvwmConsole -terminal xterm -geometry 45x5-0+0 -bg midnightblue -fg gold -fn "-adobe-courier-medium-r-*-*-14-*-*-*-*-*-*-*"
+#"p" like gesture to start gmplayer
+Stroke N14789654 0 A C Exec exec gmplayer
+#"3" like gesture to start xmms 
+Stroke N78965456321 0 A C Exec exec xmms
+#"x" like gesture to start xterm
+Stroke N7536951 0 A C Exec exec xterm
+#"v" like gesture to start gvim
+Stroke N74159 0 A C Exec exec gvim
+#"e" like gesture to start emacs
+Stroke N4569874123 0 A C Exec exec emacs
+#"m" like gesture to start mozilla
+Stroke N14785258963 0 A C Exec exec mozilla15
+#"D" like gesture to start stardict
+Stroke N147896321 0 A C Exec exec stardict
+#"d" like gesture to start gnome-dictionary
+Stroke N65412369 0 A C Exec exec gnome-dictionary
+#"C" like gesture
+#Stroke N9874123 0 A C Exec exec drscheme
+#
+#Stroke N258 0 A C Exec exec vmware
+
+#grow horizontal and vertically
+Stroke N258 0 TSF2 N Maximize True 0 growup
+Stroke N852 0 TSF2 N Maximize True 0 growdown 
+Stroke N456 0 TSF2 N Maximize True growright 0
+Stroke N654 0 TSF2 N Maximize True growleft 0
+
+#grow bidirectional
+Stroke N25852 	0 TSF2 N Maximize True 0 grow
+Stroke N5852 	0 TSF2 N Maximize True 0 grow 
+Stroke N85258 	0 TSF2 N Maximize True 0 grow 
+Stroke N5258 	0 TSF2 N Maximize True 0 grow 
+Stroke N65456 	0 TSF2 N Maximize True grow 0
+Stroke N5456 	0 TSF2 N Maximize True grow 0
+Stroke N45654 	0 TSF2 N Maximize True grow 0
+Stroke N5654 	0 TSF2 N Maximize True grow 0
+
+#grow diagonally
+Stroke N159 	0 TSF2 N Maximize True growright growup
+Stroke N951 	0 TSF2 N Maximize True growleft growdown
+Stroke N753 	0 TSF2 N Maximize True growright growdown
+Stroke N357 	0 TSF2 N Maximize True growleft growup
+Stroke N5159 	0 TSF2 N Maximize True grow grow
+Stroke N5951 	0 TSF2 N Maximize True grow grow
+Stroke N5753 	0 TSF2 N Maximize True grow grow
+Stroke N5357 	0 TSF2 N Maximize True grow grow
+
+#reverse to unmaximized
+Stroke N74123 0 TSF2 N Maximize False
+
+#window functions
+Stroke 0 	0 TSF	N RaiseLower
+Stroke 0 	0 2   	N Maximize-Func
+Stroke 0 	0 A	C Lower
+Stroke N852 	0 A C Iconify
+
+#Drag mouse on the root window
+Mouse 3 R N StrokeFunc DrawMotion 
+
+#Drag mouse with Ctrl key
+Mouse 3 A C StrokeFunc DrawMotion
+
+#Drag mouse on the border
+Mouse 3 TSF N StrokeFunc DrawMotion
+
+#Drag mouse 1 on the maxmize button
+Mouse 1 2 N StrokeFunc DrawMotion 
+

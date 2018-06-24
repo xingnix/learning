@@ -1,0 +1,454 @@
+ImagePath +:/usr/share/icons:/usr/share/pixmaps:/usr/share/icons/hicolor/48x48/apps:/usr/local/share/fvwm/icons:$HOME/.fvwm/icons:$HOME/.fvwm/decor:/usr/share/backgrounds/images:/usr/share/backgrounds/images/space:/usr/share/backgrounds/tiles:
+EdgeResistance 250 100
+EdgeScroll 100 100
+#ColormapFocus FollowsMouse
+ClickTime 750
+DeskTopSize 2x2
+Colorset 42 Transparent, fg rgb:00/ff/00, bg darkgray
+#Colorset 42 RootTransparent, fg rgb:ff/ff/c4, bg average, Tint black 20, bgTint black 20
+
+#transparent style config
+#Colorset 41 RootTransparent buffer, fg white, bg average, \
+#Tint blue 15, bgTint blue 15  # tint is optional
+#Colorset 42 RootTransparent buffer, fg white, bg average, \
+#Tint red  15, bgTint red  15  # tint is optional
+
+#*FvwmPager:Colorset * 42
+#Style * Colorset 41, HilightColorset 42  # to use fg and bg
+BorderStyle Inactive Colorset 42 
+#-- flat
+#BorderStyle Active   Colorset 41 
+#-- flat
+TitleStyle AllInactive Colorset 42
+#-- flat
+#TitleStyle AllActive   Colorset 41 
+#-- flat
+#ButtonStyle All -- UseTitleStyle flat
+
+# default Styles:
+Style * BorderWidth 1, HandleWidth 3, DepressableBorder
+Style * Icon kcmkwm.png
+Style * MWMFunctions, MWMDecor, MWMButtons, HintOverride
+Style * DecorateTransient, NoPPosition
+Style * SloppyFocus, MouseFocusClickRaises
+#Style *ClickToFocus, ClickToFocusPassesClick
+Style * SmartPlacement
+Style * Font  "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1,-misc-evermore kai-medium-r-normal--12-*-*-*-*-*-gbk-0,*-r-"
+#Style * Font  "-adobe-helvetica-medium-r-normal--18-*-*-*-*-*-iso8859-1,-misc-simsun-medium-r-normal--17-*-*-*-*-*-gb18030.2000-0,*-r-"
+#Style * IconFont  -*-simsun-medium-r-*-*-12-*-*-*-*-*-*-*
+#Style * Font "-arphic technology co.-ar pl sungtil gb-medium-r-normal-*-*-120-*-*-c-*-gb2312.1980-*,*-r-*"
+#Style * IconFont -"-arphic technology co.-ar pl sungtil gb-medium-r-normal-*-*-*-*-*-c-*-gb2312.1980-*,*-r-*"
+#Style * IconFont  "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1,-misc-evermore kai-medium-r-normal--12-*-*-*-*-*-gbk-0,*-r-"
+Style * HilightFore black, HilightBack gainsboro
+Style * IconBox 360x200+1-1, IconFill Left bottom
+
+Style * WindowShadeShrinks, WindowShadeSteps 100
+
+#TitleStyle height 26
+style * notitle
+AddTitleStyle ActiveDown VGradient 12 blue black
+
+#AddTitleStyle ActiveUp TiledPixmap title_active.xpm   -- Flat
+#AddTitleStyle ActiveUp Pixmap titleleft_active.xpm    -- Top Left Flat
+#AddTitleStyle ActiveUp Pixmap titleright_active.xpm  -- Top Right Flat
+#AddTitleStyle Inactive TiledPixmap title_inactive.xpm     -- Flat
+#AddTitleStyle Inactive Pixmap titleleft_inactive.xpm       -- Top Left Flat
+#AddTitleStyle Inactive Pixmap titleright_inactive.xpm    -- Top Right Flat
+#AddTitleStyle ActiveDown TiledPixmap title_active.xpm -- Flat
+#AddTitleStyle ActiveDown Pixmap titleleft_active.xpm  -- Top Left Flat
+#AddTitleStyle ActiveDown Pixmap titleright_active.xpm -- Top Right Flat
+
+
+MenuStyle * MWM
+MenuStyle * PopupDelayed, PopupDelay 160, Animation, TitleWarp
+MenuStyle * Foreground White, Background gray40
+MenuStyle * ActiveFore gold
+#MenuStyle * Font  "-adobe-helvetica-medium-r-normal--18-*-*-*-*-*-iso8859-1,-misc-evermore kai-medium-r-normal--12-*-*-*-*-*-gbk-0,*-r-"
+MenuStyle * Font  "-adobe-helvetica-medium-r-normal--18-*-*-*-*-*-iso8859-1,-misc-simsun-medium-r-normal--17-*-*-*-*-*-gb18030.2000-0,*-r-"
+#MenuStyle * MenuFace VGradient 64 darkgray MidnightBlue
+MenuStyle * MenuFace TiledPixmap weird10dark.xpm
+MenuStyle * MenuColorset 42
+
+ButtonStyle All -- UseTitleStyle
+ButtonStyle All ActiveDown VGradient 8 palevioletred black
+
+#ButtonStyle 1 Vector 7 \
+#  65x15@0 25x55@1 45x55@0 35x85@1 75x45@0 55x45@1 65x15@0
+#ButtonStyle 6 16 20x20@1 30x20@1 50x40@1 70x20@1 80x20@1 80x30@0 60x50@0 80x80@0 70x80@0 50x60@0 30x80@0 20x80@0 20x70@0 40x50@1 20x30@0 20x20@1
+
+#CursorStyle ROOT xc2.xpm
+CursorStyle ROOT xc.cursor
+CursorStyle TITLE 61
+CursorStyle STROKE 86
+CursorStyle BOTTOM 0
+
+
+# Styles for various Fvwm modules:
+Style "Fvwm*"       Layer 5,  NoTitle,  Sticky, WindowListSkip
+Style "Fvwm*"       BorderWidth 2, CirculateSkipIcon, CirculateSkip
+Style "FvwmPager"   StaysOnTop,Sticky,noTitle,noButton 2,noButton 4,noButton 6
+#TitleAtRight
+Style "FvwmBanner"  StaysOnTop
+Style "FvwmButtons" Icon toolbox.xpm, NeverFocus
+Style "FvwmConsole" SloppyFocus,Icon konsole.png
+
+# Styles for your common terminal emulator programs:
+Style "xterm"       noTitle, Icon /usr/share/icons/Bluecurve/48x48/apps/gnome-term-tiger.png, SloppyFocus
+Style "rxvt"        NoTitle, Icon /usr/share/icons/Bluecurve/48x48/apps/gnome-term-linux.png
+Style "gv"	    ClickToFocus
+Style "Iceweasel"    noTitle, RandomPlacement, SloppyFocus
+#in my program there were lots of "NoResource" window and I can control the display behavior
+#Style "NoResource" NoTitle BorderWidth 0, HandleWidth 0
+Style "xdaliclock" NoTitle, BorderWidth 0,NoHandles, Sticky, WindowListSkip, ClickToFocus, Layer 6
+Style "MPlayer" NoTitle, Layer 7
+Style "RealPlayer" Layer 7
+Style "XSIM"	    Layer 7, NoTitle, HandleWidth 1, Sticky, WindowListSkip
+Style "emacs"	    notitle, Icon gnu-animal.xpm
+Style "gv"	    Icon gv.xpm
+Style "Xdvi help"	NoTitle
+Style "AcroRead"	VariablePosition, VariableUSPosition
+Style * RaiseTransient LowerTransient StackTransientParent
+#Style * NoActiveIconOverride
+
+# Styles for various common programs:
+Style "xbiff"       NoTitle, Sticky, WindowListSkip, ClickToFocus
+Style "xcalc"       Icon xcalc.xpm, NoButton 2,RandomPlacement,ClickToFocus
+Style "xmh"         Icon mail1.xpm, NoIconTitle,StickyIcon
+Style "xmh"	    RandomPlacement, NoButton 2
+Style "xman"	    Icon xman.xpm, RandomPlacement, ClickToFocus
+Style "xmag"	    RandomPlacement, ClickToFocus
+Style "xeyes"       NoTitle 
+Style "FvwmButtons"	BorderWidth 0,NoHandles
+
+Style "xclock" NoTitle, Layer 7 , Sticky
+Style "Display" RaiseTransient LowerTransient StackTransientParent
+Style "Gimp" RaiseTransient LowerTransient StackTransientParent
+
+Read fvwm.strokes
+
+
+# some simple default key bindings:
+#Key Tab A M -
+Key Next         A       SCM     Next [*] Focus
+Key Prior        A       SCM     Prev [*] Focus
+
+#Key F9  A M GotoDesk -1
+#Key F10 A M GotoDesk 1
+
+Key r A 4 Restart fvwm2
+Key l A 4 RaiseLower
+Key c A 4 Close
+Key i A 4 IconifY
+
+Mouse 3 A M MoveToDesk 1
+Mouse 1 A M MoveToDesk -1
+Mouse 2 ALL M Menu RootMenu Nop
+
+
+#Key F3 A A Module FvwmConsole -terminal xterm -geometry 45x5-0+0 -bg gold -fg midnightblue -fn "-adobe-courier-medium-r-*-*-14-*-*-*-*-*-*-*"
+Key F5 A C Exec exec import -window root shot_`date +%F_%H_%M_%S`.png
+Key f11 A C Exec exec xscreensaver-command -lock
+
+# some simple default mouse bindings:
+Mouse 1	R   	A       Menu RootMenu Nop
+Mouse 2	R    	A      	Menu ProgramsMenu Nop
+
+Mouse 3 WI	SC	CloseOrNot
+Mouse 1	A   	MC      Menu RootMenu Nop
+Mouse 3 A       MC      Windowlist 
+Mouse 3 A	S	Move
+
+
+#   for the title bar buttons:
+Mouse 1	4    	A     	Iconify
+Mouse 1 6	A	Close
+Mouse 3	2    	A     	Maximize-Func2
+
+#   for other parts of the window/borders/icons:
+Mouse 1	<	A	Resize-or-RaiseNW
+Mouse 1	^	A	Resize-or-RaiseNE
+Mouse 1	v	A	Resize-or-RaiseSW
+Mouse 1	>	A	Resize-or-RaiseSE
+Mouse 1	T	A	Move-or-Max
+Mouse 1	I	A	Move-or-Iconify
+
+#Mouse 1 [ A Move-or-RaiseWest
+Mouse 1 - A Move-or-RaiseNorth
+#Mouse 1 ] A Move-or-RaiseEast
+#Mouse 1 _ A Move-or-RaiseSouth
+Mouse 1 [ A Iconify
+Mouse 1 ] A Maximize-Func2
+Mouse 1 _ A Close
+
+######################## Sample Functions ##########################
+DestroyFunc Move-or-Raise		
+AddToFunc Move-or-Raise		I Raise
++				"M" Move
++  				"C" WindowShade 
+DestroyFunc Move-or-Raise2	
+AddToFunc Move-or-Raise2	"M" Raise
++				"M" Move
++  				"D" Lower
+DestroyFunc Move-or-Max
+AddToFunc Move-or-Max		I Raise
++				"M" Move
++  				"C" WindowShade 
++                               "D" Maximize  100 100
+DestroyFunc Maximize-Func		
+AddToFunc Maximize-Func		"M" Maximize	 0 100
++				"D" Maximize	 100 0
++				"C" Maximize	 100 100
+DestroyFunc Maximize-Func2	
+AddToFunc Maximize-Func2	"M" Maximize	 100 0
++				"D" Maximize	 0 100
++				"C" Maximize	 100 100
+DestroyFunc Move-or-Iconify	
+AddToFunc Move-or-Iconify	I Raise
++				"M" Move
++				"C" Iconify
+DestroyFunc Resize-or-RaiseNW	
+AddToFunc Resize-or-RaiseNW	I Raise
++				"M" Resize
++				"D" Lower
++                               "C" WindowShade NW
+DestroyFunc Resize-or-RaiseNE	
+AddToFunc Resize-or-RaiseNE	I Raise
++				"M" Resize
++				"D" Lower
++                               "C" WindowShade NE
+DestroyFunc Resize-or-RaiseSW	
+AddToFunc Resize-or-RaiseSW	I Raise
++				"M" Resize
++				"D" Lower
++                               "C" WindowShade SW
+DestroyFunc Resize-or-RaiseSE	
+AddToFunc Resize-or-RaiseSE	I Raise
++				"M" Resize
++				"D" Lower
++                               "C" WindowShade SE
+DestroyFunc Move-or-RaiseWest	
+AddToFunc Move-or-RaiseWest	I Raise
++				"M" Move
++				"D" Lower
++                               "C" WindowShade West
+DestroyFunc Move-or-RaiseEast	
+AddToFunc Move-or-RaiseEast	I Raise
++				"M" Move
++				"D" Lower
++                               "C" WindowShade East
+DestroyFunc Move-or-RaiseSouth	
+AddToFunc Move-or-RaiseSouth	I Raise
++				"M" Move
++				"D" Lower
++                               "C" WindowShade South
+DestroyFunc Move-or-RaiseNorth	
+AddToFunc Move-or-RaiseNorth	I Raise
++				"M" Move
+#+				"D" Lower
++				"D" Maximize 100 100
++                               "C" WindowShade North
+
+DestroyFunc Resize-or-Raise2	
+AddToFunc Resize-or-Raise2	"M" Raise
++				"M" Resize
++				"D" Lower
+DestroyFunc Iconify-and-Raise     
+AddToFunc Iconify-and-Raise     I Iconify
++                               I Raise
+
+DestroyFunc CloseOrNot
+AddToFunc CloseOrNot
++ C Silent Close
++ M Nop
+
+######################## Initialization Functions ############################
+DestroyFunc StartFunction
+AddToFunc StartFunction   	
++ I Module FvwmAnimate
++ I Module FvwmPager 0 3
++ I Exec exec xdaliclock -transparent -24 -cycle  -font arial -geometry -100+10
+#+ I Exec exec xdaliclock -transparent -24 -cycle -font "builtin0" -geometry -100+10
+#+ I Exec exec xdaliclock -transparent -24 -cycle -font "builtin0" -geometry +600+10
+#+ I Exec exec /home/xing/github/xdaliclock/X11/xdaliclock -transparent -24 -cycle  -font "builtin0" -geometry +2600+10
+#+ I Exec exec xdaliclock  -24  -font "builtin0" -geometry -100+10 -bg "white" -fg "black" 
++ I Exec exec fcitx 
+#+ I Exec exec xloadimage -onroot -shrink -fullscreen /mnt/e/f/Õº∆¨/Õº∆¨/∞≤—Ù/qiao2.jpg
+#+ I Exec exec xloadimage -onroot -shrink -fullscreen /mnt/e/ftp/f/My\ Documents/√‹÷›≥ˆ¡‘.jpg
+#+ I Exec exec xloadimage -onroot -shrink -fullscreen ~/moveearch1.jpg
++ I Exec exec xset -b
+
+DestroyFunc InitFunction
+AddToFunc InitFunction 	  
++ I Exec exec xscreensaver -no-splash
+
+DestroyFunc ExitFunction
+AddToFunc ExitFunction
++ I All (xdaliclock) Close
++ I All (xscreensaver) Close
++ I All (fcitx) Close
+
+######################## Menus ###################
+
+DestroyMenu RootMenu
+AddToMenu RootMenu	"Root Menu"	Title
++			"&xterm%mini.display.xpm%"	Exec exec xterm
+#+			"&Rxvt%mini.monitor.xpm%"	Exec exec rxvt -fg pink -tr
++			"&Big Rxvt"	Exec exec urxvt -geometry  100x30
++			""		Nop
++                       "&GNOME"      Popup GNOMEMenu
++                       "&KDE"        Popup KDEMenu
++                       "&Programs"      Popup ProgramsMenu
++                       "&Utilities"     Popup Utilities
++			""		Nop
++                       "Re&fresh Screen"   Refresh
++                       "Re&capture Screen" Recapture
++			""		Nop
++                       "&Lock"         Exec exec xscreensaver-command -lock
++			"&Exit Fvwm%mini.exit.xpm%"	Popup Quit-Verify
+
+DestroyMenu ProgramsMenu
+AddToMenu "ProgramsMenu" "Programs" Title
++			"&VIM"  Exec exec gvim
++			"emacs%mini.gnu.xpm"  Exec exec emacs -geometry 123x71+0+0
++			"&gv%mini.gv.xpm"  Exec exec gv
++                        "&xpdf"        Exec exec xpdf
++                        "OpenOffice"  Exec exec ooffice
++                       "xine" Exec exec xine
++			"x&mms" Exec exec xmms
+#+                       "&iceweasel" Exec exec iceweasel -width 1280 -height 1024
++                       "&firefox" Exec exec firefox 
++                       "scilab"   Exec exec scilab 
++                       "ScreenSaverConfig" Exec exec xscreensaver-demo
+DestroyMenu GNOMEMenu
+AddToMenu "GNOMEMenu" "GNOME Menu" Title
++                       "&gnome-term%mini.monitor.xpm%" Exec exec gnome-terminal
++                       "&nautilus"        Exec exec nautilus
++                       "&GhostView"       Exec exec ggv
++                       "&ThumbView"       Exec exec gthumb
++                       "&GIMP"            Exec exec gimp
++                       "t&otem"           Exec exec totem
++                       "G&QView"          Exec exec gqview
++                       "E&ye of GNOME"    Exec exec eog
++                       "&Volume"          Exec exec gnome-volume-control
++                       "&BackGround"      Exec exec gnome-background-properties
+
+DestroyMenu KDEMenu
+AddToMenu "KDEMenu" "KDE Menu" Title
++                       "kon&queror"    Exec exec konqueror
++                       "&konsole"      Exec exec konsole
++                       "a&marok"       Exec exec amarok
++                       "k&ruler"       Exec exec kruler
++                       "k&dvi"         Exec exec kdvi
++                       "&GhostView"    Exec exec kghostview
++                       "k&write"       Exec exec kwrite
++                       "k&ate"         Exec exec kate
++                       "k&printer"     Exec exec kprinter
++                       "&IconEdit"     Exec exec kiconedit
++                       "&Snapshot"     exec exec ksnapshot
+DestroyMenu Utilities
+AddToMenu Utilities     "Utilities" Title
++			"Top"		Exec exec xterm -T Top -n Top -e top
++			"Calculator"	Exec exec xcalc
++			"Xman"		Exec exec xman
++			"Xmag"		Exec exec xmag
++                       "xeyes"         Exec exec xeyes -geometry 80x60+10+10 
++                       "&bitmap"       Exec exec bitmap
++                       "x&fontsel"     Exec exec xfontsel
+#+                       "WebShots"      Exec exec display -window root /mnt/c/windows/WebShotsForX.bmp
++                       "Iconify"    ALL  Iconify 
++			""		Nop
++                       "Reset X defaults" Exec xrdb -load $HOME/.Xdefaults 
++  			"screenshot" 	Exec import -window root shot_`date +%F_%H_%M_%S`.png
+
+DestroyMenu Quit-Verify 	
+AddToMenu Quit-Verify 	"Really ?" Title	
++		      	"Yes, Really Quit"  Quit	
++                       "Restart fvwm2"     Restart fvwm2
++		      	"No, Don't Quit"    Nop	
+
+########################### Pager #########################################
+*FvwmPager: Rows 1
+*FvwmPager: Columns 4
+*FvwmPagerLabel 0 Main
+*FvwmPagerLabel 1 Internet
+*FvwmPagerLabel 2 Program
+*FvwmPagerLabel 3 Amusement
+########################### Pager #########################################
+*FvwmPager:Pixmap default_blue.png
+*FvwmPagerBack #5c54c0
+*FvwmPagerFore white
+*FvwmPager:Font  "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1,-misc-evermore kai-medium-r-normal--12-*-*-*-*-*-gbk-0,*-r-"
+*FvwmPager:  SelFont  "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1,-misc-evermore kai-medium-r-normal--12-*-*-*-*-*-gbk-0,*-r-"
+
+*FvwmPagerHilight #6b64b0
+*FvwmPager:SmallFont "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1,-misc-evermore kai-medium-r-normal--12-*-*-*-*-*-gbk-0,*-r-"
+*FvwmPagerBalloons            All
+*FvwmPagerBalloonBack         white
+*FvwmPagerBalloonFore         black
+*FvwmPagerBalloonFont "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1,-misc-evermore kai-medium-r-normal--12-*-*-*-*-*-gbk-0,*-r-"
+*FvwmPagerBalloonBorderWidth  4
+*FvwmPagerBalloonBorderColor  white
+
+*FvwmPager: WindowBorderWidth 1
+*FvwmPager: Window3DBorders 
+
+*FvwmPager: DeskTopScale 20
+#*FvwmPager: Geometry -150-50 
+*FvwmPager: Geometry 800x100+2000+900 
+*FvwmPager: SmallFont 5x8
+*FvwmPager: MiniIcons
+*FvwmPager: UseSkipList
+*FvwmPager: SloppyFocus
+##########################Pager Control############################################
+#modifier 4 is the Super_L or Super_R
+Key Alt_L A 4 All (FvwmPager) WindowShade SW
+Key Alt_R A 4 All (FvwmPager) WindowShade SE
+Key Super_L A M All (FvwmPager) WindowShade SW
+Key Super_R A M All (FvwmPager) WindowShade SE 
+
+#swith between pages
+Key Left A C GotoPage -1p 0p
+Key Right A C GotoPage 1p 0p
+Key Up A C GotoPage 0p -1p
+Key Down A C GotoPage 0p 1p
+
+#move between pages
+Key Left A 4 MovetoPage -1p 0p
+Key Right A 4 MovetoPage 1p 0p
+Key Up A 4 MovetoPage 0p -1p
+Key Down A 4 MovetoPage 0p 1p
+
+#move between pages
+Key 1 A 4 MoveToScreen 0
+Key 2 A 4 MoveToScreen 1
+
+Key Space A 4 Maximize 100
+Mouse 1 A 4 Maximize 100
+Mouse 3 A 4 Move
+Key Tab A 4 Iconify
+
+#switch between desks
+Key Home A C GotoDesk -1
+Key End A C GotoDesk +1
+##########################FvwmWinList##################################
+*FvwmWinListBack #908090
+*FvwmWinListFore Black
+*FvwmWinListFont "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1,-misc-evermore kai-medium-r-normal--12-*-*-*-*-*-gbk-0,*-r-"
+*FvwmWinListAction Click1 Iconify -1,Focus
+*FvwmWinListAction Click2 Iconify
+*FvwmWinListAction Click3 Module "FvwmIdent" FvwmIdent
+*FvwmWinListUseSkipList
+*FvwmWinList
+
+#for FvwmBacker
+*FvwmBackerDesk 0 -solid steelblue
+*FvwmBackerDesk 1 -solid midnightblue
+
+#for FvwmScroll
+*FvwmScrollBack grey40
+*FvwmScrollFore green
+
+*FvwmAnimate: Delay 25
+*FvwmAnimate: Effect Random
+*FvwmAnimate: Width 3
+
