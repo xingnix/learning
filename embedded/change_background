@@ -1,0 +1,9 @@
+while true
+do
+# convert ~/tmp.jpg -gravity northwest -annotate 0 " `date` `conky -i 1|sed s/%/\(percent\)/g`"    ~/tmp1.jpg
+convert ~/tmp.jpg -gravity north -annotate 0 " \n `date` "    ~/tmp1.jpg
+
+sleep 0.1
+#qiv -z ~/tmp1.jpg
+feh --bg-fill  ~/tmp1.jpg
+done
