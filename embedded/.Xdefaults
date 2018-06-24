@@ -1,0 +1,87 @@
+!Xft.dpi:96
+Xft.dpi:101
+!my rxvt setting
+
+! % xrdb -load ~/.Xresources
+! % xrdb -query
+! % xrdb -symbol
+! % xrdb -merge ~/.Xresources
+
+Rxvt.geometry:100x30
+Rxvt.background:black
+Rxvt.foreground:green
+Rxvt.colorBD:yellow
+Rxvt.colorUL:white
+!Rxvt.multichar_encoding:gb18030
+Rxvt.scrollBar:True
+Rxvt.scrollBar_right:True
+Rxvt.scrollBar_floating: False
+Rxvt.scrollstyle: next
+Rxvt.saveLines:1500
+Rxvt.color0:black
+Rxvt.color1:red
+Rxvt.color2:#3a5da3
+Rxvt.color3:#4b76cc
+Rxvt.color4:RoyalBlue1
+Rxvt.color5:magenta
+Rxvt.color6:#a1b5dd
+Rxvt.color7:#8a95aa
+Rxvt.color8:#616668
+Rxvt.color9:#075982
+Rxvt.color10:#0f82bc
+Rxvt.color11:#13a9f4
+Rxvt.color12:SkyBlue2
+Rxvt.color13:#63c2f2
+Rxvt.color14:#6caccc
+Rxvt.color15:#dbeff9
+!Rxvt.font:-*-*-*-*-*-*-180-*-*-*-*-*-*-*
+!Rxvt.font:-b&h-lucidatypewriter-medium-r-normal-*-14-*-*-*-*-*-iso8859-*
+!Rxvt.font:10x20, xft:AR PL New Sung
+!Rxvt.font:10x20, xft:DejaVu Sans Mono,xft:Evermore Kai
+Rxvt.font:xft:DejaVu Sans Mono,xft:Evermore Kai
+!Rxvt.boldfont:xft:DejaVu Sans Mono,xft:Evermore Kai
+!Rxvt.mfont:-*-simsun-medium-r-*-*-14-*-*-*-c-*-*-*
+Rxvt.menu:/etc/X11/rxvt.menu
+Rxvt.preeditType:Root
+Rxvt.inputMethod:xim
+
+
+! XTerm config
+XTerm*locale: true
+XTerm*faceName:xft:DejaVu Sans Mono
+XTerm*faceNameDoublesize:Evermore Kai
+! XTerm*fontMenu*fontdefault*Label: Default
+! XTerm*font: -misc-fixed-medium-r-normal-*-18-120-100-100-c-90-iso10646-1
+! !XTerm*font:-*-times-*-*-*-*-64-*-*-*-*-*-*-*
+! XTerm*wideFont: -misc-fixed-medium-r-normal-*-18-120-100-100-c-180-iso10646-1
+! 
+! XTerm*font1.Label: efont 12 pixel
+! XTerm*font1: -efont-fixed-medium-r-normal-*-12-120-75-75-c-60-iso10646-1
+! XTerm*wideFont1: -efont-fixed-medium-r-normal-*-12-120-75-75-c-120-iso10646-1
+! XTerm*font2.Label: misc 13 pixel
+! XTerm*font2: -misc-fixed-medium-r-semicondensed-*-13-120-75-75-c-60-iso10646-1
+! XTerm*wideFont2: -misc-fixed-medium-r-normal-*-13-120-75-75-c-120-iso10646-1
+! XTerm*font3.Label: efont 14 pixel
+! XTerm*font3: -efont-fixed-medium-r-normal-*-14-140-75-75-c-70-iso10646-1
+! XTerm*wideFont3: -efont-fixed-medium-r-normal-*-14-140-75-75-c-140-iso10646-1
+! XTerm*font4.Label: efont 16 pixel
+! XTerm*font4: -efont-fixed-medium-r-normal-*-16-160-75-75-c-80-iso10646-1
+! XTerm*wideFont4: -efont-fixed-medium-r-normal-*-16-160-75-75-c-160-iso10646-1
+! XTerm*font5.Label: misc 18 pixel
+! XTerm*font5: -misc-fixed-medium-r-normal-*-18-120-100-100-c-90-iso10646-1
+! XTerm*wideFont5: -misc-fixed-medium-r-normal-*-18-120-100-100-c-180-iso10646-1
+! XTerm*font6.Label: efont 24 pixel
+! XTerm*font6: -efont-fixed-medium-r-normal-*-24-240-75-75-c-120-iso10646-1
+! XTerm*wideFont6: -efont-fixed-medium-r-normal-*-24-240-75-75-c-240-iso10646-1
+
+XTerm*background: pink
+XTerm*foreground: black
+XTerm*scrollbar: yes
+
+!enable alt-. 
+XTerm*metaSendsEscape: true
+XTerm*eightBitInput: false
+
+
+xpdf.paperColor: #cce8cf
+!xpdf*.fontList:-adobe-helvetica-medium-r-normal–12-*-*-*-*-*-iso8859-1;-*-simsun-medium-r-normal–12-*-*-*-*-*-gbk-0:xpdf*.fontList:-adobe-helvetica-medium-r-normal–12-*-*-*-*-*-iso8859-1;-*-simsun-medium-r-normal–12-*-*-*-*-*-gbk-0:
