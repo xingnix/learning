@@ -1,0 +1,6 @@
+#<size> <xhot> <yhot> <filename> <ms-delay>
+#xcursorgen config flag.cursor
+32 0 0  frame0.png 167
+32 0 0  frame1.png 167
+32 0 0  frame2.png 167
+32 0 0  frame3.png 167
