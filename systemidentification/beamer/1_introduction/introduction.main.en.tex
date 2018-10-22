@@ -1,0 +1,263 @@
+\begin{document}
+%\begin{CJK*}{GBK}{song}
+
+\def\lecturename{System Identification}
+
+\title{\insertlecture}
+
+\author{Xing Chao}
+
+\institute
+{
+  School of Astronautics , Northwestern Polytechnical University
+}
+
+%\mode<presentation>{\subject{嵌入式系统}}
+
+%  start a lecture  --------------------------
+\lecture[SI]{Introduction to System Identification}{}
+\subtitle{Basic concepts in System Identification}
+\date{2012}
+
+
+%\setbeamertemplate{background}{\pgfimage[width=\paperwidth,height=\paperheight]{image/flower}}
+%\setbeamercovered{transparent}
+%\mode<presentation>{\beamerdefaultoverlayspecification{<+->}}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+%\begin{frame}{课程内容}
+%\begin{center}\pgfimage[width=0.9\columnwidth]{image/content}\end{center}
+%\end{frame}
+
+%\begin{frame}{与其它课程关系}
+%\begin{center}\pgfimage[width=0.9\columnwidth]{image/relation}\end{center}
+%\end{frame}
+
+
+
+\section{Main content}
+
+\begin{frame}{Main content of the course}
+\begin{itemize}
+\item Purpose of System identification
+\item Identification methods
+\item Specific steps for identification
+\end{itemize}
+How to study：
+\begin{itemize}
+\item What does the course do?
+\item What problem is mainly solved?
+\item What are the methods?
+\item What are the advantages and disadvantages of each method?
+\item What is the scope of application of each method?
+\end{itemize}
+\end{frame}
+
+\section{Basic concepts in System Identification}
+\begin{frame}{Status and purpose of system identification}
+\begin{description}
+\item[Control thesry]classical control theory、modern control theory、intelligent control theory
+\item[Classical control]applying the time domain method, the root locus method and the frequency domain method to design controller for a plant
+\item[Modern control] linear system theory、optimal control theory and optimal estimation theory, etc.
+\item[intelligent control]neural network, expert system and artificial intelligence
+\end{description}
+\end{frame}
+
+\begin{frame}{Linear system theory}
+The basis of modern control, mainly to solve the model description and basic knowledge of the system. That is, a linear system can generally be described as:
+\begin{eqnarray}
+\dot x = Ax+Bu \\
+y=Cx+Du
+\end{eqnarray}
+\begin{description}
+\item[Optimal Control] Solve how to obtain the optimal input u(t) under the constraint of a certain performance criteria;
+\item[Optimal estimation] Mainly solve the estimation and prediction of the state variable X
+\end{description}
+\end{frame}
+
+
+\begin{frame}{System identification purpose}
+\begin{itemize}
+\item Prerequisites for solving the above problem：
+\begin{itemize}
+\item A, B, C, and D in the model are known.
+\item That is, the structure and parameters of the system are known.
+\item That is to know the transfer function of the system, or the impulse transfer function, or the difference equation, or the frequency characteristics of the system。
+\end{itemize}
+\item So how do you get the structure and parameters of the system?
+\item System identification purpose: How to get the model of the system and its parameters?
+\end{itemize}
+\end{frame}
+
+\section{Model description of the system}
+\begin{frame}{System model definition and characteristics}
+\begin{description}
+\item[Model definition]
+    Part of the essence of the system is reduced to a useful form of description.
+\item[Model characteristics]
+\begin{itemize}
+\item Multiple model descriptions can be used for the same system； 
+\item The same model can reflect different actual systems;
+\item Model accuracy and complexity。
+\end{itemize}
+\end{description}
+\end{frame}
+
+\begin{frame}{model representation}
+\begin{itemize}
+	\item intuition model
+	\item physical model
+	\item chart model
+	\item mathematical model.
+\end{itemize}
+Among them, the chart model is a non-parametric model, and the mathematical model is a parametric model.
+\end{frame}
+
+
+
+\begin{frame}{mathematical model classification}
+\begin{description}
+	\item[time domain]
+	\begin{itemize}
+		\item differential equation
+		\item difference equation
+		\item equation of state
+	\end{itemize}
+	\item[Complex domain]
+	\begin{itemize}
+		\item transfer function
+		\item impulse transfer function
+	\end{itemize}
+	\item[frequency domain]
+	\begin{itemize}
+		\item frequency characteristics
+		\item description function
+	\end{itemize}
+\end{description}
+\end{frame}
+
+
+\begin{frame}{Model in system identification}
+system identification acquires the non-parametric model and parametric model of a system.
+\begin{description}
+	\item[non-parametric model]
+	\begin{itemize}
+		\item frequency characteristic curve
+		\item impulse response curve
+	\end{itemize}
+	\item[parametric model]
+	\begin{itemize}
+		\item differential/difference equation
+		\item transfer function
+		\item impulse transfer function
+	\end{itemize}
+	\item[model conversion]
+	\begin{itemize}
+	\item The parametric models can be transformed from each other;
+	\item The non-parametric model can be transformed into a parametric model.
+	\end{itemize}
+\end{description}
+\end{frame}
+
+\section{Methods and principles for establishing mathematical models}
+\begin{frame}{model creation method}
+\begin{itemize}
+	\item theoretical analysis method
+	\item experimental test method: use the system input and output data to establish a mathematical model of the system.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{modeling principles}
+\begin{itemize}
+	\item The purpose of the model is definite;
+	\item clear physical concept;
+	\item identification is unbiased and consistent;
+	\item conforms to the law of parsimony(Occam's razor). The number of parameters to be identified is small.
+\end{itemize}
+\end{frame}
+
+\section{System identification and classification}
+
+
+\begin{frame}{System identification definition}
+\begin{itemize}
+\item    Definition: Based on the system input and output data, determine a model equivalent to the system being tested from a given set of model classes.
+\item    Three elements of system identification: data, model classes and criteria.
+\begin{itemize}
+\item    Data: recorded input/output data, often containing noise;
+\item    Model class: selected models
+\item    Criterion: This is the cost function, usually the error criterion.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{System Identification General Process}
+ System identification is divided into model structure identification and model parameter identification.
+The general process is:
+\begin{itemize}
+\item clarifies the purpose of the identified system model;
+\item pre-select the type of mathematical model of the system to be identified;
+\item design the experiment for identification, recording I/O data;
+\item data preprocessing, wild point culling;
+\item model structure identification, identification system order n;
+\item select the parameter estimation method to identify other parameters of the system;
+\item model validation.
+\end{itemize}
+The focus of this course: parameter estimation method
+\end{frame}
+
+\begin{frame}{System Identification Category}
+\begin{itemize}
+\item linear system identification and nonlinear system identification;
+\item centralized parameter identification and distributed parameter identification;
+\item system structure identification and system parameter identification;
+\item classic identification and modern identification;
+\item open loop system identification and closed loop system identification;
+\item Offline identification and online identification.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{offline identification}
+\begin{itemize}
+\item Process: After the system model and order n are selected, record all the I/O data of the system, and then use the parameter estimation method to identify the model parameters of the system.
+\item Features: The amount of data to be stored is large, the amount of calculation is large, and the recognition accuracy is high. Post-mortem data processing methods cannot be used in real-time control systems.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{online identification}
+\begin{itemize}
+\item process: After the system model and order n are selected, first obtain a small amount of data, estimate the system model parameters, and then obtain new I/O data, and use the recursive correction algorithm to obtain new parameter estimates, and repeat the above process. Until the system stops running.
+\item Features: Small amount of data, small amount of calculation, and slightly lower recognition accuracy. It is an online data processing method for real-time control systems.
+\end{itemize}
+\end{frame}
+
+\section{System Identification Error Criteria}
+\begin{frame}{System Identification Error Criteria}
+Error criteria are usually expressed as functionalities of errors
+\begin{eqnarray}
+J(\theta)=\Sigma_{k=1}^Nf(\epsilon(k))
+\end{eqnarray}
+$\epsilon(k)$ is the error between the model and the actual system. It can be output error or input error, or it can be generalized error. The general function $f$ is taken as the square of the error:
+\begin{eqnarray}
+f(\epsilon(k))=\epsilon^2(k)
+\end{eqnarray}
+\begin{itemize}
+\item Input error $\epsilon(k)=u(k)-u_m(k)=u(k)-S^{-1}[y_m(k)]$
+\item output error $\epsilon(k)=y(k)-y_m(k)$
+\end{itemize}
+This course uses output errors.
+\end{frame}
+
+\section{Thinking}
+\begin{frame}{thinking}
+\begin{itemize}
+\item What is the relationship between system identification and other courses?
+\item How to learn system identification?
+\end{itemize}
+\end{frame}
+
+%\end{CJK*}
+\end{document}
