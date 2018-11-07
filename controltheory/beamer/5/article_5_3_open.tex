@@ -1,0 +1,308 @@
+% Created 2018-11-07 Wed 21:37
+% Intended LaTeX compiler: pdflatex
+\documentclass[table]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage[usenames]{color}
+\usepackage{pstricks}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tikz}
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+\setCJKmonofont{Evermore Kai}
+\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\psset{unit=5mm}
+\usepackage{beamerarticle}
+\mode<beamer>{\usetheme{Frankfurt}}
+\mode<beamer>{\usecolortheme{dove}}
+\mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+\mode<beamer>{\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}}
+\setbeamercovered{transparent}
+\subtitle{开环频率特性}
+\date{}
+\title{线性系统的频域分析法}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={线性系统的频域分析法},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.1.9)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+
+
+
+
+
+
+
+
+
+\section{开环系统Nyquist图}
+\label{sec:org0a41274}
+\subsection{开环系统Nyquist图 \(G_o(s) =\frac{K\prod_{j=1}^m(\tau_j s+1)}{s^{\nu}\prod_{i=1}^{n-\nu}(T_i s+1)}\)}
+\label{sec:orgf185312}
+\begin{itemize}
+\item 当  \(\nu=0\)  时,为零型系统:
+\begin{eqnarray*}
+\left. A(\omega)\right|_{\omega=0} & = & K\\
+\left. \phi(\omega)\right|_{\omega=0}&=&0 \\
+\lim_{\omega\rightarrow\infty} A(\omega)&=&0 \\
+\lim_{\omega\rightarrow\infty} \phi(\omega)&=& -(n-m)\times\frac{\pi}{2} 
+\end{eqnarray*}
+\end{itemize}
+\subsection{开环系统Nyquist图(续) \(G_o(s) =\frac{K\prod_{j=1}^m(\tau_j s+1)}{s^{\nu}\prod_{i=1}^{n-\nu}(T_i s+1)}\)}
+\label{sec:org7f0a155}
+\begin{itemize}
+\item 当  \(\nu=1\)  时 ,为I型系统:
+\begin{eqnarray*}
+\lim_{\omega\rightarrow 0} A(\omega) & = & \infty\\
+\lim_{\omega\rightarrow 0} \phi(\omega)&=&-\frac{\pi}{2} \\
+\lim_{\omega\rightarrow\infty} A(\omega)&=&0 \\
+\lim_{\omega\rightarrow\infty} \phi(\omega)&=& -(n-m)\times\frac{\pi}{2} 
+\end{eqnarray*}
+\end{itemize}
+\subsection{开环系统Nyquist图(续)\(G_o(s) =\frac{K\prod_{j=1}^m(\tau_j s+1)}{s^{\nu}\prod_{i=1}^{n-\nu}(T_i s+1)}\)}
+\label{sec:org63bfa07}
+\begin{itemize}
+\item 当  \(\nu=2\)  时,为II型系统:
+\begin{eqnarray*}
+\lim_{\omega\rightarrow 0} A(\omega) & = & \infty\\
+\lim_{\omega\rightarrow 0} \phi(\omega)&=&-\pi \\
+\lim_{\omega\rightarrow\infty} A(\omega)&=&0 \\
+\lim_{\omega\rightarrow\infty} \phi(\omega)&=& -(n-m)\times\frac{\pi}{2} 
+\end{eqnarray*}
+\end{itemize}
+\subsection{开环系统Nyquist图(续)\(G_o(s) =\frac{K\prod_{j=1}^m(\tau_j s+1)}{s^{\nu}\prod_{i=1}^{n-\nu}(T_i s+1)}\)}
+\label{sec:org2d81142}
+\begin{itemize}
+\item 当  \(\nu=3\)  时,为III型系统:
+\begin{eqnarray*}
+\lim_{\omega\rightarrow 0} A(\omega) & = & \infty\\
+\lim_{\omega\rightarrow 0} \phi(\omega)&=&-\frac{3}{2}\pi \\
+\lim_{\omega\rightarrow\infty} A(\omega)&=&0 \\
+\lim_{\omega\rightarrow\infty} \phi(\omega)&=& -(n-m)\times\frac{\pi}{2} 
+\end{eqnarray*}
+\end{itemize}
+
+\subsection{开环系统Nyquist图,例1}
+\label{sec:org34018b4}
+\subsubsection[\(G_o(s)=\frac{10}{s^{\nu}(0.1s+1)}\)]{\(G_o(s)=\frac{10}{s^{\nu}(0.1s+1)}\)\hfill{}\textsc{BMCOL:B\_block}}
+\label{sec:orgd60728b}
+\begin{tikzpicture}[scale=0.5]
+% $G_o(s)=\frac{10}{s^{\nu}(0.1s+1)}$ 
+\begin{axis}[
+%axis x line=middle,axis y line= middle, 
+ylabel=$j$ ,xlabel=$   $ ,
+ymin=-10,ymax=10,xmin=-10,xmax=10,every axis plot post/.append style={mark=none},
+grid=both]
+\addplot[blue,thick]shell {octave -q --eval "s=tf('s');nu=0;w=logspace(-1,3,30);g=10/s^nu/(0.1*s+1);[re,im]=nyquist(g,w);disp([re,im]);"};
+\addplot[green,thick]shell {octave -q --eval "s=tf('s');nu=1;w=logspace(-1,2,20);g=10/s^nu/(0.1*s+1);[re,im]=nyquist(g,w);disp([re,im]);"};
+\addplot[pink,thick]shell {octave -q --eval "s=tf('s');nu=2;w=logspace(-0.5,1,20);g=10/s^nu/(0.1*s+1);[re,im]=nyquist(g,w);disp([re,im]);"};
+\addplot[red,thick]shell {octave -q --eval "s=tf('s');nu=3;w=logspace(-0.33,1,20);g=10/s^nu/(0.1*s+1);[re,im]=nyquist(g,w);disp([re,im]);"};
+\legend{$\nu=0$ , $\nu=1$ , $\nu=2$ , $\nu=3$}
+\end{axis}
+\end{tikzpicture}
+
+\subsubsection[\(G_o(s)=\frac{10}{(0.1s+1)^{n}}\)]{\(G_o(s)=\frac{10}{(0.1s+1)^{n}}\)\hfill{}\textsc{BMCOL:B\_block}}
+\label{sec:org35517de}
+\begin{tikzpicture}[scale=0.5]
+% $G_o(s)=\frac{10}{(0.1s+1)^n}$ 
+\begin{axis}[
+%axis x line=middle,axis y line= middle, 
+ylabel=$j$ ,xlabel=$   $ ,
+ymin=-10,ymax=5,xmin=-5,xmax=10,every axis plot post/.append style={mark=none},
+grid=both]
+\addplot[blue,thick]shell {octave -q --eval "s=tf('s');n=1;g=10/(0.1*s+1)^n;[re,im]=nyquist(g);disp([re,im]);"};
+\addplot[green,thick]shell {octave -q --eval "s=tf('s');n=2;g=10/(0.1*s+1)^n;[re,im]=nyquist(g);disp([re,im]);"};
+\addplot[pink,thick]shell {octave -q --eval "s=tf('s');n=3;g=10/(0.1*s+1)^n;[re,im]=nyquist(g);disp([re,im]);"};
+\addplot[red,thick]shell {octave -q --eval "s=tf('s');n=4;g=10/(0.1*s+1)^n;[re,im]=nyquist(g);disp([re,im]);"};
+\legend{$n-m=1$ , $n-m=2$ , $n-m=3$ , $n-m=4$}
+\end{axis}
+\end{tikzpicture}
+
+\subsection{开环系统Nyquist图,例2:\(G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}\)}
+\label{sec:org0aa4087}
+\begin{itemize}
+\item 绘制Nyquist图,求出各特征点坐标:
+\item 由于  \(\nu = 1\) 
+\begin{eqnarray*}
+\lim_{\omega\rightarrow 0} A(\omega) & = & \infty\\
+\lim_{\omega\rightarrow 0} \phi(\omega)&=&-\frac{\pi}{2} \\
+\lim_{\omega\rightarrow\infty} A(\omega)&=&0 \\
+\lim_{\omega\rightarrow\infty} \phi(\omega)&=& -2\pi 
+\end{eqnarray*}
+\end{itemize}
+\subsection{开环系统Nyquist图,例2(续),\(G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}\)}
+\label{sec:org323bddd}
+概略Nyquist图:
+
+\begin{center}
+     \begin{tikzpicture}[scale=0.5]
+     % $G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}$ 
+     \draw[->] (-5,0) -- (1,0);
+     \draw[->] (0,-5) -- (0,1);
+     \draw[dashed] (-4,-5) -- (-4,0);
+     \draw [red] plot [smooth] coordinates {(-4,-5) (-3.5,-3)  (-1,0) (0,0.45) (0.2,0.2) (0.1,0.01) (0,0)};
+     \draw (-1,0) node[above left] {$a$};
+     \draw (0,0.45) node[above right] {$b$};
+     \draw (-4,0) node[above] {$v_x$};
+     \end{tikzpicture}
+\end{center}
+\subsection{开环系统Nyquist图,例2(续),\(G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}\)}
+\label{sec:orgbd5b4cc}
+\begin{itemize}
+\item 起始点实部  \(v_x\):
+\begin{eqnarray*}
+G(j\omega) & = & \frac{10}{j\omega(j\omega+1)(2j\omega+1)(4j\omega+1)}\\
+   &=& \frac{10\omega(8\omega^2-7)+10(14\omega^2-1)j}{\omega(1+\omega^2)(1+4\omega^2)(1+16\omega^2)}\\
+\lim_{\omega\rightarrow 0}\Re[G(j\omega)] &=&-70
+\end{eqnarray*}
+\end{itemize}
+\subsection{开环系统Nyquist图,例2(续),\(G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}\)}
+\label{sec:orgf2d3232}
+\begin{itemize}
+\item 与实轴交点  \(a\):
+\begin{eqnarray*}
+\Im[G(j\omega)] & = & 0\\
+\frac{10(14\omega^2-1)}{(1+\omega^2)(1+4\omega^2)(1+16\omega^2)} &=&0\\
+% 14\omega^2-1 &=& 0\\
+\omega &=& \sqrt{\frac{1}{14}}\\
+G(j\sqrt{\frac{1}{14}}) &\approx& -21.78 \\
+\end{eqnarray*}
+\end{itemize}
+\subsection{开环系统Nyquist图,例2(续),\(G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}\)}
+\label{sec:org85a5a47}
+\begin{itemize}
+\item 与虚轴交点  \(b\):
+\begin{eqnarray*}
+\Re[G(j\omega)] & = & 0\\
+\frac{10\omega(8\omega^2-7)}{(1+\omega^2)(1+4\omega^2)(1+16\omega^2)} &=&0\\
+8\omega^2-7 &=& 0\\
+\omega &=& \sqrt{\frac{7}{8}}\\
+G(j\sqrt{\frac{7}{8}}) &\approx& 0.95j
+\end{eqnarray*}
+\end{itemize}
+\subsection{开环系统Nyquist图,例2(续),\(G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}\)}
+\label{sec:orge927ea9}
+\subsubsection[Nyquist图]{Nyquist图\hfill{}\textsc{BMCOL:B\_block}}
+\label{sec:orgfa09cbd}
+\begin{tikzpicture}[scale=0.5]
+% $G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}$ 
+\begin{axis}[
+%axis x line=middle,axis y line= middle, 
+ylabel=$j$ ,xlabel=$   $ ,
+ymin=-80,ymax=10,xmin=-80,xmax=1,every axis plot post/.append style={mark=none},
+grid=both]
+\addplot[blue,thick]shell {octave -q --eval "s=tf('s');g=10/s/(s+1)/(2*s+1)/(4*s+1);[re,im]=nyquist(g);disp([re,im]);"};
+%\draw[dashed] (axis cs:-1,-1)--(axis cs:1,-1)--(axis cs:1,1)--(axis cs:-1,1)--cycle;
+\end{axis}
+\end{tikzpicture}
+
+\subsubsection[局部放大:]{局部放大:\hfill{}\textsc{BMCOL:B\_block}}
+\label{sec:orgfefe933}
+\begin{tikzpicture}[scale=0.5]
+% $G(s)=\frac{10}{s(s+1)(2s+1)(4s+1)}$ 
+\begin{axis}[
+%axis x line=middle,axis y line= middle, 
+ylabel=$j$ ,xlabel=$   $ ,
+ymin=-1,ymax=2,xmin=-1,xmax=1,every axis plot post/.append style={mark=none},
+grid=both]
+\addplot[blue,thick]shell {octave -q --eval "s=tf('s');g=10/s/(s+1)/(2*s+1)/(4*s+1);[re,im]=nyquist(g);disp([re,im]);"};
+\end{axis}
+\end{tikzpicture}
+
+\section{开环系统Bode图}
+\label{sec:orgf6b7006}
+\subsection{开环系统Bode图}
+\label{sec:orgbd4ae1e}
+\begin{eqnarray*}
+G_o(s) &=  &G_1(s)G_2(s)G_3(s)\cdots Gn(s) \\
+A(\omega) &=&A_1(\omega)A_2(\omega)A_3(\omega)\cdots A_n(\omega)\\
+L(\omega) &=&20\lg A_1(\omega)+\cdots+20\lg A_n(\omega) \\
+\phi(\omega) &=& \phi_1(\omega)+\cdots+\phi_n(\omega)
+\end{eqnarray*}
+
+\begin{itemize}
+\item <2->结论:
+\begin{itemize}
+\item <2->系统的低频段由系统的类型和开环增益  \(K\)  决定,代表稳态性能.由初始斜率可得系统类型.
+\item <3->系统的高频段反映系统的抗噪能力,下降速度要快.
+\end{itemize}
+\end{itemize}
+
+\subsection{开环系统Bode图,例1: \(G_o(s)=\frac{10(s+3)}{s(s+2)(s^2+s+2)}\)}
+\label{sec:orgb6d2cbe}
+绘制Bode图:
+\begin{enumerate}
+\item <2->改写为标准形式:  \(G_o(s)=\frac{7.5(\frac{s}{3}+1)}{s(0.5s+1)(0.5s^2+0.5s+1)}\)
+\item <3->写出转折频率:  \(\omega=\sqrt{2},2,3\)
+\item <4->找到点  \((1,20\lg K)\)  ,其中 \(K=7.5\)
+\item <5->过点  \((1,20\lg K)\)  作斜率为  \(-20dB/dec\)  的直线
+\item <6->找转折点依次做直线即可
+\end{enumerate}
+\subsection{开环系统Bode图,例1(续): \(G_o(s)=\frac{10(s+3)}{s(s+2)(s^2+s+2)}\)}
+\label{sec:orga0d0dc3}
+Bode图	
+
+\begin{tikzpicture}[scale=0.5]
+% $G_o(s)=\frac{10(s+3)}{s(s+2)(s^2+s+2)}$ 
+\begin{semilogxaxis}[
+%axis x line=middle,axis y line= left, 
+ylabel=$L(\omega)/L_a(\omega)$ ,xlabel=$\omega$ ,
+every axis plot post/.append style={mark=none},
+grid=both,
+legend pos=south west,
+ymin=-45,ymax=20,xmin=1,xmax=10]
+\addplot[pink,thick]shell {octave -q --eval "s=tf('s');g=10*(s+3)/s/(s+2)/(2+s+s^2);[m,p,w]=bode(g);disp([w',20*log(m)/log(10)]);"};
+\addplot[red,thick] shell {
+octave -q --eval "k=10;b=[3]';a=[0 2 sqrt(2) sqrt(2)]';s=[1,sqrt(2),2,3,10];
+disp([s;20*log(k*prod(max(s,b),1)./ prod(max(s,a),1))/log(10)]');"
+};
+\legend{$L(\omega)$ , $L_a(\omega)$};
+\end{semilogxaxis}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+% $G_o(s)=\frac{10(s+3)}{s(s+2)(s^2+s+2)}$ 
+\begin{semilogxaxis}[
+%axis x line=middle,axis y line= left, 
+ylabel=$\phi(\omega)$ ,xlabel=$\omega$ ,
+every axis plot post/.append style={mark=none},
+grid=both,
+legend pos=south west,
+ymin=-270,ymax=-90,xmin=1,xmax=10]
+%\draw[blue,thick] (axis cs:0.1,90)--(axis cs:10,90);
+\addplot[violet,thick]shell {octave -q --eval "s=tf('s');g=10*(s+3)/s/(s+2)/(2+s+s^2);[m,p,w]=bode(g);disp([w',p]);"};
+\end{semilogxaxis}
+\end{tikzpicture}
+
+\mode<article>\{ \((1,20\lg K)\) 在  \(L(\omega)\)  上或在其延长线上\}
+\end{document}
