@@ -38,7 +38,8 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:1 \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+# +OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -121,7 +122,7 @@ C &=& ?
  #+ATTR_LATEX: width=\textwidth
 [[file:image/drive.pdf]]
 
-* 非线性
+* 定常/时变/线性/非线性
 ** 几个例子
 \begin{align*}
 c &= u\\
@@ -131,7 +132,48 @@ c &= 0\\
 c &= \sqrt[3]{u} \quad u= x^3 \\
 c+c^2 &= u \quad u=r+c^{2}
 \end{align*}
-** $x'+1 =u$
+** 定常/时变 $r_{\tau}(t)=r(t-\tau)\to c_{\tau}(t)\begin{cases}=c(t-\tau) \\ \neq c(t-\tau)\end{cases}$
+*** 积分限 $c(t)=\int_{-\infty}^{t}r(x)dx$                   :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_col: 0.45
+   :BEAMER_env: block
+   :END:
+\begin{align*}
+c_{\tau}(t)&=\int_{-\infty}^{t}r_{\tau}(x)dx\\
+           &=\int_{-\infty}^{t}r(x-\tau)dx\\
+           &=\int_{-\infty}^{t}r(x-\tau)d(x-\tau)\\
+           &=\int_{-\infty}^{t-\tau}r(z)dz  \qquad (z=x-\tau)\\
+           &=c(t-\tau)
+\end{align*}
+*** 区间 $c(t)=\begin{cases}0 & t\leq 6\\r(t) & t>6\end{cases}$ :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.45
+    :END:
+\begin{align*}
+c_{\tau}(t) &= 
+\begin{cases}
+0 & t\leq 6\\
+r_{\tau}(t) & t>6
+\end{cases}\\
+ &= 
+\begin{cases}
+0 & t\leq 6\\
+r(t-\tau) & t>6
+\end{cases}\\
+c(t-\tau) &=
+\begin{cases}
+0 & t-\tau\leq 6\\
+r(t-\tau) & t-\tau>6
+\end{cases}\\
+&=
+\begin{cases}
+0    & t \leq 6+\tau\\
+r(t-\tau) & t >6+\tau
+\end{cases}
+\end{align*}
+
+** $x'+1 =u$ 线性化
 *** 方法1						      :B_block:BMCOL:
     :PROPERTIES:
     :BEAMER_env: block
@@ -155,7 +197,7 @@ x' &=u-1 \\
 u-1 &= (u-1)|_{u=1}+\Delta u \\
 x' &= \Delta u 
 \end{align*}
-**  $cc'=u$
+**  $cc'=u$ 线性化
 *** 在 $c_0=1,c'_0=1$ 处线性化 				      :B_block:BMCOL:
     :PROPERTIES:
     :BEAMER_env: block
