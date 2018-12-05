@@ -31,8 +31,8 @@
 # +latex_header: \mode<beamer>{\usecolortheme{dove}}
 # +latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
 
-#+TITLE:  补充例子
-#+AUTHOR:    
+#+TITLE:  补充说明
+#+AUTHOR: 邢超
 #+EMAIL:
 #+DATE:
 #+DESCRIPTION:
@@ -251,26 +251,6 @@ x(t) &=& -1
 - $C(s)=\frac{y_0}{s+1}+\frac{1}{s+1}$
 - $C(s)=\frac{y_0}{s-1}+\frac{1}{s+1}$ 
 
-** 终值定理、稳态响应、直流分量
-终值定理计算的是瞬态响应消失后稳态响应中的直流分量，可以结合Fourier变换分析。
-\begin{align*}
-\lim_{s\to 0}sC(s) &= \lim_{s\to 0}G(s)R(s) \\
-\lim_{\omega\to 0}C(j\omega) &= \lim_{\omega\to 0}G(j\omega)R(j\omega)\\
-\end{align*}
-从终值定理的证明过程(用到微分性质 ${\cal L}[\frac{df(t)}{dt}]=sF(s)-f(0)$ ,两边对 $s\to 0$ 取极限)也可以看出，对于 $f(t)=e^{\lambda t}$ ，
-\begin{align*}
-\lim_{s\to 0}{\cal L} [\frac{df(t)}{dt}]&=\lim_{s\to 0}\frac{\lambda}{s-\lambda}=
-\begin{cases}
--f(0)  & \lambda\neq 0\\
-0   & \lambda=0
-\end{cases}\\
-\lim_{s\to 0} sF(s) &=
-\begin{cases}
-0  & \lambda\neq 0\\
-f(0)   & \lambda=0
-\end{cases}
-\end{align*}
-即：对于 $e^{\lambda t},(\lambda\neq0)$ 的分量，无论 $\lambda>0,\lambda<0$ 利用终值定理计算时均为0。
 ** 正反馈与离散系统稳定性
 \begin{eqnarray*}
 x(n+1)-kx(n) &=& r(n) \\
@@ -334,6 +314,39 @@ E &=& e^{-\frac{t}{m}}
 m \dot{E} &=& -E +m\\
 E &=& (1-m)e^{-\frac{t}{m}}+m
 \end{eqnarray*}
+
+** 终值定理、稳态响应、直流分量
+终值定理计算的是瞬态响应消失后稳态响应中的直流分量，可以结合Fourier变换分析。
+\begin{align*}
+\lim_{s\to 0}sC(s) &= \lim_{s\to 0}G(s)R(s) \\
+\lim_{\omega\to 0}C(j\omega) &= \lim_{\omega\to 0}G(j\omega)R(j\omega)\\
+\end{align*}
+从终值定理的证明过程(用到微分性质 ${\cal L}[\frac{df(t)}{dt}]=sF(s)-f(0)$ ,两边对 $s\to 0$ 取极限)也可以看出，对于 $f(t)=e^{\lambda t}$ ，
+\begin{align*}
+\lim_{s\to 0}{\cal L} [\frac{df(t)}{dt}]&=\lim_{s\to 0}\frac{\lambda}{s-\lambda}=
+\begin{cases}
+-f(0)  & \lambda\neq 0\\
+0   & \lambda=0
+\end{cases}\\
+\lim_{s\to 0} sF(s) &=
+\begin{cases}
+0  & \lambda\neq 0\\
+f(0)   & \lambda=0
+\end{cases}
+\end{align*}
+即：对于 $e^{\lambda t},(\lambda\neq0)$ 的分量，无论 $\lambda>0,\lambda<0$ 利用终值定理计算时均为0。$\lambda=0$ 时为直流分量， $f(t)$ 为常数。
+** 偶极子
+如果一个闭环零点 $z=-b$ 与一个位于左半平面的闭环极点 $p=-a$ 相距很近($|a-b|<<1$)，同时距离其它闭环极点相对较远 $|b-a|<<|\lambda_i+a|$ ，则称它们为偶极子。
+\begin{align*}
+\frac{s+b}{s+a}G(s) & = (1+\frac{b-a}{s+a})G(s)\\
+&=G(s)+\frac{b-a}{s+a}G(s)\\
+&=G(s)+\frac{b-a}{s+a}G(-a)+\sum_{i=1}^n \frac{\left.\frac{b-a}{s+a}G(s)(s-\lambda_i)\right|_{s=\lambda_i}}{s-\lambda_i}
+\end{align*}
+其中 $\lambda_i$ 为 $G(s)$ 的极点， （未考虑重根的情况，但其与此类似）。当 $-a,-b$ 满足偶极子条件时有：
+\begin{align*}
+\max_{i}\frac{|b-a|}{|\lambda_i+a|} &\approx 0\\
+\frac{s+b}{s+a}G(s) & \approx G(s) \\
+\end{align*}
 
 * Fourier变换
 ** Fourier级数(三角形式)
@@ -444,7 +457,6 @@ C(z) &=\frac{1}{3(z-1)}-\frac{1}{z-2}+\frac{2}{3(z-4)} \\
 C(z) &=\frac{z}{3(z-1)}-\frac{z}{2(z-2)}+\frac{z}{6(z-4)}\\
  &=\sum_{n=0}^{\infty}[\frac{1}{3}z^{-n}-\frac{1}{2}2^n z^{-n}+\frac{1}{6}4^n z^{-n}] 
 \end{align*}
-
 
 ** $C_{n+2}+3C_{n+1}+2C_{n}=0$ 求 $C(0)=0,C(1)=1$ 时的响应
 部分分式分解有两种，可以看到，第一种分解计算时，如果 $n$ 的取值范围没有限定好，会出现错误。（如：求和时设定 $n$ 从1开始。）

@@ -1,4 +1,4 @@
-% Created 2018-12-04 Tue 11:42
+% Created 2018-12-05 Wed 17:32
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -32,11 +32,12 @@
 \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 \setbeamercovered{transparent}
 \usetheme{default}
+\author{邢超}
 \date{}
-\title{补充例子}
+\title{补充说明}
 \hypersetup{
- pdfauthor={},
- pdftitle={补充例子},
+ pdfauthor={邢超},
+ pdftitle={补充说明},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 26.1 (Org mode 9.1.9)}, 
@@ -53,8 +54,8 @@
 
 
 \section{关于反馈}
-\label{sec:org24717f2}
-\begin{frame}[label={sec:orge6115f9}]{反馈与方程（静态）}
+\label{sec:orgd419580}
+\begin{frame}[label={sec:org1997c7c}]{反馈与方程（静态）}
 \begin{tikzpicture}[node distance=2em,auto,>=latex', thick]
 %\path[use as bounding box] (-1,0) rectangle (10,-2); 
 \path[->] node[] (r) {A}; 
@@ -77,7 +78,7 @@ C &=& ?
 \end{eqnarray}
 \end{frame}
 
-\begin{frame}[label={sec:org67b3776}]{笑话：过桥}
+\begin{frame}[label={sec:org3ba59a5}]{笑话：过桥}
 路人甲要过桥，发现桥很长，问桥边路人乙桥长多少，乙说：50米。甲走上桥后不一会儿，乙追了上来，说，桥长100米，你要是过了50米就转弯，就掉下去了。
 
 \begin{center}
@@ -85,11 +86,11 @@ C &=& ?
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org1f0a089}]{开环控制：笑话：不听话的儿子}
+\begin{frame}[label={sec:org637b7bb}]{开环控制：笑话：不听话的儿子}
 \end{frame}
-\begin{frame}[label={sec:org44a7fd4}]{开环控制：声东击西}
+\begin{frame}[label={sec:org6d9ca78}]{开环控制：声东击西}
 \end{frame}
-\begin{frame}[label={sec:orga615a44}]{操纵杆}
+\begin{frame}[label={sec:org8b84f5d}]{操纵杆}
 飞行员拉动操纵杆，飞机机头上扬，结果减弱了拉动操纵杆的效果，即：拉杆->A增大->机头上扬->A减小
 
 \begin{center}
@@ -97,7 +98,7 @@ C &=& ?
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org63986ac}]{油门、刹车}
+\begin{frame}[label={sec:orgf095464}]{油门、刹车}
 司机踩刹车，汽车减速，司机因为惯性会有前冲的趋势，易导致踩刹车的力度变大。
 
 司机踩油门，汽车加速，司机因为惯性会有后仰的趋势，易导致踩油门的力度变小。
@@ -108,8 +109,8 @@ C &=& ?
 \end{frame}
 
 \section{定常/时变/线性/非线性}
-\label{sec:org82b3238}
-\begin{frame}[label={sec:org1bf1433}]{几个例子}
+\label{sec:orga215eb1}
+\begin{frame}[label={sec:org9e35649}]{几个例子}
 \begin{align*}
 c &= u\\
 c &= u+1\\
@@ -119,7 +120,7 @@ c &= \sqrt[3]{u} \quad u= x^3 \\
 c+c^2 &= u \quad u=r+c^{2}
 \end{align*}
 \end{frame}
-\begin{frame}[label={sec:org8afdccb}]{定常/时变 \(r_{\tau}(t)=r(t-\tau)\to c_{\tau}(t)\begin{cases}=c(t-\tau) \\ \neq c(t-\tau)\end{cases}\)}
+\begin{frame}[label={sec:org9a09ae3}]{定常/时变 \(r_{\tau}(t)=r(t-\tau)\to c_{\tau}(t)\begin{cases}=c(t-\tau) \\ \neq c(t-\tau)\end{cases}\)}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{block}{积分限 \(c(t)=\int_{-\infty}^{t}r(x)dx\)}
@@ -161,7 +162,7 @@ r(t-\tau) & t >6+\tau
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org7dcd4e2}]{\(x'+1 =u\) 线性化}
+\begin{frame}[label={sec:orgbfb7010}]{\(x'+1 =u\) 线性化}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{block}{方法1}
@@ -186,7 +187,7 @@ x' &= \Delta u
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org31c0109}]{\(cc'=u\) 线性化}
+\begin{frame}[label={sec:orgf2a3d5c}]{\(cc'=u\) 线性化}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{block}{在 \(c_0=1,c'_0=1\) 处线性化}
@@ -213,8 +214,8 @@ t+\Delta c+t\Delta c'+\Delta c\Delta c' &=u \\
 \end{columns}
 \end{frame}
 \section{稳定性}
-\label{sec:orgb1a1e4d}
-\begin{frame}[label={sec:org30a79be}]{稳定性与平衡点}
+\label{sec:orgff521a2}
+\begin{frame}[label={sec:org2d36129}]{稳定性与平衡点}
 \begin{eqnarray*}
 \dot x(t)-x(t) & = & r(t)\\
 r &=& 1 \\
@@ -229,7 +230,7 @@ x(t) &=& -1
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org91aacdb}]{信号、系统、零极点相消}
+\begin{frame}[label={sec:org94588f0}]{信号、系统、零极点相消}
 考虑两种情况：
 
 \begin{itemize}
@@ -246,7 +247,81 @@ x(t) &=& -1
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org7afcec9}]{终值定理、稳态响应、直流分量}
+\begin{frame}[label={sec:org47b5a56}]{正反馈与离散系统稳定性}
+\begin{eqnarray*}
+x(n+1)-kx(n) &=& r(n) \\
+r(n) & = & 0 \\
+x(n) &=& x(0)k^n
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}[label={sec:orgf1e2c48}]{正反馈与延迟系统稳定性}
+\begin{eqnarray*}
+x(t+a)-kx(t) &=& r(t) \\
+r(t) &=& 0 \\
+x(na) &=& x(0)k^{n}
+\end{eqnarray*}
+\end{frame}
+
+\section{卷积}
+\label{sec:org306824f}
+\begin{frame}[label={sec:orgc8bece1}]{卷积与脉冲响应}
+\begin{itemize}
+\item 卷积
+\begin{eqnarray*}
+x(t)*y(t) &=& \int_{-\infty}^{\infty}x(\tau)y(t-\tau)d\tau \\
+x(t)*\delta(t)& = & x(t) \\
+\end{eqnarray*}
+\end{itemize}
+\begin{itemize}
+\item 脉冲响应
+设线性时不变(Linear Time Invariant,LTI)系统脉冲响应为 \(h(t)\) ：
+\begin{eqnarray*}
+h(t) &=& LTI[\delta(t)]\\
+h(t-\tau) &=& LTI[\delta(t-\tau)]\\
+\end{eqnarray*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgb554204}]{卷积与系统响应}
+设输入信号为 \(x(t)\) 时，输出为 \(y(t)\) :
+\begin{eqnarray*}
+y(t) & =& LTI[x(t)]\\
+     &=& LTI\left[\int_{-\infty}^{\infty}x(\tau)\delta(t-\tau)d\tau\right] \\
+     &=& \int_{-\infty}^{\infty} LTI[x(\tau)\delta(t-\tau)]d\tau \\
+     &=& \int_{-\infty}^{\infty} x(\tau)LTI[\delta(t-\tau)]d\tau \\
+     &=& \int_{-\infty}^{\infty} x(\tau) h(t-\tau)d\tau \\
+     &=& x(t) * h(t)
+\end{eqnarray*}
+\end{frame}
+
+\section{误差}
+\label{sec:orgadae547}
+\begin{frame}[label={sec:org212d288}]{阶跃输入}
+\begin{eqnarray*}
+ m \dot{v} & =& f\\
+ m \dot{v} & =& r-v\\
+ m \dot{v} & =& 1-v\\
+ m \frac{d}{dt}(v-1) & =& 1-v\\
+ m \frac{d}{dt}(1-v) & =& -(1-v)\\
+m \dot{E} &=& -E \\
+E &=& e^{-\frac{t}{m}}
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}[label={sec:org08200be}]{斜坡输入}
+\begin{eqnarray*}
+ m \dot{v} & =& f\\
+ m \dot{v} & =& r-v\\
+ m \dot{v} & =& t-v\\
+ m \frac{d}{dt}(v-t) +m & =& t-v\\
+ m \frac{d}{dt}(t-v) & =& -(t-v) +m\\
+m \dot{E} &=& -E +m\\
+E &=& (1-m)e^{-\frac{t}{m}}+m
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}[label={sec:org528eeaa}]{终值定理、稳态响应、直流分量}
 终值定理计算的是瞬态响应消失后稳态响应中的直流分量，可以结合Fourier变换分析。
 \begin{align*}
 \lim_{s\to 0}sC(s) &= \lim_{s\to 0}G(s)R(s) \\
@@ -265,85 +340,25 @@ x(t) &=& -1
 f(0)   & \lambda=0
 \end{cases}
 \end{align*}
-即：对于 \(e^{\lambda t},(\lambda\neq0)\) 的分量，无论 \(\lambda>0,\lambda<0\) 利用终值定理计算时均为0。
+即：对于 \(e^{\lambda t},(\lambda\neq0)\) 的分量，无论 \(\lambda>0,\lambda<0\) 利用终值定理计算时均为0。\(\lambda=0\) 时为直流分量， \(f(t)\) 为常数。
 \end{frame}
-\begin{frame}[label={sec:org4bce580}]{正反馈与离散系统稳定性}
-\begin{eqnarray*}
-x(n+1)-kx(n) &=& r(n) \\
-r(n) & = & 0 \\
-x(n) &=& x(0)k^n
-\end{eqnarray*}
-\end{frame}
-
-\begin{frame}[label={sec:org0b4d67d}]{正反馈与延迟系统稳定性}
-\begin{eqnarray*}
-x(t+a)-kx(t) &=& r(t) \\
-r(t) &=& 0 \\
-x(na) &=& x(0)k^{n}
-\end{eqnarray*}
-\end{frame}
-
-\section{卷积}
-\label{sec:orgab68dcb}
-\begin{frame}[label={sec:orga41e410}]{卷积与脉冲响应}
-\begin{itemize}
-\item 卷积
-\begin{eqnarray*}
-x(t)*y(t) &=& \int_{-\infty}^{\infty}x(\tau)y(t-\tau)d\tau \\
-x(t)*\delta(t)& = & x(t) \\
-\end{eqnarray*}
-\end{itemize}
-\begin{itemize}
-\item 脉冲响应
-设线性时不变(Linear Time Invariant,LTI)系统脉冲响应为 \(h(t)\) ：
-\begin{eqnarray*}
-h(t) &=& LTI[\delta(t)]\\
-h(t-\tau) &=& LTI[\delta(t-\tau)]\\
-\end{eqnarray*}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[label={sec:org1d02ea2}]{卷积与系统响应}
-设输入信号为 \(x(t)\) 时，输出为 \(y(t)\) :
-\begin{eqnarray*}
-y(t) & =& LTI[x(t)]\\
-     &=& LTI\left[\int_{-\infty}^{\infty}x(\tau)\delta(t-\tau)d\tau\right] \\
-     &=& \int_{-\infty}^{\infty} LTI[x(\tau)\delta(t-\tau)]d\tau \\
-     &=& \int_{-\infty}^{\infty} x(\tau)LTI[\delta(t-\tau)]d\tau \\
-     &=& \int_{-\infty}^{\infty} x(\tau) h(t-\tau)d\tau \\
-     &=& x(t) * h(t)
-\end{eqnarray*}
-\end{frame}
-
-\section{误差}
-\label{sec:org1a4048c}
-\begin{frame}[label={sec:orgc7b2500}]{阶跃输入}
-\begin{eqnarray*}
- m \dot{v} & =& f\\
- m \dot{v} & =& r-v\\
- m \dot{v} & =& 1-v\\
- m \frac{d}{dt}(v-1) & =& 1-v\\
- m \frac{d}{dt}(1-v) & =& -(1-v)\\
-m \dot{E} &=& -E \\
-E &=& e^{-\frac{t}{m}}
-\end{eqnarray*}
-\end{frame}
-
-\begin{frame}[label={sec:orgedaff0e}]{斜坡输入}
-\begin{eqnarray*}
- m \dot{v} & =& f\\
- m \dot{v} & =& r-v\\
- m \dot{v} & =& t-v\\
- m \frac{d}{dt}(v-t) +m & =& t-v\\
- m \frac{d}{dt}(t-v) & =& -(t-v) +m\\
-m \dot{E} &=& -E +m\\
-E &=& (1-m)e^{-\frac{t}{m}}+m
-\end{eqnarray*}
+\begin{frame}[label={sec:orgca95731}]{偶极子}
+如果一个闭环零点 \(z=-b\) 与一个位于左半平面的闭环极点 \(p=-a\) 相距很近(\(|a-b|<<1\))，同时距离其它闭环极点相对较远 \(|b-a|<<|\lambda_i+a|\) ，则称它们为偶极子。
+\begin{align*}
+\frac{s+b}{s+a}G(s) & = (1+\frac{b-a}{s+a})G(s)\\
+&=G(s)+\frac{b-a}{s+a}G(s)\\
+&=G(s)+\frac{b-a}{s+a}G(-a)+\sum_{i=1}^n \frac{\left.\frac{b-a}{s+a}G(s)(s-\lambda_i)\right|_{s=\lambda_i}}{s-\lambda_i}
+\end{align*}
+其中 \(\lambda_i\) 为 \(G(s)\) 的极点， （未考虑重根的情况，但其与此类似）。当 \(-a,-b\) 满足偶极子条件时有：
+\begin{align*}
+\max_{i}\frac{|b-a|}{|\lambda_i+a|} &\approx 0\\
+\frac{s+b}{s+a}G(s) & \approx G(s) \\
+\end{align*}
 \end{frame}
 
 \section{Fourier变换}
-\label{sec:org6b5a192}
-\begin{frame}[label={sec:orgcad1cd3}]{Fourier级数(三角形式)}
+\label{sec:org5421d11}
+\begin{frame}[label={sec:org08639a5}]{Fourier级数(三角形式)}
 \begin{eqnarray*}
 f_T(t) & =& \frac{a_0}{2}+\sum_{n=1}^{\infty}(a_n\cos(n\omega t)+b_n\sin(n\omega t))  
 \end{eqnarray*}
@@ -356,13 +371,13 @@ b_n &=& \frac{2}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f_T(t)\sin(n\omega t)dt \\
 \end{eqnarray*}
 \end{frame}
 
-\begin{frame}[label={sec:orgaa8dad2}]{Fourier级数(复指数形式)}
+\begin{frame}[label={sec:orgff97188}]{Fourier级数(复指数形式)}
 \begin{eqnarray*}
 f_T(t) & = & \sum_{n=-\infty}^{+ \infty}c_n e^{j\omega_n t} \\
 f_T(t) & = & \frac{1}{T}\sum_{n=-\infty}^{+\infty}\left[ \int_{- \frac{T}{2} }^{\frac{T}{2}}f_T(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t} 
 \end{eqnarray*}
 \end{frame}
-\begin{frame}[label={sec:orgf0e1d42}]{Fourier积分}
+\begin{frame}[label={sec:org9dbf3b0}]{Fourier积分}
 \begin{eqnarray*}
 \lim_{T\rightarrow+\infty}f_T(t) &=& f(t) \\
 f(t) & = & \lim_{T\rightarrow+\infty}\frac{1}{T}\sum_{n=-\infty}^{+\infty}\left[ \int_{- \frac{T}{2} }^{\frac{T}{2}}f_T(\tau)e^{-j\omega_n\tau}d\tau\right] e^{j\omega_n t} \\
@@ -371,7 +386,7 @@ f(t) & = & \lim_{\Delta\omega\rightarrow 0}\frac{1}{2\pi}\sum_{n=-\infty}^{+ \in
 f(t) & = & \frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega\tau}d\tau\right] e^{j\omega t}d\omega
 \end{eqnarray*}
 \end{frame}
-\begin{frame}[label={sec:orgf1e04e9}]{Fourier变换定义}
+\begin{frame}[label={sec:orga05ce60}]{Fourier变换定义}
 \begin{eqnarray*}
 f(t)& = &\frac{1}{2\pi}\int_{-\infty}^{+\infty}\left[ \int_{-\infty }^{\infty}f(\tau)e^{-j\omega\tau}d\tau\right]e^{j\omega t}d\omega \\
 F(j\omega)&=& \int_{-\infty}^{ + \infty}f(t)e^{-j\omega t}dt \\
@@ -380,7 +395,7 @@ F(j\omega) &=& {\cal F}[f(t)] \\
 f(t) &=& {\cal F}^{-1}[F(j\omega)] 
 \end{eqnarray*}
 \end{frame}
-\begin{frame}[label={sec:orgf561908}]{常用函数的Fourier变换}
+\begin{frame}[label={sec:org61d9d90}]{常用函数的Fourier变换}
 \begin{itemize}
 \item 单位脉冲函数 \(f(t)=\delta(t) \rightarrow   F(j\omega)=1\)
 \item 阶跃函数 \(f(t)=A,(t\geq 0) \rightarrow   F(j\omega)=\pi\delta(\omega)+\frac{1}{j\omega}\)
@@ -388,7 +403,7 @@ f(t) &=& {\cal F}^{-1}[F(j\omega)]
 \item 正弦函数 \(f(t)=\sin(\omega_0 t)\rightarrow F(j\omega)=\pi[\delta(\omega+\omega_0)+\delta(\omega-\omega_0)]\)
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org070cfef}]{性质}
+\begin{frame}[label={sec:orgaac9f9c}]{性质}
 \begin{itemize}
 \item 线性: \(f(t)=af_1(t)+bf_2(t)\rightarrow  F(j\omega)=aF_1(j\omega)+bF_2(j\omega)\),其中 \(a,b\) 为常数
 \item 时移: \(g(t)=f(t\pm a) \rightarrow  G(s)=F(j\omega)e^{\pm j\omega a}\)
@@ -401,8 +416,8 @@ f(t) &=& {\cal F}^{-1}[F(j\omega)]
 \end{frame}
 
 \section{连续系统频域分析}
-\label{sec:org07c2a81}
-\begin{frame}[label={sec:orgd579de1}]{基本信号 \(e^{j\omega t}\) 通过线性系统}
+\label{sec:org3229d67}
+\begin{frame}[label={sec:orge879e41}]{基本信号 \(e^{j\omega t}\) 通过线性系统}
 \begin{eqnarray*}
 f(t) & =& e^{j\omega t},\qquad -\infty < t < \infty \\
 H(j\omega) &=& \int_{-\infty}^{\infty}h(t)e^{-j\omega t}dt \\
@@ -414,7 +429,7 @@ y_f(t) &=& e^{j\omega t}*h(t) \\
        &=& |H(j\omega)|e^{j(\omega t+\phi(\omega))}
 \end{eqnarray*}
 \end{frame}
-\begin{frame}[label={sec:orgf4f6016}]{正弦（余弦）信号通过线性系统}
+\begin{frame}[label={sec:orgf120399}]{正弦（余弦）信号通过线性系统}
 \begin{eqnarray*}
 f(t) & =& A\cos\omega t , \qquad  -\infty<t<\infty \\
      &=&\frac{A}{2}(e^{j\omega t}+e^{-j\omega t}) \\
@@ -423,7 +438,7 @@ y_f(t) &=& \frac{A}{2}(H(j\omega)e^{j\omega t}+H(-j\omega)e^{-j\omega t}) \\
        &=& A|H(j\omega)|\cos(\omega t+\phi(\omega)) \\
 \end{eqnarray*}
 \end{frame}
-\begin{frame}[label={sec:orgc633ed0}]{非正弦周期信号通过线性系统}
+\begin{frame}[label={sec:org28aaefb}]{非正弦周期信号通过线性系统}
 \begin{eqnarray*}
 f(t) &=& \sum_{n=-\infty}^{\infty}F_n e^{jn\omega t} \\
 F_n &=& \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)e^{-jn\omega t}dt \\
@@ -433,7 +448,7 @@ y_f(t) &=& \sum_{n=-\infty}^{\infty}F_nH(jn\omega)e^{jn\omega t} \\
        &=& F_0+ \sum_{n=-\infty}^{\infty}2|F_n||H(jn\omega)|\cos(jn\omega t+\phi(n\omega)+\theta(n\omega))
 \end{eqnarray*}
 \end{frame}
-\begin{frame}[label={sec:orgf245d9b}]{系统对非周期信号的响应}
+\begin{frame}[label={sec:org6c0430c}]{系统对非周期信号的响应}
 \begin{eqnarray*}
 y(t) & =& f(t)*h(t)\\
 Y(j\omega) &=& F(j\omega)H(j\omega)\\
@@ -442,7 +457,7 @@ H(j\omega) &=& \frac{Y(j\omega)}{F(j\omega)}
 \end{eqnarray*}
 \end{frame}
 
-\begin{frame}[label={sec:org860f2aa}]{利用Fourier变换计算零状态响应}
+\begin{frame}[label={sec:org400ca9b}]{利用Fourier变换计算零状态响应}
 某线性时不变系统的脉冲响应 \(h(t)=(e^{-2t}-e^{-3t})U(t)\) ，求输入信号 \(f(t)=e^{-t}U(t)\) 时系统的零状态响应。其中 \(U(t)\) 为单位阶跃函数。
 
 解：
@@ -457,8 +472,8 @@ y(t) &=& (\frac{1}{2}e^{-t}-e^{-2t}+\frac{1}{2}e^{-3t})U(t)
 \end{frame}
 
 \section{部分分式分解求解差分方程}
-\label{sec:orgaf9940e}
-\begin{frame}[label={sec:org85e5045}]{\(C(n+2)-6C(n+2)+8C(n)=U(n)\) 零状态阶跃响应}
+\label{sec:org9eecfa3}
+\begin{frame}[label={sec:org4ef3270}]{\(C(n+2)-6C(n+2)+8C(n)=U(n)\) 零状态阶跃响应}
 部分分式分解方法有两种,求和限不同，但结果相同。
 \begin{align*}
 (z^2-6z+8)C(z)&=\frac{z}{z-1} \\
@@ -470,8 +485,7 @@ C(z) &=\frac{z}{3(z-1)}-\frac{z}{2(z-2)}+\frac{z}{6(z-4)}\\
 \end{align*}
 \end{frame}
 
-
-\begin{frame}[label={sec:org63318c9}]{\(C_{n+2}+3C_{n+1}+2C_{n}=0\) 求 \(C(0)=0,C(1)=1\) 时的响应}
+\begin{frame}[label={sec:orgf300707}]{\(C_{n+2}+3C_{n+1}+2C_{n}=0\) 求 \(C(0)=0,C(1)=1\) 时的响应}
 部分分式分解有两种，可以看到，第一种分解计算时，如果 \(n\) 的取值范围没有限定好，会出现错误。（如：求和时设定 \(n\) 从1开始。）
 \begin{align*}
 & z^2C(z)-z^2+3(zC(z)-z)+2C(z)=0 \\
@@ -485,15 +499,15 @@ C(n) &= 2(-1)^n-(-2)^n
 \end{align*}
 \end{frame}
 
-\begin{frame}[label={sec:org344b745}]{两种部分分式分解之间的关系}
+\begin{frame}[label={sec:orge8932f5}]{两种部分分式分解之间的关系}
 从上面的例子可以看出，两种部分分式都可以求解出差分方程的解，但一个能够直接利用z反变换求解出时域函数，另一个要用到z变换的性质 \({\cal Z}[e(t-T)]=E(z)z^{-1}\) 。因此，解的范围不同，一个是 \(n\geq 0\) ,一个是 \(n\geq 1\) 。这两个解中包含共同的项（对应于差分方程的特征根），它们在 \(n\leq 1\) 时是一致的。由于第一种方法的解从 \(n=1\) 开始求和，因此它们只是在 \(n=0\) 时相差一个常数。而分析第二种方法的解，可以从其它部分推导出来。
 
 对于n阶差分方程，知道通解、特解与初始条件即可惟一确定其解。而初始条件可以替换为任意n个时刻的值。当两个函数满足通解与特解条件，并且在两个时刻的值相等时，可以断定这两个函数相等，都是方程的解。
 \end{frame}
 
 \section{最少拍控制}
-\label{sec:orgbe1bd48}
-\begin{frame}[label={sec:org6f70033}]{最小拍}
+\label{sec:org9fe6d99}
+\begin{frame}[label={sec:org0b7f4fb}]{最小拍}
 为使误差信号在有限拍内变为0，设 \(X(z)\) 为关于 \(z^{-1}\) 的有限多项式：
 \begin{align*}
 \frac{1}{1+D(z)G(z)}\cdot\frac{A(z)}{(1-z^{-1})^m} &=A(z)X(z) \\
@@ -503,7 +517,7 @@ D(z) &= \frac{1-X(z)(1-z^{-1})^m}{X(z)(1-z^{-1})^m G(z)}
 \end{align*}
 \end{frame}
 
-\begin{frame}[label={sec:org6113a58}]{无纹波最少拍}
+\begin{frame}[label={sec:orgdaaf5aa}]{无纹波最少拍}
 为使误差信号在有限拍内变为0，且控制器 \(D(z)\) 的输出在有限拍内为常值，设 \(X(z)\) 为关于 \(z^{-1}\) 的有限多项式，\(Y(z)\) 为关于 \(z^{-1}\) 的有限多项式，或有一个极点 \(z=1\) 
 \begin{align*}
 \frac{1}{1+D(z)G(z)}\cdot\frac{A(z)}{(1-z^{-1})^m} &=A(z)X(z) \\
@@ -514,7 +528,7 @@ D(z) &= \frac{Y(z)}{X(z)}\\
 \end{align*}
 \end{frame}
 
-\begin{frame}[fragile,label={sec:org55c2b55}]{无纹波最少拍示例}
+\begin{frame}[fragile,label={sec:org480dcf1}]{无纹波最少拍示例}
  \begin{align*}
 G(z) &=\frac{3.68z^{-1}(1+0.717z^{-1})}{(1-z^{-1})(1-0.368z^{-1})} \\
 R(z) &=\frac{Tz^{-1}}{(1-z^{-1})^2} \\
