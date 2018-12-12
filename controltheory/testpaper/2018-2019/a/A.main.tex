@@ -1,0 +1,249 @@
+
+\question(20分) {已知系统结构图如图所示。求解前向通道传递函数{\Large $\frac{C(s)}{E(s)}$}与系统闭环传递函数{\Large $\frac{C(s)}{R(s)}$}。
+	
+	\includegraphics{image/diagram-2.pdf}
+	
+	\onlyanswer{
+		解：
+		
+		\begin{eqnarray*}
+			\frac{C(s)}{E(s)}&=&\frac{2G_1(s)G_2(s)+G_1(s)+G_2(s)}{1-G_1(s)G_2(s)}\\
+			\frac{C(s)}{R(s)}&=&\frac{G(s)}{1-G(s)H(s)}\\
+			&=&\frac{2G_1(s)G_2(s)+G_1(s)+G_2(s)}{1-G_1(s)G_2(s)-H(s)[2G_1(s)G_2(s)+G_1(s)+G_2(s)]}
+		\end{eqnarray*}
+	}
+}
+
+
+\onlytest{\vskip 3em}
+
+\onlytest{\newpage}
+
+\question(20分){已知某系统的结构图如图所示，分析是否可选取$k\in\mathbb{R}$的值，使系统在$r(t)=t^2$作用时，稳态误差$e_{ss}<0.5$ 。若是，则给出$k$的取值范围。
+
+\includegraphics[scale=1.3]{image/diagram-1.pdf}
+
+\onlyanswer
+{
+解：\\
+\begin{eqnarray}
+G(s) &=& \frac{k}{s}\cdot\frac{s+1}{s(s+3)(s+6)}\\
+\Phi(s)&=&\frac{G(s)}{1+G(s)}\\
+\frac{E(s)}{R(s)}&=&\frac{1}{1+G(s)}
+\end{eqnarray}
+首先考虑系统稳定性：
+$$D(s)=S^2(s+3)(s+6)+k(s+1)=s^4+9s^3+18s^2+ks+k$$
+
+Routh表：
+
+\begin{tabular}{cccc}
+	$s^4$: & 1 & 18 & k \\
+	$s^3$: & 9 & k &\\
+	$s^2$: & $18-\frac{k}{9}$ & k &\\
+	$s^1$: & $k-\frac{9k}{18-\frac{k}{9}}$ & &\\
+	$s^0$: & k & &
+\end{tabular}
+
+得：$$0<k<81$$
+
+然后考虑动态指标$e_{ss}<0.5$：
+
+因为：
+$$R(s)=2\cdot\frac{1}{s^3}$$
+所以：
+$$e_{ss}=\lim_{s\rightarrow 0}{E(s)}=\frac{36}{k}$$
+由$e_{ss}<0.5$得：
+$$k>72$$
+因此，$k$的范围是:
+$$72<k<81$$
+}
+}
+
+
+\question(20分) {单位负反馈系统开环传递函数
+$$G(s)=\frac{K^*(s+3)}{s(s+2)}$$
+求使系统闭环极点的实部均小于$-2$的$K^*$范围；证明系统非实轴上的根轨迹为圆，并求出其圆心与半径。
+
+\onlyanswer{
+解：
+
+系统闭环传递函数为：
+\begin{align*}
+\Phi(s) &=\frac{K^*(s+3)}{K^*(s+3)+s(s+2)}\\
+        &=\frac{K^*(s+3)}{K^*(s+3)+s(s+2)}\\
+\end{align*}
+设$s'=s+2$,将$s=s'-2$代入特征方程，
+\begin{align*}
+D(s') &=K^*(s'-2+3)+(s'-2)(s'-2+2)\\
+      &=s'^2+(K^*-2)s'+K^*2
+\end{align*}
+
+利用Routh判据可知$K^*>2$ 时，闭环极点实部小于$-2$。
+
+设$s=x+yi$，代入特征方程，得：
+\begin{align*}
+K^*(x+yi+3)+(x+yi)(x+yi+1) &=0 \\
+K^*(x+3)+x(x+1)-y^2+K^*yi+xyi+(x+1)yi &=0
+\end{align*}
+实部、虚部分别为0,得：
+\begin{align*}
+K^*(x+3)+x(x+1)-y^2 &=0\\
+K^*y+xy+(x+1)y &=0
+\end{align*}
+消去$K^*$得：
+\begin{align*}
+(2x+1)(x+3)-x(x+1)+y^2&=0\\
+(x+3)^2+y^2&=3
+\end{align*}
+可知，根轨迹为圆，圆心$(-3,0)$,半径$\sqrt{3}$。
+}
+}
+
+\question(20分) {设单位负反馈系统开环传递函数的Nyquist曲线如图所示，且当系统在输入$r(t)=2t$下测得其稳态误差为$0.2$。 求解系统的闭环传递函数；求解系统的截止频率、幅值裕度。
+	
+	\begin{center}
+		\includegraphics{image/diagram-3.pdf}
+	\end{center}
+	
+	
+	\onlyanswer{
+		解：
+		
+		由图可知系统为I型系统，且当$\omega\to\infty$时，$\angle(G(j\omega))=-180^0$;
+		可设系统开环传递函数为：$G(s)=\frac{k}{s(s+a)}$。
+		$$e_{ss}=\lim_{s\to 0}{s\cdot\frac{1}{1+G(s)}}=\frac{2a}{k}=0.2$$
+		由图知，当$\omega\to 0$时，
+        \begin{align*}
+          \lim_{\omega\to 0}\Re[G(j\omega)]&=\lim_{\omega\to 0}\Re[\frac{k}{j\omega(j\omega+a)}]\\
+                                           &=\lim_{\omega\to 0}\Re[\frac{k(-\omega^2-ja\omega)}{\omega^4+a^2\omega^2}]\\
+                                          &=-\frac{k}{a^2}\\
+                              &=-100
+        \end{align*}
+		可得$k=1,a=0.1$,所以开环传递函数：
+        $$
+        G(s)=\frac{1}{s(s+0.1)}
+        $$
+        闭环传递函数：
+        \begin{align*}
+          \Phi(s)&=\frac{G(s)}{1+G(s)}\\
+                 &=\frac{1}{s^2+0.1s+1}
+        \end{align*}
+		
+		截止频率：
+        \begin{align*}
+          \left|\frac{1}{\omega_c(\omega_c+0.1)}\right| &=1 \\
+          \left|\frac{1}{\omega_c^2}\right| &\approx 1 \\
+          \omega_c &\approx 1
+        \end{align*}
+		由Nyquist图可知，幅值裕度：
+		$$h = \infty$$
+
+%		相角裕度：
+%        \begin{align*}
+%          \gamma &=180^\circ-\angle \omega_cj-\angle(\omega_cj+0.1)\\
+%                 &=180^\circ-90^\circ-\arctan10\\
+%                 &=90^\circ-\arctan(10)\\
+%        \end{align*}
+
+	}
+}
+
+
+\question(20分){已知控制系统模型如下：
+	
+	\begin{align*}
+	\dot{u}(t) & =-3u(t)+ke(t) \\
+	\dot{c}(t) & =v(t) \\
+	\dot{v}(t) &= -3v(t)-2c(t)+u(t)\\
+	e(t) &=r(t)- c(t)
+	\end{align*}
+	求系统闭环传递函数  $\Phi(s)=\frac{C(s)}{R(s)}$，其中$Y(s)={\cal L}[y(t)],R(s)={\cal L}[r(t)]$ ；分析是否可改变 $k$ 值使闭环系统稳定，若是，则给出$k\in \mathbb{R}$ 的取值范围；分析是否可改变$k$的值使闭环系统阶跃响应超调量为0，若是，则给出$k\in \mathbb{R}$ 的取值范围。
+	
+	\onlyanswer
+	{
+		
+		答：
+		由系统微分方程组可得：
+		\begin{align*}
+		sU(s) & =-3U(s)+kE(s) \\
+		sC(s) & =V(s) \\
+		sV(s) &= -3V(s)-2C(s)+U(s)\\
+		E(s) &=R(s)- C(s)
+		\end{align*}
+		解得：
+		\begin{align*}
+		G(s) &=\frac{k}{(s+3)(s^2+3s+2)} \\
+		&=\frac{k}{(s+1)(s+2)(s+3)}\\
+		\Phi(s) &=\frac{G(s)}{1+G(s)}\\
+		&= \frac{k}{(s+1)(s+2)(s+3)+k}
+		\end{align*}
+		
+		系统闭环传递函数：
+		$$
+		\Phi(s)=\frac{k}{s^3+6s^2+11s+6+k}
+		$$
+		Routh表：
+		$$
+		\begin{matrix}
+		s^3 & 1 & 11\\
+		s^2 & 6 & 6+k\\
+		s^1 & 10-\frac{k}{6} \\
+		s^0 & 6+k
+		\end{matrix}
+		$$
+		
+		可知，当 $-6<k<60$ 时，系统稳定。
+		
+		根轨迹为：
+		
+		\begin{tikzpicture}[scale=1]
+		\coordinate (o) at (0,0);
+		\coordinate (ox) at (0.5,0);
+		\draw[->] (-3,0) -- (ox);
+		\draw[->] (0,-2) -- (0,2);
+		%\draw (o) node[below left] {$o$};
+		\draw[thick,red] (-1,0) node {$\times$};
+		\draw[thick,red] (-2,0) node {$\times$};
+		\draw[thick,red] (-3,0) node {$\times$};
+		
+		\draw [blue,thick] (-3,0)--(-2,0);
+		\draw [red,thick] (-2,0)--(-1,0);
+		\draw [->,red,thick] (-3,0)--(-3.5,0);
+		\draw [->,blue,thick] (-1,0)--(0.2,0);
+		
+		\draw [->,red,thick](-1.5,0) to [out=90,in=-135](-1,0.9);
+		\draw [->,red,thick](-1.5,0) to [out=-90,in=135](-1,-0.9);
+		\draw [->,blue,thick](-2.5,0) to [out=90,in=-45](-3,0.9);
+		\draw [->,blue,thick](-2.5,0) to [out=-90,in=45](-3,-0.9);
+		
+		
+		\draw [violet,dashed] (-2,0)--+(45:2);
+		\draw [violet,dashed] (-2,0)--+(-45:2);
+		\draw [violet,dashed] (-2,0)--+(135:2);
+		\draw [violet,dashed] (-2,0)--+(-135:2);
+		
+		%\draw (-1,0) node[below=1em] {$-1$};
+		\draw (-1,0) node[xshift=0em ,yshift=0.5em] {$-1$};
+		\draw (-2,0) node[xshift=0em ,yshift=0.5em] {$-2$};
+		\draw (-3,0) node[xshift=0em ,yshift=0.5em] {$-3$};
+		\end{tikzpicture}
+		
+		计算分离点，由
+		$$
+		\frac{d}{ds}(k+(s+1)(s+2)(s+3))=0
+		$$
+		得
+		$$
+		\lambda=-2\pm\frac{1}{\sqrt{3}}
+		$$
+		分别将其代入特征方程，可得：
+		$$
+		\begin{cases}
+		k=\frac{2}{3\sqrt{3}} & (\lambda=-2+\frac{1}{\sqrt{3}})\\
+		k=-\frac{2}{3\sqrt{3}} & (\lambda=-2-\frac{1}{\sqrt{3}})
+		\end{cases}
+		$$
+		因此，当$-\frac{2}{3\sqrt{3}}\leqslant k \leqslant \frac{2}{3\sqrt{3}}$ 时，闭环系统根位于实轴负半轴，即系统超调量为0。
+	}
+}
+
