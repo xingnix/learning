@@ -1,10 +1,12 @@
-<TeXmacs|1.0.7.21>
+<TeXmacs|1.99.6>
 
 <style|<tuple|article|chinese>>
 
 <\body>
   <doc-data|<doc-title|<strong|Note on Randomized Response
-  Technique\<#FF0C\>RRT>>|<doc-author|<\author-data|<author-name|\<#90A2\>\<#8D85\>>>
+  Technique\<#FF0C\>RRT>>|<doc-author|<\author-data|<author-name|Xing Chao>>
+    \;
+  <|author-data>
     \;
   <|author-data>
     \;
@@ -49,11 +51,11 @@
 
   \ \ \ \ \ \ \<#8BBE\>\<#FF1A\>
 
-  <math|P<around*|(|T|)>>:\<#56DE\>\<#7B54\>''\<#662F\>''\<#7684\>\<#6982\>\<#7387\>\<#FF0C\>
+  <math|P<around*|(|T|)>>:\<#56DE\>\<#7B54\>\Q\<#662F\>\Q\<#7684\>\<#6982\>\<#7387\>\<#FF0C\>
 
-  <math|P<around*|(|T\|A|)>>:\<#9009\>\<#62E9\>\<#95EE\>\<#9898\>A\<#5E76\>\<#56DE\>\<#7B54\>''\<#662F\>''\<#7684\>\<#6982\>\<#7387\>,
+  <math|P<around*|(|T\|A|)>>:\<#9009\>\<#62E9\>\<#95EE\>\<#9898\>A\<#5E76\>\<#56DE\>\<#7B54\>\Q\<#662F\>\Q\<#7684\>\<#6982\>\<#7387\>,
 
-  <math|P<around*|(|T\|B|)>>:\<#9009\>\<#62E9\>\<#95EE\>\<#9898\>B\<#5E76\>\<#56DE\>\<#7B54\>''\<#662F\>''\<#7684\>\<#6982\>\<#7387\>,
+  <math|P<around*|(|T\|B|)>>:\<#9009\>\<#62E9\>\<#95EE\>\<#9898\>B\<#5E76\>\<#56DE\>\<#7B54\>\Q\<#662F\>\Q\<#7684\>\<#6982\>\<#7387\>,
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|P<around*|(|T\|A|)>+P<around*|(|T\|B|)>>|<cell|=>|<cell|1>>>>
@@ -67,9 +69,9 @@
 
   \;
 
-  \<#6839\>\<#636E\>\<#4E8C\>\<#9879\>\<#5206\>\<#5E03\>\<#8D28\>\<#53EF\>\<#5F97\>\<#FF1A\>
+  \<#6839\>\<#636E\>\<#4E8C\>\<#9879\>\<#5206\>\<#5E03\>\<#6027\>\<#8D28\>\<#53EF\>\<#5F97\>\<#FF1A\>
 
-  <strong|\<#671F\>\<#671B\>>
+  \<#671F\>\<#671B\>
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|E<around*|[|<wide|P|^><around*|(|T|)>|]>>|<cell|=>|<cell|P<around*|(|T|)>>>|<row|<cell|E<around*|[|<wide|P|^><around*|(|T\|A|)>|]>>|<cell|=>|<cell|P<around*|(|T\|A|)>>>>>
@@ -107,11 +109,11 @@
 
   \ \ \ \ \ \ \<#8BBE\>\<#FF1A\>
 
-  <math|P<around*|(|T|)>>:\<#56DE\>\<#7B54\>''\<#662F\>''\<#7684\>\<#6982\>\<#7387\>\<#FF0C\>
+  <math|P<around*|(|T|)>>:\<#56DE\>\<#7B54\>\Q\<#662F\>\Q\<#7684\>\<#6982\>\<#7387\>\<#FF0C\>
 
-  <math|P<around*|(|T\|A|)>>:\<#9009\>\<#62E9\>\<#95EE\>\<#9898\>A\<#5E76\>\<#56DE\>\<#7B54\>''\<#662F\>''\<#7684\>\<#6982\>\<#7387\>,
+  <math|P<around*|(|T\|A|)>>:\<#9009\>\<#62E9\>\<#95EE\>\<#9898\>A\<#5E76\>\<#56DE\>\<#7B54\>\Q\<#662F\>\Q\<#7684\>\<#6982\>\<#7387\>,
 
-  <math|P<around*|(|T\|B|)>>:\<#9009\>\<#62E9\>\<#95EE\>\<#9898\>B\<#5E76\>\<#56DE\>\<#7B54\>''\<#662F\>''\<#7684\>\<#6982\>\<#7387\>,
+  <math|P<around*|(|T\|B|)>>:\<#9009\>\<#62E9\>\<#95EE\>\<#9898\>B\<#5E76\>\<#56DE\>\<#7B54\>\Q\<#662F\>\Q\<#7684\>\<#6982\>\<#7387\>,
 
   \<#5F97\>\<#FF1A\>
 
@@ -119,9 +121,11 @@
     <tformat|<table|<row|<cell|P<around*|(|T\|A|)>P<around*|(|A|)>+P<around*|(|T\|B|)>P<around*|(|B|)>>|<cell|=>|<cell|P<around*|(|T|)>>>|<row|<cell|P<around*|(|T\|A|)>P<around*|(|A|)>+P<around*|(|T\|B|)><around*|(|1-P<around*|(|A|)>|)>>|<cell|=>|<cell|P<around*|(|T|)>>>|<row|<cell|P<around*|(|T\|A|)>>|<cell|=>|<cell|<frac|P<around*|(|T|)>-P<around*|(|T\|B|)><around*|(|1-P<around*|(|A|)>|)>|P<around*|(|A|)>>>>|<row|<cell|<wide|P|^><around*|(|T<around*|\||A|\|>|)>>|<cell|=>|<cell|<frac|<wide|P|^><around*|(|T|)>-P<around*|(|T\|B|)><around*|(|1-P<around*|(|A|)>|)>|P<around*|(|A|)>>>>>>
   </eqnarray*>
 
-  \ \ \ \ \ \ \ \<#4E8C\>\<#9879\>\<#5206\>\<#5E03\>\<#8D28\>\<#53EF\>\<#5F97\>\<#FF1A\>
+  \;
 
-  <strong|\<#671F\>\<#671B\>>
+  \<#6839\>\<#636E\>\<#4E8C\>\<#9879\>\<#5206\>\<#5E03\>\<#6027\>\<#8D28\>\<#53EF\>\<#5F97\>\<#FF1A\>
+
+  \<#671F\>\<#671B\>
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|E<around*|[|<wide|P|^><around*|(|T<around*|\||A|\|>|)>|]>>|<cell|=>|<cell|P<around*|(|T\|A|)>>>>>
