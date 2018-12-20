@@ -51,7 +51,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -142,22 +142,26 @@ $$h_{ML}=\arg \max_{h \in H}P(D|h)$$
 - 选取 $P(h)$ 服从均匀分布
     - $P(h) = \frac{1}{|H|}$ , 对 $H$ 中的所有 $h$
 
-则：
+** Brute-Force MAP学习算法（续）
+可得：
 
-\begin{equation*}
-P(h|D) = \left\{ \begin{array}{cl}
+\begin{align*}
+P(h|D) &=\frac{P(D|h)P(h)}{P(D)}\\
+&=\frac{P(D|h)P(h)}{\sum_{h_i\in H}P(D|h_i)P(h_i)}\\
+&=\frac{P(D|h)\cdot \frac{1}{|H|}}{\sum_{h_i\in VS_{H,D}}1\times \frac{1}{|H|}+\sum_{h_i\not\in VS_{H,D}}0\times \frac{1}{|H|}}\\
+&=\frac{P(D|h)}{|VS_{H,D}|}\\
+&= \left\{ \begin{array}{cl}
   \frac{1}{|VS_{H,D}|} & \mbox{if $h$ is consistent with $D$} \\
 \\
   0  & \mbox{otherwise} 
 \end{array} \right.
-\end{equation*}
+\end{align*}
 
 ** 贝叶斯法则
 [[./image/bayes-vs.png]]
 
 ** 贝叶斯学习
-
-#+attr_latex: width=0.7\textwidth
+#+attr_latex: :width 0.7\textwidth
 [[./image/vs-map-equivalent.png]]
 
 ** MAP假设和一致学习器
@@ -176,7 +180,7 @@ P(h|D) = \left\{ \begin{array}{cl}
 
 * 极大似然
 ** 学习实值函数
-#+attr_latex: width=0.7\textwidth
+#+attr_latex: :width 0.7\textwidth
 [[./image/bayes-linear.png]]
 
 ** 考虑实值函数 $f$
@@ -213,7 +217,10 @@ h_{ML}  &= &\arg \max_{h \in H}
  考虑从数据中预测概率
   - 训练样例 $\langle x_{i}, d_{i} \rangle$, 其中 $d_{i}$ 为 1 或 0
   - 训练神经网络根据给定的 $x_i$ 输出一个概率
-    $$h_{ML} = \arg \max_{h \in H} \sum_{i=1}^{m} d_{i} \ln h(x_{i}) + (1-d_{i})\ln (1 - h(x_{i}))$$
+     \begin{align*}
+      h_{ML} &= \arg \max_{h \in H} \prod_{i=1}^{m} h(x_{i})^{d_i} (1 - h(x_{i}))^{1-d_{i}}\\
+             &= \arg \max_{h \in H} \sum_{i=1}^{m} d_{i} \ln h(x_{i}) + (1-d_{i})\ln (1 - h(x_{i}))
+     \end{align*}
   - sigmoid单元的权值更新:
     $$w_{jk} \leftarrow w_{jk} +  \Delta w_{jk}$$
     其中：
@@ -340,12 +347,12 @@ P(h_{3}|D)=.3, & P(-|h_{3})=1, & P(+|h_{3})=0 \nonumber
 
 ** 算法
 
-- Naive\_Bayes\_Learn($examples$)
+- Naive_Bayes_Learn($examples$)
   对每个目标值 $v_j$
     - $\hat{P}(v_j) \leftarrow$ 估计 $P(v_j)$
     - 对每个属性 $a$ 的 每个可能 取值 $a_i$ 
        - $\hat{P}(a_i|v_j) \leftarrow$ 估计 $P(a_i|v_j)$ 
-- Classify\_New\_Instance($x$)
+- Classify_New_Instance($x$)
   $$v_{NB} = \arg \max_{v_{j} \in V} \hat{P}(v_{j}) \prod_{a_i \in x} \hat{P}(a_{i} | v_{j})$$
 
 ** 示例
@@ -484,7 +491,7 @@ his own, but because some thugs in Toronto decided
 #+END_EXAMPLE
 
 ** Learning Curve for 20 Newsgroups
-#+attr_latex: width=0.8\textwidth
+#+attr_latex: :width 0.8\textwidth
 [[./image/bayes-text-results.png]]
 
 \centerline{Accuracy vs. Training set size (1/3 withheld for test)}
