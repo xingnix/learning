@@ -336,7 +336,7 @@ f(0)   & \lambda=0
 \end{align*}
 即：对于 $e^{\lambda t},(\lambda\neq0)$ 的分量，无论 $\lambda>0,\lambda<0$ 利用终值定理计算时均为0。$\lambda=0$ 时为直流分量， $f(t)$ 为常数。
 ** 零极点对消的近似
-如果一个零点 $z=-b$ 与一个位于左半平面的极点 $p=-a$ 相距很近($|a-b|<<1$)，同时距离其它极点相对较远 $|b-a|<<|\lambda_i+a|$ ， $\lambda_i$ 为 $G(s)R(s)$ 的极点， （未考虑重根的情况，但其与此类似）：
+若零点 $z=-b$ 与位于左半平面的极点 $p=-a$ 相距很近($|a-b|<<1$)，同时距离其它极点相对较远 $|b-a|<<|\lambda_i+a|$ ， $\lambda_i$ 为 $G(s)R(s)$ 的极点， （未考虑重根的情况，但其与此类似）：
 \begin{align*}
 \frac{s+b}{s+a}G(s)R(s) & = (1+\frac{b-a}{s+a})G(s)R(s)=G(s)R(s)+\frac{b-a}{s+a}G(s)\\
 &=G(s)R(s)+\frac{b-a}{s+a}G(-a)R(-a)+\\
