@@ -1,0 +1,202 @@
+\documentclass{beamer}
+\usepackage{tikz,pgffor}
+\usetikzlibrary{math,matrix}
+\begin{document}
+
+%\def\trans#1#2{\ifnum #1>1 {\ifnum #1<12 { #2}\fi}\fi}%1
+%\def\trans#1#2#3{\ifnum #1>1 \ifnum #1<12 \draw[red!50,->]  (nodea{\xx,\yy})to [out=0,in=-90] node[pos=#2,fill=blue,draw=black] {#3} (nodes); \fi\fi}%2
+\foreach \xx in {1,...,3}{  % coordinate x of convolution center
+\foreach \yy in {1,...,3}{  % coordinate y of convolution center
+\foreach \calculateindex in {1,2,...,9,10}{  %  index number of current convolution step 
+\foreach \motionindex in {0,0.1,...,1,1,1,1,1}{  % create animation of production and summation
+%\foreach \motionindex[count=\pp] in {0,0,0.5,...,1,1}{
+\begin{frame}
+\begin{tikzpicture}[ampersand replacement=\&]
+
+\tikzmath{
+% convolution center coordinate
+int \i;
+int \j;
+int \k;
+int \l;
+int \convcenterx;
+int \convcentery;
+\convcenterx=\xx+1;
+\convcentery=\yy+1;
+int \motionflag;
+if \motionindex==0 || \motionindex==1 then{
+    \motionflag=0;
+}
+else{
+    \motionflag=1;
+};
+%int \currentx;
+%int \currenty;
+%\currentx=(\calculateindex-1)/3+1;
+%\currenty=mod((\calculateindex-1),3)+1;
+% set data matrix
+for \i in {1,...,5}{
+  for \j in {1,...,5}{
+    % submatrix centered at (\convcenterx,\convcentery)
+    if \i >= \convcenterx-1 && \i<=\convcenterx+1 && \j >=\convcentery-1 && \j<=\convcentery+1  then{
+          if (\i-\convcenterx+1)*3+\j-\convcentery+2==\calculateindex then{
+              let \colora=red;
+          }
+          else{
+              let \colora=green!50;
+          };
+          \k=\i-\convcenterx+2;
+          \l=\j-\convcentery+2;
+          if (\k-1)*3+\l==\calculateindex then{
+              let \a{\i,\j}=node[fill=\colora](nodea){$a_{\i,\j}$};
+              let \texta=$a_{\i,\j}$;
+          }
+          else{
+              let \a{\i,\j}=node[fill=\colora]{$a_{\i,\j}$};
+          };
+    }
+    else{
+        let \a{\i,\j}=node{$a_{\i,\j}$};
+    };
+  };
+};
+%
+% set element of output matrix b
+for \i in {1,...,3}{
+    for \j in {1,...,3}{
+        if \i == \xx &&  \j ==\yy  then{
+            if \calculateindex==10 then{
+                let \b{\i,\j}=node[fill=red](nodeb){$c_{\i,\j}$};
+                let \textb=$b_{\i,\j}$;
+            }
+            else{
+                let \b{\i,\j}=node{};
+            };
+        }
+        else {
+            if \i <\xx || (\i==\xx && \j<\yy) then{
+                let \b{\i,\j}=node{$c_{\i,\j}$};
+            }
+            else{
+                 let \b{\i,\j}=node{};
+            };
+        };
+    };
+};
+%
+%convolution kernel
+for \i in {1,...,3}{
+    for \j in {1,...,3}{
+        if (\i-1)*3+\j== \calculateindex then{
+            let \c{\i,\j}=node[fill=red](nodec){$c_{\i,\j}$};
+            let \textc=$c_{\i,\j}$;
+        }
+        else{
+            let \c{\i,\j}=node[fill=blue!50]{$c_{\i,\j}$};
+        };
+    };
+};
+%
+%multiply and addition formular
+int \ix; % coordinate x of kernel matrix term in current production
+int \iy; % coordinate y of kernel matrix term in current production
+int \di; % coordinate x of data matrix term in current production
+int \dj; % coordinate x of data matrix term in current production
+%
+for \i in {1,...,9}{
+   \ix=(\i-1)/3+1;
+   \iy=mod((\i-1),3)+1;
+   \di=\convcenterx-2+\ix;
+   \dj=\convcentery-2+\iy;
+   if \i==\calculateindex then{
+      let \add{\i}=node[fill=red]{$+$};
+      let \prod{\i}=node[fill=red]{$\times$};
+      if  \motionindex==1 then{
+          let \s{\i}=node[fill=red](nodes){$c_{\ix,\iy}$};
+          let \d{\i}=node[fill=red](nodes){$a_{\di,\dj}$};
+      }
+      else{
+          let \add{\i}=node[]{};
+          let \prod{\i}=node[]{};
+          let \s{\i}=node(nodes){};
+          let \d{\i}=node(noded){};
+      };
+   }
+   else{
+      if \i<\calculateindex then{
+          let \add{\i}=node{$+$};
+          let \prod{\i}=node{$\times$};
+          let \s{\i}=node[fill=blue!50]{$c_{\ix,\iy}$};
+          let \d{\i}=node[fill=green!50]{$a_{\di,\dj}$};
+      }
+      else{
+          let \add{\i}=node{};
+          let \prod{\i}=node{};
+          let \s{\i}=node{};
+          let \d{\i}=node{};
+      };
+    };
+};
+}
+\matrix [matrix of nodes] at(0,0)
+{
+\draw \a{1,1} ; \& \draw \a{1,2}; \& \draw \a{1,3} ; \& \draw \a{1,4}; \& \draw \a{1,5} ;\\
+\draw \a{2,1} ; \& \draw \a{2,2}; \& \draw \a{2,3} ; \& \draw \a{2,4}; \& \draw \a{2,5} ;\\
+\draw \a{3,1} ; \& \draw \a{3,2}; \& \draw \a{3,3} ; \& \draw \a{3,4}; \& \draw \a{3,5} ;\\
+\draw \a{4,1} ; \& \draw \a{4,2}; \& \draw \a{4,3} ; \& \draw \a{4,4}; \& \draw \a{4,5} ;\\
+\draw \a{5,1} ; \& \draw \a{5,2}; \& \draw \a{5,3} ; \& \draw \a{5,4}; \& \draw \a{5,5} ;\\
+};
+
+\matrix [matrix of nodes] at(20ex,0)
+{
+\draw \c{1,1} ; \& \draw \c{1,2}; \& \draw \c{1,3} ;\\
+\draw \c{2,1} ; \& \draw \c{2,2}; \& \draw \c{2,3} ;\\
+\draw \c{3,1} ; \& \draw \c{3,2}; \& \draw \c{3,3} ;\\
+};
+
+\matrix [matrix of nodes] at(35ex,0)
+{
+\draw \b{1,1} ; \& \draw \b{1,2}; \& \draw \b{1,3} ;\\
+\draw \b{2,1} ; \& \draw \b{2,2}; \& \draw \b{2,3} ;\\
+\draw \b{3,1} ; \& \draw \b{3,2}; \& \draw \b{3,3} ;\\
+};
+
+\matrix[column sep=0ex,row sep=1ex] at (10ex,30ex)
+{
+\draw \d{1};\&\draw\prod{1};\&\draw\s{1} ;\&\draw\add{1};\&%   
+\draw \d{2};\&\draw\prod{2};\&\draw\s{2} ;\&\draw\add{2};\&%
+\draw \d{3};\&\draw\prod{3};\&\draw\s{3} ;\&\draw\add{3};\&\\
+\draw \d{4};\&\draw\prod{4};\&\draw\s{4} ;\&\draw\add{4};\&%
+\draw \d{5};\&\draw\prod{5};\&\draw\s{5} ;\&\draw\add{5};\&%
+\draw \d{6};\&\draw\prod{6};\&\draw\s{6} ;\&\draw\add{6};\&\\
+\draw \d{7};\&\draw\prod{7};\&\draw\s{7} ;\&\draw\add{7};\&%
+\draw \d{8};\&\draw\prod{8};\&\draw\s{8} ;\&\draw\add{8};\&%
+\draw \d{9};\&\draw\prod{9};\&\draw\s{9} ;\&\ifnum \calculateindex>9 \node(f){$\to$};\fi\\
+};
+
+\ifnum \calculateindex<10 {
+%      \draw (nodea) .. controls +(0,10ex) .. (noded);
+%      \draw (nodec) .. controls +(0,10ex) .. (nodes);
+      \ifnum \motionflag>0 {
+                  \draw[red!50,->]  (nodea)to [out=0,in=-90] node[pos=\motionindex,fill=blue,draw=black] {\texta} (noded);
+                  \draw[red!50,->]  (nodec)to [out=0,in=-90] node[pos=\motionindex,fill=blue,draw=black] {\textc} (nodes);
+      }\fi
+}
+\else{
+%      \draw (f) .. controls +(10ex,0) .. (nodeb);
+      \ifnum \motionflag>0 {
+             \ifnum \motionflag>0{
+                  \draw[red!50,->]  (f)to [out=0,in=-90] node[pos=\motionindex,fill=blue,draw=black] {\textb} (nodeb);
+              }\fi
+      }\fi
+}
+\fi
+%\trans{\pp}{\motionindex}{$a_{\xx,\yy}$}%2
+
+\end{tikzpicture}
+\end{frame}
+}
+}
+}
+}
+\end{document}
