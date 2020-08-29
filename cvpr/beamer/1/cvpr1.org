@@ -1,0 +1,239 @@
+ # +LaTeX_CLASS: article
+#+LATEX_HEADER: \usepackage{etex}
+#+LATEX_HEADER: \usepackage{amsmath}
+ # +LATEX_HEADER: \usepackage[usenames]{color}
+#+LATEX_HEADER: \usepackage{pstricks}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+#+LATEX_HEADER: \usepackage{colortbl}
+#+LATEX_HEADER: \usepackage{yfonts}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \usetikzlibrary{arrows,shapes}
+#+LATEX_HEADER: \usetikzlibrary{intersections}
+#+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+#+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=SimHei]{KaiTi}
+#+LATEX_HEADER: \setCJKmonofont{KaiTi}
+ # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+#+LATEX_HEADER: \usepackage{pst-node}
+#+LATEX_HEADER: \usepackage{pst-plot}
+#+LATEX_HEADER: \psset{unit=5mm}
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+# +LaTeX_CLASS_OPTIONS: [bigger]
+# +latex_header: \usepackage{beamerarticle}
+# +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
+#+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
+#+latex_header: \mode<beamer>{\usecolortheme{dove}}
+#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+
+#+TITLE:  绪论
+#+AUTHOR:    
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+
+#+latex_header:\setbeamercovered{transparent}
+#+BEAMER_FRAME_LEVEL: 1
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+
+
+
+
+
+
+
+* 计算视觉与模式识别历史与发展；
+
+**  什么是计算机视觉？                                              :B_block:
+   :PROPERTIES:
+   :BEAMER_env: block
+   :END:
+- 计算机视觉本质上就是研究视觉感知问题。
+- 视觉感知是指对“环境表达和理解中，对视觉信息的组织、识别和解释的过程
+- 计算机视觉的目标是对环境的表达和理解
+- 核心问题是研究如何对输入的图像信息进行组织，对物体和场景进行识别，进而对图像内容给予解释。
+
+** 计算机视觉历史
+- 1982年马尔( David Marr )《视觉》（Marr, 1982）一书问世
+- 马尔的计算视觉分为三个层次： 计算理论、表达和算法以及算法实现。
+
+** David Marr
+#+attr_latex: width=0.9\textwidth
+[[./image/David Marr at MIT.png]]
+
+** 计算理论(Computational Theory)
+- 视觉不管有多少功能，主要功能在于“从视网膜成像的二维图像来恢复空间物体的可见三维表面形状”，称之为“三维重建”（3D reconstruction）。而且，这种重建过程可以通过计算完成。
+- 图像是物理空间在视网膜上的投影，所以图像信息蕴含了物理空间的内在信息，因此，任何计算视觉计算理论和方法都应该从图像出发，充分挖掘图像所蕴含的对应物理空间的内在属性。
+
+** 表达和算法（Representationand Algorithm）
+- 马尔视觉计算理论的“物体表达”，是指“物体坐标系下的三维形状表达”。同一物体，选用的坐标系不同，表达方式亦不同。
+- 马尔将“观测者坐标系下的三维几何形状表达”称之为“2.5维表达”，物体坐标系下的表达为“三维表达”。
+
+** 批评
+- 认为这种三维重建过程是“纯粹自底向上的过程”（pure bottom-up process），缺乏高层反馈（top-down feedback）；
+- “重建”缺乏“目的性和主动性”。由于不同的用途，要求重建的精度不同，而不考虑具体任务，仅仅“盲目地重建一个适合任何任务的三维模型”似乎不合理。
+
+** 多视几何(Multiple View Geometry)
+- “多视几何”本质上就是研究射影变换下图像对应点之间以及空间点与其投影的图像点之间的约束理论和计算方法的学科。
+- 计算机视觉领域，多视几何主要研究二幅图像对应点之间的对极几何约束（epipolar geometry）, 三幅图像对应点之间的三焦张量约束（tri-focal tensor），空间平面点到图像点，或空间点为平面点投影的多幅图像点之间的单应约束（homography）等。
+
+** 分层三维重建（Stratified 3D Reconstruction）
+- 从多幅二维图像恢复欧几里德空间的三维结构时，不是从图像一步到欧几里德空间下的三维结构，而是分步分层地进行。
+- 先从多幅图像的对应点重建射影空间下的对应空间点(即射影重建：projective reconstruction)，
+- 然后把射影空间下重建的点提升到仿射空间下(即仿射重建：affine reconstruction)，
+- 最后把仿射空间下重建的点再提升到欧几里德空间（或度量空间: metric reconstruction）
+ 
+** 什么是模式识别？                                                :B_block:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :END:
+  模式识别研究的目的是利用计算机对物理对象进行分类，在错误概率最小的条件下，使识别的结果尽量与客观物体相符合。
+
+** 模式识别历史
+- 二十世纪三十年代，Fisher提出统计分类理论，奠定了统计模式识别的基础。
+- 二十世纪六十年代，L.A.Zadeh 提出模糊集理论，模糊模式识别方法得以发展和应用。
+- 二十世纪八十年代，以Hopfield网络、BP网络为代表的神经网络模型导致了人工神经网络的复活，并且在模式识别领域得到了比较广泛的应用。
+- 二十世纪九十年代，小样本学习理论、支持向量机方法被提出（由 Corinna Cortes 和 Vapnik 提出）。
+- 2000年，流形学习被提出（manifold learning）。
+- 2005年，稀疏表示（sparse representation）的方法被提出。
+- 2006年，深度学习的概念被 Hinton 等人提出。Yan Lecun 等人又提出卷积神经网络。
+
+* 计算视觉与模式识别应用介绍；
+
+** 计算机视觉示例
+- 无人驾驶汽车
+- 手写识别
+- 人脸识别
+
+
+** ALVINN [Pomerleau] drives 70 mph on highways
+
+#+attr_latex: width=0.3\textwidth
+[[./image/nl5-interior-front-color.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/alvinn1.png]]
+#+attr_latex: width=0.3\textwidth
+[[./image/alvinn2.png]]
+
+
+** 示例：三维场景重建
+#+attr_latex: width=0.9\textwidth
+[[./image/scene.jpg]]
+
+
+
+
+* 课程简介
+
+** 课程主要内容
+
+- 摄像机标定
+- 图像特征提取
+- 图像配准与拼接
+- 立体视觉
+- 模式识别基础
+- 图像目标识别
+- 运动分析
+
+** 与其它课程关系
+
+- 概率与数理统计
+- 图像处理
+- 人工智能
+- 机器学习
+- 模式识别
+- 心理学
+- 哲学
+
+
+* 相关资源
+** 文献资源
+- TPAMI: IEEE Trans on Pattern Analysis and Machine Intelligence
+- IJCV: International Journal of Computer Vision
+- TIP: IEEE Transactions on Image Processing
+- TNNLS: IEEE Transactions on Neural Networks and learning systems
+- Pattern Recognition
+** 会议
+- ICCV: International Conference on Computer Vision
+- CVPR: International Conference on Computer Vision and Pattern Recognition
+- ECCV: European Conference on Computer Vision
+- ICML: International Conference on Machine Learning
+- NIPS: Annual Conference on Neural Information Processing Systems
+- AAAI: AAAI Conference on Artificial Intelligence
+
+** 课程
+
+
+- https://www.coursera.org/learn/machine-learning  Machine Learning Stanford University (coursera)
+- http://open.163.com/special/opencourse/machinelearning.html  斯坦福大学公开课 ：机器学习课程（网易公开课）
+- http://open.163.com/special/opencourse/learningfromdata.html 加州理工学院公开课：机器学习与数据挖掘
+
+** 资料
+  - https://www.kaggle.com/
+    数据科学竞赛平台、社区
+  - http://philschatz.com/biology-book/  
+    a  freedom book about biology
+  - [[http://www.cs.cmu.edu/~tom/mlbook-chapter-slides.html][http://www.cs.cmu.edu/\textasciitilde tom/mlbook-chapter-slides.html]]
+    Machine Learning slide (LaTeX source )
+  - http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/mlbook/latex-support.html 
+    Machine Learning slide (LaTeX source )
+  - https://learnxinyminutes.com
+    各种程序设计语言快速入门
+  - http://cos.name/
+    统计技术社区
+  - https://databricks.com/
+    Spark在线学习
+
+* 工具
+** C/C++
+   - http://dlib.net 
+   - http://mlpack.org/ 
+   - http://opencv.org/
+   - http://caffe.berkeleyvision.org
+   - http://mxnet.io/
+
+** Lua
+   - http://torch.ch
+   - https://github.com/torchnet/
+
+** Python
+   - http://scikit-image.org/
+   - http://scikit-learn.org/
+   - http://programmingcomputervision.com/
+   - https://www.tensorflow.org
+   - https://pytorch.org/
+
+** Java
+     - http://www.cs.waikato.ac.nz/ml/weka/index.html
+     - http://moa.cms.waikato.ac.nz/
+     - http://spark.apache.org/mllib/
+     - https://mahout.apache.org/
+     - http://www.h2o.ai/
+     - http://deeplearning4j.org/
+     - http://neuroph.sourceforge.net/
+     - http://airbnb.io/aerosolve/
+
+** 科学计算
+- Rstudio(R)
+- Matlab/Octave
+- Scilab
+- Sage
+- Julia
+- Spyder(Python)
+- RapidMiner https://rapidminer.com/
