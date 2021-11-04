@@ -5,7 +5,7 @@
 #+LATEX_HEADER: \usepackage{pstricks}
 #+LATEX_HEADER: \usepackage{pgfplots}
 #+LATEX_HEADER: \usepackage{tikz}
-#+LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
+# +LATEX_HEADER: \usepackage[europeanresistors,americaninductors]{circuitikz}
 #+LATEX_HEADER: \usepackage{colortbl}
 #+LATEX_HEADER: \usepackage{yfonts}
 #+LATEX_HEADER: \usetikzlibrary{shapes,arrows}
@@ -14,9 +14,13 @@
 #+LATEX_HEADER: \usetikzlibrary{intersections}
 #+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
 #+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
-#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
-#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
- # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+# +LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+# +LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=SimHei]{SimSun}
+#+LATEX_HEADER: \setCJKmonofont{KaiTi}
+#+LATEX_HEADER: \usepackage {indentfirst}
+#+LATEX_HEADER: \setlength{\parindent}{2em}
+# +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
 #+LATEX_HEADER: \usepackage{pst-node}
 #+LATEX_HEADER: \usepackage{pst-plot}
 #+LATEX_HEADER: \psset{unit=5mm}
@@ -24,11 +28,11 @@
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 # +LaTeX_CLASS_OPTIONS: [bigger]
-#+latex_header: \usepackage{beamerarticle}
+# +latex_header: \usepackage{beamerarticle}
 # +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
 #+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
 #+latex_header: \mode<beamer>{\usecolortheme{dove}}
-#+latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
+# +latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
 
 #+TITLE:  机器学习的基本概念
 #+AUTHOR:    
@@ -37,7 +41,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -66,7 +70,8 @@
     :PROPERTIES:
     :BEAMER_env: block
     :END:
- 对于某类任务 $T$ 和性能度量 $P$ 如果一个计算机程序在T上以P衡量的性能随着经验E而自我完善，那么我们称这个计算机程序在从经验E学习。
+
+对于某类任务 $T$ 和性能度量 $P$ 如果一个计算机程序在T上以P衡量的性能随着经验E而自我完善，那么我们称这个计算机程序在从经验E学习。
 
 ** 课程主要内容
 
@@ -116,7 +121,7 @@
 [[./image/csec.png]]
 
 - One of 18 learned rules:
-       \begin{verbatim}
+       #+begin_example
        If   No previous vaginal delivery, and
             Abnormal 2nd Trimester Ultrasound, and
             Malpresentation at admission
@@ -124,7 +129,7 @@
        
         Over training data: 26/41 = .63, 
         Over test data: 12/20 = .60
-       \end{verbatim}
+       #+end_example
 
 ** Credit Risk Analysis 
 Data:
@@ -132,7 +137,8 @@ Data:
 [[./image/credit-outcomes.png]]
 
 Rules learned from synthesized data:
-\begin{verbatim}
+
+#+begin_example
 If   Other-Delinquent-Accounts > 2, and
      Number-Delinquent-Billing-Cycles > 1
 Then Profitable-Customer? = No
@@ -142,7 +148,7 @@ If   Other-Delinquent-Accounts = 0, and
      (Income > $30k)  OR  (Years-of-Credit > 3)
 Then Profitable-Customer? = Yes
      [Accept Credit Card application]
-\end{verbatim}
+#+end_example
 
 # * Other Prediction Problems 
 ** Customer purchase behavior:
@@ -160,16 +166,22 @@ Then Profitable-Customer? = Yes
 
 ** ALVINN [Pomerleau] drives 70 mph on highways
 
-#+attr_latex: width=0.3\textwidth
-[[./image/nl5-interior-front-color.png]]
-#+attr_latex: width=0.3\textwidth
-[[./image/alvinn1.png]]
-#+attr_latex: width=0.3\textwidth
-[[./image/alvinn2.png]]
+# #+attr_latex: :width 0.3\textwidth
+# [[./image/nl5-interior-front-color.png]]
+# #+attr_latex: :width 0.3\textwidth
+# [[./image/alvinn1.png]]
+# #+attr_latex: :width 0.3\textwidth
+# [[./image/alvinn2.png]]
+
+
+\includegraphics[width=0.3\textwidth]{./image/nl5-interior-front-color.png}
+\includegraphics[width=0.3\textwidth]{./image/alvinn1.png}
+\includegraphics[width=0.3\textwidth]{./image/alvinn2.png}
+
 
 ** Software that Customizes to User
 \center
-#+attr_latex: width=0.5\textwidth
+#+attr_latex: :width 0.5\textwidth
 [[./image/wisewire.png]]
 
 \centerline{http://www.wisewire.com}
@@ -276,14 +288,12 @@ LMS 权值更新法则(LMS Weight update rule)
 
 ** 最终设计
 \center
-#+attr_latex: width=0.7\textwidth
+#+attr_latex: :width 0.7\textwidth
 [[./image/intro-final-design.png]]
 
 ** 最终设计
 - 执行系统（Performance system），这个模块是用学会的目标函数来解决给定的任务，在此就是对弈西洋跳棋。
-\mode<article>{它把新问题（新一盘棋）的实例作为输入，产生一组解答路线（对弈历史记录）作为输出。
-在这里，执行系统采用的选择下一步走法的策略是由学到的评估函数来决定的。
-所以我们期待它的性能会随着评估函数的日益准确而提高。}
+# \mode<article>{它把新问题（新一盘棋）的实例作为输入，产生一组解答路线（对弈历史记录）作为输出。在这里，执行系统采用的选择下一步走法的策略是由学到的评估函数来决定的。所以我们期待它的性能会随着评估函数的日益准确而提高。}
 
 - 鉴定器（Critic），它以对弈的路线或历史记录作为输入，输出目标函数的一系列训练样例。
 如图所示，每一个训练样例对应路线中的某个棋盘状态和目标函数给这个样例的评估值 $V_{train}$ 。
@@ -296,7 +306,7 @@ LMS 权值更新法则(LMS Weight update rule)
 
 ** 设计过程
 \center
-#+attr_latex: width=0.5\textwidth
+#+attr_latex: :width 0.5\textwidth
 [[./image/intro-f1.png]]
 
 * 机器学习的问题
@@ -353,6 +363,7 @@ LMS 权值更新法则(LMS Weight update rule)
    - https://github.com/torchnet/
 
 ** Python
+   - https://pytorch.org
    - http://scikit-learn.org/
    - https://www.tensorflow.org
    - http://www.deeplearning.net/software/theano/
