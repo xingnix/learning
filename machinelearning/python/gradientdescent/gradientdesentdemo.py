@@ -1,4 +1,5 @@
 import numpy as np
+import os
 class quadraticform:
     def __init__ (self, w, b):
         self.w=w
@@ -17,11 +18,16 @@ for i in range(1000):
              break
 
 def surface(x_interval,y_interval,resolution):
+        surf=''
         for i in range(resolution):
                 s=' '
                 for j in range(resolution):
                         x=x_interval[0]+1.0*i*(x_interval[1]-x_interval[0])/resolution
                         y=y_interval[0]+1.0*j*(y_interval[1]-y_interval[0])/resolution
                         s=s+str( m.f(np.matrix([[x],[y]]))[0,0])+' '
-                print(s)
-#surface([-1,1],[-1,1],100)
+                surf=surf+s+'\n'
+        with open('surface.txt','w') as f:
+            f.write(surf)
+        os.system("gnuplot -e 'set grid;splot \"surface.txt\"  matrix w l; pause -1;'")
+
+surface([-1,1],[-1,1],100)
