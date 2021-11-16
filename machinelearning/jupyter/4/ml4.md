@@ -6,7 +6,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.13.0
+      jupytext_version: 1.13.1
   kernelspec:
     display_name: Python 3
     language: python
@@ -222,7 +222,7 @@ $$
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## 训练线性单元的梯度下降算法
 
-Gradient-Descent( training\\\_examples , $eta$)
+Gradient-Descent( $training\_examples$ , $eta$)
 
 -   $training\_examples$ 中每个训练样例形式为序偶
     $\langle \vec{x}, t \rangle$ ， 其中
@@ -336,18 +336,12 @@ $n_{hidden}$ )
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## 反向传播算法
 
-Backpropagation( training_examples , $\eta$ , $n_{in}$ , $n_{out}$ ,
-$n_{hidden}$ )
-
+Backpropagation( training_examples , $\eta$ , $n_{in}$ , $n_{out}$ ,$n_{hidden}$ )
 -   创建网络: $n_{in}$ 个输入，$n_{hidden}$ 个隐藏单元， $n_{out}$
     个输出
-
 -   初始化所有网络权值为小的随机值（如 $[-0.05,0.05]$ ）
-
 -   在遇到终止条件前:
-
     对于训练样例 training_examples 中的每个 $<\vec{x},\vec{t}>$ :
-
     -   把输入沿网络前向传播
         -   把实例输入网络，并计算网络中每个单元 $u$ 的输出 $o_u$ 。
     -   使误差沿网络反向传播
@@ -400,7 +394,7 @@ $n_{hidden}$ )
 ```
 <!-- #endregion -->
 <!-- #region slideshow={"slide_type": "subslide"} -->
-``## 其它误差函数
+## 其它误差函数
 
 -   为权值增加惩罚项：
     $$E(\vec{w}) \equiv \frac{1}{2}\sum_{d \in D} \sum_{k \in outputs} (t_{kd} -o_{kd})^2 + \gamma \sum_{i,j}w_{ji}^{2}$$
