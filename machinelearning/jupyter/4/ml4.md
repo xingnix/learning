@@ -54,7 +54,6 @@ jupyter:
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## 示例(ALVINN系统)
 
-`\center`{=latex}
 
 ![](./image/alvinn1.png)
 
@@ -62,7 +61,6 @@ jupyter:
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## 示例(ALVINN原理)
 
-`\center`{=latex}
 
 ![](./image/alvinn2.png)
 
@@ -70,7 +68,6 @@ jupyter:
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## 示例(隐藏单元权值)
 
-`\center`{=latex}
 
 ![](./image/alvinn3.png)
 
