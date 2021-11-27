@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{amsmath,xcolor}
+
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\mathd}{\mathrm{d}}
+\newcommand{\tmcolor}[2]{{\color{#1}{#2}}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+\title{Back propogation(Recursive Representation)}
+
+\author{
+  
+  \and
+  Xing Chao
+}
+
+\maketitle
+
+Error of a network can be represented by the formula of each node in the
+output layer.
+\begin{eqnarray*}
+  e & = & \Sigma_{\tau} l_{\tau} (x_{\tau})
+\end{eqnarray*}
+The relationship between derectly connected nodes can be represented as
+\begin{eqnarray*}
+  x_r & = & f_r (\Sigma_{\rho} w_{r \rho} x_{\rho})
+\end{eqnarray*}
+For the contribution of the differential $\mathd x_r$ which is the output of a
+specific node
+\begin{eqnarray}
+  \mathd e & = & l_r' \mathd x_r \nonumber\\
+  \mathd x_p & = & f_p' w_{p q} \mathd x_q  \label{pq}
+\end{eqnarray}
+
+
+A new symbol $\beta$ can be introduced to describe the relationship. As a
+consequence, for the differential $\mathd x_q$ of a specific node q
+\begin{eqnarray*}
+  \mathd e & = & \beta_q \mathd x_q
+\end{eqnarray*}
+According to the relationship between each $\mathd x_{\rho}$ and $\mathd x_q$
+as in eq. (\ref{pq}) as well as the chains from node $q$ to $e$
+\[ \tmcolor{red}{e \longleftarrow \{ x_{\rho} |x_{\rho} \leftarrow x_q \}
+   \longleftarrow x_q} \]
+which means \tmcolor{red}{there is a different chain from $q$ to $e$ through
+different node $\rho$}, there is
+\begin{eqnarray}
+  \mathd e & = & \beta_q \mathd x_q \nonumber\\
+  & = & \sum_{\rho \in \{ \rho | \rho \leftarrow q \}} \beta_{\rho} f_{\rho}'
+  w_{\rho q} \mathd x_q \nonumber\\
+  \beta_q & = & \sum_{\rho \in \{ \rho | \rho \leftarrow q \}} \beta_{\rho}
+  f_{\rho}' w_{\rho q}  \label{beta}
+\end{eqnarray}
+Further simplification can be deduced by multiplying $f'_q$ to eqn
+(\ref{beta})
+\begin{eqnarray}
+  \beta_q f'_q & = & \sum_{\rho \in \{ \rho | \rho \leftarrow q \}}
+  \beta_{\rho} f_{\rho}' w_{\rho q} f'_q \nonumber\\
+  \delta_q & = & \sum_{\rho \in \{ \rho | \rho \leftarrow q \}} \delta_{\rho}
+  w_{\rho q} f'_q  \label{delta}
+\end{eqnarray}
+Eqn (\ref{delta}) is the back propogation rule.
+
+For the differential of $\mathd w_{\tmop{pq}}$, there is relationship between
+two node as
+\begin{eqnarray*}
+  \mathd x_p & = & f_p' \cdot \mathd w_{p q} \cdot x_q
+\end{eqnarray*}
+then
+\begin{eqnarray*}
+  \mathd e & = & \beta_p \mathd x_p\\
+  & = & \beta_p f_p' \cdot \mathd w_{p q} \cdot x_q\\
+  & = & \delta_p \cdot \mathd w_{p q} \cdot x_q
+\end{eqnarray*}
+the update of $w_{p q}$ is
+\begin{eqnarray*}
+  \Delta w_{p q} & = & - \eta \delta_p x_q\\
+  w_{p q} & \leftarrow & w_{p q} + \Delta w_{p q}
+\end{eqnarray*}
+
+
+\
+
+\end{document}
