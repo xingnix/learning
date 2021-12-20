@@ -13,7 +13,7 @@ def gradient_descent_linear_perceptron(training_examples,eta):
 			dw+=eta*(t-o)*np.array(x)
 		wnew=w+dw
 		precision=correct(training_examples,w,'+-')
-		print "precision: ", np.int(precision*100) , "%"
+		print ("precision: ", np.int(precision*100) , "%")
 		if np.linalg.norm(wnew-w)<0.001 or precision==1:
 		   break 
 		w=wnew
@@ -32,7 +32,7 @@ def gradient_descent_sigmoid(training_examples,eta):
 			# dw+=eta*(t-o)*np.array(x)   #maximum likelihood
 		wnew=w+dw
 		precision=correct(training_examples,w,'01')
-		print "precision: ", np.int(precision*100) , "%"
+		print ("precision: ", np.int(precision*100) , "%")
 		if np.linalg.norm(wnew-w)<0.001 or precision==1:
 		   break 
 		w=wnew
@@ -50,7 +50,7 @@ def gradient_descent_sigmoid_like(training_examples,eta):
 			dw+=eta*(t-o2)*o1*(1-o1)*np.array(x)
 		wnew=w+dw
 		precision=correct(training_examples,w,'+-')
-		print "precision: ", np.int(precision*100) , "%"
+		print( "precision: ", np.int(precision*100) , "%")
 		if np.linalg.norm(wnew-w)<0.001 or precision==1:
 		   break 
 		w=wnew
@@ -82,7 +82,7 @@ def run_sigmoid_like():
     gradient_descent_sigmoid_like(training_examples,0.1)
  
 def usage():
-    print "usage: \n python  perception.py  <arg> \n  arg:  linear, sigmoid, sigmoid_like"
+    print ("usage: \n python  perception.py  <arg> \n  arg:  linear, sigmoid, sigmoid_like")
 
 if len(sys.argv)==2:
       if sys.argv[1]=='linear' :
