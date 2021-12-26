@@ -9,7 +9,7 @@ doctest=" sad  sad  bad cry cry cry  happy happy  laugh laugh cry joy"
 vocabulary=set()
 N=0
 for v in ['p','n']:
-    doc[v]=filter(lambda x: x!='',re.split(' +',doc[v]))
+    doc[v]=list(filter(lambda x: x!='',re.split(' +',doc[v])))
     vocabulary=vocabulary|set(doc[v])
     N+=len(doc[v])
 prior={}
@@ -19,11 +19,11 @@ for v in ['p','n']:
     n=len(doc[v])
     conditional[v]={}
     for wk in vocabulary:
-        nk=len(filter(lambda x :x==wk,doc[v]))
-	conditional[v][wk]=1.0*(nk+1)/(n+len(vocabulary))
+        nk=len(list(filter(lambda x :x==wk,doc[v])))
+        conditional[v][wk]=1.0*(nk+1)/(n+len(vocabulary))
 
-print "prior of classes :\n", prior
-print "\n conditional probability of words :\n" ,conditional
+print ("prior of classes :\n", prior)
+print ("\n conditional probability of words :\n" ,conditional)
 
 #----------- test
 r={}
@@ -31,5 +31,5 @@ doctest=filter(lambda x: x!='',re.split(' +',doctest))
 for v in ['p','n']:
     r[v]=prior[v]
     for ai in doctest:
-        r[v]*=conditional[v][ai] if conditional[v].has_key(ai) else 1
-print "\n classificaiton of test doc :\n" , r
+        r[v]*=conditional[v][ai] if ai in conditional[v] else 1
+print ("\n classificaiton of test doc :\n" , r)

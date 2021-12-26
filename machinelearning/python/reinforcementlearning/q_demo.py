@@ -18,4 +18,4 @@ for episode in range(episodes):
 	     Q[s,n]=R[s,n]+Gamma*max(Q[n,R[n,:]>=0])
 	     s=n
 
-
+print(Q)

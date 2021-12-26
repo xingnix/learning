@@ -1,5 +1,6 @@
 import re
 import math
+from functools import reduce
 
 input_string = """
 Day Outlook   Temperature  Humidity   Wind   PlayTennis
@@ -18,11 +19,11 @@ D12 Overcast  Mild         High       Strong Yes
 D13 Overcast  Hot          Normal     Weak   Yes
 D14 Rain      Mild         High       Strong No"""
 
-lines = map(lambda x: filter(lambda y: y != '',
-                             re.split(' +', x))[1:],  # drop first item "Example"
-            filter(lambda x: x != '', re.split('\n', input_string)))
+lines = list(map(lambda x: list(filter(lambda y: y != '',
+                             re.split(' +', x)))[1:],  # drop first item "Example"
+            filter(lambda x: x != '', re.split('\n', input_string))))
 names, data = lines[0], lines[1:]
-data_lines = map(lambda x: dict(zip(names, x)), data)
+data_lines = list(map(lambda x: dict(zip(names, x)), data))
 values = dict(zip(names,
                   reduce(lambda x, y:
                          map(lambda z:
@@ -39,19 +40,19 @@ def init(names,values):
     for t in [P,N]:
         p[t]={}
         for name in names:
-	    p[t][name]={}
+            p[t][name]={}
             for v in values[name]:
-	        p[t][name][v]=0
+                p[t][name][v]=0
     return p
 
 def init_alt(names,values):
     return dict(map(lambda t: 
                      [t,dict(map(lambda name:
-				[name,dict(map(lambda v: 
-						[v,0],
-					       values[name]))],
-			      names))],
-		     [P,N]))
+                                [name,dict(map(lambda v: 
+                                                [v,0],
+                                               values[name]))],
+                              names))],
+                     [P,N]))
 
 # counting occurrance
 def count(prob,data_lines,names,values):
@@ -68,28 +69,28 @@ def classifier(data_lines,target,names,values):
         p_n[sample[target]]+=1
     for t in [P,N]:
         for name in names:
-	    for v in values[name]:
-	        k=len(values[name])
-	        m=k*0.1
+            for v in values[name]:
+                k=len(values[name])
+                m=k*0.1
                 nc=prob[t][name][v]
                 if nc>0:
                    prob[t][name][v]=(nc+m/k)/(p_n[sample[target]]+m)
-	        else:
+                else:
                    prob[t][name][v]=1.0/(len(values[name]))
     prob[target]={P:float(p_n[P])/(p_n[P]+p_n[N]),N:float(p_n[N])/(p_n[P]+p_n[N])}
 
     return prob
 
 def predict(prob,sample,names,target):
-	r={P:1,N:1};
-	for t in [P,N]:
+        r={P:1,N:1};
+        for t in [P,N]:
             r[t]*=prob[target][t]
             for name in names:
-	        r[t]*=prob[t][name][sample[name]]
-	return {P:r[P]/(r[P]+r[N]),N:r[N]/(r[P]+r[N])}
+                r[t]*=prob[t][name][sample[name]]
+        return {P:r[P]/(r[P]+r[N]),N:r[N]/(r[P]+r[N])}
 
 
 prob=classifier(data_lines[5:9],target,names,values)
 for sample in data_lines[5:9]:
   r=predict(prob,sample,names,target)
-  print [r[sample[target]]]
+  print ([r[sample[target]]])

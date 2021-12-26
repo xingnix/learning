@@ -1,4 +1,5 @@
 import re
+from functools import reduce
 
 input_string = """
 Example Sky AirTemp Humidity Wind Water Forecast  EnjoySport
@@ -6,11 +7,11 @@ Example Sky AirTemp Humidity Wind Water Forecast  EnjoySport
 2       Sunny  Warm  High    Strong  Warm  Same   Yes
 3       Rainy  Cold  High    Strong  Warm  Change No
 4       Sunny  Warm  High    Strong  Cool  Change Yes"""
-lines = map(lambda x: filter(lambda y: y != '',
-                             re.split(' +', x))[1:],  # drop first item "Example"
-            filter(lambda x: x != '', re.split('\n', input_string)))
+lines = list(map(lambda x: list(filter(lambda y: y != '',
+                             re.split(' +', x)))[1:],  # drop first item "Example"
+            filter(lambda x: x != '', re.split('\n', input_string))))
 names, data = lines[0], lines[1:]
-data_lines = map(lambda x: dict(zip(names, x)), data)
+data_lines = list(map(lambda x: dict(zip(names, x)), data))
 values = dict(zip(names,
                   reduce(lambda x, y:
                          map(lambda z:

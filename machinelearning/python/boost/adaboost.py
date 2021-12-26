@@ -110,44 +110,42 @@ class adaboost:
         return o
 
 
-print "-------------  xor problem ----------------"
-print "input"
-print x
-print "expect"
-print y
+print ("-------------  xor problem ----------------")
+print ("input")
+print (x)
+print ("expect")
+print (y)
 n = np.shape(x)[0]
 w = np.ones(n, 'double') / n
 m = sigmoid_batch(w, x, y)
 o = m.test(x)
-print "weak learner gradient descent"
-print o
+print ("weak learner gradient descent")
+print (o)
 
 a = adaboost(x, y, 5, sigmoid_batch)
 o = a.test(x)
-print "adaboost (weak learner:gradient descent,batch)"
-print o
+print ("adaboost (weak learner:gradient descent,batch)")
+print (o)
 
 a = adaboost(x, y, 3, sigmoid_single)
 o = a.test(x)
-print "adaboost (weak learner: gradient descent,single)"
-print o
+print ("adaboost (weak learner: gradient descent,single)")
+print (o)
 
-print "------------- another demo problem ----------------"
+print ("------------- another demo problem ----------------")
 
-print "input"
-
-print "input"
-print x1
-print "expect"
-print y1
+print ("input")
+print (x1)
+print ("expect")
+print (y1)
 n1 = np.shape(x1)[0]
 w1 = np.ones(n1, 'double') / n1
 s = decision_stump(w1, x1, y1)
 o1 = s.test(x1)
-print "decision stump"
-print o1
+print ("decision stump")
+print (o1)
 
 a = adaboost(x1, y1, 3, decision_stump)
 o = a.test(x1)
-print "adaboost with decision stump"
-print o
+print ("adaboost with decision stump")
+print (o)

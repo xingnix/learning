@@ -41,18 +41,18 @@ def init(names, values, n):
 def compute_cost(rules, samples):
     names = rules[0].keys()
     n = len(samples)
-    return map(lambda rule:
-               sum(np.double(map(lambda sample:
+    return list(map(lambda rule:
+               sum(np.double(list(map(lambda sample:
                                    reduce(lambda x, y: x and y,
                                             map(lambda name:
                                                   sample[name] == rule[name] or rule[name] == '?',
                                                 names)) == (sample[target] == p),
-                                 samples)))/n,
-        rules)
+                                 samples))))/n,
+        rules))
 
 
 def select(rules, cost, n):
-    cost = map(lambda x: x+0.1, cost)
+    cost = list(map(lambda x: x+0.1, cost))
     c = sum(cost)
     newrules = []
     for i in range(n):
@@ -66,7 +66,7 @@ def select(rules, cost, n):
 
 
 def crossover(rules):
-    names = rules[0].keys()
+    names = list(rules[0].keys())
     l = len(names)
     n = len(rules)
     newrules = []
@@ -83,7 +83,7 @@ def crossover(rules):
 
 
 def mutate(rules):
-    names = rules[0].keys()
+    names = list(rules[0].keys())
     l = len(names)
     n = len(rules)
     for i in range(n):

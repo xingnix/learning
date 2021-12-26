@@ -7,12 +7,12 @@ def predict(data,x,k):
 	return round(1.0*sum(data[sorted(range(data.shape[0]),key=lambda i:np.linalg.norm(data[i,:-1]-x))[0:k],-1])/k)
 
 
-print data1
+print (data1)
 print(predict(data1,1,3))
 print(predict(data1,2,3))
 print(predict(data1,0,3))
 print(predict(data1,-1,3))
 
-print data2
+print (data2)
 print(predict(data2,np.array([1,1]),3))
 print(predict(data2,np.array([0,0]),3))
