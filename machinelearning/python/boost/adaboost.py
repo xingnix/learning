@@ -135,7 +135,7 @@ print (o)
 print ("------------- another demo problem ----------------")
 
 print ("input")
-print (x1)
+print (x1.reshape(-1))
 print ("expect")
 print (y1)
 n1 = np.shape(x1)[0]
