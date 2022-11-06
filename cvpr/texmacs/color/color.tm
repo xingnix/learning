@@ -109,7 +109,7 @@
   </hidden>|<\hidden>
     <tit|RGB\<#989C\>\<#8272\>\<#7A7A\>\<#95F4\>>
 
-    \;
+    <image|img/rgb_lch.png|1par|||>
   </hidden>|<\hidden>
     <tit|CMYK\<#989C\>\<#8272\>\<#7A7A\>\<#95F4\>>
 
@@ -191,15 +191,15 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|c<rsub|1>>|<cell|=>|<cell|log<around*|(|<frac|r<rsub|1>|r<rsub|3>>|)>>>|<row|<cell|c<rsub|2>>|<cell|=>|<cell|log<around*|(|<frac|r<rsub|2>|r<rsub|3>>|)>>>|<row|<cell|<matrix|<tformat|<table|<row|<cell|c<rsub|1>>>|<row|<cell|c<rsub|2>>>>>>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|a<rsub|1>>>|<row|<cell|a<rsub|2>>>>>>+<frac|1|T><matrix|<tformat|<table|<row|<cell|b<rsub|1>>>|<row|<cell|b<rsub|2>>>>>>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|\<#989C\>\<#8272\>\<#65B9\>\<#5411\>>
 
     <space|1em><image|img/color_direction.png|0.9par|||>
-  </shown>|<\hidden>
+  </hidden>|<\shown>
     <tit|\<#989C\>\<#8272\>\<#6052\>\<#5E38\>\<#6027\>>
 
-    \;
-  </hidden>|<\hidden>
+    <space|2em><image|img/color_constancy.png|0.8par|||>
+  </shown>|<\hidden>
     <tit|\<#6709\>\<#9650\>\<#7EF4\>\<#7EBF\>\<#6027\>\<#6A21\>\<#578B\>>
 
     <\eqnarray*>
