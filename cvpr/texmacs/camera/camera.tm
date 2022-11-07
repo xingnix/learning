@@ -19,6 +19,16 @@
 
       \;
     </hidden>|<\hidden>
+      \;
+
+      <image|img/sun_image.png|1par|||>
+    </hidden>|<\hidden>
+      <space|3em><image|img/camera-image-1.png|0.8par|||>
+    </hidden>|<\shown>
+      \;
+
+      <space|3em><image|img/Camera-Obscura.jpg|280pt|||>
+    </shown>|<\hidden>
       <tit|\<#7167\>\<#76F8\>\<#673A\>\<#4E0E\>\<#6444\>\<#50CF\>\<#673A\>>
 
       <space|6em><image|img/sailor.png|0.6par|||>
@@ -251,13 +261,13 @@
       \;
 
       <image|img/human_eye.png|1par|||>
-    </hidden>|<\shown>
+    </hidden>|<\hidden>
       <tit|<strong|\<#89C6\>\<#9525\>\<#7EC6\>\<#80DE\>\<#54CD\>\<#5E94\>\<#66F2\>\<#7EBF\>>>
 
       <space|3em><image|img/cone_cell_response.png|0.8par|||>
 
       <space|7em><hlink|http://weeklysciencequiz.blogspot.com|http://weeklysciencequiz.blogspot.com>
-    </shown>|<\hidden>
+    </hidden>|<\hidden>
       <tit|\<#4F20\>\<#611F\>\<#5668\>>
 
       \;
