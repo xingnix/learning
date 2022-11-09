@@ -47,18 +47,44 @@
     <tit|\<#5FAE\>\<#5C0F\>\<#8FD0\>\<#52A8\>>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-t\>>|<cell|=>|<cell|\<delta\>t\<b-v\>>>|<row|<cell|\<cal-R\>>|<cell|=>|<cell|\<b-I\>+\<delta\>t<around*|[|\<b-omega\>|]><rsub|\<times\>>>>|<row|<cell|\<b-p\><rprime|'>>|<cell|=>|<cell|\<b-p\>+\<delta\>t<wide|\<b-p\>|\<dot\>>>>>>
+      <tformat|<table|<row|<cell|f<around*|(|s|)>>|<cell|=>|<cell|\<b-p\><rsup|T><around*|[|\<b-t\><around*|(|s|)>|]><rsub|\<times\>>\<cal-R\><around*|(|s|)>\<b-p\><rprime|'><around*|(|s|)>>>|<row|<cell|>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    where
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-t\><around*|(|s|)>>|<cell|=>|<cell|s\<b-v\>>>|<row|<cell|\<cal-R\><around*|(|s|)>>|<cell|=>|<cell|\<b-I\>+s<around*|[|\<b-omega\>|]><rsub|\<times\>>>>|<row|<cell|\<b-p\><rprime|'><around*|(|s|)>>|<cell|=>|<cell|\<b-p\>+s<wide|\<b-p\>|\<dot\>>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<mathd\>|\<mathd\>s>f<around*|(|s|)>>|<cell|=>|<cell|\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><around*|(|\<b-I\>+s<around*|[|\<b-omega\>|]><rsub|\<times\>>|)><around*|(|\<b-p\>+s<wide|\<b-p\>|\<dot\>>|)>+\<b-p\><rsup|T><around*|[|s\<b-v\>|]><rsub|\<times\>><around*|[|\<b-omega\>|]><rsub|\<times\>><around*|(|\<b-p\>+s<wide|\<b-p\>|\<dot\>>|)>>>|<row|<cell|>|<cell|>|<cell|+\<b-p\><rsup|T><around*|[|s\<b-v\>|]><rsub|\<times\>><around*|(|\<b-I\>+s<around*|[|\<b-omega\>|]><rsub|\<times\>>|)><wide|\<b-p\>|\<dot\>>>>|<row|<cell|<around*|\<nobracket\>|<frac|\<mathd\>|\<mathd\>s>f<around*|(|s|)>|\|><rsub|s=0>>|<cell|=>|<cell|\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>>\<b-p\>>>|<row|<cell|>|<cell|=>|<cell|0>>|<row|<cell|<around*|\<nobracket\>|<frac|\<mathd\><rsup|2>|\<mathd\>s<rsup|2>>f<around*|(|s|)>|\|><rsub|s=0>>|<cell|=>|<cell|\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><around*|[|\<b-omega\>|]><rsub|\<times\>>\<b-p\>+\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><wide|\<b-p\>|\<dot\>>+\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><around*|[|\<b-omega\>|]><rsub|\<times\>>\<b-p\>+\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><wide|\<b-p\>|\<dot\>>>>|<row|<cell|>|<cell|=>|<cell|2<around*|(|\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><around*|[|\<b-omega\>|]><rsub|\<times\>>\<b-p\>+\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><wide|\<b-p\>|\<dot\>>|)>>>>>
     </eqnarray*>
 
     \<#5F97\>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><around*|(|\<b-I\>+\<delta\>t<around*|[|\<b-omega\>|]><rsub|\<times\>>|)><around*|(|\<b-p\>+\<delta\>t<wide|\<b-p\>|\<dot\>>|)>>|<cell|=>|<cell|0>>|<row|<cell|\<delta\>t\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><around*|[|\<b-omega\>|]><rsub|\<times\>>\<b-p\>+\<delta\>t\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><wide|\<b-p\>|\<dot\>>>|<cell|\<approx\>>|<cell|0>>|<row|<cell|\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><around*|[|\<b-omega\>|]><rsub|\<times\>>\<b-p\>+\<b-p\><around*|[|\<b-v\>|]><rsub|\<times\>><wide|\<b-p\>|\<dot\>>>|<cell|=>|<cell|0>>>>
+      <tformat|<table|<row|<cell|\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><around*|[|\<b-omega\>|]><rsub|\<times\>>\<b-p\>+\<b-p\><rsup|T><around*|[|\<b-v\>|]><rsub|\<times\>><wide|\<b-p\>|\<dot\>>>|<cell|=>|<cell|0>>>>
     </eqnarray*>
-  </hidden>|<\shown>
-    <tit|\<#53EA\>\<#6709\>\<#5E73\>\<#52A8\>\<#65F6\>>
+  </hidden>|<\hidden>
+    <tit|\<#5E73\>\<#52A8\>>
 
     <image|img/focus_of_expansion.png|1par|||>
+  </hidden>|<\shown>
+    <tit|\<#672A\>\<#6807\>\<#5B9A\>\<#60C5\>\<#51B5\>>
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-p\>\<cal-F\>\<b-p\><rprime|'>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    where
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-p\>>|<cell|=>|<cell|\<cal-K\><wide|\<b-p\>|^>>>|<row|<cell|\<b-p\><rprime|'>>|<cell|=>|<cell|\<cal-K\><rprime|'><wide|\<b-p\>|^><rprime|'>>>|<row|<cell|\<cal-F\>>|<cell|=>|<cell|\<cal-K\><rsup|-T>\<varepsilon\>\<cal-K\><rprime|'><rsup|-1>>>>>
+    </eqnarray*>
   </shown>>
 </body>
 
