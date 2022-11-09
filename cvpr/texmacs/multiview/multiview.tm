@@ -26,7 +26,7 @@
 
     <image|img/epipolar_constraint.png|1par|||>
   </hidden>|<\hidden>
-    <tit|\<#5DF2\>\<#6807\>\<#5B9A\>\<#60C5\>\<#51B5\>>
+    <tit|\<#672C\>\<#8D28\>\<#77E9\>\<#9635\>>
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|<wide|Op|\<vect\>>\<cdummy\><around*|[|<wide|OO<rprime|'>|\<vect\>>\<times\><wide|O<rprime|'>p<rprime|'>|\<vect\>>|]>>|<cell|=>|<cell|0>>|<row|<cell|\<b-p\>\<cdummy\><around*|[|\<b-t\>\<times\><around*|(|\<cal-R\>\<b-p\><rprime|'>|)>|]>>|<cell|=>|<cell|0>>|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|I>|<cell|\<b-0\>>>>>>>>|<row|<cell|\<cal-M\><rprime|'>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-R\><rsup|T>>|<cell|-\<cal-R\>\<b-t\>>>>>>>>|<row|<cell|\<b-p\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|u>|<cell|v>|<cell|1>>>>><rsup|T>>>|<row|<cell|\<b-p\><rprime|'>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|u<rprime|'>>|<cell|v<rprime|'>>|<cell|1>>>>><rsup|T>>>>>
@@ -35,13 +35,13 @@
     \<#5F97\>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-p\><rsup|T>\<b-varepsilon\>\<b-p\><rprime|'>>|<cell|=>|<cell|0>>>>
+      <tformat|<table|<row|<cell|\<b-p\><rsup|T>\<cal-E\>\<b-p\><rprime|'>>|<cell|=>|<cell|0>>>>
     </eqnarray*>
 
     \<#5176\>\<#4E2D\>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-varepsilon\>>|<cell|=>|<cell|<around*|[|\<b-t\>|]><rsub|\<times\>>\<cal-R\>>>>>
+      <tformat|<table|<row|<cell|\<cal-E\>>|<cell|=>|<cell|<around*|[|\<b-t\>|]><rsub|\<times\>>\<cal-R\>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|\<#5FAE\>\<#5C0F\>\<#8FD0\>\<#52A8\>>
@@ -71,8 +71,8 @@
     <tit|\<#5E73\>\<#52A8\>>
 
     <image|img/focus_of_expansion.png|1par|||>
-  </hidden>|<\shown>
-    <tit|\<#672A\>\<#6807\>\<#5B9A\>\<#60C5\>\<#51B5\>>
+  </hidden>|<\hidden>
+    <tit|\<#57FA\>\<#7840\>\<#77E9\>\<#9635\>>
 
     \;
 
@@ -83,7 +83,17 @@
     where
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-p\>>|<cell|=>|<cell|\<cal-K\><wide|\<b-p\>|^>>>|<row|<cell|\<b-p\><rprime|'>>|<cell|=>|<cell|\<cal-K\><rprime|'><wide|\<b-p\>|^><rprime|'>>>|<row|<cell|\<cal-F\>>|<cell|=>|<cell|\<cal-K\><rsup|-T>\<varepsilon\>\<cal-K\><rprime|'><rsup|-1>>>>>
+      <tformat|<table|<row|<cell|\<b-p\>>|<cell|=>|<cell|\<cal-K\><wide|\<b-p\>|^>>>|<row|<cell|\<b-p\><rprime|'>>|<cell|=>|<cell|\<cal-K\><rprime|'><wide|\<b-p\>|^><rprime|'>>>|<row|<cell|\<cal-F\>>|<cell|=>|<cell|\<cal-K\><rsup|-T>\<cal-E\>\<cal-K\><rprime|'><rsup|-1>>>>>
+    </eqnarray*>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-F\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|b>|<cell|a>|<cell|-a\<beta\>-b\<alpha\>>>|<row|<cell|-d>|<cell|-c>|<cell|c\<beta\>+d\<alpha\>>>|<row|<cell|d\<beta\><rprime|'>-b\<alpha\><rprime|'>>|<cell|c\<beta\><rprime|'>-a\<alpha\><rprime|'>>|<cell|-c\<beta\>\<beta\><rprime|'>-d\<beta\><rprime|'>\<alpha\>+a\<beta\>\<alpha\><rprime|'>+b\<alpha\>\<alpha\><rprime|'>>>>>>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    <tit|\<#5F31\>\<#6807\>\<#5B9A\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|u>|<cell|v>|<cell|1>>>>>\<cal-F\><matrix|<tformat|<table|<row|<cell|u<rprime|'>>>|<row|<cell|v<rprime|'>>>|<row|<cell|1>>>>>>|<cell|=>|<cell|0>>|<row|<cell|tr<around*|[|\<cal-F\><matrix|<tformat|<table|<row|<cell|u<rprime|'>>>|<row|<cell|v<rprime|'>>>|<row|<cell|1>>>>><matrix|<tformat|<table|<row|<cell|u>|<cell|v>|<cell|1>>>>>|]>>|<cell|=>|<cell|0>>|<row|<cell|tr<around*|[|\<cal-F\><matrix|<tformat|<table|<row|<cell|u\<nospace\>\<nospace\>u<rprime|'>>|<cell|v\<nospace\>\<nospace\>u<rprime|'>>|<cell|\<nospace\>u<rprime|'>>>|<row|<cell|u\<nospace\>v<rprime|'>>|<cell|v\<nospace\>v<rprime|'>>|<cell|v<rprime|'>>>|<row|<cell|u>|<cell|v>|<cell|1>>>>>|]>>|<cell|=>|<cell|0>>>>
     </eqnarray*>
   </shown>>
 </body>
