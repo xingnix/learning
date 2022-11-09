@@ -24,11 +24,11 @@
       <image|img/sun_image.png|1par|||>
     </hidden>|<\hidden>
       <space|3em><image|img/camera-image-1.png|0.8par|||>
-    </hidden>|<\shown>
+    </hidden>|<\hidden>
       \;
 
       <space|3em><image|img/Camera-Obscura.jpg|280pt|||>
-    </shown>|<\hidden>
+    </hidden>|<\hidden>
       <tit|\<#7167\>\<#76F8\>\<#673A\>\<#4E0E\>\<#6444\>\<#50CF\>\<#673A\>>
 
       <space|6em><image|img/sailor.png|0.6par|||>
@@ -93,7 +93,7 @@
       therefore\ 
 
       <\eqnarray*>
-        <tformat|<table|<row|<cell|x<rprime|'>>|<cell|=>|<cell|f<rprime|'><frac|x<rprime|'>|z>>>|<row|<cell|y<rprime|'>>|<cell|=>|<cell|f<rprime|'><frac|y<rprime|'>|z>>>>>
+        <tformat|<table|<row|<cell|x<rprime|'>>|<cell|=>|<cell|f<rprime|'><frac|x|z>>>|<row|<cell|y<rprime|'>>|<cell|=>|<cell|f<rprime|'><frac|y|z>>>>>
       </eqnarray*>
 
       \;
@@ -208,28 +208,30 @@
 
       <image|img/radiance_irradiance.png|1par|||>
     </hidden>|<\hidden>
-      <tit|>
+      \;
 
       <\eqnarray*>
         <tformat|<table|<row|<cell|\<Omega\>>|<cell|=>|<cell|<frac|\<pi\>d<rsup|2>|4>\<cdummy\>co\<alpha\>\<cdummy\><frac|1|<around*|\||<wide|OP|\<vect\>>|\|><rsup|2>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\>d<rsup|2>|4>\<cdummy\><frac|cos<rsup|3>\<alpha\>|z<rsup|2>>>>|<row|<cell|\<delta\>P>|<cell|=>|<cell|L\<Omega\>\<delta\>A\<nospace\>cos\<beta\>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\>d<rsup|2>|4>\<cdummy\><frac|cos<rsup|3>\<alpha\>|z<rsup|2>>L\<nospace\>cos\<beta\>\<delta\>A\<nospace\>>>|<row|<cell|E>|<cell|=>|<cell|<frac|\<delta\>P|\<delta\>A<rprime|'>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\>d<rsup|2>|4>\<cdummy\><frac|cos<rsup|3>\<alpha\>|z<rsup|2>>L\<nospace\>cos\<beta\><frac|\<delta\>A\<nospace\>|\<delta\>A<rprime|'>>>>|<row|<cell|>|<cell|>|<cell|>>>>
       </eqnarray*>
     </hidden>|<\hidden>
-      <tit|>
+      \;
+
+      \;
 
       <\eqnarray*>
-        <tformat|<table|<row|<cell|<frac|\<delta\>A\<nospace\>cos\<beta\>|<around*|\||<rsup|><wide|OP|\<vect\>>|\|><rsup|2>>>|<cell|=>|<cell|<frac|\<delta\>A<rprime|'>cos\<alpha\>|<around*|\||<wide|OP<rprime|'>|\<vect\>>|\|><rsup|2>>>>|<row|<cell|\<delta\>A\<nospace\>cos\<beta\>\<cdummy\><frac|cos<rsup|2>\<alpha\>|z>>|<cell|=>|<cell|\<delta\>A<rprime|'>cos<rsup|3>\<alpha\>\<cdummy\><frac|cos<rsup|2>\<alpha\>|z<rprime|'>>>>|<row|<cell|<frac|\<delta\>A|\<delta\>A<rprime|'>>>|<cell|=>|<cell|<frac|cos\<alpha\>|cos\<beta\>><around*|(|<frac|z|z<rprime|'>>|)><rsup|2>>>|<row|<cell|E>|<cell|=>|<cell|<frac|\<pi\>d<rsup|2>|4>\<cdummy\><frac|cos<rsup|3>\<alpha\>|z<rsup|2>>L\<nospace\>cos\<beta\><frac|\<delta\>A\<nospace\>|\<delta\>A<rprime|'>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\>|4><around*|(|<frac|d|z<rprime|'><rsup|>>|)><rsup|2>\<nospace\>cos<rsup|4>\<alpha\>L>>>>
+        <tformat|<table|<row|<cell|<frac|\<delta\>A\<nospace\>cos\<beta\>|<around*|\||<rsup|><wide|OP|\<vect\>>|\|><rsup|2>>>|<cell|=>|<cell|<frac|\<delta\>A<rprime|'>cos\<alpha\>|<around*|\||<wide|OP<rprime|'>|\<vect\>>|\|><rsup|2>>>>|<row|<cell|\<delta\>A\<nospace\>cos\<beta\>\<cdummy\><frac|cos<rsup|2>\<alpha\>|z>>|<cell|=>|<cell|\<delta\>A<rprime|'>cos\<alpha\>\<cdummy\><frac|cos<rsup|2>\<alpha\>|z<rprime|'>>>>|<row|<cell|<frac|\<delta\>A|\<delta\>A<rprime|'>>>|<cell|=>|<cell|<frac|cos\<alpha\>|cos\<beta\>><around*|(|<frac|z|z<rprime|'>>|)><rsup|2>>>|<row|<cell|E>|<cell|=>|<cell|<frac|\<pi\>d<rsup|2>|4>\<cdummy\><frac|cos<rsup|3>\<alpha\>|z<rsup|2>>L\<nospace\>cos\<beta\><frac|\<delta\>A\<nospace\>|\<delta\>A<rprime|'>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\>|4><around*|(|<frac|d|z<rprime|'><rsup|>>|)><rsup|2>\<nospace\>cos<rsup|4>\<alpha\>L>>>>
       </eqnarray*>
     </hidden>|<\hidden>
       <tit|\<#771F\>\<#5B9E\>\<#900F\>\<#955C\>>
 
       <image|img/thick_lens.png|1par|||>
-    </hidden>|<\hidden>
+    </hidden>|<\shown>
       <tit|\<#7403\>\<#9762\>\<#50CF\>\<#5DEE\>>
 
       <image|img/spherical_aberration.png|1par|||>
 
       \;
-    </hidden>|<\hidden>
+    </shown>|<\hidden>
       <tit|\<#7578\>\<#53D8\>>
 
       \;
