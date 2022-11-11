@@ -89,11 +89,31 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<cal-F\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|b>|<cell|a>|<cell|-a\<beta\>-b\<alpha\>>>|<row|<cell|-d>|<cell|-c>|<cell|c\<beta\>+d\<alpha\>>>|<row|<cell|d\<beta\><rprime|'>-b\<alpha\><rprime|'>>|<cell|c\<beta\><rprime|'>-a\<alpha\><rprime|'>>|<cell|-c\<beta\>\<beta\><rprime|'>-d\<beta\><rprime|'>\<alpha\>+a\<beta\>\<alpha\><rprime|'>+b\<alpha\>\<alpha\><rprime|'>>>>>>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|\<#5F31\>\<#6807\>\<#5B9A\>>
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|u>|<cell|v>|<cell|1>>>>>\<cal-F\><matrix|<tformat|<table|<row|<cell|u<rprime|'>>>|<row|<cell|v<rprime|'>>>|<row|<cell|1>>>>>>|<cell|=>|<cell|0>>|<row|<cell|tr<around*|[|\<cal-F\><matrix|<tformat|<table|<row|<cell|u<rprime|'>>>|<row|<cell|v<rprime|'>>>|<row|<cell|1>>>>><matrix|<tformat|<table|<row|<cell|u>|<cell|v>|<cell|1>>>>>|]>>|<cell|=>|<cell|0>>|<row|<cell|tr<around*|[|\<cal-F\><matrix|<tformat|<table|<row|<cell|u\<nospace\>\<nospace\>u<rprime|'>>|<cell|v\<nospace\>\<nospace\>u<rprime|'>>|<cell|\<nospace\>u<rprime|'>>>|<row|<cell|u\<nospace\>v<rprime|'>>|<cell|v\<nospace\>v<rprime|'>>|<cell|v<rprime|'>>>|<row|<cell|u>|<cell|v>|<cell|1>>>>>|]>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|tr<around*|[|<matrix|<tformat|<table|<row|<cell|F<rsub|11>>|<cell|F<rsub|12>>|<cell|F<rsub|13>>>|<row|<cell|F<rsub|21>>|<cell|F<rsub|22>>|<cell|F<rsub|23>>>|<row|<cell|F<rsub|31>>|<cell|F<rsub|32>>|<cell|F<rsub|33>>>>>><matrix|<tformat|<table|<row|<cell|u\<nospace\>\<nospace\>u<rprime|'>>|<cell|v\<nospace\>\<nospace\>u<rprime|'>>|<cell|\<nospace\>u<rprime|'>>>|<row|<cell|u\<nospace\>v<rprime|'>>|<cell|v\<nospace\>v<rprime|'>>|<cell|v<rprime|'>>>|<row|<cell|u>|<cell|v>|<cell|1>>>>>|]>>|<cell|=>|<cell|0>>|<row|<cell|<matrix|<tformat|<table|<row|<cell|u*u<rprime|'>>|<cell|u*v<rprime|'>>|<cell|u>|<cell|v*u<rprime|'>>|<cell|v*v<rprime|'>>|<cell|v>|<cell|u<rprime|'>>|<cell|v<rprime|'>>|<cell|1>>>>><matrix|<tformat|<table|<row|<cell|<tabular*|<tformat|<table|<row|<cell|F<rsub|11>>>|<row|<cell|F<rsub|12>>>|<row|<cell|F<rsub|13>>>|<row|<cell|F<rsub|21>>>|<row|<cell|F<rsub|22>>>|<row|<cell|F<rsub|23>>>|<row|<cell|F<rsub|31>>>|<row|<cell|F<rsub|32>>>|<row|<cell|F<rsub|33>>>>>>>>>>>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\shown>
+    <\tit>
+      eight-point algorithm
+    </tit>
+
+    \;
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|u<rsub|1>*u<rprime|'><rsub|1>>|<cell|u<rsub|1>*v<rprime|'><rsub|1>>|<cell|u<rsub|1>>|<cell|v<rsub|1>*u<rprime|'><rsub|1>>|<cell|v<rsub|1>*v<rprime|'><rsub|1>>|<cell|v<rsub|1>>|<cell|u<rprime|'><rsub|1>>|<cell|v<rprime|'><rsub|1>>>|<row|<cell|u<rsub|2>*u<rprime|'><rsub|2>>|<cell|u<rsub|2>*v<rprime|'><rsub|2>>|<cell|u<rsub|2>>|<cell|v<rsub|2>*u<rprime|'><rsub|2>>|<cell|v<rsub|2>*v<rprime|'><rsub|2>>|<cell|v<rsub|2>>|<cell|u<rprime|'><rsub|2>>|<cell|v<rprime|'><rsub|2>>>|<row|<cell|u<rsub|3>*u<rprime|'><rsub|3>>|<cell|u<rsub|3>*v<rprime|'><rsub|3>>|<cell|u<rsub|3>>|<cell|v<rsub|3>*u<rprime|'><rsub|3>>|<cell|v<rsub|3>*v<rprime|'><rsub|3>>|<cell|v<rsub|3>>|<cell|u<rprime|'><rsub|3>>|<cell|v<rprime|'><rsub|3>>>|<row|<cell|u<rsub|4>*u<rprime|'><rsub|4>>|<cell|u<rsub|4>*v<rprime|'><rsub|4>>|<cell|u<rsub|4>>|<cell|v<rsub|4>*u<rprime|'><rsub|4>>|<cell|v<rsub|4>*v<rprime|'><rsub|4>>|<cell|v<rsub|4>>|<cell|u<rprime|'><rsub|4>>|<cell|v<rprime|'><rsub|4>>>|<row|<cell|u<rsub|5>*u<rprime|'><rsub|5>>|<cell|u<rsub|5>*v<rprime|'><rsub|5>>|<cell|u<rsub|5>>|<cell|v<rsub|5>*u<rprime|'><rsub|5>>|<cell|v<rsub|5>*v<rprime|'><rsub|5>>|<cell|v<rsub|5>>|<cell|u<rprime|'><rsub|5>>|<cell|v<rprime|'><rsub|5>>>|<row|<cell|u<rsub|6>*u<rprime|'><rsub|6>>|<cell|u<rsub|6>*v<rprime|'><rsub|6>>|<cell|u<rsub|6>>|<cell|v<rsub|6>*u<rprime|'><rsub|6>>|<cell|v<rsub|6>*v<rprime|'><rsub|6>>|<cell|v<rsub|6>>|<cell|u<rprime|'><rsub|6>>|<cell|v<rprime|'><rsub|6>>>|<row|<cell|u<rsub|7>*u<rprime|'><rsub|7>>|<cell|u<rsub|7>*v<rprime|'><rsub|7>>|<cell|u<rsub|7>>|<cell|v<rsub|7>*u<rprime|'><rsub|7>>|<cell|v<rsub|7>*v<rprime|'><rsub|7>>|<cell|v<rsub|7>>|<cell|u<rprime|'><rsub|7>>|<cell|v<rprime|'><rsub|7>>>|<row|<cell|u<rsub|8>*u<rprime|'><rsub|8>>|<cell|u<rsub|8>*v<rprime|'><rsub|8>>|<cell|u<rsub|8>>|<cell|v<rsub|8>*u<rprime|'><rsub|8>>|<cell|v<rsub|8>*v<rprime|'><rsub|8>>|<cell|v<rsub|8>>|<cell|u<rprime|'><rsub|8>>|<cell|v<rprime|'><rsub|8>>>>>><matrix|<tformat|<table|<row|<cell|<tabular*|<tformat|<table|<row|<cell|F<rsub|11>>>|<row|<cell|F<rsub|12>>>|<row|<cell|F<rsub|13>>>|<row|<cell|F<rsub|21>>>|<row|<cell|F<rsub|22>>>|<row|<cell|F<rsub|23>>>|<row|<cell|F<rsub|31>>>|<row|<cell|F<rsub|32>>>>>>>>>>>>|<cell|=>|<cell|-\<b-1\>>>>>
     </eqnarray*>
   </shown>>
 </body>
