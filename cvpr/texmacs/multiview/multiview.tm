@@ -103,7 +103,7 @@
     </eqnarray*>
 
     \;
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <\tit>
       eight-point algorithm
     </tit>
@@ -115,6 +115,50 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|u<rsub|1>*u<rprime|'><rsub|1>>|<cell|u<rsub|1>*v<rprime|'><rsub|1>>|<cell|u<rsub|1>>|<cell|v<rsub|1>*u<rprime|'><rsub|1>>|<cell|v<rsub|1>*v<rprime|'><rsub|1>>|<cell|v<rsub|1>>|<cell|u<rprime|'><rsub|1>>|<cell|v<rprime|'><rsub|1>>>|<row|<cell|u<rsub|2>*u<rprime|'><rsub|2>>|<cell|u<rsub|2>*v<rprime|'><rsub|2>>|<cell|u<rsub|2>>|<cell|v<rsub|2>*u<rprime|'><rsub|2>>|<cell|v<rsub|2>*v<rprime|'><rsub|2>>|<cell|v<rsub|2>>|<cell|u<rprime|'><rsub|2>>|<cell|v<rprime|'><rsub|2>>>|<row|<cell|u<rsub|3>*u<rprime|'><rsub|3>>|<cell|u<rsub|3>*v<rprime|'><rsub|3>>|<cell|u<rsub|3>>|<cell|v<rsub|3>*u<rprime|'><rsub|3>>|<cell|v<rsub|3>*v<rprime|'><rsub|3>>|<cell|v<rsub|3>>|<cell|u<rprime|'><rsub|3>>|<cell|v<rprime|'><rsub|3>>>|<row|<cell|u<rsub|4>*u<rprime|'><rsub|4>>|<cell|u<rsub|4>*v<rprime|'><rsub|4>>|<cell|u<rsub|4>>|<cell|v<rsub|4>*u<rprime|'><rsub|4>>|<cell|v<rsub|4>*v<rprime|'><rsub|4>>|<cell|v<rsub|4>>|<cell|u<rprime|'><rsub|4>>|<cell|v<rprime|'><rsub|4>>>|<row|<cell|u<rsub|5>*u<rprime|'><rsub|5>>|<cell|u<rsub|5>*v<rprime|'><rsub|5>>|<cell|u<rsub|5>>|<cell|v<rsub|5>*u<rprime|'><rsub|5>>|<cell|v<rsub|5>*v<rprime|'><rsub|5>>|<cell|v<rsub|5>>|<cell|u<rprime|'><rsub|5>>|<cell|v<rprime|'><rsub|5>>>|<row|<cell|u<rsub|6>*u<rprime|'><rsub|6>>|<cell|u<rsub|6>*v<rprime|'><rsub|6>>|<cell|u<rsub|6>>|<cell|v<rsub|6>*u<rprime|'><rsub|6>>|<cell|v<rsub|6>*v<rprime|'><rsub|6>>|<cell|v<rsub|6>>|<cell|u<rprime|'><rsub|6>>|<cell|v<rprime|'><rsub|6>>>|<row|<cell|u<rsub|7>*u<rprime|'><rsub|7>>|<cell|u<rsub|7>*v<rprime|'><rsub|7>>|<cell|u<rsub|7>>|<cell|v<rsub|7>*u<rprime|'><rsub|7>>|<cell|v<rsub|7>*v<rprime|'><rsub|7>>|<cell|v<rsub|7>>|<cell|u<rprime|'><rsub|7>>|<cell|v<rprime|'><rsub|7>>>|<row|<cell|u<rsub|8>*u<rprime|'><rsub|8>>|<cell|u<rsub|8>*v<rprime|'><rsub|8>>|<cell|u<rsub|8>>|<cell|v<rsub|8>*u<rprime|'><rsub|8>>|<cell|v<rsub|8>*v<rprime|'><rsub|8>>|<cell|v<rsub|8>>|<cell|u<rprime|'><rsub|8>>|<cell|v<rprime|'><rsub|8>>>>>><matrix|<tformat|<table|<row|<cell|<tabular*|<tformat|<table|<row|<cell|F<rsub|11>>>|<row|<cell|F<rsub|12>>>|<row|<cell|F<rsub|13>>>|<row|<cell|F<rsub|21>>>|<row|<cell|F<rsub|22>>>|<row|<cell|F<rsub|23>>>|<row|<cell|F<rsub|31>>>|<row|<cell|F<rsub|32>>>>>>>>>>>>|<cell|=>|<cell|-\<b-1\>>>>>
     </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|\<#4E09\>\<#89C6\>\<#56FE\>>
+
+    <space|4em><image|img/trinocular_epipolar.png|0.7par|||>
+  </hidden>|<\hidden>
+    <tit|\<#4E09\>\<#76EE\>\<#5BF9\>\<#6781\>\<#51E0\>\<#4F55\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-p\><rsup|T><rsub|1>\<cal-E\><rsub|12>\<b-p\><rsub|2>>|<cell|=>|<cell|0>>|<row|<cell|\<b-p\><rsup|T><rsub|2>\<cal-E\><rsub|23>\<b-p\><rsub|3>>|<cell|=>|<cell|0>>|<row|<cell|\<b-p\><rsup|T><rsub|3>\<cal-E\><rsub|31>\<b-p\><rsub|1>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|>
+
+    <space|4em><image|img/three_image_lines_intersection.png|0.7par|||>
+  </hidden>|<\hidden>
+    <tit|\<#4E09\>\<#7126\>\<#51E0\>\<#4F55\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-l\><rsup|T>\<cal-M\>\<b-P\>>|<cell|=>|<cell|\<b-0\>>>>>
+    </eqnarray*>
+
+    \<#5F97\>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-L\>\<b-P\>>|<cell|=>|<cell|\<b-0\>>>|<row|<cell|\<cal-L\>>|<cell|\<equiv\>>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|T>\<cal-M\><rsub|1>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-M\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-M\><rsub|3>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-L\><rsub|1><rsup|T>>>|<row|<cell|\<b-L\><rsub|2><rsup|T>>>|<row|<cell|\<b-L\><rsub|3><rsup|T>>>>>>>>|<row|<cell|\<b-L\><rsub|i>>|<cell|=>|<cell|\<cal-M\><rsup|T>\<b-l\><rsub|i>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|\<#5DF2\>\<#6807\>\<#5B9A\>\<#60C5\>\<#51B5\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-M\><rsub|1>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-I\>>|<cell|\<b-0\>>>>>>>>|<row|<cell|\<cal-M\><rsub|2>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-R\><rsub|2>>|<cell|\<b-t\><rsub|2>>>>>>>>|<row|<cell|\<cal-M\><rsub|1>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-R\><rsub|3>>|<cell|\<b-t\><rsub|3>>>>>>>>>>
+    </eqnarray*>
+
+    \<#5F97\>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-L\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|T>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2>>|<cell|\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3>>|<cell|\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|1>>|<cell|\<b-l\><rsub|1><rsup|2>>|<cell|\<b-l\><rsub|1><rsup|3>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|1>>|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|2>>|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|3>>|<cell|\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|1>>|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|2>>|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|3>>|<cell|\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>>>>>>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-l\><rsub|1>\<times\><matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|1>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|2>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|3>\<b-l\><rsub|3>>>>>>>|<cell|=>|<cell|\<b-0\>>>|<row|<cell|\<cal-G\><rsub|1><rsup|i>>|<cell|=>|<cell|\<b-t\><rsub|2>\<b-R\><rsub|3><rsup|i\<nospace\>T>-\<b-R\><rsub|2><rsup|i>\<b-t\><rsub|3><rsup|T><space|2em>i=1,2,3>>>>
+    </eqnarray*>
+
+    \;
   </shown>>
 </body>
 
