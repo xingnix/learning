@@ -126,7 +126,7 @@
       <tformat|<table|<row|<cell|\<b-p\><rsup|T><rsub|1>\<cal-E\><rsub|12>\<b-p\><rsub|2>>|<cell|=>|<cell|0>>|<row|<cell|\<b-p\><rsup|T><rsub|2>\<cal-E\><rsub|23>\<b-p\><rsub|3>>|<cell|=>|<cell|0>>|<row|<cell|\<b-p\><rsup|T><rsub|3>\<cal-E\><rsub|31>\<b-p\><rsub|1>>|<cell|=>|<cell|0>>>>
     </eqnarray*>
   </hidden>|<\hidden>
-    <tit|>
+    <tit|\<#76F4\>\<#7EBF\>>
 
     <space|4em><image|img/three_image_lines_intersection.png|0.7par|||>
   </hidden>|<\hidden>
@@ -153,9 +153,45 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<cal-L\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|T>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2>>|<cell|\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3>>|<cell|\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|1>>|<cell|\<b-l\><rsub|1><rsup|2>>|<cell|\<b-l\><rsub|1><rsup|3>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|1>>|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|2>>|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|3>>|<cell|\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|1>>|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|2>>|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|3>>|<cell|\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>>>>>>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<det|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|2>>|<cell|\<b-l\><rsub|1><rsup|3>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|2>>|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|3>>|<cell|\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|2>>|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|3>>|<cell|\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>>>>>>>|<cell|=>|<cell|0>>|<row|<cell|\<b-l\><rsub|1><rsup|2><around*|(|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|3>\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>-\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|3>\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>|)>-\<b-l\><rsub|1><rsup|3><around*|(|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|2>\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>-\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|2>\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>|)>>|<cell|=>|<cell|0>>|<row|<cell|\<b-l\><rsub|1><rsup|2><around*|(|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|3>\<b-t\><rsub|3><rsup|T>\<b-l\><rsub|3>-\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>\<cal-R\><rsub|3><rsup|3T>\<b-l\><rsub|3>|)>-\<b-l\><rsub|1><rsup|3><around*|(|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|2>\<b-t\><rsub|3><rsup|T>\<b-l\><rsub|3>-\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>\<cal-R\><rsub|3><rsup|2T>\<b-l\><rsub|3>|)>>|<cell|=>|<cell|0>>|<row|<cell|\<b-l\><rsub|1><rsup|2><around*|[|\<b-l\><rsub|2><rsup|T><around*|(|\<cal-R\><rsub|2><rsup|3>\<b-t\><rsub|3><rsup|T>-\<b-t\><rsub|2>\<cal-R\><rsub|3><rsup|3T>|)>\<b-l\><rsub|3>|]>-\<b-l\><rsub|1><rsup|3><around*|[|\<b-l\><rsub|2><rsup|T><around*|(|\<cal-R\><rsub|2><rsup|2>\<b-t\><rsub|3><rsup|T>-\<b-t\><rsub|2>\<cal-R\><rsub|3><rsup|2T>|)>\<b-l\><rsub|3>|]>>|<cell|=>|<cell|0>>|<row|<cell|<det|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|1>>|<cell|\<b-l\><rsub|1><rsup|3>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|1>>|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|3>>|<cell|\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|1>>|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|3>>|<cell|\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>>>>>>>|<cell|=>|<cell|0>>|<row|<cell|<det|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|1>>|<cell|\<b-l\><rsub|1><rsup|2>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|1>>|<cell|\<b-l\><rsub|2><rsup|T>\<cal-R\><rsub|2><rsup|2>>|<cell|\<b-l\><rsub|2><rsup|T>\<b-t\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|1>>|<cell|\<b-l\><rsub|3><rsup|T>\<cal-R\><rsub|3><rsup|2>>|<cell|\<b-l\><rsub|3><rsup|T>\<b-t\><rsub|3>>>>>>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|\<#4E09\>\<#7126\>\<#5F20\>\<#91CF\>>
+
+    \;
+
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<b-l\><rsub|1>\<times\><matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|1>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|2>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|3>\<b-l\><rsub|3>>>>>>>|<cell|=>|<cell|\<b-0\>>>|<row|<cell|\<cal-G\><rsub|1><rsup|i>>|<cell|=>|<cell|\<b-t\><rsub|2>\<b-R\><rsub|3><rsup|i\<nospace\>T>-\<b-R\><rsub|2><rsup|i>\<b-t\><rsub|3><rsup|T><space|2em>i=1,2,3>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-l\><rsub|1>>|<cell|\<propto\>>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|1>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|2>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|3>\<b-l\><rsub|3>>>>>>>>|<row|<cell|\<b-p\><rsub|1><rsup|T><matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|1>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|2>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|3>\<b-l\><rsub|3>>>>>>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    where
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-P\>>|<cell|\<in\>>|<cell|\<b-l\>>>|<row|<cell|\<b-p\><rsub|1>>|<cell|=>|<cell|\<cal-M\><rsub|1>\<b-P\>>>|<row|<cell|\<b-p\><rsub|1>>|<cell|\<in\>>|<cell|\<b-l\><rsub|1>>>|<row|<cell|\<b-p\><rsub|1>\<b-l\><rsub|1>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <space|4em><image|img/three_image_point_lines.png|0.7par|||>
+  </hidden>|<\hidden>
+    <tit|\<#672A\>\<#6807\>\<#5B9A\>\<#60C5\>\<#51B5\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-p\>>|<cell|=>|<cell|\<cal-K\><wide|\<b-p\>|^>>>|<row|<cell|\<b-l\><rsup|T>\<b-p\>>|<cell|=>|<cell|0>>|<row|<cell|\<b-l\><rsup|T>\<cal-K\><wide|\<b-p\>|^>>|<cell|=>|<cell|0>>|<row|<cell|\<cal-L\>>|<cell|=>|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|T>\<cal-K\><rsub|1>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-K\><rsub|2>\<cal-R\><rsub|2>>|<cell|\<b-l\><rsub|2><rsup|T>\<cal-K\><rsub|2>\<b-t\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-K\><rsub|3>\<cal-R\><rsub|3>>|<cell|\<b-l\><rsub|3><rsup|T>\<cal-K\><rsub|3>\<b-t\><rsub|3>>>>>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-L\><matrix|<tformat|<table|<row|<cell|\<cal-K\><rsub|1><rsup|-1>>|<cell|\<b-0\>>>|<row|<cell|\<b-0\>>|<cell|1>>>>>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|1><rsup|T>>|<cell|0>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-A\><rsub|2>>|<cell|\<b-l\><rsub|2><rsup|T>\<b-b\><rsub|2>>>|<row|<cell|\<b-l\><rsub|3><rsup|T>\<cal-A\><rsub|3>>|<cell|\<b-l\><rsub|3><rsup|T>\<b-b\><rsub|3>>>>>>>>|<row|<cell|\<cal-A\><rsub|i>>|<cell|\<equiv\>>|<cell|\<cal-K\><rsub|i>\<cal-R\><rsub|i>\<cal-K\><rsub|i><rsup|-1>>>|<row|<cell|\<b-b\><rsub|i>>|<cell|=>|<cell|\<cal-K\><rsub|i>\<b-t\><rsub|i><space|2em>i=2,3>>|<row|<cell|\<cal-M\><rsub|1>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-K\><rsub|1>>|<cell|\<b-0\>>>>>>>>|<row|<cell|\<cal-M\><rsub|2>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-A\><rsub|2>\<cal-K\><rsub|1>>|<cell|\<b-b\><rsub|2>>>>>>>>|<row|<cell|\<cal-M\><rsub|3>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-A\><rsub|3>\<cal-K\><rsub|1>>|<cell|\<b-b\><rsub|3>>>>>>>>|<row|<cell|\<cal-G\><rsub|1><rsup|i>>|<cell|=>|<cell|\<b-b\><rsub|2>\<b-A\><rsub|3><rsup|i\<nospace\>T>-\<b-A\><rsub|2><rsup|i>\<b-b\><rsub|3><rsup|T>>>|<row|<cell|\<cal-A\><rsub|i>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-A\><rsup|1><rsub|i>>|<cell|\<b-A\><rsub|i><rsup|2>>|<cell|\<b-A\><rsub|i><rsup|3>>>>>>>>>>
     </eqnarray*>
 
     \;
