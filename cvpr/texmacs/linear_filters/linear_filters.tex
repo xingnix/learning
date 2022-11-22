@@ -283,9 +283,11 @@
     g (x, y) & = & \int \int \mathcal{F} (g) e^{i 2 \pi (u \nospace x + v
     \nospace y)} \mathd u \mathd v
   \end{eqnarray*}
-\end{frame}}{\frametitle{傅里叶基实部示例}
-
-\resizebox{1\columnwidth}{!}{\includegraphics{img/fourier_base.png}}}{\begin{frame}
+\end{frame}}{\begin{frame}
+  \frametitle{傅里叶基实部示例}
+  
+  \resizebox{1\columnwidth}{!}{\includegraphics{img/fourier_base.png}}
+\end{frame}}{\begin{frame}
   \frametitle{幅值与相位}
   \begin{eqnarray*}
     \mathcal{F} (g (x, y)) & = & \int \int g (x, y) \cos (2 \pi u \nospace x +
@@ -300,6 +302,112 @@
   \frametitle{傅里叶变换示例}
   
   {\hspace{3em}}\resizebox{0.8\columnwidth}{!}{\includegraphics{img/magnitude_phase_swap.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{采样与失真}
+  
+  \tmfoldedstd{{\hspace{4em}}\resizebox{0.6\columnwidth}{!}{\includegraphics{img/checkboard_sampling.png}}}{Figure
+  8.8. The two checkerboards on the top illustrate a sampling procedure which
+  appears to be successful (whether it is or not depends on some details that
+  we will deal with later). The grey circles represent the samples; if there
+  are sufficient samples, then the samples represent the detail in the
+  underlying function. The sampling procedure shown on the bottom is
+  unequivocally unsuccessful; the samples suggest that there are fewer checks
+  than there are. This illustrates two important phenomena: firstly,
+  successful sampling schemes sample data ``often enough''; and, secondly,
+  unsuccessful sampling schemes cause high frequency information to appear as
+  lower frequency information.}
+\end{frame}}{\begin{frame}
+  \frametitle{一维采样}
+  
+  \resizebox{1\columnwidth}{!}{\includegraphics{img/sample1D.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{二维采样}
+  
+  {\hspace{5em}}\resizebox{0.6\columnwidth}{!}{\includegraphics{img/sample2D.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{采样信号模型}
+  \begin{eqnarray*}
+    \int_{- \infty}^{\infty} a \delta (x) f (x) \mathd x & = & a \nospace
+    \lim_{\varepsilon \rightarrow 0} \int_{- \infty}^{+ \infty}
+    d_{\varepsilon} (x) f (x) \mathd x\\
+    & = & a \nospace \lim_{\varepsilon \rightarrow 0} \int_{- \infty}^{+
+    \infty} \frac{\tmop{bar}_{\varepsilon} (x)}{\varepsilon} f (x) \mathd x\\
+    & = & a \nospace \lim_{\varepsilon \rightarrow 0} \sum_{i = - \infty}^{+
+    \infty} \frac{\tmop{bar}_{\varepsilon} (x)}{\varepsilon} f (i \varepsilon)
+    \tmop{bar}_{\varepsilon} (x - i \varepsilon) \varepsilon\\
+    & = & a \nospace f (0)\\
+    \tmop{sample}_{2 D} (f) & = & \sum_{i = - \infty}^{\infty} \sum_{j = -
+    \infty}^{\infty} f (i, j) \delta (x - i, y - j)\\
+    & = & \sum_{i = - \infty}^{\infty} \sum_{j = - \infty}^{\infty} f (x, y)
+    \delta (x - i, y - j)
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \
+  
+  
+  \begin{eqnarray*}
+    \mathcal{F} (\tmop{sample}_{2 D} (f (x, y))) & = & \mathcal{F} \left( f
+    (x, y) \sum_{i = - \infty}^{\infty} \sum_{j = - \infty}^{\infty} \delta (x
+    - i, y - j) \right)\\
+    & = & \mathcal{F} (f (x, y)) \ast \ast \mathcal{F} \left( \sum_{i = -
+    \infty}^{\infty} \sum_{j = - \infty}^{\infty} \delta (x - i, y - j)
+    \right)\\
+    & = & F (u, v) \ast \ast \sum_{i = - \infty}^{\infty} \sum_{j = -
+    \infty}^{\infty} \delta (x - i, y - j)\\
+    & = & \sum_{i = - \infty}^{\infty} \sum_{j = - \infty}^{\infty} F (u - i,
+    v - j)
+  \end{eqnarray*}
+  
+\end{frame}}{\begin{frame}
+  \frametitle{采样信号傅里叶变换}
+  
+  {\hspace{5em}}\resizebox{0.7\columnwidth}{!}{\includegraphics{img/sample_fourier1.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{频域混叠}
+  
+  {\hspace{6em}}\resizebox{0.6\columnwidth}{!}{\includegraphics{img/sample_fourier_mix.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{平采与重采样}
+  
+  \tmfoldedstd{\resizebox{1\columnwidth}{!}{\includegraphics{img/smooth_resample_0.png}}}{Figure
+  8.13. The top row shows sampled versions of an image of a grid obtained by
+  multiplying two sinusoids with linearly increasing frequency --- one in x
+  and one in y. The other images in the series are obtained by resampling by
+  factors of two, without smoothing (i.e. the next is a 128x128, then a 64x64,
+  etc., all scaled to the same size). Note the substantial aliasing; high
+  spatial frequencies alias down to low spatial frequencies, and the smallest
+  image is an extremely poor representation of the large image. The bottom row
+  shows the magnitude of the Fourier transform of each image --- displayed as
+  a log, to compress the intensity scale. The constant component is at the
+  center. Notice that the Fourier transform of a resampled image is obtained
+  by scaling the Fourier transform of the original image and then tiling the
+  plane. Interference between copies of the original Fourier transform means
+  that we cannot recover its value at some points --- this is the mechanism
+  underlying aliasing.
+  
+  \ }
+\end{frame}}{\begin{frame}
+  \frametitle{平滑与重采样(高斯平滑)}
+  
+  {\hspace{3em}}\resizebox{0.8\columnwidth}{!}{\includegraphics{img/smooth_resample_1.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{平滑与重采样(高斯平滑)}
+  
+  \qquad\resizebox{0.8\columnwidth}{!}{\includegraphics{img/smooth_resample_2.png}}
+\end{frame}}{\frametitle{高斯金字塔}
+
+{\hspace{7em}}\resizebox{0.5\columnwidth}{!}{\includegraphics{img/gaussian_pyramid.png}}}{\begin{frame}
+  \frametitle{尺度空间}
+  
+  {\hspace{5em}}\resizebox{0.6\columnwidth}{!}{\includegraphics{img/scale_space.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{Zero-crossing}
+  
+  {\hspace{5em}}\resizebox{0.6\columnwidth}{!}{\includegraphics{img/zero_crossing.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{2D}
+  
+  \resizebox{1\columnwidth}{!}{\includegraphics{img/scale_space_2D.png}}
 \end{frame}}}
 
 \end{document}

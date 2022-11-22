@@ -259,11 +259,11 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|g<around*|(|x,y|)>>|<cell|=>|<cell|<big|int><big|int>\<cal-F\><around*|(|g|)>e<rsup|i2\<pi\><around*|(|u\<nospace\>x+v\<nospace\>y|)>>\<mathd\>u\<mathd\>v>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|\<#5085\>\<#91CC\>\<#53F6\>\<#57FA\>\<#5B9E\>\<#90E8\>\<#793A\>\<#4F8B\>>
 
     <image|img/fourier_base.png|1par|||>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|\<#5E45\>\<#503C\>\<#4E0E\>\<#76F8\>\<#4F4D\>>
 
     <\eqnarray*>
@@ -273,6 +273,104 @@
     <tit|\<#5085\>\<#91CC\>\<#53F6\>\<#53D8\>\<#6362\>\<#793A\>\<#4F8B\>>
 
     <space|3em><image|img/magnitude_phase_swap.png|0.8par|||>
+  </hidden>|<\hidden>
+    <tit|\<#91C7\>\<#6837\>\<#4E0E\>\<#5931\>\<#771F\>>
+
+    <\folded-std>
+      <space|4em><image|img/checkboard_sampling.png|0.6par|||>
+    <|folded-std>
+      Figure 8.8. The two checkerboards on the top illustrate a sampling
+      procedure which appears to be successful (whether it is or not depends
+      on some details that we will deal with later). The grey circles
+      represent the samples; if there are sufficient samples, then the
+      samples represent the detail in the underlying function. The sampling
+      procedure shown on the bottom is unequivocally unsuccessful; the
+      samples suggest that there are fewer checks than there are. This
+      illustrates two important phenomena: firstly, successful sampling
+      schemes sample data \Poften enough\Q; and, secondly, unsuccessful
+      sampling schemes cause high frequency information to appear as lower
+      frequency information.
+    </folded-std>
+  </hidden>|<\hidden>
+    <tit|\<#4E00\>\<#7EF4\>\<#91C7\>\<#6837\>>
+
+    <image|img/sample1D.png|1par|||>
+  </hidden>|<\hidden>
+    <tit|\<#4E8C\>\<#7EF4\>\<#91C7\>\<#6837\>>
+
+    <space|5em><image|img/sample2D.png|0.6par|||>
+  </hidden>|<\hidden>
+    <tit|\<#91C7\>\<#6837\>\<#4FE1\>\<#53F7\>\<#6A21\>\<#578B\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<big|int><rsub|-\<infty\>><rsup|\<infty\>>a\<delta\><around*|(|x|)>f<around*|(|x|)>\<mathd\>x>|<cell|=>|<cell|a\<nospace\>lim<rsub|\<varepsilon\>\<rightarrow\>0><big|int><rsub|-\<infty\>><rsup|+\<infty\>>d<rsub|\<varepsilon\>><around*|(|x|)>f<around*|(|x|)>\<mathd\>x>>|<row|<cell|>|<cell|=>|<cell|a\<nospace\>lim<rsub|\<varepsilon\>\<rightarrow\>0><big|int><rsub|-\<infty\>><rsup|+\<infty\>><frac|bar<rsub|\<varepsilon\>><around*|(|x|)>|\<varepsilon\>>f<around*|(|x|)>\<mathd\>x>>|<row|<cell|>|<cell|=>|<cell|a\<nospace\>lim<rsub|\<varepsilon\>\<rightarrow\>0><big|sum><rsub|i=-\<infty\>><rsup|+\<infty\>><frac|bar<rsub|\<varepsilon\>><around*|(|x|)>|\<varepsilon\>>f<around*|(|i\<varepsilon\>|)>bar<rsub|\<varepsilon\>><around*|(|x-i\<varepsilon\>|)>\<varepsilon\>>>|<row|<cell|>|<cell|=>|<cell|a\<nospace\>f<around*|(|0|)>>>|<row|<cell|sample<rsub|2D><around*|(|f|)>>|<cell|=>|<cell|<big|sum><rsub|i=-\<infty\>><rsup|\<infty\>><big|sum><rsub|j=-\<infty\>><rsup|\<infty\>>f<around*|(|i,j|)>\<delta\><around*|(|x-i,y-j|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i=-\<infty\>><rsup|\<infty\>><big|sum><rsub|j=-\<infty\>><rsup|\<infty\>>f<around*|(|x,y|)>\<delta\><around*|(|x-i,y-j|)>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-F\><around*|(|sample<rsub|2D><around*|(|f<around*|(|x,y|)>|)>|)>>|<cell|=>|<cell|\<cal-F\><around*|(|f<around*|(|x,y|)><big|sum><rsub|i=-\<infty\>><rsup|\<infty\>><big|sum><rsub|j=-\<infty\>><rsup|\<infty\>>\<delta\><around*|(|x-i,y-j|)>|)>>>|<row|<cell|>|<cell|=>|<cell|\<cal-F\><around*|(|f<around*|(|x,y|)>|)>\<ast\>\<ast\>\<cal-F\><around*|(|<big|sum><rsub|i=-\<infty\>><rsup|\<infty\>><big|sum><rsub|j=-\<infty\>><rsup|\<infty\>>\<delta\><around*|(|x-i,y-j|)>|)>>>|<row|<cell|>|<cell|=>|<cell|F<around*|(|u,v|)>\<ast\>\<ast\><big|sum><rsub|i=-\<infty\>><rsup|\<infty\>><big|sum><rsub|j=-\<infty\>><rsup|\<infty\>>\<delta\><around*|(|x-i,y-j|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i=-\<infty\>><rsup|\<infty\>><big|sum><rsub|j=-\<infty\>><rsup|\<infty\>>F<around*|(|u-i,v-j|)>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|\<#91C7\>\<#6837\>\<#4FE1\>\<#53F7\>\<#5085\>\<#91CC\>\<#53F6\>\<#53D8\>\<#6362\>>
+
+    <space|5em><image|img/sample_fourier1.png|0.7par|||>
+  </hidden>|<\hidden>
+    <tit|\<#9891\>\<#57DF\>\<#6DF7\>\<#53E0\>>
+
+    <space|6em><image|img/sample_fourier_mix.png|0.6par|||>
+  </hidden>|<\hidden>
+    <tit|\<#5E73\>\<#91C7\>\<#4E0E\>\<#91CD\>\<#91C7\>\<#6837\>>
+
+    <\folded-std>
+      <image|img/smooth_resample_0.png|1par|||>
+    <|folded-std>
+      Figure 8.13. The top row shows sampled versions of an image of a grid
+      obtained by multiplying two sinusoids with linearly increasing
+      frequency \V one in x and one in y. The other images in the series are
+      obtained by resampling by factors of two, without smoothing (i.e. the
+      next is a 128x128, then a 64x64, etc., all scaled to the same size).
+      Note the substantial aliasing; high spatial frequencies alias down to
+      low spatial frequencies, and the smallest image is an extremely poor
+      representation of the large image. The bottom row shows the magnitude
+      of the Fourier transform of each image \V displayed as a log, to
+      compress the intensity scale. The constant component is at the center.
+      Notice that the Fourier transform of a resampled image is obtained by
+      scaling the Fourier transform of the original image and then tiling the
+      plane. Interference between copies of the original Fourier transform
+      means that we cannot recover its value at some points \V this is the
+      mechanism underlying aliasing.
+
+      \;
+    </folded-std>
+  </hidden>|<\hidden>
+    <tit|\<#5E73\>\<#6ED1\>\<#4E0E\>\<#91CD\>\<#91C7\>\<#6837\>(\<#9AD8\>\<#65AF\>\<#5E73\>\<#6ED1\>)>
+
+    <space|3em><image|img/smooth_resample_1.png|0.8par|||>
+  </hidden>|<\hidden>
+    <tit|\<#5E73\>\<#6ED1\>\<#4E0E\>\<#91CD\>\<#91C7\>\<#6837\>(\<#9AD8\>\<#65AF\>\<#5E73\>\<#6ED1\>)>
+
+    <space|2em><image|img/smooth_resample_2.png|0.8par|||>
+  </hidden>|<\shown>
+    <tit|\<#9AD8\>\<#65AF\>\<#91D1\>\<#5B57\>\<#5854\>>
+
+    <space|7em><image|img/gaussian_pyramid.png|0.5par|||>
+  </shown>|<\hidden>
+    <tit|\<#5C3A\>\<#5EA6\>\<#7A7A\>\<#95F4\>>
+
+    <space|5em><image|img/scale_space.png|0.6par|||>
+  </hidden>|<\hidden>
+    <tit|Zero-crossing>
+
+    <space|5em><image|img/zero_crossing.png|0.6par|||>
+  </hidden>|<\hidden>
+    <tit|2D>
+
+    <image|img/scale_space_2D.png|1par|||>
   </hidden>>
 </body>
 
