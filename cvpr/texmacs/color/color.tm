@@ -198,7 +198,11 @@
   </hidden>|<\shown>
     <tit|\<#989C\>\<#8272\>\<#6052\>\<#5E38\>\<#6027\>>
 
-    <space|2em><image|img/color_constancy.png|0.8par|||>
+    \;
+
+    \;
+
+    <space|2em><image|img/061031colorcp1.png|0.8par|||>
   </shown>|<\hidden>
     <tit|\<#6709\>\<#9650\>\<#7EF4\>\<#7EBF\>\<#6027\>\<#6A21\>\<#578B\>>
 
