@@ -215,7 +215,7 @@
     \;
 
     <image|img/local_histogram_equalization.png|1par|||>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|\<#76F4\>\<#65B9\>\<#56FE\>\<#7EDF\>\<#8BA1\>\<#56FE\>\<#50CF\>\<#589E\>\<#5F3A\>>
 
     \;
@@ -225,7 +225,7 @@
     </eqnarray*>
 
     <image|img/local_histogram_statistics_enhancement.png|1par|||>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|\<#90BB\>\<#57DF\>>
 
     <image|img/3_3_neighborhood.png|1par|||>
@@ -249,6 +249,12 @@
     \;
 
     <image|img/example_smoothing_kernel.png|1par|||>
+  </hidden>|<\hidden>
+    <tit|\<#53EF\>\<#5206\>\<#79BB\>\<#6EE4\>\<#6CE2\>\<#5668\>\<#6838\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|W>|<cell|=>|<cell|\<b-v\>\<b-w\><rsup|T>>>>>
+    </eqnarray*>
   </hidden>|<\hidden>
     <tit|\<#7A7A\>\<#95F4\>\<#57DF\>\<#4E0E\>\<#9891\>\<#57DF\>\<#4F4E\>\<#901A\>\<#6EE4\>\<#6CE2\>>
 
@@ -320,6 +326,12 @@
   </hidden>|<\hidden>
     <tit|\<#4E00\>\<#9636\>\<#4E0E\>\<#4E8C\>\<#9636\>\<#5BFC\>\<#6570\>>
 
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>f|\<partial\>x>>|<cell|=>|<cell|f<around*|(|x+1|)>-f<around*|(|x|)>>>|<row|<cell|<frac|\<partial\><rsup|2>f|\<partial\>x<rsup|2>>>|<cell|=>|<cell|f<around*|(|x+1|)>+f<around*|(|x-1|)>-2f<around*|(|x|)>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    \;
+
     <space|1em><image|img/1_2_derivative.png|0.9par|||>
   </hidden>|<\hidden>
     <tit|Laplacian kernel>
@@ -327,7 +339,13 @@
     \;
 
     <image|img/laplacian_kernel.png|1par|||>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
+    <tit|\<#56FE\>\<#50CF\>\<#9510\>\<#5316\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<nabla\><rsup|2>f>|<cell|=>|<cell|<frac|\<partial\><rsup|2>f|\<partial\>x<rsup|2>>+<frac|\<partial\><rsup|2>f|\<partial\>y<rsup|2>>>>|<row|<cell|g<around*|(|x,y|)>>|<cell|=>|<cell|f<around*|(|x,y|)>+c\<nabla\><rsup|2>f>>>>
+    </eqnarray*>
+  </shown>|<\hidden>
     <tit|\<#56FE\>\<#50CF\>\<#9510\>\<#5316\>\<#793A\>\<#4F8B\>>
 
     <space|4em><image|img/sharpening_laplacian.png|0.7par|||>
@@ -365,6 +383,10 @@
     <tit|\<#793A\>\<#4F8B\>\<#56FE\>\<#50CF\>>
 
     <image|img/zone_plate_image.png|1par|||>
+
+    <\equation*>
+      z ( x, y) = <frac|1|2><around*|(|1+cos<around*|(|x<rsup|2>+y<rsup|2>|)>|)>
+    </equation*>
   </hidden>|<\hidden>
     <tit|1\<#7EF4\>\<#4E0E\>2\<#7EF4\>\<#6EE4\>\<#6CE2\>\<#5668\>>
 

@@ -6,6 +6,7 @@
 \newcommand{\mathd}{\mathrm{d}}
 \newcommand{\nospace}{}
 \newcommand{\tmfoldedstd}[2]{\trivlist{\item[$\bullet$]\mbox{}#1}}
+\newcommand{\tmmathbf}[1]{\ensuremath{\boldsymbol{#1}}}
 %%%%%%%%%% End TeXmacs macros
 
 \begin{document}
@@ -216,20 +217,22 @@
   \
   
   \resizebox{1\columnwidth}{!}{\includegraphics{img/local_histogram_equalization.png}}
-\end{frame}}{\frametitle{直方图统计图像增强}
-
-
-\begin{eqnarray*}
-  g (x, y) & = & \left\{\begin{array}{l}
-    C \nospace f (x, y)\\
-    f (x, y)
-  \end{array}\right. \qquad \begin{array}{l}
-    k_0 m_G \leqslant m_{S_{x \nospace y}} \leqslant k_1 m_G, k_2 \sigma_G
-    \leqslant \sigma_{S_{x \nospace y}} \leqslant k_3 \sigma_G\\
-    \text{otherwise}
-  \end{array}
-\end{eqnarray*}
-\resizebox{1\columnwidth}{!}{\includegraphics{img/local_histogram_statistics_enhancement.png}}}{\begin{frame}
+\end{frame}}{\begin{frame}
+  \frametitle{直方图统计图像增强}
+  
+  
+  \begin{eqnarray*}
+    g (x, y) & = & \left\{\begin{array}{l}
+      C \nospace f (x, y)\\
+      f (x, y)
+    \end{array}\right. \qquad \begin{array}{l}
+      k_0 m_G \leqslant m_{S_{x \nospace y}} \leqslant k_1 m_G, k_2 \sigma_G
+      \leqslant \sigma_{S_{x \nospace y}} \leqslant k_3 \sigma_G\\
+      \text{otherwise}
+    \end{array}
+  \end{eqnarray*}
+  \resizebox{1\columnwidth}{!}{\includegraphics{img/local_histogram_statistics_enhancement.png}}
+\end{frame}}{\begin{frame}
   \frametitle{邻域}
   
   \resizebox{1\columnwidth}{!}{\includegraphics{img/3_3_neighborhood.png}}
@@ -253,6 +256,11 @@
   \
   
   \resizebox{1\columnwidth}{!}{\includegraphics{img/example_smoothing_kernel.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{可分离滤波器核}
+  \begin{eqnarray*}
+    W & = & \tmmathbf{v}\tmmathbf{w}^T
+  \end{eqnarray*}
 \end{frame}}{\begin{frame}
   \frametitle{空间域与频域低通滤波}
   
@@ -323,6 +331,12 @@
   \resizebox{1\columnwidth}{!}{\includegraphics{img/x_ray_image_mean_median.png}}
 \end{frame}}{\begin{frame}
   \frametitle{一阶与二阶导数}
+  \begin{eqnarray*}
+    \frac{\partial f}{\partial x} & = & f (x + 1) - f (x)\\
+    \frac{\partial^2 f}{\partial x^2} & = & f (x + 1) + f (x - 1) - 2 f (x)
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \
   
   \quad\resizebox{0.9\columnwidth}{!}{\includegraphics{img/1_2_derivative.png}}
 \end{frame}}{\begin{frame}
@@ -331,7 +345,12 @@
   \
   
   \resizebox{1\columnwidth}{!}{\includegraphics{img/laplacian_kernel.png}}
-\end{frame}}{\begin{frame}
+\end{frame}}{\frametitle{图像锐化}
+\begin{eqnarray*}
+  \nabla^2 f & = & \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2
+  f}{\partial y^2}\\
+  g (x, y) & = & f (x, y) + c \nabla^2 f
+\end{eqnarray*}}{\begin{frame}
   \frametitle{图像锐化示例}
   
   {\hspace{4em}}\resizebox{0.7\columnwidth}{!}{\includegraphics{img/sharpening_laplacian.png}}
@@ -369,6 +388,7 @@
   \frametitle{示例图像}
   
   \resizebox{1\columnwidth}{!}{\includegraphics{img/zone_plate_image.png}}
+  \[ z (x, y) = \frac{1}{2} (1 + \cos (x^2 + y^2)) \]
 \end{frame}}{\begin{frame}
   \frametitle{1维与2维滤波器}
   
