@@ -59,11 +59,12 @@ def count(prob,data_lines,names,values):
     for sample in data_lines:
         for name in names:
             prob[sample[target]][name][sample[name]]+=1.0
-    return prob
+    return prob.copy()
 
 def classifier(data_lines,target,names,values):
-    prob=init(names,values)
-    count(prob,data_lines,names,values)
+    prob=init_alt(names,values)
+    nums=init_alt(names,values)
+    nums=count(nums,data_lines,names,values)
     p_n={P:0,N:0}
     for sample in data_lines:
         p_n[sample[target]]+=1
@@ -72,9 +73,9 @@ def classifier(data_lines,target,names,values):
             for v in values[name]:
                 k=len(values[name])
                 m=k*0.1
-                nc=prob[t][name][v]
+                nc=nums[t][name][v]
                 if nc>0:
-                   prob[t][name][v]=(nc+m/k)/(p_n[sample[target]]+m)
+                   prob[t][name][v]=(nc+m/k)/(sum(nums[t][name].values())+m)
                 else:
                    prob[t][name][v]=1.0/(len(values[name]))
     prob[target]={P:float(p_n[P])/(p_n[P]+p_n[N]),N:float(p_n[N])/(p_n[P]+p_n[N])}
@@ -88,7 +89,6 @@ def predict(prob,sample,names,target):
             for name in names:
                 r[t]*=prob[t][name][sample[name]]
         return {P:r[P]/(r[P]+r[N]),N:r[N]/(r[P]+r[N])}
-
 
 prob=classifier(data_lines[5:9],target,names,values)
 for sample in data_lines[5:9]:
