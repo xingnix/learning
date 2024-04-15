@@ -37,8 +37,9 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
@@ -66,7 +67,7 @@
 - 20世纪50年代后期,快速傅立叶变换算法出现,得到了广泛的应用。
 ** Joseph Fourier
 #+BEGIN_CENTER
-#+attr_latex: width=0.3\textwidth
+#+attr_latex: :width 0.3\textwidth
 [[./image/Fourier2.jpg]]
 #+END_CENTER
 ** 函数表示
@@ -84,7 +85,7 @@
 - 离散函数 $f(x)$ (其中 $x,u=0,1,2,\cdots,M-1$ )的傅里叶变换:
   \[ F(u) = \frac{1}{M}\sum_{x=0}^{M-1}f(x)e^{\frac{-j2\pi u x}{M}}\]
 - 反变换
-  \[ f(x) = \sum_{u=0}^{M-1}F(u)e^{\frac{-j2\pi u x}{M}}\]
+  \[ f(x) = \sum_{u=0}^{M-1}F(u)e^{\frac{j2\pi u x}{M}}\]
 
 ** 频谱
 \[ F(u) = |F(u)|e^{-j\phi(u)} \]
@@ -186,8 +187,8 @@ f(x,y)h(x,y) &= \mathcal{F}^{-1}[F(u,v)*H(u,v)]
 - 振铃现象示例：
 #+BEGIN_EXAMPLE
 f(x)=[1,1,0,0,0,0,0,0,0,0,0,0]
-h(x)=[1,1,1,1,0,0,0,0,0,1,1,1]
-g(x)=[0.89,0.89,0.23,0.17,0.0,0.11,
+H(u)=[1,1,1,1,0,0,0,0,0,1,1,1]
+f(x)*h(x)=[0.89,0.89,0.23,0.17,0.0,0.11,
       0.06,0.06,0.11,0.0,0.17,0.23]
 #+END_EXAMPLE
 * 频域锐化滤波器
@@ -198,10 +199,11 @@ g(x)=[0.89,0.89,0.23,0.17,0.0,0.11,
 \[ H(u,v) = \begin{cases} 0, \qquad (u,v)=(0,0) \\    1, \qquad \text{其它} \end{cases} \]
 
 ** 周期噪声滤波
-#+attr_latex: width=0.3\textwidth
-[[./image/coins.png]]
-#+attr_latex: width=0.3\textwidth
-[[./image/coins_periodic_noise.png]]
-#+attr_latex: width=0.3\textwidth
-[[./image/coins_periodic_filted.png]]
+# The LaTeX export back-end centers all images by default. Setting ‘:center’ to ‘nil’ disables centering. To disable centering globally, set org-latex-images-centered to ‘nil’. (setq org-latex-images-centered t)  (setq org-latex-images-centered 'nil)
 
+#+attr_latex: :width 0.3\textwidth :center nil
+[[./image/coins.png]]
+#+attr_latex: :width 0.3\textwidth :center nil
+[[./image/coins_periodic_noise.png]]
+#+attr_latex: :width 0.3\textwidth :center nil
+[[./image/coins_periodic_filted.png]]
