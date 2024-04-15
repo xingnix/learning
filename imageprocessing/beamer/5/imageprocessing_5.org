@@ -39,7 +39,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -90,7 +90,7 @@
 
 ** 退化模型
 
-\[ g(x,y) = H[f(x,y)+n(x,y) \]
+\[ g(x,y) = H(f,n) \]
 
 
 ** 线性退化模型
@@ -122,13 +122,11 @@ G(u,v) &= H(u,v)F(u,v)+N(u,v)
 ** 瑞利噪声(Rayleigh noise)
 - 概率密度函数（PDF)
 
-\[
-p(z)=
+\[ p(z)=
 \begin{cases}
 \frac{2}{b}(z-a)e^{-\frac{(z-a)^2}{b}},\qquad  x\geq a \\
 0 ,\qquad x<a
-\end{cases}
-\]
+\end{cases} \]
 
 - 均值与方差
    \begin{align*}
@@ -138,13 +136,11 @@ p(z)=
 
 ** 爱尔朗（伽马）噪声(Erlang(Gamma) noise)
 - 概率密度函数（PDF)
-\[
-p(z) = 
+\[ p(z) = 
 \begin{cases}
 \frac{a^bz^{b-1}}{(b-1)!}e^{-az}, \qquad  z\geq 0 \\
 0 , \qquad z<0
-\end{cases}
- \]
+\end{cases}  \]
 
 - 均值与方差
    \begin{align*}
@@ -158,8 +154,8 @@ p(z) =
 \begin{cases}
 a e^{-az}, \qquad z\geq 0 \\
 0, \qquad z<0
-\end{cases}
-\]
+\end{cases}\]
+
 - 均值与方差
 \begin{align*}
     \bar z &= \frac{1}{a} \\
@@ -172,8 +168,8 @@ a e^{-az}, \qquad z\geq 0 \\
 \begin{cases}
 \frac{1}{b-a}, \qquad a\leq z \leq b \\
 0, \qquad \text{其它}
-\end{cases}
-\]
+\end{cases} \]
+
 - 均值与方差
 \begin{align*}
     \bar z &= \frac{a+b}{2} \\
@@ -187,8 +183,7 @@ a e^{-az}, \qquad z\geq 0 \\
 p_a, \qquad z=a \\
 p_b, \qquad z=b \\
 0, \qquad \text{其它}
-\end{cases}
-\]
+\end{cases} \]
 
 ** 周期噪声
 - 图像获取过程中的电气、机电干扰
@@ -349,20 +344,15 @@ G(u,v)&=F(u,v)+N(u,v)
 1, \qquad D(u,v)<D_0-\frac{W}{2} \\
 0, \qquad D_0-\frac{W}{2} \leq D(u,v) \leq D_0+\frac{W}{2}\\
 1, \qquad D(u,v)>D_0+\frac{W}{2}
-\end{cases}
-\]
+\end{cases} \]
 
 其中， $D(u,v)$ 是到中心化频率矩形原点的距离，$W$ 是频带的宽度， $D_0$ 是频带的中心半径。
 
 ** n阶巴特沃思(Butterworth)带阻滤波器
-\[
-H(u,v) = \frac{1}{1+\left(\frac{D(u,v)W}{D^2(u,v)-D_0^2}\right)^{2n}}
-\]
+\[ H(u,v) = \frac{1}{1+\left(\frac{D(u,v)W}{D^2(u,v)-D_0^2}\right)^{2n}} \]
 
 ** 高斯带阻滤波器
-\[
-H(u,v)=1-e^{-\frac{1}{2}\left(\frac{D^2(u,v)-D_0^2}{D(u,v)W}\right)^{2n}}
-\]
+\[ H(u,v)=1-e^{-\frac{1}{2}\left(\frac{D^2(u,v)-D_0^2}{D(u,v)W}\right)^{2n}} \]
 
 ** 带通滤波器
 带通滤波器执行与带阻滤波器相反的操作。
@@ -375,8 +365,7 @@ H(u,v)=1-e^{-\frac{1}{2}\left(\frac{D^2(u,v)-D_0^2}{D(u,v)W}\right)^{2n}}
 0, \qquad D(u,v)<D_0-\frac{W}{2} \\
 1, \qquad D_0-\frac{W}{2} \leq D(u,v) \leq D_0+\frac{W}{2}\\
 0, \qquad D(u,v)>D_0+\frac{W}{2}
-\end{cases}
-\]
+\end{cases} \]
 
 ** 理想Butterworth带通滤波器
 \begin{align*}
@@ -410,19 +399,13 @@ D_2(u,v) &=\left((u+u_0)^2+(v+v_0)^2\right)^{\frac{1}{2}}
 半径为 $D_0$ ，中心在 $(u_0,v_0)$ 且在 $(-u_0,-v_0)$ 对称
 
 ** 阶数为n的巴特沃思陷波带阻滤波器
-\[
-H(u,v)=\frac{1}{1+\left(\frac{D_0^2}{D_1(u,v)D_2(u,v)}\right)^n}
-\]
+\[ H(u,v)=\frac{1}{1+\left(\frac{D_0^2}{D_1(u,v)D_2(u,v)}\right)^n} \]
 
 ** 高斯陷波带阻滤波器
-\[
-H(u,v)=1-e^{-\frac{1}{2}\frac{D_1(u,v)D_2(u,v)}{D_0^2}}
-\]
+\[ H(u,v)=1-e^{-\frac{1}{2}\frac{D_1(u,v)D_2(u,v)}{D_0^2}} \]
 
 ** 陷波带通滤波器的传递函数：
-\[ 
-H_{np}(u,v)=1-H_{nr}(u,v)
-\]
+\[  H_{np}(u,v)=1-H_{nr}(u,v) \]
 
 
 当 $u_0=v_0$ 时， 陷波带通滤波器变为低通滤波器。

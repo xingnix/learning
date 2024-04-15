@@ -1,18 +1,15 @@
-% Created 2017-06-02 Fri 18:01
-\documentclass{beamer}
-\usepackage{fixltx2e}
+% Created 2024-04-15 Mon 18:27
+% Intended LaTeX compiler: xelatex
+\documentclass[presentation]{beamer}
 \usepackage{graphicx}
 \usepackage{longtable}
-\usepackage{float}
 \usepackage{wrapfig}
-\usepackage{soul}
-\usepackage{textcomp}
-\usepackage{marvosym}
-\usepackage{wasysym}
-\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{capt-of}
 \usepackage{hyperref}
-\tolerance=1000
 \usepackage{etex}
 \usepackage{amsmath}
 \DeclareMathOperator*{\median}{median}
@@ -40,23 +37,20 @@
 \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
 \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 \setbeamercovered{transparent}
-\providecommand{\alert}[1]{\textbf{#1}}
-
-\title{图像恢复}
-\author{}
+\usetheme{default}
 \date{}
+\title{图像恢复}
 \hypersetup{
-  pdfkeywords={},
-  pdfsubject={},
-  pdfcreator={Emacs Org-mode version 7.9.3f}}
-
+ pdfauthor={},
+ pdftitle={图像恢复},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.2 (Org mode 9.6.15)}, 
+ pdflang={English}}
 \begin{document}
 
 \maketitle
-
-\begin{frame}
-\frametitle{Outline}
-\setcounter{tocdepth}{3}
+\begin{frame}{Outline}
 \tableofcontents
 \end{frame}
 
@@ -70,18 +64,14 @@
 
 
 
-
-
 \section{概述}
-\label{sec-1}
-\begin{frame}
-\frametitle{图像退化与恢复}
-\label{sec-1-1}
-
+\label{sec:org71b5b98}
+\begin{frame}[label={sec:org3007c8f}]{图像退化与恢复}
 \begin{itemize}
 \item 图像退化
 
-    图像在形成、记录、处理和传输过程中，由于成像系统、记录设备、传输介质和处理方法的不完善，会导致图像质量下降。这一过程称为图像的退化。
+图像在形成、记录、处理和传输过程中，由于成像系统、记录设备、传输介质和处理方法的不完善，会导致图像质量下降。这一过程称为图像的退化。
+
 \item 图像恢复
 \begin{itemize}
 \item 图像的恢复就是要尽可能恢复退化图像的本来面目，它是沿图像退化的逆过程进行。
@@ -89,10 +79,7 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{图像退化原因与形式}
-\label{sec-1-2}
-
+\begin{frame}[label={sec:org9b0df41}]{图像退化原因与形式}
 \begin{itemize}
 \item 图像退化形式
 \begin{itemize}
@@ -108,126 +95,101 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
+
 \section{图像退化与恢复模型}
-\label{sec-2}
-\begin{frame}
-\frametitle{退化与恢复过程}
-\label{sec-2-1}
-
-
+\label{sec:orgaa5187a}
+\begin{frame}[label={sec:org6268977}]{退化与恢复过程}
 \begin{itemize}
-\item 退化过程可以被模型化为一个退化函数和一个加性噪声项，处理一幅输入图像 $f(x,y)$ 产生一幅退化图像 $g(x,y)$ 。
-\item 给定 $g(x,y)$ 和关于退化函数H的一些知识以及外加噪声项 $n(x,y)$ ，图像复原的目的是获得关于原始图像的近似估计 $\hat f(x,y)$ 。
+\item 退化过程可以被模型化为一个退化函数和一个加性噪声项，处理一幅输入图像 \(f(x,y)\) 产生一幅退化图像 \(g(x,y)\) 。
+\item 给定 \(g(x,y)\) 和关于退化函数H的一些知识以及外加噪声项 \(n(x,y)\) ，图像复原的目的是获得关于原始图像的近似估计 \(\hat f(x,y)\) 。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{退化模型}
-\label{sec-2-2}
 
 
-\[ g(x,y) = H[f(x,y)+n(x,y) \]
+\begin{frame}[label={sec:org4dc0c3d}]{退化模型}
+\[ g(x,y) = H(f,n) \]
 \end{frame}
-\begin{frame}
-\frametitle{线性退化模型}
-\label{sec-2-3}
 
 
-如果退化函数 $H$ 是一个线性、平移不变函数，那么在空间域中给出的退化图像可由下式给出：
+\begin{frame}[label={sec:orge2c9f7e}]{线性退化模型}
+如果退化函数 \(H\) 是一个线性、平移不变函数，那么在空间域中给出的退化图像可由下式给出：
 
 \begin{align*}
 g(x,y) &= h(x,y)\otimes f(x,y)+n(x,y)\\
 G(u,v) &= H(u,v)F(u,v)+N(u,v)
 \end{align*}
 \end{frame}
-\section{噪声模型}
-\label{sec-3}
-\begin{frame}
-\frametitle{有噪声情况下的图像恢复}
-\label{sec-3-1}
 
+\section{噪声模型}
+\label{sec:orgb41c6ca}
+\begin{frame}[label={sec:org61ef1fa}]{有噪声情况下的图像恢复}
 \begin{itemize}
 \item 必须知道噪声的统计特性以及噪声和图像信号的相关情况，这是非常复杂的。在实际应用中，往往假设噪声是白噪声，即它的频谱密度为常数，且与图像不相关。
 \item 不同的恢复技术需要不同的有关噪声的先验信息，（例如：维纳滤波器需要知道噪声的谱密度，约束反卷积法需要知道噪声的协方差）。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{噪声模型}
-\label{sec-3-2}
 
+\begin{frame}[label={sec:orgb8656f8}]{噪声模型}
 \begin{itemize}
 \item 数字图像的噪声主要来源于图像的获取和传输过程。图像传输器的工作情况受各种因素的影响，如图像获取中的环境条件和传感器件自身的质量
 \item 存在的一些重要的噪声类型：高斯噪声、瑞利噪声、伽马噪声、指数分布噪声、均匀分布噪声、脉冲噪声等
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{噪声的空间和频率特性}
-\label{sec-3-3}
 
+\begin{frame}[label={sec:org34d0613}]{噪声的空间和频率特性}
 \begin{itemize}
 \item 假设噪声独立于空间坐标，并且它与图像本身无关联
 \item 当噪声的傅里叶谱是常量时，噪声通常称为白噪声
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{高斯噪声(Gaussian noise)}
-\label{sec-3-4}
 
+\begin{frame}[label={sec:orgc59ed95}]{高斯噪声(Gaussian noise)}
 \begin{itemize}
 \item 概率密度函数（PDF)
 \end{itemize}
 \[p(z)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(z-\mu)^2}{2\sigma^2}}  \]
 \end{frame}
-\begin{frame}
-\frametitle{瑞利噪声(Rayleigh noise)}
-\label{sec-3-5}
 
+\begin{frame}[label={sec:orgf031ce0}]{瑞利噪声(Rayleigh noise)}
 \begin{itemize}
 \item 概率密度函数（PDF)
 \end{itemize}
 
-\[
-p(z)=
+\[ p(z)=
 \begin{cases}
 \frac{2}{b}(z-a)e^{-\frac{(z-a)^2}{b}},\qquad  x\geq a \\
 0 ,\qquad x<a
-\end{cases}
-\]
+\end{cases} \]
 
 \begin{itemize}
 \item 均值与方差
-   \begin{align*}
-    \bar z &= a+\frac{\sqrt{\pi b}}{2} \\
-    \sigma^2 &=  \frac{b(4-\pi)}{4}
-   \end{align*}
+\begin{align*}
+ \bar z &= a+\frac{\sqrt{\pi b}}{2} \\
+ \sigma^2 &=  \frac{b(4-\pi)}{4}
+\end{align*}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{爱尔朗（伽马）噪声(Erlang(Gamma) noise)}
-\label{sec-3-6}
 
+\begin{frame}[label={sec:org2402f80}]{爱尔朗（伽马）噪声(Erlang(Gamma) noise)}
 \begin{itemize}
 \item 概率密度函数（PDF)
 \end{itemize}
-\[
-p(z) = 
+\[ p(z) = 
 \begin{cases}
 \frac{a^bz^{b-1}}{(b-1)!}e^{-az}, \qquad  z\geq 0 \\
 0 , \qquad z<0
-\end{cases}
- \]
+\end{cases}  \]
 
 \begin{itemize}
 \item 均值与方差
-   \begin{align*}
-    \bar z &= \frac{b}{a} \\
-    \sigma^2 &=  \frac{b}{a^2}
-   \end{align*}
+\begin{align*}
+ \bar z &= \frac{b}{a} \\
+ \sigma^2 &=  \frac{b}{a^2}
+\end{align*}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{指数噪声(Exponential noise)}
-\label{sec-3-7}
 
+\begin{frame}[label={sec:org0076312}]{指数噪声(Exponential noise)}
 \begin{itemize}
 \item 概率密度函数
 \end{itemize}
@@ -235,8 +197,8 @@ p(z) =
 \begin{cases}
 a e^{-az}, \qquad z\geq 0 \\
 0, \qquad z<0
-\end{cases}
-\]
+\end{cases}\]
+
 \begin{itemize}
 \item 均值与方差
 \end{itemize}
@@ -245,10 +207,8 @@ a e^{-az}, \qquad z\geq 0 \\
     \sigma^2 &=  \frac{1}{a^2}
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{均匀噪声(Uniform noise)}
-\label{sec-3-8}
 
+\begin{frame}[label={sec:orgc35fcc8}]{均匀噪声(Uniform noise)}
 \begin{itemize}
 \item 概率密度函数
 \end{itemize}
@@ -256,8 +216,8 @@ a e^{-az}, \qquad z\geq 0 \\
 \begin{cases}
 \frac{1}{b-a}, \qquad a\leq z \leq b \\
 0, \qquad \text{其它}
-\end{cases}
-\]
+\end{cases} \]
+
 \begin{itemize}
 \item 均值与方差
 \end{itemize}
@@ -266,10 +226,8 @@ a e^{-az}, \qquad z\geq 0 \\
     \sigma^2 &=  \frac{(b-a)^2}{12}
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{脉冲(椒盐)噪声(Impulse(salt and pepper) noise)}
-\label{sec-3-9}
 
+\begin{frame}[label={sec:org3e29527}]{脉冲(椒盐)噪声(Impulse(salt and pepper) noise)}
 \begin{itemize}
 \item 概率密度函数
 \end{itemize}
@@ -278,24 +236,19 @@ a e^{-az}, \qquad z\geq 0 \\
 p_a, \qquad z=a \\
 p_b, \qquad z=b \\
 0, \qquad \text{其它}
-\end{cases}
-\]
+\end{cases} \]
 \end{frame}
-\begin{frame}
-\frametitle{周期噪声}
-\label{sec-3-10}
 
+\begin{frame}[label={sec:org568d369}]{周期噪声}
 \begin{itemize}
 \item 图像获取过程中的电气、机电干扰
 \item 可通过频域滤波减轻影响
 \end{itemize}
 \end{frame}
-\section{噪声参数估计与滤波}
-\label{sec-4}
-\begin{frame}
-\frametitle{周期噪声参数估计}
-\label{sec-4-1}
 
+\section{噪声参数估计与滤波}
+\label{sec:org12a2fa5}
+\begin{frame}[label={sec:org5d2097f}]{周期噪声参数估计}
 \begin{itemize}
 \item 通过检测图像的傅里叶谱进行估计。
 \begin{itemize}
@@ -305,10 +258,8 @@ p_b, \qquad z=b \\
 \item 当噪声尖峰格外显著或可以使用关于干扰的频率分量一般位置的某些知识时，自动分析是可能的。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{噪声存在下的唯一空间滤波恢复}
-\label{sec-4-2}
 
+\begin{frame}[label={sec:org385af34}]{噪声存在下的唯一空间滤波恢复}
 \begin{align*}
 g(x,y)&=f(x,y)+n(x,y)\\
 G(u,v)&=F(u,v)+N(u,v)
@@ -321,12 +272,10 @@ G(u,v)&=F(u,v)+N(u,v)
 \item 自适应滤波器
 \end{itemize}
 \end{frame}
-\section{均值滤波器}
-\label{sec-5}
-\begin{frame}
-\frametitle{均值滤波器}
-\label{sec-5-1}
 
+\section{均值滤波器}
+\label{sec:orgc24eeb1}
+\begin{frame}[label={sec:orge035e76}]{均值滤波器}
 \begin{itemize}
 \item 算术均值滤波器
 \item 几何均值滤波器
@@ -334,61 +283,50 @@ G(u,v)&=F(u,v)+N(u,v)
 \item 逆谐波均值滤波器
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{算术均值滤波器}
-\label{sec-5-2}
-
+\begin{frame}[label={sec:orgd4a901d}]{算术均值滤波器}
 \begin{itemize}
-\item 算术均值滤波器是最简单的均值滤波器。令 $S_{xy}$ 表示中心在 $(x,y)$ 点，尺寸为 $m\times n$ 的矩形子图像窗口的坐标组。
+\item 算术均值滤波器是最简单的均值滤波器。令 \(S_{xy}\) 表示中心在 \((x,y)\) 点，尺寸为 \(m\times n\) 的矩形子图像窗口的坐标组。
 \end{itemize}
-计算由 $S_{xy}$ 定义的区域中被干扰图像 $g(x,y)$ 的平均值。在任意点 $(x,y)$ 处复原图像就是用 $S_{xy}$ 定义区域的像素计算出来的算术均值。即：
+计算由 \(S_{xy}\) 定义的区域中被干扰图像 \(g(x,y)\) 的平均值。在任意点 \((x,y)\) 处复原图像就是用 \(S_{xy}\) 定义区域的像素计算出来的算术均值。即：
 
 \[ \hat f(x,y) = \frac{1}{mn}\sum_{(s,t)\in S_{xy}}g(s,t) \]
 \end{frame}
-\begin{frame}
-\frametitle{几何均值滤波器}
-\label{sec-5-3}
 
-
+\begin{frame}[label={sec:orgc44fb13}]{几何均值滤波器}
 \[ \hat f(x,y) = \left[\prod_{(s,t)\in S_{xy}}g(s,t)\right]^{\frac{1}{mn}} \]
 
 \begin{itemize}
-\item 每个被复原像素等于子图像窗口中像素点乘积的 $\frac{1}{mn}$ 次幂。
+\item 每个被复原像素等于子图像窗口中像素点乘积的 \(\frac{1}{mn}\) 次幂。
 \item 几何均值滤波器所达到的平滑度可以与算术均值滤波器相比，但在滤波过程中会丢失更少的图像细节。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{谐波均值滤波器}
-\label{sec-5-4}
 
+\begin{frame}[label={sec:org7973d9f}]{谐波均值滤波器}
 \begin{itemize}
 \item 使用谐波均值滤波器的操作由如下表达式给出：
-   \[ \hat f(x,y) = \frac{mn}{\sum_{(s,t)\in S_{xy}}\frac{1}{g(s,t)}} \]
+\[ \hat f(x,y) = \frac{mn}{\sum_{(s,t)\in S_{xy}}\frac{1}{g(s,t)}} \]
+
 \item 谐波均值滤波器对于“盐” 噪声效果较好，但不适于“胡椒”噪声。它善于处理高斯噪声。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{逆谐波均值滤波器}
-\label{sec-5-5}
 
+\begin{frame}[label={sec:orgb87d0b7}]{逆谐波均值滤波器}
 \begin{itemize}
 \item 逆谐波均值滤波操作对一幅图像的复原基于表达式：
-     \[ \hat f(x,y) = \frac{\sum_{(s,t)\in S_{xy}}g(s,t)^{Q+1}}{\sum_{(s,t)\in S_{xy}}g(s,t)^Q} \]
+\[ \hat f(x,y) = \frac{\sum_{(s,t)\in S_{xy}}g(s,t)^{Q+1}}{\sum_{(s,t)\in S_{xy}}g(s,t)^Q} \]
 \item 其中Q称为滤波器的阶数。这种滤波器适合减少或是在实际中消除椒盐噪声的影响。
 \begin{itemize}
-\item 当 $Q$ 值为正数时，滤波器用于消除“胡椒”噪声;
-\item 当 $Q$ 值为负数时，滤波器用于消除“盐”噪声。
-\item 当 $Q=0$ 时，逆谐波均值滤波器退变为算术均值滤波器;
-\item 当 $Q=-1$ 时，逆谐波均值滤波器退变为谐波均值滤波器。
+\item 当 \(Q\) 值为正数时，滤波器用于消除“胡椒”噪声;
+\item 当 \(Q\) 值为负数时，滤波器用于消除“盐”噪声。
+\item 当 \(Q=0\) 时，逆谐波均值滤波器退变为算术均值滤波器;
+\item 当 \(Q=-1\) 时，逆谐波均值滤波器退变为谐波均值滤波器。
 \end{itemize}
 \end{itemize}
 \end{frame}
-\section{统计排序滤波器}
-\label{sec-6}
-\begin{frame}
-\frametitle{统计排序滤波器}
-\label{sec-6-1}
 
+\section{统计排序滤波器}
+\label{sec:org2fb44a1}
+\begin{frame}[label={sec:org07e1dc3}]{统计排序滤波器}
 统计滤波器是空间域滤波器，它们的响应基于由滤波器包围的图像区域中像素点的排序。滤波器在任何点的响应由排序结果决定。
 
 \begin{itemize}
@@ -398,110 +336,91 @@ G(u,v)&=F(u,v)+N(u,v)
 \item 修正后的阿尔法均值滤波器
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{中值滤波器}
-\label{sec-6-2}
 
+\begin{frame}[label={sec:orgffe4db4}]{中值滤波器}
 \[  \hat f(x,y) = \median_{(s,t)\in S_{xy}} g(s,t) \]
+
 \begin{itemize}
 \item 中值滤波器的应用非常普遍，对于很多种随机噪声，它都有良好的去噪能力，
 \item 在相同尺寸下比起线性平滑滤波器引起的模糊较少。
 \item 中值滤波器尤其对单极或双极脉冲噪声非常有效。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最大值滤波器}
-\label{sec-6-3}
 
+
+\begin{frame}[label={sec:orgd3c5166}]{最大值滤波器}
 \[  \hat f(x,y) = \max_{(s,t)\in S_{xy}}g(s,t) \]
 \begin{itemize}
 \item 最大值滤波器在发现图像中的最亮点时非常有用。
 \item 同样，因为“胡椒”噪声是非常低的值，作为子图像区域Sxy的最大值选择结果，它可以通过这种滤波器消除。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最小值滤波器}
-\label{sec-6-4}
 
+\begin{frame}[label={sec:org4fe39ea}]{最小值滤波器}
 \[  \hat f(x,y) = \min_{(s,t)\in S_{xy}}g(s,t) \]
 \begin{itemize}
 \item 对发现图像中的最暗点非常有用。
 \item 作为最小值操作的结果，它可以用来消除“盐”噪声。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{中点滤波器}
-\label{sec-6-5}
 
+\begin{frame}[label={sec:orgc43d7cd}]{中点滤波器}
 \[  \hat f(x,y) = \frac{1}{2}\left[\max_{(s,t)\in S_{xy}}g(s,t)+\frac{1}{2}\min_{(s,t)\in S_{xy}}g(s,t)\right] \]
 \begin{itemize}
 \item 结合了顺序统计和求平均，对于高斯和均匀随机分布这类噪声有最好的效果。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{修正后的阿尔法均值滤波器}
-\label{sec-6-6}
 
-在 $S_{xy}$ 邻域内去掉 $g(s,t)$ 最高灰度值的 $\frac{d}{2}$ 和最低灰度值的 $\frac{d}{2}$ 。用 $g_r(s,t)$ 来代表剩余的 $mn-d$ 个像素。
+\begin{frame}[label={sec:org64b0c64}]{修正后的阿尔法均值滤波器}
+在 \(S_{xy}\) 邻域内去掉 \(g(s,t)\) 最高灰度值的 \(\frac{d}{2}\) 和最低灰度值的 \(\frac{d}{2}\) 。用 \(g_r(s,t)\) 来代表剩余的 \(mn-d\) 个像素。
 由这些剩余像素点的平均值形成的滤波器称为修正后的阿尔法均值滤波器。
 \[ \hat f(x,y) = \frac{1}{mn-d}\sum_{(s,t)\in S_{xy}}g_r(s,t) \]
 \begin{itemize}
-\item 其中，$d$ 值可以取 $0$ 到 $mn-1$ 之间的任意数。
+\item 其中，\(d\) 值可以取 \(0\) 到 \(mn-1\) 之间的任意数。
 \item 修正后的阿尔法均值滤波器在包括多种噪声的情况下非常适用，例如高斯噪声和椒盐噪声混合的情况下。
 \end{itemize}
 \end{frame}
-\section{自适应滤波器}
-\label{sec-7}
-\begin{frame}
-\frametitle{自适应、局部噪声消除滤波器}
-\label{sec-7-1}
 
+\section{自适应滤波器}
+\label{sec:orgeaa3050}
+\begin{frame}[label={sec:orgc6dc8cc}]{自适应、局部噪声消除滤波器}
 \begin{itemize}
 \item 随机变量最简单的统计度量是均值和方差。这些适当的参数是自适应滤波器的基础，因为它们是与图像状态紧密相关的数据。
 \item 均值给出了计算均值的区域中灰度平均值的度量，
 \item 方差给出了这个区域的平均对比度的度量。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{自适应、局部噪声消除滤波器}
-\label{sec-7-2}
 
+\begin{frame}[label={sec:orgc8912b3}]{自适应、局部噪声消除滤波器}
 \[ \hat f(x,y)=g(x,y)-\frac{\sigma_n^2}{\sigma_L^2}(g(x,y)-m_L) \]
 
 \begin{itemize}
-\item $g(x,y)$ 表示图像在点 $(x,y)$ 上的值
-\item $\sigma^2_n$ 表示干扰的方差
-\item $m_L$ 表示 $S_{xy}$ 上像素点的局部均值
-\item $\sigma_L^2$ 表示 $S_{xy}$ 上像素点的局部方差
+\item \(g(x,y)\) 表示图像在点 \((x,y)\) 上的值
+\item \(\sigma^2_n\) 表示干扰的方差
+\item \(m_L\) 表示 \(S_{xy}\) 上像素点的局部均值
+\item \(\sigma_L^2\) 表示 \(S_{xy}\) 上像素点的局部方差
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{自适应中值滤波器}
-\label{sec-7-3}
 
-
+\begin{frame}[label={sec:org297659e}]{自适应中值滤波器}
 \begin{itemize}
 \item 自适应中值滤波器可以处理具有更大概率的冲激噪声。
 \item 平滑非冲激噪声时可以更好地保存细节。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{自适应中值滤波器}
-\label{sec-7-4}
 
+\begin{frame}[label={sec:org8d389e0}]{自适应中值滤波器}
 如下标记符号：
 \begin{itemize}
-\item $z_{min}$ 表示 $S_{xy}$ 中灰度级的最小值
-\item $z_{max}$ 表示 $S_{xy}$ 中灰度级的最大值
-\item $z_{med}$ 表示 $S_{xy}$ 中灰度级的中值
-\item $z_{xy}$ 表示坐标 $(x,y)$ 上的灰度级
-\item $S_{max}$ 表示 $S_{xy}$ 允许的最大尺寸
+\item \(z_{min}\) 表示 \(S_{xy}\) 中灰度级的最小值
+\item \(z_{max}\) 表示 \(S_{xy}\) 中灰度级的最大值
+\item \(z_{med}\) 表示 \(S_{xy}\) 中灰度级的中值
+\item \(z_{xy}\) 表示坐标 \((x,y)\) 上的灰度级
+\item \(S_{max}\) 表示 \(S_{xy}\) 允许的最大尺寸
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{自适应中值滤波器}
-\label{sec-7-5}
 
+\begin{frame}[label={sec:org7e6e702}]{自适应中值滤波器}
  \begin{codebox}
 \Procname{自适应中值滤波器}
  \zi      \Repeat
@@ -521,12 +440,10 @@ G(u,v)&=F(u,v)+N(u,v)
  \zi \Return $z_{med}$
  \end{codebox}
 \end{frame}
-\section{周期噪声滤波}
-\label{sec-8}
-\begin{frame}
-\frametitle{周期噪声滤波}
-\label{sec-8-1}
 
+\section{周期噪声滤波}
+\label{sec:org8286c41}
+\begin{frame}[label={sec:org4802d73}]{周期噪声滤波}
 \begin{itemize}
 \item 带阻滤波器
 \item 带通滤波器
@@ -534,98 +451,70 @@ G(u,v)&=F(u,v)+N(u,v)
 \item 最佳陷波滤波器
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{带阻滤波器}
-\label{sec-8-2}
 
+\begin{frame}[label={sec:org4cb8198}]{带阻滤波器}
 \begin{itemize}
 \item 带阻滤波器消除或衰减了傅里叶变换原点处的频段。
 \item 带阻滤波器的主要应用之一是在频域噪声分量位置近似已知的应用中消除噪声。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{理想带阻滤波器}
-\label{sec-8-3}
-
+\begin{frame}[label={sec:org7ec4eb3}]{理想带阻滤波器}
 \[ H(u,v)=
 \begin{cases}
 1, \qquad D(u,v)<D_0-\frac{W}{2} \\
 0, \qquad D_0-\frac{W}{2} \leq D(u,v) \leq D_0+\frac{W}{2}\\
 1, \qquad D(u,v)>D_0+\frac{W}{2}
-\end{cases}
-\]
+\end{cases} \]
 
-其中， $D(u,v)$ 是到中心化频率矩形原点的距离，$W$ 是频带的宽度， $D_0$ 是频带的中心半径。
+其中， \(D(u,v)\) 是到中心化频率矩形原点的距离，\(W\) 是频带的宽度， \(D_0\) 是频带的中心半径。
 \end{frame}
-\begin{frame}
-\frametitle{n阶巴特沃思(Butterworth)带阻滤波器}
-\label{sec-8-4}
 
-\[
-H(u,v) = \frac{1}{1+\left(\frac{D(u,v)W}{D^2(u,v)-D_0^2}\right)^{2n}}
-\]
+\begin{frame}[label={sec:org90a9a7f}]{n阶巴特沃思(Butterworth)带阻滤波器}
+\[ H(u,v) = \frac{1}{1+\left(\frac{D(u,v)W}{D^2(u,v)-D_0^2}\right)^{2n}} \]
 \end{frame}
-\begin{frame}
-\frametitle{高斯带阻滤波器}
-\label{sec-8-5}
 
-\[
-H(u,v)=1-e^{-\frac{1}{2}\left(\frac{D^2(u,v)-D_0^2}{D(u,v)W}\right)^{2n}}
-\]
+\begin{frame}[label={sec:orgedf1c30}]{高斯带阻滤波器}
+\[ H(u,v)=1-e^{-\frac{1}{2}\left(\frac{D^2(u,v)-D_0^2}{D(u,v)W}\right)^{2n}} \]
 \end{frame}
-\begin{frame}
-\frametitle{带通滤波器}
-\label{sec-8-6}
 
+\begin{frame}[label={sec:org3b7aad5}]{带通滤波器}
 带通滤波器执行与带阻滤波器相反的操作。
-带通滤波器的传递函数 $H_{bp}(u,v)$ 可由相应的带阻滤波器的传递函数 $H_{br}(u,v)$ 得到：
+带通滤波器的传递函数 \(H_{bp}(u,v)\) 可由相应的带阻滤波器的传递函数 \(H_{br}(u,v)\) 得到：
 \[ H_{bp}(u,v)=1-H_{br}(u,v) \]
 \end{frame}
-\begin{frame}
-\frametitle{理想带通滤波器}
-\label{sec-8-7}
 
+\begin{frame}[label={sec:org604fcd4}]{理想带通滤波器}
 \[ H(u,v)=
 \begin{cases}
 0, \qquad D(u,v)<D_0-\frac{W}{2} \\
 1, \qquad D_0-\frac{W}{2} \leq D(u,v) \leq D_0+\frac{W}{2}\\
 0, \qquad D(u,v)>D_0+\frac{W}{2}
-\end{cases}
-\]
+\end{cases} \]
 \end{frame}
-\begin{frame}
-\frametitle{理想Butterworth带通滤波器}
-\label{sec-8-8}
 
+\begin{frame}[label={sec:org8490ae4}]{理想Butterworth带通滤波器}
 \begin{align*}
 H_{Bbp}(u,v) &=1- \frac{1}{1+\left(\frac{D(u,v)W}{D^2(u,v)-D_0^2}\right)^{2n}}\\
 &= \frac{\left(\frac{D(u,v)W}{D^2(u,v)-D_0^2}\right)^{2n}}{1+\left(\frac{D(u,v)W}{D^2(u,v)-D_0^2}\right)^{2n}}
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{理想Gaussian带通滤波器}
-\label{sec-8-9}
 
+\begin{frame}[label={sec:orgc352d27}]{理想Gaussian带通滤波器}
 \begin{align*}
 H(u,v)&=1-\left(1-e^{-\frac{1}{2}\left(\frac{D^2(u,v)-D_0^2}{D(u,v)W}\right)^{2n}}\right)\\
 &=e^{-\frac{1}{2}\left(\frac{D^2(u,v)-D_0^2}{D(u,v)W}\right)^{2n}}
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{陷波滤波器}
-\label{sec-8-10}
 
+\begin{frame}[label={sec:orgdc38ea0}]{陷波滤波器}
 \begin{itemize}
 \item 陷波滤波器阻止(或通过)事先定义的中心频率邻域内的频率。
 \item 由于傅里叶变换是对称的，要获得有效结果，陷波滤波器必须以关于原点对称的形式出现。
 \item 可实现的陷波滤波器的对数是任意的。陷波区域的形状也是任意的(例如，矩形)。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{理想陷波滤波器}
-\label{sec-8-11}
 
-
+\begin{frame}[label={sec:org9a41238}]{理想陷波滤波器}
 \begin{align*}
 H(u,v) &= \begin{cases}
 0,\qquad D_1(u,v)\leq D_0  \\
@@ -636,61 +525,43 @@ D_1(u,v) &=\left((u-u_0)^2+(v-v_0)^2\right)^{\frac{1}{2}}\\
 D_2(u,v) &=\left((u+u_0)^2+(v+v_0)^2\right)^{\frac{1}{2}}
 \end{align*}
 
-半径为 $D_0$ ，中心在 $(u_0，v_0)$ 且在 $(-u_0，-v_0)$ 对称
+半径为 \(D_0\) ，中心在 \((u_0,v_0)\) 且在 \((-u_0,-v_0)\) 对称
 \end{frame}
-\begin{frame}
-\frametitle{阶数为n的巴特沃思陷波带阻滤波器}
-\label{sec-8-12}
 
-\[
-H(u,v)=\frac{1}{1+\left(\frac{D_0^2}{D_1(u,v)D_2(u,v)}\right)^n}
-\]
+\begin{frame}[label={sec:orgfc7fb33}]{阶数为n的巴特沃思陷波带阻滤波器}
+\[ H(u,v)=\frac{1}{1+\left(\frac{D_0^2}{D_1(u,v)D_2(u,v)}\right)^n} \]
 \end{frame}
-\begin{frame}
-\frametitle{高斯陷波带阻滤波器}
-\label{sec-8-13}
 
-\[
-H(u,v)=1-e^{-\frac{1}{2}\frac{D_1(u,v)D_2(u,v)}{D_0^2}}
-\]
+\begin{frame}[label={sec:orgc35f731}]{高斯陷波带阻滤波器}
+\[ H(u,v)=1-e^{-\frac{1}{2}\frac{D_1(u,v)D_2(u,v)}{D_0^2}} \]
 \end{frame}
-\begin{frame}
-\frametitle{陷波带通滤波器的传递函数：}
-\label{sec-8-14}
 
-\[ 
-H_{np}(u,v)=1-H_{nr}(u,v)
-\]
+\begin{frame}[label={sec:orge88af29}]{陷波带通滤波器的传递函数：}
+\[  H_{np}(u,v)=1-H_{nr}(u,v) \]
 
 
-当 $u_0=v_0$ 时， 陷波带通滤波器变为低通滤波器。
+当 \(u_0=v_0\) 时， 陷波带通滤波器变为低通滤波器。
 \end{frame}
+
 \section{线性位置不变退化}
-\label{sec-9}
-\begin{frame}
-\frametitle{线性位置不变退化模型}
-\label{sec-9-1}
-
+\label{sec:org2271933}
+\begin{frame}[label={sec:orgb8091e0}]{线性位置不变退化模型}
 \begin{align*}
  H[af_1(x,y)+bf_2(x,y)] &= aH[f_1(x,y)]+bH[f_2(x,y)] \\
   H[f(x,y)] &= g(x,y) \\
  H[f(x-\alpha,y-\beta)] &= g(x-\alpha,y-\beta)
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{脉冲响应}
-\label{sec-9-2}
 
+\begin{frame}[label={sec:org6517c26}]{脉冲响应}
 \begin{align*}
 H[\delta(x,y)] &= h(x,y) \\
 H[\delta(x-\alpha,y-\beta)] &= h(x-\alpha,y-\beta) \\
 H[f(\alpha,\beta)\delta(x-\alpha,y-\beta)] &=f(\alpha,\beta)h(x-\alpha,y-\beta) \\
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{卷积}
-\label{sec-9-3}
 
+\begin{frame}[label={sec:orgd3b21ba}]{卷积}
 \begin{align*}
 g(x,y) &=H[f(x,y)] \\
 &= H[f(x,y)*\delta(x,y)] \\
@@ -701,43 +572,33 @@ g(x,y) &=H[f(x,y)] \\
 &= f(x,y)*h(x,y)
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{有噪声退化模型}
-\label{sec-9-4}
 
+\begin{frame}[label={sec:org4c3a71f}]{有噪声退化模型}
 \begin{align*}
 g(x,y) &=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(\alpha,\beta)h(x-\alpha,y-\beta) d\alpha d\beta +n(x,y)\\
 G(u,v) &= H(u,v)F(u,v)+N(u,v)
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{估计退化函数}
-\label{sec-9-5}
 
+\begin{frame}[label={sec:org7352e74}]{估计退化函数}
 \begin{itemize}
 \item 图像观察估计法
 \item 试验估计法
 \item 模型估计法
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{图像观测估计法}
-\label{sec-9-6}
 
-
+\begin{frame}[label={sec:org86cce5a}]{图像观测估计法}
 \[ H_s(u,v) = \frac{G_s(u,v)}{\hat F_s(u,v)} \]
 
 其中：
 \begin{itemize}
-\item $G_s(u,v)$ 为特征明显的部分图像
-\item $\hat F_s(u,v)$ 是对原始图像的估计
+\item \(G_s(u,v)\) 为特征明显的部分图像
+\item \(\hat F_s(u,v)\) 是对原始图像的估计
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{试验估计法}
-\label{sec-9-7}
 
-
+\begin{frame}[label={sec:orgdd5312b}]{试验估计法}
 \[ H(u,v)=\frac{G(u,v)}{A} \]
 
 \begin{itemize}
@@ -745,24 +606,19 @@ G(u,v) &= H(u,v)F(u,v)+N(u,v)
 \item 利用相同的系统设置， 通过对一个脉冲(小亮点)成像可得到退化的脉冲响应。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{模型估计法}
-\label{sec-9-8}
 
-
+\begin{frame}[label={sec:org3b6acc9}]{模型估计法}
 \begin{itemize}
-\item 根据导致模糊的物理过程（先验知识）来确定 $h(x,y)$ 或 $H(u,v)$ 。
+\item 根据导致模糊的物理过程（先验知识）来确定 \(h(x,y)\) 或 \(H(u,v)\) 。
 \item 长时间曝光下大气湍流造成的转移函数
-   \[ H(u,v) = e^{-k(u^2+v^2)^{\frac{5}{6}}} \]
-\item $k$ 是常数，它与湍流的性质有关。
+\[ H(u,v) = e^{-k(u^2+v^2)^{\frac{5}{6}}} \]
+\item \(k\) 是常数，它与湍流的性质有关。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{运动模糊}
-\label{sec-9-9}
 
+\begin{frame}[label={sec:org66e3d7f}]{运动模糊}
 \begin{itemize}
-\item 假设 $T$ 为曝光时间（快门时间）， $x_0(t),y_0(t)$ 是位移的 $x$ 分量和 $y$ 分量。
+\item 假设 \(T\) 为曝光时间（快门时间）， \(x_0(t),y_0(t)\) 是位移的 \(x\) 分量和 \(y\) 分量。
 \end{itemize}
 \begin{align*}
 g(x,y) &= \int_0^T f(x-x_0(t),y-y_0(t)) dt \\
@@ -772,10 +628,8 @@ G(u,v) &= F(u,v) \int_0^T \mathcal{F}[\delta(x-x_0(t),y-y_0(t))] dt \\
 G(u,v) &= F(u,v) \int_0^T e^{-j2\pi(ux_0(t)+vy_0(t))} dt 
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{直线运动模糊}
-\label{sec-9-10}
 
+\begin{frame}[label={sec:orgfb662c2}]{直线运动模糊}
 当
 \begin{align*}
 x_0(t) &=\frac{at}{T} \\
@@ -787,11 +641,8 @@ H(u,v) &=\int_0^T e^{-j2\pi u \frac{at}{T}} dt \\
 &=\frac{T}{\pi u a} \sin(\pi u a) e^{-j\pi u a}
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{逆滤波}
-\label{sec-9-11}
 
-
+\begin{frame}[label={sec:orgca07e4d}]{逆滤波}
 \begin{align*}
  \hat F(u,v) &= \frac{G(u,v)}{H(u,v)} \\
  \hat F(u,v) &= F(u,v)+\frac{N(u,v)}{H(u,v)} \\
@@ -799,25 +650,20 @@ H(u,v) &=\int_0^T e^{-j2\pi u \frac{at}{T}} dt \\
 
 \begin{itemize}
 \item 即使知道退化函数，也不能准确地复原未退化的图像。因为噪声是一个随机函数，其傅氏变换未知。
-\item 实际应用逆滤波复原方法时存在病态的问题，即如果退化为零或非常小的值，则 $\frac{N(u,v)}{H(u,v)}$ 很容易决定复原函数的值。
+\item 实际应用逆滤波复原方法时存在病态的问题，即如果退化为零或非常小的值，则 \(\frac{N(u,v)}{H(u,v)}\) 很容易决定复原函数的值。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最小均方误差滤波(维纳滤波)}
-\label{sec-9-12}
 
+\begin{frame}[label={sec:org4e0382c}]{最小均方误差滤波(维纳滤波)}
 \begin{itemize}
 \item 最小均方误差滤波是综合退化函数和噪声统计特征两方面进行复原处理的方法。
 \item 目标是找一个未污染图像f的估计值，使它们之间的均方误差最小。误差度量由下式给出：
-  \[ e^2 = E((f-\hat f)^2) \]
+\[ e^2 = E((f-\hat f)^2) \]
 \item 假定：噪声和图像不相关；其中一个有零均值；估计的灰度级是退化图像灰度级的线性函数。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最小均方误差滤波(维纳滤波)}
-\label{sec-9-13}
 
-
+\begin{frame}[label={sec:orgc9eef20}]{最小均方误差滤波(维纳滤波)}
 \begin{align*}
 \hat F(u,v) &= \frac{H^{* } S_f(u,v)}{S_f(u,v)|H(u,v)|^2+S_n(u,v)}G(u,v) \\
 &= \frac{H^{* } }{|H(u,v)|^2+\frac{S_n(u,v)}{S_f(u,v)}}G(u,v) \\
@@ -826,27 +672,21 @@ H(u,v) &=\int_0^T e^{-j2\pi u \frac{at}{T}} dt \\
 
 其中：
 \begin{itemize}
-\item $H(u,v),H^{*}(u,v)$ 退化函数及其共轭复数
-\item $S_n(u,v)=|N(u,v)|^2$ 噪声功率谱
-\item $S_f(u,v)=|F(u,v)|^2$ 未退化图像的功率谱
+\item \(H(u,v),H^{*}(u,v)\) 退化函数及其共轭复数
+\item \(S_n(u,v)=|N(u,v)|^2\) 噪声功率谱
+\item \(S_f(u,v)=|F(u,v)|^2\) 未退化图像的功率谱
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最小均方误差滤波(维纳滤波)}
-\label{sec-9-14}
 
-
+\begin{frame}[label={sec:org6b0bf9c}]{最小均方误差滤波(维纳滤波)}
 \begin{itemize}
-\item 当处理白噪声时，谱 $|N(u,v)|^2$ 是一个常数，大大简化了处理过程。
+\item 当处理白噪声时，谱 \(|N(u,v)|^2\) 是一个常数，大大简化了处理过程。
 \item 未退化图像的功率谱很少是已知。当这些值未知或不能估计时，经常使用的方法是用下面的表达式近似：
-   \[ \hat F(u,v) = \frac{1}{H(u,v)}\frac{|H(u,v)|^2 }{|H(u,v)|^2+K}G(u,v) \]
+\[ \hat F(u,v) = \frac{1}{H(u,v)}\frac{|H(u,v)|^2 }{|H(u,v)|^2+K}G(u,v) \]
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{约束最小二乘方滤波器}
-\label{sec-9-15}
 
-
+\begin{frame}[label={sec:org5670fcd}]{约束最小二乘方滤波器}
 \begin{align*}
 \hat F(u,v) &= \frac{H^{* }(u,v) }{|H(u,v)|^2+\gamma|P(u,v)|^2}G(u,v)\\
 P(u,v)&=\mathcal{F}[p(x,y)]\\
@@ -863,18 +703,14 @@ p(x,y)&=
 \item 约束最小二乘方滤波器对于处理的每一幅图像它都能产生最优结果。因此，算法的选择往往由结果图像的感知视觉质量决定(至少部分是这样)。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{几何均值滤波}
-\label{sec-9-16}
 
+\begin{frame}[label={sec:org3183fc2}]{几何均值滤波}
 \[ \hat F(u,v) =\left(\frac{H^{*}(u,v)}{|H(u,v)|^2}\right)^{\alpha}\left(\frac{H^{ *}(u,v)}{|H(u,v)|^2+\beta \frac{S_n(u,v)}{S_f(u,v)}}\right)^{1-\alpha}G(u,v) \]
 \end{frame}
-\section{几何变换}
-\label{sec-10}
-\begin{frame}
-\frametitle{几何变换}
-\label{sec-10-1}
 
+\section{几何变换}
+\label{sec:org457576d}
+\begin{frame}[label={sec:org7e2612c}]{几何变换}
 \begin{itemize}
 \item 几何变换可在一幅图像中的像素间修改空间关系。
 \item 几何变换通常又叫做橡皮片变换，因为它们可以被看做在一片橡皮片上打印图像，然后根据预先确定的规则拉伸这个橡皮片的过程。
@@ -885,33 +721,26 @@ p(x,y)&=
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{空间变换}
-\label{sec-10-2}
 
+\begin{frame}[label={sec:org503f0c9}]{空间变换}
 \begin{itemize}
 \item 空间变换中对应的连接点可用多种不同技术建立。例如，一些图像生成系统有物理的人为缺陷(如金属点)，镶嵌在图像传感器上。这产生了一个已知点集(叫做网状标记)，在图像被获取时直接镶在图像上。
 \item 如果图像由于一些其它处理(如图像显示或图像重建处理)失真了，图像可以用这项技术校正。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{灰度级插补}
-\label{sec-10-3}
 
+\begin{frame}[label={sec:org50d52b2}]{灰度级插补}
 \begin{itemize}
-\item 空间变换方法遍历坐标 $(x,y)$ 的整数值得到复原图像 。然而，根据系数 $c_i$ 的值，根据前边两个式子能产生非整数的 $x',y'$ 。
-\item 因为失真图像 $g(x,y)$ 是数字的，它的像素值只定义在整数坐标。因此，对 $x',y'$ 用非整数值会导致一个到 $g$ 位置的映射，在这些位置没有灰度定义，所以有必要基于整数坐标的灰度值去推断那些位置的灰度值。
+\item 空间变换方法遍历坐标 \((x,y)\) 的整数值得到复原图像 。然而，根据系数 \(c_i\) 的值，根据前边两个式子能产生非整数的 \(x',y'\) 。
+\item 因为失真图像 \(g(x,y)\) 是数字的，它的像素值只定义在整数坐标。因此，对 \(x',y'\) 用非整数值会导致一个到 \(g\) 位置的映射，在这些位置没有灰度定义，所以有必要基于整数坐标的灰度值去推断那些位置的灰度值。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{双线性插补}
-\label{sec-10-4}
 
+\begin{frame}[label={sec:org4f02b9d}]{双线性插补}
 \begin{itemize}
-\item 定义在坐标上 $(x',y')$ 的灰度级 $v(x',y')$ 用下面的关系从它的邻点值被插补。
+\item 定义在坐标上 \((x',y')\) 的灰度级 \(v(x',y')\) 用下面的关系从它的邻点值被插补。
 \end{itemize}
 
 \[ v(x',y')=a x'+by'+cx'y'+d \]
 \end{frame}
-
 \end{document}
