@@ -70,4 +70,6 @@ def eliminate(rules, samples, names):
 
 
 rules=eliminate(listconcept(names, values),data_lines,names)
-print(list(rules))
+
+for r in list(rules):
+    print(r)
