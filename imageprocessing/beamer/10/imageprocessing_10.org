@@ -16,9 +16,11 @@
 #+LATEX_HEADER: \usetikzlibrary{intersections}
 #+LATEX_HEADER: \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
 #+LATEX_HEADER: \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
-#+LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
-#+LATEX_HEADER: \setCJKmonofont{Evermore Kai}
- # +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
+ # +LATEX_HEADER: \setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
+ # +LATEX_HEADER: \setCJKmonofont{Evermore Kai}
+#+LATEX_HEADER: \setCJKmainfont[BoldFont=SimHei]{KaiTi}
+#+LATEX_HEADER: \setCJKmonofont{KaiTi}
+# +LATEX_HEADER: \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
 #+LATEX_HEADER: \usepackage{pst-node}
 #+LATEX_HEADER: \usepackage{pst-plot}
 #+LATEX_HEADER: \psset{unit=5mm}
@@ -39,7 +41,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -197,7 +199,7 @@ G_y
 
        \[\begin{bmatrix}
             0 & -1 &  0 \\
-           -1 &  4 &  0 \\
+           -1 &  4 &  -1 \\
             0 & -1 &  0 \end{bmatrix}
            \begin{bmatrix}
            -1 &  -1 &  -1 \\

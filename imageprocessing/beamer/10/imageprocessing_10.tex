@@ -1,18 +1,15 @@
-% Created 2017-06-02 Fri 18:25
-\documentclass{beamer}
-\usepackage{fixltx2e}
+% Created 2024-04-15 Mon 09:47
+% Intended LaTeX compiler: xelatex
+\documentclass[presentation]{beamer}
 \usepackage{graphicx}
 \usepackage{longtable}
-\usepackage{float}
 \usepackage{wrapfig}
-\usepackage{soul}
-\usepackage{textcomp}
-\usepackage{marvosym}
-\usepackage{wasysym}
-\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{capt-of}
 \usepackage{hyperref}
-\tolerance=1000
 \usepackage{etex}
 \usepackage{amsmath}
 \DeclareMathOperator*{\median}{median}
@@ -29,8 +26,8 @@
 \usetikzlibrary{intersections}
 \usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
 \usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
-\setCJKmainfont[BoldFont=Evermore Hei]{Evermore Kai}
-\setCJKmonofont{Evermore Kai}
+\setCJKmainfont[BoldFont=SimHei]{KaiTi}
+\setCJKmonofont{KaiTi}
 \usepackage{pst-node}
 \usepackage{pst-plot}
 \psset{unit=5mm}
@@ -40,23 +37,20 @@
 \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
 \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 \setbeamercovered{transparent}
-\providecommand{\alert}[1]{\textbf{#1}}
-
-\title{图像分割}
-\author{}
+\usetheme{default}
 \date{}
+\title{图像分割}
 \hypersetup{
-  pdfkeywords={},
-  pdfsubject={},
-  pdfcreator={Emacs Org-mode version 7.9.3f}}
-
+ pdfauthor={},
+ pdftitle={图像分割},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.2 (Org mode 9.4.6)}, 
+ pdflang={English}}
 \begin{document}
 
 \maketitle
-
-\begin{frame}
-\frametitle{Outline}
-\setcounter{tocdepth}{3}
+\begin{frame}{Outline}
 \tableofcontents
 \end{frame}
 
@@ -70,14 +64,10 @@
 
 
 
-
-
 \section{图像分割简介}
-\label{sec-1}
-\begin{frame}
-\frametitle{图像分割}
-\label{sec-1-1}
+\label{sec:orga568d32}
 
+\begin{frame}[label={sec:orgb89459e}]{图像分割}
 \begin{itemize}
 \item 分割的目的:将图像划分为不同区域
 \item 方法
@@ -88,10 +78,8 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{图像分割}
-\label{sec-1-2}
 
+\begin{frame}[label={sec:org9484e85}]{图像分割}
 \begin{itemize}
 \item 在对图像的研究和应用中,人们往往仅对图像中的某些部分感兴趣,这些部分一般称为目标或前景
 \item 为了辨识和分析目标,需要将有关区域分离提取出来,在此基础上对目标进一步利用,如进行特征提取和测量
@@ -104,10 +92,8 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{图像分割}
-\label{sec-1-3}
 
+\begin{frame}[label={sec:org0c3601f}]{图像分割}
 \begin{itemize}
 \item 间断检测
 \item 边缘连接和边界检测
@@ -116,12 +102,10 @@
 \item 分割中运动的应用
 \end{itemize}
 \end{frame}
-\section{间断检测}
-\label{sec-2}
-\begin{frame}
-\frametitle{间断检测}
-\label{sec-2-1}
 
+\section{间断检测}
+\label{sec:org0525946}
+\begin{frame}[label={sec:orgfe0a1d1}]{间断检测}
 \begin{itemize}
 \item 间断检测类型
 \begin{itemize}
@@ -132,13 +116,11 @@
 \item 寻找间断的一般方法:模板检测
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{点检测}
-\label{sec-2-2}
 
+\begin{frame}[label={sec:orga10adcb}]{点检测}
 \begin{itemize}
-\item 使用如下所示的模板,如果 $|R|\geq T$ 则在模板中心位置检测到一个点。其中, $T$ 是阈值, $R$ 是模板计算值
-       \[\begin{bmatrix}
+\item 使用如下所示的模板,如果 \(|R|\geq T\) 则在模板中心位置检测到一个点。其中, \(T\) 是阈值, \(R\) 是模板计算值
+\[\begin{bmatrix}
            -1 & -1 & -1 \\
            -1 &  8 & -1 \\
            -1 & -1 & -1 \end{bmatrix}\]
@@ -146,13 +128,11 @@
 \item 注意:如果模板响应为0,则表示在灰度级为常数的区域
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{线检测}
-\label{sec-2-3}
 
+\begin{frame}[label={sec:org4a7728b}]{线检测}
 \begin{itemize}
 \item 4个线检测模板
-     \[\begin{bmatrix}
+\[\begin{bmatrix}
          -1 & -1 & -1 \\
           2 &  2 &  2 \\
          -1 & -1 & -1 \end{bmatrix}\begin{bmatrix}
@@ -166,34 +146,28 @@
          -1 &  2 & -1 \\
          -1 & -1 &  2 \end{bmatrix}\]
 \item 第一个模板对水平线有最大响应
-\item 第二个模板对 $45^{\circ}$ 方向线有最大响应
+\item 第二个模板对 \(45^{\circ}\) 方向线有最大响应
 \item 第三个模板对垂直线有最大响应
-\item 第四个模板对 $-45^{\circ}$ 方向线有最大响应
+\item 第四个模板对 \(-45^{\circ}\) 方向线有最大响应
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{线检测}
-\label{sec-2-4}
 
+\begin{frame}[label={sec:orgf4ef85e}]{线检测}
 \begin{itemize}
-\item 用 $R_1,R_2,R_3,R_4$ 分别代表 $0^{\circ},45^{\circ},90^{\circ},-45^{\circ}$ 方向线的模板响应,在图像中心的点,如果 $|R_i|>|R_j|,j\neq i$
-     则此点被认为与在模板 $i$ 方向上的线更相关
+\item 用 \(R_1,R_2,R_3,R_4\) 分别代表 \(0^{\circ},45^{\circ},90^{\circ},-45^{\circ}\) 方向线的模板响应,在图像中心的点,如果 \(|R_i|>|R_j|,j\neq i\)
+则此点被认为与在模板 \(i\) 方向上的线更相关
 \item 在灰度恒定的区域,上述4个模板的响应为零
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{边缘检测}
-\label{sec-2-5}
 
+\begin{frame}[label={sec:org398d554}]{边缘检测}
 \begin{itemize}
 \item 边缘: 一组相连的像素集合,这些像素位于两个区域的边界上
 \item 检测方法： 一阶导数和二阶导数
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{边缘与导数}
-\label{sec-2-6}
 
+\begin{frame}[label={sec:org8c37b48}]{边缘与导数}
 \begin{itemize}
 \item 一阶导数可用于检测图像中的一个点是否在边缘上
 \item 二阶导数可以判断一个边缘像素是在边缘亮的一边还是暗的一边
@@ -201,11 +175,9 @@
 \item 一阶导数使用梯度算子,二阶导数使用拉普拉斯算子
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{梯度算子}
-\label{sec-2-7}
 
- 图像 $f(x,y)$ 在位置 $(x,y)$ 的梯度定义为:
+\begin{frame}[label={sec:orge532b33}]{梯度算子}
+图像 \(f(x,y)\) 在位置 \((x,y)\) 的梯度定义为:
 \begin{align*}
 \nabla f&= \begin{bmatrix}
 G_x \\
@@ -222,22 +194,17 @@ G_y
     \alpha(x,y) &= \arctan(\frac{G_y}{G_x})
 \end{align*}
 \end{frame}
-\begin{frame}
-\frametitle{Roberts 交叉梯度算子}
-\label{sec-2-8}
 
-       \[\begin{bmatrix}
+\begin{frame}[label={sec:org335a5f1}]{Roberts 交叉梯度算子}
+\[\begin{bmatrix}
            -1 & 0  \\
             0 & 1 \end{bmatrix}
            \begin{bmatrix}
             0 & -1 \\
            1 &  0 \end{bmatrix}\]
 \end{frame}
-\begin{frame}
-\frametitle{Prewitt梯度算子}
-\label{sec-2-9}
-
-       \[\begin{bmatrix}
+\begin{frame}[label={sec:orga21493e}]{Prewitt梯度算子}
+\[\begin{bmatrix}
            -1 & -1 & -1 \\
             0 &  0 &  0 \\
             1 &  1 &  1 \end{bmatrix}
@@ -246,11 +213,8 @@ G_y
            -1 &  0 &  1 \\
            -1 &  0 &  1 \end{bmatrix}\]
 \end{frame}
-\begin{frame}
-\frametitle{Sobel梯度算子}
-\label{sec-2-10}
-
-       \[\begin{bmatrix}
+\begin{frame}[label={sec:orgebee143}]{Sobel梯度算子}
+\[\begin{bmatrix}
            -1 & -2 & -1 \\
             0 &  0 &  0 \\
             1 &  2 &  1 \end{bmatrix}
@@ -259,39 +223,33 @@ G_y
            -2 &  0 &  2 \\
            -1 &  0 &  1 \end{bmatrix}\]
 \end{frame}
-\begin{frame}
-\frametitle{梯度算子特点}
-\label{sec-2-11}
 
+\begin{frame}[label={sec:orge7f7dd1}]{梯度算子特点}
 \begin{itemize}
 \item Prewitt和Sobel算子是计算数字梯度时最常用的算子
 \item Prewitt模板比Sobel模板简单,但Sobel模板能够有效抑制噪声
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{拉普拉斯算子}
-\label{sec-2-12}
 
-  图像函数的拉普拉斯变换定义为
+\begin{frame}[label={sec:orgbeffddb}]{拉普拉斯算子}
+图像函数的拉普拉斯变换定义为
 \begin{align*}
 \Delta f &=\nabla^2 f \\
          &= \nabla\cdot\nabla f\\ 
          &=\frac{\partial^2 f}{\partial x^2} +\frac{\partial^2 f}{\partial y^2} 
 \end{align*}
 
-       \[\begin{bmatrix}
+\[\begin{bmatrix}
             0 & -1 &  0 \\
-           -1 &  4 &  0 \\
+           -1 &  4 &  -1 \\
             0 & -1 &  0 \end{bmatrix}
            \begin{bmatrix}
            -1 &  -1 &  -1 \\
            -1 &  8  &  -1 \\
            -1 &  -1 &  -1 \end{bmatrix}\]
 \end{frame}
-\begin{frame}
-\frametitle{拉普拉斯算子特点}
-\label{sec-2-13}
 
+\begin{frame}[label={sec:orgc07b948}]{拉普拉斯算子特点}
 \begin{itemize}
 \item 缺点:
 \begin{itemize}
@@ -306,10 +264,8 @@ G_y
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{高斯型的拉普拉斯算子(LoG)}
-\label{sec-2-14}
 
+\begin{frame}[label={sec:orgc5ca22d}]{高斯型的拉普拉斯算子(LoG)}
 \begin{align*}
 h(r) &= e^{-\frac{r^2}{2\sigma^2}} \\
 r^2 &= x^2+y^2\\
@@ -323,10 +279,8 @@ r^2 &= x^2+y^2\\
      0 & -1 & -2 & -1 &  0 \\
      0 &  0 & -1 &  0 &  0 \end{bmatrix}\]
 \end{frame}
-\begin{frame}
-\frametitle{高斯型拉普拉斯算子特点}
-\label{sec-2-15}
 
+\begin{frame}[label={sec:org75144b9}]{高斯型拉普拉斯算子特点}
 \begin{itemize}
 \item 高斯型函数的目的是对图像进行平滑处理
 \item 拉普拉斯算子的目的是提供一幅用零交叉确定边缘位置的图像
@@ -347,23 +301,19 @@ r^2 &= x^2+y^2\\
 \end{itemize}
 \end{itemize}
 \end{frame}
-\section{边缘连接和边界检测}
-\label{sec-3}
-\begin{frame}
-\frametitle{边缘连接}
-\label{sec-3-1}
 
+\section{边缘连接和边界检测}
+\label{sec:org74de3b2}
+\begin{frame}[label={sec:orgb45d152}]{边缘连接}
 \begin{itemize}
 \item 由于噪声、照明等产生边缘间断,使得一组像素难以完整形成边缘
 \item 在边缘检测算法后,使用连接过程将间断的边缘像素组合成完整边缘
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{局部处理}
-\label{sec-3-2}
 
+\begin{frame}[label={sec:orgb7e85b8}]{局部处理}
 \begin{itemize}
-\item 分析图像中每个边缘点 $(x,y)$ 的一个邻域内的像素,根据某种准则将相似点进行连接,由满足该准则的像素连接形成边缘
+\item 分析图像中每个边缘点 \((x,y)\) 的一个邻域内的像素,根据某种准则将相似点进行连接,由满足该准则的像素连接形成边缘
 \item 如何确定边缘像素的相似性
 \begin{itemize}
 \item 边缘像素梯度算子的响应强度
@@ -371,64 +321,50 @@ r^2 &= x^2+y^2\\
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{如何确定边缘像素的相似性}
-\label{sec-3-3}
-
+\begin{frame}[label={sec:org2362c99}]{如何确定边缘像素的相似性}
 \begin{itemize}
 \item 邻域像素梯度算子的响应强度
-     \[ ||\nabla f(x_1,y_1)|-|\nabla f(x_2,y_2)||\leq E \]
+\[ ||\nabla f(x_1,y_1)|-|\nabla f(x_2,y_2)||\leq E \]
 \item 邻域像素梯度算子的方向
-     \[ |\alpha(x_1,y_1)-\alpha(x_2,y_2)|\leq A  \]
+\[ |\alpha(x_1,y_1)-\alpha(x_2,y_2)|\leq A  \]
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{通过Hough变换进行整体处理}
-\label{sec-3-4}
 
+\begin{frame}[label={sec:org539962a}]{通过Hough变换进行整体处理}
 \begin{itemize}
 \item Hough变换的基本思想
 \item 算法实现
 \item Hough变换的扩展
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{Hough变换的基本思想}
-\label{sec-3-5}
 
+\begin{frame}[label={sec:orgce80d19}]{Hough变换的基本思想}
 \begin{itemize}
 \item 对于边界上的n个点的点集,找出共线的点集和直线方程。
-\item 对于任意两点的直线方程: $y=ax+b$ ,构造一个参数 $a,b$ 的平面,从而有如下结论:
-\item $x-y$ 平面上的任意一条直线 $y=ax+b$ ,对应在参数 $a-b$ 平面上都有一个点 $(a,b)$
-\item 过 $x-y$ 平面一个点 $(x,y)$ 的所有直线,构成参数 $(a,b)$ 平面上的一条直线
-\item 如果点 $(x1,y1)$ 与点 $(x2,y2)$ 共线,那么这两点在参数 $a-b$ 平面上的直线将有一个交点
-\item 在参数 $a-b$ 平面求解相交直线最多的点,即可求得对应 $x-y$ 平面上的直线
+\item 对于任意两点的直线方程: \(y=ax+b\) ,构造一个参数 \(a,b\) 的平面,从而有如下结论:
+\item \(x-y\) 平面上的任意一条直线 \(y=ax+b\) ,对应在参数 \(a-b\) 平面上都有一个点 \((a,b)\)
+\item 过 \(x-y\) 平面一个点 \((x,y)\) 的所有直线,构成参数 \((a,b)\) 平面上的一条直线
+\item 如果点 \((x1,y1)\) 与点 \((x2,y2)\) 共线,那么这两点在参数 \(a-b\) 平面上的直线将有一个交点
+\item 在参数 \(a-b\) 平面求解相交直线最多的点,即可求得对应 \(x-y\) 平面上的直线
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{Hough变换算法实现}
-\label{sec-3-6}
 
+\begin{frame}[label={sec:orgabda79b}]{Hough变换算法实现}
 \begin{itemize}
-\item 极坐标形式: $x\cos\theta+y\sin\theta=\rho$
-\item 参数平面为 $\theta,\rho$
+\item 极坐标形式: \(x\cos\theta+y\sin\theta=\rho\)
+\item 参数平面为 \(\theta,\rho\)
 \item 使用交点累加器,或交点统计直方图,找出相交线段最多的参数空间的点
 \item 找出该点对应的xy平面的直线线段
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{Hough变换圆检测}
-\label{sec-3-7}
 
-
-    \[(x–c_1)^2 + (y - c_2)^2 = c_3^2\]
+\begin{frame}[label={sec:org2fe5755}]{Hough变换圆检测}
+\[(x–c_1)^2 + (y - c_2)^2 = c_3^2\]
 \end{frame}
-\section{阈值处理}
-\label{sec-4}
-\begin{frame}
-\frametitle{阈值处理}
-\label{sec-4-1}
 
+\section{阈值处理}
+\label{sec:org402e1a8}
+\begin{frame}[label={sec:orgba93d09}]{阈值处理}
 \begin{itemize}
 \item 阈值处理操作
 \item 基本全局阈值
@@ -438,41 +374,35 @@ r^2 &= x^2+y^2\\
 \item 基于不同变量的阈值
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{阈值处理操作}
-\label{sec-4-2}
-
+\begin{frame}[label={sec:org6193915}]{阈值处理操作}
 \begin{itemize}
-\item $f(x,y)$ 是点 $(x,y)$ 的灰度级, $p(x,y)$ 表示该点的局部性质,如以 $(x,y)$ 为中心的邻域的平均灰度级
-     \[ T= T(x,y,p(x,y),f(x,y)) \]
-\item 阈值处理后的图像 $g(x,y)$ 定义为
-     \[ g(x,y)=\begin{cases}1, \qquad f(x,y)>T \\  0, \qquad f(x,y)\leq T \end{cases} \]
+\item \(f(x,y)\) 是点 \((x,y)\) 的灰度级, \(p(x,y)\) 表示该点的局部性质,如以 \((x,y)\) 为中心的邻域的平均灰度级
+\[ T= T(x,y,p(x,y),f(x,y)) \]
+\item 阈值处理后的图像 \(g(x,y)\) 定义为
+\[ g(x,y)=\begin{cases}1, \qquad f(x,y)>T \\  0, \qquad f(x,y)\leq T \end{cases} \]
 \item 标记为1的像素对应于对象,标记为0的像素对应于背景
 \item 当T仅取决于f(x,y),阈值称为全局的
 \item 当T取决于f(x,y)和p(x,y),阈值是局部的
 \item 当T取决于空间坐标x和y,阈值就是动态的或自适应的
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{基本全局阈值算法}
-\label{sec-4-3}
 
+
+\begin{frame}[label={sec:org33778fb}]{基本全局阈值算法}
 \begin{itemize}
-\item 选择一个 $T$ 的初始估计值
-\item 重复以下步骤,直到逐次迭代所得的 $T$ 值之差小于事先定义的参数 $T_0$
-\item 用 $T$ 分割图像,生成两组像素:
+\item 选择一个 \(T\) 的初始估计值
+\item 重复以下步骤,直到逐次迭代所得的 \(T\) 值之差小于事先定义的参数 \(T_0\)
+\item 用 \(T\) 分割图像,生成两组像素:
 \begin{itemize}
-\item $G_1$ 由所有灰度值大于 $T$ 的像素组成,
-\item $G_2$ 由所有灰度值小于或等于 $T$ 的像素组成
+\item \(G_1\) 由所有灰度值大于 \(T\) 的像素组成,
+\item \(G_2\) 由所有灰度值小于或等于 \(T\) 的像素组成
 \end{itemize}
-\item 对区域 $G_1$ 和 $G_2$ 中的所有像素计算平均灰度值 $μ_1$ 和 $μ_2$
-\item 计算新的阈值 $T=\frac{1}{2}(\mu_1+\mu_2)$
+\item 对区域 \(G_1\) 和 \(G_2\) 中的所有像素计算平均灰度值 \(μ_1\) 和 \(μ_2\)
+\item 计算新的阈值 \(T=\frac{1}{2}(\mu_1+\mu_2)\)
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{基本自适应阈值}
-\label{sec-4-4}
 
+\begin{frame}[label={sec:org63c5734}]{基本自适应阈值}
 \begin{itemize}
 \item 单一全局阈值存在的问题
 \begin{itemize}
@@ -490,75 +420,63 @@ r^2 &= x^2+y^2\\
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最佳全局和自适应阈值}
-\label{sec-4-5}
 
+\begin{frame}[label={sec:orgfbd2357}]{最佳全局和自适应阈值}
 \begin{itemize}
-\item 假设一幅图像仅包含两个主要的灰度级区域。令 $z$ 表示灰度级值,则两个灰度区域的直方图可以看作它们概率密度函数(PDF)的估计 $p(z)$
-\item $p(z)$ 是两个密度的和或混合。一个是图像中亮区域的密度,另一个是暗区域的密度
-\item 如果 $p(z)$ 已知或假设,则它能够确定一个最佳阈值(具有最低的误差)将图像分割为两个可区分的区域
+\item 假设一幅图像仅包含两个主要的灰度级区域。令 \(z\) 表示灰度级值,则两个灰度区域的直方图可以看作它们概率密度函数(PDF)的估计 \(p(z)\)
+\item \(p(z)\) 是两个密度的和或混合。一个是图像中亮区域的密度,另一个是暗区域的密度
+\item 如果 \(p(z)\) 已知或假设,则它能够确定一个最佳阈值(具有最低的误差)将图像分割为两个可区分的区域
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最佳全局和自适应阈值}
-\label{sec-4-6}
 
- 假设2个 $PDF$ 中较大的一个对应背景的灰度级,较小的一个描述了图像中对象的灰度级,则混合 $PDF$ 是
-  \[ p(z) =P_1 p_1(z)P_2 p_2(z) \]
- 
- 其中$P_1$ 是属于对象像素的概率, $P_2$ 是属于背景像素的概率,假设图像只包括对象和背景,则
-  \[ P_1+P_2=1 \]
+\begin{frame}[label={sec:orga631ff3}]{最佳全局和自适应阈值}
+假设2个 \(PDF\) 中较大的一个对应背景的灰度级,较小的一个描述了图像中对象的灰度级,则混合 \(PDF\) 是
+ \[ p(z) =P_1 p_1(z)P_2 p_2(z) \]
+
+其中\(P_1\) 是属于对象像素的概率, \(P_2\) 是属于背景像素的概率,假设图像只包括对象和背景,则
+ \[ P_1+P_2=1 \]
 \end{frame}
-\begin{frame}
-\frametitle{最佳全局和自适应阈值}
-\label{sec-4-7}
 
+\begin{frame}[label={sec:orgcd9bc24}]{最佳全局和自适应阈值}
 \begin{itemize}
-\item 在区间 $[a,b]$ 内取值的随机变量的概率是它的概率密度函数从 $a$ 到 $b$ 的积分,即在这两个上下限之间 $PDF$ 曲线围住的面积
+\item 在区间 \([a,b]\) 内取值的随机变量的概率是它的概率密度函数从 \(a\) 到 \(b\) 的积分,即在这两个上下限之间 \(PDF\) 曲线围住的面积
 \item 将一个背景点当作对象点进行分类时,错误发生的概率为:
-      \[ E_1(T) = \int_{-\infty}^{T}p_2(z) dz \]
-     这是在曲线 $p_2(z)$ 下方位于阈值左边区域的面积
+ \[ E_1(T) = \int_{-\infty}^{T}p_2(z) dz \]
+这是在曲线 \(p_2(z)\) 下方位于阈值左边区域的面积
 \item 将一个对象点当作背景点进行分类错误发生的概率为
-      \[ E_2(T) = \int_{T}^{\infty}p_1(z) dz \]
-     这是在曲线 $p_1(z)$ 下方位于阈值右边区域的面积
+ \[ E_2(T) = \int_{T}^{\infty}p_1(z) dz \]
+这是在曲线 \(p_1(z)\) 下方位于阈值右边区域的面积
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最佳全局和自适应阈值}
-\label{sec-4-8}
 
+\begin{frame}[label={sec:org96b0bf8}]{最佳全局和自适应阈值}
 \begin{itemize}
 \item 出错率的整体概率是
-   \[ E(T)=P_2E_1(T)+P_1E_2(T) \]
-\item 为了找到出错最少的阈值,使用莱布尼兹法则把 $E(T)$ 对 $T$ 求微分并令结果等于 0,得到
-   \[ P_2 p_1(T) =P_1 P_2(T)\]
-    上式解出 $T$ ,即为最佳阈值
-\item 如果 $P_1=P_2$ ,则最佳阈值位于曲线 $p_1(z)$ 和 $p_2(z)$ 的交点处
+\[ E(T)=P_2E_1(T)+P_1E_2(T) \]
+\item 为了找到出错最少的阈值,使用莱布尼兹法则把 \(E(T)\) 对 \(T\) 求微分并令结果等于 0,得到
+\[ P_2 p_1(T) =P_1 P_2(T)\]
+ 上式解出 \(T\) ,即为最佳阈值
+\item 如果 \(P_1=P_2\) ,则最佳阈值位于曲线 \(p_1(z)\) 和 \(p_2(z)\) 的交点处
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最佳全局和自适应阈值}
-\label{sec-4-9}
 
+\begin{frame}[label={sec:orgdbf1335}]{最佳全局和自适应阈值}
 \begin{itemize}
 \item 高斯密度可以用两个参数均值和方差描述
-    \[ p(z)=\frac{P_1}{\sqrt{2\pi}\sigma_1}e^{-\frac{(z-\mu_1)^2}{2\sigma_1^2}}+\frac{P_2}{\sqrt{2\pi}\sigma_2}e^{-\frac{(z-\mu_2)^2}{2\sigma_2^2}}\]
+\[ p(z)=\frac{P_1}{\sqrt{2\pi}\sigma_1}e^{-\frac{(z-\mu_1)^2}{2\sigma_1^2}}+\frac{P_2}{\sqrt{2\pi}\sigma_2}e^{-\frac{(z-\mu_2)^2}{2\sigma_2^2}}\]
 \item 出错最少的阈值T的解
-     \begin{align*}
-       A T^2+BT+C &=0 \\
-        A &= \sigma_1^2-\sigma_2^2 \\
-        B &= 2(\mu_1\sigma_2^2-\mu_2\sigma_1^2)\\
-        C &= \sigma_1^2\mu_2^2-\sigma_2^2\mu_1^2+2\sigma_1^2\sigma_2^2\ln\frac{\sigma_2P_1}{\sigma_1P_2}
-     \end{align*}
-\item 如果方差相等 $\sigma=\sigma_1=\sigma_2$ ,则得到单一的阈值
-     \[ T=\frac{\mu_1+\mu_2}{2}+\frac{\sigma^2}{\mu_1-\mu_2}\ln \frac{P_2}{P_1} \]
+\begin{align*}
+  A T^2+BT+C &=0 \\
+   A &= \sigma_1^2-\sigma_2^2 \\
+   B &= 2(\mu_1\sigma_2^2-\mu_2\sigma_1^2)\\
+   C &= \sigma_1^2\mu_2^2-\sigma_2^2\mu_1^2+2\sigma_1^2\sigma_2^2\ln\frac{\sigma_2P_1}{\sigma_1P_2}
+\end{align*}
+\item 如果方差相等 \(\sigma=\sigma_1=\sigma_2\) ,则得到单一的阈值
+\[ T=\frac{\mu_1+\mu_2}{2}+\frac{\sigma^2}{\mu_1-\mu_2}\ln \frac{P_2}{P_1} \]
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{通过边界特性选择阈值}
-\label{sec-4-10}
 
+\begin{frame}[label={sec:orgd906c0d}]{通过边界特性选择阈值}
 \begin{itemize}
 \item 如果直方图的各个波峰很高、很窄、对称,且被很深的波谷分开时,有利于选择阈值
 \item 为了改善直方图的波峰形状,可只把区域边缘的像素绘入直方图,而不考虑区域中间的像素。用微分算子处理图像,使图像只剩下边界中心两边的值
@@ -570,21 +488,17 @@ r^2 &= x^2+y^2\\
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{边界特性阈值算法实现:}
-\label{sec-4-11}
 
+\begin{frame}[label={sec:org8d7651a}]{边界特性阈值算法实现:}
 \begin{itemize}
 \item 对图像进行梯度计算,得到梯度图像。
 \item 得到梯度值最大的那一部分(比如10\%)的像素直方图
-\item 通过直方图的谷底,得到阈值 $T$
-\item 如果用拉普拉斯算子,不通过直方图,直接得到阈值,方法是使用拉普拉斯算子过滤图像,将0穿越点对应的灰度值为阈值 $T$
+\item 通过直方图的谷底,得到阈值 \(T\)
+\item 如果用拉普拉斯算子,不通过直方图,直接得到阈值,方法是使用拉普拉斯算子过滤图像,将0穿越点对应的灰度值为阈值 \(T\)
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{基于不同变量的阈值}
-\label{sec-4-12}
 
+\begin{frame}[label={sec:org0da0b55}]{基于不同变量的阈值}
 \begin{itemize}
 \item 在某些情况下,传感器可以产生不止一个在图像中描述每一个像素的可利用的变量,因此,允许进行多谱段阈值处理
 \item 例如一幅有3个变量的图像(RGB分量),每个像素有16种可能的灰度级,构成16×16×16种灰度级(网格,立方体)
@@ -592,37 +506,31 @@ r^2 &= x^2+y^2\\
 \item 彩色图像处理中的色调和饱和度易于图像分割
 \end{itemize}
 \end{frame}
-\section{基于区域的分割}
-\label{sec-5}
-\begin{frame}
-\frametitle{基于区域的分割}
-\label{sec-5-1}
 
+\section{基于区域的分割}
+\label{sec:orge85f178}
+\begin{frame}[label={sec:org554c84c}]{基于区域的分割}
 \begin{itemize}
 \item 基本公式
 \item 区域生长
 \item 区域分离与合并
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{基本概念}
-\label{sec-5-2}
 
+\begin{frame}[label={sec:org2e09358}]{基本概念}
 \begin{itemize}
-\item 目标:将区域 $R$ 划分为若干个子区域 $R_1,R_2,\cdots,R_n$ ,这些子区域满足5个条件:
+\item 目标:将区域 \(R\) 划分为若干个子区域 \(R_1,R_2,\cdots,R_n\) ,这些子区域满足5个条件:
 \begin{itemize}
-\item 完备性:  $\bigcup_{i=1}^n R_i=R$
-\item 连通性:每个 $R_i$ 都是一个连通区域
-\item 独立性:$R_i\cap R_j=\emptyset,i\neq j$
-\item 单一性:每个区域内像素满足同样的性质（如：灰度级相等）, $P(R_i)= TRUE,i = 1,2,\cdots,n$
-\item 互斥性:任两个区域像素的性质不同（如：灰度级不等）, $P(R_i\cup R_j)= FALSE,i\neq j$
+\item 完备性:  \(\bigcup_{i=1}^n R_i=R\)
+\item 连通性:每个 \(R_i\) 都是一个连通区域
+\item 独立性:\(R_i\cap R_j=\emptyset,i\neq j\)
+\item 单一性:每个区域内像素满足同样的性质（如：灰度级相等）, \(P(R_i)= TRUE,i = 1,2,\cdots,n\)
+\item 互斥性:任两个区域像素的性质不同（如：灰度级不等）, \(P(R_i\cup R_j)= FALSE,i\neq j\)
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{区域增长的算法实现:}
-\label{sec-5-3}
 
+\begin{frame}[label={sec:org0dd7fbb}]{区域增长的算法实现:}
 \begin{itemize}
 \item 根据图像的不同应用选择一个或一组种子,它或者是最亮或最暗的点,或者是位于点簇中心的点
 \item 选择一个描述符(条件)
@@ -630,52 +538,43 @@ r^2 &= x^2+y^2\\
 \item 以上过程进行到不再有满足条件的新结点加入集合为止
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{区域分裂与合并算法实现:}
-\label{sec-5-4}
 
+\begin{frame}[label={sec:org70bfeae}]{区域分裂与合并算法实现:}
 \begin{itemize}
 \item 对图像中灰度级不同的区域,均分为四个子区域
 \item 如果相邻的子区域所有像素的灰度级相同,则将其合并
 \item 反复进行上两步操作,直至不再有新的分裂与合并为止
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{区域分裂与合并算法实现:}
-\label{sec-5-5}
 
-
+\begin{frame}[label={sec:org33d91e6}]{区域分裂与合并算法实现:}
 \begin{itemize}
-\item $P(R_i)$ 可定义为:  区域内多于80\%的像素满足不等式
-       \[|z_j-m_i|\leq 2σ_i\]
-      其中:
+\item \(P(R_i)\) 可定义为:  区域内多于80\%的像素满足不等式
+ \[|z_j-m_i|\leq 2σ_i\]
+其中: 
 \begin{itemize}
-\item $z_j$ 是区域 $R_i$ 中第 $j$ 个点的灰度级,
-\item $m_i$ 是该区域的平均灰度级,
-\item $σ_i$ 是区域的灰度级的标准方差。
+\item \(z_j\) 是区域 \(R_i\) 中第 \(j\) 个点的灰度级,
+\item \(m_i\) 是该区域的平均灰度级,
+\item \(σ_i\) 是区域的灰度级的标准方差。
 \end{itemize}
-\item 当 $P(R_i)=TRUE$ 时,将区域内所有像素的灰度级置为$m_i$
+
+\item 当 \(P(R_i)=TRUE\) 时,将区域内所有像素的灰度级置为\(m_i\)
 \end{itemize}
 \end{frame}
+
 \section{分割中运动的应用}
-\label{sec-6}
-\begin{frame}
-\frametitle{分割中运动的应用}
-\label{sec-6-1}
-
-
+\label{sec:org738f26b}
+\begin{frame}[label={sec:org1bb459d}]{分割中运动的应用}
 \begin{itemize}
-\item 使用两帧图像 $f(x,y,t_i)$ 和 $f(x,y,t_j)$ 相减的办法,形成差值图像
-      \[d_{i,j}(x,y)=\begin{cases} 1, \qquad |f(x,y,t_i)-f(x,y,t_j)|>T \\   0,\qquad \text{其它} \end{cases}\]
-\item 在动态图像处理过程中, $d_{i,j}(x,y)$ 中值为 $1$ 的像素被认为是对象运动的结果
-\item 考虑图像帧序列 $f(x,y,t_1),f(x,y,t_2),\cdots,f(x,y,t_n)$ ,并令 $f(x,y,t_1)$ 为基本图像,一幅累积差异图像(ADI)由基准图像和图像序列的后续图像对比得到
+\item 使用两帧图像 \(f(x,y,t_i)\) 和 \(f(x,y,t_j)\) 相减的办法,形成差值图像
+\[d_{i,j}(x,y)=\begin{cases} 1, \qquad |f(x,y,t_i)-f(x,y,t_j)|>T \\   0,\qquad \text{其它} \end{cases}\]
+\item 在动态图像处理过程中, \(d_{i,j}(x,y)\) 中值为 \(1\) 的像素被认为是对象运动的结果
+\item 考虑图像帧序列 \(f(x,y,t_1),f(x,y,t_2),\cdots,f(x,y,t_n)\) ,并令 \(f(x,y,t_1)\) 为基本图像,一幅累积差异图像(ADI)由基准图像和图像序列的后续图像对比得到
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{空间技术}
-\label{sec-6-2}
 
-  令R(x,y)表示基准图像,绝对ADI,正ADI和负ADI定义如下:
+\begin{frame}[label={sec:org981ebab}]{空间技术}
+令R(x,y)表示基准图像,绝对ADI,正ADI和负ADI定义如下:
 \begin{align*}
 A_k(x,y)&=\begin{cases} A_{k-1}(x,y)+1, \qquad |R(x,y)-f(x,y,k)|>T \\
                        A_{k-1}(x,y) , \qquad \text{其它}\end{cases}\\
@@ -685,5 +584,4 @@ N_k(x,y)&=\begin{cases} N_{k-1}(x,y)+1, \qquad |R(x,y)-f(x,y,k)|<-T \\
                        N_{k-1}(x,y) , \qquad \text{其它}\end{cases}
 \end{align*}
 \end{frame}
-
 \end{document}
