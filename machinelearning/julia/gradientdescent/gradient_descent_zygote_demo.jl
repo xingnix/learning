@@ -31,12 +31,14 @@ function nonlinear()
 end
 
 function main(args)
-    if args[1]=="simple"
+    if isempty(args)
+       println("usage: julia gradient_descent_zygote_demo.jl  <args>\n <args>:  simple or nonlinear\n")
+    elseif args[1]=="simple"
         simple_example()
     elseif args[1]=="nonlinear"
         nonlinear()
     else
-       println("usage: julia gradient_descent_zygote_demo.jl  <args>\n <args>:  simple or nonlilear\n")
+       println("usage: julia gradient_descent_zygote_demo.jl  <args>\n <args>:  simple or nonlinear\n")
     end
 end
 main(ARGS)
