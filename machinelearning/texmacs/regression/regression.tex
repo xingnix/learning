@@ -1,0 +1,328 @@
+\documentclass{beamer}
+\usepackage{CJK}
+\usepackage{amsmath,amssymb,graphicx,enumerate}
+
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\Tau}{\mathrm{T}}
+\newcommand{\tmmathbf}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+\newenvironment{enumeratenumeric}{\begin{enumerate}[1.] }{\end{enumerate}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+{\screens{\begin{frame}
+  \
+  
+  \
+  
+  \
+  
+  \
+  
+  \
+  
+  \title{机器学习}
+  
+  \maketitle
+  
+  \ 
+\end{frame}}{\begin{frame}
+  \frametitle{最小二乘学习法}
+  
+  \
+  
+  \qquad以$d$维实向量$\tmmathbf{x}$作为输入、以实数值$y$作为输出的函数$y
+  = f (\tmmathbf{x})$的学习问题进行说明。
+  
+  \qquad这里的真实关系$f$是未知的，通过学习过程中作为训练集而输入输出的训练样本$\{
+  \tmmathbf{x}_i, y_i \}_{i = 1}^n$来对其进行学习。但是
+  在一般情况下，输出样本$y_i$的直实值$f
+  (\tmmathbf{x}_i)$中经常会观测到噪声。
+\end{frame}}{\begin{frame}
+  \frametitle{均方误差损失}
+  
+  最小二乘法习法是 对模型 的输出$f_{\tmmathbf{\theta}}
+  (\tmmathbf{x}_i)$和训练集输出$\{ y_i \}_{i = 1}^n$的平方误差
+  \[ J_{\tmop{LS}} (\tmmathbf{\theta}) = \frac{1}{2} \sum_{i = 1}^n
+     (f_{\tmmathbf{\theta}} (\tmmathbf{x}_i) - y_i)^2 \]
+  为最小时的参数$\tmmathbf{\theta}$进行学习。
+  \[ \hat{\tmmathbf{\theta}}_{\tmop{LS}} = \arg \min_{\tmmathbf{\theta}}
+     J_{\tmop{LS}} (\tmmathbf{\theta}) \]
+  平方误差$(f_{\tmmathbf{\theta}} (\tmmathbf{x}_i) - y_i)^2$是残差
+  \[ f_{\tmmathbf{\theta}} (\tmmathbf{x}_i) - y_i \]
+  的$\mathcal{l}_2$范数，因此最小二乘学习法有时也称为$\mathcal{l}_2$损失最小化学习法。
+\end{frame}}{\begin{frame}
+  \frametitle{线性模型}
+  
+  如果使用线性模型
+  \[ f_{\tmmathbf{\theta}} (\tmmathbf{x}) = \sum_{j = 1}^b \theta_i \phi_i
+     (\tmmathbf{x}) =\tmmathbf{\theta}^T \phi (\tmmathbf{x}) \]
+  则训练样本的平方差$J_{\tmop{LS}}$就能够表示为下述形式。
+  \[ J_{\tmop{LS}} (\tmmathbf{\theta}) = \frac{1}{2} \|
+     \tmmathbf{\Phi}\tmmathbf{\theta}-\tmmathbf{y} \|^2 \]
+  在这里，$\tmmathbf{y}= (y_1, \cdots,
+  y_n)^T$是训练输出的$n$维向量, $\tmmathbf{\Phi}$是$n \times
+  b$矩阵，也称为设计矩阵，如下所示：
+  \[ \tmmathbf{\Phi}= \left(\begin{array}{ccc}
+       \phi_1 (\tmmathbf{x}_1) & \cdots & \phi_b (\tmmathbf{x}_1)\\
+       \vdots & \ddots & \vdots\\
+       \phi_1 (\tmmathbf{x}_n) & \cdots & \phi_b (\tmmathbf{x}_n)
+     \end{array}\right) \]
+\end{frame}}{\begin{frame}
+  \frametitle{求解}
+  
+  训练样本的平方差$J_{\tmop{LS}}$的参数向量$\tmmathbf{\theta}$的偏微分$\nabla_{\tmmathbf{\theta}}
+  J_{\tmop{LS}}$为
+  \[ \nabla_{\tmmathbf{\theta}} J_{\tmop{LS}} = \left( \frac{\partial
+     J_{\tmop{LS}}}{\partial \theta_1}, \cdots, \frac{\partial
+     J_{\tmop{LS}}}{\partial \theta_b} \right)^T =\tmmathbf{\Phi}^T
+     \tmmathbf{\Phi}\tmmathbf{\theta}-\tmmathbf{\Phi}^T \tmmathbf{y} \]
+  令此微分为0,得最小二乘解满足
+  \[ \tmmathbf{\Phi}^T \tmmathbf{\Phi}\tmmathbf{\theta}=\tmmathbf{\Phi}^T
+     \tmmathbf{y} \]
+  此方程的解$\hat{\tmmathbf{\theta}}_{\tmop{LS}}$使用设计矩阵$\tmmathbf{\Phi}$的广义逆矩阵$\tmmathbf{\Phi}^{\dag}$来进行计算，得
+  \[ \hat{\tmmathbf{\theta}}_{\tmop{LS}} =\tmmathbf{\Phi}^{\dag} \tmmathbf{y}
+  \]
+\end{frame}}{\begin{frame}
+  \frametitle{加权最小二乘}
+  
+  对顺序为$i$的训练样本的平方差通过权重$w_i \geqslant
+  0$进行加权，然后再采用最小二乘法学习，称为加权最小二乘学习法。
+  \[ \min_{\tmmathbf{\theta}} \frac{1}{2} \sum_{i = 1}^n w_i
+     (f_{\tmmathbf{\theta}} (\tmmathbf{x}_i) - y_i)^2 \]
+  加权最小二乘法，与没有权重时相同，
+  \[ (\tmmathbf{\Phi}^T \tmmathbf{W}\tmmathbf{\Phi})^{\dag} \tmmathbf{\Phi}^T
+     \tmmathbf{W}\tmmathbf{y} \]
+  上式中的$\tmmathbf{W}$是以$w_1, \cdots,
+  w_n$为对角元素的对角矩阵。
+\end{frame}}{\begin{frame}
+  \frametitle{核模型}
+  
+  核模型
+  \[ f_{\tmmathbf{\theta}} (\tmmathbf{x}) = \sum_{j = 1}^n \theta_j K
+     (\tmmathbf{x}, \tmmathbf{x}_j) \]
+  也可以认为是线性模型的一种，把设计矩阵$\tmmathbf{\Phi}$置换为核矩阵$K$，就可以使用和线性模型相同的方法来求得核模型的最小二乘解
+  \[ K = \left(\begin{array}{ccc}
+       K (\tmmathbf{x}_1, \tmmathbf{x}_1) & \cdots & K (\tmmathbf{x}_1,
+       \tmmathbf{x}_n)\\
+       \vdots & \ddots & \vdots\\
+       K (\tmmathbf{x}_n, \tmmathbf{x}_1) & \cdots & K (\tmmathbf{x}_n,
+       \tmmathbf{x}_n)
+     \end{array}\right) \]
+  
+\end{frame}}{\begin{frame}
+  \frametitle{最小二乘解的性质}
+  
+  设计矩阵$\tmmathbf{\Phi}$的奇异值分解
+  \[ \tmmathbf{\Phi}= \sum_{k = 1}^{\min (n, b)} \kappa_k \tmmathbf{\psi}_k
+     \tmmathbf{\varphi}_k^T \]
+  其中$\kappa_k, \tmmathbf{\psi}_k,
+  \tmmathbf{\varphi}_k$分别称为奇异值，左奇异向量，右奇异向量。奇异值全部是非负的，奇异向量满足正交性
+  \[ \tmmathbf{\psi}_i^T \tmmathbf{\psi}_{i'} = \text{}
+     \left\{\begin{array}{l}
+       1 \quad (i = i')\\
+       0 \quad (i \neq i')
+     \end{array}\right. \quad \tmmathbf{\varphi}_j^T
+     \tmmathbf{\varphi}_{_{j'}} = \left\{\begin{array}{l}
+       1 \quad (j = j')\\
+       0 \quad (j \neq j')
+     \end{array}\right. \]
+  
+\end{frame}}{\begin{frame}
+  \frametitle{奇异值分解}
+  
+  进行奇异值分解后，$\tmmathbf{\Phi}$的广义逆矩阵$\tmmathbf{\Phi}^{\dag}$就可以表示为
+  \[ \tmmathbf{\Phi}^{\dag} = \sum_{k = 1}^{\min (n, b)} \kappa_k^{\dag}
+     \tmmathbf{\varphi}_k \tmmathbf{\psi}_k^T \]
+  其中$\kappa^{\dag}$是标量$\kappa$的广义逆矩阵
+  \[ \kappa^{\dag} = \left\{\begin{array}{l}
+       \frac{1}{\kappa} \quad (\kappa \neq 0)\\
+       0 \quad (\kappa = 0)
+     \end{array}\right. \]
+  最小二乘解$\hat{\tmmathbf{\theta}}_{\tmop{LS}}$可以表示为
+  \[ \hat{\tmmathbf{\theta}}_{\tmop{LS}} = \sum_{k = 1}^{\min (n, b)}
+     \kappa_k^{\dag} (\tmmathbf{\psi}_k^T \tmmathbf{y}) \tmmathbf{\varphi}_k
+  \]
+\end{frame}}{\begin{frame}
+  \frametitle{无偏性}
+  
+  将最小二乘学习法中得到的函数以训练输入$\{ \tmmathbf{x}_i
+  \}_{i = 1}^n$得到输出值$\{ f_{{\hat{\tmmathbf{\theta}}_{\tmop{LS}}} 
+  (\tmmathbf{x}_i)} \}_{i = 1}^n$，变换为列向量表示，得
+  \[ (f_{\hat{\tmmathbf{\theta}}_{\tmop{LS}}} (\tmmathbf{x}_1), \cdots
+     f_{\hat{\tmmathbf{\theta}}_{\tmop{LS}}} (\tmmathbf{x}_n))^T
+     =\tmmathbf{\Phi} \hat{\tmmathbf{\theta}}_{\tmop{LS}}
+     =\tmmathbf{\Phi}\tmmathbf{\Phi}^{\dag} \tmmathbf{y} \]
+  其中$\tmmathbf{\Phi}\tmmathbf{\Phi}^{\dag}$是$\tmmathbf{\Phi}$的值域$\mathcal{R}
+  (\tmmathbf{\Phi})$的正交投影矩阵，最小二乘学习法的输出向量是由$\mathcal{R}
+  (\tmmathbf{\Phi})$的正交投影得到的。
+  
+  如果噪声的期望值为0,则最小二乘解$\hat{\tmmathbf{\theta}}_{\tmop{LS}}$就是真实参数$\tmmathbf{\theta}^{\ast}$的无偏估计量。
+  \[ \mathbb{E} [\hat{\tmmathbf{\theta}}_{\tmop{LS}}]
+     =\tmmathbf{\theta}^{\ast} \]
+  上式中$\mathbb{E}$为对噪声的期望值。另外，即使真实函数没有包含在模型中（即无论对于什么样的$\tmmathbf{\theta}$，都存在$f
+  \neq f_{\tmmathbf{\theta}}$，如果增加训练样本数$n$，$\mathbb{E}
+  [\hat{\tmmathbf{\theta}}_{\tmop{LS}}]$也会向着模型中的最优参数方向收敛。这种性质称为无偏性。
+\end{frame}}{\begin{frame}
+  \frametitle{随机梯度法}
+  
+  \qquad\resizebox{0.8\columnwidth}{!}{\includegraphics{img/gradient.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{}
+  
+  \
+  
+  随机梯度法是指，沿着训练平方误差$J_{\tmop{LS}}$的梯度下降，对参数依次进行学习的算法。
+  
+  \qquad一般而言，与线性模型相对应的训练平方误差$J_{\tmop{LS}}$为凸函数。$J
+  (\tmmathbf{\theta})$函数为凸函数是指对任意的两点$\tmmathbf{\theta}_1,
+  \tmmathbf{\theta}_2$和任意的$t \in [0, 1]$，
+  \[ J (t\tmmathbf{\theta}_1 + (1 - t) \tmmathbf{\theta}_2) \leqslant
+     \tmop{tJ} (\tmmathbf{\theta}_1) + (1 - t) J (\tmmathbf{\theta}_2) \]
+  \qquad凸函数只有一个峰值，可以通过梯度法得到全局最优解。
+\end{frame}}{\begin{frame}
+  \frametitle{}
+  
+  \resizebox{0.8\columnwidth}{!}{\includegraphics{img/convex.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{随机梯度最小二乘}
+  
+  \qquad随机梯度算法对线性模型进行最小二乘学习的算法流程
+  \begin{enumeratenumeric}
+    \item 给$\tmmathbf{\theta}$以适当的初值
+    
+    \item 随机先择一个训练样本, 如：$(\tmmathbf{x}_i, y_i)$
+    
+    \item
+    对于选定的训练样本，采用使其梯度下降的方式，对参数$\tmmathbf{\theta}$进行更新
+    \[ \tmmathbf{\theta} \leftarrow \tmmathbf{\theta}- \varepsilon \nabla
+       J_{\tmop{LS}}^{(i)} (\tmmathbf{\theta}) \]
+    这里$\varepsilon$是名为学习系数的小标量，表示梯度下降的步幅，$\nabla
+    J_{\tmop{LS}}^{(i)}$是顺度为$i$的训练样本相对应的训练平方误差的梯度
+    \[ \nabla J_{\tmop{LS}}^{(i)} (\tmmathbf{\theta}) = \phi (\tmmathbf{x}_i)
+       (f_{\tmmathbf{\theta}} (\tmmathbf{x}_i) - y_i) \]
+    \item
+    直到解$\tmmathbf{\theta}$达到收敛精度为止，否则重复2,3
+  \end{enumeratenumeric}
+\end{frame}}{\begin{frame}
+  \frametitle{带有约束条件的最小二乘法}
+  
+  \
+  
+  \qquad单纯的最小二乘法对于包含噪声的学习过程经常有过拟合的弱点。原因是学习模型对于训练样本而言过度复杂。利用约束条件可以控制模型复杂程序。
+\end{frame}}{\begin{frame}
+  \frametitle{部分空间约束的最小二乘学习法}
+  
+  \quad对于有参数的线性模型，
+  \[ f_{\tmmathbf{\theta}} (\tmmathbf{x}) = \sum_{j = 1}^b \theta_j \phi_j
+     (\tmmathbf{x}) =\tmmathbf{\theta}^{\Tau} \tmmathbf{\phi}_j (\tmmathbf{x})
+  \]
+  参数$\{ \theta_j \}_{j =
+  1}^b$可以自由设置，利用部分空间约束的最小二乘法，通过把参数空间限制在一定范围内，防止过拟合现象。
+  \[ \min_{\tmmathbf{\theta}} J_{\tmop{LS}} (\tmmathbf{\theta}) \hspace{4em}
+     s.t. \quad \tmmathbf{P}\tmmathbf{\theta}=\tmmathbf{\theta} \]
+  其中$\tmmathbf{P}$是满足$\tmmathbf{P}^2
+  =\tmmathbf{P}$和$\tmmathbf{P}^T =\tmmathbf{P}$的$b \times
+  b$维矩阵，表示的是矩阵$\tmmathbf{P}$的值域$\mathcal{R}
+  (\tmmathbf{P})$的正交投影矩阵。通过附加约束条件$\tmmathbf{P}\tmmathbf{\theta}=\tmmathbf{\theta}$,
+  参数$\tmmathbf{\theta}$不会偏 移到值域$\mathcal{R}
+  (\tmmathbf{P})$的范围外。部分空间约束的最小二乘学习法的解$\hat{\tmmathbf{\theta}}$，一般是通过将最小二乘学习的设计矩阵$\tmmathbf{\Phi}$置换为$\tmmathbf{\Phi}\tmmathbf{P}$的方式求得
+  \[ \hat{\tmmathbf{\theta}} = (\tmmathbf{\Phi}\tmmathbf{P})^{\dag}
+     \tmmathbf{y} \]
+\end{frame}}{\begin{frame}
+  \frametitle{$\mathcal{l}_2$约束的最小二乘学习法}
+  
+  拉格朗日对偶问题：
+  
+  可微分的凸函数$f : \mathbb{R}^d \rightarrow
+  \mathbb{R}$和$\tmmathbf{g}: \mathbb{R}^d \rightarrow
+  \mathbb{R}^p$的约束条件的最小化问题
+  \[ \min_{\tmmathbf{t}} f (\tmmathbf{t}) \hspace{3em} s.t. \quad \tmmathbf{g}
+     (\tmmathbf{t}) \leqslant 0 \]
+  可定义拉格朗日对偶问题：
+  
+  \ 
+\end{frame}}{\begin{frame}
+  \frametitle{}
+  
+  使用拉格朗日待定因子：
+  \[ \tmmathbf{\lambda}= (\lambda_1, \cdots, \lambda_p)^T  \]
+  和拉格朗日函数：
+  \[ L (\tmmathbf{t}, \tmmathbf{\lambda}) = f (\tmmathbf{t})
+     +\tmmathbf{\lambda}^T \tmmathbf{g} (\tmmathbf{t}) \]
+  采用以下方式进行定义：
+  \[ \max_{\tmmathbf{\lambda}} \inf_{\tmmathbf{t}} L (\tmmathbf{t},
+     \tmmathbf{\lambda}) \hspace{4em} s.t. \quad \tmmathbf{\lambda} \geqslant
+     0 \]
+  拉格朗日对偶问题的$\tmmathbf{t}$的解，与原来的问题的解是一致的。
+\end{frame}}{\begin{frame}
+  \frametitle{}
+  
+  部分空间约束的最小二乘法中，只使用了参数空间的一部分，但是由于正交投影矩阵$P$的设置有很大的自由度，因此在实际应用中操作起来有很大难度。$\ell_2$约束的最小二乘学习法相对容易操作。
+  \[ \min_{\tmmathbf{\theta}} J_{\tmop{LS}} (\tmmathbf{\theta}) \hspace{4em}
+     s.t. \quad \| \tmmathbf{\theta} \|^2 \leqslant R \]
+  $\ell_2$约束的最小二乘学习法以参数空间的原点为圆心，在一定半径范围的圆（一般为超球）内进行求解。$R$表示的即是圆的半径。
+  
+  \ 
+\end{frame}}{\begin{frame}
+  \frametitle{}
+  
+  利用拉格朗日对偶问题，通过求解下式的最优解，得到原最优化问题的解。
+  \[ \max_{\tmmathbf{\lambda}} \min_{\tmmathbf{\theta}}  \left[ J_{\tmop{LS}}
+     (\tmmathbf{\theta}) + \frac{\lambda}{2} (\| \tmmathbf{\theta} \|^2 - R)
+     \right] \hspace{4em} s.t. \lambda \geqslant 0 \]
+  拉格朗日对偶问题的拉格朗日待定因子$\lambda$的解由圆的半径$R$决定，如果不根据$R$来决定$\lambda$,
+  而是直接指定$\lambda$的值，$\ell_2$约束的最小二乘学习法的解$\hat{\tmmathbf{\theta}}$就可以通过下式求得：
+  \[ \hat{\tmmathbf{\theta}} = \arg \min_{\tmmathbf{\theta}} \left[
+     J_{\tmop{LS}} (\tmmathbf{\theta}) + \frac{\lambda}{2} \|
+     \tmmathbf{\theta} \|^2 \right] \]
+  
+\end{frame}}{\begin{frame}
+  \frametitle{}
+  
+  其中第一项$J_{\tmop{LS}}
+  (\tmmathbf{\theta})$表示的是对训练样本的拟合程度，通过与第二项的$\frac{\lambda}{2}
+  \| \tmmathbf{\theta}
+  \|^2$相结合得到最小值，可防止对训练样本的过拟合。
+  
+  令关于参数$\tmmathbf{\theta}$的偏微分等于0,可得：
+  \[ \hat{\tmmathbf{\theta}} = (\tmmathbf{\Phi}^T \tmmathbf{\Phi}+ \lambda
+     \tmmathbf{I})^{- 1} \tmmathbf{\Phi}^T \tmmathbf{y} \]
+  $\ell_2$约束的最小二乘法通过将矩阵$\tmmathbf{\Phi}^T
+  \tmmathbf{\Phi}$与$\lambda
+  I$相加提高了其正则性，进而可以更稳定地进行逆矩阵的求解。因此，$\ell_2$约束的最小二乘学习法也称为$\ell_2$正则化的最小二乘法。$\|
+  \tmmathbf{\theta}
+  \|^2$称为正则项，$\lambda$为正则化参数。$\ell_2$正则化的最小二乘法在有些著作中也称为岭回归。
+\end{frame}}{\begin{frame}
+  \frametitle{}
+  
+  考虑设计矩阵$\tmmathbf{\Phi}$的奇异值分解：
+  \[ \tmmathbf{\Phi}= \sum_{k = 1}^{\min (n, b)} \kappa_k \tmmathbf{\psi}_k
+     \tmmathbf{\varphi}_k^T \]
+  $\ell_2$约束的最小二乘法的解可表示为：
+  \[ \hat{\tmmathbf{\theta}} = \sum_{k = 1}^{\min (n, b)}
+     \frac{\kappa_k}{\kappa_k^2 + \lambda} (\tmmathbf{\psi}_k^T \tmmathbf{y})
+     \tmmathbf{\varphi}_k \]
+\end{frame}}{\frametitle{}
+
+当$\lambda =
+0$时，$\ell_2$约束的最小二乘法就与一般的最小二乘法相同，当设计矩阵$\tmmathbf{\Phi}$的计算条件很恶劣，即包含非常小的奇异值$\kappa_k$时，$\frac{\kappa_k}{\kappa_k^2}
+=
+\frac{1}{\kappa_k}$会非常大，训练输出向量$\tmmathbf{y}$包含的噪声会增大，$\ell_2$约束最小二乘法，$\frac{\kappa_k}{\kappa_k^2
++
+\lambda}$由于正常数$\lambda$的作用，不会变得过大，进而可以达到防止过拟合的目的。
+
+通过使用$b \times
+b$的正则化矩阵$G$，就可以得到更普遍的表示方法
+\[ \min_{\tmmathbf{\theta}} J_{\tmop{LS}} (\tmmathbf{\theta}) \hspace{4em}
+   s.t. \quad \tmmathbf{\theta}^T \tmmathbf{G}\tmmathbf{\theta} \leqslant R \]
+上述表示方式称为一般$\ell_2$约束的最小二乘法。矩阵$\tmmathbf{G}$为对称正定矩阵时，$\tmmathbf{\theta}^T
+\tmmathbf{G}\tmmathbf{\theta} \leqslant
+R$可以把参数限制在椭圆形的区域内。一般$\ell_2$约束的最小二乘法的解：
+\[ \hat{\tmmathbf{\theta}} = (\tmmathbf{\Phi}^T \tmmathbf{\Phi}+ \lambda
+   \tmmathbf{G})^{- 1} \tmmathbf{\Phi}^T \tmmathbf{y} \]}}
+
+\end{CJK*}
+\end{document}
