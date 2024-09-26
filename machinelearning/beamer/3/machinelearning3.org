@@ -52,7 +52,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -160,7 +160,7 @@
 
 ** 熵（entropy）
 \center
-#+attr_latex: width=0.6\textwidth
+#+attr_latex: :width 0.5\textwidth
 [[./image/dt-fig-entropy-new.png]]
 
 
@@ -205,7 +205,7 @@
 
 ** Selecting the Next Attribute
 \center
-#+attr_latex: width=0.6\textwidth
+#+attr_latex: :width 0.6\textwidth
 [[./image/dt-t.png]]
 
  # entropy(x)=-x*log2(x)-(1-x)*log2(1-x)
@@ -214,7 +214,7 @@
 ** Hypothesis Space Search by ID3
 
 \center
-#+attr_latex: width=0.5\textwidth
+#+attr_latex: :width 0.5\textwidth
 [[./image/dt-search.png]]
 
 
@@ -254,13 +254,13 @@
 - 较短的树比较长的得到优先。
 - 信息增益高的属性更靠近根结点的树得到优先。
 
-** ID3算法和候选消除算法的归纳偏置不同
+** ID3算法和候选消除算法(Version Space Candidate Elimination,VSCE)的归纳偏置
 - ID3的搜索范围是一个完整的假设空间（例如，能表示任何有限的离散值函数的空间）。
-- 但它不彻底地搜索这个空间，从简单的假设到复杂的假设，直到遇到终止条件（例如，它发现了一个与数据一致的假设）。
-- 它的归纳偏置完全是搜索策略排序假设的结果。它的假设空间没有引入额外的偏置。
-- 变型空间候选消除算法的搜索范围是不完整的假设空间（即一个仅能表示潜在可教授概念子集的空间）。
-- 但它彻底地搜索这个空间，查找所有与训练数据一致的假设。
-- 它的归纳偏置完全是假设表示的表达能力的结果。它的搜索策略没有引入额外的偏置。
+- ID3不彻底地搜索这个空间，仅从简单的假设到复杂的假设，然后遇到终止条件（例如：发现了一个与数据一致的假设）。
+- ID3的归纳偏置完全是搜索策略排序假设的结果。它的假设空间没有引入额外的偏置。
+- VSCE的搜索范围是不完整的假设空间（即一个仅能表示潜在可教授概念子集的空间）。
+- VSCE彻底地搜索这个空间，查找所有与训练数据一致的假设。
+- VSCE的归纳偏置完全是假设表示的表达能力的结果。它的搜索策略没有引入额外的偏置。
 
 ** 限定偏置和优选偏置
 - ID3的归纳偏置来自它的搜索策略，
@@ -285,12 +285,13 @@
 * 决策树学习的常见问题
 **  过拟合（Overfitting）数据
 
-Consider adding noisy training example \#15:
+Consider adding noisy training example No. 15:
 
 \[ Sunny,\  Hot,\  Normal,\  Strong,\ PlayTennis=No \]
 
 What effect on earlier tree?
 
+#+attr_latex: :width 0.5\textwidth
 [[./image/dt-f1.png]]
 
 
@@ -351,6 +352,7 @@ What effect on earlier tree?
 
 ** 决策树转化为等价的规则集合
 
+#+attr_latex: :width 0.6\textwidth
 [[./image/dt-f1.png]]
 
 | IF     | $(Outlook=Sunny) \land (Humidity=High)$   |
@@ -403,13 +405,14 @@ What if some examples missing values of $A$?
 - 赋给它结点 $n$ 的具有同样目标值的训练样例中该属性的最常见值。
 - 为A的每个可能值赋与一个概率，按此比例将样例分配到子树中。
    - 例如，给定一个布尔属性A，如果结点n包含6个已知A=1和6个A=0的样例，那么A(x)=1的概率是0.6，A(x)=0的概率是0.4。
-     实例x的 60\% 被分配到 A=1 的分支，40\% 被分配到另一个分支。
+     实例x的 60\% 被分配到 A=1 的分支，
+     40\% 被分配到另一个分支。
 
 ** 处理代价不同的属性(Attributes with Costs)
 
 Consider
 
-- 医疗诊断,  $BloodTest$ 代价 \$150
+- 医疗诊断,  $BloodTest$ 代价 150美元
 - 机器人, $Width\_from\_1ft$ 代价 23 秒
 
 优先选择尽可能使用低代价属性的决策树，仅当需要产生可靠的分类时才依赖高代价属性。

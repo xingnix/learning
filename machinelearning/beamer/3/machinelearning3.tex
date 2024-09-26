@@ -1,18 +1,17 @@
-% Created 2016-09-13 Tue 17:25
-\documentclass{beamer}
-\usepackage{fixltx2e}
+% Created 2024-09-26 Thu 11:27
+% Intended LaTeX compiler: pdflatex
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{longtable}
-\usepackage{float}
 \usepackage{wrapfig}
-\usepackage{soul}
-\usepackage{textcomp}
-\usepackage{marvosym}
-\usepackage{wasysym}
-\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{capt-of}
 \usepackage{hyperref}
-\tolerance=1000
 \usepackage{enumitem}
 \setlistdepth{9}
 \setlist[itemize,1]{label=$\diamond$}
@@ -50,23 +49,20 @@
 \usepackage{underscore}
 \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 \setbeamercovered{transparent}
-\providecommand{\alert}[1]{\textbf{#1}}
-
-\title{决策树学习}
-\author{}
+\usetheme{default}
 \date{}
+\title{决策树学习}
 \hypersetup{
-  pdfkeywords={},
-  pdfsubject={},
-  pdfcreator={Emacs Org-mode version 7.9.3f}}
-
+ pdfauthor={},
+ pdftitle={决策树学习},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.4 (Org mode 9.6.15)}, 
+ pdflang={English}}
 \begin{document}
 
 \maketitle
-
-\begin{frame}
-\frametitle{Outline}
-\setcounter{tocdepth}{3}
+\begin{frame}{Outline}
 \tableofcontents
 \end{frame}
 
@@ -76,17 +72,9 @@
 
 
 
-
-
-
-
 \section{决策树介绍}
-\label{sec-1}
-\begin{frame}
-\frametitle{决策树表示法}
-\label{sec-1-1}
-
-
+\label{sec:orgd053a1c}
+\begin{frame}[label={sec:org9dfa2b5}]{决策树表示法}
 \begin{itemize}
 \item 决策树通过把实例从根结点排列（sort）到某个叶子结点来分类实例，叶子结点即为实例所属的分类。
 \item 树上的每一个结点指定了对实例的某个属性（attribute）的测试，并且该结点的每一个后继分支对应于该属性的一个可能值。
@@ -94,10 +82,8 @@
 \item 这个过程再在以新结点为根的子树上重复。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{决策树学习的适用问题}
-\label{sec-1-2}
 
+\begin{frame}[label={sec:orgd9e3905}]{决策树学习的适用问题}
 \begin{itemize}
 \item 实例是由“属性---值”对（pair）表示的。
 \begin{itemize}
@@ -112,10 +98,8 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{决策树学习的适用问题}
-\label{sec-1-3}
 
+\begin{frame}[label={sec:org8117ce0}]{决策树学习的适用问题}
 \begin{itemize}
 \item 可能需要析取的描述（disjunctive description）。
 \item 训练数据可以包含错误。
@@ -125,23 +109,18 @@
 \item 训练数据可以包含缺少属性值的实例。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{Decision Tree for $PlayTennis$}
-\label{sec-1-4}
 
-
+\begin{frame}[label={sec:orgb74536d}]{Decision Tree for \(PlayTennis\)}
+\begin{center}
 \includegraphics[width=.9\linewidth]{./image/dt-f1.png}
+\end{center}
 \end{frame}
-\begin{frame}[fragile]
-\frametitle{A Tree to Predict C-Section Risk}
-\label{sec-1-5}
 
-
-\begin{itemize}
+\begin{frame}[label={sec:orgfd345aa},fragile]{A Tree to Predict C-Section Risk}
+ \begin{itemize}
 \item Learned from medical records of 1000 women
 \item Negative examples are C-sections
 \end{itemize}
-
 \begin{verbatim}
 [833+,167-] .83+ .17-
 Fetal_Presentation = 1: [822+,116-] .88+ .12-
@@ -157,170 +136,156 @@ Fetal_Presentation = 2: [3+,29-] .11+ .89-
 Fetal_Presentation = 3: [8+,22-] .27+ .73-
 \end{verbatim}
 \end{frame}
-\section{基本的决策树学习算法}
-\label{sec-2}
-\begin{frame}
-\frametitle{ID3(Examples，Target\_{}Attribute，Attributes)}
-\label{sec-2-1}
 
+\section{基本的决策树学习算法}
+\label{sec:orgadfef82}
+\begin{frame}[label={sec:org7561165}]{ID3(Examples，Target\_Attribute，Attributes)}
 \begin{itemize}
 \item Examples: 训练样例集。
-\item Target\_{}Attribute: 要预测的目标属性。
+\item Target\_Attribute: 要预测的目标属性。
 \item Attributes: 除目标属性外供学习到的决策树测试的属性列表。
 \item 返回值：能分类给定Examples的决策树。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{ID3(Examples，Target\_{}Attribute，Attributes)}
-\label{sec-2-2}
 
+\begin{frame}[label={sec:org1bf9eae}]{ID3(Examples，Target\_Attribute，Attributes)}
 \begin{itemize}
 \item 创建树的Root结点
-\item 若Examples都为正，返回 $label =+$ 的单结点树Root
-\item 若Examples都为反，返回 $label =-$ 的单结点树Root
-\item 如果Attributes为空，那么返回单结点树Root，label=Examples中最普遍的Target\_{}Attribute值
+\item 若Examples都为正，返回 \(label =+\) 的单结点树Root
+\item 若Examples都为反，返回 \(label =-\) 的单结点树Root
+\item 如果Attributes为空，那么返回单结点树Root，label=Examples中最普遍的Target\_Attribute值
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{ID3(Examples，Target\_{}Attribute，Attributes)}
-\label{sec-2-3}
 
+\begin{frame}[label={sec:org04fff66}]{ID3(Examples，Target\_Attribute，Attributes)}
 \begin{itemize}
 \item 否则:
 \begin{itemize}
 \item A←Attributes中分类Examples能力最好的属性
 \item Root的决策属性←A
-\item 对于A的每个可能值 $v_i$
+\item 对于A的每个可能值 \(v_i\)
 \begin{itemize}
-\item 在Root下加一个新的分支对应测试 $A=v_i$
-\item 令 $Examples_{v_i}$ 为Examples中满足A属性值为 $v_i$ 的子集
-\item $Examples_{v_i}$ 是否为空？
+\item 在Root下加一个新的分支对应测试 \(A=v_i\)
+\item 令 \(Examples_{v_i}\) 为Examples中满足A属性值为 \(v_i\) 的子集
+\item \(Examples_{v_i}\) 是否为空？
 \begin{itemize}
-\item 是则在这个新分支下加一个叶子结点，结点的label=Examples中最普遍的Target\_{}Attribute值
+\item 是则在这个新分支下加一个叶子结点，结点的label=Examples中最普遍的Target\_Attribute值
 \item 否则在这个新分支下加一个子树: 
 
-                      ID3( $Examples_{v_i}$ ,Target\_{}Attribute,Attributes-\{A\})
+ID3( \(Examples_{v_i}\) ,Target\_Attribute,Attributes-\{A\})
 \end{itemize}
 \end{itemize}
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{最佳分类属性}
-\label{sec-2-4}
 
-
+\begin{frame}[label={sec:orgd9f42ee}]{最佳分类属性}
+\begin{center}
 \includegraphics[width=.9\linewidth]{./image/dt-s1.png}
+\end{center}
 \end{frame}
-\begin{frame}
-\frametitle{熵（entropy）}
-\label{sec-2-5}
 
-
+\begin{frame}[label={sec:org9364223}]{熵（entropy）}
 \begin{itemize}
 \item 给定包含关于某个目标概念的正反样例的样例集S，那么S相对这个布尔型分类的熵为：
 
-  \[ Entropy(S) \equiv  - p_{\oplus} \log_{2} p_{\oplus} -  p_{\ominus} \log_{2}p_{\ominus} \]
+\[ Entropy(S) \equiv  - p_{\oplus} \log_{2} p_{\oplus} -  p_{\ominus} \log_{2}p_{\ominus} \]
+
 \begin{itemize}
-\item $p_{\oplus}$ 是 $S$ 中正例的比例
-\item $p_{\ominus}$ 是 $S$ 中反例的比例
+\item \(p_{\oplus}\) 是 \(S\) 中正例的比例
+\item \(p_{\ominus}\) 是 \(S\) 中反例的比例
 \end{itemize}
+
 \item 熵确定了要编码集合 S 中任意成员（即以均匀的概率随机抽出的一个成员）的分类所需要的最少二进制位数。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{熵（entropy）}
-\label{sec-2-6}
 
+\begin{frame}[label={sec:org39c7368}]{熵（entropy）}
 \center
-\includegraphics[width=0.6\textwidth]{./image/dt-fig-entropy-new.png}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{./image/dt-fig-entropy-new.png}
+\end{center}
 \end{frame}
-\begin{frame}
-\frametitle{信息增益度量}
-\label{sec-2-7}
 
 
+\begin{frame}[label={sec:org3b3c117}]{信息增益度量}
 \begin{itemize}
 \item 一个属性的信息增益就是由于使用这个属性分割样例而导致的期望熵降低。
 \item 一个属性A相对样例集合S的信息增益Gain(S,A)定义为:
 
-   \[ Gain(S,A) \equiv Entropy(S)\ - \sum_{v \in Values(A)} \frac{|S_{v}|}{|S|}Entropy(S_{v}) \]
+\[ Gain(S,A) \equiv Entropy(S)\ - \sum_{v \in Values(A)} \frac{|S_{v}|}{|S|}Entropy(S_{v}) \]
 
-   其中
+其中 
 \begin{itemize}
 \item Values(A)是属性A所有可能值的集合，
-\item $S_v$ 是S中属性A的值为v的子集（即： $S_v=\{s\in S|A(s)=v\}$ ）
+\item \(S_v\) 是S中属性A的值为v的子集（即： \(S_v=\{s\in S|A(s)=v\}\) ）
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{信息增益度量}
-\label{sec-2-8}
 
-
+\begin{frame}[label={sec:orgcf6304f}]{信息增益度量}
+\begin{center}
 \includegraphics[width=.9\linewidth]{./image/dt-s1.png}
+\end{center}
 \end{frame}
-\begin{frame}
-\frametitle{例}
-\label{sec-2-9}
 
-
-
+\begin{frame}[label={sec:org1e6410e}]{例}
 \begin{center}
 \begin{tabular}{llllll}
- Day  &  Outlook   &  Temperature  &  Humidity  &  Wind    &  PlayTennis  \\
+Day & Outlook & Temperature & Humidity & Wind & PlayTennis\\[0pt]
 \hline
- D1   &  Sunny     &  Hot          &  High      &  Weak    &  No          \\
- D2   &  Sunny     &  Hot          &  High      &  Strong  &  No          \\
- D3   &  Overcast  &  Hot          &  High      &  Weak    &  Yes         \\
- D4   &  Rain      &  Mild         &  High      &  Weak    &  Yes         \\
- D5   &  Rain      &  Cool         &  Normal    &  Weak    &  Yes         \\
- D6   &  Rain      &  Cool         &  Normal    &  Strong  &  No          \\
- D7   &  Overcast  &  Cool         &  Normal    &  Strong  &  Yes         \\
- D8   &  Sunny     &  Mild         &  High      &  Weak    &  No          \\
- D9   &  Sunny     &  Cool         &  Normal    &  Weak    &  Yes         \\
- D10  &  Rain      &  Mild         &  Normal    &  Weak    &  Yes         \\
- D11  &  Sunny     &  Mild         &  Normal    &  Strong  &  Yes         \\
- D12  &  Overcast  &  Mild         &  High      &  Strong  &  Yes         \\
- D13  &  Overcast  &  Hot          &  Normal    &  Weak    &  Yes         \\
- D14  &  Rain      &  Mild         &  High      &  Strong  &  No          \\
+D1 & Sunny & Hot & High & Weak & No\\[0pt]
+D2 & Sunny & Hot & High & Strong & No\\[0pt]
+D3 & Overcast & Hot & High & Weak & Yes\\[0pt]
+D4 & Rain & Mild & High & Weak & Yes\\[0pt]
+D5 & Rain & Cool & Normal & Weak & Yes\\[0pt]
+D6 & Rain & Cool & Normal & Strong & No\\[0pt]
+D7 & Overcast & Cool & Normal & Strong & Yes\\[0pt]
+D8 & Sunny & Mild & High & Weak & No\\[0pt]
+D9 & Sunny & Cool & Normal & Weak & Yes\\[0pt]
+D10 & Rain & Mild & Normal & Weak & Yes\\[0pt]
+D11 & Sunny & Mild & Normal & Strong & Yes\\[0pt]
+D12 & Overcast & Mild & High & Strong & Yes\\[0pt]
+D13 & Overcast & Hot & Normal & Weak & Yes\\[0pt]
+D14 & Rain & Mild & High & Strong & No\\[0pt]
 \end{tabular}
 \end{center}
 \end{frame}
-\begin{frame}
-\frametitle{Selecting the Next Attribute}
-\label{sec-2-10}
 
-   
+
+\begin{frame}[label={sec:org6653ec5}]{Selecting the Next Attribute}
+\begin{center}
 \includegraphics[width=.9\linewidth]{./image/dt-inf.png}
+\end{center}
 \end{frame}
-\begin{frame}
-\frametitle{Selecting the Next Attribute}
-\label{sec-2-11}
 
+\begin{frame}[label={sec:orgce919f1}]{Selecting the Next Attribute}
 \center
+\begin{center}
 \includegraphics[width=0.6\textwidth]{./image/dt-t.png}
+\end{center}
 \end{frame}
-\begin{frame}
-\frametitle{Hypothesis Space Search by ID3}
-\label{sec-2-12}
 
-
+\begin{frame}[label={sec:org80c3b3d}]{Hypothesis Space Search by ID3}
 \center
+\begin{center}
 \includegraphics[width=0.5\textwidth]{./image/dt-search.png}
+\end{center}
 \end{frame}
-\section{ID3算法的搜索空间和搜索策略}
-\label{sec-3}
-\begin{frame}
-\frametitle{ID3算法的搜索空间}
-\label{sec-3-1}
 
+
+
+
+
+\section{ID3算法的搜索空间和搜索策略}
+\label{sec:org2e20a70}
+\begin{frame}[label={sec:orgc0a8681}]{ID3算法的搜索空间}
 \begin{itemize}
 \item ID3算法中的假设空间包含所有的决策树，它是相对于现有属性的有限离散值函数的一个完整空间。
 \begin{itemize}
 \item 因为每个有限离散值函数可被表示为某个决策树，所以ID3算法避免了搜索不完整假设空间（例如那些仅考虑合取假设的方法）的一个主要风险：
 
-     假设空间可能不包含目标函数。
+假设空间可能不包含目标函数。
 \end{itemize}
 \item 当遍历决策树空间时，ID3仅维护单一的当前假设。
 \begin{itemize}
@@ -330,10 +295,7 @@ Fetal_Presentation = 3: [8+,22-] .27+ .73-
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{ID3算法的搜索策略}
-\label{sec-3-2}
-
+\begin{frame}[label={sec:org1d65122}]{ID3算法的搜索策略}
 \begin{itemize}
 \item 基本的ID3算法在搜索中不进行回溯。每当在树的某一层次选择了一个属性进行测试，它不会再回溯重新考虑这个选择。
 \begin{itemize}
@@ -342,10 +304,7 @@ Fetal_Presentation = 3: [8+,22-] .27+ .73-
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{ID3算法的搜索策略}
-\label{sec-3-3}
-
+\begin{frame}[label={sec:org7e71dd6}]{ID3算法的搜索策略}
 \begin{itemize}
 \item ID3算法在搜索的每一步都使用当前的所有训练样例，以统计为基础决定怎样精化当前的假设。
 \begin{itemize}
@@ -355,12 +314,11 @@ Fetal_Presentation = 3: [8+,22-] .27+ .73-
 \end{itemize}
 \end{itemize}
 \end{frame}
-\section{ID3算法归纳偏置}
-\label{sec-4}
-\begin{frame}
-\frametitle{BFS-ID3(Breadth First Search)}
-\label{sec-4-1}
 
+\section{ID3算法归纳偏置}
+\label{sec:orgdb3338d}
+
+\begin{frame}[label={sec:org54e9f3f}]{BFS-ID3(Breadth First Search)}
 \begin{itemize}
 \item 从一个空的树开始广度优先（breadth first）搜索逐渐复杂的树，
 \item 先考虑所有深度为1的树，然后所有深度为2的，……。
@@ -368,53 +326,45 @@ Fetal_Presentation = 3: [8+,22-] .27+ .73-
 \item BFS-ID3寻找最短的决策树，因此精确地具有“较短的树比较长的得到优先”的偏置。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{ID3归纳偏置：}
-\label{sec-4-2}
 
+\begin{frame}[label={sec:org941c146}]{ID3归纳偏置：}
 \begin{itemize}
 \item ID3可被看作BFS-ID3的一个有效近似，它使用一种贪婪的启发式搜索企图发现最短的树，而不用进行完整的广度优先搜索来遍历假设空间。
 \item 较短的树比较长的得到优先。
 \item 信息增益高的属性更靠近根结点的树得到优先。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{ID3算法和候选消除算法的归纳偏置不同}
-\label{sec-4-3}
 
+\begin{frame}[label={sec:org66a3459}]{ID3算法和候选消除算法(Version Space Candidate Elimination,VSCE)的归纳偏置}
 \begin{itemize}
 \item ID3的搜索范围是一个完整的假设空间（例如，能表示任何有限的离散值函数的空间）。
-\item 但它不彻底地搜索这个空间，从简单的假设到复杂的假设，直到遇到终止条件（例如，它发现了一个与数据一致的假设）。
-\item 它的归纳偏置完全是搜索策略排序假设的结果。它的假设空间没有引入额外的偏置。
-\item 变型空间候选消除算法的搜索范围是不完整的假设空间（即一个仅能表示潜在可教授概念子集的空间）。
-\item 但它彻底地搜索这个空间，查找所有与训练数据一致的假设。
-\item 它的归纳偏置完全是假设表示的表达能力的结果。它的搜索策略没有引入额外的偏置。
+\item ID3不彻底地搜索这个空间，仅从简单的假设到复杂的假设，然后遇到终止条件（例如：发现了一个与数据一致的假设）。
+\item ID3的归纳偏置完全是搜索策略排序假设的结果。它的假设空间没有引入额外的偏置。
+\item VSCE的搜索范围是不完整的假设空间（即一个仅能表示潜在可教授概念子集的空间）。
+\item VSCE彻底地搜索这个空间，查找所有与训练数据一致的假设。
+\item VSCE的归纳偏置完全是假设表示的表达能力的结果。它的搜索策略没有引入额外的偏置。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{限定偏置和优选偏置}
-\label{sec-4-4}
 
+\begin{frame}[label={sec:orgf7a9347}]{限定偏置和优选偏置}
 \begin{itemize}
 \item ID3的归纳偏置来自它的搜索策略，
 \item 而候选消除算法的归纳偏置来自它对搜索空间的定义。
 \item ID3的归纳偏置是对某种假设（例如，对于较短的假设）胜过其他假设的一种优选（preference），它对最终可列举的假设没有硬性限制。
-   这种类型的偏置通常被称为优选偏置（preference bias）（或叫搜索偏置（search bias））。
+这种类型的偏置通常被称为优选偏置（preference bias）（或叫搜索偏置（search bias））。
 \item 候选消除算法的偏置是对待考虑假设的一种限定（restriction）。
-  这种形式的偏置通常被称为限定偏置（或者叫语言偏置（language bias））。
+这种形式的偏置通常被称为限定偏置（或者叫语言偏置（language bias））。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{奥坎姆剃刀 (Occam's Razor)}
-\label{sec-4-5}
 
+\begin{frame}[label={sec:orgf7ecd69}]{奥坎姆剃刀 (Occam's Razor)}
 优先选择拟合数据的最简单假设。
 
 支持论点:
 \begin{itemize}
 \item 短假设的数量少于长假设（基于简单的参数组合）
-\item $\rightarrow$ 一个短的假设与训练数据拟合的偶然性较小
-\item $\rightarrow$ 复杂的假设拟合当前的训练数据的偶然性较大
+\item \(\rightarrow\) 一个短的假设与训练数据拟合的偶然性较小
+\item \(\rightarrow\) 复杂的假设拟合当前的训练数据的偶然性较大
 \end{itemize}
 
 反对论点:
@@ -423,59 +373,51 @@ Fetal_Presentation = 3: [8+,22-] .27+ .73-
 \item 假设的大小是由学习者内部使用的特定表示决定的。所以两个学习器使用不同的内部表示会得到不同的假设
 \end{itemize}
 \end{frame}
+
 \section{决策树学习的常见问题}
-\label{sec-5}
-\begin{frame}
-\frametitle{过拟合（Overfitting）数据}
-\label{sec-5-1}
-
-
-Consider adding noisy training example \#15:
+\label{sec:orgd5b0c11}
+\begin{frame}[label={sec:org357cbd6}]{过拟合（Overfitting）数据}
+Consider adding noisy training example No. 15:
 
 \[ Sunny,\  Hot,\  Normal,\  Strong,\ PlayTennis=No \]
 
 What effect on earlier tree?
 
-\includegraphics[width=.9\linewidth]{./image/dt-f1.png}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{./image/dt-f1.png}
+\end{center}
 \end{frame}
-\begin{frame}
-\frametitle{过拟合（Overfitting）数据}
-\label{sec-5-2}
 
 
-
-考虑假设 $h$ 错误率
+\begin{frame}[label={sec:orgf65fe7c}]{过拟合（Overfitting）数据}
+考虑假设 \(h\) 错误率
 \begin{itemize}
-\item 训练数据: $error_{train}(h)$
-\item 数据的整个分布  $\cal{D}$ : $error_{\cal{D}}(h)$
+\item 训练数据: \(error_{train}(h)\)
+\item 数据的整个分布  \(\cal{D}\) : \(error_{\cal{D}}(h)\)
 \end{itemize}
 
-定义： 给定一个假设空间 $H$ ，一个假设 $h\in H$ ，如果存在其他的假设 $h'\in H$ ，使得在训练样例上h的错误率比 $h'$ 小，
+定义： 给定一个假设空间 \(H\) ，一个假设 \(h\in H\) ，如果存在其他的假设 \(h'\in H\) ，使得在训练样例上h的错误率比 \(h'\) 小，
 \[  error_{train}(h) < error_{train}(h') \]
-但在整个实例分布上 $h'$ 的错误率比h小，
+但在整个实例分布上 \(h'\) 的错误率比h小，
 \[  error_{\cal{D}}(h) > error_{\cal{D}}(h') \]
-那么就说假设 $h$ 过度拟合（overfit）训练数据。
+那么就说假设 \(h\) 过度拟合（overfit）训练数据。
 \end{frame}
-\begin{frame}
-\frametitle{Overfitting in Decision Tree Learning}
-\label{sec-5-3}
 
 
+\begin{frame}[label={sec:orgff0da57}]{Overfitting in Decision Tree Learning}
+\begin{center}
 \includegraphics[width=.9\linewidth]{./image/dt-train-val.png}
+\end{center}
 \end{frame}
-\begin{frame}
-\frametitle{避免决策树学习中的过度拟合}
-\label{sec-5-4}
 
+\begin{frame}[label={sec:org80e0643}]{避免决策树学习中的过度拟合}
 \begin{itemize}
 \item 及早停止增长树法，在ID3算法完美分类训练数据之前停止增长树；
 \item 后修剪法（post-prune），即允许树过度拟合数据，然后对这个树后修剪。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{确定最终正确树大小的准则}
-\label{sec-5-5}
 
+\begin{frame}[label={sec:org79ea555}]{确定最终正确树大小的准则}
 \begin{itemize}
 \item 使用与训练样例截然不同的一套分离的样例，来评估通过后修剪方法从树上修剪结点的效用。（训练和验证集（training and validation set）法。）
 \item 使用所有可用数据进行训练，但进行统计测试来估计扩展（或修剪）一个特定的结点是否有可能改善在训练集合外的实例上的性能。
@@ -485,16 +427,13 @@ What effect on earlier tree?
 \item 使用一个明确的标准来衡量训练样例和决策树编码的复杂度，当这个编码的长度最小时停止增长树。
 \begin{itemize}
 \item 这个方法基于一种启发式规则，被称为最小描述长度（Minimum Description Length）的准则
-\item MDL: minimize $size(tree) + size(misclassifications(tree))$
+\item MDL: minimize \(size(tree) + size(misclassifications(tree))\)
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{错误率降低修剪}
-\label{sec-5-6}
 
-
-将数据分为训练（ $training$ ） 与验证 （ $validation$ ） 集合。
+\begin{frame}[label={sec:org61db265}]{错误率降低修剪}
+将数据分为训练（ \(training\) ） 与验证 （ \(validation\) ） 集合。
 
 这样便使因为训练集合的巧合规律性而加入的结点很可能被删除，因为同样的巧合不大会发生在验证集合中。反复地修剪结点，每次总是选取它的删除可以最大提高决策树在验证集合上的精度的结点。
 
@@ -509,18 +448,14 @@ What effect on earlier tree?
 \item 重复修剪结点直到进一步的修剪是有害的（降低了在验证集合上的精度）
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{错误率降低修剪的效果}
-\label{sec-5-7}
 
-
+\begin{frame}[label={sec:org216ae6e}]{错误率降低修剪的效果}
+\begin{center}
 \includegraphics[width=.9\linewidth]{./image/dt-prune.png}
+\end{center}
 \end{frame}
-\begin{frame}
-\frametitle{规则后修剪（rule post-pruning）}
-\label{sec-5-8}
 
-
+\begin{frame}[label={sec:org29087c7}]{规则后修剪（rule post-pruning）}
 规则后修剪包括下面的步骤：
 \begin{itemize}
 \item 从训练集合推导出决策树，增长决策树直到尽可能好地拟合训练数据，允许过度拟合发生。
@@ -529,28 +464,26 @@ What effect on earlier tree?
 \item 按照修剪过的规则的估计精度对它们进行排序；并按这样的顺序应用这些规则来分类后来的实例。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{决策树转化为等价的规则集合}
-\label{sec-5-9}
 
-
-\includegraphics[width=.9\linewidth]{./image/dt-f1.png}
-
+\begin{frame}[label={sec:org6870142}]{决策树转化为等价的规则集合}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{./image/dt-f1.png}
+\end{center}
 
 \begin{center}
 \begin{tabular}{ll}
- IF      &  $(Outlook=Sunny) \land (Humidity=High)$    \\
- THEN    &  $PlayTennis=No$                            \\
- IF      &  $(Outlook=Sunny) \land (Humidity=Normal)$  \\
- THEN    &  $PlayTennis=Yes$                           \\
- \ldots  &                                             \\
+IF & \((Outlook=Sunny) \land (Humidity=High)\)\\[0pt]
+THEN & \(PlayTennis=No\)\\[0pt]
+ & \\[0pt]
+IF & \((Outlook=Sunny) \land (Humidity=Normal)\)\\[0pt]
+THEN & \(PlayTennis=Yes\)\\[0pt]
+ & \\[0pt]
+\ldots & \\[0pt]
 \end{tabular}
 \end{center}
 \end{frame}
-\begin{frame}
-\frametitle{决策树转化成规则集的好处：}
-\label{sec-5-10}
 
+\begin{frame}[label={sec:orga760a70}]{决策树转化成规则集的好处：}
 \begin{itemize}
 \item 转化为规则集可以区分决策结点使用的不同上下文。
 \begin{itemize}
@@ -564,72 +497,62 @@ What effect on earlier tree?
 \item 转化为规则提高了可读性。对于人来说规则总是更容易理解的。
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{连续值属性}
-\label{sec-5-11}
 
-
+\begin{frame}[label={sec:orgd1a3f0c}]{连续值属性}
 动态地定义新的离散值属性，即先把连续值属性的值域分割为离散的区间集合。
 \begin{itemize}
-\item $Temperature = 82.5$
-\item $(Temperature>72.3) = t,f$
+\item \(Temperature = 82.5\)
+\item \((Temperature>72.3) = t,f\)
 \end{itemize}
-
 
 \begin{center}
 \begin{tabular}{lrrrrrr}
- \{\em Temperature\}:  &  40  &  48  &   60  &   72  &   80  &  90  \\
- \{\em PlayTennis\}:   &  No  &  No  &  Yes  &  Yes  &  Yes  &  No  \\
+\{\em Temperature\}: & 40 & 48 & 60 & 72 & 80 & 90\\[0pt]
+\{\em PlayTennis\}: & No & No & Yes & Yes & Yes & No\\[0pt]
 \end{tabular}
 \end{center}
 \end{frame}
-\begin{frame}
-\frametitle{属性选择的其它度量标准}
-\label{sec-5-12}
 
 
+\begin{frame}[label={sec:org5932b8e}]{属性选择的其它度量标准}
 多值的属性(Attributes with Many Values)
 \begin{itemize}
-\item If attribute has many values, $Gain$ will select it
-\item Imagine using $Date = Jun\_3\_1996$ as attribute
+\item If attribute has many values, \(Gain\) will select it
+\item Imagine using \(Date = Jun\_3\_1996\) as attribute
 \end{itemize}
 
-增益比率 ( $GainRatio$ )
+增益比率 ( \(GainRatio\) )
 
 \[GainRatio(S,A) \equiv \frac{Gain(S,A)}{SplitInformation(S,A)} \]
 
 \[ SplitInformation(S,A) \equiv - \sum_{i=1}^{c} \frac{|S_{i}|}{|S|} \log_{2}\frac{|S_{i}|}{|S|} \]
 
-其中 $S_{i}$  是 $S$ 中属性 $A$ 的值为 $v_{i}$ 的子集
+其中 \(S_{i}\)  是 \(S\) 中属性 \(A\) 的值为 \(v_{i}\) 的子集
 \end{frame}
-\begin{frame}
-\frametitle{缺少属性值的训练样例(Unknown Attribute Values)}
-\label{sec-5-13}
 
 
-What if some examples missing values of $A$?
+\begin{frame}[label={sec:org3435e90}]{缺少属性值的训练样例(Unknown Attribute Values)}
+What if some examples missing values of \(A\)?
 
 
 \begin{itemize}
-\item 赋给它结点 $n$ 的训练样例中该属性的最常见值。
-\item 赋给它结点 $n$ 的具有同样目标值的训练样例中该属性的最常见值。
+\item 赋给它结点 \(n\) 的训练样例中该属性的最常见值。
+\item 赋给它结点 \(n\) 的具有同样目标值的训练样例中该属性的最常见值。
 \item 为A的每个可能值赋与一个概率，按此比例将样例分配到子树中。
 \begin{itemize}
 \item 例如，给定一个布尔属性A，如果结点n包含6个已知A=1和6个A=0的样例，那么A(x)=1的概率是0.6，A(x)=0的概率是0.4。
-     实例x的 60\% 被分配到 A=1 的分支，40\% 被分配到另一个分支。
+实例x的 60$\backslash$% 被分配到 A=1 的分支，
+40$\backslash$% 被分配到另一个分支。
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{处理代价不同的属性(Attributes with Costs)}
-\label{sec-5-14}
 
-
+\begin{frame}[label={sec:orgcc600b7}]{处理代价不同的属性(Attributes with Costs)}
 Consider
 
 \begin{itemize}
-\item 医疗诊断,  $BloodTest$ 代价 \$150
-\item 机器人, $Width\_from\_1ft$ 代价 23 秒
+\item 医疗诊断,  \(BloodTest\) 代价 150美元
+\item 机器人, \(Width\_from\_1ft\) 代价 23 秒
 \end{itemize}
 
 优先选择尽可能使用低代价属性的决策树，仅当需要产生可靠的分类时才依赖高代价属性。
@@ -637,12 +560,12 @@ Consider
 \begin{itemize}
 \item Tan and Schlimmer (1990)
 
-   \[\frac{Gain^{2}(S,A)}{Cost(A)}\]
+\[\frac{Gain^{2}(S,A)}{Cost(A)}\]
+
 \item \item Nunez (1988)
 
-    \[\frac{2^{Gain(S,A)} - 1}{(Cost(A) + 1)^{w}} \]
-     其中 $w \in [0,1]$ 决定代价的重要性
+\[\frac{2^{Gain(S,A)} - 1}{(Cost(A) + 1)^{w}} \]
+ 其中 \(w \in [0,1]\) 决定代价的重要性
 \end{itemize}
 \end{frame}
-
 \end{document}
