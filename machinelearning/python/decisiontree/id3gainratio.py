@@ -22,10 +22,12 @@ D12 Overcast  Mild         High       Strong Yes
 D13 Overcast  Hot          Normal     Weak   Yes
 D14 Rain      Mild         High       Strong No"""
 
+using_date=True
+
 lines = list(map(lambda x: list(filter(lambda y: y != '',
-                             re.split(' +', x)))[1:],  # drop first item "Example"
+                             re.split(' +', x)))[0 if using_date else 1:],  # drop first item "Example"
             list(filter(lambda x: x != '', re.split('\n', input_string)))))
-names, data = lines[0], lines[1:]
+names, data = lines[0], lines[0:]
 data_lines = list(map(lambda x: dict(zip(names, x)), data))
 values = dict(zip(names,
                   reduce(lambda x, y:
@@ -59,6 +61,8 @@ def entropy(indices):
         return -p/len(indices)*math.log(p/len(indices))/math.log(2)-n/len(indices)*math.log(n/len(indices))/math.log(2)
     else: return 0
 
+power_on_split=2
+
 def gainratio(indices,name):
     gain=entropy(indices)
     split_information=0.0;
@@ -66,8 +70,8 @@ def gainratio(indices,name):
        indices_v=subindices(indices,name,v)
        gain=gain-float(len(indices_v))/len(indices)*entropy(indices_v)
        s=float(len(indices_v))/len(indices)
-       split_information=1*split_information-s*math.log(s if s>0 else 1)/math.log(2)
-    return gain/split_information
+       split_information=split_information-s*math.log(s if s>0 else 1)/math.log(2)
+    return gain/(split_information ** power_on_split)
 
 def bestattribute(indices,attributes):
     maxgain = -1
@@ -98,6 +102,8 @@ def id3(indices,attributes):
             attributes_v.remove(node['decision'])
             node[v]=id3(indices_v,attributes_v)
     return node
+
+
 
 tree=id3(range(14),names)
 def prettytreeview(tree,space):

@@ -21,10 +21,11 @@ D12 Overcast  Mild         High       Strong Yes
 D13 Overcast  Hot          Normal     Weak   Yes
 D14 Rain      Mild         High       Strong No"""
 
+using_date=False
 lines = list(map(lambda x: list(filter(lambda y: y != '',
-                             re.split(' +', x)))[1:],  # drop first item "Example"
+                             re.split(' +', x)))[0 if using_date else 1:],  # drop first item "Example"
             list(filter(lambda x: x != '', re.split('\n', input_string)))))
-names, data = lines[0], lines[1:]
+names, data = lines[0], lines[0:]
 data_lines = list(map(lambda x: dict(zip(names, x)), data))
 values = dict(zip(names,
                   reduce(lambda x, y:
