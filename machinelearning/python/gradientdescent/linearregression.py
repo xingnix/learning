@@ -13,7 +13,7 @@ class model:
         self.samples=samples
         self.target=target
     def f(self,x):
-        return np.transpose(self.samples*x-self.target)*(self.samples*x-self.target)
+        return (self.samples*x-self.target).T*(self.samples*x-self.target)
 
     def gradient(self,x):
         return 2*np.transpose(self.samples)*(self.samples*x-self.target)
@@ -37,7 +37,7 @@ def train(m,samples,target):
 def run_train_file(filename='./train_process.txt'):
    x=train(m,samples,target)
    f=open(filename,'w')
-   f.write(re.sub("[\[\]]",' ',re.sub('],',"\n",str(x.transpose().tolist()))))
+   f.write(re.sub("[\\[\\]]",' ',re.sub('],',"\n",str(x.transpose().tolist()))))
    f.close()
    os.system("gnuplot -e \"set grid;plot '"+filename+"' using 0:1 w lp , '' using 0:2 w lp ; pause -1\"")
 def surface_line_string(x_interval,y_interval,resolution):
@@ -55,7 +55,7 @@ def error(m,x_interval,y_interval,resolution,output='./error_surface_index.txt')
         f=open(output,'w')
         for i in range(resolution):
                 for j in range(resolution):
-                        z[i,j]= m.f(np.matrix([[x[i,j]],[y[i][j]]]))
+                        z[i,j]= m.f(np.matrix([[x[i,j]],[y[i][j]]]))[0,0]
                         f.write(str(x[i,j])+" "+str(y[i,j])+" "+str(z[i,j])+"\n")
                 f.write("\n")
         f.close()
@@ -63,7 +63,7 @@ def error(m,x_interval,y_interval,resolution,output='./error_surface_index.txt')
 def run_error_file(filename='./error_surface.txt'):
     z=error(m,[-9,9],[-9,9],50)
     f=open(filename,'w')
-    f.write(re.sub("[\[\]]"," ",re.sub('],',"\n",str(z.tolist()))))
+    f.write(re.sub("[\\[\\]]"," ",re.sub('],',"\n",str(z.tolist()))))
     f.close()
     os.system('gnuplot -e \'set grid;splot "'+filename+'" matrix w l; pause -1;\'')
 
@@ -85,11 +85,13 @@ def run_trace_file(filename1='./error_surface_index.txt',filename2='./train_proc
     f=open(filename2,'w')
     for i in x.transpose():
        f.write(str(i[0,0])+" "+str(i[0,1])+" "+str(m.f(i.transpose())[0,0]) +" \n")
+       f.write("\n")
     f.close()
-    os.system('gnuplot -e \'set contour base;set pm3d at bs;set cntrparam levels incremental  0,0.9,8;splot "'+filename1+'" w l, "'+filename2+'" w lp lt rgb "white";pause -1;\'')
+    #os.system('gnuplot -e \'set contour base;set pm3d at bs;set cntrparam levels incremental  0,0.9,8;splot "'+filename1+'"   w l  , "'+filename2+'" w lp lt rgb "white";pause -1;\'')
+    os.system('gnuplot -e \'do for[t=1:50]{set contour base;set pm3d at bs;set cntrparam levels incremental  0,0.9,8;splot "'+filename1+'"   w l, "'+filename2+'" every :::1::t w lp lt rgb "white";pause mouse keypress;}\'')
 
 def usage():
-        print("usage:\n python linearregression.py train \n or \n python linearregression.py errorspace")
+        print("usage:\n python linearregression.py train \n or \n python linearregression.py errorspace\n or \n python linearregression.py tracee")
 
 if len(sys.argv)==2:
     if sys.argv[1]=='train' :
