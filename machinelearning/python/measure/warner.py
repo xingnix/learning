@@ -1,10 +1,10 @@
 import numpy as np
-P_T_A=0.1
-P_A=0.7
-N=1000
-m=0.0
-a=0.0
-am=0.0
+P_T_A=0.1 # trueth value of answer 1
+P_A=0.7  #probability selecting question 1
+N=1000  # number of samples
+m=0.0  # number of answer `
+a=0.0 # truth number of answer ` of samples
+am=0.0 # number of answer 1
 for n in range(1,N):
         if np.random.random()<P_T_A:
             if np.random.random()<P_A:
