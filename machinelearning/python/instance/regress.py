@@ -1,7 +1,9 @@
 import numpy as np
+# KNN regress and weighted KNN regress
+
 N=10
 data1=np.random.rand(N,1)
-target1=np.sin(data1)
+target1=np.sin(data1*10)
 
 def regress(data,target,x):
         data=np.hstack((data,np.ones((data.shape[0],1))))
@@ -33,7 +35,7 @@ def train(data,target,k,f=regress):
                 localdata=data[index,:]
                 localtarget=target[index,0].reshape(k,1)
                 w=f(np.matrix(localdata),np.matrix(localtarget),x)
-                print (x,np.matrix([x,1])*w)
+                print (x,np.matrix([x[0],1])*w)
 
 
 def test(data,target,k,f=regress):
@@ -48,13 +50,18 @@ def test(data,target,k,f=regress):
 
 
 
-print ("data is")
+print (" training samples ")
+print (" | data | target |")
 print (np.hstack((data1,target1)))
 print ("regression performance in train set")
+print (" | truth | prediction |")
 train(data1,target1,3)
 print ("regression performance in test set")
+print (" | truth | prediction |")
 test(data1,target1,3)
 print ("weighted regression performance in train set")
+print (" | input | prediction |")
 train(data1,target1,3,weightedregress)
 print ("weighted regression performance in test set")
+print (" | input | prediction |")
 test(data1,target1,3,weightedregress)
