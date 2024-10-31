@@ -21,10 +21,10 @@ def q():
     episodes=20
     for episode in range(episodes):
             print ("\n"+"="*20 +   "   episode " + str(episode) +"  "+ "="*20 +"\n")
-            s=np.int(np.random.random()*5)
+            s=int(np.random.random()*5)
             while s!=sink:
                  f=(R[s,:]+1).nonzero()[0]
-                 n=f[np.int(np.random.random()*len(f))]
+                 n=f[int(np.random.random()*len(f))]
                  Q[s,n]=R[s,n]+Gamma*max(Q[n,R[n,:]>=0])
                  print ("\n", s, "   to   ",n,  "\n")
                  prettyview(Q,P,s,n)

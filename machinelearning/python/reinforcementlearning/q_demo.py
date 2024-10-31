@@ -11,10 +11,10 @@ Q=np.zeros((6,6))
 Gamma=0.8
 episodes=20
 for episode in range(episodes):
-	s=np.int(np.random.random()*5)
+	s=int(np.random.random()*5)
 	while s!=5:
 	     f=(R[s,:]+1).nonzero()[0]
-	     n=f[np.int(np.random.random()*len(f))]
+	     n=f[int(np.random.random()*len(f))]
 	     Q[s,n]=R[s,n]+Gamma*max(Q[n,R[n,:]>=0])
 	     s=n
 
