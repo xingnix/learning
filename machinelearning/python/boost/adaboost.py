@@ -14,23 +14,23 @@ y1 = np.array([1, 1, 1, -1, -1, -1, 1, 1, 1, -1])
 class sigmoid_batch:
     def __init__(self, w, x, y):
         self.k = x[0] * 0 + np.random.random(x.shape[1]) - 0.5
-        for i in range(100):
+        for i in range(500):
             o1 = 1 / (1 + np.exp(-(x.dot(self.k))))
             o2 = 2 * (o1 - 0.5)
-            dk = 5 * len(w) * x.transpose().dot(np.diag(w)).dot(o1 * (1 - o1) * (o2 - y))
+            dk =  len(w) * x.transpose().dot(np.diag(w)).dot(o1 * (1 - o1) * (o2 - y))
             # dk = 5 * x.transpose().dot(o1 * (1 - o1) * (o2 - y))
             if np.linalg.norm(dk) < 0.001:
                 break
             else:
-                self.k = self.k - dk
+                self.k = self.k - 5.3*dk
 
         o1 = 1 / (1 + np.exp(-(x.dot(self.k))))
         o2 = 2 * (o1 - 0.5)
         o2[o2 >= 0] = 1
         o2[o2 < 0] = -1
         # self.epsilon = (o2 - y).transpose().dot(np.diag(w).dot(o2 - y))/o2.shape[0]
-        self.epsilon = (np.exp(-y * o2).dot(w) - np.exp(-np.abs(y)).dot(w)) / np.exp(np.abs(y)).dot(w)
-        # self.epsilon = np.abs(y - o2).dot(w)/2
+        #self.epsilon = (np.exp(-y * o2).dot(w) - np.exp(-np.abs(y)).dot(w)) / np.exp(np.abs(y)).dot(w)
+        self.epsilon = np.abs(y - o2).dot(w)/2
 
     def test(self, x):
         o = x.dot(self.k)
@@ -46,20 +46,20 @@ class sigmoid_single:
             for t in range(x.shape[0]):
                 o1 = 1 / (1 + np.exp(-(x[t].dot(self.k))))
                 o2 = 2 * (o1 - 0.5)
-                dk = 5.0 * len(w) * x[t] * w[t] * o1 * (1 - o1) * (o2 - y[t])
+                dk = len(w) * x[t] * w[t] * o1 * (1 - o1) * (o2 - y[t])
                 # dk = 5 * x.transpose().dot(o1 * (1 - o1) * (o2 - y))
                 if np.linalg.norm(dk) < 0.001:
                     break
                 else:
-                    self.k = self.k - dk
+                    self.k = self.k - 5*dk
 
         o1 = 1 / (1 + np.exp(-(x.dot(self.k))))
         o2 = 2 * (o1 - 0.5)
         o2[o2 >= 0] = 1
         o2[o2 < 0] = -1
         # self.epsilon = (o2 - y).transpose().dot(np.diag(w).dot(o2 - y))/o2.shape[0]
-        self.epsilon = (np.exp(-y * o2).dot(w) - np.exp(-np.abs(y)).dot(w)) / np.exp(np.abs(y)).dot(w)
-        # self.epsilon = np.abs(y - o2).dot(w)/2
+        #self.epsilon = (np.exp(-y * o2).dot(w) - np.exp(-np.abs(y)).dot(w)) / np.exp(np.abs(y)).dot(w)
+        self.epsilon = np.abs(y - o2).dot(w)/2
 
     def test(self, x):
         o = x.dot(self.k)
@@ -119,8 +119,14 @@ n = np.shape(x)[0]
 w = np.ones(n, 'double') / n
 m = sigmoid_batch(w, x, y)
 o = m.test(x)
-print ("weak learner gradient descent")
+print ("weak learner gradient descent(batch)")
 print (o)
+
+m = sigmoid_single(w, x, y)
+o = m.test(x)
+print ("weak learner gradient descent(single)")
+print (o)
+
 
 a = adaboost(x, y, 5, sigmoid_batch)
 o = a.test(x)
