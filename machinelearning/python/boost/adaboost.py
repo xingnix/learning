@@ -76,7 +76,7 @@ class decision_stump:
             for j in d[:-1] + (d[1:] - d[:-1]) / 2.0:
                 for n in [-1, 1]:
                     t = np.ones(y.shape) * n
-                    t[d < j] = -n
+                    t[x[:,i] < j] = -n
                     new_e = np.abs(t - y).dot(w) / 2.0
                     if new_e < e:
                         e = new_e
