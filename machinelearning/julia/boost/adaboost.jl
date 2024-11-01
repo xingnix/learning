@@ -71,7 +71,8 @@ function decision_stump(w, x, y)
 	flag=0
 	for i in range(1,size(x)[2])
             d = sort(x[:, i])
-	    for j in d[1:end-1] + (d[2:end] - d[1:end-1]) / 2.0
+	    s=d[2:end]-d[1:end-1]
+	    for j in (d[1:end-1] + s/2)[s.>0]
                 for n in [-1, 1]
                     t = ones(size(y)) * n
 		    t[x[:,i]  .< j] .= -n
