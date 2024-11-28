@@ -1,5 +1,5 @@
 !Xft.dpi:96
-Xft.dpi:101
+Xft.dpi:100
 !my rxvt setting
 
 ! % xrdb -load ~/.Xresources
@@ -10,35 +10,35 @@ Xft.dpi:101
 Rxvt.geometry:100x30
 Rxvt.background:black
 Rxvt.foreground:green
-Rxvt.colorBD:yellow
+Rxvt.colorBD:indianred
 Rxvt.colorUL:white
 !Rxvt.multichar_encoding:gb18030
-Rxvt.scrollBar:True
-Rxvt.scrollBar_right:True
-Rxvt.scrollBar_floating: False
-Rxvt.scrollstyle: next
-Rxvt.saveLines:1500
-Rxvt.color0:black
-Rxvt.color1:red
-Rxvt.color2:#3a5da3
-Rxvt.color3:#4b76cc
-Rxvt.color4:RoyalBlue1
-Rxvt.color5:magenta
-Rxvt.color6:#a1b5dd
-Rxvt.color7:#8a95aa
-Rxvt.color8:#616668
-Rxvt.color9:#075982
-Rxvt.color10:#0f82bc
-Rxvt.color11:#13a9f4
-Rxvt.color12:SkyBlue2
-Rxvt.color13:#63c2f2
-Rxvt.color14:#6caccc
-Rxvt.color15:#dbeff9
+! Rxvt.scrollBar:True
+! Rxvt.scrollBar_right:True
+! Rxvt.scrollBar_floating: False
+! Rxvt.scrollstyle: next
+! Rxvt.saveLines:1500
+! Rxvt.color0:black
+! Rxvt.color1:red
+! Rxvt.color2:#3a5da3
+! Rxvt.color3:#4b76cc
+! Rxvt.color4:RoyalBlue1
+! Rxvt.color5:magenta
+! Rxvt.color6:#a1b5dd
+! Rxvt.color7:#8a95aa
+! Rxvt.color8:#616668
+! Rxvt.color9:#075982
+! Rxvt.color10:#0f82bc
+! Rxvt.color11:#13a9f4
+! Rxvt.color12:SkyBlue2
+! Rxvt.color13:#63c2f2
+! Rxvt.color14:#6caccc
+! Rxvt.color15:#dbeff9
 !Rxvt.font:-*-*-*-*-*-*-180-*-*-*-*-*-*-*
 !Rxvt.font:-b&h-lucidatypewriter-medium-r-normal-*-14-*-*-*-*-*-iso8859-*
 !Rxvt.font:10x20, xft:AR PL New Sung
 !Rxvt.font:10x20, xft:DejaVu Sans Mono,xft:Evermore Kai
-Rxvt.font:xft:DejaVu Sans Mono:size=20,xft:Evermore Kai
+Rxvt.font:xft:DejaVu Sans Mono:size=16,xft:Evermore Kai
 !Rxvt.boldfont:xft:DejaVu Sans Mono,xft:Evermore Kai
 !Rxvt.mfont:-*-simsun-medium-r-*-*-14-*-*-*-c-*-*-*
 Rxvt.menu:/etc/X11/rxvt.menu
@@ -46,12 +46,121 @@ Rxvt.preeditType:Root
 Rxvt.inputMethod:xim
 
 
+
+
+! Key Bindings
+! ============
+
+! Copy/Paste, same keys as gnome-terminal
+! https://stackoverflow.com/questions/39884093
+! Disable ISO 14755 unicode input so we can use Ctrl-Shift bindings
+URxvt.iso14755:        false
+URxvt.iso14755_52:     false
+! Disable Ctrl-Alt-c & Ctrl-Alt-v bindings (optional)
+URxvt.keysym.C-M-c:    builtin-string:
+URxvt.keysym.C-M-v:    builtin-string:
+! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
+! I dont know why, but I needed to use hex keysym values to get it to work
+URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
+URxvt.keysym.C-S-0x56: eval:paste_clipboard
+
+URxvt.keysym.Home: \033[H
+URxvt.keysym.End:  \033[F
+
+! match vte/xterm
+URxvt.keysym.Control-Up:    \033[1;5A
+URxvt.keysym.Control-Down:  \033[1;5B
+URxvt.keysym.Control-Left:  \033[1;5D
+URxvt.keysym.Control-Right: \033[1;5C
+
+! clear the scrollback
+URxvt.keysym.Control-l: command:\033c
+
+! scale fonts
+URxvt.keysym.C-S-plus: font-size:increase
+URxvt.keysym.C-KP_Add: font-size:increase
+URxvt.keysym.C-S-underscore: font-size:decrease
+URxvt.keysym.C-KP_Subtract: font-size:decrease
+URxvt.keysym.C-0: font-size:reset
+URxvt.keysym.C-KP_0: font-size:reset
+
+
+! Theme/Colors
+! ============
+
+URxvt.fading: 0
+
+URxvt.cursorColor: #AAAAAA
+URxvt.cursorBlink: 1
+URxvt.cursorUnderline: 1
+
+URxvt.background: black
+URxvt.foreground: pink
+
+!! Tango Colors
+!
+!! black dark/light
+URxvt.color0: #171A1B
+URxvt.color8: #555753
+
+!! red dark/light
+URxvt.color1: #CC0000
+URxvt.color9: #FF0000
+
+!! green dark/light
+URxvt.color2: #00DD00
+URxvt.color10: #00FF00
+
+!! yellow dark/light
+! URxvt.color3: #DDDD00
+! URxvt.color11: #FFFF00
+URxvt.color3: indianred
+URxvt.color11: red3
+
+!! blue dark/light
+! URxvt.color4: #8888FF
+! URxvt.color12: #AAAAFF
+URxvt.color4: #555500
+URxvt.color12: #999900
+
+!! magenta (blue deleted)  dark/light
+URxvt.color5: #755000
+URxvt.color13: #AD7F00
+
+!! cyan(blue deleted) dark/light
+URxvt.color6: #069800
+URxvt.color14: #34E200
+
+!! white dark/light
+URxvt.color7: #D3D7CF
+URxvt.color15: #EEEEEC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ! XTerm config
 xterm*cursorBlink: true
 xterm.borderLess: true
 XTerm*locale: true
-XTerm*faceName:xft:DejaVu Sans Mono:size=20
+XTerm*faceName:xft:DejaVu Sans Mono
 XTerm*faceNameDoublesize:Evermore Kai
+xterm*faceSize: 16
+! xterm*renderFont: true
 ! XTerm*fontMenu*fontdefault*Label: Default
 ! XTerm*font: -misc-fixed-medium-r-normal-*-18-120-100-100-c-90-iso10646-1
 ! !XTerm*font:-*-times-*-*-*-*-64-*-*-*-*-*-*-*
@@ -76,14 +185,67 @@ XTerm*faceNameDoublesize:Evermore Kai
 ! XTerm*font6: -efont-fixed-medium-r-normal-*-24-240-75-75-c-120-iso10646-1
 ! XTerm*wideFont6: -efont-fixed-medium-r-normal-*-24-240-75-75-c-240-iso10646-1
 
-XTerm*background: pink
-XTerm*foreground: black
+
+!XTerm.VT100.background: Black
+XTerm*background: gray50
+!XTerm.VT100.foreground:         IndianRed
+XTerm*foreground: pink
+XTerm*transparent: true
 XTerm*scrollbar: yes
+xterm.*backarrowKey: false 
+
+
+!! black dark/light
+XTerm.VT100.color0: #171A1B
+XTerm.VT100.color8: #555753
+
+!! red dark/light
+XTerm.VT100.color1: #CC0000
+XTerm.VT100.color9: #FF0000
+
+!! green dark/light
+XTerm.VT100.color2: #00DD00
+XTerm.VT100.color10: #00FF00
+
+!! yellow dark/light
+XTerm.VT100.color3: #999900
+XTerm.VT100.color11: #DDDD00
+
+!! blue dark/light
+! XTerm.VT100.color4: #8888FF
+! XTerm.VT100.color12: #AAAAFF
+XTerm.VT100.color4: #555500
+XTerm.VT100.color12: #999900
+
+!! magenta (blue deleted)  dark/light
+XTerm.VT100.color5: #755000
+XTerm.VT100.color13: #AD7F00
+
+!! cyan(blue deleted) dark/light
+XTerm.VT100.color6: #069800
+XTerm.VT100.color14: #34E200
+
+!! white dark/light
+XTerm.VT100.color7: #D3D7CF
+XTerm.VT100.color15: #EEEEEC
+
+
+XTerm.VT100.colorBD:            DarkGoldenrod
+XTerm.VT100.colorBDMode:        true
+XTerm.VT100.colorUL:            black
+XTerm.VT100.colorULMode:        true
+XTerm.VT100.cursorColor:        IndianRed
+
+
+
+
+
 
 !enable alt-. 
 XTerm*metaSendsEscape: true
 XTerm*eightBitInput: false
 
+XTerm.font:xft:DejaVu Sans Mono:size=16,xft:Evermore Kai
 
 xpdf.paperColor: #cce8cf
 !xpdf*.fontList:-adobe-helvetica-medium-r-normal–12-*-*-*-*-*-iso8859-1;-*-simsun-medium-r-normal–12-*-*-*-*-*-gbk-0:xpdf*.fontList:-adobe-helvetica-medium-r-normal–12-*-*-*-*-*-iso8859-1;-*-simsun-medium-r-normal–12-*-*-*-*-*-gbk-0:
