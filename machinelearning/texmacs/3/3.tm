@@ -1,9 +1,9 @@
-<TeXmacs|2.1.4>
+<TeXmacs|2.1.1>
 
 <style|<tuple|beamer|blackboard|chinese>>
 
 <\body>
-  <screens|<\shown>
+  <screens|<\hidden>
     \;
 
     \;
@@ -15,17 +15,17 @@
     <doc-data|<doc-title|\<#7EBF\>\<#6027\>\<#6A21\>\<#578B\>>>
 
     \;
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|\<#57FA\>\<#672C\>\<#5F62\>\<#5F0F\>>
 
-    <space|2em>\<#7ED9\>\<#5B9A\>\<#7531\>d\<#4E2A\>\<#5C5E\>\<#6027\>\<#63CF\>\<#8FF0\>\<#7684\>\<#5B9E\>\<#4F8B\><math|(x<rsub|1>,x<rsub|2>,\<cdots\>,x<rsub|d>)<rsup|T>>\<#FF0C\>\<#5176\>\<#4E2D\><math|x<rsub|i>>\<#5BF9\>\<#5E94\>\<#7B2C\><math|i>\<#4E2A\>\<#5C5E\>\<#6027\>\<#4E0A\>\<#7684\>\<#503C\>\<#FF0C\>\<#7EBF\>\<#6027\>\<#6A21\>\<#578B\>(linear
+    <space|2em>\<#7ED9\>\<#5B9A\>\<#7531\><math|d>\<#4E2A\>\<#5C5E\>\<#6027\>\<#63CF\>\<#8FF0\>\<#7684\>\<#5B9E\>\<#4F8B\><math|(x<rsub|1>,x<rsub|2>,\<cdots\>,x<rsub|d>)<rsup|T>>\<#FF0C\>\<#5176\>\<#4E2D\><math|x<rsub|i>>\<#5BF9\>\<#5E94\>\<#7B2C\><math|i>\<#4E2A\>\<#5C5E\>\<#6027\>\<#4E0A\>\<#7684\>\<#503C\>\<#FF0C\>\<#7EBF\>\<#6027\>\<#6A21\>\<#578B\>(linear
     model)\<#5229\>\<#7528\>\<#5C5E\>\<#6027\>\<#7684\>\<#7EBF\>\<#6027\>\<#7EC4\>\<#5408\>\<#6765\>\<#8FDB\>\<#884C\>\<#9884\>\<#6D4B\>\<#FF0C\>\<#5373\>\<#FF1A\>
 
     <\equation*>
-      f(\<b-x\> )=w<rsub|0+>w<rsub|1>x<rsub|1>+w<rsub|2>x<rsub|2>+\<cdots\>+w<rsub|d>x<rsub|d>
+      f(\<b-x\> )=w<rsub|0>+w<rsub|1>x<rsub|1>+w<rsub|2>x<rsub|2>+\<cdots\>+w<rsub|d>x<rsub|d>
     </equation*>
 
-    \<#5411\>\<#91CF\>\<#5F62\>\<#5F0F\>\<#4E3A\>\<#FF1A\>\ 
+    \<#5411\>\<#91CF\>\<#5F62\>\<#5F0F\>\<#4E3A\>\<#FF1A\>
 
     <\equation*>
       f(\<b-x\> )=\<b-w\><rsup|T>\<b-x\>\ 
@@ -55,7 +55,7 @@
     \<#5176\>\<#4E2D\>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|X>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-x\><rsub|1>,\<cdots\>,x<rsub|m>>>>>>>>>>
+      <tformat|<table|<row|<cell|X>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-x\><rsub|1>,\<cdots\>,x<rsub|m>>>>>><rsup|T>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|\<#6700\>\<#5C0F\>\<#4E8C\>\<#4E58\>\<#6CD5\>>
@@ -185,7 +185,7 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|J>|<cell|=>|<cell|<frac|\<b-w\><rsup|T>S<rsub|b>\<b-w\>|\<b-w\><rsup|T>S<rsub|w>\<b-w\>>>>>>
     </eqnarray*>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     \<#4F18\>\<#5316\>
 
     <\eqnarray*>
@@ -199,7 +199,7 @@
     </eqnarray*>
 
     \;
-  </hidden>|<\hidden>
+  </shown>|<\hidden>
     <tit|\<#591A\>\<#5206\>\<#7C7B\>>
 
     <math|n>\<#4E2A\>\<#7C7B\>\<#522B\>\<#FF0C\>\<#5747\>\<#503C\>\<#4E3A\><math|\<b-mu\>>
@@ -264,7 +264,11 @@
 
 <\initial>
   <\collection>
+    <associate|font|stix>
     <associate|font-base-size|14>
+    <associate|font-family|rm>
+    <associate|info-flag|minimal>
+    <associate|math-font|math-stix>
     <associate|page-medium|paper>
   </collection>
 </initial>
