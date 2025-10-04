@@ -944,7 +944,7 @@
     quantities <math|a<rsub|k>> are defined by\ 
 
     <\equation*>
-      a<rsub|k>= ln p(\<b-x\>\|\<cal-C\><rsub|k>)p(\<cal-C\><rsub|k>).
+      a<rsub|k>= ln p(\<b-x\>\|\<cal-C\><rsub|k>)p(\<cal-C\><rsub|k>).<label|a-k>
     </equation*>
 
     The normalized exponential is also known as the <strong|softmax
@@ -999,11 +999,230 @@
       \<minus\><frac|1|2>\<b-mu\><rsup|T><rsub|k>\<Sigma\><rsup|-1>\<b-mu\><rsub|k>
       +ln p(\<cal-C\><rsub|k>).>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     <space|2em><image|img/figure_4_11_boundary.png|0.8par|||>
-  </shown>>
+  </hidden>|<\hidden>
+    <tit|Maximum likelihood solution>
+
+    Consider first the case of two classes, each having a Gaussian
+    class-conditional density with a shared covariance matrix, and suppose we
+    have a data set <math|{\<b-x\><rsub|n>,t<rsub|n>}> where <math|n =
+    1,\<cdots\>,N>. Here <math|t<rsub|n>=1> denotes class
+    <math|\<cal-C\><rsub|1>> and <math|t<rsub|n>=0> denotes class
+    <math|\<cal-C\><rsub|2>>. We denote the prior class probability
+    <math|p(\<cal-C\><rsub|1>) = \<pi\>>, so that
+    <math|p(\<cal-C\><rsub|2>)=1\<minus\>\<pi\>>.\ 
+
+    For a data point <math|\<b-x\><rsub|n>> from class
+    <math|\<cal-C\><rsub|1>>, we have <math|t<rsub|n>=1> and hence\ 
+
+    <\equation*>
+      p(\<b-x\><rsub|n>, \<cal-C\><rsub|1>) =
+      p(\<cal-C\><rsub|1>)p(\<b-x\><rsub|n>\|\<cal-C\><rsub|1>) =
+      \<pi\>\<cal-N\> (\<b-x\><rsub|n>\|\<b-mu\><rsub|1>, \<Sigma\>).\ 
+    </equation*>
+
+    Similarly for class <math|\<cal-C\><rsub|2>>, we have <math|t<rsub|n>=0>
+    and hence\ 
+
+    <\equation*>
+      p(\<b-x\><rsub|n>, \<cal-C\><rsub|2>) =
+      p(\<cal-C\><rsub|2>)p(\<b-x\><rsub|n>\|\<cal-C\><rsub|2>) = (1
+      \<minus\> \<pi\>)\<cal-N\> (\<b-x\><rsub|n>\|\<b-mu\><rsub|2>,
+      \<Sigma\>).\ 
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    Thus the likelihood function is given by\ 
+
+    <\equation*>
+      <next-line>p(\<b-t\>\|\<pi\>,\<b-mu\><rsub|1>,\<b-mu\><rsub|2>,\<Sigma\>)=<big|prod><rsub|n=1><rsup|N>[\<pi\>\<cal-N\>(\<b-x\><rsub|n>\|\<b-mu\><rsub|1>,\<Sigma\>)]<rsup|t<rsub|n>>
+      [(1\<minus\>\<pi\>)\<cal-N\>(\<b-x\><rsub|n>\|\<b-mu\><rsub|2>,\<Sigma\>)]<rsup|1\<minus\>t<rsub|n>>
+      </equation*>
+
+    where <math|t = (t<rsub|1>,\<cdots\>,t<rsub|N>)<rsup|T>>.
+  </hidden>|<\hidden>
+    \ Consider first the maximization with respect to <math|\<pi\>>. The
+    terms in the log likelihood function that depend on <math|\<pi\>> are
+
+    <\equation*>
+      <frac|\<mathd\>|\<mathd\>\<pi\>>log
+      p=<big|sum><rsub|n=1><rsup|N>{t<rsub|n> ln \<pi\> + (1 \<minus\>
+      t<rsub|n>) ln(1 \<minus\> \<pi\>)} .
+    </equation*>
+
+    Setting the derivative with respect to \<pi\> equal to zero and
+    rearranging, we obtain
+
+    <\equation*>
+      \<pi\>=<frac|1|N><big|sum><rsub|n=1><rsup|N>t<rsub|n>=<frac|N<rsub|1>|N>
+    </equation*>
+
+    where <math|N<rsub|1>> denotes the total number of data points in class
+    <math|\<cal-C\><rsub|1>>, and <math|N<rsub|2>> denotes the total number
+    of data points in class <math|\<cal-C\><rsub|2>>. Thus the maximum
+    likelihood estimate for <math|\<pi\>> is simply the fraction of points in
+    class <math|\<cal-C\><rsub|1>> as expected. This result is easily
+    generalized to the multiclass case where again the maximum likelihood
+    estimate of the prior probability associated with class
+    <math|\<cal-C\><rsub|k>> is given by the fraction of the training set
+    points assigned to that class.
+  </hidden>|<\hidden>
+    Now consider the maximization with respect to <math|\<b-mu\><rsub|1>>.
+    Again we can pick out of the log likelihood function those terms that
+    depend on <math|\<b-mu\><rsub|1>> giving\ 
+
+    <\equation*>
+      <big|sum><rsub|n=1><rsup|N>t<rsub|n>ln\<cal-N\>(\<b-x\><rsub|n>\|\<b-mu\><rsub|1>,\<Sigma\>)=\<minus\><frac|1|2>
+      t<rsub|n>(\<b-x\><rsub|n>\<minus\>\<b-mu\><rsub|1>)<rsup|T>\<Sigma\><rsup|-1>(\<b-x\><rsub|n>
+      \<minus\>\<b-mu\><rsub|1>)+const.
+    </equation*>
+
+    <next-line>Setting the derivative with respect to <math|\<b-mu\><rsub|1>>
+    to zero and rearranging, we obtain
+
+    <\equation*>
+      \<b-mu\><rsub|1> = <frac|1|N<rsub|1>><big|sum><rsub|n=1><rsup|N>t<rsub|n>
+    </equation*>
+
+    which is simply the mean of all the input vectors <math|\<b-x\><rsub|n>>
+    assigned to class <math|\<cal-C\><rsub|1>>. By a similar argument,
+    <math|\<b-mu\><rsub|2>> is the mean of all the input vectors
+    <math|\<b-x\><rsub|n>> assigned to class <math|\<cal-C\><rsub|2>> as in
+
+    <\equation*>
+      \<b-mu\><rsub|2>=<frac|1|N<rsub|2>><big|sum><rsub|n=1><rsup|N><around*|(|1-t<rsub|n>|)>\<b-x\><rsub|n>.
+    </equation*>
+
+    <next-line>
+  </hidden>|<\hidden>
+    Finally, consider the maximum likelihood solution for the shared
+    covariance matrix <math|\<Sigma\>>. Picking out the terms in the log
+    likelihood function that depend on <math|\<Sigma\>>, we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|-<frac|1|2><big|sum><rsub|n=1><rsup|N>t<rsub|n>ln<around*|\||\<Sigma\>|\|>-<frac|1|2><big|sum><rsub|n=1><rsup|N>t<rsub|n><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|1>|)><rsup|T>\<Sigma\><rsup|-1><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|1>|)>>|<cell|>|<cell|>>|<row|<cell|-<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|(|1-t<rsub|n>|)>ln<around*|\||\<Sigma\>|\|>-<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|(|1-t<rsub|n>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|2>|)><rsup|T>\<Sigma\><rsup|-1><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|2>|)>>|<cell|=>|<cell|-<frac|N|2><around*|(|ln<around*|\||\<Sigma\>|\|>+Tr<around*|(|\<Sigma\><rsup|-1>S|)>|)>>>>>
+    </eqnarray*>
+
+    where
+
+    <\equation*>
+      S=<frac|1|N><around*|(|<big|sum><rsub|n\<in\>\<cal-C\><rsub|1>><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|1>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|1>|)><rsup|T>+<big|sum><rsub|n\<in\>\<cal-C\><rsub|2>><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|1>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|1>|)><rsup|T>|)>
+    </equation*>
+
+    Using the standard result for the maximum likelihood solution for a
+    Gaussian distribution, we see that <math|\<Sigma\>=S>, which represents a
+    weighted average of the covariance matrices associated with each of the
+    two classes separately.
+  </hidden>|<\shown>
+    <tit|Discrete features >
+
+    \;
+
+    \;
+
+    <\itemize-dot>
+      <item>Consider the case of discrete feature values
+      <math|\<b-x\><rsub|i>>. For simplicity, Looking at binary feature
+      values <math|\<b-x\><rsub|i>\<in\>{0,1}> \ and discuss the extension to
+      more general discrete features shortly.\ 
+
+      <item>If there are <math|D> inputs, then a general distribution would
+      correspond to a table of <math|2D> numbers for each class, containing
+      <math|2D\<minus\>1> independent variables (due to the summation
+      constraint).\ 
+
+      <item>Because this grows exponentially with the number of features, we
+      might seek a more restricted representation.\ 
+    </itemize-dot>
+
+    \;
+  </shown>|<\hidden>
+    \;
+
+    Make the naive Bayes assumption in which the feature values are treated
+    as independent, conditioned on the class <math|\<cal-C\><rsub|k>>.
+    Class-conditional distributions of the form
+
+    <\equation*>
+      p<around*|(|\<b-x\><around*|\||\<cal-C\><rsub|k>|\<nobracket\>>|)>=<big|prod><rsub|i=1><rsup|D>\<mu\><rsub|k
+      i><rsup|x<rsub|i>><around*|(|1-\<mu\><rsub|k i>|)><rsup|1-x<rsub|i>>
+    </equation*>
+
+    which contain D independent parameters for each class. \ 
+
+    <math|[<reference|a-k>]>
+
+    <\equation*>
+      a<rsub|k><around*|(|\<b-x\>|)>=<big|sum><rsub|i=1><rsup|D><around*|{|x<rsub|i>ln\<mu\><rsub|k
+      i>+<around*|(|1-x<rsub|i>|)>ln<around*|(|1-\<mu\><rsub|k i>|)>|}>+ln
+      p<around*|(|\<cal-C\><rsub|k>|)>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Exponential family>
+
+    As we have seen, for both Gaussian distributed and discrete inputs, the
+    posterior class probabilities are given by generalized linear models with
+    logistic sigmoid (<math|K=2> classes) or softmax (<math|K\<geqslant\>2>
+    classes) activation functions.\ 
+
+    These are particular cases of a more general result obtained by assuming
+    that the class-conditional densities<math| p(\<b-x\>\|\<cal-C\><rsub|k>)>
+    are members of the exponential family of distributions.
+  </hidden>|<\hidden>
+    for members of the exponential family, we see that the distribution of x
+    can be written in the form\ 
+
+    <\equation*>
+      p(\<b-x\>\|\<b-lambda\><rsub|k> ) = h(\<b-x\>)g(\<b-lambda\><rsub|k> )
+      exp \<b-lambda\><rsup|T><rsub|k> \<b-u\>(\<b-x\>).
+    </equation*>
+
+    We now restrict attention to the subclass of such distributions for which
+    <math|\<b-u\>(\<b-x\>) = \<b-x\>>. Then introduce a scaling parameter
+    <math|s>, so that we obtain the restricted set of exponential family
+    class-conditional densities of the form\ 
+
+    <\equation*>
+      p(\<b-x\>\|\<b-lambda\><rsub|k>,s) = <frac|1|s>h
+      <around*|(|<frac|1|s>\<b-x\>|)> g(\<b-lambda\><rsub|k>)exp<around*|{|
+      <frac|1|s>\<b-lambda\><rsup|T><rsub|k> \<b-x\>|}>.
+    </equation*>
+
+    Note that we are allowing each class to have its own parameter vector
+    <math|\<lambda\><rsub|k>> but we are assuming that the classes share the
+    same scale parameter <math|s>.
+  </hidden>|<\hidden>
+    \;
+
+    For the two-class problem, the posterior class probability is again given
+    by a logistic sigmoid acting on a linear function <math|a(x)> which is
+    given by\ 
+
+    <\equation*>
+      a(x) = (\<lambda\><rsub|1> \<minus\> \<lambda\><rsub|2>)<rsup|T>x + ln
+      g(\<lambda\><rsub|1>) \<minus\> ln g(\<lambda\><rsub|2>) + ln
+      p(C<rsub|1>) \<minus\> ln p(C<rsub|2>).
+    </equation*>
+
+    Similarly, for the <math|K>-class problem,<next-line>
+
+    <\equation*>
+      a<rsub|k>(\<b-x\>) = \<b-lambda\><rsup|T><rsub|k>\<b-x\> + ln
+      g(\<b-lambda\><rsub|k>) + ln p(\<cal-C\><rsub|k>)
+    </equation*>
+
+    and so again is a linear function of <math|x>.<next-line>
+  </hidden>>
 </body>
 
 <\initial>
@@ -1021,6 +1240,7 @@
 
 <\references>
   <\collection>
+    <associate|a-k|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
     <associate|multi-posterior|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
     <associate|posterior|<tuple|<with|mode|<quote|math>|\<bullet\>>|1>>
   </collection>
