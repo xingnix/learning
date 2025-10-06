@@ -1280,9 +1280,9 @@
     <math|t<rsub|n>\<in\>{0,1}> and <math|\<varphi\><rsub|n>=\<varphi\>(x<rsub|n>)>,
     with <math|n=1,\<cdots\>,N> , the likelihood function can be written
 
-    <\equation*>
-      p<around*|(|\<b-t\><around*|\||\<b-w\>|\<nobracket\>>|)>=<big|prod><rsub|n=1><rsup|N>y<rsub|n><rsup|t<rsub|n>><around*|{|1-y<rsub|n>|}><rsup|1-t<rsub|n>>
-    </equation*>
+    <\equation>
+      <label|4.89>p<around*|(|\<b-t\><around*|\||\<b-w\>|\<nobracket\>>|)>=<big|prod><rsub|n=1><rsup|N>y<rsub|n><rsup|t<rsub|n>><around*|{|1-y<rsub|n>|}><rsup|1-t<rsub|n>>
+    </equation>
 
     where <math|t=(t<rsub|1>,\<cdots\>,t<rsub|N>)<rsup|T>> and
     <math|y<rsub|n>=p(C<rsub|1>\|\<varphi\><rsub|n>)>.\ 
@@ -1670,10 +1670,424 @@
 
     For the Gaussian <math|s=\<beta\>\<minus\>1>, whereas for the logistic
     model <math|s=1>.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|The Laplace Approximation>
 
+    Here we introduce a simple, but widely used, framework called the Laplace
+    ap- proximation, that aims to find a Gaussian approximation to a
+    probability density defined over a set of continuous variables. Consider
+    first the case of a single contin- uous variable <math|z>, and suppose
+    the distribution <math|p(z)> is defined by\ 
+
+    <\equation*>
+      p(z) = <frac|1|Z> f(z)
+    </equation*>
+
+    where <math|Z=<big|int>f(z)\<mathd\>z> is the normalization coefficient.
+    We shall suppose that the value of <math|Z> is unknown. In the Laplace
+    method the goal is to find a Gaussian approximation <math|q(z)> which is
+    centred on a mode of the distribution <math|p(z)>. The first step is to
+    find a mode of <math|p(z)>, in other words a point <math|z<rsub|0>> such
+    that <math|p'(z<rsub|0>)=0>, or equivalently\ 
+
+    <\equation*>
+      <around*|\<nobracket\>|<frac|\<mathd\>f(z)|\<mathd\>z>|\|><rsub|z=z<rsub|0>>=0.
+    </equation*>
+  </hidden>|<\hidden>
     \;
+
+    A Gaussian distribution has the property that its logarithm is a
+    quadratic function of the variables. We therefore consider a Taylor
+    expansion of <math|ln f(z)> centred on the mode <math|z<rsub|0>> so that\ 
+
+    <\equation*>
+      <math-up|ln>f(z)\<approx\><math-up|ln>f(z<rsub|0>)\<minus\>
+      <frac|1|2>A(z\<minus\>z<rsub|0>)<rsup|2>
+    </equation*>
+
+    where
+
+    <\equation*>
+      A = \<minus\> <frac|\<mathd\><rsup|2>|\<mathd\>z<rsup|2>>
+      <math-up|ln>f(z)
+    </equation*>
+
+    <next-line>Note that the first-order term in the Taylor expansion does
+    not appear since <math|z<rsub|0>> is a local maximum of the distribution.
+    </hidden>|<\hidden>
+    \;
+
+    Taking the exponential we obtain\ 
+
+    <\equation*>
+      f(z)\<approx\>f(z<rsub|0>)exp<around*|{|\<minus\><frac|A|2>(z\<minus\>z<rsub|0>)<rsup|2>|}>.
+    </equation*>
+
+    We can then obtain a normalized distribution <math|q(z)> by making use of
+    the standard result for the normalization of a Gaussian, so that\ 
+
+    <\equation*>
+      q(z) =<around*|(|<frac|A|2\<pi\>>|)><rsup|1/2>
+      \ exp<around*|{|\<minus\><frac|A|2>(z \<minus\> z<rsub|0>)<rsup|2>|}>.
+    </equation*>
+  </hidden>|<\hidden>
+    \;
+
+    <image|img/figure_4_14_laplace.png|1par|||>
+  </hidden>|<\hidden>
+    \;
+
+    Extend the Laplace method to approximate a distribution
+    <math|p(\<b-z\>)=f(\<b-z\>)/Z> defined over an M-dimensional space
+    <math|\<b-z\>>. At a stationary point <math|\<b-z\><rsub|0>> the gradient
+    <math|\<nabla\>f(\<b-z\>)> will vanish. Expanding around this stationary
+    point we have\ 
+
+    <\equation*>
+      ln f(\<b-z\>)\<approx\>ln f(\<b-z\><rsub|0> ) \<minus\>
+      <frac|1|2>(\<b-z\>\<minus\>\<b-z\><rsub|0> )<rsup|T>
+      A(\<b-z\>\<minus\>\<b-z\><rsub|0>)
+    </equation*>
+
+    where the <math|M\<times\>M> Hessian matrix <math|A> is defined by
+
+    <\equation*>
+      A = \<minus\> \<nabla\>\<nabla\><around*|\<nobracket\>|ln f
+      (\<b-z\>)|\|><rsub|\<b-z\>=\<b-z\><rsub|0>>
+    </equation*>
+
+    and <math|\<nabla\>> is the gradient operator.\ 
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    Taking the exponential of both sides we obtain\ 
+
+    <\equation>
+      <label|4.133>f(\<b-z\>)\<approx\>f(\<b-z\><rsub|0>)exp<around*|{|\<minus\><frac|1|2>(\<b-z\>\<minus\>\<b-z\><rsub|0>)<rsup|T>A(\<b-z\>\<minus\>\<b-z\><rsub|0>)|}>.
+    </equation>
+
+    The distribution <math|q(\<b-z\>)> is proportional to <math|f(\<b-z\>)>
+    and the appropriate normalization coefficient can be found by inspection,
+    using the standard result for a normalized multivariate Gaussian, giving\ 
+
+    <\equation*>
+      q(z)= <frac|<around*|\||A|\|><rsup|1/2>|<around*|(|2\<pi\>|)><rsup|M/2>>exp<around*|{|\<minus\><frac|1|2>(\<b-z\>\<minus\>\<b-z\><rsub|0>)<rsup|T>A(\<b-z\>\<minus\>\<b-z\><rsub|0>)|}>
+      =\<cal-N\>(\<b-z\>\|\<b-z\><rsub|0>,A<rsup|-1>)
+    </equation*>
+
+    where <math|\|A\|> denotes the determinant of <math|A>. This Gaussian
+    distribution will be well defined provided its precision matrix, given by
+    <math|A>, is positive definite, which implies that the stationary point
+    <math|\<b-z\><rsub|0>> must be a local maximum, not a minimum or a saddle
+    point.
+  </hidden>|<\hidden>
+    <tit|Model comparison and BIC>
+
+    As well as approximating the distribution p(z) we can also obtain an
+    approxi- mation to the normalization constant Z. Using the approximation
+    Eq. <eqref|4.133> we have\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|Z>|<cell|=>|<cell|<big|int>f<around*|(|\<b-z\>|)>\<mathd\>\<b-z\>>>|<row|<cell|>|<cell|\<approx\>>|<cell|f<around*|(|\<b-z\><rsub|0>|)><big|int>exp<around*|{|-<frac|1|2><around*|(|\<b-z\>-\<b-z\><rsub|0>|)><rsup|T>A<around*|(|\<b-z\>-\<b-z\><rsub|0>|)>|}>\<mathd\>\<b-z\>>>|<row|<cell|>|<cell|=>|<cell|f<around*|(|\<b-z\><rsub|0>|)><frac|<around*|(|2\<pi\>|)><rsup|M/2>|<around*|\||A|\|><rsup|1/2>><eq-number><label|4.135>>>>>
+    </eqnarray*>
+
+    where we have noted that the integrand is Gaussian and made use of the
+    standard result for a normalized Gaussian distribution.\ 
+
+    We can use the result to obtain an approximation to the model evidence,
+    plays a central role in Bayesian model comparison.
+  </hidden>|<\hidden>
+    \;
+
+    <\itemize-dot>
+      <item>Consider a data set <math|D> and a set of models
+      <math|{\<cal-M\><rsub|i>}> having parameters
+      <math|{\<b-theta\><rsub|i>}>.\ 
+
+      <item>For each model we define a likelihood function
+      <math|p(\<cal-D\>\|\<b-theta\><rsub|i>,\<cal-M\><rsub|i>)>. If we
+      introduce a prior <math|p(\<b-theta\><rsub|i>\|\<cal-M\><rsub|i>)> over
+      the parameters, then we are interested in computing the model evidence
+      <math|p(\<cal-D\>\|\<cal-M\><rsub|i>)> for the various models.\ 
+
+      <item>From now on we omit the conditioning on <math|\<cal-M\><rsub|i>>
+      to keep the notation uncluttered.\ 
+
+      <item>From Bayes' theorem the model evidence is given by\ 
+
+      <\equation*>
+        p(\<cal-D\>) =<big|int>p<around*|(|\<cal-D\><around*|\||\<b-theta\>|\<nobracket\>>|)>p<around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\>
+      </equation*>
+    </itemize-dot>
+
+    \;
+  </hidden>|<\hidden>
+    <next-line>Identifying <math|f(\<theta\>) =
+    p(\<cal-D\>\|\<theta\>)p(\<theta\>)> and <math|Z = p(\<cal-D\>)>, and
+    applying the result Eq. <eqref|4.135>, we obtain\ 
+
+    <\equation>
+      <label|4.137>ln p(\<cal-D\>)\<approx\>ln
+      p(\<cal-D\>\|\<theta\><rsub|MAP>)+ln
+      p(\<theta\><rsub|MAP>)+<wide*|<frac|M|2>
+      ln(2\<pi\>)\<minus\><frac|1|2>ln\|A\||\<wide-underbrace\>><rsub|Occam
+      factor>
+    </equation>
+
+    where <math|\<theta\><rsub|MAP>> is the value of <math|\<theta\>> at the
+    mode of the posterior distribution, and <math|A> is the Hessian matrix of
+    second derivatives of the negative log posterior\ 
+
+    <\equation*>
+      A = \<minus\>\<nabla\>\<nabla\> ln p(D\|\<theta\>MAP)p(\<theta\>MAP) =
+      \<minus\>\<nabla\>\<nabla\> ln p(\<theta\>MAP\|D).
+    </equation*>
+
+    The first term on the right hand side of Eq. <eqref|4.137> represents the
+    log likelihood evaluated using the optimized parameters, while the
+    remaining three terms comprise the `Occam factor' which penalizes model
+    complexity.
+  </hidden>|<\hidden>
+    \;
+
+    If we assume that the Gaussian prior distribution over parameters is
+    broad, and that the Hessian has full rank, then we can approximate Eq.
+    <eqref|4.137> very roughly using\ 
+
+    <\equation*>
+      lnp(\<cal-D\>)\<approx\>lnp(\<cal-D\>\|\<theta\><rsub|MAP>)\<minus\><frac|1|2>M<math-up|ln>N
+    </equation*>
+
+    where N is the number of data points, M is the number of parameters in
+    <math|\<b-theta\>> and we have omitted additive constants. This is known
+    as the <strong|Bayesian Information Criterion> (BIC) or the
+    <strong|Schwarz criterion>. Note that, compared to AIC , this penalizes
+    model complexity more heavily.
+  </hidden>|<\hidden>
+    <tit|Bayesian Logistic Regression>
+
+    <\itemize-dot>
+      <item>Exact Bayesian infer- ence for logistic regression is
+      intractable.\ 
+
+      <item>In particular, evaluation of the posterior distribution would
+      require normalization of the product of a prior distribution and a
+      likelihood function that itself comprises a product of logistic sigmoid
+      functions, one for every data point.\ 
+
+      <item>Evaluation of the predictive distribution is similarly
+      intractable.\ 
+
+      <item>Here we consider the application of the Laplace approximation to
+      the problem of Bayesian logistic regression
+    </itemize-dot>
+  </hidden>|<\hidden>
+    <tit|Laplace approximation>
+
+    Because we seek a Gaussian representation for the posterior distribution,
+    it is natural to begin with a Gaussian prior, which we write in the
+    general form\ 
+
+    <\equation>
+      <label|4.140>p(\<b-w\>) = \<cal-N\> (\<b-w\>\|\<b-m\><rsub|0>,
+      S<rsub|0>)
+    </equation>
+
+    where <math|\<b-m\><rsub|0>> and <math|S<rsub|0>> are fixed
+    hyperparameters. The posterior distribution over <math|\<b-w\>> is given
+    by\ 
+
+    <\equation*>
+      p(\<b-w\>\|\<b-t\>) \<propto\> p(\<b-w\>)p(\<b-t\>\|\<b-w\>)
+    </equation*>
+
+    where <math|t=(t<rsub|1>,\<cdots\>,t<rsub|N>)<rsup|T>>.\ 
+  </hidden>|<\hidden>
+    \;
+
+    Taking the log of both sides, and substituting for the prior distribution
+    using Eq. <eqref|4.140>, and for the likelihood function using Eq.
+    <eqref|4.89>, we obtain\ 
+
+    <\equation*>
+      ln p(\<b-w\>\|\<b-t\>)=\<minus\><frac|1|2>(\<b-w\>\<minus\>\<b-m\><rsub|0>
+      )<rsup|T>S<rsup|\<minus\>1>(\<b-w\>\<minus\>\<b-m\><rsub|0>
+      )+<big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>ln
+      y<rsub|n>+<around*|(|1-t<rsub|n>|)>ln<around*|(|1-y<rsub|n>|)>|}>+const
+    </equation*>
+
+    where <math|y<rsub|n>=\<sigma\>(\<b-w\><rsup|T>\<b-varphi\><rsub|n>)>.
+
+    \;
+  </hidden>|<\hidden>
+    To obtain a Gaussian approximation to the posterior distribution, we
+    first maximize the posterior distribution to give the MAP (maximum
+    posterior) solution <math|w<rsub|MAP>>, which defines the mean of the
+    Gaussian. The covariance is then given by the inverse of the matrix of
+    second derivatives of the negative log likelihood, which takes the form\ 
+
+    <\equation*>
+      S<rsub|N>=-\<nabla\>\<nabla\>ln p<around*|(|\<b-w\><around*|\||\<b-t\>|\<nobracket\>>|)>=S<rsup|-1><rsub|0>+<big|sum><rsub|n=1><rsup|N>y<rsub|n><around*|(|1-y<rsub|n>|)>\<b-varphi\><rsub|n>\<b-varphi\><rsub|n><rsup|T>.
+    </equation*>
+
+    <next-line>The Gaussian approximation to the posterior distribution
+    therefore takes the form
+
+    <\equation>
+      <label|4.144>q(\<b-w\>) = \<cal-N\> (\<b-w\><rsub|MAP>, S<rsub|N> ).
+    </equation>
+
+    Having obtained a Gaussian approximation to the posterior distribution,
+    there remains the task of marginalizing with respect to this distribution
+    in order to make predictions.
+  </hidden>|<\hidden>
+    <tit|Predictive distribution>
+
+    The predictive distribution for class <math|\<cal-C\><rsub|1>>, given a
+    new feature vector <math|\<varphi\>(\<b-x\>)>, is obtained by
+    marginalizing with respect to the posterior distribution
+    <math|p(\<b-w\>\|\<b-t\>)>, which is itself approximated by a Gaussian
+    distribution <math|q(\<b-w\>)> so that\ 
+
+    <\equation*>
+      p(\<cal-C\><rsub|1>\|\<b-varphi\>,\<b-t\>)=p(\<cal-C\><rsub|1>\|\<b-varphi\>,\<b-w\>)p(\<b-w\>\|\<b-t\>)
+      \<mathd\>\<b-w\>\<approx\> <big|int>\<sigma\>(\<b-w\><rsup|T>\<b-varphi\>)q(\<b-w\>)\<mathd\>\<b-w\>
+    </equation*>
+
+    with the corresponding probability for class <math|\<cal-C\><rsub|2>>
+    given by
+
+    <\equation*>
+      p(\<cal-C\><rsub|2> \|\<varphi\>,t)=1\<minus\>p(\<cal-C\><rsub|1>\|\<b-varphi\>,\<b-t\>).
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    To evaluate the predictive distribution, we first note that the function
+    <math|\<sigma\>(\<b-w\><rsup|T>\<b-varphi\>)> depends on <math|\<b-w\>>
+    only through its projection onto <math|\<varphi\>>. Denoting
+    <math|a=\<b-w\><rsup|T>\<b-varphi\>>, we have \ 
+
+    <\equation*>
+      \<sigma\>(\<b-w\><rsup|T>\<b-varphi\>) =<big|int>\<delta\>(a \<minus\>
+      \<b-w\><rsup|T>\<b-varphi\>)\<sigma\>(a) \<mathd\>a
+    </equation*>
+
+    <next-line>where <math|\<delta\>(\<cdummy\>)> is the Dirac delta
+    function. From this we obtain\ 
+
+    <\equation*>
+      <big|int>\<sigma\>(\<b-w\><rsup|T>\<b-varphi\>)q(\<b-w\>)
+      \<mathd\>\<b-w\>=<big|int>\<sigma\>(a)p(a) \<mathd\>a
+    </equation*>
+
+    where\ 
+
+    <\equation*>
+      p(a)=<big|int>\<delta\>(a \<minus\>
+      \<b-w\><rsup|T>\<b-varphi\>)q(\<b-w\>) \<mathd\>\<b-w\>.\ 
+    </equation*>
+  </hidden>|<\hidden>
+    We can evaluate <math|p(a)> by noting that the delta function imposes a
+    linear constraint on w and so forms a marginal distribution from the
+    joint distribution <math|q(w)> by integrating out all directions
+    orthogonal to <math|\<varphi\>>. Because <math|q(w)> is Gaussian, the
+    marginal distribution will also be Gaussian. We can evaluate the mean and
+    covariance of this distribution by taking moments, and interchanging the
+    order of integration over <math|a> and <math|w>, so that\ 
+
+    <\equation>
+      <label|4.149>\<mu\><rsub|a>= \<bbb-E\>[a] = <big|int>p(a)a\<mathd\>a
+      =<big|int> q(\<b-w\>)\<b-w\><rsup|T>\<b-varphi\>\<mathd\>\<b-w\>=\<b-w\><rsup|T><rsub|MAP>\<b-varphi\>
+    </equation>
+
+    \ 
+
+    where we have used the result of Eqn. <eqref|4.144> for the variational
+    posterior distribution <math|q(\<b-w\>)>.
+
+    Similarly
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<sigma\><rsup|2><rsub|a>>|<cell|=>|<cell|var<around*|[|a|]>=<big|int>p<around*|(|a|)><around*|{|a<rsup|2>-\<bbb-E\><around*|[|a|]><rsup|2>|}>\<mathd\>a>>|<row|<cell|>|<cell|=>|<cell|<big|int>q<around*|(|\<b-w\>|)><around*|{|<around*|(|\<b-w\><rsup|T>\<b-varphi\>|)><rsup|2>-<around*|(|\<b-m\><rsub|N><rsup|T>\<b-varphi\>|)><rsup|2>|}>\<mathd\>\<b-w\>=\<b-varphi\><rsup|T>S<rsub|N>\<b-varphi\><eq-number><label|4.150>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    Note that the distribution of a takes the same form as the predictive
+    distribution (3.58) for the linear regression model, with the noise
+    variance set to zero. Thus our variational approximation to the
+    predictive distribution becomes\ 
+
+    <\equation>
+      <label|4.151>p(\<cal-C\><rsub|1>\|\<b-t\>) =
+      <big|int>\<sigma\>(a)p(a)\<mathd\>a =
+      <big|int>\<sigma\>(a)\<cal-N\>(a\|\<mu\><rsub|a>,\<sigma\><rsub|a><rsup|2>)\<mathd\>a.
+    </equation>
+
+    This result can also be derived directly by making use of the results for
+    the marginal of a Gaussian distribution given in Section 2.3.2.
+
+    The integral over a represents the convolution of a Gaussian with a
+    logistic sigmoid, and cannot be evaluated analytically. We can, however,
+    obtain a good approximation by making use of the close similarity between
+    the logistic sigmoid function <math|\<sigma\>(a)> defined by (4.59) and
+    the probit function <math|\<Phi\>(a)> defined by (4.114). In order to
+    obtain the best approximation to the logistic function we need to
+    re-scale the horizontal axis, so that we approximate <math|\<sigma\>(a)>
+    by <math|\<Phi\>(\<lambda\>a)>. We can find a suitable value of
+    <math|\<lambda\>> by requiring that the two functions have the same slope
+    at the origin, which gives <math|\<lambda\><rsup|2> = \<pi\>/8>. The
+    similarity of the logistic sigmoid and the probit function, for this
+    choice of \<lambda\>, is illustrated in Figure 4.9.
+  </hidden>|<\hidden>
+    The advantage of using a probit function is that its convolution with a
+    Gaussian can be expressed analytically in terms of another probit
+    function. Specifically we can show that\ 
+
+    <\equation*>
+      <big|int>\<Phi\>(\<lambda\>a)\<cal-N\>(a\|\<mu\>,
+      \<sigma\><rsup|2>)\<mathd\>a=\<Phi\><around*|(|
+      <frac|\<mu\>|(\<lambda\><rsup|\<minus\>2>+\<sigma\><rsup|2>)<rsup|1/2>>|)>.
+    </equation*>
+
+    We now apply the approximation <math|\<sigma\>(a)\<approx\>\<Phi\>(\<lambda\>a)>
+    to the probit functions appearing on both sides of this equation, leading
+    to the following approximation for the convolution of a logistic sigmoid
+    with a Gaussian
+
+    <\equation*>
+      <big|int>\<sigma\><around*|(|a|)>\<cal-N\><around*|(|a<around*|\||\<mu\>,\<sigma\><rsup|2>|\<nobracket\>>|)>\<mathd\>a\<approx\>\<sigma\><around*|(|\<kappa\><around*|(|\<sigma\><rsup|2>|)>\<mu\>|)>
+    </equation*>
+
+    where we have defined
+
+    <\equation>
+      <label|4.154>\<kappa\><around*|(|\<sigma\><rsup|2>|)>=<around*|(|1+\<pi\>\<sigma\><rsup|2>/8|)><rsup|-1/2>.
+    </equation>
+  </hidden>|<\shown>
+    \;
+
+    Applying this result to Eq. <eqref|4.151> we obtain the approximate
+    predictive distribution in the form\ 
+
+    <\equation*>
+      p(\<cal-C\><rsub|1>\|\<b-varphi\>,\<b-t\>) =
+      \<sigma\><around*|(|\<kappa\>(\<sigma\><rsub|a><rsup|2>)\<mu\><rsub|a>|)>
+    </equation*>
+
+    where <math|\<mu\><rsub|a>> and <math|\<sigma\><rsub|a><rsup|2>> are
+    defined by Eq. <eqref|4.149> and <eqref|4.150>, respectively, and
+    <math|\<kappa\>(\<sigma\><rsub|a><rsup|2>) >is defined by Eq.
+    <eqref|4.154>.
+
+    Note that the decision boundary corresponding to
+    <math|p(C<rsub|1>\|\<varphi\>,t) = 0.5> is given by <math|\<mu\><rsub|a>
+    = 0>, which is the same as the decision boundary obtained by using the
+    MAP value for w. Thus if the decision criterion is based on minimizing
+    misclassification rate, with equal prior probabilities, then the
+    marginalization over w has no ef- fect. However, for more complex
+    decision criteria it will play an important role.
   </shown>>
 </body>
 
@@ -1692,10 +2106,20 @@
 
 <\references>
   <\collection>
-    <associate|4.90|<tuple|4|?>>
-    <associate|a-k|<tuple|3|?>>
-    <associate|multi-posterior|<tuple|2|?>>
-    <associate|posterior|<tuple|<with|mode|<quote|math>|\<bullet\>>|1>>
-    <associate|sigmoid|<tuple|2|?>>
+    <associate|4.133|<tuple|6|?>>
+    <associate|4.135|<tuple|7|?>>
+    <associate|4.137|<tuple|8|?>>
+    <associate|4.140|<tuple|9|?>>
+    <associate|4.144|<tuple|10|?>>
+    <associate|4.149|<tuple|11|?>>
+    <associate|4.150|<tuple|12|?>>
+    <associate|4.151|<tuple|13|?>>
+    <associate|4.154|<tuple|14|?>>
+    <associate|4.89|<tuple|4|?>>
+    <associate|4.90|<tuple|5|55>>
+    <associate|a-k|<tuple|3|38>>
+    <associate|multi-posterior|<tuple|2|37>>
+    <associate|posterior|<tuple|<with|mode|<quote|math>|\<bullet\>>|34>>
+    <associate|sigmoid|<tuple|2|35>>
   </collection>
 </references>
