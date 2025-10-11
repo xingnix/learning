@@ -996,6 +996,8 @@
 
     <space|4em><image|img/figure_6.6.png|0.8par|||>
   </hidden>|<\hidden>
+    \;
+
     So far, we have used the Gaussian process viewpoint to build a model of
     the joint distribution over sets of data points.\ 
 
@@ -1064,7 +1066,7 @@
     with mean and covariance given by\ 
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|m<around*|(|\<b-x\><rsub|N+1>|)>>|<cell|=>|<cell|\<b-k\><rsup|T>C<rsub|N><rsup|-1>\<b-t\>>>|<row|<cell|\<sigma\><rsup|2><around*|(|\<b-x\><rsub|N+1>|)>>|<cell|=>|<cell|c-\<b-k\><rsup|T>C<rsub|N><rsup|-1>\<b-k\>>>>>
+      <tformat|<table|<row|<cell|m<around*|(|\<b-x\><rsub|N+1>|)>>|<cell|=>|<cell|\<b-k\><rsup|T>C<rsub|N><rsup|-1>\<b-t\><eq-number><label|6.66>>>|<row|<cell|\<sigma\><rsup|2><around*|(|\<b-x\><rsub|N+1>|)>>|<cell|=>|<cell|c-\<b-k\><rsup|T>C<rsub|N><rsup|-1>\<b-k\><eq-number><label|6.67>>>>>
     </eqnarray*>
 
     These are the key results that define Gaussian process regression.\ 
@@ -1075,12 +1077,105 @@
     <math|\<b-x\><rsub|N+1>>.\ 
 
     \;
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     \;
 
     <space|4em><image|img/figure_6_8_example_gaussion_process_regression.png|0.8par|||>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    <\itemize-dot>
+      <item>The only restriction on the kernel function is that the
+      covariance matrix given by Eq. <eqref|6.62> must be positive definite.\ 
+
+      <item>If <math|\<lambda\><rsub|i>> is an eigenvalue of <math|K>, then
+      the corresponding eigenvalue of <math|C> will be
+      <math|\<lambda\><rsub|i>+\<beta\><rsup|\<minus\>1>>. It is therefore
+      sufficient that the kernel matrix <math|k(\<b-x\><rsub|n>,\<b-x\><rsub|m>)>
+      be positive semidefinite for any pair of points <math|\<b-x\><rsub|n>>
+      and <math|\<b-x\><rsub|m>> , so that
+      <math|\<lambda\><rsub|i>\<geqslant\>0>, because any eigenvalue
+      <math|\<lambda\><rsub|i>> that is zero will still give rise to a
+      positive eigenvalue for <math|C> because <math|\<beta\>\<gtr\>0>.\ 
+
+      <item>This is the same restriction on the kernel function discussed
+      earlier, and so we can again exploit all of the techniques in Section
+      6.2 to construct suitable kernels.
+    </itemize-dot>
+  </hidden>|<\hidden>
+    \;
+
+    Note that the mean Eq. <eqref|6.66> of the predictive distribution can be
+    written, as a function of <math|\<b-x\><rsub|N+1>>, in the form
+
+    <\equation*>
+      m(\<b-x\><rsub|N+1> )=<big|sum><rsub|n=1><rsup|N>a<rsub|n>k(\<b-x\><rsub|n>,\<b-x\><rsub|N+1>)
+    </equation*>
+
+    where <math|a<rsub|n>> is the <math|n<rsup|th>> component of
+    <math|C<rsub|N><rsup|-1>\<b-t\>>. Thus, if the kernel function
+    <math|k(\<b-x\><rsub|n>,\<b-x\><rsub|m>)> depends only on the distance
+    <math|<around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-x\><rsub|m>|\<\|\|\>>>, then
+    we obtain an expansion in radial basis functions.
+
+    The results Eq. <eqref|6.66> and <eqref|6.67> define the predictive
+    distribution for Gaussian process regression with an arbitrary kernel
+    function <math|k(\<b-x\><rsub|n>,\<b-x\><rsub|m>)>.
+  </hidden>|<\hidden>
+    <tit|Learning the hyperparameters>
+
+    <\itemize-dot>
+      <item>The predictions of a Gaussian process model will depend, in part,
+      on the choice of covariance function. In practice, rather than fixing
+      the covariance function, we may prefer to use a parametric family of
+      functions and then infer the parameter values from the data.\ 
+
+      <item>These parameters govern such things as the length scale of the
+      correlations and the precision of the noise and correspond to the
+      hyperparameters in a standard parametric model.
+
+      <item>Techniques for learning the hyperparameters are based on the
+      evaluation of the likelihood function <math|p(t\|\<theta\>)> where
+      <math|\<theta\>> denotes the hyperparameters of the Gaussian process
+      model.\ 
+
+      <item>The simplest approach is to make a point estimate of
+      <math|\<theta\>> by maximizing the log likelihood function. Because
+      <math|\<theta\>> represents a set of hyperparameters for the regression
+      problem, this can be viewed as analogous to the type 2 maximum
+      likelihood procedure for linear regression models.\ 
+
+      <item>Maximization of the log likelihood can be done using efficient
+      gradient-based optimization algorithms such as conjugate gradients.
+    </itemize-dot>
+  </hidden>|<\shown>
+    \ The log likelihood function for a Gaussian process regression model is
+    easily evaluated using the standard form for a multivariate Gaussian
+    distribution, giving
+
+    <\equation*>
+      ln p<around*|(|\<b-t\><around*|\||\<b-theta\>|\<nobracket\>>|)>=-<frac|1|2>ln<around*|\||C<rsub|N>|\|>-<frac|1|2>\<b-t\><rsup|T>C<rsub|N><rsup|-1>\<b-t\>-<frac|N|2>ln<around*|(|2\<pi\>|)>
+    </equation*>
+
+    For nonlinear optimization, we also need the gradient of the log
+    likelihood function with respect to the parameter vector
+    <math|\<b-theta\>>. We shall assume that evaluation of the derivatives of
+    <math|C<rsub|N>> is straightforward, as would be the case for the
+    covariance functions considered in this chapter. Making use of the result
+    (C.21) for the derivative of <math|C<rsup|-1><rsub|N>>, together with the
+    result (C.22) for the derivative of <math|ln\|C<rsub|N>\|>, we obtain
+
+    <\equation*>
+      <frac|\<partial\>|\<partial\>\<theta\><rsub|i>>ln
+      p<around*|(|\<b-t\><around*|\||\<b-theta\>|\<nobracket\>>|)>=-<frac|1|2>Tr<around*|(|C<rsup|-1><rsub|N><frac|\<partial\>C<rsub|N>|\<partial\>\<theta\><rsub|i>>|)>+<frac|1|2>\<b-t\><rsup|T>C<rsub|N><rsup|-1><frac|\<partial\>C<rsub|N>|\<partial\>\<theta\><rsub|i>>C<rsub|N><rsup|-1>\<b-t\>
+    </equation*>
+
+    Because <math|ln p(\<b-t\><around*|\||\<b-theta\>|\<nobracket\>>)> will
+    in general be a nonconvex function, it can have multiple maxima.
   </shown>>
 </body>
 
@@ -1102,5 +1197,7 @@
     <associate|6.60|<tuple|4|?>>
     <associate|6.61|<tuple|5|?>>
     <associate|6.62|<tuple|6|?>>
+    <associate|6.66|<tuple|7|?>>
+    <associate|6.67|<tuple|8|?>>
   </collection>
 </references>
