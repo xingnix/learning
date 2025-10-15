@@ -92,7 +92,7 @@
         </equation*>
       </itemize-dot>
     </itemize-dot>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <tit|Generalized linear models>
 
     For classification problems, we wish to predict discrete class labels, or
@@ -114,7 +114,7 @@
     functions of <math|x>, even if the function <math|f(\<cdummy\>)> is
     nonlinear. For this reason, the class of models are called generalized
     linear models.
-  </hidden>|<\hidden>
+  </shown>|<\hidden>
     <tit|Discriminant Functions(two classes)>
 
     A discriminant is a function that takes an input vector <math|x> and
@@ -281,7 +281,7 @@
 
     \;
 
-    learning the parameters of linear discrimi- nant functions based on\ 
+    learning the parameters of linear discriminant functions based on\ 
 
     \;
 
@@ -472,17 +472,21 @@
       >\ 
     </equation*>
 
-    where SB is the between-class covariance matrix and is given by\ 
+    where <math|S<rsub|B>> is the between-class covariance matrix and is
+    given by\ 
 
     <\equation*>
-      SB = (m2 \<minus\> m1)(m2 \<minus\> m1)T
+      S<rsub|B>=(\<b-m\><rsub|2>\<minus\>\<b-m\><rsub|1>)(\<b-m\><rsub|2>\<minus\>\<b-m\><rsub|1>)<rsup|T>
     </equation*>
 
-    and SW is the total within-class covariance matrix, given by
+    and <math|S<rsub|W>> is the total within-class covariance matrix, given
+    by
 
     <\equation*>
-      SW = (xn \<minus\> m1)(xn \<minus\> m1)T + (xn \<minus\> m2)(xn
-      \<minus\> m2)T. n\<in\>C1 n\<in\>C2\ 
+      S<rsub|W> = <big|sum><rsub|n\<in\>\<cal-C\><rsub|1><rsub|>>(\<b-x\><rsub|n>\<minus\>\<b-m\><rsub|1>)(\<b-x\><rsub|n>\<minus\>\<b-m\><rsub|1>)<rsup|T>
+      +<big|sum><rsub|n\<in\>\<cal-C\><rsub|2>>
+      (\<b-x\><rsub|n>\<minus\>\<b-m\><rsub|2>)(\<b-x\><rsub|n>\<minus\>\<b-m\><rsub|2>)<rsup|T>.
+      \ 
     </equation*>
 
     \;
@@ -586,8 +590,6 @@
         <tformat|<table|<row|<cell|<big|sum><rsub|n=1><rsup|N><around*|(|w<rsup|T>x<rsub|n>+w<rsub|0>-t<rsub|n>|)>x<rsub|n>>|<cell|=>|<cell|<around*|(|S<rsub|W>+<frac|N<rsub|1>N<rsub|2>|N>S<rsub|B>|)>w-N<around*|(|m<rsub|1>-m<rsub|2>|)>>>>>
       </eqnarray*>
     </folded-std>
-
-    \;
 
     \;
 
@@ -1354,8 +1356,6 @@
       \<b-z\> = \<Phi\>\<b-w\><rsup|(old)> \<minus\>
       R<rsup|\<minus\>1>(\<b-y\>\<minus\>\<b-t\>)
     </equation*>
-
-    \;
   </hidden>|<\hidden>
     As in the weighted least-squares problem, the elements of the diagonal
     weighting matrix R can be interpreted as variances because the mean and
@@ -1714,7 +1714,7 @@
 
     <next-line>Note that the first-order term in the Taylor expansion does
     not appear since <math|z<rsub|0>> is a local maximum of the distribution.
-    </hidden>|<\hidden>
+  </hidden>|<\hidden>
     \;
 
     Taking the exponential we obtain\ 
@@ -1785,9 +1785,9 @@
   </hidden>|<\hidden>
     <tit|Model comparison and BIC>
 
-    As well as approximating the distribution p(z) we can also obtain an
-    approxi- mation to the normalization constant Z. Using the approximation
-    Eq. <eqref|4.133> we have\ 
+    As well as approximating the distribution <math|p(z)> we can also obtain
+    an approximation to the normalization constant <math|Z>. Using the
+    approximation Eq. <eqref|4.133> we have\ 
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|Z>|<cell|=>|<cell|<big|int>f<around*|(|\<b-z\>|)>\<mathd\>\<b-z\>>>|<row|<cell|>|<cell|\<approx\>>|<cell|f<around*|(|\<b-z\><rsub|0>|)><big|int>exp<around*|{|-<frac|1|2><around*|(|\<b-z\>-\<b-z\><rsub|0>|)><rsup|T>A<around*|(|\<b-z\>-\<b-z\><rsub|0>|)>|}>\<mathd\>\<b-z\>>>|<row|<cell|>|<cell|=>|<cell|f<around*|(|\<b-z\><rsub|0>|)><frac|<around*|(|2\<pi\>|)><rsup|M/2>|<around*|\||A|\|><rsup|1/2>><eq-number><label|4.135>>>>>
@@ -2065,7 +2065,7 @@
     <\equation>
       <label|4.154>\<kappa\><around*|(|\<sigma\><rsup|2>|)>=<around*|(|1+\<pi\>\<sigma\><rsup|2>/8|)><rsup|-1/2>.
     </equation>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     Applying this result to Eq. <eqref|4.151> we obtain the approximate
@@ -2088,7 +2088,7 @@
     misclassification rate, with equal prior probabilities, then the
     marginalization over w has no ef- fect. However, for more complex
     decision criteria it will play an important role.
-  </shown>>
+  </hidden>>
 </body>
 
 <\initial>
