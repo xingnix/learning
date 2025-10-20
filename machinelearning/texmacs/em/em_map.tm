@@ -1,4 +1,4 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.1>
 
 <style|<tuple|generic|old-spacing|old-dots|old-lengths>>
 
@@ -86,7 +86,7 @@
   \<#5728\>M\<#6B65\>\<#4E2D\>\<#5C06\><math|Q<around*|(|\<theta\>\|\<theta\><rsup|<around*|(|i|)>>,Y|)>>\<#5BF9\><math|\<theta\>>\<#6C42\>\<#5BFC\>\<#5E76\>\<#4EE4\>\<#5176\>\<#4E3A\>0,\<#6709\>
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|\<theta\><rsup|<around*|(|i+1|)>>>|<cell|=>|<cell|<frac|y<rsub|1>+y<rsub|4>-E<rsup|Z><around*|(|Z\|\<theta\><rsup|<around*|(|i|)>>,Y|)>|y<rsub|1>+y<rsub|2>+y<rsub|3>+y<rsub|4>-E<rsup|Z><around*|(|Z\|\<theta\><rsup|<around*|(|i|)>>,Y|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<theta\><rsup|<around*|(|i|)>>y<rsub|1>+<around*|(|\<theta\><rsup|<around*|(|i|)>>+2|)>y<rsub|4>|\<theta\><rsup|<around*|(|i|)>>y<rsub|1>+<around*|(|\<theta\><rsup|<around*|(|i|)>>+2|)><around*|(|y<rsub|2>+y<rsub|3>+y<rsub|4>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|159\<theta\><rsup|<around*|(|i|)>>+68|1978<rsup|<around*|(|i|)>>+144>>>>>
+    <tformat|<table|<row|<cell|\<theta\><rsup|<around*|(|i+1|)>>>|<cell|=>|<cell|<frac|y<rsub|1>+y<rsub|4>-E<rsup|Z><around*|(|Z\|\<theta\><rsup|<around*|(|i|)>>,Y|)>|y<rsub|1>+y<rsub|2>+y<rsub|3>+y<rsub|4>-E<rsup|Z><around*|(|Z\|\<theta\><rsup|<around*|(|i|)>>,Y|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<theta\><rsup|<around*|(|i|)>>y<rsub|1>+<around*|(|\<theta\><rsup|<around*|(|i|)>>+2|)>y<rsub|4>|\<theta\><rsup|<around*|(|i|)>>y<rsub|1>+<around*|(|\<theta\><rsup|<around*|(|i|)>>+2|)><around*|(|y<rsub|2>+y<rsub|3>+y<rsub|4>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|159\<theta\><rsup|<around*|(|i|)>>+68|197\<theta\><rsup|<around*|(|i|)>>+144>>>>>
   </eqnarray*>
 
   \<#4ECE\><math|\<theta\><rsup|<around*|(|0|)>>=0.5>\<#5F00\>\<#59CB\>\<#FF0C\>\<#7ECF\>\<#8FC7\>\<#56DB\>\<#6B21\>\<#8FED\>\<#4EE3\>\<#FF0C\>EM\<#7B97\>\<#6CD5\>\<#6536\>\<#655B\>\<#5230\>\<#89C2\>\<#6D4B\>\<#540E\>\<#9A8C\>\<#5206\>\<#5E03\>\<#7684\>\<#4F17\>\<#6570\>0.6268\<#3002\>
