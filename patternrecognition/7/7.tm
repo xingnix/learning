@@ -124,7 +124,7 @@
     hyperplane. In the case of data points for which the equality holds, the
     constraints are said to be <strong|active>, whereas for the remainder
     they are said to be <strong|inactive>.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     The optimization problem then simply requires that we maximize
     <math|<around*|\<\|\|\>|\<b-w\>|\<\|\|\>><rsup|\<minus\>1>>, which is
     equivalent to minimizing <math|<around*|\<\|\|\>|\<b-w\>|\<\|\|\>><rsup|2>>,
@@ -136,9 +136,43 @@
 
     subject to the constraints given by Eq. <eqref|7.5>.
 
-    This is an example of a quadratic programming problem in which we are
-    trying to minimize a quadratic function subject to a set of linear
+    This is an example of a <strong|quadratic programming> problem in which
+    we are trying to minimize a quadratic function subject to a set of linear
     inequality constraints.
+  </hidden>|<\hidden>
+    In order to solve this constrained optimization problem, we introduce
+    Lagrange multipliers an \N 0, with one multiplier an for each of the
+    constraints in Eq. <eqref|7.5>, giving the Lagrangian function
+
+    <\equation*>
+      L<around*|(|\<b-w\>,b,\<b-a\>|)>=<frac|1|2><around*|\<\|\|\>|\<b-w\>|\<\|\|\>><rsup|2>-<big|sum><rsub|n=1><rsup|N>a<rsub|n><around*|{|t<rsub|n><around*|(|\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>+b|)>-1|}>
+    </equation*>
+
+    where <math|a=(a<rsub|1>,\<cdots\>,a<rsub|N>)<rsup|T>>.
+
+    Setting the derivatives of <math|L(w, b, a) >with respect to w and b
+    equal to zero, we obtain the following two conditions
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-w\>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>>>|<row|<cell|0>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    Eliminating w and b from <math|L(w,b,a)> using these conditions then
+    gives the dual representation of the maximum margin problem in which we
+    maximize\ 
+
+    <\equation*>
+      <wide|L|~><around*|(|\<b-a\>|)>=<big|sum><rsub|n=1><rsup|N>a<rsub|n>-<frac|1|2><big|sum><rsub|n=1><rsup|N><big|sum><rsub|m=1><rsup|N>a<rsub|n>a<rsub|m>t<rsub|n>t<rsub|m>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>
+    </equation*>
+
+    with respect to a subject to the constraints\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|a<rsub|n>>|<cell|\<geqslant\>>|<cell|0,\<space\><application-space|1em><space|1em>n=1,\<cdots\>,N,>>|<row|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>>|<cell|=>|<cell|0.>>>>
+    </eqnarray*>
+
+    Here the kernel function is defined by <math|k(\<b-x\>,\<b-x\><rprime|'>)
+    = \<b-varphi\>(\<b-x\>)<rsup|T>\<b-varphi\>(\<b-x\><rprime|'>)>.
   </shown>>
 </body>
 
