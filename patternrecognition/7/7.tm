@@ -154,12 +154,12 @@
     equal to zero, we obtain the following two conditions
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-w\>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>>>|<row|<cell|0>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>>>>>
+      <tformat|<table|<row|<cell|\<b-w\>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><eq-number><label|7.8>>>|<row|<cell|0>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n><eq-number><label|7.9>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
-    Eliminating w and b from <math|L(w,b,a)> using these conditions then
-    gives the dual representation of the maximum margin problem in which we
-    maximize\ 
+  </hidden>|<\hidden>
+    Eliminating <math|w> and <math|b> from <math|L(w,b,a)> using these
+    conditions then gives the <strong|dual representation> of the maximum
+    margin problem in which we maximize\ 
 
     <\equation*>
       <wide|L|~><around*|(|\<b-a\>|)>=<big|sum><rsub|n=1><rsup|N>a<rsub|n>-<frac|1|2><big|sum><rsub|n=1><rsup|N><big|sum><rsub|m=1><rsup|N>a<rsub|n>a<rsub|m>t<rsub|n>t<rsub|m>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>
@@ -173,6 +173,31 @@
 
     Here the kernel function is defined by <math|k(\<b-x\>,\<b-x\><rprime|'>)
     = \<b-varphi\>(\<b-x\>)<rsup|T>\<b-varphi\>(\<b-x\><rprime|'>)>.
+  </hidden>|<\hidden>
+    In order to classify new data points using the trained model, we evaluate
+    the sign of <math|y(x)> defined by Eq. <eqref|7.1>. This can be expressed
+    in terms of the parameters <math|{a<rsub|n>}> and the kernel function by
+    substituting for <math|w> using Eq. <eqref|7.8> to give
+
+    <\equation*>
+      y<around*|(|\<b-x\>|)>=<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>+b
+    </equation*>
+
+    a constrained optimization of this form satisfies the Karush-Kuhn-Tucker
+    (<strong|KKT>) conditions, which in this case require that the following
+    three properties hold\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|a<rsub|n>>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|t<rsub|n>y<around*|(|\<b-x\><rsub|n>|)>-1>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|a<rsub|n><around*|{|t<rsub|n>y<around*|(|\<b-x\><rsub|n>|)>-1|}>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    <strong|support vectors>:<math|a<rsub|n>\<gtr\>0,t<rsub|n>y<around*|(|\<b-x\><rsub|n>|)>=1>
+  </hidden>|<\shown>
+    \;
+
+    \;
+
+    \;
   </shown>>
 </body>
 
@@ -189,5 +214,7 @@
   <\collection>
     <associate|7.1|<tuple|1|?>>
     <associate|7.5|<tuple|2|?>>
+    <associate|7.8|<tuple|3|?>>
+    <associate|7.9|<tuple|4|?>>
   </collection>
 </references>
