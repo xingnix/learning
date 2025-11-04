@@ -185,28 +185,18 @@
     \;
 
     <space|5em><image|img/example_q_3.png|0.5par|||>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <tit|More episode>
 
     \;
 
-    \;
-
-    \;
-
-    <space|5em><image|img/example_q_more.png|0.5par|||>
-  </hidden>|<\hidden>
-    This matrix Q, can then be normalized (i.e.; converted to percentage) by
-    dividing all non-zero entries by the highest number (500 in this case):
-
-    \;
-
-    \;
-
     <space|7em><image|img/example_q_normal.png|0.5par|||>
-  </hidden>|<\shown>
+
+    This matrix Q, can then be normalized (i.e.; converted to percentage) by
+    dividing all non-zero entries by the highest number (500 in this case).
+  </shown>|<\hidden>
     <space|4em><image|img/graph2.png|0.7par|||>
-  </shown>>
+  </hidden>>
 </body>
 
 <\initial>
