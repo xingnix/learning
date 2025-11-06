@@ -27,12 +27,12 @@
     </hidden>|<\hidden>
       \;
 
-      <space|3em><image|img/Camera-Obscura.jpg|280pt|||>
+      <space|3em><image|img/Camera-Obscura.png|280pt|||>
     </hidden>|<\hidden>
       <tit|\<#7167\>\<#76F8\>\<#673A\>\<#4E0E\>\<#6444\>\<#50CF\>\<#673A\>>
 
       <space|6em><image|img/sailor.png|0.6par|||>
-    </hidden>|<\hidden>
+    </hidden>|<\shown>
       <tit|\<#9488\>\<#5B54\>\<#76F8\>\<#673A\>>
 
       <label|attachment_494307><space|2em><image|img/cameria-obscura-illustration-2.jpg|0.9par|||>
@@ -41,7 +41,7 @@
       obscura in Gemma Frisius' book \PDe Radio Astronomica et Geometrica,\Q
       1545 (Photo: <hlink|Wikimedia Commons|https://commons.wikimedia.org/wiki/File:1545_gemma_frisius_-_camera-obscura-sonnenfinsternis_1545-650x337.jpg>,
       Public domain)https://mymodernmet.com/camera-obscura/
-    </hidden>|<\hidden>
+    </shown>|<\hidden>
       <tit|\<#900F\>\<#89C6\>\<#6295\>\<#5F71\>>
 
       \;
@@ -225,13 +225,13 @@
       <tit|\<#771F\>\<#5B9E\>\<#900F\>\<#955C\>>
 
       <image|img/thick_lens.png|1par|||>
-    </hidden>|<\shown>
+    </hidden>|<\hidden>
       <tit|\<#7403\>\<#9762\>\<#50CF\>\<#5DEE\>>
 
       <image|img/spherical_aberration.png|1par|||>
 
       \;
-    </shown>|<\hidden>
+    </hidden>|<\hidden>
       <tit|\<#7578\>\<#53D8\>>
 
       \;
