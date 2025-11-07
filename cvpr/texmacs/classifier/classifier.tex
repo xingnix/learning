@@ -1,0 +1,296 @@
+\documentclass{beamer}
+\usepackage[english]{babel}
+\usepackage{amsmath,graphicx}
+
+%%%%%%%%%% Start TeXmacs macros
+\catcode`\<=\active \def<{
+\fontencoding{T1}\selectfont\symbol{60}\fontencoding{\encodingdefault}}
+\catcode`\>=\active \def>{
+\fontencoding{T1}\selectfont\symbol{62}\fontencoding{\encodingdefault}}
+\newcommand{\nospace}{}
+\newcommand{\tmfoldedstd}[2]{\trivlist{\item[$\bullet$]\mbox{}#1}}
+\newcommand{\tmmathbf}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+\newenvironment{itemizedot}{\begin{itemize} \renewcommand{\labelitemi}{$\bullet$}\renewcommand{\labelitemii}{$\bullet$}\renewcommand{\labelitemiii}{$\bullet$}\renewcommand{\labelitemiv}{$\bullet$}}{\end{itemize}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+{\screens{\begin{frame}
+  \
+  
+  \
+  
+  \
+  
+  \
+  
+  \
+  
+  \title{计算视觉与模式识别}
+  
+  \maketitle
+  
+  \ 
+\end{frame}}{\begin{frame}
+  \frametitle{分类器}
+  
+  数据集
+  \begin{eqnarray*}
+    (x_1, y_1) & \cdots & (x_n, y_n)
+  \end{eqnarray*}
+  分类
+  \begin{eqnarray*}
+    x_{\tmop{new}} & \rightarrow & ?
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \frametitle{风险函数}
+  
+  \
+  
+  损失函数
+  \begin{eqnarray*}
+    L (i \rightarrow j) & = & \left\{\begin{array}{l}
+      l > 0\\
+      0
+    \end{array}\right. \qquad \begin{array}{l}
+      i \neq j\\
+      i = j
+    \end{array}
+  \end{eqnarray*}
+  
+  
+  风险函数
+  \begin{eqnarray*}
+    R (s) & = & P r\{1 \rightarrow 2| \tmop{using} s\}L (1 \rightarrow 2) + P
+    r\{2 \rightarrow 1| \tmop{using} s\}L (2 \rightarrow 1)
+  \end{eqnarray*}
+  
+  
+  \ 
+\end{frame}}{\begin{frame}
+  \frametitle{分类边界}
+  \begin{eqnarray*}
+    &  & P\{\tmop{class} \tmop{is} 2| x\}L (2 \rightarrow 1) +
+    P\{\tmop{class} \tmop{is} 1| x\}L (1 \rightarrow 1)\\
+    & = & P\{\tmop{class} \tmop{is} 2| x\}L (2 \rightarrow 1) + 0\\
+    & = & p (2| x) L (2 \rightarrow 1)\\
+    &  & P\{\tmop{class} \tmop{is} 1| x\}L (1 \rightarrow 2)\\
+    & = & p (1| x) L (1 \rightarrow 2)
+  \end{eqnarray*}
+  边界上
+  \begin{eqnarray*}
+    p (2| x) L (2 \rightarrow 1) & = & p (1| x) L (1 \rightarrow 2)
+  \end{eqnarray*}
+  得
+  \begin{eqnarray*}
+    p (x| 2) p (2) L (2 \rightarrow 1) & = & p (x| 1) p (1) L (1 \rightarrow
+    2)
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \frametitle{分类}
+  
+  \
+  
+  \
+  
+  
+  \begin{eqnarray*}
+    x \rightarrow 1 \hspace{5em} p (x| 2) p (2) L (2 \rightarrow 1) & < & p
+    (x| 1) p (1) L (1 \rightarrow 2)\\
+    x \rightarrow 2 \hspace{5em} p (x| 2) p (2) L (2 \rightarrow 1) & > & p
+    (x| 1) p (1) L (1 \rightarrow 2)
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \frametitle{多类别贝叶斯分类器}
+  
+  损失函数
+  \begin{itemizedot}
+    \item $\exists k, \Pr (k|x) > 1 - d$
+    \begin{eqnarray*}
+      L (i \rightarrow j) & = & \left\{\begin{array}{ll}
+        1 & i \neq j\\
+        0 & i = j
+      \end{array}\right.
+    \end{eqnarray*}
+    \item $\forall k, \Pr (k|x) < 1 - d$,d<1
+    \begin{eqnarray*}
+      L (i \rightarrow j) & = & d
+    \end{eqnarray*}
+  \end{itemizedot}
+  选择类别
+  \begin{eqnarray*}
+    c & = & \arg \max_k \Pr (k|x)
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \
+  
+  \resizebox{1\columnwidth}{!}{\includegraphics{img/decision_boundary.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{Logistic regression}
+  \begin{eqnarray*}
+    \log \frac{p (1|\tmmathbf{x})}{p (- 1|\tmmathbf{x})} & = & \tmmathbf{a}^T
+    \tmmathbf{x}\\
+    p (1|\tmmathbf{x}) & = & \frac{e^{\tmmathbf{a}^T \tmmathbf{x}}}{1 +
+    e^{\tmmathbf{a}^T \tmmathbf{x}}}\\
+    p (- 1|\tmmathbf{x}) & = & \frac{1}{1 + e^{\tmmathbf{a}^T \tmmathbf{x}}}\\
+    L & = & - \sum_i \frac{1 + y_i}{2} \tmmathbf{a}^T \tmmathbf{x}_i - \ln (1
+    + e^{\tmmathbf{a}^T \tmmathbf{x}_i})\\
+    \hat{a} & = & \arg \min_a L
+  \end{eqnarray*}
+  \tmfoldedstd{note}{\begin{eqnarray*}
+    p (1|\tmmathbf{x}) & = & \frac{1}{1 + e^{-\tmmathbf{a}^T \tmmathbf{x}}}\\
+    p (- 1|\tmmathbf{x}) & = & \frac{1}{1 + e^{\tmmathbf{a}^T \tmmathbf{x}}}\\
+    p (y|\tmmathbf{x}) & = & \frac{1}{1 + e^{- y\tmmathbf{a}^T \tmmathbf{x}}}
+    \qquad (y = \pm 1)\\
+    L (y_i, \gamma_i) & = & - \ln \nospace [p (y_i |\tmmathbf{x}_i)]\\
+    & = & \ln (1 + e^{- y_i \gamma_i}) \qquad (\gamma_i =\tmmathbf{a}^T
+    \tmmathbf{x}_i)
+  \end{eqnarray*}}
+\end{frame}}{\begin{frame}
+  \frametitle{正则化}
+  
+  
+  \begin{eqnarray*}
+    L & = & - \sum_i \frac{1 + y_i}{2} \tmmathbf{a}^T \tmmathbf{x}_i - \ln (1
+    + e^{\tmmathbf{a}^T \tmmathbf{x}_i}) + \lambda \| \tmmathbf{a} \|_p
+  \end{eqnarray*}
+  \begin{itemizedot}
+    \item $p = 2$
+    \begin{eqnarray*}
+      \| \tmmathbf{a} \|_2 & = & \lambda \tmmathbf{a}^T \tmmathbf{a}
+    \end{eqnarray*}
+    \item p=1
+    \begin{eqnarray*}
+      \| \tmmathbf{a} \|_1 & = & \sum_i | a_i |
+    \end{eqnarray*}
+  \end{itemizedot}
+\end{frame}}{\begin{frame}
+  \resizebox{1\columnwidth}{!}{\includegraphics{img/decision_boundary_only.png}}
+  
+  \ 
+\end{frame}}{\begin{frame}
+  \frametitle{正态类别条件分布}
+  \begin{eqnarray*}
+    \tmmathbf{\mu}_k & = & \frac{1}{N_k} \sum_{i = 1}^{N_k} \tmmathbf{x}_{k,
+    i}\\
+    \tmmathbf{\Sigma}_k & = & \frac{1}{N_k - 1} \sum_{i = 1}^{N_k}
+    (\tmmathbf{x}_{k, i} -\tmmathbf{\mu}_k) (\tmmathbf{x}_{k, i}
+    -\tmmathbf{\mu}_k)^T
+  \end{eqnarray*}
+  选择
+  \begin{eqnarray*}
+    c & = & \arg \min_k \delta (\tmmathbf{x}; \tmmathbf{\mu}_k,
+    \tmmathbf{\Sigma}_k)^2 - \Pr \{ k \}
+  \end{eqnarray*}
+  其中
+  \begin{eqnarray*}
+    \delta (\tmmathbf{x}; \tmmathbf{\mu}_k, \tmmathbf{\Sigma}_k) & = &
+    \frac{1}{2} ((\tmmathbf{x}-\tmmathbf{\mu}_k)^T \tmmathbf{\Sigma}_k^{- 1}
+    (\tmmathbf{x}-\tmmathbf{\mu}_k))^{1 / 2}
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \frametitle{k邻分类器}
+  
+  对于特征向量$\tmmathbf{x}$
+  \begin{itemizedot}
+    \item 确定距离$\tmmathbf{x}$最近的k个训练样例
+    
+    \item 确定k个样例中属于各类别的样例数
+    
+    \item 有最多样例的类别记作c,个数记作n
+    
+    \item $n > l$时$x \in c$，否则拒绝分类
+  \end{itemizedot}
+\end{frame}}{\begin{frame}
+  \frametitle{估计、提高性能}
+  \begin{itemizedot}
+    \item Cross Validation
+    
+    划分数据集，交替选择训练集与测试集
+    
+    \item Bootstrapping
+    
+    部分数据集用于训练，余下的测试，出错样例再次训练
+  \end{itemizedot}
+\end{frame}}{\begin{frame}
+  \frametitle{皮肤像素分类}
+  
+  \
+  
+  比较：
+  \begin{eqnarray*}
+    \frac{p (\tmmathbf{x}| \tmop{skin}) p (\tmop{skin})}{p (\tmmathbf{x})} L
+    (\tmop{skin} \rightarrow \tmop{not} \tmop{skin}) &  & \\
+    \frac{p (\tmmathbf{x}| \tmop{not} \tmop{skin}) p (\tmop{not}
+    \tmop{skin})}{p (\tmmathbf{x})} L (\tmop{not} \tmop{skin} \rightarrow
+    \tmop{skin}) &  & 
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \
+  
+  {\hspace{6em}}\resizebox{0.6\columnwidth}{!}{\includegraphics{img/skin_sample.png}}
+\end{frame}}{\begin{frame}
+  \
+  
+  \resizebox{1\columnwidth}{!}{\includegraphics{img/skin_roc.png}}
+\end{frame}}{\begin{frame}
+  \frametitle{朴素贝叶斯}
+  
+  
+  \begin{eqnarray*}
+    P (\tmop{image} | \tmop{face}) & = & P (\tmop{label} 1 \tmop{at} (x 1, y
+    1), \ldots, \tmop{label} k \tmop{at} (\tmop{xk}, \tmop{yk}) |
+    \tmop{face})\\
+    & = & P (\tmop{label} 1 \tmop{at} (x 1, y 1) | \tmop{face}) \cdots P
+    (\tmop{label} k \tmop{at} (\tmop{xk}, \tmop{yk}) | \tmop{face})
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \frametitle{PCA}
+  \begin{eqnarray*}
+    v (\tmmathbf{x}_i) & = & \tmmathbf{v}^T (\tmmathbf{x}_i -\tmmathbf{\mu})\\
+    \tmop{var} (\tmmathbf{v}) & = & \frac{1}{n - 1} v (\tmmathbf{x}_i) v
+    (\tmmathbf{x}_i)^T\\
+    & = & \frac{1}{n - 1} \sum_{i = 1}^n \tmmathbf{v}^T (\tmmathbf{x}_i
+    -\tmmathbf{\mu}) (\tmmathbf{x}_i -\tmmathbf{\mu})^T \tmmathbf{v} \\
+    & = & \tmmathbf{v}^T \Sigma \tmmathbf{v}
+  \end{eqnarray*}
+\end{frame}}{\begin{frame}
+  \
+  
+  {\hspace{5em}}\resizebox{0.7\columnwidth}{!}{\includegraphics{img/pca.png}}
+  
+\end{frame}}{\begin{frame}
+  \frametitle{Canonical Variates}
+  \begin{eqnarray*}
+    \overline{\tmmathbf{\mu}} & = & \frac{1}{g} \sum_{j = 1}^g
+    \tmmathbf{\mu}_j\\
+    \mathcal{B} & = & \frac{1}{g - 1} \sum_{j = 1}^g (\tmmathbf{\mu}_j -
+    \overline{\tmmathbf{\mu}}) (\tmmathbf{\mu}_j -
+    \overline{\tmmathbf{\mu}})^T
+  \end{eqnarray*}
+  最大化
+  \[ \frac{\tmmathbf{v}_1^T \mathcal{B}\tmmathbf{v}_1}{\tmmathbf{v}_1^T \Sigma
+     \tmmathbf{v}_1} \]
+  得
+  \begin{eqnarray*}
+    \mathcal{B}\tmmathbf{v}_1 + \lambda \Sigma \tmmathbf{v}_1 & = & 0
+  \end{eqnarray*}
+\end{frame}}{\qquad\resizebox{0.8\columnwidth}{!}{\includegraphics{img/canonical_variate.png}}
+
+\tmfoldedstd{Figure 25.10}{Principal component analysis doesn't take into
+account the fact that there may be more than one class of item in a dataset.
+This can lead to significant problems. For a classifier, we would like to
+obtain a set of features that firstly reduces the number of features and
+secondly makes the difference between classes most obvious. For the data set
+on the top, one class is indicated by circles and the other by stars. PCA
+would suggest projection onto a vertical axis, which captures the variance in
+the dataset, but cannot be used to discriminate it, as we can see from the
+axes obtained by PCA, which are overlaid on the data set. The bottom row shows
+the projections onto those axes. On the bottom left, we show the projection
+onto the first principal component --- which has higher variance, but
+separates the classes poorly --- and on the bottom right, we show the
+projection onto the second principal component --- which has significantly
+lower variance (look at the axes) and gives better separation.}}}
+
+\end{document}
