@@ -180,7 +180,7 @@
     substituting for <math|w> using Eq. <eqref|7.8> to give
 
     <\equation*>
-      y<around*|(|\<b-x\>|)>=<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>+b
+      <label|7.13>y<around*|(|\<b-x\>|)>=<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>+b
     </equation*>
 
     a constrained optimization of this form satisfies the Karush-Kuhn-Tucker
@@ -192,12 +192,45 @@
     </eqnarray*>
 
     <strong|support vectors>:<math|a<rsub|n>\<gtr\>0,t<rsub|n>y<around*|(|\<b-x\><rsub|n>|)>=1>
+  </hidden>|<\hidden>
+    Having solved the quadratic programming problem and found a value for
+    <math|\<b-a\>>, we can then determine the value of the threshold
+    parameter <math|b> by noting that any support vector
+    <math|\<b-x\><rsub|n>> satisfies <math|t<rsub|n>y(\<b-x\><rsub|n> ) = 1>.
+    Using Eq. <eqref|7.13> this gives
+
+    <\equation*>
+      t<rsub|n><around*|(|<big|sum><rsub|m\<in\>\<cal-S\>>a<rsub|m>t<rsub|m>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>+b|)>=1
+    </equation*>
+
+    where <math|\<cal-S\>> denotes the set of indices of the support vectors.
+    Although we can solve this equation for <math|b> using an arbitrarily
+    chosen support vector <math|\<b-x\><rsub|n>>, a numerically more stable
+    solution is obtained by first multiplying through by <math|t<rsub|n>> ,
+    making use of <math|t<rsup|2><rsub|n>=1>, and then averaging these
+    equations over all support vectors and solving for <math|b> to give
+
+    <\equation*>
+      b=<frac|1|N<rsub|\<cal-S\>>><big|sum><rsub|n\<in\>\<cal-S\>><around*|(|t<rsub|n>-<big|sum><rsub|m\<in\>\<cal-S\>>a<rsub|m>t<rsub|m>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>|)>
+    </equation*>
+
+    where <math|N<rsub|\<cal-S\>>> is the total number of support vectors.
+  </hidden>|<\hidden>
+    For later comparison with alternative models, we can express the
+    maximum-margin classifier in terms of the minimization of an error
+    function, with a simple quadratic regularizer, in the form
+
+    <\equation*>
+      <big|sum><rsub|n=1><rsup|N>E<rsub|\<infty\>><around*|(|y<around*|(|\<b-x\><rsub|n>|)>t<rsub|n>-1|)>+\<lambda\><around*|\<\|\|\>|\<b-w\>|\<\|\|\>><rsup|2>
+    </equation*>
+
+    where <math|E\<infty\>(z)> is a function that is zero if
+    <math|z\<geqslant\>0> and <math|\<infty\>> otherwise and ensures that the
+    constraints Eq. <eqref|7.5> are satisfied. Note that as long as the
+    regularization parameter satisfies <math|\<lambda\>\<gtr\>0>, its precise
+    value plays no role.
   </hidden>|<\shown>
-    \;
-
-    \;
-
-    \;
+    <image|img/7_2example.png|1par|||>
   </shown>>
 </body>
 
@@ -213,6 +246,7 @@
 <\references>
   <\collection>
     <associate|7.1|<tuple|1|?>>
+    <associate|7.13|<tuple|4|?>>
     <associate|7.5|<tuple|2|?>>
     <associate|7.8|<tuple|3|?>>
     <associate|7.9|<tuple|4|?>>
