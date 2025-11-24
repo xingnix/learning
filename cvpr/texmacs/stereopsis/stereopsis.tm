@@ -57,11 +57,13 @@
     \;
 
     <space|4em><image|img/triangulation_rectified.png|0.8par|||>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
+    <space|2em><image|img/reconstruction_leaves.png|0.8par|||>
+  </hidden>|<\hidden>
     <tit|\<#4EBA\>\<#773C\>\<#7ACB\>\<#4F53\>\<#89C6\>\<#89C9\>>
 
     <image|img/Vieth_Muller_Circle.png|1par|||>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|\<#968F\>\<#673A\>\<#70B9\>\<#4F53\>\<#89C6\>\<#56FE\>>
 
     <image|img/shaking_pepper.png|1par|||>
@@ -168,7 +170,7 @@
     <tit|\<#4E09\>\<#76EE\>\<#7ACB\>\<#4F53\>\<#89C6\>\<#89C9\>>
 
     <image|img/trinocular_sterero.png|1par|||>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <tit|\<#66F2\>\<#7EBF\>\<#5207\>\<#7EBF\>\<#9884\>\<#6D4B\>>
 
     <image|img/from_p1_p2_to_p3.png|1par|||>
@@ -180,7 +182,7 @@
         <tformat|<table|<row|<cell|\<b-l\><rsub|1>>|<cell|\<propto\>>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|1>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|2>\<b-l\><rsub|3>>>|<row|<cell|\<b-l\><rsub|2><rsup|T>\<cal-G\><rsub|1><rsup|3>\<b-l\><rsub|3>>>>>>>>|<row|<cell|\<cal-G\><rsub|1><rsup|i>>|<cell|=>|<cell|\<b-t\><rsub|2>\<b-R\><rsub|3><rsup|i\<nospace\>T>-\<b-R\><rsub|2><rsup|i>\<b-t\><rsub|3><rsup|T><space|2em>i=1,2,3>>>>
       </eqnarray*>
     </folded-std>
-  </hidden>>
+  </shown>>
 </body>
 
 <\initial>
