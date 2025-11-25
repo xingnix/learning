@@ -229,8 +229,50 @@
     constraints Eq. <eqref|7.5> are satisfied. Note that as long as the
     regularization parameter satisfies <math|\<lambda\>\<gtr\>0>, its precise
     value plays no role.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <image|img/7_2example.png|1par|||>
+  </hidden>|<\hidden>
+    <tit|Overlapping class distributions>
+
+    Introduce <em|slack variables>,\ 
+
+    <\equation*>
+      \<xi\><rsub|n>\<geqslant\>0
+    </equation*>
+
+    where <math|n=1,\<cdots\>,N> , with one slack variable for each training
+    data point.
+
+    <\equation*>
+      \<xi\><rsub|n>=<choice|<tformat|<table|<row|<cell|0>|<cell|<text|data
+      points on or inside the correct margin
+      boundary>>>|<row|<cell|<around*|\||t<rsub|n>\<minus\>y(x<rsub|n>)|\|>>|<cell|<text|others.>>>>>>
+    </equation*>
+
+    The exact classification constraints Eq. <eqref|7.5> are then replaced
+    with\ 
+
+    <\equation*>
+      t<rsub|n>y(x<rsub|n>)\<geqslant\>1\<minus\>\<xi\><rsub|n>,\<space\>\<space\>\<space\><application-space|1em>n=1,\<cdots\>,N
+    </equation*>
+
+    \ 
+
+    \ 
+  </hidden>|<\hidden>
+    \;
+
+    <image|img/7_3_slack_variable.png|1par|||>
+  </hidden>|<\shown>
+    Our goal is now to maximize the margin while softly penalizing points
+    that lie on the wrong side of the margin boundary. We therefore minimize
+
+    <\equation*>
+      C<big|sum><rsub|n=1><rsup|N>\<xi\><rsub|n>+<frac|1|2><around*|\<\|\|\>|\<b-W\>|\<\|\|\>><rsup|2>
+    </equation*>
+
+    where the parameter <math|C\<gtr\>0> controls the trade-off between the
+    slack variable penalty and the margin.
   </shown>>
 </body>
 
