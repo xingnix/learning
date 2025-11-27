@@ -263,7 +263,7 @@
     \;
 
     <image|img/7_3_slack_variable.png|1par|||>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     Our goal is now to maximize the margin while softly penalizing points
     that lie on the wrong side of the margin boundary. We therefore minimize
 
@@ -273,6 +273,70 @@
 
     where the parameter <math|C\<gtr\>0> controls the trade-off between the
     slack variable penalty and the margin.
+
+    <\itemize-dot>
+      <item><math|<big|sum><rsub|n>\<xi\><rsub|n>> is an upper bound on the
+      number of misclassified points Because any point that is misclassified
+      has <math|\<xi\><rsub|n>\<gtr\>1>.
+
+      <item><math|C> is therefore analogous to (the inverse of) a
+      regularization coefficient because it controls the trade-off between
+      minimizing training errors and controlling model complexity.
+    </itemize-dot>
+  </hidden>|<\hidden>
+    <tit|Lagrangian >
+
+    \;
+
+    \;
+
+    The corresponding Lagrangian is given by
+
+    <\equation*>
+      L<around*|(|\<b-W\>,b,\<b-a\>|)>=<frac|1|2><around*|\<\|\|\>|\<b-W\>|\<\|\|\>><rsup|2>+C<big|sum><rsub|n=1><rsup|N>\<xi\><rsub|n>-<big|sum><rsub|n=1><rsup|N>a<rsub|n><around*|{|t<rsub|n>y<around*|(|\<b-x\><rsub|n>|)>-1+\<xi\><rsub|n>|}>-<big|sum><rsub|n=1><rsup|N>\<mu\><rsub|n>\<xi\><rsub|n>
+    </equation*>
+
+    where <math|{a<rsub|n>\<geqslant\>0}> and
+    <math|{\<mu\><rsub|n>\<geqslant\>0}> are Lagrange multipliers.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|KKT conditions>
+
+    KKT conditions are given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|a<rsub|n>>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|t<rsub|n>y<around*|(|\<b-x\><rsub|n>|)>-1+\<xi\><rsub|n>>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|a<rsub|n><around*|(|t<rsub|n>y<around*|(|\<b-x\><rsub|n>|)>-1+\<xi\><rsub|n>|)>>|<cell|=>|<cell|0>>|<row|<cell|\<xi\><rsub|n>>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|\<mu\><rsub|n>>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|\<mu\><rsub|n>\<xi\><rsub|n>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    where <math|n=1,\<cdots\>,N>.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>L|\<partial\>w>=0>|<cell|\<Rightarrow\>>|<cell|\<b-W\>=<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>\<varphi\><around*|(|\<b-x\><rsub|n>|)>>>|<row|<cell|<frac|\<partial\>L|\<partial\>b>=0>|<cell|\<Rightarrow\>>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>=0>>|<row|<cell|<frac|\<partial\>L|\<partial\>\<xi\><rsub|n>>=0>|<cell|\<Rightarrow\>>|<cell|a<rsub|n>=C-\<mu\><rsub|n>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    Using these results to eliminate <math|w, b,> and <math|{\<xi\><rsub|n>}>
+    from the Lagrangian, we obtain the
+
+    dual Lagrangian in the form
+
+    <\equation*>
+      <wide|L|~><around*|(|a|)>=<big|sum><rsub|n=1><rsup|N>a<rsub|n>-<frac|1|2><big|sum><rsub|n=1><rsup|N><big|sum><rsub|m=1><rsup|N>a<rsub|n>a<rsub|m>t<rsub|n>t<rsub|m>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>
+    </equation*>
+
+    \ with respect to the dual variables <math|{a<rsub|n>}> subject to
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|0\<leqslant\>>|<cell|a<rsub|n>>|<cell|\<leqslant\>C>>|<row|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|n>t<rsub|n>>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    for <math|n=1,\<cdots\>,N>.
+
+    \;
   </shown>>
 </body>
 
