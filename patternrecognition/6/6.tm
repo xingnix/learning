@@ -3,7 +3,7 @@
 <style|<tuple|beamer|manila-paper>>
 
 <\body>
-  <screens|<\shown>
+  <screens|<\hidden>
     \;
 
     \;
@@ -15,7 +15,7 @@
     \;
 
     <doc-data|<doc-title|Kernel Methods>>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|Parametric model>
 
     In Chapters 3 and 4, we considered linear parametric models for
@@ -739,7 +739,8 @@
       <big|int><rsub|-\<infty\>><rsup|\<infty\>>f<around*|(|\<b-x\>,t|)>t\<mathd\>t=0
     </equation*>
 
-    for all values of x. Using a simple change of variable, we then obtain
+    for all values of <math|x>. Using a simple change of variable, we then
+    obtain
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|y<around*|(|\<b-x\>|)>=>|<cell|=>|<cell|<frac|<big|sum><rsub|n=1><rsup|N><big|int>f<around*|(|\<b-x\>-\<b-x\><rsub|n>,t|)>t<rsub|n>\<mathd\>t|<big|sum><rsub|m=1><rsup|N><big|int>f<around*|(|\<b-x\>-\<b-x\><rsub|m>,t|)>\<mathd\>t>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><around*|{|<frac|<big|int>f<around*|(|\<b-x\>-\<b-x\><rsub|n>,t|)>\<mathd\>t|<big|sum><rsub|m><big|int>f<around*|(|\<b-x\>-\<b-x\><rsub|m>,t|)>\<mathd\>t>|}>t<rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>t<rsub|n>>>>>
@@ -750,9 +751,9 @@
     The result is known as the <strong|Nadaraya-Watson model>, or
     <strong|kernel regression>.
   </hidden>|<\hidden>
-    For a localized kernel function, it has the prop- erty of giving more
-    weight to the data points xn that are close to x. Note that the kernel
-    (6.46) satisfies the summation constraint\ 
+    For a localized kernel function, it has the property of giving more
+    weight to the data points xn that are close to <math|x>. Note that the
+    kernel (6.46) satisfies the summation constraint\ 
 
     <\equation*>
       <big|sum><rsub|n=1><rsup|N>k(\<b-x\>, \<b-x\><rsub|n>) = 1.
@@ -791,8 +792,8 @@
 
     However, as we shall see, for a finite training set we only need to
     consider the values of the function at the discrete set of input values
-    xn corresponding to the training set and test set data points, and so in
-    practice we can work in a finite space.
+    <math|x<rsub|n>> corresponding to the training set and test set data
+    points, and so in practice we can work in a finite space.
   </hidden>|<\hidden>
     <tit|Linear regression revisited>
 
@@ -804,9 +805,9 @@
       y<around*|(|\<b-x\>|)>=\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\>|)><label|6.49>
     </equation>
 
-    where x is the input vector and w is the <math|M>-dimensional weight
-    vector. Now consider a prior distribution over <math|\<b-w\>> given by an
-    isotropic Gaussian of the form
+    where <math|x> is the input vector and w is the <math|M>-dimensional
+    weight vector. Now consider a prior distribution over <math|\<b-w\>>
+    given by an isotropic Gaussian of the form
 
     <\equation*>
       p<around*|(|\<b-w\>|)>=\<cal-N\><around*|(|\<b-w\><around*|\||\<b-0\>,\<alpha\><rsup|-1>\<b-I\>|\<nobracket\>>|)>
@@ -975,7 +976,7 @@
     linear terms to give\ 
 
     <\equation*>
-      k(\<b-x\><rsub|n>,\<b-x\><rsub|m>)=\<theta\><rsub|0>exp<around*|{|\<minus\><frac|\<theta\>|2><around*|\<\|\|\>|\<b-x\><rsub|n>\<minus\>\<b-x\><rsub|m>|\<\|\|\>><rsup|2>|}>+\<theta\><rsub|2>+\<theta\><rsub|3>\<b-x\><rsup|T><rsub|n>\<b-x\><rsub|m>.
+      k(\<b-x\><rsub|n>,\<b-x\><rsub|m>)=\<theta\><rsub|0>exp<around*|{|\<minus\><frac|\<theta\><rsub|1>|2><around*|\<\|\|\>|\<b-x\><rsub|n>\<minus\>\<b-x\><rsub|m>|\<\|\|\>><rsup|2>|}>+\<theta\><rsub|2>+\<theta\><rsub|3>\<b-x\><rsup|T><rsub|n>\<b-x\><rsub|m>.
     </equation*>
 
     Note that the term involving <math|\<theta\><rsub|3>> corresponds to a
@@ -1273,7 +1274,7 @@
 
     This is illustrated for the case of a one-dimensional input space in
     Figure 6.11 in which the probability distribution over the target
-    variable t is then given by the Bernoulli distribution
+    variable <math|t> is then given by the Bernoulli distribution
 
     <\equation*>
       p(t\|a) = \<sigma\>(a)<rsup|t>(1 \<minus\>
@@ -1567,11 +1568,11 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|<frac|\<partial\>\<b-a\><rsup|\<ast\>><rsub|N>|\<partial\>\<theta\><rsub|j>>>|<cell|=>|<cell|<frac|\<partial\>C<rsub|N>|\<partial\>\<theta\><rsub|j>><around*|(|\<b-t\><rsub|N>-\<b-sigma\><rsub|N>|)>-C<rsub|N>W<rsub|N><frac|\<partial\>\<b-a\><rsup|\<ast\>><rsub|N>|\<partial\>\<theta\><rsub|j>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|I+W<rsub|N>C<rsub|N>|)><rsup|-1><frac|\<partial\>C<rsub|N>|\<partial\>\<theta\><rsub|j>><around*|(|\<b-t\><rsub|N>-\<b-sigma\><rsub|N>|)>.>>>>
     </eqnarray*>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     \;
 
     <image|img/figure_6_12_gaussion_process_classification.png|1par|||>
-  </hidden>>
+  </shown>>
 </body>
 
 <\initial>
