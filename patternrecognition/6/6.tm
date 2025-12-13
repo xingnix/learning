@@ -88,9 +88,9 @@
       feature space allows us to build interesting extensions of many
       well-known algorithms by making use of the <strong|kernel trick>, also
       known as <strong|kernel substitution>. The general idea is that, if we
-      have an algorithm formulated in such a way that the input vector x
-      enters only in the form of scalar products, then we can replace that
-      scalar product with some other choice of kernel.
+      have an algorithm formulated in such a way that the input vector
+      <math|\<b-x\>> enters only in the form of scalar products, then we can
+      replace that scalar product with some other choice of kernel.
 
       <item>There are numerous forms of kernel functions in common use, and
       we shall encounter several examples in this chapter. Many have the
@@ -101,9 +101,10 @@
       specialization involves <strong|homogeneous kernels>, also known as
       <strong|radial basis functions>, which depend only on the magnitude of
       the distance (typically Euclidean) between the arguments so that
-      <math|k(x, x<rprime|'>) = k( x \<minus\> x<rprime|'>)>.
+      <math|k(x, x<rprime|'>) = k( <around*|\<\|\|\>|x \<minus\>
+      x<rprime|'>|\<\|\|\>>)>.
     </itemize-dot>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     Here we consider a linear regression model whose parameters are
     determined by minimizing a regularized sum-of-squares error function
     given by\ 
@@ -113,9 +114,10 @@
     </equation*>
 
     where <math|\<lambda\>\<geqslant\>0>. Set the gradient of <math|J(w)>
-    with respect to w equal to zero, the solution for <math|w> takes the form
-    of a linear combination of the vectors <math|\<varphi\>(x<rsub|n>)>, with
-    coefficients that are functions of <math|w>,
+    with respect to <math|w> equal to zero, the solution for <math|w> takes
+    the form of a linear combination of the vectors
+    <math|\<varphi\>(x<rsub|n>)>, with coefficients that are functions of
+    <math|w>,
 
     <\equation*>
       \<b-w\>=-<frac|1|\<lambda\>><big|sum><rsub|n=1><rsup|N><around*|{|\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>-t<rsub|n>|}>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>=<big|sum><rsub|n=1><rsup|N>a<rsub|n>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>=\<Phi\><rsup|T>\<b-a\>
@@ -129,7 +131,7 @@
     <\equation*>
       a<rsub|n>=-<frac|1|\<lambda\>><around*|{|\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>-t<rsub|n>|}>.
     </equation*>
-  </hidden>|<\hidden>
+  </shown>|<\hidden>
     Instead of working with the parameter vector <math|w>, we can now
     reformulate the least-squares algorithm in terms of the parameter vector
     <math|a>, giving rise to a <strong|dual representation>. If we substitute
@@ -166,10 +168,10 @@
     </equation*>
 
     If we substitute this back into the linear regression model, we obtain
-    the following prediction for a new input <math|x>
+    the following prediction for a new input <math|\<b-x\>>
 
     <\equation*>
-      y(\<b-x\>) = \<b-w\><rsup|T>\<b-varphi\>(\<b-x\>)=\<b-a\><rsup|T>\<Phi\>\<b-varphi\>(\<b-x\>)=\<b-k\>(\<b-x\>)<rsup|T>(K+\<lambda\>I<rsub|N>)<rsup|\<minus\>1>\<b-t\>
+      y(\<b-x\>) = \<b-w\><rsup|T>\<b-varphi\>(\<b-x\>)=\<b-a\><rsup|T>\<b-Phi\>\<b-varphi\>(\<b-x\>)=\<b-k\>(\<b-x\>)<rsup|T>(K+\<lambda\>I<rsub|N>)<rsup|\<minus\>1>\<b-t\>
     </equation*>
 
     where we have defined the vector <math|\<b-k\>(\<b-x\>)> with elements
@@ -537,13 +539,13 @@
       F = \<bbb-E\><rsub|\<b-x\>> <around*|[|\<b-g\>(\<b-theta\>,\<b-x\>)\<b-g\>(\<b-theta\>,\<b-x\>)<rsup|T>|]>
     </equation*>
 
-    where the expectation is with respect to x under the distribution
-    <math|p(x\|\<theta\>)>. This can be motivated from the perspective of
-    <strong|information geometry>, which considers the differential geometry
-    of the space of model parameters. Here we simply note that the presence
-    of the Fisher information matrix causes this kernel to be invariant under
-    a nonlinear re-parameterization of the density model <math|\<theta\>
-    \<rightarrow\> \<psi\>(\<theta\>>).
+    where the expectation is with respect to <math|\<b-x\>> under the
+    distribution <math|p(\<b-x\>\|\<b-theta\>)>. This can be motivated from
+    the perspective of <strong|information geometry>, which considers the
+    differential geometry of the space of model parameters. Here we simply
+    note that the presence of the Fisher information matrix causes this
+    kernel to be invariant under a nonlinear re-parameterization of the
+    density model <math|\<theta\> \<rightarrow\> \<psi\>(\<theta\>>).
   </hidden>|<\hidden>
     In practice, it is often infeasible to evaluate the Fisher information
     matrix. One approach is simply to replace the expectation in the
@@ -579,15 +581,15 @@
     superficial resemblance to neural network models.\ 
 
     As we shall see, in the limit of an infinite number of basis functions, a
-    Bayesian neural network with an appropriate prior reduces to a Gaussian
-    process, thereby providing a deeper link between neural networks and
-    kernel methods.
+    Bayesian neural network with an appropriate prior reduces to a
+    <strong|Gaussian process>, thereby providing a deeper link between neural
+    networks and kernel methods.
   </hidden>|<\hidden>
     <tit|Radial Basis Function Networks>
 
     Radial basis functions have the property that each basis function depends
-    only on the radial distance (typically Euclidean) from a centre \<mu\>j ,
-    so that <math|\<varphi\><rsub|j>(\<b-x\>)=h(\<b-x\>\<minus\>\<b-mu\><rsub|j>
+    only on the radial distance (typically Euclidean) from a centre
+    <math|\<b-mu\><rsub|j>>, so that <math|\<varphi\><rsub|j>(\<b-x\>)=h(\<b-x\>\<minus\>\<b-mu\><rsub|j>
     )>.\ 
 
     Historically, radial basis functions were introduced for the purpose of
@@ -636,10 +638,10 @@
     </equation*>
   </hidden>|<\hidden>
     Using the calculus of variations, we can optimize with respect to the
-    function <math|f(\<b-x\>)> to give
+    function <math|y(\<b-x\>)> to give
 
     <\equation*>
-      y<around*|(|\<b-x\><rsub|n>|)>=<big|sum><rsub|n=1><rsup|N>t<rsub|n>h<around*|(|\<b-x\>-\<b-x\><rsub|n>|)>
+      y<around*|(|\<b-x\>|)>=<big|sum><rsub|n=1><rsup|N>t<rsub|n>h<around*|(|\<b-x\>-\<b-x\><rsub|n>|)>
     </equation*>
 
     where the basis functions are given by
@@ -658,11 +660,12 @@
     <|folded-std>
       The basis functions are normalized, so that
       <math|<big|sum><rsub|n>h(\<b-x\>\<minus\>\<b-x\><rsub|n>)=1> for any
-      value of x. The effect of such normalization is shown in Figure 6.2.
-      Normal- ization is sometimes used in practice as it avoids having
-      regions of input space where all of the basis functions take small
-      values, which would necessarily lead to predic- tions in such regions
-      that are either small or controlled purely by the bias parameter.
+      value of <math|\<b-x\>>. The effect of such normalization is shown in
+      Figure 6.2. Normalization is sometimes used in practice as it avoids
+      having regions of input space where all of the basis functions take
+      small values, which would necessarily lead to predic- tions in such
+      regions that are either small or controlled purely by the bias
+      parameter.
     </folded-std>
   </hidden>|<\hidden>
     \;
@@ -739,8 +742,8 @@
       <big|int><rsub|-\<infty\>><rsup|\<infty\>>f<around*|(|\<b-x\>,t|)>t\<mathd\>t=0
     </equation*>
 
-    for all values of <math|x>. Using a simple change of variable, we then
-    obtain
+    for all values of <math|x>. Using a simple change of
+    variable(<math|t\<rightarrow\>t+t<rsub|n>>), we then obtain
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|y<around*|(|\<b-x\>|)>=>|<cell|=>|<cell|<frac|<big|sum><rsub|n=1><rsup|N><big|int>f<around*|(|\<b-x\>-\<b-x\><rsub|n>,t|)>t<rsub|n>\<mathd\>t|<big|sum><rsub|m=1><rsup|N><big|int>f<around*|(|\<b-x\>-\<b-x\><rsub|m>,t|)>\<mathd\>t>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><around*|{|<frac|<big|int>f<around*|(|\<b-x\>-\<b-x\><rsub|n>,t|)>\<mathd\>t|<big|sum><rsub|m><big|int>f<around*|(|\<b-x\>-\<b-x\><rsub|m>,t|)>\<mathd\>t>|}>t<rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>t<rsub|n>>>>>
@@ -805,9 +808,9 @@
       y<around*|(|\<b-x\>|)>=\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\>|)><label|6.49>
     </equation>
 
-    where <math|x> is the input vector and w is the <math|M>-dimensional
-    weight vector. Now consider a prior distribution over <math|\<b-w\>>
-    given by an isotropic Gaussian of the form
+    where <math|\<b-x\>> is the input vector and <math|\<b-w\>> is the
+    <math|M>-dimensional weight vector. Now consider a prior distribution
+    over <math|\<b-w\>> given by an isotropic Gaussian of the form
 
     <\equation*>
       p<around*|(|\<b-w\>|)>=\<cal-N\><around*|(|\<b-w\><around*|\||\<b-0\>,\<alpha\><rsup|-1>\<b-I\>|\<nobracket\>>|)>
@@ -1402,7 +1405,8 @@
     </eqnarray*>
   </hidden>|<\hidden>
     First we need to find the mode of the posterior distribution, and this
-    requires that we evaluate the gradient of \<Psi\>(aN ), which is given by
+    requires that we evaluate the gradient of <math|\<Psi\>(a<rsub|N>)>,
+    which is given by
 
     <\equation*>
       \<nabla\>\<Psi\>(\<b-a\><rsub|N> )=\<b-t\><rsub|N>\<minus\>\<b-sigma\><rsub|N>\<minus\>C<rsup|\<minus\>1>\<b-a\><rsub|N>
@@ -1497,9 +1501,9 @@
     Eq. <eqref|6.76> using the result (4.153).\ 
 
     As with the Bayesian logistic regression model of Section 4.5, if we are
-    only interested in the decision boundary correspond- ing to p(tN+1\|tN) =
-    0.5, then we need only consider the mean and we can ignore the effect of
-    the variance.
+    only interested in the decision boundary correspond- ing to
+    <math|p(t<rsub|N+1>\|t<rsub|N>) = 0.5>, then we need only consider the
+    mean and we can ignore the effect of the variance.
   </hidden>|<\hidden>
     We also need to determine the parameters <math|\<b-theta\>> of the
     covariance function. One approach is to maximize the likelihood function
@@ -1568,11 +1572,11 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|<frac|\<partial\>\<b-a\><rsup|\<ast\>><rsub|N>|\<partial\>\<theta\><rsub|j>>>|<cell|=>|<cell|<frac|\<partial\>C<rsub|N>|\<partial\>\<theta\><rsub|j>><around*|(|\<b-t\><rsub|N>-\<b-sigma\><rsub|N>|)>-C<rsub|N>W<rsub|N><frac|\<partial\>\<b-a\><rsup|\<ast\>><rsub|N>|\<partial\>\<theta\><rsub|j>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|I+W<rsub|N>C<rsub|N>|)><rsup|-1><frac|\<partial\>C<rsub|N>|\<partial\>\<theta\><rsub|j>><around*|(|\<b-t\><rsub|N>-\<b-sigma\><rsub|N>|)>.>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     <image|img/figure_6_12_gaussion_process_classification.png|1par|||>
-  </shown>>
+  </hidden>>
 </body>
 
 <\initial>
