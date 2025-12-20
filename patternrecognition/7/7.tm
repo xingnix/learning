@@ -604,7 +604,7 @@
     conditions are
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|t<rsub|n>>|<cell|\<leqslant\>>|<cell|y<around*|(|x<rsub|n>|)>+\<varepsilon\>+\<xi\><rsub|n>>>|<row|<cell|t<rsub|n>>|<cell|\<geqslant\>>|<cell|y<around*|(|x<rsub|n>|)>-\<varepsilon\>-<wide|\<xi\>|^><rsub|n>>>>>
+      <tformat|<table|<row|<cell|t<rsub|n>>|<cell|\<leqslant\>>|<cell|y<around*|(|x<rsub|n>|)>+\<varepsilon\>+\<xi\><rsub|n><label|7.53><eq-number>>>|<row|<cell|t<rsub|n>>|<cell|\<geqslant\>>|<cell|y<around*|(|x<rsub|n>|)>-\<varepsilon\>-<wide|\<xi\>|^><rsub|n><label|7.54><eq-number>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     \;
@@ -612,8 +612,127 @@
     \;
 
     <image|img/7_7_svm_regression.png|1par|||>
+  </hidden>|<\hidden>
+    The error function for support vector regression can then be written as
+
+    <\equation*>
+      C<big|sum><rsub|n=1><rsup|N><around*|(|\<xi\><rsub|n>+<wide|\<xi\>|^><rsub|n>|)>+<frac|1|2><around*|\<\|\|\>|\<b-w\>|\<\|\|\>><rsup|2>
+    </equation*>
+
+    which must be minimized subject to the constraints
+    <math|\<xi\><rsub|n>\<geqslant\>0> and
+    <math|<wide|\<xi\>|^><rsub|n>\<geqslant\>0> as well as Eq. <eqref|7.53>
+    and <eqref|7.54>. This can be achieved by introducing Lagrange
+    multipliers <math|a<rsub|n>\<geqslant\>0>,
+    <math|<wide|a|^><rsub|n>\<geqslant\>0>,
+    <math|\<mu\><rsub|n>\<geqslant\>0>, and
+    <math|<wide|\<mu\>|^><rsub|n>\<geqslant\>0> and optimizing the Lagrangian
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|L>|<cell|=>|<cell|C<big|sum><rsub|n=1><rsup|N><around*|(|\<xi\><rsub|n>+<wide|\<xi\>|^><rsub|n>|)>+<frac|1|2><around*|\<\|\|\>|\<b-w\>|\<\|\|\>><rsup|2>-<big|sum><rsub|n=1><rsup|N><around*|(|\<mu\><rsub|n>\<xi\><rsub|n>+<wide|\<mu\>|^><rsub|n><wide|\<xi\>|^><rsub|n>|)>>>|<row|<cell|>|<cell|>|<cell|-<big|sum><rsub|n=1><rsup|N>a<rsub|n><around*|(|\<varepsilon\>+\<xi\><rsub|n>+y<rsub|n>-t<rsub|n>|)>-<big|sum><rsub|n=1><rsup|N><wide|a|^><rsub|n><around*|(|\<varepsilon\>+<wide|\<xi\>|^><rsub|n>-y<rsub|n>+t<rsub|n>|)>.>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    substitute for <math|y(x)> using Eq. <eqref|7.1> and then set the
+    derivatives of the Lagrangian with respect to <math|w, b,
+    \<xi\><rsub|n>>, and <math|<wide|\<xi\>|^><rsub|n>> to zero, giving
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>L|\<partial\>\<b-w\>>=0>|<cell|\<Rightarrow\>>|<cell|\<b-w\>=<big|sum><rsub|n=1><rsup|N><around*|(|a<rsub|n>-<wide|a|^><rsub|n>|)>\<varphi\><around*|(|\<b-x\><rsub|n>|)><label|7.57><eq-number>>>|<row|<cell|<frac|\<partial\>L|\<partial\>b>=0>|<cell|\<Rightarrow\>>|<cell|<big|sum><rsub|n=1><rsup|N><around*|(|a<rsub|n>-<wide|a|^><rsub|n>|)>=0<label|7.58><eq-number>>>|<row|<cell|<frac|\<partial\>L|\<partial\>\<xi\><rsub|n>>=0>|<cell|\<Rightarrow\>>|<cell|a<rsub|n>+\<mu\><rsub|n>=C<label|7.59><eq-number>>>|<row|<cell|<frac|\<partial\>L|\<partial\><wide|\<xi\>|^><rsub|n>>=0>|<cell|\<Rightarrow\>>|<cell|<wide|a|^><rsub|n>+<wide|\<mu\>|^><rsub|n>=C<label|7.60><eq-number>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    Using these results to eliminate the corresponding variables from the
+    Lagrangian, we see that the dual problem involves maximizing
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<wide|L|~><around*|(|a,<wide|a|^>|)>>|<cell|=>|<cell|-<frac|1|2><big|sum><rsub|n=1><rsup|N><big|sum><rsub|m=1><rsup|N><around*|(|a<rsub|n>-<wide|a|^><rsub|n>|)><around*|(|a<rsub|m>-<wide|a|^><rsub|m>|)>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>>>|<row|<cell|>|<cell|>|<cell|-\<varepsilon\><big|sum><rsub|n=1><rsup|N><around*|(|a<rsub|n>+<wide|a|^><rsub|n>|)>+<big|sum><rsub|n=1><rsup|N><around*|(|a<rsub|n>-<wide|a|^><rsub|n>|)>t<rsub|n>>>>>
+    </eqnarray*>
+
+    with respect to <math|{a<rsub|n>}> and <math|{a<rsub|n>}>, where we have
+    introduced the kernel <math|k(x,x<rprime|'>) =
+    \<b-varphi\>(x)<rsup|T>\<b-varphi\>(x<rprime|'>)>.
+  </hidden>|<\hidden>
+    To find the constraints we note that <math|a<rsub|n>\<geqslant\>0> and
+    <math|<wide|a|^><rsub|n>\<geqslant\>0> are both required because these
+    are Lagrange multipliers. Also <math|\<mu\><rsub|n>\<geqslant\>0> and
+    <math|<wide|\<mu\>|^><rsub|n>\<geqslant\>0> together with <eqref|7.59>
+    and <eqref|7.60>, require an a\<#300\> C and an a\<#300\> C, and so again
+    we have the box constraints
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|0\<leqslant\>>|<cell|a<rsub|n>>|<cell|\<leqslant\>C>>|<row|<cell|0\<leqslant\>>|<cell|<wide|a|^><rsub|n>>|<cell|\<leqslant\>C>>>>
+    </eqnarray*>
+
+    together with the condition <eqref|7.58>.
+
+    Substituting <eqref|7.57> into <eqref|7.1>, we see that predictions for
+    new inputs can be made using
+
+    <\equation>
+      y<around*|(|x|)>=<big|sum><rsub|n=1><rsup|N><around*|(|a<rsub|n>-<wide|a|^><rsub|n>|)>k<around*|(|x,x<rsub|n>|)>+b<label|7.64>
+    </equation>
+
+    which is again expressed in terms of the kernel function.<next-line>
+  </hidden>|<\hidden>
+    The corresponding Karush-Kuhn-Tucker (KKT) conditions, which state that
+    at the solution the product of the dual variables and the constraints
+    must vanish, are given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|a<rsub|n><around*|(|\<varepsilon\>+\<xi\><rsub|n>+y<rsub|n>-t<rsub|n>|)>>|<cell|=>|<cell|0<label|7.65><eq-number>>>|<row|<cell|<wide|a|^><rsub|n><around*|(|\<varepsilon\>+<wide|\<xi\>|^><rsub|n>-y<rsub|n>+t<rsub|n>|)>>|<cell|=>|<cell|0<label|7.66><eq-number>>>|<row|<cell|<around*|(|C-a<rsub|n>|)>\<xi\><rsub|n>>|<cell|=>|<cell|0<label|7.67><eq-number>>>|<row|<cell|<around*|(|C-<wide|a|^><rsub|n>|)><wide|\<xi\>|^><rsub|n>>|<cell|=>|<cell|0<label|7.68><eq-number>>>>>
+    </eqnarray*>
+
+    Note that a coefficient <math|a<rsub|n>> can only be nonzero if
+    <math|\<varepsilon\>+\<xi\><rsub|n>+y<rsub|n>-t<rsub|n>=0>, which implies
+    that the data point either lies on the upper boundary of the
+    <math|\<varepsilon\>>-tube (<math|\<xi\><rsub|n>=0>) or lies above the
+    upper boundary (<math|\<xi\><rsub|n>\<gtr\>0>). So does
+    <math|<wide|a|^><rsub|n>>.\ 
+
+    The two constraints <math|\<varepsilon\>+\<xi\><rsub|n> +y<rsub|n>
+    \<minus\>t<rsub|n> = 0> and<math| \<varepsilon\>+\<xi\><rsub|n>
+    \<minus\>y<rsub|n> +t<rsub|n> = 0> are incompatible, as is easily seen by
+    adding them together and noting that <math|\<xi\><rsub|n>> and
+    <math|<wide|\<xi\>|^><rsub|n>> are nonnegative while
+    <math|\<varepsilon\>> is strictly positive, and so for every data point
+    <math|x<rsub|n>>, either <math|a<rsub|n>> or <math|<wide|a<rsub|n>|^>>
+    (or both) must be zero.
+  </hidden>|<\hidden>
+    The parameter b can be found by considering a data point for which
+    <math|0 \<less\> a<rsub|n> \<less\> C>, which from <eqref|7.67> must have
+    \<xi\>n = 0, and from <eqref|7.65> must therefore satisfy
+    <math|\<varepsilon\>+ y<rsub|n> \<minus\> t<rsub|n> = 0>. Using
+    <eqref|7.1> and solving for <math|b>, we obtain
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|b>|<cell|=>|<cell|t<rsub|n>-\<varepsilon\>-\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|t<rsub|n>-\<varepsilon\>-<big|sum><rsub|m=1><rsup|N><around*|(|a<rsub|m>-<wide|a|^><rsub|m>|)>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>>>>>
+    </eqnarray*>
+
+    where we have used <eqref|7.57>. We can obtain an analogous result by
+    considering a point for which <math|0 \<less\> a<rsub|n> \<less\> C>. In
+    practice, it is better to average over all such estimates of <math|b>.
+  </hidden>|<\hidden>
+    A parameter <math|\<nu\>> bounds the fraction of points lying outside the
+    tube. This involves maximizing
+
+    <\equation*>
+      <wide|L|~><around*|(|a,<wide|a|^>|)>=-<frac|1|2><big|sum><rsub|n=1><rsup|N><big|sum><rsub|m=1><rsup|N><around*|(|a<rsub|n>-<wide|a|^><rsub|n>|)><around*|(|a<rsub|m>-<wide|a|^><rsub|m>|)>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>+<big|sum><rsub|n=1><rsup|N><around*|(|a<rsub|n>-<wide|a|^><rsub|n>|)>t<rsub|n>
+    </equation*>
+
+    subject to the constraints
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|0\<leqslant\>>|<cell|a<rsub|n>>|<cell|\<leqslant\>C/N>>|<row|<cell|0\<leqslant\>>|<cell|<wide|a|^><rsub|n>>|<cell|\<leqslant\>C/N>>|<row|<cell|<big|sum><rsub|n=1><rsup|N><around*|(|a<rsub|n>-<wide|a|^><rsub|n>|)>>|<cell|=>|<cell|0>>|<row|<cell|<big|sum><rsub|n=1><rsup|N><around*|(|a<rsub|n>+<wide|a|^><rsub|n>|)>>|<cell|\<leqslant\>>|<cell|\<nu\>C>>>>
+    </eqnarray*>
+
+    It can be shown that there are at most <math|\<nu\>N> data points falling
+    outside the insensitive tube, while at least <math|\<nu\>N> data points
+    are support vectors and so lie either on the tube or outside it.
   </hidden>|<\shown>
     \;
+
+    \;
+
+    <image|img/7_8_n_svm_regression.png|1par|||>
   </shown>>
 </body>
 
@@ -641,6 +760,17 @@
     <associate|7.33|<tuple|13|1>>
     <associate|7.34|<tuple|14|1>>
     <associate|7.5|<tuple|2|?>>
+    <associate|7.53|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
+    <associate|7.54|<tuple|16|?>>
+    <associate|7.57|<tuple|17|?>>
+    <associate|7.58|<tuple|18|?>>
+    <associate|7.59|<tuple|19|?>>
+    <associate|7.60|<tuple|20|?>>
+    <associate|7.64|<tuple|22|?>>
+    <associate|7.65|<tuple|22|?>>
+    <associate|7.66|<tuple|23|?>>
+    <associate|7.67|<tuple|24|?>>
+    <associate|7.68|<tuple|25|?>>
     <associate|7.8|<tuple|3|?>>
     <associate|7.9|<tuple|4|?>>
   </collection>
