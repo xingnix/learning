@@ -76,7 +76,7 @@
   </hidden>|<\hidden>
     \;
 
-    <image|img/7_1margin.png|1par|||>
+    <math|\<b-varphi\>(x)><image|img/7_1margin.png|1par|||>
   </hidden>|<\hidden>
     Recall from Figure 4.1 that the perpendicular distance of a point x from
     a hyper- plane defined by <math|y(x)=0> where <math|y(x)> takes the form
@@ -141,8 +141,9 @@
     inequality constraints.
   </hidden>|<\hidden>
     In order to solve this constrained optimization problem, we introduce
-    Lagrange multipliers an \N 0, with one multiplier an for each of the
-    constraints in Eq. <eqref|7.5>, giving the Lagrangian function
+    Lagrange multipliers <math|a<rsub|n>\<gtr\>0>, with one multiplier an for
+    each of the constraints in Eq. <eqref|7.5>, giving the Lagrangian
+    function
 
     <\equation*>
       L<around*|(|\<b-w\>,b,\<b-a\>|)>=<frac|1|2><around*|\<\|\|\>|\<b-w\>|\<\|\|\>><rsup|2>-<big|sum><rsub|n=1><rsup|N>a<rsub|n><around*|{|t<rsub|n><around*|(|\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>+b|)>-1|}>
@@ -230,6 +231,8 @@
     regularization parameter satisfies <math|\<lambda\>\<gtr\>0>, its precise
     value plays no role.
   </hidden>|<\hidden>
+    \;
+
     <image|img/7_2example.png|1par|||>
   </hidden>|<\hidden>
     <tit|Overlapping class distributions>
@@ -449,7 +452,7 @@
     The required conditional probability is assumed to be of the form\ 
 
     <\equation*>
-      p(t=1\|x)=\<sigma\>(Ay(x)+B)
+      p(t=1\|x)=\<sigma\>(A y(x)+B)
     </equation*>
 
     where <math|y(x)> is defined by <eqref|7.1>.
@@ -535,7 +538,7 @@
 
       <item>one-versus-one
 
-      <item>based on error-correcting out- put codes
+      <item>based on error-correcting out-put codes
 
       <item>single-class support vector machines
     </itemize-dot>
@@ -553,7 +556,7 @@
 
     To obtain sparse solutions, the quadratic error function is replaced by
     an <math|\<varepsilon\>>-insensitive error function. which gives zero
-    error if the absolute difference be- tween the prediction <math|y(x)> and
+    error if the absolute difference be-tween the prediction <math|y(x)> and
     the target <math|t> is less than <math|\<varepsilon\>> where
     <math|\<varepsilon\>\<gtr\>0>.
   </hidden>|<\hidden>
@@ -655,8 +658,9 @@
     <math|<wide|a|^><rsub|n>\<geqslant\>0> are both required because these
     are Lagrange multipliers. Also <math|\<mu\><rsub|n>\<geqslant\>0> and
     <math|<wide|\<mu\>|^><rsub|n>\<geqslant\>0> together with <eqref|7.59>
-    and <eqref|7.60>, require an a\<#300\> C and an a\<#300\> C, and so again
-    we have the box constraints
+    and <eqref|7.60>, require <math|a<rsub|n>\<leqslant\>C> and
+    <math|a<rsub|n><rsub|>\<leqslant\>C>, and so again we have the box
+    constraints
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|0\<leqslant\>>|<cell|a<rsub|n>>|<cell|\<leqslant\>C>>|<row|<cell|0\<leqslant\>>|<cell|<wide|a|^><rsub|n>>|<cell|\<leqslant\>C>>>>
@@ -694,12 +698,12 @@
     adding them together and noting that <math|\<xi\><rsub|n>> and
     <math|<wide|\<xi\>|^><rsub|n>> are nonnegative while
     <math|\<varepsilon\>> is strictly positive, and so for every data point
-    <math|x<rsub|n>>, either <math|a<rsub|n>> or <math|<wide|a<rsub|n>|^>>
+    <math|x<rsub|n>>, either <math|a<rsub|n>> or <math|<wide|a|^><rsub|n>>
     (or both) must be zero.
   </hidden>|<\hidden>
     The parameter b can be found by considering a data point for which
     <math|0 \<less\> a<rsub|n> \<less\> C>, which from <eqref|7.67> must have
-    \<xi\>n = 0, and from <eqref|7.65> must therefore satisfy
+    <math|\<xi\><rsub|n> = 0>, and from <eqref|7.65> must therefore satisfy
     <math|\<varepsilon\>+ y<rsub|n> \<minus\> t<rsub|n> = 0>. Using
     <eqref|7.1> and solving for <math|b>, we obtain
 
@@ -738,6 +742,7 @@
 
 <\initial>
   <\collection>
+    <associate|info-flag|minimal>
     <associate|page-height|auto>
     <associate|page-medium|paper>
     <associate|page-type|16:9>
