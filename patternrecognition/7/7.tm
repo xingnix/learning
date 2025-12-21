@@ -731,12 +731,259 @@
     It can be shown that there are at most <math|\<nu\>N> data points falling
     outside the insensitive tube, while at least <math|\<nu\>N> data points
     are support vectors and so lie either on the tube or outside it.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     \;
 
     <image|img/7_8_n_svm_regression.png|1par|||>
+  </hidden>|<\hidden>
+    <tit|Computational learning theory>
+
+    <\description>
+      <item*|Probably approximately correct, or PAC>A function
+      <math|f(x;\<cal-D\>)>, drawn from a space <math|\<cal-F\>> of such
+      functions on the basis of the training set <math|\<cal-D\>>, has good
+      generalization if its expected error rate is below some pre-specified
+      threshold <math|\<varepsilon\>>, so that\ 
+
+      <\equation>
+        E<rsub|x,t> [I (f(x; \<cal-D\>)\<neq\> t)]
+        \<less\>\<varepsilon\><label|7.75>
+      </equation>
+
+      where <math|I(\<cdummy\>)> is the indicator function, and the
+      expectation is with respect to the distribution <math|p(x,t)>. The
+      quantity on the left-hand side is a random variable, because it depends
+      on the training set <math|\<cal-D\>>, and the PAC framework requires
+      that <eqref|7.75> holds, with probability greater than
+      <math|1\<minus\>\<delta\>>, for a data set <math|\<cal-D\>> drawn
+      randomly from <math|p(x,t)>.
+
+      <item*|Vapnik-Chervonenkis dimension, or VC dimension>provides a
+      measure of the complexity of a space of functions, and which allows the
+      PAC framework to be extended to spaces containing an infinite number of
+      functions.
+    </description>
+  </hidden>|<\hidden>
+    <tit|Relevance Vector Machines>
+
+    <\itemize-dot>
+      <item>the outputs of an SVM represent decisions rather than posterior
+      probabilities.
+
+      the SVM was originally formulated for two classes, and the extension to
+      K\<gtr\>2 classes is prob- lematic. There is a complexity parameter C,
+      or \<nu\> (as well as a parameter <math|\<varepsilon\>> in the case of
+      regression), that must be found using a hold-out method such as
+      cross-validation.\ 
+
+      Predictions are expressed as linear combinations of kernel functions
+      that are centred on training data points and that are required to be
+      positive definite.
+
+      <item>The relevance vector machine or RVM is a Bayesian sparse kernel
+      technique for regression and classification that shares many of the
+      characteristics of the SVM whilst avoiding its principal limitations.\ 
+
+      Additionally, it typically leads to much sparser models resulting in
+      correspondingly faster performance on test data whilst maintaining
+      comparable generalization error.
+    </itemize-dot>
+  </hidden>|<\hidden>
+    <tit|RVM for regression>
+
+    The relevance vector machine for regression is a linear model of the form
+    studied in Chapter 3 but with a modified prior that results in sparse
+    solutions. The model defines a conditional distribution for a real-valued
+    target variable <math|t>, given an input vector <math|\<b-x\>>, which
+    takes the form
+
+    <\equation>
+      p<around*|(|t<around*|\||\<b-x\>,\<b-w\>,\<beta\>|\<nobracket\>>|)>=\<cal-N\><around*|(|t<around*|\||y<around*|(|\<b-x\>|)>,\<beta\><rsup|-1>|\<nobracket\>>|)><label|7.76>
+    </equation>
+
+    where <math|\<beta\>=\<sigma\><rsup|\<minus\>2>> is the noise precision
+    (inverse noise variance), and the mean is given by a linear model of the
+    form
+
+    <\equation>
+      y<around*|(|x|)>=<big|sum><rsub|i=1><rsup|M>w<rsub|i>\<varphi\><rsub|i><around*|(|\<b-x\>|)>=\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\>|)><label|7.77>
+    </equation>
+
+    with fixed nonlinear basis functions <math|\<varphi\><rsub|i>(\<b-x\>)>,
+    which will typically include a constant term so that the corresponding
+    weight parameter represents a `bias'.
+  </hidden>|<\hidden>
+    <tit|SVM-like form>
+
+    \;
+
+    The relevance vector machine is a specific instance of this model, which
+    is intended to mirror the structure of the support vector machine.
+
+    In particular, the basis functions are given by kernels, with one kernel
+    associated with each of the data points from the training set.\ 
+
+    The general expression <eqref|7.77> then takes the SVM-like form
+
+    <\equation*>
+      y<around*|(|\<b-x\>|)>=<big|sum><rsub|n=1><rsup|N>w<rsub|n>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>+b
+    </equation*>
+
+    where b is a bias parameter.
+
+    In contrast to the SVM, there is no restriction to positive-definite
+    kernels, nor are the basis functions tied in either number or location to
+    the training data points.
+  </hidden>|<\hidden>
+    <tit|Likelihood & prior>
+
+    \;
+
+    Suppose we are given a set of <math|N> observations of the input vector
+    <math|\<b-x\>>, which we denote collectively by a data matrix <math|X>
+    whose <math|n<rsup|th>> row is <math|x<rsup|T><rsub|n>> with
+    <math|n=1,\<cdots\>,N>. The corresponding target values are given by
+    <math|t=(t<rsub|1>,\<cdots\>,t<rsub|N>)<rsup|T>>. Thus, the likelihood
+    function is given by
+
+    <\equation*>
+      p<around*|(|\<b-t\><around*|\||X,\<b-w\>,\<beta\>|\<nobracket\>>|)>=<big|prod><rsub|n=1><rsup|N>p<around*|(|t<rsub|n><around*|\||\<b-x\><rsub|n>,\<b-w\>,\<beta\><rsup|-1>|\<nobracket\>>|)>
+    </equation*>
+
+    \ the weight prior takes the form
+
+    <\equation*>
+      p<around*|(|\<b-w\><around*|\||\<b-alpha\>|\<nobracket\>>|)>=<big|prod><rsub|i=1><rsup|N>\<cal-N\><around*|(|w<rsub|i><around*|\||0,\<alpha\><rsup|-1><rsub|i>|\<nobracket\>>|)>
+    </equation*>
+
+    where <math|\<alpha\><rsub|i>> represents the precision of the
+    corresponding parameter <math|w<rsub|i>>, and <math|\<alpha\>> denotes
+    <math|(\<alpha\><rsub|1>,\<cdots\>,\<alpha\><rsub|M>)<rsup|T>>.
+  </hidden>|<\hidden>
+    <tit|Posterior>
+
+    Using the result (3.49) for linear regression models, we see that the
+    posterior distribution for the weights is again Gaussian and takes the
+    form
+
+    <\equation>
+      p(\<b-w\>\|\<b-t\>, X, \<b-alpha\>, \<beta\>) =
+      \<cal-N\>(\<b-w\>\|\<b-m\>,\<b-Sigma\>)<label|7.81>
+    </equation>
+
+    where the mean and covariance are given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-m\>>|<cell|=>|<cell|\<beta\>\<b-Sigma\>\<b-Phi\><rsup|T>\<b-t\><label|7.82><eq-number>>>|<row|<cell|\<b-Sigma\>>|<cell|=>|<cell|<around*|(|A+\<beta\>\<b-Phi\><rsup|T>\<b-Phi\>|)><rsup|-1><label|7.83><eq-number>>>>>
+    </eqnarray*>
+
+    where <math|\<b-Phi\>> is the <math|N\<times\>M> design matrix with
+    elements <math|\<Phi\><rsub|ni>=\<varphi\><rsub|i>(\<b-x\><rsub|n>)>, and
+    <math|A=diag(\<alpha\><rsub|i>)>.
+  </hidden>|<\hidden>
+    <tit|Evidence approximation>
+
+    maximize the marginal likeli- hood function obtained by integrating out
+    the weight parameters
+
+    <\equation*>
+      p<around*|(|\<b-t\><around*|\||X,\<b-alpha\>,\<beta\>|\<nobracket\>>|)>=<big|int>p<around*|(|\<b-t\><around*|\||X,\<b-w\>,\<beta\>|\<nobracket\>>|)>p<around*|(|\<b-w\><around*|\||\<b-alpha\>|\<nobracket\>>|)>\<mathd\>\<b-w\>
+    </equation*>
+
+    Because this represents the convolution of two Gaussians, it is readily
+    evaluated to\ 
+
+    give the log marginal likelihood in the form
+
+    <\equation*>
+      ln p<around*|(|\<b-t\><around*|\||X,\<b-alpha\>,\<beta\>|\<nobracket\>>|)>=ln
+      \<cal-N\><around*|(|\<b-t\><around*|\||\<b-0\>,C|\<nobracket\>>|)>-<frac|1|2><around*|{|N
+      ln<around*|(|2\<pi\>|)>+ln<around*|\||C|\|>+\<b-t\><rsup|T>C<rsup|-1>\<b-t\>|}>
+    </equation*>
+
+    where <math|t = (t<rsub|1>,\<cdots\>, t<rsub|N>)<rsup|T>>, and we have
+    defined the <math|N\<times\>N> matrix <math|C> given by
+
+    <\equation*>
+      C=\<beta\><rsup|\<minus\>1>\<b-I\>+\<b-Phi\>A<rsup|\<minus\>1>\<b-Phi\><rsup|T>.
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|Alternately re-estimating>
+
+    \;
+
+    set the required derivatives of the marginal likelihood to zero and
+    obtain the following re-estimation equations
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<alpha\><rsup|new><rsub|i>>|<cell|=>|<cell|<frac|\<gamma\><rsub|i>|m<rsup|2><rsub|i>>>>|<row|<cell|<around*|(|\<beta\><rsup|new>|)><rsup|-1>>|<cell|=>|<cell|<frac|<around*|\<\|\|\>|\<b-t\>-\<b-Phi\>\<b-m\>|\<\|\|\>><rsup|2>|N-<big|sum><rsub|i>\<gamma\><rsub|i>>>>>>
+    </eqnarray*>
+
+    where <math|m<rsub|i>> is the <math|i<rsup|th>> component of the
+    posterior mean <math|\<b-m\>> defined by <eqref|7.82>. The quantity
+    <math|\<gamma\><rsub|i>> measures how well the corresponding parameter
+    <math|w<rsub|i>> is determined by the data and is defined by
+
+    <\equation*>
+      \<gamma\><rsub|i>=1-\<alpha\><rsub|i>\<Sigma\><rsub|ii>
+    </equation*>
+
+    in which <math|\<Sigma\><rsub|ii>> is the ith diagonal component of the
+    posterior covariance <math|\<Sigma\>> given by <eqref|7.83>.
+  </hidden>|<\hidden>
+    <tit|Predictive distribution>
+
+    Having found values <math|\<alpha\><rsup|\<ast\>>> and
+    <math|\<beta\><rsup|\<ast\>>> for the hyperparameters that maximize the
+    marginal likelihood, we can evaluate the predictive distribution over
+    <math|t> for a new input <math|x>. Using <eqref|7.76> and <eqref|7.81>,
+    this is given by\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p(t\|x,X,t,\<alpha\><rsup|\<ast\>>
+      ,\<beta\><rsup|\<ast\>> ) >|<cell|=>|<cell|<big|int>
+      p(t\|x,w,\<beta\><rsup|\<ast\>> )p(w\|X,t,\<alpha\><rsup|\<ast\>>,\<beta\><rsup|\<ast\>>
+      )dw >>|<row|<cell|>|<cell|=>|<cell| \<cal-N\><around*|(|
+      t\|m<rsup|T>\<varphi\>(x), \<sigma\><rsup|2>(x)|)>.>>>>
+    </eqnarray*>
+
+    Thus the predictive mean is given by <eqref|7.76> with <math|w> set equal
+    to the posterior mean <math|m>, and the variance of the predictive
+    distribution is given by\ 
+
+    <\equation*>
+      \<sigma\><rsup|2>(\<b-x\>) = (\<beta\> <rsup|\<ast\>>)<rsup|\<minus\>1>
+      + \<varphi\>(\<b-x\>)<rsup|T>\<Sigma\>\<varphi\>(\<b-x\>)
+    </equation*>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    <image|img/7.9_rvm_regression.png|1par|||>
+  </hidden>|<\hidden>
+    <tit|Analysis of sparsity>
+
+    Consider a data set comprising <math|N = 2> observations <math|t<rsub|1>>
+    and <math|t<rsub|2>>, together with a model having a single basis
+    function <math|\<varphi\>(x)>, with hyperparameter <math|\<alpha\>>,
+    along with isotropic noise having precision <math|\<beta\>>. From
+    <eqref|7.85>, the marginal likelihood is given by <math|p(t\|\<alpha\>,
+    \<beta\>) = \<cal-N\>(t\|0, C)> in which the covariance matrix takes the
+    form\ 
+
+    <\equation*>
+      C = <frac|1|\<beta\>> \<b-I\> + <frac|1|\<alpha\>>
+      \<b-varphi\>\<b-varphi\><rsup|T>
+    </equation*>
+
+    where <math|\<b-varphi\>> denotes the <math|N>-dimensional vector
+    <math|(\<varphi\>(\<b-x\><rsub|1>),\<varphi\>(\<b-x\><rsub|2>))<rsup|T>>,
+    and similarly <math|t = (t<rsub|1>,t<rsub|2>)<rsup|T>>.
+  </hidden>|<\shown>
+    <image|img/7_10_sparse.png|1par|||>
   </shown>>
 </body>
 
@@ -776,7 +1023,13 @@
     <associate|7.66|<tuple|23|?>>
     <associate|7.67|<tuple|24|?>>
     <associate|7.68|<tuple|25|?>>
+    <associate|7.75|<tuple|27|?>>
+    <associate|7.76|<tuple|28|?>>
+    <associate|7.77|<tuple|29|?>>
     <associate|7.8|<tuple|3|?>>
+    <associate|7.81|<tuple|30|?>>
+    <associate|7.82|<tuple|30|?>>
+    <associate|7.83|<tuple|31|?>>
     <associate|7.9|<tuple|4|?>>
   </collection>
 </references>
