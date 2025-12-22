@@ -897,18 +897,18 @@
 
     give the log marginal likelihood in the form
 
-    <\equation*>
+    <\equation>
       ln p<around*|(|\<b-t\><around*|\||X,\<b-alpha\>,\<beta\>|\<nobracket\>>|)>=ln
       \<cal-N\><around*|(|\<b-t\><around*|\||\<b-0\>,C|\<nobracket\>>|)>-<frac|1|2><around*|{|N
-      ln<around*|(|2\<pi\>|)>+ln<around*|\||C|\|>+\<b-t\><rsup|T>C<rsup|-1>\<b-t\>|}>
-    </equation*>
+      ln<around*|(|2\<pi\>|)>+ln<around*|\||C|\|>+\<b-t\><rsup|T>C<rsup|-1>\<b-t\>|}><label|7.85>
+    </equation>
 
     where <math|t = (t<rsub|1>,\<cdots\>, t<rsub|N>)<rsup|T>>, and we have
     defined the <math|N\<times\>N> matrix <math|C> given by
 
-    <\equation*>
-      C=\<beta\><rsup|\<minus\>1>\<b-I\>+\<b-Phi\>A<rsup|\<minus\>1>\<b-Phi\><rsup|T>.
-    </equation*>
+    <\equation>
+      C=\<beta\><rsup|\<minus\>1>\<b-I\>+\<b-Phi\>A<rsup|\<minus\>1>\<b-Phi\><rsup|T>.<label|7.86>
+    </equation>
   </hidden>|<\hidden>
     <tit|Alternately re-estimating>
 
@@ -982,8 +982,64 @@
     where <math|\<b-varphi\>> denotes the <math|N>-dimensional vector
     <math|(\<varphi\>(\<b-x\><rsub|1>),\<varphi\>(\<b-x\><rsub|2>))<rsup|T>>,
     and similarly <math|t = (t<rsub|1>,t<rsub|2>)<rsup|T>>.
+  </hidden>|<\hidden>
+    \;
+
+    <space|2em><image|img/7_10_sparse.png|0.9par|||>
+  </hidden>|<\hidden>
+    <tit|Sparsity from a more mathematical perspective>
+
+    pull out the contribution from \<alpha\>i in the matrix C defined by
+    <eqref|7.86> to give
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|C>|<cell|=>|<cell|\<beta\><rsup|-1>\<b-I\>+<big|sum><rsub|j\<neq\>i>\<alpha\><rsup|-1><rsub|j>\<b-varphi\><rsub|j>\<b-varphi\><rsup|T><rsub|j>+\<alpha\><rsup|-1><rsub|i>\<b-varphi\><rsub|i>\<b-varphi\><rsup|T><rsub|i>>>|<row|<cell|>|<cell|=>|<cell|C<rsub|-i>+\<alpha\><rsup|-1><rsub|i>\<b-varphi\><rsub|i>\<b-varphi\><rsup|T><rsub|i>>>>>
+    </eqnarray*>
+
+    where <math|\<varphi\><rsub|i>> denotes the ith column of <math|\<Phi\>>,
+    in other words the N-dimensional vector with elements
+    <math|(\<varphi\><rsub|i>(x<rsub|1>),\<cdots\>
+    ,\<varphi\><rsub|i>(x<rsub|N>))>, in contrast to
+    <math|\<varphi\><rsub|n>>, which denotes the nth row of <math|\<Phi\>>.
+    the determinant and inverse of <math|C> can then be written
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<around*|\||C|\|>>|<cell|=>|<cell|<around*|\||C<rsub|-i>|\|><around*|\||1+\<alpha\><rsup|-1><rsub|i>\<varphi\><rsup|T><rsub|i>C<rsup|-1><rsub|-i>|\|>>>|<row|<cell|C<rsup|-1>>|<cell|=>|<cell|C<rsup|-1><rsub|-i>-<frac|C<rsup|-1><rsub|-i>\<varphi\><rsub|i>\<varphi\><rsup|T><rsub|i>C<rsup|-1><rsub|-i>|\<alpha\><rsub|i>+\<varphi\><rsup|T><rsub|i>C<rsup|-1><rsub|-i>\<varphi\><rsub|i>>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    write the log marginal likelihood function (7.85) in the form\ 
+
+    <\equation*>
+      L(\<alpha\>) = L(\<alpha\><rsub|\<minus\>i>) +
+      \<lambda\>(\<alpha\><rsub|i>)
+    </equation*>
+
+    where <math|L(\<alpha\><rsub|\<minus\>i>)> is simply the log marginal
+    likelihood with basis function <math|\<varphi\><rsub|i>> omitted, and the
+    quantity <math|\<lambda\>(\<alpha\><rsub|i>)> is defined by
+
+    <\equation*>
+      \<lambda\><around*|(|\<alpha\><rsub|i>|)>=<frac|1|2><around*|[|ln\<alpha\><rsub|i>-ln<around*|(|\<alpha\><rsub|i>+s<rsub|i>|)>+<frac|q<rsup|2><rsub|i>|\<alpha\><rsub|i>+s<rsub|i>>|]>
+    </equation*>
+
+    and contains all of the dependence on <math|\<alpha\><rsub|i>>. Here we
+    have introduced the two quantities\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|s<rsub|i>>|<cell|=>|<cell|\<b-varphi\><rsup|T><rsub|i>C<rsup|-1><rsub|-i>\<b-varphi\><rsub|i>>>|<row|<cell|q<rsub|i>>|<cell|=>|<cell|\<b-varphi\><rsup|T><rsub|i>C<rsup|-1><rsub|-i>\<b-t\>>>>>
+    </eqnarray*>
+
+    Here <math|s<rsub|i>> is called the <strong|sparsity> and
+    <math|q<rsub|i>> is known as the <strong|quality> of
+    <math|\<varphi\><rsub|i>>,
   </hidden>|<\shown>
-    <image|img/7_10_sparse.png|1par|||>
+    \;
+
+    \;
+
+    \;
+
+    <image|img/7_11_sparsity_quality.png|1par|||>
   </shown>>
 </body>
 
@@ -1030,6 +1086,8 @@
     <associate|7.81|<tuple|30|?>>
     <associate|7.82|<tuple|30|?>>
     <associate|7.83|<tuple|31|?>>
+    <associate|7.85|<tuple|33|?>>
+    <associate|7.86|<tuple|34|?>>
     <associate|7.9|<tuple|4|?>>
   </collection>
 </references>
