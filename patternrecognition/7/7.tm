@@ -1032,7 +1032,7 @@
     Here <math|s<rsub|i>> is called the <strong|sparsity> and
     <math|q<rsub|i>> is known as the <strong|quality> of
     <math|\<varphi\><rsub|i>>,
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     \;
@@ -1040,6 +1040,26 @@
     \;
 
     <image|img/7_11_sparsity_quality.png|1par|||>
+  </hidden>|<\shown>
+    The stationary points of the marginal likelihood with respect to
+    <math|\<alpha\><rsub|i>> occur when the derivative
+
+    <\equation*>
+      <frac|\<mathd\>\<lambda\><around*|(|\<alpha\><rsub|i>|)>|\<mathd\>\<alpha\><rsub|i>>=<frac|\<alpha\><rsup|-1><rsub|i>s<rsup|2><rsub|i>-<around*|(|q<rsup|2><rsub|i>-s<rsub|i>|)>|2<around*|(|\<alpha\><rsub|i>+s<rsub|i>|)><rsup|2>>
+    </equation*>
+
+    is equal to zero.
+
+    There are two possible forms for the solution. Recalling that
+    <math|\<alpha\><rsub|i>\<less\>0>, we see that if
+    <math|q<rsub|i><rsup|2>\<less\>s<rsub|i>>, then
+    <math|\<alpha\><rsub|i>\<rightarrow\>\<infty\>> provides a solution.
+    Conversely, if <math|q<rsub|i><rsup|2>\<gtr\>s<rsub|i>>, we can solve for
+    <math|\<alpha\><rsub|i>> to obtain
+
+    <\equation*>
+      \<alpha\><rsub|i>=<frac|s<rsup|2><rsub|i>|q<rsup|2><rsub|i>-s<rsub|i>>
+    </equation*>
   </shown>>
 </body>
 
