@@ -1000,8 +1000,9 @@
     in other words the N-dimensional vector with elements
     <math|(\<varphi\><rsub|i>(x<rsub|1>),\<cdots\>
     ,\<varphi\><rsub|i>(x<rsub|N>))>, in contrast to
-    <math|\<varphi\><rsub|n>>, which denotes the nth row of <math|\<Phi\>>.
-    the determinant and inverse of <math|C> can then be written
+    <math|\<varphi\><rsub|n>>, which denotes the <math|n<rsup|th>> row of
+    <math|\<Phi\>>. the determinant and inverse of <math|C> can then be
+    written
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|<around*|\||C|\|>>|<cell|=>|<cell|<around*|\||C<rsub|-i>|\|><around*|\||1+\<alpha\><rsup|-1><rsub|i>\<varphi\><rsup|T><rsub|i>C<rsup|-1><rsub|-i>|\|>>>|<row|<cell|C<rsup|-1>>|<cell|=>|<cell|C<rsup|-1><rsub|-i>-<frac|C<rsup|-1><rsub|-i>\<varphi\><rsub|i>\<varphi\><rsup|T><rsub|i>C<rsup|-1><rsub|-i>|\<alpha\><rsub|i>+\<varphi\><rsup|T><rsub|i>C<rsup|-1><rsub|-i>\<varphi\><rsub|i>>>>>>
@@ -1057,10 +1058,50 @@
     Conversely, if <math|q<rsub|i><rsup|2>\<gtr\>s<rsub|i>>, we can solve for
     <math|\<alpha\><rsub|i>> to obtain
 
-    <\equation*>
-      \<alpha\><rsub|i>=<frac|s<rsup|2><rsub|i>|q<rsup|2><rsub|i>-s<rsub|i>>
-    </equation*>
-  </shown>>
+    <\equation>
+      \<alpha\><rsub|i>=<frac|s<rsup|2><rsub|i>|q<rsup|2><rsub|i>-s<rsub|i>><label|7.101>
+    </equation>
+  </shown>|<\hidden>
+    <tit|Sequential sparse Bayesian learning algorithm>
+
+    <\itemize-dot>
+      <item>1. If solving a regression problem, initialize <math|\<beta\>>.
+
+      <item>Initialize one basis function <math|\<varphi\><rsub|1>>, with
+      hyperparameter \<alpha\>1 set using <eqref|7.101>, with the remaining
+      hyperparameters <math|\<alpha\><rsub|j>> for <math|j\<neq\>i>
+      initialized to infinity. Only <math|\<varphi\><rsub|1>> is included in
+      the model.
+
+      <item>Evaluate <math|\<Sigma\>> and <math|m>, along with
+      <math|q<rsub|i>> and <math|s<rsub|i>> for all basis functions.\ 
+
+      <item>Select a candidate basis function <math|\<varphi\><rsub|i>>.\ 
+
+      <item>If <math|q<rsub|i><rsup|2>\<gtr\>s<rsub|i>>, and
+      <math|\<alpha\><rsub|i>\<less\>\<infty\>>, so that the basis vector
+      <math|\<varphi\><rsub|i>> is already included in the model, then update
+      <math|\<alpha\><rsub|i>> using <eqref|7.101>.\ 
+
+      <item>If <math|q<rsub|i><rsup|2>\<gtr\>s<rsub|i>>,
+      <math|\<alpha\><rsub|i>=\<infty\>>, then add <math|\<varphi\><rsub|i>>
+      to the model, and evaluate hyperparameter <math|\<alpha\><rsub|i>>
+      using <eqref|7.101>.\ 
+
+      <item>If <math|q<rsub|i><rsup|2>\<less\>s<rsub|i>>, and
+      <math|\<alpha\><rsub|i>\<less\>\<infty\>> then remove basis function
+      <math|\<varphi\><rsub|i>> from the model, and set
+      <math|\<alpha\><rsub|i>=\<infty\>>.\ 
+
+      <item>If solving a regression problem, update <math|\<beta\>>.\ 
+
+      <item>If converged terminate, otherwise go to 3.\ 
+    </itemize-dot>
+  </hidden>|<\hidden>
+    <tit|>
+
+    \;
+  </hidden>>
 </body>
 
 <\initial>
@@ -1077,6 +1118,7 @@
   <\collection>
     <associate|7.1|<tuple|1|1>>
     <associate|7.10|<tuple|5|?>>
+    <associate|7.101|<tuple|35|?>>
     <associate|7.13|<tuple|6|?>>
     <associate|7.21|<tuple|7|?>>
     <associate|7.25|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
