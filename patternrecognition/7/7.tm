@@ -3,7 +3,7 @@
 <style|<tuple|beamer|manila-paper>>
 
 <\body>
-  <screens|<\hidden>
+  <screens|<\shown>
     \;
 
     \;
@@ -19,7 +19,7 @@
     </doc-title>>
 
     \;
-  </hidden>|<\hidden>
+  </shown>|<\hidden>
     \;
 
     <\itemize-dot>
@@ -854,9 +854,9 @@
 
     \ the weight prior takes the form
 
-    <\equation*>
-      p<around*|(|\<b-w\><around*|\||\<b-alpha\>|\<nobracket\>>|)>=<big|prod><rsub|i=1><rsup|N>\<cal-N\><around*|(|w<rsub|i><around*|\||0,\<alpha\><rsup|-1><rsub|i>|\<nobracket\>>|)>
-    </equation*>
+    <\equation>
+      p<around*|(|\<b-w\><around*|\||\<b-alpha\>|\<nobracket\>>|)>=<big|prod><rsub|i=1><rsup|N>\<cal-N\><around*|(|w<rsub|i><around*|\||0,\<alpha\><rsup|-1><rsub|i>|\<nobracket\>>|)><label|7.80>
+    </equation>
 
     where <math|\<alpha\><rsub|i>> represents the precision of the
     corresponding parameter <math|w<rsub|i>>, and <math|\<alpha\>> denotes
@@ -918,7 +918,7 @@
     obtain the following re-estimation equations
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<alpha\><rsup|new><rsub|i>>|<cell|=>|<cell|<frac|\<gamma\><rsub|i>|m<rsup|2><rsub|i>>>>|<row|<cell|<around*|(|\<beta\><rsup|new>|)><rsup|-1>>|<cell|=>|<cell|<frac|<around*|\<\|\|\>|\<b-t\>-\<b-Phi\>\<b-m\>|\<\|\|\>><rsup|2>|N-<big|sum><rsub|i>\<gamma\><rsub|i>>>>>>
+      <tformat|<table|<row|<cell|\<alpha\><rsup|new><rsub|i>>|<cell|=>|<cell|<frac|\<gamma\><rsub|i>|m<rsup|2><rsub|i>><label|7.87><eq-number>>>|<row|<cell|<around*|(|\<beta\><rsup|new>|)><rsup|-1>>|<cell|=>|<cell|<frac|<around*|\<\|\|\>|\<b-t\>-\<b-Phi\>\<b-m\>|\<\|\|\>><rsup|2>|N-<big|sum><rsub|i>\<gamma\><rsub|i>>>>>>
     </eqnarray*>
 
     where <math|m<rsub|i>> is the <math|i<rsup|th>> component of the
@@ -1041,7 +1041,7 @@
     \;
 
     <image|img/7_11_sparsity_quality.png|1par|||>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     The stationary points of the marginal likelihood with respect to
     <math|\<alpha\><rsub|i>> occur when the derivative
 
@@ -1061,7 +1061,7 @@
     <\equation>
       \<alpha\><rsub|i>=<frac|s<rsup|2><rsub|i>|q<rsup|2><rsub|i>-s<rsub|i>><label|7.101>
     </equation>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|Sequential sparse Bayesian learning algorithm>
 
     <\itemize-dot>
@@ -1098,9 +1098,210 @@
       <item>If converged terminate, otherwise go to 3.\ 
     </itemize-dot>
   </hidden>|<\hidden>
-    <tit|>
+    \;
+
+    In practice, it is convenient to evaluate the quantities\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|Q<rsub|i>>|<cell|=>|<cell|\<b-varphi\><rsup|T><rsub|i>C<rsup|\<minus\>1>
+      \<b-t\>>>|<row|<cell|S<rsub|i>>|<cell|=>|<cell|\<b-varphi\><rsup|T><rsub|i>C<rsup|-1>\<b-varphi\><rsub|i>>>>>
+    </eqnarray*>
+
+    The quality and sparseness variables can then be expressed in the form
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|q<rsub|i>>|<cell|=>|<cell|<frac|\<alpha\><rsub|i>Q<rsub|i>|\<alpha\><rsub|i>-S<rsub|i>>>>|<row|<cell|s<rsub|i>>|<cell|=>|<cell|<frac|\<alpha\><rsub|i>S<rsub|i>|\<alpha\><rsub|i>-S<rsub|i>>>>>>
+    </eqnarray*>
 
     \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    Note that when <math|\<alpha\><rsub|i> = \<infty\>>, we have
+    <math|q<rsub|i> = Q<rsub|i>> and <math|s<rsub|i> = S<rsub|i>>. Using
+    (C.7), we can write
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|Q<rsub|i>>|<cell|=>|<cell|\<beta\>\<b-varphi\><rsup|T><rsub|i>\<b-t\>-\<beta\><rsup|2>\<b-varphi\><rsup|T><rsub|i>\<Phi\>\<Sigma\>\<Phi\><rsup|T>\<b-t\>>>|<row|<cell|S<rsub|i>>|<cell|=>|<cell|\<beta\>\<b-varphi\><rsup|T><rsub|i>\<b-varphi\><rsub|i>-\<beta\><rsup|2>\<b-varphi\><rsup|T><rsub|i>\<Phi\>\<Sigma\>\<Phi\><rsup|T>\<b-varphi\><rsub|i>>>>>
+    </eqnarray*>
+
+    where <math|\<Phi\>> and <math|\<Sigma\>> involve only those basis
+    vectors that correspond to finite hyperparameters
+    <math|\<alpha\><rsub|i>>.\ 
+
+    At each stage the required computations therefore scale like
+    <math|O(M<rsup|3>)>, where M is the number of active basis vectors in the
+    model and is typically much smaller than the number <math|N> of training
+    patterns.
+  </hidden>|<\hidden>
+    <tit|RVM for classification>
+
+    To start with, we consider two-class problems with a binary target
+    variable <math|t\<in\>{0,1}>. The model now takes the form of a linear
+    combination of basis functions transformed by a logistic sigmoid function\ 
+
+    <\equation*>
+      y(\<b-x\>,\<b-w\>)=\<sigma\><around*|(|\<b-w\><rsup|T>\<b-varphi\>(\<b-x\>)|)>
+    </equation*>
+
+    where <math|\<sigma\>(\<cdummy\>)> is the logistic sigmoid function
+    defined by (4.59). If we introduce a Gaussian prior over the weight
+    vector <math|\<b-w\>>, then we obtain the model that has been considered
+    already in Chapter 4.\ 
+
+    The difference here is that in the RVM, this model uses the ARD prior
+    <eqref|7.80> in which there is a separate precision hyperparameter
+    associated with each weight parameter.
+  </hidden>|<\hidden>
+    <tit|Iterative reweighted least squares (IRLS)>
+
+    For a fixed value of <math|\<b-alpha\>>, the mode of the posterior
+    distribution over <math|\<b-w\>> is obtained by maximizing
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln p(\<b-w\>\|<math-bf|>,\<b-alpha\>)
+      >|<cell|=>|<cell| ln {p(\<b-t\>\|\<b-w\>)p(\<b-w\>\|\<b-alpha\>)}\<minus\>ln
+      p(\<b-t\>\|\<b-alpha\>)>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>{t<rsub|n>
+      ln y<rsub|n> +(1\<minus\>t<rsub|n>)ln(1\<minus\>y<rsub|n>)}\<minus\><frac|1|2>\<b-w\><rsup|T>A\<b-w\>+const<label|7.109><eq-number>>>>>
+    </eqnarray*>
+
+    where <math|A=diag(\<alpha\><rsub|i>)>. This can be done using iterative
+    reweighted least squares (IRLS) as discussed in Section 4.3.3.\ 
+  </hidden>|<\hidden>
+    <tit|Gradient vector and Hessian matrix>
+
+    The gradient vector and Hessian matrix of the log posterior distribution,
+    which from <eqref|7.109> are given by\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<nabla\>ln
+      p<around*|(|\<b-w\><around*|\||\<b-t\>,\<b-alpha\>|\<nobracket\>>|)>>|<cell|=>|<cell|\<Phi\><rsup|T><around*|(|\<b-t\>-\<b-y\>|)>-A\<b-w\><label|7.110><eq-number>>>|<row|<cell|\<nabla\>\<nabla\>ln
+      p<around*|(|\<b-w\><around*|\||\<b-t\>,\<b-alpha\>|\<nobracket\>>|)>>|<cell|=>|<cell|-<around*|(|\<Phi\><rsup|T>B\<Phi\>+A|)>>>>>
+    </eqnarray*>
+
+    where <math|B> is an <math|N\<times\>N> diagonal matrix with elements
+    <math|b<rsub|n>=y<rsub|n>(1\<minus\>y<rsub|n>)>,\ 
+
+    the vector <math|y=(y<rsub|1>,\<cdots\>,y<rsub|N>)<rsup|T>>,
+
+    \ and <math|\<Phi\>> is the design matrix with elements
+    <math|\<Phi\><rsub|ni>=\<varphi\><rsub|i>(x<rsub|n>)>.
+  </hidden>|<\hidden>
+    <tit|Mean and covariance of the Laplace approximation>
+
+    The mode of the resulting approximation to the posterior distribution,
+    corresponding to the mean of the Gaussian approximation, is obtained
+    setting <eqref|7.110> to zero, giving the mean and covariance of the
+    Laplace approximation in the form\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-w\><rsup|\<ast\>>>|<cell|=>|<cell|
+      A<rsup|\<minus\>1>\<Phi\><rsup|T>(\<b-t\>\<minus\>\<b-y\>)>>|<row|<cell|\<Sigma\>>|<cell|=>|<cell|<around*|(|\<Phi\><rsup|T>B\<Phi\>+A|)><rsup|-1>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|Laplace approximation>
+
+    We can now use this Laplace approximation to evaluate the marginal
+    likelihood. Using the general result (4.135) for an integral evaluated
+    using the Laplace approximation, we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-t\><around*|\||\<b-alpha\>|\<nobracket\>>|)>>|<cell|=>|<cell|<big|int>p<around*|(|\<b-t\><around*|\||\<b-w\>|\<nobracket\>>|)>p<around*|(|\<b-w\><around*|\||\<b-alpha\>|\<nobracket\>>|)>\<mathd\>\<b-w\>>>|<row|<cell|>|<cell|\<approx\>>|<cell|p<around*|(|\<b-t\><around*|\||\<b-w\><rsup|\<ast\>>|\<nobracket\>>|)>p<around*|(|\<b-w\><rsup|\<ast\>><around*|\||\<b-alpha\>|\<nobracket\>>|)><around*|(|2\<pi\>|)><rsup|M/2><around*|\||\<Sigma\>|\|>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    If we substitute for <math|p(\<b-t\>\|\<b-w\><rsup|\<ast\>>)> and
+    <math|p(\<b-w\><rsup|\<ast\>>\|\<b-alpha\>)> and then set the derivative
+    of the marginal likelihood with respect to <math|\<alpha\><rsub|i>> equal
+    to zero, we obtain
+
+    <\equation*>
+      \<minus\><frac|1|2>(w<rsub|i><rsup|\<ast\>> )<rsup|2>
+      +<frac|1|2\<alpha\><rsub|i>>\<minus\><frac|1|2>\<Sigma\><rsub|i i> = 0.
+    </equation*>
+
+    Defining <math|\<gamma\><rsub|i> = 1\<minus\>\<alpha\><rsub|i>\<Sigma\><rsub|i
+    i>> and rearranging then gives
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<alpha\><rsub|i><rsup|new>>|<cell|=>|<cell|<frac|\<gamma\><rsub|i>|<around*|(|w<rsup|\<ast\>><rsub|i>|)><rsup|2>>>>>>
+    </eqnarray*>
+
+    which is identical to the re-estimation formula <eqref|7.87> obtained for
+    the regression RVM.
+  </hidden>|<\hidden>
+    If we define
+
+    <\equation*>
+      <wide|\<b-t\>|^>=\<Phi\>\<b-w\><rsup|\<ast\>>+B<rsup|-1><around*|(|\<b-t\>-\<b-y\>|)>
+    </equation*>
+
+    we can write the approximate log marginal likelihood in the form
+
+    <\equation*>
+      ln p<around*|(|\<b-t\><around*|\||\<b-alpha\>,\<beta\>|\<nobracket\>>|)>=-<frac|1|2><around*|{|N
+      ln<around*|(|2\<pi\>|)>+ln<around*|\||C|\|>+<around*|(|<wide|\<b-t\>|^>|)><rsup|T>C<rsup|-1><wide|\<b-t\>|^>|}>
+    </equation*>
+
+    where\ 
+
+    <\equation*>
+      C=B+\<Phi\>A\<Phi\><rsup|T>
+    </equation*>
+
+    This takes the same form as <eqref|7.85> in the regression case, and so
+    we can apply the same analysis of sparsity and obtain the same fast
+    learning algorithm in which we fully optimize a single hyperparameter
+    <math|\<alpha\><rsub|i>> at each step.
+  </hidden>|<\hidden>
+    \;
+
+    <image|img/7_12_rvm_classification.png|1par|||>
+  </hidden>|<\hidden>
+    <tit|Multiclass classification>
+
+    So far, we have considered the RVM for binary classification problems.
+    For <math|K\<gtr\>2> classes, we again make use of the probabilistic
+    approach in Section 4.3.4 in which there are <math|K> linear models of
+    the form
+
+    <\equation*>
+      a<rsub|k>=\<b-w\><rsup|T><rsub|k>\<b-x\>
+    </equation*>
+
+    which are combined using a softmax function to give outputs
+
+    <\equation*>
+      y<rsub|k><around*|(|\<b-x\>|)>=<frac|exp<around*|(|a<rsub|k>|)>|<big|sum><rsub|j>exp<around*|(|a<rsub|j>|)>>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    The log likelihood function is then given by
+
+    <\equation*>
+      ln p<around*|(|T<around*|\||\<b-w\><rsub|1>,\<cdots\>,\<b-w\><rsub|K>|\<nobracket\>>|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsup|K><rsub|k=1>y<rsub|n
+      k><rsup|t<rsub|n k>>
+    </equation*>
+
+    where the target values tnk have a 1-of-K coding for each data point n,
+    and <math|T> is a matrix with elements <math|t<rsub|n k>>.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    The principal disadvantage of the relevance vector machine is the
+    relatively long training times compared with the SVM. This is offset,
+    however, by the avoidance of cross-validation runs to set the model
+    complexity parameters.\ 
+
+    Furthermore, because it yields sparser models, the computation time on
+    test points, which is usually the more important consideration in
+    practice, is typically much less.
   </hidden>>
 </body>
 
@@ -1118,7 +1319,9 @@
   <\collection>
     <associate|7.1|<tuple|1|1>>
     <associate|7.10|<tuple|5|?>>
-    <associate|7.101|<tuple|35|?>>
+    <associate|7.101|<tuple|37|1>>
+    <associate|7.109|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
+    <associate|7.110|<tuple|38|?>>
     <associate|7.13|<tuple|6|?>>
     <associate|7.21|<tuple|7|?>>
     <associate|7.25|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
@@ -1145,11 +1348,13 @@
     <associate|7.76|<tuple|28|?>>
     <associate|7.77|<tuple|29|?>>
     <associate|7.8|<tuple|3|?>>
-    <associate|7.81|<tuple|30|?>>
-    <associate|7.82|<tuple|30|?>>
-    <associate|7.83|<tuple|31|?>>
-    <associate|7.85|<tuple|33|?>>
-    <associate|7.86|<tuple|34|?>>
+    <associate|7.80|<tuple|30|?>>
+    <associate|7.81|<tuple|31|?>>
+    <associate|7.82|<tuple|31|?>>
+    <associate|7.83|<tuple|32|?>>
+    <associate|7.85|<tuple|34|?>>
+    <associate|7.86|<tuple|35|?>>
+    <associate|7.87|<tuple|35|?>>
     <associate|7.9|<tuple|4|?>>
   </collection>
 </references>
