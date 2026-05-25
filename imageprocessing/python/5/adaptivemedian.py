@@ -8,7 +8,7 @@ def am(a,x,y):
     windowsize=3
     Smax=7
     while(windowsize<Smax):
-        d=np.int((windowsize-1)/2)
+        d=np.int64((windowsize-1)/2)
         s=a[max(0,x-d):min(I,x+d+1),max(0,y-d):min(J,y+d+1)]
         zmin=np.min(s)
         zmed=np.median(s)
@@ -37,3 +37,4 @@ for i in range(I):
     for j in range(J):
         b[i,j]=am(a,i,j)
 print(b)
+print(a-b)
