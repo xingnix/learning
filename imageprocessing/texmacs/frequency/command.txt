@@ -1,0 +1,8 @@
+# mplay video with ascii text
+mplayer Videos/vokoscreenNG-2023-02-22_00-48-47.webm -vo caca
+
+# view image with ascii text
+cacaview Pictures/*.jpg
+
+# convert image to ascii
+img2txt -W 100 /home/xing/Pictures/Screenshot_20210709_164631.png
