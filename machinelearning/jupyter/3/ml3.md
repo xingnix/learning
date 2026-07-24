@@ -6,9 +6,9 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.13.1
+      jupytext_version: 1.13.0
   kernelspec:
-    display_name: Python 3
+    display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
@@ -47,7 +47,7 @@ jupyter:
 
 <!-- #endregion -->
 <!-- #region slideshow={"slide_type": "subslide"} -->
-## Decision Tree for $PlayTennis$
+## Decision Tree for $Launch$
 
 ![](./image/dt-f1.png)
 
@@ -166,7 +166,7 @@ Fetal_Presentation = 3: [8+,22-] .27+ .73-
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## 例
 ```
-   Day   Outlook    Temperature   Humidity   Wind     PlayTennis
+   Day   Outlook    Temperature   Humidity   Wind    Launch
   ----- ---------- ------------- ---------- -------- ------------
   D1    Sunny      Hot           High       Weak     No
   D2    Sunny      Hot           High       Strong   No
@@ -311,7 +311,7 @@ Fetal_Presentation = 3: [8+,22-] .27+ .73-
 
 Consider adding noisy training example #15:
 
-$$ Sunny,\  Hot,\  Normal,\  Strong,\ PlayTennis=No $$
+$$ Sunny,\  Hot,\  Normal,\  Strong,\ Launch=No $$
 
 What effect on earlier tree?
 
@@ -398,10 +398,10 @@ $$  error_{train}(h) < error_{train}(h') $$ 但在整个实例分布上 $h'$
 
   ------ -------------------------------------------
   IF     $(Outlook=Sunny) \land (Humidity=High)$
-  THEN   $PlayTennis=No$
+  THEN   $Launch=No$
          
   IF     $(Outlook=Sunny) \land (Humidity=Normal)$
-  THEN   $PlayTennis=Yes$
+  THEN   $Launch=Yes$
          
   ...    
   ------ -------------------------------------------
@@ -458,7 +458,7 @@ What if some examples missing values of $A$?
 -   赋给它结点 $n$ 的具有同样目标值的训练样例中该属性的最常见值。
 -   为A的每个可能值赋与一个概率，按此比例将样例分配到子树中。
     -   例如，给定一个布尔属性A，如果结点n包含6个已知A=1和6个A=0的样例，那么A(x)=1的概率是0.6，A(x)=0的概率是0.4。
-        实例x的 60\\% 被分配到 A=1 的分支，40\\% 被分配到另一个分支。
+        实例x的 60% 被分配到 A=1 的分支，40% 被分配到另一个分支。
 
 <!-- #endregion -->
 <!-- #region slideshow={"slide_type": "subslide"} -->
