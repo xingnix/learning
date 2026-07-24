@@ -8,7 +8,7 @@ jupyter:
       format_version: '1.3'
       jupytext_version: 1.13.0
   kernelspec:
-    display_name: Python 3
+    display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
@@ -381,9 +381,7 @@ $V_{train}$ 。
 
 -   <https://www.kaggle.com/> 数据科学竞赛平台、社区
 -   <http://philschatz.com/biology-book/> a freedom book about biology
--   [[http://www.cs.cmu.edu/\\textasciitilde](http://www.cs.cmu.edu/\textasciitilde)
-    tom/mlbook-chapter-slides.html](http://www.cs.cmu.edu/~tom/mlbook-chapter-slides.html)
-    Machine Learning slide (LaTeX source )
+-   <http://www.cs.cmu.edu/~tom/mlbook-chapter-slides.html>Machine Learning slide (LaTeX source )
 -   <http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/mlbook/latex-support.html>
     Machine Learning slide (LaTeX source )
 -   <https://learnxinyminutes.com> \\ 各种程序设计语言快速入门
