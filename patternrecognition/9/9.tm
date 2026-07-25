@@ -1,27 +1,71 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.1>
 
 <style|<tuple|beamer|manila-paper>>
 
 <\body>
-  <\slideshow>
-    <\slide>
+  <screens|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <doc-data|<\doc-title>
+      Mixture Models and EM
+    </doc-title>>
+  </hidden>|<\hidden>
+    \;
+
+    <\itemize-dot>
+      <unroll-greyed|<\shown>
+        \;
+      </shown>|<\shown>
+        <item>The introduction of latent variables thereby allows complicated
+        distributions to be formed from simpler components.
+      </shown>|<\shown>
+        <item>If we define a joint distribution over observed and latent
+        variables, the corresponding distribution of the observed variables
+        alone is obtained by marginalization.\ 
+      </shown>|<\shown>
+        <item>This allows relatively complex marginal distributions over
+        observed variables to be expressed in terms of more tractable joint
+        distributions over the expanded space of observed and latent
+        variables.
+      </shown>>
+    </itemize-dot>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    <expanded|<\shown>
       \;
 
-      \;
+      <\itemize-dot>
+        <item>As well as providing a framework for building more complex
+        probability distributions, mixture models can also be used to cluster
+        data.
 
-      \;
+        <item>considering the problem of finding clusters in a set of data
+        points, which we approach first using a nonprobabilistic technique
+        called the <strong|K-means> algorithm.
 
-      \;
+        <item>In the latent variable view of mixture distributions the
+        discrete latent variables can be interpreted as defining assignments
+        of data points to specific components of the mixture.
 
-      \;
+        <item>A general technique for finding maximum likelihood estimators
+        in latent variable models is the expectation-maximization (EM)
+        algorithm.
+      </itemize-dot>
+    </shown>>
+  </hidden>|<\shown>
+    <tit|K-means Clustering>
 
-      <doc-data|<\doc-title>
-        Mixture Models and EM
-      </doc-title>>
-
-      \;
-    </slide>
-  </slideshow>
+    \;
+  </shown>>
 </body>
 
 <\initial>
@@ -33,14 +77,3 @@
     <associate|page-width|auto>
   </collection>
 </initial>
-
-<\references>
-  <\collection>
-    <associate|7.1|<tuple|1|3>>
-    <associate|7.10|<tuple|3|9>>
-    <associate|7.13|<tuple|4|10>>
-    <associate|7.5|<tuple|2|6>>
-    <associate|7.8|<tuple|1|8>>
-    <associate|7.9|<tuple|2|8>>
-  </collection>
-</references>
