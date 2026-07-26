@@ -40,31 +40,47 @@
   </hidden>|<\hidden>
     \;
 
-    <expanded|<\shown>
-      \;
+    <\overlays-greyed|5|5>
+      <expanded|<\shown>
+        \;
 
-      <\itemize-dot>
-        <item>As well as providing a framework for building more complex
-        probability distributions, mixture models can also be used to cluster
-        data.
+        <\itemize-dot>
+          <overlay-from|2|<item>As well as providing a framework for building
+          more complex probability distributions, mixture models can also be
+          used to cluster data.|>
 
-        <item>considering the problem of finding clusters in a set of data
-        points, which we approach first using a nonprobabilistic technique
-        called the <strong|K-means> algorithm.
+          <overlay-from|3|<item>considering the problem of finding clusters
+          in a set of data points, which we approach first using a
+          nonprobabilistic technique called the <strong|K-means> algorithm.|>
 
-        <item>In the latent variable view of mixture distributions the
-        discrete latent variables can be interpreted as defining assignments
-        of data points to specific components of the mixture.
+          <overlay-from|4|<item>In the latent variable view of mixture
+          distributions the discrete latent variables can be interpreted as
+          defining assignments of data points to specific components of the
+          mixture.|>
 
-        <item>A general technique for finding maximum likelihood estimators
-        in latent variable models is the expectation-maximization (EM)
-        algorithm.
-      </itemize-dot>
-    </shown>>
+          <overlay-from|5|<item>A general technique for finding maximum
+          likelihood estimators in latent variable models is the
+          expectation-maximization (EM) algorithm.|>
+        </itemize-dot>
+      </shown>>
+    </overlays-greyed>
   </hidden>|<\shown>
     <tit|K-means Clustering>
 
-    \;
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      We begin by considering the problem of identifying groups, or clusters,
+      of data points in a multidimensional space.\ 
+    </shown>|<\shown>
+      Suppose we have a data set <math|{x<rsub|1>,\<cdots\>,x<rsub|N>}>
+      consisting of <math|N> observations of a random D-dimensional Euclidean
+      variable <math|x>.\ 
+    </shown>|<\shown>
+      Our goal is to partition the data set into some number <math|K> of
+      clusters, where we shall suppose for the moment that the value of
+      <math|K> is given.
+    </shown>>
   </shown>>
 </body>
 
