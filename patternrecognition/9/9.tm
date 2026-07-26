@@ -1,4 +1,4 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1.4>
 
 <style|<tuple|beamer|manila-paper>>
 
@@ -64,7 +64,7 @@
         </itemize-dot>
       </shown>>
     </overlays-greyed>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|K-means Clustering>
 
     <unroll-greyed|<\shown>
@@ -81,6 +81,84 @@
       clusters, where we shall suppose for the moment that the value of
       <math|K> is given.
     </shown>>
+  </hidden>|<\hidden>
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      Intuitively, we might think of a cluster as comprising a group of data
+      points whose inter-point distances are small compared with the
+      distances to points outside of the cluster. \ 
+    </shown>|<\shown>
+      We can formalize this notion by rst introducing a set of
+      <math|D>-dimensional vectors <math|\<mu\><rsub|k>> , where <math|k=
+      1,\<cdots\>,K>, in which <math|\<mu\><rsub|k>> is a prototype
+      associated with the k'th cluster.
+    </shown>|<\shown>
+      As we shall see shortly, we can think of the \<mu\>k as representing
+      the centres of the clusters.\ 
+    </shown>|<\shown>
+      Our goal is then to nd an assignment of data points to clusters, as
+      well as a set of vectors <math|{\<mu\><rsub|k> }>, such that the sum of
+      the squares of the distances of each data point to its closest vector
+      <math|\<mu\><rsub|k>> , is a minimum.
+    </shown>>
+
+    \;
+  </hidden>|<\hidden>
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      \ For each data point xn , we introduce a corresponding set of binary
+      indicator variables <math|r<rsub|nk>\<in\>{0, 1}>, where
+      <math|k=1,\<cdots\>,K> describing which of the <math|K> clusters the
+      data point <math|x<rsub|n>> is assigned to,
+    </shown>|<\shown>
+      \ so that if data point <math|x<rsub|n>> is assigned to cluster
+      <math|k> then <math|r<rsub|n k>=1>, and <math|r<rsub|n j>=0> for
+      <math|j\<neq\>k>. This is known as the <strong|<progressive-in|1-of-K
+      coding scheme|1s>>.
+    </shown>|<\shown>
+      We can then define an objective function, sometimes called a distortion
+      measure, given by
+
+      <\equation>
+        <progressive-in|J=<big|sum><rsub|n=1><rsup|N><big|sum><rsub|n=1><rsup|N>r<rsub|n
+        k><around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|\<\|\|\>><rsup|2><label|9.1>|1s>
+      </equation>
+
+      which represents the sum of the squares of the distances of each data
+      point to its assigned vector <math|\<b-mu\><rsub|k>> . Our goal is to
+      nd values for the <math|{r<rsub|nk>}> and the <math|{\<mu\><rsub|k>}>
+      so as to minimize <math|J>.
+    </shown>>
+  </hidden>|<\hidden>
+    <tit|K-means EM>
+
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      Each iteration involves two successive steps corresponding to
+      successive optimizations with respect to the rnk and the
+      <math|\<mu\><rsub|k>>.\ 
+    </shown>|<\shown>
+      First choose some initial values for the <math|\<mu\><rsub|k>>.\ 
+    </shown>|<\shown>
+      Then in the rst phase we minimize <math|J> with respect to the
+      <math|r<rsub|nk>> , keeping the <math|\<mu\><rsub|k>> xed.\ 
+    </shown>|<\shown>
+      In the second phase we minimize <math|J> with respect to the
+      <math|\<mu\><rsub|k>> , keeping <math|r<rsub|nk>> xed.\ 
+    </shown>|<\shown>
+      This two-stage optimization is then repeated until convergence.
+    </shown>|<\shown>
+      We shall see that these two stages of updating <math|r<rsub|nk>> and
+      updating <math|\<mu\><rsub|k>> correspond respectively to the <strong|E
+      (expectation)> and <strong|M (maximization)> steps of the EM algorithm,
+      and to emphasize this we shall use the terms E step and M step in the
+      context of the K-means algorithm.<tiny-switch|<hidden|>>
+    </shown>>
+  </hidden>|<\shown>
+    \;
   </shown>>
 </body>
 
@@ -93,3 +171,9 @@
     <associate|page-width|auto>
   </collection>
 </initial>
+
+<\references>
+  <\collection>
+    <associate|9.1|<tuple|1|1>>
+  </collection>
+</references>
