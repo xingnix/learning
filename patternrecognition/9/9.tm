@@ -115,15 +115,15 @@
     </shown>|<\shown>
       \ so that if data point <math|x<rsub|n>> is assigned to cluster
       <math|k> then <math|r<rsub|n k>=1>, and <math|r<rsub|n j>=0> for
-      <math|j\<neq\>k>. This is known as the <strong|<progressive-in|1-of-K
-      coding scheme|1s>>.
+      <math|j\<neq\>k>. This is known as the <strong|1-of-K coding
+      scheme<progressive-in||1s>>.
     </shown>|<\shown>
       We can then define an objective function, sometimes called a distortion
       measure, given by
 
       <\equation>
-        <progressive-in|J=<big|sum><rsub|n=1><rsup|N><big|sum><rsub|n=1><rsup|N>r<rsub|n
-        k><around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|\<\|\|\>><rsup|2><label|9.1>|1s>
+        J=<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|N>r<rsub|n
+        k><around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|\<\|\|\>><rsup|2><progressive-in|<label|9.1>|1s>
       </equation>
 
       which represents the sum of the squares of the distances of each data
@@ -157,7 +157,7 @@
       and to emphasize this we shall use the terms E step and M step in the
       context of the K-means algorithm.<tiny-switch|<shown|>>
     </shown>>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     <\overlays-greyed|6|6>
@@ -182,6 +182,43 @@
         </equation>
       </overlay-from|>
     </overlays-greyed>
+  </hidden>|<\hidden>
+    <\overlays-greyed|9|9>
+      \;
+
+      <overlay-from|2|Now consider the optimization of the
+      <math|\<mu\><rsub|k>> with the <math|r<rsub|nk>> held fixed.|>
+      <overlay-from|3|The objective function <math|J> is a quadratic function
+      of <math|\<mu\><rsub|k>>,|> <overlay-from|4|and it can be minimized by
+      setting its derivative with respect to <math|\<mu\><rsub|k>> to zero
+      giving|>
+
+      <\overlay-from|5>
+        <\equation>
+          2<big|sum><rsub|n=1><rsup|N>r<rsub|n
+          k><around*|(|x<rsub|n>-\<mu\><rsub|k>|)>=0<label|9.3>
+        </equation>
+      </overlay-from|>
+
+      <\overlay-from|6>
+        which we can easily solve for <math|\<mu\><rsub|k>> to give
+
+        <\equation>
+          \<b-mu\><rsub|k>=<frac|<big|sum><rsub|n>r<rsub|n
+          k>\<b-x\><rsub|n>|<big|sum><rsub|n>r<rsub|n k>><label|9.4>
+        </equation>
+      </overlay-from|>
+
+      <overlay-from|7|The denominator in this expression is equal to the
+      number of points assigned to cluster <math|k>,|> <overlay-from|8|and so
+      this result has a simple interpretation, namely set
+      <math|\<mu\><rsub|k>> equal to the mean of all of the data points
+      <math|x<rsub|n>> assigned to cluster <math|k>.|> <overlay-from|9|For
+      this reason, the procedure is known as the <strong|K-means>
+      algorithm.<progressive-in||1s>|>
+    </overlays-greyed>
+  </hidden>|<\shown>
+    <space|8em><image|image/fig_9_1_kmeans.png|0.6par|||>
   </shown>>
 </body>
 
@@ -197,7 +234,9 @@
 
 <\references>
   <\collection>
-    <associate|9.1|<tuple|1|1>>
-    <associate|9.2|<tuple|2|?>>
+    <associate|9.1|<tuple|1|4>>
+    <associate|9.2|<tuple|2|6>>
+    <associate|9.3|<tuple|3|1>>
+    <associate|9.4|<tuple|4|1>>
   </collection>
 </references>
