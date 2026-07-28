@@ -1,4 +1,4 @@
-<TeXmacs|2.1.4>
+<TeXmacs|2.1.1>
 
 <style|<tuple|beamer|manila-paper>>
 
@@ -155,10 +155,33 @@
       updating <math|\<mu\><rsub|k>> correspond respectively to the <strong|E
       (expectation)> and <strong|M (maximization)> steps of the EM algorithm,
       and to emphasize this we shall use the terms E step and M step in the
-      context of the K-means algorithm.<tiny-switch|<hidden|>>
+      context of the K-means algorithm.<tiny-switch|<shown|>>
     </shown>>
   </hidden>|<\shown>
     \;
+
+    <\overlays-greyed|6|6>
+      <overlay-from|2|Consider first the determination of the
+      <math|r<rsub|nk>>.|> <overlay-from|3|Because <math|J> in Eq.
+      <eqref|9.1> is a linear function of <math|r<rsub|nk>>, this
+      optimization can be performed easily to give a closed form solution. |>
+
+      <overlay-from|4|The terms involving different <math|n> are independent
+      and so we can optimize for each <math|n> separately by choosing
+      <math|r<rsub|nk>> to be 1 for whichever value of <math|k> gives the
+      minimum value of <math|<around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|j>|\<\|\|\>><rsup|2>>.|>
+
+      \ <overlay-from|5|In other words, we simply assign the n'th data point
+      to the closest cluster centre.|><overlay-from|6|More formally, this can
+      be expressed as|>
+
+      <\overlay-from|6>
+        <\equation>
+          r<rsub|n k>=<choice|<tformat|<cwith|1|1|1|1|cell-halign|c>|<table|<row|<cell|1>|<cell|>|<cell|if
+          k=argmin<rsub|j> <around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|j>|\<\|\|\>><rsup|2>>>|<row|<cell|0>|<cell|>|<cell|otherwise>>>>><label|9.2>
+        </equation>
+      </overlay-from|>
+    </overlays-greyed>
   </shown>>
 </body>
 
@@ -175,5 +198,6 @@
 <\references>
   <\collection>
     <associate|9.1|<tuple|1|1>>
+    <associate|9.2|<tuple|2|?>>
   </collection>
 </references>
