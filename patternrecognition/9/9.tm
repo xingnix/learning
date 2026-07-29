@@ -339,7 +339,7 @@
     is the case for the standard K-means algorithm.\ 
 
     \;
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     For a general choice of dissimilarity measure, the M step is potentially
@@ -354,9 +354,9 @@
     <math|O(N<rsub|k><rsup|2>)> evaluations of
     <math|\<cal-V\>(\<cdummy\>,\<cdummy\>)>.
 
-    <\folded>
+    <\unfolded>
       \;
-    <|folded>
+    <|unfolded>
       One notable feature of the K-means algorithm is that at each iteration,
       every data point is assigned uniquely to one, and only one, of the
       clusters. Whereas some data points will be much closer to a particular
@@ -368,15 +368,46 @@
       assignments of data points to clusters in a way that reflects the level
       of uncertainty over the most appropriate assignment. This probabilistic
       formulation brings with it numerous benefits.
-    </folded>
-  </shown>|<\hidden>
+    </unfolded>
+  </hidden>|<\hidden>
     <tit|Image segmentation and compression>
 
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      As an illustration of the application of the K-means algorithm, we
+      consider the related problems of image segmentation and image
+      compression.
+    </shown>|<\shown>
+      The goal of segmentation is to partition an image into regions each of
+      which has a reasonably homogeneous visual appearance or which
+      corresponds to objects or parts of objects (Forsyth and Ponce, 2003).\ 
+    </shown>|<\shown>
+      Each pixel in an image is a point in a 3-dimensional space comprising
+      the intensities of the red, blue, and green channels, and our
+      segmentation algorithm simply treats each pixel in the image as a
+      separate data point.
+    </shown>>
+
+    \;
+  </hidden>|<\hidden>
     \;
 
     \;
 
     \;
+
+    We illustrate the result of running K-means to convergence, for any
+    particular value of K, by re-drawing the image replacing each pixel
+    vector with the <math|{R,G,B}> intensity triplet given by the centre
+    <math|\<mu\><rsub|k>> to which that pixel has been assigned.\ 
+
+    Results for various values of K are shown in Figure <reference|9.3>. We
+    see that for a given value of K, the algorithm is representing the image
+    using a palette of only K colours. It should be emphasized that this use
+    of K-means is not a particularly sophisticated approach to image
+    segmentation, not least because it takes no account of the spatial
+    proximity of different pixels.
   </hidden>|<\hidden>
     <\folded>
       <small-figure|<image|image/fig_9_3_imagesegmentation.png|0.7par|||>|Two
@@ -388,7 +419,53 @@
       compression, in which smaller values of K give higher compression at
       the expense of poorer image quality.
     </folded>
-  </hidden>>
+  </hidden>|<\hidden>
+    \;
+
+    We can also use the result of a clustering algorithm to perform data
+    compres- sion. It is important to distinguish between <strong|lossless
+    data compression>, in which the goal is to be able to reconstruct the
+    original data exactly from the compressed representation, and
+    <strong|lossy data compression>, in which we accept some errors in the
+    reconstruction in return for higher levels of compression than can be
+    achieved in the lossless case.\ 
+
+    We can apply the K-means algorithm to the problem of lossy data
+    compression as follows. For each of the <math|N> data points, we store
+    only the identity <math|k> of the cluster to which it is assigned. We
+    also store the values of the K clus- ter centres <math|\<mu\><rsub|k>>,
+    which typically requires significantly less data, provided we choose
+    <math|K\<ll\>N>. Each data point is then approximated by its nearest
+    centre <math|\<mu\><rsub|k>>. New data points can similarly be compressed
+    by first finding the nearest <math|\<mu\><rsub|k>> and then storing the
+    label k instead of the original data vector. This framework is often
+    called vector quantization, and the vectors <math|\<mu\><rsub|k>> are
+    called <strong|code-book vectors>.
+  </hidden>|<\shown>
+    The image segmentation problem discussed above also provides an
+    illustration of the use of clustering for data compression. Suppose the
+    original image has N pixels comprising {R, G, B} values each of which is
+    stored with 8 bits of precision. Then to transmit the whole image
+    directly would cost 24N bits. Now suppose we first run K-means on the
+    image data, and then instead of transmitting the original pixel intensity
+    vectors we transmit the identity of the nearest vector \<mu\>k. Because
+    there are K such vectors, this requires <math|log<rsub|2>K> bits per
+    pixel. We must also transmit the K code book vectors \<mu\>k, which
+    requires 24K bits, and so the total number of bits required to transmit
+    the image is <math|24K+N log<rsub|2>K> (rounding up to the nearest
+    integer). The original image shown in Figure <reference|9.3> has
+    <math|240\<times\>180=43,200> pixels and so requires 24 \<times\> 43, 200
+    = 1, 036, 800 bits to transmit directly. By comparison, the compressed
+    images require 43, 248 bits (K = 2), 86, 472 bits (K = 3), and 173, 040
+    bits (K = 10), respectively, to transmit. These represent compression
+    ratios compared to the original image of 4.2%, 8.3%, and 16.7%,
+    respectively. We see that there is a trade-off between degree of
+    compression and image quality. Note that our aim in this example is to
+    illustrate the K-means algorithm. If we had been aiming to produce a good
+    image compressor, then it would be more fruitful to consider small blocks
+    of adjacent pixels, for instance 5 \<times\> 5, and thereby exploit the
+    correlations that exist in natural images between nearby pixels.
+  </shown>>
 </body>
 
 <\initial>
@@ -412,7 +489,6 @@
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-2|<tuple|2|?>>
     <associate|auto-3|<tuple|3|?>>
-    <associate|auto-4|<tuple|4|?>>
     <associate|fig9.1|<tuple|1|?>>
   </collection>
 </references>
@@ -429,6 +505,11 @@
       given by Eq. (<reference|9.1>) after each E step (blue points) and M
       step (red points) of the K-means algorithm for the example shown in
       Figure <reference|fig9.1>. >|<pageref|auto-2>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|3>||Two examples of the
+      application of the K-means clustering algorithm to image segmentation
+      show- ing the initial images together with their K-means segmentations
+      obtained using various values of K. >|<pageref|auto-3>>
     </associate>
   </collection>
 </auxiliary>
