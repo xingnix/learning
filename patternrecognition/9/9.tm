@@ -431,7 +431,7 @@
     this use of K-means is not a particularly sophisticated approach to image
     segmentation, not least because it takes no account of the spatial
     proximity of different pixels.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <\folded>
       <small-figure|<image|image/fig_9_3_imagesegmentation.png|0.7par|||>|<label|fig9.3>Two
       examples of the application of the K-means clustering algorithm to
@@ -442,7 +442,7 @@
       compression, in which smaller values of K give higher compression at
       the expense of poorer image quality.
     </folded>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|Image compression>
 
     \;
@@ -657,7 +657,30 @@
     <math|p(x)=<big|sum><rsub|z>p(x,z)>, it follows that for every observed
     data point <math|x<rsub|n>> there is a corresponding latent variable
     <math|z<rsub|n>>.
-  </hidden>>
+  </hidden>|<\hidden>
+    \ we are now able to work with the joint distribution <math|p(x, z)>
+    instead of the marginal distribution <math|p(x)>, and this will lead to
+    signicant simplications, most notably through the introduction of the
+    expectation-maximization (EM) algorithm.
+
+    Another quantity that will play an important role is the conditional
+    probability of <math|z> given <math|x>. We shall use
+    <math|\<gamma\>(z<rsub|k>)> to denote <math|p(z<rsub|k>= 1\|x)>, whose
+    value can be found using Bayes' theorem
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<gamma\>\<equiv\>p<around*|(|z<rsub|k>=1<around*|\||x|\<nobracket\>>|)>>|<cell|=>|<cell|<frac|p<around*|(|z<rsub|k>=1|)>p<around*|(|x<around*|\||z<rsub|k>=1|\<nobracket\>>|)>|<big|sum><rsub|j=1><rsup|K>p<around*|(|z<rsub|j>=1|)>p<around*|(|x<around*|\||z<rsub|j>=1|\<nobracket\>>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\><rsub|k>\<cal-N\><around*|(|x<around*|\||\<mu\><rsub|k>,\<Sigma\><rsub|k>|\<nobracket\>>|)>|<big|sum><rsub|j=1><rsup|K>\<pi\><rsub|j>\<cal-N\><around*|(|x<around*|\||\<mu\><rsub|j>,\<Sigma\><rsub|j>|\<nobracket\>>|)>>>>>>
+    </eqnarray*>
+
+    We shall view <math|\<pi\><rsub|k>> as the prior probability of
+    <math|z<rsub|k> = 1>, and the quantity <math|\<gamma\>(z<rsub|k>)> as the
+    corresponding posterior probability once we have observed <math|x>. As we
+    shall see later, <math|\<gamma\>(z<rsub|k>)> can also be viewed as the
+    responsibility that component <math|k> takes for `explaining' the
+    observation <math|x>.
+  </hidden>|<\shown>
+    \;
+  </shown>>
 </body>
 
 <\initial>
@@ -685,12 +708,12 @@
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-2|<tuple|1|?>>
     <associate|auto-3|<tuple|2|?>>
-    <associate|auto-4|<tuple|3|?>>
+    <associate|auto-4|<tuple|3|1>>
     <associate|auto-5|<tuple|2|?>>
     <associate|auto-6|<tuple|4|?>>
     <associate|fig9.1|<tuple|1|?>>
     <associate|fig9.2|<tuple|2|?>>
-    <associate|fig9.3|<tuple|3|?>>
+    <associate|fig9.3|<tuple|3|1>>
     <associate|fig9.4|<tuple|4|?>>
   </collection>
 </references>
