@@ -65,7 +65,21 @@
       </shown>>
     </overlays-greyed>
   </hidden>|<\hidden>
-    <tit|K-means Clustering>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|K-means Clustering>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|Clustering>
+
+    \;
 
     <unroll-greyed|<\shown>
       \;
@@ -94,8 +108,8 @@
       1,\<cdots\>,K>, in which <math|\<mu\><rsub|k>> is a prototype
       associated with the k'th cluster.
     </shown>|<\shown>
-      As we shall see shortly, we can think of the \<mu\>k as representing
-      the centres of the clusters.\ 
+      As we shall see shortly, we can think of the <math|\<mu\><rsub|k>> as
+      representing the centres of the clusters.\ 
     </shown>|<\shown>
       Our goal is then to nd an assignment of data points to clusters, as
       well as a set of vectors <math|{\<mu\><rsub|k> }>, such that the sum of
@@ -108,8 +122,8 @@
     <unroll-greyed|<\shown>
       \;
     </shown>|<\shown>
-      \ For each data point xn , we introduce a corresponding set of binary
-      indicator variables <math|r<rsub|nk>\<in\>{0, 1}>, where
+      \ For each data point <math|x<rsub|n>>, we introduce a corresponding
+      set of binary indicator variables <math|r<rsub|nk>\<in\>{0, 1}>, where
       <math|k=1,\<cdots\>,K> describing which of the <math|K> clusters the
       data point <math|x<rsub|n>> is assigned to,
     </shown>|<\shown>
@@ -138,7 +152,7 @@
       \;
     </shown>|<\shown>
       Each iteration involves two successive steps corresponding to
-      successive optimizations with respect to the rnk and the
+      successive optimizations with respect to the <math|r<rsub|n k>> and the
       <math|\<mu\><rsub|k>>.\ 
     </shown>|<\shown>
       First choose some initial values for the <math|\<mu\><rsub|k>>.\ 
@@ -241,7 +255,7 @@
     </folded>
   </hidden>|<\hidden>
     <\unfolded>
-      <small-figure|<image|image/fig_9_2_kmeans_iteration.png|0.5par|||>|Plot
+      <small-figure|<image|image/fig_9_2_kmeans_iteration.png|0.5par|||>|<label|fig9.2>Plot
       of the cost function <math|J> given by Eq. <eqref|9.1> after each E
       step (blue points) and M step (red points) of the K-means algorithm for
       the example shown in Figure <reference|fig9.1>. >
@@ -272,7 +286,7 @@
 
     \;
 
-    <\overlays-greyed|3|6>
+    <\overlays-greyed|6|6>
       \ 
 
       <overlay-this|2|So far, we have considered a batch version of K-means
@@ -340,19 +354,28 @@
 
     \;
   </hidden>|<\hidden>
+    <tit|Discrete Search>
+
     \;
 
-    For a general choice of dissimilarity measure, the M step is potentially
-    more complex than for K-means, and so it is common to restrict each
-    cluster prototype to be equal to one of the data vectors assigned to that
-    cluster, as this allows the algorithm to be implemented for any choice of
-    dissimilarity measure <math|\<cal-V\>(\<cdummy\>,\<cdummy\>)> so long as
-    it can be readily evaluated.\ 
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      For a general choice of dissimilarity measure, the M step is
+      potentially more complex than for K-means, and so it is common to
+      restrict each cluster prototype to be equal to one of the data vectors
+      assigned to that cluster, as this allows the algorithm to be
+      implemented for any choice of dissimilarity measure
+      <math|\<cal-V\>(\<cdummy\>,\<cdummy\>)> so long as it can be readily
+      evaluated.
 
-    Thus the M step involves, for each cluster <math|k>, a discrete search
-    over the <math|N<rsub|k>> points assigned to that cluster, which requires
-    <math|O(N<rsub|k><rsup|2>)> evaluations of
-    <math|\<cal-V\>(\<cdummy\>,\<cdummy\>)>.
+      <with|gr-mode|<tuple|edit|point>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|1cm|center>|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-color|blue|gr-point-size|10ln|gr-opacity|20%|<graphics||<point|-1.23902|1.93443>|<point|-3.5|0>|<point|-3.2|0>|<point|-2.8|0.4>|<point|-2.8|0.4>|<point|-2.7|0>|<point|-3|0>|<point|-4|0>|<point|-4|0>|<point|-3.6|0.3>|<point|-3|-0.3>|<point|-1.8|-0.3>|<point|-1.5|0>|<with|color|red|<point|1|0.2>>|<with|color|red|<point|1.8|0.2>>|<with|color|red|<point|1.6|-0.2>>|<with|color|red|<point|0.7|-0.2>>|<with|color|red|<point|-0.4|0>>|<with|color|red|<point|-0.3|-0.3>>|<with|color|red|<point|0.2|0.3>>|<with|color|red|<point|0.3|-0.2>>|<with|color|red|opacity|20%|point-size|10ln|<point|0.7|-0.2>>|<with|color|blue|opacity|20%|point-size|10ln|<point|-3|0>>>>
+    </shown>|<\shown>
+      Thus the M step involves, for each cluster <math|k>, a discrete search
+      over the <math|N<rsub|k>> points assigned to that cluster, which
+      requires <math|O(N<rsub|k><rsup|2>)> evaluations of
+      <math|\<cal-V\>(\<cdummy\>,\<cdummy\>)>.
+    </shown>>
 
     <\unfolded>
       \;
@@ -370,7 +393,7 @@
       formulation brings with it numerous benefits.
     </unfolded>
   </hidden>|<\hidden>
-    <tit|Image segmentation and compression>
+    <tit|Image segmentation>
 
     <unroll-greyed|<\shown>
       \;
@@ -402,15 +425,15 @@
     vector with the <math|{R,G,B}> intensity triplet given by the centre
     <math|\<mu\><rsub|k>> to which that pixel has been assigned.\ 
 
-    Results for various values of K are shown in Figure <reference|9.3>. We
-    see that for a given value of K, the algorithm is representing the image
-    using a palette of only K colours. It should be emphasized that this use
-    of K-means is not a particularly sophisticated approach to image
+    Results for various values of K are shown in Figure <reference|fig9.3>.
+    We see that for a given value of K, the algorithm is representing the
+    image using a palette of only K colours. It should be emphasized that
+    this use of K-means is not a particularly sophisticated approach to image
     segmentation, not least because it takes no account of the spatial
     proximity of different pixels.
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <\folded>
-      <small-figure|<image|image/fig_9_3_imagesegmentation.png|0.7par|||>|Two
+      <small-figure|<image|image/fig_9_3_imagesegmentation.png|0.7par|||>|<label|fig9.3>Two
       examples of the application of the K-means clustering algorithm to
       image segmentation show- ing the initial images together with their
       K-means segmentations obtained using various values of K. >
@@ -419,57 +442,227 @@
       compression, in which smaller values of K give higher compression at
       the expense of poorer image quality.
     </folded>
+  </shown>|<\hidden>
+    <tit|Image compression>
+
+    \;
+
+    \;
+
+    <\overlays-greyed|6|6>
+      <overlay-from|2|We can also use the result of a clustering algorithm to
+      perform data compression.|> <overlay-from|3|It is important to
+      distinguish between <strong|lossless data compression>,|>
+      <overlay-from|4|in which the goal is to be able to reconstruct the
+      original data exactly from the compressed representation,|>
+      <overlay-from|5|and <strong|lossy data compression>,|>
+      <overlay-from|6|in which we accept some errors in the reconstruction in
+      return for higher levels of compression than can be achieved in the
+      lossless case. |>
+    </overlays-greyed>
+  </hidden>|<\hidden>
+    <tit|Vector quantization>
+
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      We can apply the K-means algorithm to the problem of lossy data
+      compression as follows.\ 
+    </shown>|<\shown>
+      For each of the <math|N> data points, we store only the identity
+      <math|k> of the cluster to which it is assigned.
+    </shown>|<\shown>
+      We also store the values of the K clus- ter centres
+      <math|\<mu\><rsub|k>>, which typically requires significantly less
+      data, provided we choose <math|K\<ll\>N>.
+    </shown>|<\shown>
+      Each data point is then approximated by its nearest centre
+      <math|\<mu\><rsub|k>>.
+    </shown>|<\shown>
+      New data points can similarly be compressed by first finding the
+      nearest <math|\<mu\><rsub|k>> and then storing the label k instead of
+      the original data vector.
+    </shown>|<\shown>
+      This framework is often called vector quantization, and the vectors
+      <math|\<mu\><rsub|k>> are called <strong|code-book vectors>.
+    </shown>>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Compression illustration>
+
+    \;
+
+    <\overlays-greyed|11|11>
+      <overlay-from|2|The image segmentation problem discussed above also
+      provides an illustration of the use of clustering for data compression.
+      |>
+
+      <overlay-from|3|Suppose the original image has <math|N> pixels
+      comprising <math|{R,G,B}> values each of which is stored with 8 bits of
+      precision. |><overlay-from|4|Then to transmit the whole image directly
+      would cost <math|24N> bits.|>\ 
+
+      <overlay-from|5|Now suppose we first run K-means on the image data,|>
+      <overlay-from|6|and then instead of transmitting the original pixel
+      intensity vectors we transmit the identity of the nearest vector
+      <math|\<mu\><rsub|k>>. |><overlay-from|7|Because there are K such
+      vectors, this requires <math|log<rsub|2>K> bits per
+      pixel.|><overlay-from|8| We must also transmit the K code book vectors
+      <math|\<mu\><rsub|k>>, |><overlay-from|9|which requires 24K bits,|>
+      <overlay-from|10|and so the total number of bits required to transmit
+      the image is <math|24K+N log<rsub|2>K>|> <overlay-from|11|(rounding up
+      to the nearest integer).|>
+    </overlays-greyed>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Example Result>
+
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      The original image shown in Figure <reference|9.3> has
+      <math|240\<times\>180=43,200> pixels and so requires
+      <math|24\<times\>43,200=1,036,800> bits to transmit directly.
+    </shown>|<\shown>
+      By comparison, the compressed images require 43,248 bits (K = 2),
+      86,472 bits (K = 3), and 173, 040 bits (K = 10), respectively, to
+      transmit.
+    </shown>|<\shown>
+      These represent compression ratios compared to the original image of
+      4.2%, 8.3%, and 16.7%, respectively.\ 
+    </shown>>
+
+    <\unfolded>
+      \;
+    <|unfolded>
+      We see that there is a trade-off between degree of compression and
+      image quality. Note that our aim in this example is to illustrate the
+      K-means algorithm. If we had been aiming to produce a good image
+      compressor, then it would be more fruitful to consider small blocks of
+      adjacent pixels, for instance 5\<times\>5, and thereby exploit the
+      correlations that exist in natural images between nearby pixels.
+    </unfolded>
   </hidden>|<\hidden>
     \;
 
-    We can also use the result of a clustering algorithm to perform data
-    compres- sion. It is important to distinguish between <strong|lossless
-    data compression>, in which the goal is to be able to reconstruct the
-    original data exactly from the compressed representation, and
-    <strong|lossy data compression>, in which we accept some errors in the
-    reconstruction in return for higher levels of compression than can be
-    achieved in the lossless case.\ 
+    \;
 
-    We can apply the K-means algorithm to the problem of lossy data
-    compression as follows. For each of the <math|N> data points, we store
-    only the identity <math|k> of the cluster to which it is assigned. We
-    also store the values of the K clus- ter centres <math|\<mu\><rsub|k>>,
-    which typically requires significantly less data, provided we choose
-    <math|K\<ll\>N>. Each data point is then approximated by its nearest
-    centre <math|\<mu\><rsub|k>>. New data points can similarly be compressed
-    by first finding the nearest <math|\<mu\><rsub|k>> and then storing the
-    label k instead of the original data vector. This framework is often
-    called vector quantization, and the vectors <math|\<mu\><rsub|k>> are
-    called <strong|code-book vectors>.
-  </hidden>|<\shown>
-    The image segmentation problem discussed above also provides an
-    illustration of the use of clustering for data compression. Suppose the
-    original image has N pixels comprising {R, G, B} values each of which is
-    stored with 8 bits of precision. Then to transmit the whole image
-    directly would cost 24N bits. Now suppose we first run K-means on the
-    image data, and then instead of transmitting the original pixel intensity
-    vectors we transmit the identity of the nearest vector \<mu\>k. Because
-    there are K such vectors, this requires <math|log<rsub|2>K> bits per
-    pixel. We must also transmit the K code book vectors \<mu\>k, which
-    requires 24K bits, and so the total number of bits required to transmit
-    the image is <math|24K+N log<rsub|2>K> (rounding up to the nearest
-    integer). The original image shown in Figure <reference|9.3> has
-    <math|240\<times\>180=43,200> pixels and so requires 24 \<times\> 43, 200
-    = 1, 036, 800 bits to transmit directly. By comparison, the compressed
-    images require 43, 248 bits (K = 2), 86, 472 bits (K = 3), and 173, 040
-    bits (K = 10), respectively, to transmit. These represent compression
-    ratios compared to the original image of 4.2%, 8.3%, and 16.7%,
-    respectively. We see that there is a trade-off between degree of
-    compression and image quality. Note that our aim in this example is to
-    illustrate the K-means algorithm. If we had been aiming to produce a good
-    image compressor, then it would be more fruitful to consider small blocks
-    of adjacent pixels, for instance 5 \<times\> 5, and thereby exploit the
-    correlations that exist in natural images between nearby pixels.
-  </shown>>
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Mixtures of Gaussians>
+    </padded-center>
+  </hidden>|<\hidden>
+    <active*|>
+
+    Now turn to a formulation of Gaussian mixtures in terms of discrete
+    latent variables.\ 
+
+    This will provide us with a deeper insight into this important
+    distribution, and will also serve to motivate the
+    Expectation-Maximization algorithm.\ 
+
+    The Gaussian mixture distribution can be written as a linear
+    superposition of Gaussians in the form\ 
+
+    <\equation>
+      p(\<b-x\>)=<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>\<cal-N\>(\<b-x\>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>).<label|9.7>
+    </equation>
+  </hidden>|<\hidden>
+    Let us introduce a K-dimensional binary random variable z having a 1-of-K
+    representation in which a particular element <math|z<rsub|k>> is equal to
+    1 and all other elements are equal to 0.\ 
+
+    The values of <math|z<rsub|k>> therefore satisfy
+    <math|z<rsub|k>\<in\>{0,1}> and <math|<big|sum><rsub|k>z<rsub|k>=1>, and
+    we see that there are K possible states for the vector z according to
+    which element is nonzero.\ 
+
+    We shall define the joint distribution <math|p(x,z)> in terms of a
+    marginal distribution <math|p(\<b-z\>)> and a conditional distribution
+    <math|p(\<b-x\>\|\<b-z\>)>, corresponding to the graphical model in
+    Figure <reference|fig9.4>.
+
+    <\small-figure|<image|image/fig_9_5_mixture.png|50pt|||>>
+      <label|fig9.4>Graphical representation of a mixture model, in which the
+      joint distribution is expressed in the form <math|p(x,z) =
+      p(z)p(x\|z)>.
+    </small-figure>
+  </hidden>|<\hidden>
+    The marginal distribution over <math|z> is specified in terms of the
+    mixing coefficients <math|\<pi\><rsub|k>>, such that\ 
+
+    <\equation*>
+      p(z<rsub|k> =1)=\<pi\><rsub|k>
+    </equation*>
+
+    where the parameters <math|{\<pi\><rsub|k>}> must satisfy
+
+    <\equation*>
+      0\<leqslant\>\<pi\><rsub|k>\<leqslant\>1
+    </equation*>
+
+    together with
+
+    <\equation*>
+      <big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>=1
+    </equation*>
+
+    in order to be valid probabilities. Because z uses a 1-of-K
+    representation, we can also write this distribution in the form
+
+    <\equation>
+      p<around*|(|\<b-z\>|)>=<big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|z<rsub|k>><label|9.10>
+    </equation>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    Similarly, the conditional distribution of <math|\<b-x\>> given a
+    particular value for <math|\<b-z\>> is a Gaussian\ 
+
+    <\equation*>
+      p(\<b-x\>\|z<rsub|k>=1) = \<cal-N\>(\<b-x\>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>)
+    </equation*>
+
+    which can also be written in the form
+
+    <\equation>
+      p<around*|(|\<b-x\><around*|\||\<b-z\>|\<nobracket\>>|)>=<big|prod><rsub|k=1><rsup|K>\<cal-N\><around*|(|\<b-x\><around*|\||\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|\<nobracket\>>|)><rsup|z<rsub|k>><label|9.11>
+    </equation>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    The joint distribution is given by p(z)p(x\|z), and the marginal
+    distribution of x is then obtained by summing the joint distribution over
+    all possible states of z to give
+
+    <\equation*>
+      p(\<b-x\>) = <big|sum><rsub|z>p(z)p(x\|z)
+      =<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>
+    </equation*>
+
+    where we have made use of <eqref|9.10> and <eqref|9.11>. Thus the
+    marginal distribution of x is a Gaussian mixture of the form <eqref|9.7>.\ 
+
+    If we have several observations <math|x<rsub|1>,\<cdots\>,x<rsub|N>>,
+    then, because we have represented the marginal distribution in the form
+    <math|p(x)=<big|sum><rsub|z>p(x,z)>, it follows that for every observed
+    data point <math|x<rsub|n>> there is a corresponding latent variable
+    <math|z<rsub|n>>.
+  </hidden>>
 </body>
 
 <\initial>
   <\collection>
+    <associate|font-base-size|10>
     <associate|info-flag|minimal>
     <associate|page-height|auto>
     <associate|page-medium|paper>
@@ -481,15 +674,24 @@
 <\references>
   <\collection>
     <associate|9.1|<tuple|1|4>>
+    <associate|9.10|<tuple|8|?>>
+    <associate|9.11|<tuple|9|?>>
     <associate|9.2|<tuple|2|6>>
     <associate|9.3|<tuple|3|1>>
     <associate|9.4|<tuple|4|1>>
     <associate|9.5|<tuple|5|?>>
     <associate|9.6|<tuple|6|?>>
+    <associate|9.7|<tuple|7|?>>
     <associate|auto-1|<tuple|1|?>>
-    <associate|auto-2|<tuple|2|?>>
-    <associate|auto-3|<tuple|3|?>>
+    <associate|auto-2|<tuple|1|?>>
+    <associate|auto-3|<tuple|2|?>>
+    <associate|auto-4|<tuple|3|?>>
+    <associate|auto-5|<tuple|2|?>>
+    <associate|auto-6|<tuple|4|?>>
     <associate|fig9.1|<tuple|1|?>>
+    <associate|fig9.2|<tuple|2|?>>
+    <associate|fig9.3|<tuple|3|?>>
+    <associate|fig9.4|<tuple|4|?>>
   </collection>
 </references>
 
@@ -498,18 +700,34 @@
     <\associate|figure>
       <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Illustration of the
       K-means algorithm using the re-scaled Old Faithful data
-      set.>|<pageref|auto-1>>
+      set.>|<pageref|auto-2>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|2>||Plot of the cost
       function <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|J>>
       given by Eq. (<reference|9.1>) after each E step (blue points) and M
       step (red points) of the K-means algorithm for the example shown in
-      Figure <reference|fig9.1>. >|<pageref|auto-2>>
+      Figure <reference|fig9.1>. >|<pageref|auto-3>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|3>||Two examples of the
       application of the K-means clustering algorithm to image segmentation
       show- ing the initial images together with their K-means segmentations
-      obtained using various values of K. >|<pageref|auto-3>>
+      obtained using various values of K. >|<pageref|auto-4>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|4>|>
+        Graphical representation of a mixture model, in which the joint
+        distribution is expressed in the form
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x,z)
+        = p(z)p(x\|z)>>.
+      </surround>|<pageref|auto-6>>
+    </associate>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>K-means
+      Clustering> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Mixtures
+      of Gaussians> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-5><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
