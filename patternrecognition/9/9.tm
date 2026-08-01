@@ -587,7 +587,7 @@
     <math|p(\<b-x\>\|\<b-z\>)>, corresponding to the graphical model in
     Figure <reference|fig9.4>.
 
-    <\small-figure|<image|image/fig_9_5_mixture.png|50pt|||>>
+    <\small-figure|<image|image/fig_9_4_mixture.png|50pt|||>>
       <label|fig9.4>Graphical representation of a mixture model, in which the
       joint distribution is expressed in the form <math|p(x,z) =
       p(z)p(x\|z)>.
@@ -608,9 +608,9 @@
 
     together with
 
-    <\equation*>
-      <big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>=1
-    </equation*>
+    <\equation>
+      <big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>=1<label|9.9>
+    </equation>
 
     in order to be valid probabilities. Because z uses a 1-of-K
     representation, we can also write this distribution in the form
@@ -669,7 +669,7 @@
     value can be found using Bayes' theorem
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<gamma\>\<equiv\>p<around*|(|z<rsub|k>=1<around*|\||x|\<nobracket\>>|)>>|<cell|=>|<cell|<frac|p<around*|(|z<rsub|k>=1|)>p<around*|(|x<around*|\||z<rsub|k>=1|\<nobracket\>>|)>|<big|sum><rsub|j=1><rsup|K>p<around*|(|z<rsub|j>=1|)>p<around*|(|x<around*|\||z<rsub|j>=1|\<nobracket\>>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\><rsub|k>\<cal-N\><around*|(|x<around*|\||\<mu\><rsub|k>,\<Sigma\><rsub|k>|\<nobracket\>>|)>|<big|sum><rsub|j=1><rsup|K>\<pi\><rsub|j>\<cal-N\><around*|(|x<around*|\||\<mu\><rsub|j>,\<Sigma\><rsub|j>|\<nobracket\>>|)>>>>>>
+      <tformat|<table|<row|<cell|\<gamma\>\<equiv\>p<around*|(|z<rsub|k>=1<around*|\||x|\<nobracket\>>|)>>|<cell|=>|<cell|<frac|p<around*|(|z<rsub|k>=1|)>p<around*|(|x<around*|\||z<rsub|k>=1|\<nobracket\>>|)>|<big|sum><rsub|j=1><rsup|K>p<around*|(|z<rsub|j>=1|)>p<around*|(|x<around*|\||z<rsub|j>=1|\<nobracket\>>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\><rsub|k>\<cal-N\><around*|(|x<around*|\||\<mu\><rsub|k>,\<Sigma\><rsub|k>|\<nobracket\>>|)>|<big|sum><rsub|j=1><rsup|K>\<pi\><rsub|j>\<cal-N\><around*|(|x<around*|\||\<mu\><rsub|j>,\<Sigma\><rsub|j>|\<nobracket\>>|)>><eq-number><label|9.13>>>>>
     </eqnarray*>
 
     We shall view <math|\<pi\><rsub|k>> as the prior probability of
@@ -678,7 +678,259 @@
     shall see later, <math|\<gamma\>(z<rsub|k>)> can also be viewed as the
     responsibility that component <math|k> takes for `explaining' the
     observation <math|x>.
+  </hidden>|<\hidden>
+    <\small-figure|<image|image/fig_9_5_mixture_gaussion_sample.png|0.9par|||>>
+      \ Example of 500 points drawn from the mixture of 3 Gaussians shown in
+      Figure 2.23. (a) Samples from the joint distribution <math|p(z)p(x\|z)>
+      in which the three states of <math|z>, corresponding to the three
+      components of the mixture, are depicted in red, green, and blue, and
+      (b) the corresponding samples from the marginal distribution
+      <math|p(x)>, which is obtained by simply ignoring the values of
+      <math|z> and just plotting the <math|x> values. The data set in (a) is
+      said to be complete, whereas that in (b) is incomplete. (c) The same
+      samples in which the colours represent the value of the
+      responsibilities <math|\<gamma\>(z<rsub|n k>)> associated with data
+      point xn, obtained by plotting the corresponding point using
+      proportions of red, blue, and green ink given by
+      <math|\<gamma\>(z<rsub|n k>)> for <math|k = 1,2,3>, respectively
+    </small-figure>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Maximum likelihood>
+
+    Suppose we have a data set of observations
+    <math|{x<rsub|1>,\<cdots\>,x<rsub|N>}>, and we wish to model this data
+    using a mixture of Gaussians.\ 
+
+    We can represent this data set as an N\<times\>D matrix <math|X> in which
+    the nth row is given by <math|\<b-x\><rsup|T><rsub|n>> .\ 
+
+    Similarly, the corresponding latent variables will be denoted by an
+    N\<times\>K matrix <math|Z> with rows <math|\<b-z\><rsup|T><rsub|n>> .\ 
+
+    f we assume that the data points are drawn independently from the
+    distribution, then we can express the Gaussian mixture model for this
+    i.i.d. data set using the graphical representation in Figure
+    <reference|fig9.6>.
+  </hidden>|<\hidden>
+    \;
+
+    I
+
+    <small-figure|<image|image/fig_9_6_mixture_gaussion_n.png|0.3par|||>|<label|fig9.6>Graphical
+    representation of a Gaussian mixture model for a set of <math|N> i.i.d.
+    data points <math|{x<rsub|n>}>, with corresponding <math|\<pi\>> latent
+    points <math|{z<rsub|n>}>, where <math|n = 1,...,N>.>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    From Eq. <eqref|9.7> the log of the likelihood function is given by
+
+    <\equation>
+      ln p<around*|(|X\|\<b-pi\>,\<b-mu\>,\<b-Sigma\>|)>=<big|sum><rsub|n=1><rsup|N>ln<around*|{|<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|}><label|9.14>
+    </equation>
+  </hidden>|<\hidden>
+    \;
+
+    <small-figure|<image|image/fig_9_7_mixture_gaussion_singularity.png|0.5par|||>|Illustration
+    of how singularities in the likelihood function arise with mixtures of
+    Gaussians. This should be compared with the case of a single Gaussian
+    shown in Figure 1.14 for which no singularities arise.>
+  </hidden>|<\hidden>
+    <tit|EM for Gaussian mixtures>
+
+    An elegant and powerful method for finding maximum likelihood solutions
+    for models with latent variables is called the expectation-maximization
+    algorithm, or EM algorithm (Dempster et al., 1977; McLachlan and
+    Krishnan, 1997).
+
+    Later we shall give a general treatment of EM, and we shall also show how
+    EM can be generalized to obtain the variational inference framework.\ 
+
+    Initially, we shall motivate the EM algorithm by giving a relatively
+    informal treatment in the context of the Gaussian mixture model.\ 
+
+    We emphasize, however, that EM has broad applicability, and indeed it
+    will be encountered in the context of a variety of different models in
+    this book.
+  </hidden>|<\hidden>
+    <tit|<math|\<b-mu\><rsub|k>>>
+
+    Let us begin by writing down the conditions that must be satisfied at a
+    maximum of the likelihood function.\ 
+
+    Setting the derivatives of <math|ln p(X\|\<pi\>, \<mu\>, \<Sigma\>)> in
+    Eq. <eqref|9.14> with respect to the means <math|\<b-mu\><rsub|k>> of the
+    Gaussian components to zero, we obtain\ 
+
+    <\equation*>
+      0=-<big|sum><rsub|n=1><rsup|N><with|color|magenta|<wide*|<with|color|<pattern|/Applications/TeXmacs.app/Contents/Resources/share/TeXmacs/misc/patterns/vintage/granite-dark.png||>|<frac|\<pi\>
+      <rsub|k<rsub| >>\<cal-N\> ( x<rsub|n>
+      \|\<mu\><rsub|k>,\<Sigma\><rsub|k>)|<big|sum><rsub|j>\<pi\><rsub|j>\<cal-N\>(x<rsub|n>\|\<mu\><rsub|j>,\<Sigma\><rsub|j>)>>|\<wide-underbrace\>><rsub|<with|color|magenta|\<gamma\><around*|(|z<rsub|n
+      k>|)>>>>\<Sigma\><rsub|k>(\<b-x\><rsub|n> \<minus\>\<b-mu\><rsub|k>)
+    </equation*>
+
+    where we have made use of the form (2.43) for the Gaussian distribution.
+    Note that the posterior probabilities, or responsibilities, given by Eq.
+    <eqref|9.13> appear naturally on the right-hand side.\ 
+  </hidden>|<\hidden>
+    \;
+
+    Multiplying by <math|\<Sigma\><rsup|-1>> (which we assume to be
+    nonsingular) and rearranging we obtain
+
+    <\equation>
+      \<b-mu\><rsub|k>=<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+      k>|)>\<b-x\><rsub|n><label|9.17>
+    </equation>
+
+    where
+
+    <\equation*>
+      N<rsub|k>=<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|<rsub|Z<rsub|n
+      k>>|)>.
+    </equation*>
+
+    We can interpret <math|N<rsub|k>> as the effective number of points
+    assigned to cluster <math|k>. Note carefully the form of this solution.
+    We see that the mean <math|\<mu\><rsub|k>> for the k'th Gaussian
+    component is obtained by taking a weighted mean of all of the points in
+    the data set, in which the weighting factor for data point
+    <math|x<rsub|n>> is given by the posterior probability
+    <math|\<gamma\>(z<rsub|n k>)> that component <math|k> was responsible for
+    generating <math|x<rsub|n>>.
+  </hidden>|<\hidden>
+    <tit|<math|\<Sigma\><rsub|k>>>
+
+    If we set the derivative of <math|ln p(X\|\<pi\>,\<mu\>,\<Sigma\>)> with
+    respect to <math|\<Sigma\><rsub|k>> to zero, and follow a similar line of
+    reasoning, making use of the result for the maximum likelihood solution
+    for the covariance matrix of a single Gaussian, we obtain\ 
+
+    <\equation>
+      \<Sigma\><rsub|k>=<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+      k>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T><label|9.19>
+    </equation>
+
+    which has the same form as the corresponding result for a single Gaussian
+    fitted to the data set, but again with each data point weighted by the
+    corresponding posterior probability and with the denominator given by the
+    effective number of points associated with the corresponding component.
+  </hidden>|<\hidden>
+    <tit|<math|\<pi\><rsub|k>>>
+
+    Finally, we maximize ln <math|p(X\|\<pi\>, \<mu\>, \<Sigma\>)> with
+    respect to the mixing coefficients <math|\<pi\><rsub|k>>. Here we must
+    take account of the constraint <eqref|9.9>, which requires the mixing
+    coefficients to sum to one. This can be achieved using a Lagrange
+    multiplier and maximizing the following quantity
+
+    <\equation*>
+      ln p<around*|(|X\|\<pi\>,\<b-mu\>,\<b-Sigma\>|)>+\<lambda\><around*|(|<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>-1|)>
+    </equation*>
+
+    which gives
+
+    <\folded>
+      <\equation*>
+        0=<big|sum><rsub|n=1><rsup|N><frac|\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|<big|sum><rsub|j>\<pi\><rsub|j>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>,\<b-Sigma\><rsub|j>|)>>+\<lambda\>
+      </equation*>
+    <|folded>
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|0>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><frac|\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|<big|sum><rsub|j>\<pi\><rsub|j>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>,\<b-Sigma\><rsub|j>|)>>+\<lambda\>\<pi\><rsub|k>>>|<row|<cell|0>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K><frac|\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|<big|sum><rsub|j>\<pi\><rsub|j>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>,\<b-Sigma\><rsub|j>|)>>+\<lambda\><big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>>>|<row|<cell|0>|<cell|=>|<cell|N+\<lambda\>>>>>
+      </eqnarray*>
+    </folded>
+
+    where again we see the appearance of the responsibilities.\ 
+  </hidden>|<\hidden>
+    \;
+
+    If we now multiply both sides by <math|\<pi\><rsub|k>> and sum over
+    <math|k> making use of the constraint Eq. <eqref|9.9>, we find
+    <math|\<lambda\>=\<minus\>N>. Using this to eliminate <math|\<lambda\>>
+    and rearranging we obtain\ 
+
+    <\folded>
+      <\equation>
+        \<pi\><rsub|k> = <frac|N<rsub|k>|N><label|9.22>
+      </equation>
+    <|folded>
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|0>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><frac|\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|<big|sum><rsub|j>\<pi\><rsub|j>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>,\<b-Sigma\><rsub|j>|)>>+\<lambda\>\<pi\><rsub|k>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+        k>|)>-N\<pi\><rsub|k>>>|<row|<cell|>|<cell|=>|<cell|N<rsub|k>-N\<pi\><rsub|k>>>>>
+      </eqnarray*>
+    </folded>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|EM algorithm>
+
+    It is worth emphasizing that the results Eq. <eqref|9.17>, Eq.
+    <eqref|9.19>, and Eq. <eqref|9.22> do not constitute a closed-form
+    solution for the parameters of the mixture model because the
+    responsibilities <math|\<gamma\>(z<rsub|n k>)> depend on those parameters
+    in a complex way through <eqref|9.13>.\ 
+
+    However, these results do suggest a simple iterative scheme for finding a
+    solution to the maximum likelihood problem, which as we shall see turns
+    out to be an instance of the EM algorithm for the particular case of the
+    Gaussian mixture model.\ 
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    We first choose some initial values for the means, covariances, and
+    mixing coefficients.\ 
+
+    Then we alternate between the following two updates that we shall call
+    the E step and the M step, for reasons that will become apparent shortly.\ 
+
+    In the expectation step, or E step, we use the current values for the
+    parameters to evaluate the posterior probabilities, or responsibilities,
+    given by <eqref|9.13>.\ 
+
+    We then use these probabilities in the maximization step, or M step, to
+    re-estimate the means, covariances, and mix- ing coefficients using the
+    results Eq. <eqref|9.17>, Eq. <eqref|9.19>, and Eq. <eqref|9.22>.\ 
+
+    Note that in so doing we first evaluate the new means using Eq.
+    <eqref|9.17> and then use these new values to find the covariances using
+    Eq. <eqref|9.19>, in keeping with the corresponding result for a single
+    Gaussian distribution.
+  </hidden>|<\hidden>
+    <\folded>
+      <\small-figure|<image|image/fig_9_8_mixture_gaussion_EM.png|0.65par|||>>
+        Illustration of the EM algorithm using the Old Faithful set as used
+        for the illustration of the K-means algorithm in Figure
+        <reference|fig9.1>.
+      </small-figure>
+    <|folded>
+      Gaussian components are shown as blue and red circles. Plot (b) shows
+      the result of the initial E step, in which each data point is depicted
+      using a proportion of blue ink equal to the posterior probability of
+      having been generated from the blue com- ponent, and a corresponding
+      proportion of red ink given by the posterior probability of having been
+      generated by the red component. Thus, points that have a significant
+      probability for belonging to either cluster appear purple. The
+      situation after the first M step is shown in plot (c), in which the
+      mean of the blue Gaussian has moved to the mean of the data set,
+      weighted by the probabilities of each data point belonging to the blue
+      cluster, in other words it has moved to the centre of mass of the blue
+      ink. Similarly, the covariance of the blue Gaussian is set equal to the
+      covariance of the blue ink. Analogous results hold for the red
+      component. Plots (d), (e), and (f) show the results after 2, 5, and 20
+      complete cycles of EM, respectively. In plot (f) the algorithm is close
+      to convergence.
+    </folded>
   </hidden>|<\shown>
+    <tit|EM for Gaussian Mixtures>
+
     \;
   </shown>>
 </body>
@@ -697,24 +949,36 @@
 <\references>
   <\collection>
     <associate|9.1|<tuple|1|4>>
-    <associate|9.10|<tuple|8|?>>
-    <associate|9.11|<tuple|9|?>>
+    <associate|9.10|<tuple|9|?>>
+    <associate|9.11|<tuple|10|?>>
+    <associate|9.13|<tuple|11|?>>
+    <associate|9.14|<tuple|12|?>>
+    <associate|9.17|<tuple|13|?>>
+    <associate|9.19|<tuple|14|?>>
     <associate|9.2|<tuple|2|6>>
+    <associate|9.22|<tuple|15|?>>
     <associate|9.3|<tuple|3|1>>
     <associate|9.4|<tuple|4|1>>
     <associate|9.5|<tuple|5|?>>
     <associate|9.6|<tuple|6|?>>
     <associate|9.7|<tuple|7|?>>
+    <associate|9.9|<tuple|8|?>>
     <associate|auto-1|<tuple|1|?>>
+    <associate|auto-10|<tuple|8|?>>
+    <associate|auto-11|<tuple|9|?>>
     <associate|auto-2|<tuple|1|?>>
     <associate|auto-3|<tuple|2|?>>
     <associate|auto-4|<tuple|3|1>>
     <associate|auto-5|<tuple|2|?>>
     <associate|auto-6|<tuple|4|?>>
+    <associate|auto-7|<tuple|5|?>>
+    <associate|auto-8|<tuple|6|?>>
+    <associate|auto-9|<tuple|7|?>>
     <associate|fig9.1|<tuple|1|?>>
     <associate|fig9.2|<tuple|2|?>>
     <associate|fig9.3|<tuple|3|1>>
     <associate|fig9.4|<tuple|4|?>>
+    <associate|fig9.6|<tuple|6|?>>
   </collection>
 </references>
 
@@ -742,6 +1006,48 @@
         <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x,z)
         = p(z)p(x\|z)>>.
       </surround>|<pageref|auto-6>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|5>|>
+        \ Example of 500 points drawn from the mixture of 3 Gaussians shown
+        in Figure 2.23. (a) Samples from the joint distribution
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(z)p(x\|z)>>
+        in which the three states of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z>>,
+        corresponding to the three components of the mixture, are depicted in
+        red, green, and blue, and (b) the corresponding samples from the
+        marginal distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x)>>,
+        which is obtained by simply ignoring the values of
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z>>
+        and just plotting the <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>
+        values. The data set in (a) is said to be complete, whereas that in
+        (b) is incomplete. (c) The same samples in which the colours
+        represent the value of the responsibilities
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<gamma\>(z<rsub|n
+        k>)>> associated with data point xn, obtained by plotting the
+        corresponding point using proportions of red, blue, and green ink
+        given by <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<gamma\>(z<rsub|n
+        k>)>> for <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|k
+        = 1,2,3>>, respectively
+      </surround>|<pageref|auto-7>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|6>||Graphical
+      representation of a Gaussian mixture model for a set of
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|N>>
+      i.i.d. data points <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|{x<rsub|n>}>>,
+      with corresponding <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<pi\>>>
+      latent points <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|{z<rsub|n>}>>,
+      where <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|n
+      = 1,...,N>>.>|<pageref|auto-8>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|7>||Illustration of how
+      singularities in the likelihood function arise with mixtures of
+      Gaussians. This should be compared with the case of a single Gaussian
+      shown in Figure 1.14 for which no singularities
+      arise.>|<pageref|auto-9>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|8>||Illustration of the
+      EM algorithm using the Old Faithful set as used for the illustration of
+      the K-means algorithm in Figure <reference|fig9.1>. See the text for
+      details.>|<pageref|auto-10>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>K-means
