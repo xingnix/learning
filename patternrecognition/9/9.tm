@@ -680,11 +680,11 @@
     observation <math|x>.
   </hidden>|<\hidden>
     <\small-figure|<image|image/fig_9_5_mixture_gaussion_sample.png|0.9par|||>>
-      \ Example of 500 points drawn from the mixture of 3 Gaussians shown in
-      Figure 2.23. (a) Samples from the joint distribution <math|p(z)p(x\|z)>
-      in which the three states of <math|z>, corresponding to the three
-      components of the mixture, are depicted in red, green, and blue, and
-      (b) the corresponding samples from the marginal distribution
+      <label|fig9.5> Example of 500 points drawn from the mixture of 3
+      Gaussians shown in Figure 2.23. (a) Samples from the joint distribution
+      <math|p(z)p(x\|z)> in which the three states of <math|z>, corresponding
+      to the three components of the mixture, are depicted in red, green, and
+      blue, and (b) the corresponding samples from the marginal distribution
       <math|p(x)>, which is obtained by simply ignoring the values of
       <math|z> and just plotting the <math|x> values. The data set in (a) is
       said to be complete, whereas that in (b) is incomplete. (c) The same
@@ -928,9 +928,155 @@
       complete cycles of EM, respectively. In plot (f) the algorithm is close
       to convergence.
     </folded>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|EM for Gaussian Mixtures>
 
+    Given a Gaussian mixture model, the goal is to maximize the likelihood
+    function with respect to the parameters (comprising the means and
+    covariances of the components and the mixing coefficients).
+
+    <\folded>
+      1. Initialize the means <math|\<b-mu\><rsub|k>> , covariances
+      <math|\<b-Sigma\><rsub|k>> and mixing coeffïcients
+      <math|\<pi\><rsub|k>>,\ 
+    <|folded>
+      and evaluate the initial value of the log likelihood.
+    </folded>
+
+    <\unfolded>
+      2. E step. Evaluate the responsibilities using the current parameter
+      values
+    <|unfolded>
+      <\equation*>
+        \<gamma\><around*|(|z<rsub|n k>|)>=<tfrac|\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|<big|sum><rsub|j=1><rsup|N>\<pi\><rsub|j>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>,\<b-Sigma\><rsub|j>|)>>
+      </equation*>
+    </unfolded>
+
+    <\folded>
+      3. M step. Re-estimate the parameters using the current
+      responsibilities
+    <|folded>
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|\<b-mu\><rsub|k><rsup|new>>|<cell|=>|<cell|<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+        k>|)>\<b-x\><rsub|n>>>|<row|<cell|\<b-Sigma\><rsub|k><rsup|new>>|<cell|=>|<cell|<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|K>\<gamma\><around*|(|z<rsub|n
+        k>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k><rsup|new>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k><rsup|new>|)><rsup|T>>>|<row|<cell|\<pi\><rsub|k><rsup|new>>|<cell|=>|<cell|<frac|N<rsub|k>|N>>>>>
+      </eqnarray*>
+
+      where
+
+      <\equation*>
+        N<rsub|k>=<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+        k>|)>
+      </equation*>
+    </folded>
+
+    <\folded>
+      4. Evaluate the log likelihood
+    <|folded>
+      <\equation*>
+        ln p<around*|(|X\|\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>=<big|sum><rsub|n=1><rsup|N>ln<around*|{|<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|}>
+      </equation*>
+    </folded>
+
+    <\folded>
+      5. Check for convergence of either the parameters or the log
+      likelihood.
+    <|folded>
+      If the convergence criterion is not satisfied return to step 2.
+    </folded>
+
+    \ 
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|An Alternative View of EM>
+    </padded-center>
+  </hidden>|<\hidden>
+    The goal of the EM algorithm is to find maximum likelihood solutions for
+    models having latent variables.\ 
+
+    We denote the set of all observed data by <math|X>, in which the n'th row
+    represents <math|\<b-x\><rsub|n><rsup|T>>, and similarly we denote the
+    set of all latent variables by <math|Z>, with a corresponding row
+    <math|z<rsup|T><rsub|n>> . The set of all model parameters is denoted by
+    <math|\<b-theta\>> and so the log likelihood function is given by
+
+    <\equation*>
+      ln p(X\|\<b-theta\>) = ln p(X, Z\|\<b-theta\>) .
+    </equation*>
+
+    Note that our discussion will apply equally well to continuous latent
+    variables simply by replacing the sum over <math|Z> with an integral.
+
+    A key observation is that the summation over the latent variables appears
+    inside the logarithm. Even if the joint distribution
+    <math|p(X,Z\|\<theta\>)> belongs to the exponential family, the marginal
+    distribution <math|p(X\|\<theta\>)> typically does not as a result of
+    this summation. The presence of the sum prevents the logarithm from
+    acting directly on the joint distribution, resulting in complicated
+    expressions for the maximum likelihood solution.
+  </hidden>|<\hidden>
+    Now suppose that, for each observation in <math|X>, we were told the
+    corresponding value of the latent variable <math|Z>. We shall call
+    <math|{X, Z}> the complete data set, and we shall refer to the actual
+    observed data <math|X> as incomplete, as illustrated in Figure
+    <reference|fig9.5>. The likelihood function for the complete data set
+    simply takes the form <math|ln p(X,Z\|\<theta\>)>, and we shall suppose
+    that maximization of this complete-data log likelihood function is
+    straightforward.
+
+    In practice, however, we are not given the complete data set
+    <math|{X,Z}>, but only the incomplete data <math|X>. Our state of
+    knowledge of the values of the latent variables in <math|Z> is given only
+    by the posterior distribution <math|p(Z\|X,\<theta\>)>.\ 
+
+    Because we cannot use the complete-data log likelihood, we consider
+    instead its expected value under the posterior distribution of the latent
+    variable, which corresponds (as we shall see) to the E step of the EM
+    algorithm.
+
+    In the subsequent M step, we maximize this expectation.\ 
+
+    If the current estimate for the parameters is denoted
+    <math|\<theta\><rsup|old>>, then a pair of successive E and M steps gives
+    rise to a revised estimate <math|<math|\<theta\>><rsup|new>> .\ 
+
+    The algorithm is initialized bychoosing some starting value for the
+    parameters <math|\<theta\><rsub|0>> .
+  </hidden>|<\hidden>
+    In the E step, we use the current parameter values
+    <math|\<b-theta\><rsup|old>> to find the posterior distribution of the
+    latent variables given by <math|p(Z\|X, \<b-theta\><rsup|old>)>. We then
+    use this posterior distribution to find the expectation of the
+    complete-data log likelihood evaluated for some general parameter value
+    <math|\<b-theta\>>. This expectation, denoted
+    <math|\<cal-Q\>(\<b-theta\>,\<b-theta\><rsup|old>)>, is given by
+
+    <\equation*>
+      \<cal-Q\><around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=<big|sum><rsub|z>p<around*|(|Z\|X,\<b-theta\><rsup|old>|)>ln
+      p<around*|(|X,Z\|\<b-theta\>|)>
+    </equation*>
+
+    In the M step, we determine the revised parameter estimate
+    <math|\<b-theta\><rsup|new>> by maximizing this function
+
+    <\equation*>
+      \<b-theta\><rsup|new>=arg max<rsub|\<b-theta\>>
+      \<cal-Q\><around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>
+    </equation*>
+
+    Note that in the definition of <math|\<cal-Q\><around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>>,
+    the logarithm acts directly on the joint distribution <math|p(X,
+    Z\|\<b-theta\>)>, and so the corresponding M-step maximization will, by
+    supposition, be tractable.
+  </hidden>|<\shown>
     \;
   </shown>>
 </body>
@@ -965,7 +1111,7 @@
     <associate|9.9|<tuple|8|?>>
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-10|<tuple|8|?>>
-    <associate|auto-11|<tuple|9|?>>
+    <associate|auto-11|<tuple|3|?>>
     <associate|auto-2|<tuple|1|?>>
     <associate|auto-3|<tuple|2|?>>
     <associate|auto-4|<tuple|3|1>>
@@ -978,6 +1124,7 @@
     <associate|fig9.2|<tuple|2|?>>
     <associate|fig9.3|<tuple|3|1>>
     <associate|fig9.4|<tuple|4|?>>
+    <associate|fig9.5|<tuple|5|?>>
     <associate|fig9.6|<tuple|6|?>>
   </collection>
 </references>
@@ -1044,10 +1191,11 @@
       shown in Figure 1.14 for which no singularities
       arise.>|<pageref|auto-9>>
 
-      <tuple|normal|<surround|<hidden-binding|<tuple>|8>||Illustration of the
-      EM algorithm using the Old Faithful set as used for the illustration of
-      the K-means algorithm in Figure <reference|fig9.1>. See the text for
-      details.>|<pageref|auto-10>>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|8>|>
+        Illustration of the EM algorithm using the Old Faithful set as used
+        for the illustration of the K-means algorithm in Figure
+        <reference|fig9.1>.
+      </surround>|<pageref|auto-10>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>K-means
@@ -1057,6 +1205,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Mixtures
       of Gaussians> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-5><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>An
+      Alternative View of EM> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-11><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
