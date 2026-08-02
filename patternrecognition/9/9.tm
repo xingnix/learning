@@ -640,9 +640,9 @@
 
     \;
 
-    The joint distribution is given by p(z)p(x\|z), and the marginal
-    distribution of x is then obtained by summing the joint distribution over
-    all possible states of z to give
+    The joint distribution is given by <math|p(z)p(x\|z)>, and the marginal
+    distribution of <math|x> is then obtained by summing the joint
+    distribution over all possible states of <math|z> to give
 
     <\equation*>
       p(\<b-x\>) = <big|sum><rsub|z>p(z)p(x\|z)
@@ -650,7 +650,8 @@
     </equation*>
 
     where we have made use of <eqref|9.10> and <eqref|9.11>. Thus the
-    marginal distribution of x is a Gaussian mixture of the form <eqref|9.7>.\ 
+    marginal distribution of <math|x> is a Gaussian mixture of the form
+    <eqref|9.7>.\ 
 
     If we have several observations <math|x<rsub|1>,\<cdots\>,x<rsub|N>>,
     then, because we have represented the marginal distribution in the form
@@ -943,14 +944,14 @@
       and evaluate the initial value of the log likelihood.
     </folded>
 
-    <\unfolded>
+    <\folded>
       2. E step. Evaluate the responsibilities using the current parameter
       values
-    <|unfolded>
+    <|folded>
       <\equation*>
         \<gamma\><around*|(|z<rsub|n k>|)>=<tfrac|\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|<big|sum><rsub|j=1><rsup|N>\<pi\><rsub|j>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>,\<b-Sigma\><rsub|j>|)>>
       </equation*>
-    </unfolded>
+    </folded>
 
     <\folded>
       3. M step. Re-estimate the parameters using the current
@@ -1009,7 +1010,7 @@
     <math|\<b-theta\>> and so the log likelihood function is given by
 
     <\equation*>
-      ln p(X\|\<b-theta\>) = ln p(X, Z\|\<b-theta\>) .
+      ln p(X\|\<b-theta\>) = ln<big|sum><rsub|Z>p(X, Z\|\<b-theta\>) .
     </equation*>
 
     Note that our discussion will apply equally well to continuous latent
@@ -1076,8 +1077,225 @@
     the logarithm acts directly on the joint distribution <math|p(X,
     Z\|\<b-theta\>)>, and so the corresponding M-step maximization will, by
     supposition, be tractable.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
+    <tit|The General EM Algorithm>
+
+    Given a joint distribution <math|p(X,Z\|\<theta\>)> over observed
+    variables <math|X> and latent variables <math|Z>, governed by parameters
+    \<theta\>, the goal is to maximize the likelihood function
+    <math|p(X\|\<theta\>)> with respect to <math|\<theta\>>.
+
+    <hspace|3.5ex>1. Choose an initial setting for the parameters
+    <math|\<b-theta\><rsup|old>>.
+
+    <hspace|3.5ex>2. E step Evaluate <math|p(Z\|X,\<b-theta\><rsup|old>)>.
+
+    <\folded-std>
+      3. M step Evaluate <math|\<b-theta\><rsup|new>>
+    <|folded-std>
+      <\equation*>
+        \<b-theta\><rsup|new>=arg max<rsub|\<theta\>>\<cal-Q\><around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>
+      </equation*>
+
+      where
+
+      <\equation*>
+        \<cal-Q\><around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=<big|sum><rsub|Z>p<around*|(|Z\|X,\<b-theta\><rsup|<rsup|old>>|)>ln
+        p<around*|(|X,Z\|\<b-theta\>|)>
+      </equation*>
+    </folded-std>
+
+    <\folded>
+      4. Check for convergence of either the log likelihood or the parameter
+      values.
+    <|folded>
+      If the convergence criterion is not satisfied, then let
+
+      <\equation*>
+        \<b-theta\><rsup|old>\<leftarrow\>\<b-theta\><rsup|new>
+      </equation*>
+
+      and return to step 2.
+    </folded>
+
     \;
+  </hidden>|<\hidden>
+    <tit| Gaussian mixtures revisited>
+
+    <\padded-center>
+      <\small-figure|<image|image/fig_9_8_mixture_gaussion_complete_data.png|.3par|||>>
+        This shows the same graph as in Figure <reference|fig9.6> except that
+        we now suppose that the discrete variables <math|z<rsub|n>> are
+        observed, as well as the data variables <math|x<rsub|n>>.
+      </small-figure>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|likelihood for the complete data set>
+
+    \;
+
+    Now consider the problem of maximizing the likelihood for the complete
+    data set <math|{X,Z}>. From Eq. <eqref|9.10> and Eq. <eqref|9.11>, this
+    likelihood function takes the form
+
+    <\equation*>
+      p<around*|(|X,Z\|\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|z<rsub|n
+      k>>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)><rsup|z<rsub|n
+      k>>
+    </equation*>
+
+    where <math|z<rsub|nk>> denotes the k'th component of <math|z<rsub|n>> .
+    Taking the logarithm, we obtain
+
+    <\equation*>
+      ln p<around*|(|X,Z\|\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>=<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>z<rsub|n
+      k><around*|{|ln \<pi\><rsub|k>+ln\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|}>
+    </equation*>
+
+    which can be maximized trivially in closed form.
+  </hidden>|<\hidden>
+    <tit|posterior distribution of the latent variables>
+
+    \;
+
+    Consider the expectation, with respect to the posterior distribution of
+    the latent variables, of the complete-data log likelihood.
+
+    <\folded>
+      <\equation*>
+        p<around*|(|Z\|X,\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>\<propto\><big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K><around*|[|\<pi\><rsub|k>\<cal-N\><around*|(|x<rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|]><rsup|z<rsub|n
+        k>>
+      </equation*>
+    <|folded>
+      \;
+
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|p<around*|(|z\|x|)>>|<cell|=>|<cell|<frac|p<around*|(|x,z|)>|p<around*|(|x|)>>>>|<row|<cell|>|<cell|\<propto\>>|<cell|p<around*|(|x,z|)>>>>>
+      </eqnarray*>
+    </folded>
+
+    \;
+
+    For each n, there is
+
+    <\equation*>
+      p<around*|(|\<b-z\><rsub|n>\|X,\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>\<propto\><big|prod><rsub|k=1><rsup|K><around*|[|\<pi\><rsub|k>\<cal-N\><around*|(|x<rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|]><rsup|z<rsub|n
+      k>>
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|<math|\<bbb-E\><around*|[|z<rsub|n k>|]>>>
+
+    The expected value of the indicator variable <math|z<rsub|nk>> under this
+    posterior distribution is then given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|z<rsub|nk>|]>>|<cell|=>|<cell|<frac|<around*|[|<big|sum><rsub|\<b-z\><rsub|n>>\<b-z\><rsub|n>p<around*|(|\<b-z\><rsub|n>\|X,\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>|]><rsub|k>|<big|sum><rsub|\<b-z\><rsub|n>>p<around*|(|\<b-z\><rsub|n>\|X,\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<around*|{|<big|sum><rsub|\<b-z\><rsub|n>>\<b-z\><rsub|n><big|prod><rsub|k=1><rsup|K><around*|[|\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|]><rsup|<rsup|<rsub|z<rsub|nk>>>>|}><rsub|k>|<big|sum><rsub|\<b-z\><rsub|n>><big|prod><rsub|j=1><rsup|K><around*|[|\<pi\><rsub|j>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>,\<b-Sigma\><rsub|j>|)>|]><rsup|z<rsub|nj>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<around*|[|\<pi\><rsub|k>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|]><rsup|<rsup|<rsub|z<rsub|nk>>>>|<big|sum><rsub|j=1><rsup|K><around*|[|\<pi\><rsub|j>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>,\<b-Sigma\><rsub|j>|)>|]><rsup|z<rsub|nj>>>>>|<row|<cell|>|<cell|=>|<cell|\<gamma\><around*|(|z<rsub|nk>|)>>>>>
+    </eqnarray*>
+
+    which is just the responsibility of component k for data point
+    <math|\<b-x\><rsub|n>>.
+  </hidden>|<\hidden>
+    The expected value of the complete-data log likelihood function is
+    therefore given by
+
+    <\equation>
+      \<bbb-E\><rsub|Z><around*|[|ln p<around*|(|X,Z\|\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>|]>=<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>\<gamma\><around*|(|z<rsub|n
+      k>|)><around*|{|ln \<pi\><rsub|k>+ln\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>|}><label|9.40>
+    </equation>
+
+    We can now proceed as follows. First we choose some initial values for
+    the parameters <math|\<b-mu\><rsup|old>> , <math|\<b-Sigma\><rsup|old>>
+    and <math|\<b-pi\><rsup|old>> , and use these to evaluate the
+    responsibilities (the E step). We then keep the responsibilities xed and
+    maximize Eq. <eqref|9.40> with respect to <math|\<mu\><rsup|k>>,<math|
+    \<Sigma\><rsup|k>> and <math|\<pi\><rsup|k>> (the M step). This leads to
+    closed form solutions for <math|\<mu\><rsup|new>> ,
+    <math|\<Sigma\><rsup|new>> and <math|\<pi\><rsup|new>> given by Eq.
+    <eqref|9.17>, <eqref|9.19>, and <eqref|9.22> as before. This is precisely
+    the EM algorithm for Gaussian mixtures as derived earlier.
+  </hidden>|<\hidden>
+    <tit|Relation to K-means>
+
+    Comparison of the K-means algorithm with the EM algorithm for Gaussian
+    mixtures shows that there is a close similarity. Whereas the K-means
+    algorithm performs a hard assignment of data points to clusters, in which
+    each data point is associated uniquely with one cluster, the EM algorithm
+    makes a soft assignment based on the posterior probabilities. In fact, we
+    can derive the K-means algorithm as a particular limit of EM for Gaussian
+    mixtures as follows.
+  </hidden>|<\hidden>
+    Consider a Gaussian mixture model in which the covariance matrices of the
+    mixture components are given by <math|\<varepsilon\>I>, where
+    <math|\<varepsilon\>> is a variance parameter that is shared by all of
+    the components, and <math|I> is the identity matrix, so that
+
+    <\equation*>
+      p<around*|(|\<b-x\>\|\<b-mu\><rsub|k>,\<b-Sigma\><rsub|k>|)>=<frac|1|<around*|(|2\<pi\>\<varepsilon\>|)><rsup|1/2>>exp<around*|{|-<frac|1|2\<varepsilon\>><around*|\<\|\|\>|\<b-x\>-\<b-mu\><rsub|k>|\<\|\|\>><rsup|2>|}>
+    </equation*>
+
+    We now consider the EM algorithm for a mixture of K Gaussians of this
+    form in which we treat <math|\<varepsilon\>> as a fixed constant, instead
+    of a parameter to be re-estimated.
+
+    <\equation*>
+      <text|>
+    </equation*>
+  </hidden>|<\hidden>
+    From Eq. <eqref|9.13> the posterior probabilities, or responsibilities,
+    for a particular data point <math|x<rsub|n>>, are given by\ 
+
+    <\equation*>
+      \<gamma\><around*|(|z<rsub|nk>|)>=<frac|\<pi\><rsub|k>exp<around*|{|-<around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|\<\|\|\>><rsup|2>/2\<varepsilon\>|}>|<big|sum><rsub|j>\<pi\><rsub|j>exp<around*|{|-<around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|j>|\<\|\|\>><rsup|2>/2\<varepsilon\>|}>>
+    </equation*>
+
+    If we consider the limit <math|\<varepsilon\>\<rightarrow\>0>, we see
+    that in the denominator the term for which
+    <math|<around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|j>|\<\|\|\>><rsup|2>>
+    is smallest will go to zero most slowly, and hence the responsibilities
+    <math|\<gamma\><around*|(|z<rsub|nk>|)>> for the data point
+    <math|\<b-x\><rsub|n>> all go to zero except for term <math|j>, for which
+    the responsibility <math|\<gamma\><around*|(|z<rsub|nj>|)>> will go to
+    unity. Note that this holds independently of the values of the
+    <math|\<pi\><rsub|k>> so long as none of the <math|\<pi\><rsub|k>> is
+    zero. Thus, in this limit, we obtain a hard assignment of data points to
+    clusters, just as in the K-means algorithm, so that
+    <math|\<gamma\><around*|(|z<rsub|nk>|)>\<rightarrow\>r<rsub|nk>> where
+    <math|r<rsub|nk>> is defined by Eq. <eqref|9.2>. Each data point is
+    thereby assigned to the cluster having the closest mean.
+  </hidden>|<\hidden>
+    \;
+
+    The EM re-estimation equation for the <math|\<b-mu\><rsub|k>> , given by
+    Eq. <eqref|9.17>, then reduces to the K-means result Eq. <eqref|9.4>.
+    Note that the re-estimation formula for the mixing coefficients Eq.
+    <eqref|9.22> simply re-sets the value of <math|\<pi\><rsub|k>> to be
+    equal to the fraction of data points assigned to cluster k, although
+    these parameters no longer play an active role in the algorithm.
+
+    Finally, in the limit <math|\<varepsilon\>\<rightarrow\>0> the expected
+    complete-data log likelihood, given by Eq. <eqref|9.40>, becomes
+
+    <\equation*>
+      \<bbb-E\><rsub|Z><around*|[|ln p<around*|(|X,Z\|\<b-mu\>,\<b-Sigma\>,\<b-pi\>|)>|]>\<rightarrow\>-<frac|1|2><big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>r<rsub|nk><around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|\<\|\|\>><rsup|2>+const
+    </equation*>
+
+    \;
+
+    Thus we see that in this limit, maximizing the expected complete-data log
+    likelihood is equivalent to minimizing the distortion measure <math|J>
+    for the K-means algorithm given by Eq. <eqref|9.1>.
+  </hidden>|<\shown>
+    <tit|Mixtures of Bernoulli distributions>
+
+    So far in this chapter, we have focussed on distributions over continuous
+    variables described by mixtures of Gaussians. As a further example of
+    mixture modelling, and to illustrate the EM algorithm in a different
+    context, we now discuss mixtures of discrete binary variables described
+    by Bernoulli distributions. This model is also known as latent class
+    analysis (Lazarsfeld and Henry, 1968; McLachlan and Peel, 2000). As well
+    as being of practical importance in its own right, our discussion of
+    Bernoulli mixtures will also lay the foundation for a consideration of
+    hidden Markov models over discrete variables.
   </shown>>
 </body>
 
@@ -1105,6 +1323,7 @@
     <associate|9.22|<tuple|15|?>>
     <associate|9.3|<tuple|3|1>>
     <associate|9.4|<tuple|4|1>>
+    <associate|9.40|<tuple|16|?>>
     <associate|9.5|<tuple|5|?>>
     <associate|9.6|<tuple|6|?>>
     <associate|9.7|<tuple|7|?>>
@@ -1112,6 +1331,7 @@
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-10|<tuple|8|?>>
     <associate|auto-11|<tuple|3|?>>
+    <associate|auto-12|<tuple|9|?>>
     <associate|auto-2|<tuple|1|?>>
     <associate|auto-3|<tuple|2|?>>
     <associate|auto-4|<tuple|3|1>>
@@ -1196,6 +1416,14 @@
         for the illustration of the K-means algorithm in Figure
         <reference|fig9.1>.
       </surround>|<pageref|auto-10>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|9>|>
+        This shows the same graph as in Figure <reference|fig9.6> except that
+        we now suppose that the discrete variables
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z<rsub|n>>>
+        are observed, as well as the data variables
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x<rsub|n>>>.
+      </surround>|<pageref|auto-12>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>K-means
