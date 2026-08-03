@@ -1123,7 +1123,7 @@
     <tit| Gaussian mixtures revisited>
 
     <\padded-center>
-      <\small-figure|<image|image/fig_9_8_mixture_gaussion_complete_data.png|.3par|||>>
+      <\small-figure|<image|image/fig_9_9_mixture_gaussion_complete_data.png|.3par|||>>
         This shows the same graph as in Figure <reference|fig9.6> except that
         we now suppose that the discrete variables <math|z<rsub|n>> are
         observed, as well as the data variables <math|x<rsub|n>>.
@@ -1459,7 +1459,7 @@
 
     where <math|N<rsub|k>> is the effective number of data points associated
     with component <math|k>.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     In the M step, we maximize the expected complete-data log likelihood with
     respect to the parameters <math|\<b-mu\><rsub|k>> and <math|\<b-pi\>>. If
     we set the derivative of Eq. <eqref|9.55> with respect to
@@ -1484,6 +1484,138 @@
     which represents the intuitively reasonable result that the mixing
     coefficient for component k is given by the effective fraction of points
     in the data set explained by that component.
+  </hidden>|<\hidden>
+    <small-figure|<image|image/fig_9_10_bernoulli_digits.png|0.8par|||>|Illustration
+    of the Bernoulli mixture model in which the top row shows examples from
+    the digits data set after converting the pixel values from grey scale to
+    binary using a threshold of 0.5. On the bottom row the first three images
+    show the parameters <math|\<mu\><rsub|ki>> for each of the three
+    components in the mixture model. As a comparison, we also fit the same
+    data set using a single multivariate Bernoulli distribution, again using
+    maximum likelihood. This amounts to simply averaging the counts in each
+    pixel and is shown by the right-most image on the bottom row.>
+  </hidden>|<\hidden>
+    <tit|EM for Bayesian linear regression>
+
+    As a third example of the application of EM, we return to the evidence
+    approximation for Bayesian linear regression. In Section 3.5.2, we
+    obtained the re-estimation equations for the hyperparameters
+    <math|\<alpha\>> and <math|\<beta\>> by evaluation of the evidence and
+    then setting the derivatives of the resulting expression to zero.\ 
+
+    We now turn to an alternative approach for finding <math|\<alpha\>> and
+    <math|\<beta\>> based on the EM algorithm. Recall that our goal is to
+    maximize the evidence function <math|p(t\|\<alpha\>,\<beta\>)> given by
+    (3.77) with respect to <math|\<alpha\>> and <math|\<beta\>>. Because the
+    parameter vector <math|\<b-w\>> is marginalized out, we can regard it as
+    a latent variable, and hence we can optimize this marginal likelihood
+    function using EM.
+  </hidden>|<\hidden>
+    In the E step, we compute the posterior distribution of <math|\<b-w\>>
+    given the current setting of the parameters <math|\<alpha\>> and
+    <math|\<beta\>> and then use this to find the expected
+    comple<active|<active*|>>te-data log likelihood.\ 
+
+    In the M step, we maximize this quantity with respect to <math|\<alpha\>>
+    and <math|\<beta\>>. We have already derived the posterior distribution
+    of <math|\<b-w\>> because this is given by (3.49). The complete-data log
+    likelihood function is then given by\ 
+
+    <\equation*>
+      ln p(\<b-t\>, \<b-w\>\|\<alpha\>, \<beta\>) = ln p(\<b-t\>\|\<b-w\>,
+      \<beta\>) + ln p(\<b-w\>\|\<alpha\>)
+    </equation*>
+
+    where the likelihood <math|p(\<b-t\>\|\<b-w\>, \<beta\>) >and the prior
+    <math|p(\<b-w\>\|\<alpha\>)> are given by (3.10) and (3.52),
+    respectively, and <math|y(x, \<b-w\>)> is given by (3.3).
+  </hidden>|<\hidden>
+    Taking the expectation with respect to the posterior distribution of
+    <math|\<b-w\>> then gives
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|ln
+      p<around*|(|\<b-t\>,\<b-w\>\|\<alpha\>,\<beta\>|)>|]>>|<cell|=>|<cell|<frac|M|2>ln<around*|(|<frac|\<alpha\>|2\<pi\>>|)>-<frac|\<alpha\>|2>\<bbb-E\><around*|[|\<b-w\><rsup|T>\<b-w\>|]>+<frac|N|2><around*|(|<frac|\<beta\>|2\<pi\>>|)>-<frac|\<beta\>|2><big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|<around*|(|t<rsub|n>-\<b-w\><rsup|T>\<b-varphi\><rsub|n>|)><rsup|2>|]>>>>>
+    </eqnarray*>
+
+    Setting the derivatives with respect to <math|\<alpha\>> to zero, we
+    obtain the M step re-estimation equation
+
+    <\equation>
+      \<alpha\>=<frac|M|\<bbb-E\><around*|[|\<b-w\><rsup|T>\<b-w\>|]>>=<frac|M|\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>+Tr<around*|(|S<rsub|N>|)>><label|9.63>
+    </equation>
+
+    An analogous result holds for <math|\<beta\>>.
+  </hidden>|<\hidden>
+    These two approaches to determining <math|\<alpha\>> should of course
+    converge to the same result (assuming they find the same local maximum of
+    the evidence function). This can be verified by first noting that the
+    quantity <math|\<gamma\>> is defined by \ 
+
+    <\equation*>
+      \<gamma\>=M-\<alpha\><big|sum><rsub|i=1><rsup|M><frac|1|\<lambda\><rsub|i>
+      + \<alpha\>> = M \<minus\> \<alpha\>Tr(S<rsub|N> ).
+    </equation*>
+
+    \ At a stationary point of the evidence function, the re-estimation
+    equation (3.92) will be self-consistently satisfied, and hence we can
+    substitute for \<gamma\> to give
+
+    <\equation*>
+      \<alpha\>\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>
+      =\<gamma\>=M\<minus\>\<alpha\>Tr(S<rsub|N>)
+    </equation*>
+
+    and solving for <math|\<alpha\>> we obtain Eq. <eqref|9.63>, which is
+    precisely the EM re-estimation equation.
+  </hidden>|<\hidden>
+    <tit|relevance vector machine for regression>
+
+    As a final example, we consider a closely related model, namely the
+    relevance vector machine for regression discussed in Section 7.2.1.\ 
+
+    There we used direct maximization of the marginal likelihood to derive
+    re-estimation equations for the hyper- parameters <math|\<alpha\>> and
+    <math|\<beta\>>.\ 
+
+    Here we consider an alternative approach in which we view the weight
+    vector w as a latent variable and apply the EM algorithm.
+  </hidden>|<\hidden>
+    \;
+
+    The E step involves finding the posterior distribution over the weights,
+    and this is given by (7.81). In the M step we maximize the expected
+    complete-data log likelihood, which is defined by\ 
+
+    <\equation*>
+      \<bbb-E\><rsub|\<b-w\>> [ln p(\<b-t\>\|X, \<b-w\>,
+      \<beta\>)p(\<b-w\>\|\<alpha\>)]
+    </equation*>
+
+    where the expectation is taken with respect to the posterior distribution
+    computed using the `old' parameter values. To compute the new parameter
+    values we maximize with respect to <math|\<alpha\>> and <math|\<beta\>>
+    to give
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<alpha\><rsup|new><rsub|i>>|<cell|=>|<cell|<frac|1|m<rsup|2><rsub|i>+\<Sigma\><rsub|i
+      i>>>>|<row|<cell|<around*|(|\<beta\><rsup|new>|)><rsup|-1>>|<cell|=>|<cell|<frac|<around*|\<\|\|\>|\<b-t\>-\<Phi\>\<b-m\><rsub|N>|\<\|\|\>><rsup|2>+\<beta\><rsup|-1><big|sum><rsub|i>\<gamma\><rsub|i>|N>>>>>
+    </eqnarray*>
+
+    These re-estimation equations are formally equivalent to those obtained
+    by direct maxmization.\ 
+  </hidden>|<\shown>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|The EM Algorithm in General>
+    </padded-center>
   </shown>>
 </body>
 
@@ -1516,12 +1648,15 @@
     <associate|9.5|<tuple|5|?>>
     <associate|9.55|<tuple|18|?>>
     <associate|9.6|<tuple|6|?>>
+    <associate|9.63|<tuple|19|?>>
     <associate|9.7|<tuple|7|?>>
     <associate|9.9|<tuple|8|?>>
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-10|<tuple|8|?>>
     <associate|auto-11|<tuple|3|?>>
     <associate|auto-12|<tuple|9|?>>
+    <associate|auto-13|<tuple|10|?>>
+    <associate|auto-14|<tuple|4|?>>
     <associate|auto-2|<tuple|1|?>>
     <associate|auto-3|<tuple|2|?>>
     <associate|auto-4|<tuple|3|1>>
@@ -1614,6 +1749,17 @@
         are observed, as well as the data variables
         <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x<rsub|n>>>.
       </surround>|<pageref|auto-12>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|10>||Illustration of
+      the Bernoulli mixture model in which the top row shows examples from
+      the digits data set after converting the pixel values from grey scale
+      to binary using a threshold of 0.5. On the bottom row the first three
+      images show the parameters <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\><rsub|ki>>>
+      for each of the three components in the mixture model. As a comparison,
+      we also fit the same data set using a single multivariate Bernoulli
+      distribution, again using maximum likelihood. This amounts to simply
+      averaging the counts in each pixel and is shown by the right-most image
+      on the bottom row.>|<pageref|auto-13>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>K-means
