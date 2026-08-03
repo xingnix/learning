@@ -1284,18 +1284,206 @@
     Thus we see that in this limit, maximizing the expected complete-data log
     likelihood is equivalent to minimizing the distortion measure <math|J>
     for the K-means algorithm given by Eq. <eqref|9.1>.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|Mixtures of Bernoulli distributions>
 
     So far in this chapter, we have focussed on distributions over continuous
-    variables described by mixtures of Gaussians. As a further example of
-    mixture modelling, and to illustrate the EM algorithm in a different
-    context, we now discuss mixtures of discrete binary variables described
-    by Bernoulli distributions. This model is also known as latent class
-    analysis (Lazarsfeld and Henry, 1968; McLachlan and Peel, 2000). As well
-    as being of practical importance in its own right, our discussion of
-    Bernoulli mixtures will also lay the foundation for a consideration of
-    hidden Markov models over discrete variables.
+    variables described by mixtures of Gaussians.
+
+    As a further example of mixture modelling, and to illustrate the EM
+    algorithm in a different context, we now discuss mixtures of discrete
+    binary variables described by Bernoulli distributions.
+
+    This model is also known as latent class analysis (Lazarsfeld and Henry,
+    1968; McLachlan and Peel, 2000). As well as being of practical importance
+    in its own right, our discussion of Bernoulli mixtures will also lay the
+    foundation for a consideration of hidden Markov models over discrete
+    variables.
+  </hidden>|<\hidden>
+    <tit|Bernoulli distribution>
+
+    Consider a set of <math|D> binary variables <math|x<rsub|i>> , where
+    <math|i=1,\<cdots\>,D>, each of which is governed by a Bernoulli
+    distribution with parameter <math|\<mu\><rsub|i>>, so that
+
+    <\equation*>
+      p<around*|(|\<b-x\>\|\<b-mu\>|)>=<big|prod><rsub|i=1><rsup|D>\<mu\><rsub|i><rsup|<rsup|x<rsub|i>>><around*|(|1-\<mu\><rsub|i>|)><rsup|<around*|(|1-x<rsub|i>|)>>
+    </equation*>
+
+    where <math|\<b-x\>=(x<rsub|1>,\<cdots\>,x<rsub|D>)<rsup|T>> and
+    <math|\<b-mu\>=(\<mu\><rsub|1>,\<cdots\>,\<mu\><rsub|D>)<rsup|T>> . We
+    see that the individual variables <math|x<rsub|i>> are independent, given
+    <math|\<b-mu\>>. The mean and covariance of this distribution are easily
+    seen to be
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-x\>|]>>|<cell|=>|<cell|\<b-mu\>>>|<row|<cell|cov<around*|[|\<b-x\>|]>>|<cell|=>|<cell|diag<around*|{|\<mu\><rsub|i><around*|(|1-\<mu\><rsub|i>|)>|}>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|mixture>
+
+    Now let us consider a finite mixture of these distributions given by
+
+    <\equation>
+      p<around*|(|\<b-x\>\|\<b-mu\>,\<b-pi\>|)>=<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>p<around*|(|\<b-x\>\|\<b-mu\><rsub|k>|)><label|9.47>
+    </equation>
+
+    where <math|\<b-mu\>=<around*|{|\<b-mu\><rsub|1>,\<cdots\>,\<b-mu\><rsub|K>|}>>,<math|\<b-pi\>=<around*|{|\<pi\><rsub|1>,\<cdots\>,\<pi\><rsub|K>|}>>
+    and
+
+    <\equation*>
+      p<around*|(|\<b-x\>\|\<b-mu\><rsub|k>|)>=<big|prod><rsub|i=1><rsup|D>\<mu\><rsub|k
+      i><rsup|<rsup|x<rsub|i>>><around*|(|1-\<mu\><rsub|k
+      i>|)><rsup|<around*|(|1-x<rsub|i>|)>>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    The mean and covariance of this mixture distribution are given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-x\>|]>>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>\<b-mu\><rsub|k>>>|<row|<cell|cov<around*|[|<math-bf|x>|]>>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k><around*|{|\<Sigma\><rsub|K>+\<b-mu\><rsub|k>\<b-mu\><rsub|k><rsup|T>|}>-\<bbb-E\><around*|[|\<b-x\>|]>\<bbb-E\><around*|[|x|]><rsup|T>>>>>
+    </eqnarray*>
+
+    where
+
+    <\equation*>
+      \<Sigma\><rsub|k>=diag<around*|{|\<mu\><rsub|k
+      i><around*|(|1-\<mu\><rsub|k i>|)>|}>
+    </equation*>
+
+    \ Because the covariance matrix <math|cov[\<b-x\>]> is no longer
+    diagonal, the mixture distribution can capture correlations between the
+    variables, unlike a single Bernoulli distribution.
+  </hidden>|<\hidden>
+    <tit|likelihood>
+
+    \;
+
+    If we are given a data set <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}>
+    then the log likelihood function for this model is given by
+
+    <\equation*>
+      ln p<around*|(|X\|\<b-mu\>,\<b-pi\>|)>=<big|sum><rsub|n=1><rsup|N>ln<around*|{|<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>p<around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>|)>|}>
+    </equation*>
+
+    Again we see the appearance of the summation inside the logarithm, so
+    that the maximum likelihood solution no longer has closed form.
+  </hidden>|<\hidden>
+    <tit|Latent variable>
+
+    We now derive the EM algorithm for maximizing the likelihood function for
+    the mixture of Bernoulli distributions.\ 
+
+    To do this, we rst introduce an explicit latent variable <math|\<b-z\>>
+    associated with each instance of <math|\<b-x\>>.\ 
+
+    As in the case of the Gaussian mixture, <math|\<b-z\> =
+    (z<rsub|1>,\<cdots\>,z<rsup|K>)<rsup|T>> is a binary K-dimensional
+    variable having a single component equal to 1, with all other components
+    equal to 0.\ 
+  </hidden>|<\hidden>
+    \;
+
+    We can then write the conditional distribution of <math|\<b-x\>>, given
+    the latent variable, as
+
+    <\equation*>
+      p<around*|(|\<b-x\>\|\<b-z\>,\<b-mu\>|)>=<big|prod><rsub|k=1><rsup|K>p<around*|(|\<b-x\>\|\<b-mu\><rsub|k>|)><rsup|<rsup|z<rsub|k>>>
+    </equation*>
+
+    while the prior distribution for the latent variables is the same as for
+    the mixture of Gaussians model, so that
+
+    <\equation*>
+      p<around*|(|\<b-z\>\|\<b-pi\>|)>=<big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|z<rsub|k>>
+    </equation*>
+
+    If we form the product of <math|p(x\|z, \<mu\>)> and <math|p(z\|\<pi\>)>
+    and then marginalize over <math|z>, then we recover Eq. <eqref|9.47>.
+  </hidden>|<\hidden>
+    In order to derive the EM algorithm, we first write down the
+    complete-data log likelihood function, which is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln p<around*|(|X,Z\|\<b-mu\>,\<b-pi\>|)>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>z<rsub|n
+      k><around*|{|ln \<pi\><rsub|k>+<big|sum><rsub|i=1><rsup|D><around*|[|x<rsub|n
+      i>ln \<mu\><rsub|k i>+<around*|(|1-x<rsub|n
+      i>|)>ln<around*|(|1-\<mu\><rsub|k i>|)>|]>|}>>>>>
+    </eqnarray*>
+
+    where <math|X={\<b-x\><rsub|n>}> and <math|Z={\<b-z\><rsub|n>}>. Next we
+    take the expectation of the complete-data log likelihood with respect to
+    the posterior distribution of the latent variables to give
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|>|<cell|>|<cell|\<bbb-E\><rsub|\<b-z\>><around*|[|ln
+      p<around*|(|X,Z\|\<b-mu\>,\<b-pi\>|)>|]>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>\<gamma\><around*|(|z<rsub|n
+      k>|)><around*|{|ln \<pi\><rsub|k>+<big|sum><rsub|i=1><rsup|D><around*|[|x<rsub|n
+      i>ln \<mu\><rsub|k i>|]>+<around*|(|1-x<rsub|n
+      i>|)>ln<around*|(|1-\<mu\><rsub|k i>|)>|}><eq-number><label|9.55>>>>>
+    </eqnarray*>
+
+    where <math|\<gamma\>(z<rsub|n k>)=\<bbb-E\>[z<rsub|n k>]> is the
+    posterior probability, or responsibility, of component k given data point
+    <math|\<b-x\><rsub|n>>.
+  </hidden>|<\hidden>
+    \ 
+
+    \;
+
+    In the E step, these responsibilities are evaluated using Bayes' theorem,
+    which takes the form
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<gamma\><around*|(|z<rsub|n
+      k>|)>>|<cell|=>|<cell|\<bbb-E\><around*|[|z<rsub|n
+      k>|]>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|sum><rsub|z<rsub|n
+      k>>z<rsub|n k><around*|[|\<pi\><rsub|k>p<around*|(|\<b-x\><rsub|n><around*|\||\<b-mu\><rsub|k>|\|>|)>|]><rsup|z<rsub|n
+      k>>|<big|sum><rsub|z<rsub|n j>><around*|[|\<pi\><rsub|j>p<around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>|)>|]><rsup|z<rsub|n
+      j>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\><rsub|k>p<around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>|)>|<big|sum><rsub|j=1><rsup|K>\<pi\><rsub|j>p<around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|j>|)>>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    If we consider the sum over <math|n> in <eqref|9.55>, we see that the
+    responsibilities enter only through two terms, which can be written as\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|N<rsub|k>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+      k>|)>>>|<row|<cell|<wide|\<b-x\>|\<wide-bar\>><rsub|k>>|<cell|=>|<cell|<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+      k>|)>\<b-x\><rsub|n>>>>>
+    </eqnarray*>
+
+    where <math|N<rsub|k>> is the effective number of data points associated
+    with component <math|k>.
+  </hidden>|<\shown>
+    In the M step, we maximize the expected complete-data log likelihood with
+    respect to the parameters <math|\<b-mu\><rsub|k>> and <math|\<b-pi\>>. If
+    we set the derivative of Eq. <eqref|9.55> with respect to
+    <math|\<b-mu\><rsub|k>> equal to zero and rearrange the terms, we obtain
+
+    <\equation*>
+      \<b-mu\><rsub|k>=<wide|\<b-x\>|\<wide-bar\>><rsub|k>
+    </equation*>
+
+    We see that this sets the mean of component k equal to a weighted mean of
+    the data, with weighting coefficients given by the responsibilities that
+    component k takes for data points. For the maximization with respect to
+    <math|\<pi\><rsub|k>> , we need to introduce a Lagrange multiplier to
+    enforce the constraint <math|<big|sum><rsub|k>\<pi\><rsub|k>=1>.
+    Following analogous steps to those used for the mixture of Gaussians, we
+    then obtain
+
+    <\equation*>
+      \<pi\><rsub|k>=<frac|N<rsub|k>|N>
+    </equation*>
+
+    which represents the intuitively reasonable result that the mixing
+    coefficient for component k is given by the effective fraction of points
+    in the data set explained by that component.
   </shown>>
 </body>
 
@@ -1324,7 +1512,9 @@
     <associate|9.3|<tuple|3|1>>
     <associate|9.4|<tuple|4|1>>
     <associate|9.40|<tuple|16|?>>
+    <associate|9.47|<tuple|17|1>>
     <associate|9.5|<tuple|5|?>>
+    <associate|9.55|<tuple|18|?>>
     <associate|9.6|<tuple|6|?>>
     <associate|9.7|<tuple|7|?>>
     <associate|9.9|<tuple|8|?>>
