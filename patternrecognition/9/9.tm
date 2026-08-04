@@ -74,7 +74,7 @@
     \;
 
     <\padded-center>
-      <section|K-means Clustering>
+      <section|K-means Clustering><label|section9.1>
     </padded-center>
   </hidden>|<\hidden>
     <tit|Clustering>
@@ -554,7 +554,7 @@
     \;
 
     <\padded-center>
-      <section|Mixtures of Gaussians>
+      <section|Mixtures of Gaussians><label|section9.2>
     </padded-center>
   </hidden>|<\hidden>
     <active*|>
@@ -997,7 +997,7 @@
     \;
 
     <\padded-center>
-      <section|An Alternative View of EM>
+      <section|An Alternative View of EM><label|section9.3>
     </padded-center>
   </hidden>|<\hidden>
     The goal of the EM algorithm is to find maximum likelihood solutions for
@@ -1604,7 +1604,7 @@
 
     These re-estimation equations are formally equivalent to those obtained
     by direct maxmization.\ 
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     \;
@@ -1614,8 +1614,70 @@
     \;
 
     <\padded-center>
-      <section|The EM Algorithm in General>
+      <section|The EM Algorithm in General><label|section9.4>
     </padded-center>
+  </hidden>|<\hidden>
+    The expectation maximization algorithm, or EM algorithm, is a general
+    technique for finding maximum likelihood solutions for probabilistic
+    models having latent vari- ables (Dempster et al., 1977; McLachlan and
+    Krishnan, 1997).\ 
+
+    Here we give a very general treatment of the EM algorithm and in the
+    process provide a proof that the EM algorithm derived heuristically in
+    Sections <reference|section9.2> and <reference|section9.3> for Gaussian
+    mixtures does indeed maximize the likelihood function (Csisza`r and
+    Tusna`dy, 1984; Hath- away, 1986; Neal and Hinton, 1999).\ 
+
+    Our discussion will also form the basis for the derivation of the
+    variational inference framework.
+  </hidden>|<\hidden>
+    Consider a probabilistic model in which we collectively denote all of the
+    observed variables by <math|X> and all of the hidden variables by
+    <math|Z>. The joint distribution <math|p(X, Z\|\<b-theta\>)> is governed
+    by a set of parameters denoted <math|\<b-theta\>>. Our goal is to
+    maximize the likelihood function that is given by
+
+    <\equation*>
+      p(X\|\<theta\>) = <big|sum><rsub|Z>p(X, Z\|\<theta\>)
+    </equation*>
+
+    Here we are assuming <math|Z> is discrete, although the discussion is
+    identical if <math|Z> comprises continuous variables or a combination of
+    discrete and continuous variables, with summation replaced by integration
+    as appropriate.
+  </hidden>|<\hidden>
+    \;
+
+    We shall suppose that direct optimization of <math|p(X\|\<theta\>)> is
+    difficult, but that opti- mization of the complete-data likelihood
+    function <math|p(X, Z\|\<theta\>)> is significantly easier.
+
+    Next we introduce a distribution <math|q(Z)> defined over the latent
+    variables, and we observe that, for any choice of <math|q(Z)>, the
+    following decomposition holds
+
+    <\equation>
+      ln p(X\|\<b-theta\>) = L(q, \<b-theta\>) + KL(q\<\|\|\>p)<label|9.70>
+    </equation>
+
+    where we have defined\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-L\>(q, \<b-theta\>)>|<cell|
+      =>|<cell|<big|sum><rsub|Z> q(Z)ln<around*|{|<frac|p(X, Z\|\<b-theta\>)
+      |q(Z)>|}><eq-number><label|9.71>>>|<row|<cell|KL(q\<\|\|\>p)
+      >|<cell|=>|<cell|-<big|sum><rsub|Z>q(Z)ln<around*|{|<frac|p(
+      Z\|X,\<b-theta\>) |q(Z)>|}><eq-number>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <small-figure|<image|image/fig_9_11_em.png|0.7par|||>|Illustration of the
+    decomposition given by Eq. <eqref|9.70>, which holds for any choice of
+    distribution <math|q(Z)>. Because the Kullback-Leibler divergence
+    satisfies <math|KL(q\<\|\|\>p)\<geqslant\>0>, we see that the quantity
+    <math|\<cal-L\>(q,\<b-theta\>)> is a lower bound on the log likelihood
+    function <math|ln p(X\|\<b-theta\>)>.>
+  </hidden>|<\shown>
+    \;
   </shown>>
 </body>
 
@@ -1650,13 +1712,16 @@
     <associate|9.6|<tuple|6|?>>
     <associate|9.63|<tuple|19|?>>
     <associate|9.7|<tuple|7|?>>
+    <associate|9.70|<tuple|20|?>>
+    <associate|9.71|<tuple|21|?>>
     <associate|9.9|<tuple|8|?>>
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-10|<tuple|8|?>>
     <associate|auto-11|<tuple|3|?>>
     <associate|auto-12|<tuple|9|?>>
     <associate|auto-13|<tuple|10|?>>
-    <associate|auto-14|<tuple|4|?>>
+    <associate|auto-14|<tuple|4|1>>
+    <associate|auto-15|<tuple|11|?>>
     <associate|auto-2|<tuple|1|?>>
     <associate|auto-3|<tuple|2|?>>
     <associate|auto-4|<tuple|3|1>>
@@ -1671,6 +1736,10 @@
     <associate|fig9.4|<tuple|4|?>>
     <associate|fig9.5|<tuple|5|?>>
     <associate|fig9.6|<tuple|6|?>>
+    <associate|section9.1|<tuple|1|?>>
+    <associate|section9.2|<tuple|2|?>>
+    <associate|section9.3|<tuple|3|?>>
+    <associate|section9.4|<tuple|4|?>>
   </collection>
 </references>
 
@@ -1760,6 +1829,16 @@
       distribution, again using maximum likelihood. This amounts to simply
       averaging the counts in each pixel and is shown by the right-most image
       on the bottom row.>|<pageref|auto-13>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|11>||Illustration of
+      the decomposition given by Eq. (<reference|9.70>), which holds for any
+      choice of distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q(Z)>>.
+      Because the Kullback-Leibler divergence satisfies
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|KL(q\<\|\|\>p)\<geqslant\>0>>,
+      we see that the quantity <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-L\>(q,\<b-theta\>)>>
+      is a lower bound on the log likelihood function
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|ln
+      p(X\|\<b-theta\>)>>.>|<pageref|auto-15>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>K-means
@@ -1773,6 +1852,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>An
       Alternative View of EM> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-11><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>The
+      EM Algorithm in General> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-14><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
