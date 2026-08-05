@@ -792,10 +792,10 @@
 
     where
 
-    <\equation*>
+    <\equation>
       N<rsub|k>=<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|<rsub|Z<rsub|n
-      k>>|)>.
-    </equation*>
+      k>>|)>.<label|9.18>
+    </equation>
 
     We can interpret <math|N<rsub|k>> as the effective number of points
     assigned to cluster <math|k>. Note carefully the form of this solution.
@@ -1645,7 +1645,7 @@
     identical if <math|Z> comprises continuous variables or a combination of
     discrete and continuous variables, with summation replaced by integration
     as appropriate.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     We shall suppose that direct optimization of <math|p(X\|\<theta\>)> is
@@ -1669,7 +1669,7 @@
       >|<cell|=>|<cell|-<big|sum><rsub|Z>q(Z)ln<around*|{|<frac|p(
       Z\|X,\<b-theta\>) |q(Z)>|}><eq-number><label|9.72>>>>>
     </eqnarray*>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     Note that <math|\<cal-L\>(q, \<b-theta\>)> is a functional (see Appendix
     D for a discussion of functionals) of the distribution <math|q(Z)>, and a
     function of the parameters <math|\<b-theta\>>. It is worth studying
@@ -1711,15 +1711,19 @@
     The EM algorithm is a two-stage iterative optimization technique for
     finding maximum likelihood solutions. We can use the decomposition Eq.
     <eqref|9.70> to define the EM algorithm and to demonstrate that it does
-    indeed maximize the log likelihood. Suppose that the current value of the
-    parameter vector is <math|\<theta\><rsup|old>>. In the E step, the lower
-    bound <math|L(q, \<theta\><rsup|old>)> is maximized with respect to
+    indeed maximize the log likelihood.\ 
+
+    Suppose that the current value of the parameter vector is
+    <math|\<theta\><rsup|old>>. In the E step, the lower bound
+    <math|\<cal-L\>(q, \<theta\><rsup|old>)> is maximized with respect to
     <math|q(Z)> while holding <math|\<theta\><rsup|old>> fixed. The solution
     to this maximization problem is easily seen by noting that the value of
     ln <math|p(X\|\<theta\><rsup|old>)> does not depend on <math|q(Z)> and so
-    the largest value of <math|L(q, \<theta\><rsup|old>)> will occur when the
-    Kullback-Leibler divergence vanishes, in other words when <math|q(Z)> is
-    equal to the posterior distribution <math|p(Z\|X,\<theta\><rsup|old>)>.
+    the largest value of <math|\<cal-L\>(q, \<theta\><rsup|old>)> will occur
+    when the Kullback-Leibler divergence vanishes, in other words when
+    <math|q(Z)> is equal to the posterior distribution
+    <math|p(Z\|X,\<theta\><rsup|old>)>.\ 
+
     In this case, the lower bound will equal the log likelihood, as
     illustrated in Figure <eqref|fig9.12>.
   </hidden>|<\hidden>
@@ -1735,14 +1739,18 @@
     </padded-center>
   </hidden>|<\hidden>
     In the subsequent M step, the distribution <math|q(Z)> is held fixed and
-    the lower bound <math|L(q,\<theta\>)> is maximized with respect to
-    <math|\<theta\>> to give some new value <math|\<theta\><rsup|new>>. This
-    will cause the lower bound <math|\<cal-L\>> to increase (unless it is
-    already at a maximum), which will necessarily cause the corresponding log
-    likelihood function to increase. Because the distribution q is determined
-    using the old parameter values rather than the new values and is held
-    fixed during the M step, it will not equal the new posterior distribution
-    p(Z\|X,\<theta\>new), and hence there will be a nonzero KL divergence.
+    the lower bound <math|\<cal-L\>(q,\<theta\>)> is maximized with respect
+    to <math|\<theta\>> to give some new value <math|\<theta\><rsup|new>>.
+    This will cause the lower bound <math|\<cal-L\>> to increase (unless it
+    is already at a maximum), which will necessarily cause the corresponding
+    log likelihood function to increase.\ 
+
+    Because the distribution <math|q> is determined using the old parameter
+    values rather than the new values and is held fixed during the M step, it
+    will not equal the new posterior distribution
+    <math|p(Z\|X,\<theta\><rsup|new>)>, and hence there will be a nonzero KL
+    divergence.\ 
+
     The increase in the log likelihood function is therefore greater than the
     increase in the lower bound, as shown in Figure <reference|fig9.13>.
   </hidden>|<\hidden>
@@ -1783,14 +1791,14 @@
     function <math|p(X\|\<theta\>)>.
   </hidden>|<\hidden>
     The operation of the EM algorithm can also be viewed in the space of
-    parameters, as illustrated schematically in Figure 9.14. Here the red
-    curve depicts the (in-complete data) log likelihood function whose value
-    we wish to maximize. We start with some initial parameter value
-    <math|\<theta\><rsup|old>>, and in the first E step we evaluate the
+    parameters, as illustrated schematically in Figure <reference|fig9.14>.
+    Here the red curve depicts the (in-complete data) log likelihood function
+    whose value we wish to maximize. We start with some initial parameter
+    value <math|\<theta\><rsup|old>>, and in the first E step we evaluate the
     posterior distribution over latent variables, which gives rise to a lower
-    bound <math|L(\<theta\>, \<theta\><rsup|(old)>)> whose value equals the
-    log likelihood at <math|\<theta\><rsup|(old)>>, as shown by the blue
-    curve.\ 
+    bound <math|\<cal-L\>(\<theta\>, \<theta\><rsup|(old)>)> whose value
+    equals the log likelihood at <math|\<theta\><rsup|(old)>>, as shown by
+    the blue curve.\ 
 
     Note that the bound makes a tangential contact with the log likelihood at
     <math|\<theta\><rsup|(old)>>, so that both curves have the same gradient.
@@ -1802,8 +1810,8 @@
     <math|\<theta\><rsup|(new)>> as shown by the green curve.
   </hidden>|<\hidden>
     <\padded-center>
-      <small-figure|<image|image/fig_9_14_em_parameter.png|0.5par|||>|The EM
-      algorithm involves alternately computing a lower bound on the log
+      <small-figure|<image|image/fig_9_14_em_parameter.png|0.5par|||>|<label|fig9.14>The
+      EM algorithm involves alternately computing a lower bound on the log
       likelihood for the cur- rent parameter values and then maximizing this
       bound to obtain the new parameter values.>
     </padded-center>
@@ -1873,7 +1881,95 @@
     introduction of the prior term <math|ln p(\<theta\>)>, which typically
     requires only a small modification to the standard maximum likeli-hood
     M-step equations.
-  </hidden>>
+  </hidden>|<\hidden>
+    <tit|generalized EM>
+
+    The generalized EM, or GEM, algorithm addresses the problem of an
+    intractable M step. Instead of aiming to maximize
+    <math|\<cal-L\>(q,\<theta\>)> with respect to <math|\<theta\>>, it seeks
+    instead to change the parameters in such a way as to increase its value.
+    Again, because <math|\<cal-L\>(q,\<theta\>)> is a lower bound on the log
+    likelihood function, each complete EM cycle of the GEM algorithm is
+    guaranteed to increase the value of the log likelihood (unless the
+    parameters already correspond to a local maximum).\ 
+
+    One way to exploit the GEM approach would be to use one of the nonlinear
+    optimization strategies, such as the conjugate gradients algorithm,
+    during the M step.\ 
+
+    Another form of GEM algorithm, known as the expectation conditional
+    maximization, or ECM, algorithm, involves making several constrained
+    optimizations within each M step (Meng and Rubin, 1993). For instance,
+    the parameters might be partitioned into groups, and the M step is broken
+    down into multiple steps each of which involves optimizing one of the
+    subset with the remainder held xed.
+  </hidden>|<\hidden>
+    We can similarly generalize the E step of the EM algorithm by performing
+    a partial, rather than complete, optimization of
+    <math|\<cal-L\>(q,\<theta\>)> with respect to <math|q(Z)> (Neal and
+    Hinton, 1999).\ 
+
+    As we have seen, for any given value of <math|\<theta\>> there is a
+    unique maximum of <math|\<cal-L\>(q,\<theta\>)> with respect to
+    <math|q(Z)> that corresponds to the posterior distribution
+    <math|q<rsub|\<theta\>>(Z) = p(Z\|X, \<theta\>)> and that for this choice
+    of <math|q(Z)> the bound <math|\<cal-L\>(q,\<theta\>)> is equal to the
+    log likelihood function <math|ln p(X\|\<theta\>)>.\ 
+
+    It follows that any algorithm that converges to the global maximum of
+    <math|\<cal-L\>(q,\<theta\>)> will nd a value of <math|\<theta\>> that
+    is also a global maximum of the log likelihood <math|ln p(X\|\<theta\>)>.\ 
+
+    Provided <math|p(X,Z\|\<theta\>)> is a continuous function of
+    <math|\<theta\>> then, by continuity, any local maximum of
+    <math|\<cal-L\><math|(q,\<theta\>)>> will also be a local maximum of
+    <math|ln p(X\|\<theta\>)>.
+  </hidden>|<\hidden>
+    Consider the case of N independent data points
+    <math|x<rsub|1>,\<cdots\>,x<rsub|N>> with corresponding latent variables
+    <math|z<rsub|1>,\<cdots\>,z<rsub|N>>. The joint distribution
+    <math|p(X,Z\|\<theta\>)> factorizes over the data points, and this
+    structure can be exploited in an incremental form of EM in which at each
+    EM cycle only one data point is processed at a time.\ 
+
+    In the E step, instead of recomputing the responsibilities for all of the
+    data points, we just re-evaluate the responsibilities for one data point.\ 
+
+    It might appear that the subsequent M step would require computation
+    involving the responsibilities for all of the data points. However, if
+    the mixture components are members of the exponential family, then the
+    responsibilities enter only through simple sufcient statistics, and
+    these can be updated efciently.
+
+    Consider, for instance, the case of a Gaussian mixture, and suppose we
+    perform an update for data point <math|m> in which the corresponding old
+    and new values of the responsibilities are denoted
+    <math|\<gamma\><rsup|old>(z<rsub|mk>)> and
+    <math|\<gamma\><rsup|new>(z<rsub|mk>)>. In the M step, the required
+    sufcient statistics can be updated incrementally.
+  </hidden>|<\shown>
+    For instance, for the means the sufficient statistics are defined by Eq.
+    <eqref|9.17> and <eqref|9.18> from which we obtain
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-mu\><rsub|k><rsup|new>>|<cell|=>|<cell|\<b-mu\><rsub|k><rsup|old>+<around*|(|<frac|\<gamma\><rsup|new><around*|(|z<rsub|mk>|)>-\<gamma\><rsup|old><around*|(|z<rsub|mk>|)>|N<rsub|k><rsup|new>>|)><around*|(|\<b-x\><rsub|m>-\<mu\><rsub|k><rsup|old>|)>>>|<row|<cell|N<rsub|k><rsup|new>>|<cell|=>|<cell|N<rsub|k><rsup|old>+\<gamma\><rsup|new><around*|(|z<rsub|mk>|)>-\<gamma\><rsup|old><around*|(|z<rsub|mk>|)>>>>>
+    </eqnarray*>
+
+    The corresponding results for the covariances and the mixing coefficients
+    are analogous.
+
+    Thus both the E step and the M step take fixed time that is independent
+    of the total number of data points. Because the parameters are revised
+    after each data point, rather than waiting until after the whole data set
+    is processed, this incremental version can converge faster than the batch
+    version.\ 
+
+    Each E or M step in this incremental algorithm is increasing the value of
+    <math|\<cal-L\>(q, \<b-theta\>)> and, as we have shown above, if the
+    algorithm converges to a local (or global) maximum of <math|\<cal-L\>(q,
+    \<b-theta\>)>, this will correspond to a local (or global) maximum of the
+    log likelihood function <math|ln p(X\|\<b-theta\>)>.
+  </shown>>
 </body>
 
 <\initial>
@@ -1896,21 +1992,22 @@
     <associate|9.13|<tuple|11|?>>
     <associate|9.14|<tuple|12|?>>
     <associate|9.17|<tuple|13|?>>
-    <associate|9.19|<tuple|14|?>>
+    <associate|9.18|<tuple|14|?>>
+    <associate|9.19|<tuple|15|?>>
     <associate|9.2|<tuple|2|6>>
-    <associate|9.22|<tuple|15|?>>
+    <associate|9.22|<tuple|16|?>>
     <associate|9.3|<tuple|3|1>>
     <associate|9.4|<tuple|4|1>>
-    <associate|9.40|<tuple|16|?>>
-    <associate|9.47|<tuple|17|1>>
+    <associate|9.40|<tuple|17|?>>
+    <associate|9.47|<tuple|18|1>>
     <associate|9.5|<tuple|5|?>>
-    <associate|9.55|<tuple|18|?>>
+    <associate|9.55|<tuple|19|?>>
     <associate|9.6|<tuple|6|?>>
-    <associate|9.63|<tuple|19|?>>
+    <associate|9.63|<tuple|20|?>>
     <associate|9.7|<tuple|7|?>>
-    <associate|9.70|<tuple|20|?>>
-    <associate|9.71|<tuple|21|?>>
-    <associate|9.72|<tuple|22|?>>
+    <associate|9.70|<tuple|21|1>>
+    <associate|9.71|<tuple|22|1>>
+    <associate|9.72|<tuple|23|1>>
     <associate|9.9|<tuple|8|?>>
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-10|<tuple|8|?>>
@@ -1933,6 +2030,7 @@
     <associate|fig9.1|<tuple|1|?>>
     <associate|fig9.12|<tuple|12|?>>
     <associate|fig9.13|<tuple|13|?>>
+    <associate|fig9.14|<tuple|14|?>>
     <associate|fig9.2|<tuple|2|?>>
     <associate|fig9.3|<tuple|3|1>>
     <associate|fig9.4|<tuple|4|?>>
