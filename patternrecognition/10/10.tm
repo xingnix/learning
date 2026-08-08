@@ -177,7 +177,7 @@
     In the case of applications to probabilistic inference, the restriction
     may for example take the form of factorization assumptions (Jordan et
     al., 1999; Jaakkola, 2001).
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|more detail <text-dots>>
 
     Now let us consider in more detail how the concept of variational
@@ -195,7 +195,7 @@
     distributed data, for which <math|X =
     {\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}> and <math|Z =
     {\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|N>}>.
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     \;
 
     \;
@@ -212,45 +212,48 @@
     where we have defined
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<cal-L\><around*|(|q|)>>|<cell|=>|<cell|<big|int>q<around*|(|Z|)>ln<around*|{|<frac|p<around*|(|X,Z|)>|q<around*|(|Z|)>>|}>\<mathd\>Z>>|<row|<cell|KL<around*|(|q\<\|\|\>p|)>>|<cell|=>|<cell|-<big|int>q<around*|(|Z|)>ln<around*|{|<frac|p<around*|(|Z\|X|)>|q<around*|(|Z|)>>|}>\<mathd\>Z>>>>
+      <tformat|<table|<row|<cell|\<cal-L\><around*|(|q|)>>|<cell|=>|<cell|<big|int>q<around*|(|Z|)>ln<around*|{|<frac|p<around*|(|X,Z|)>|q<around*|(|Z|)>>|}>\<mathd\>Z<eq-number><label|10.3>>>|<row|<cell|KL<around*|(|q\<\|\|\>p|)>>|<cell|=>|<cell|-<big|int>q<around*|(|Z|)>ln<around*|{|<frac|p<around*|(|Z\|X|)>|q<around*|(|Z|)>>|}>\<mathd\>Z>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     This differs from our discussion of EM only in that the parameter vector
-    \<theta\> no longer appears, because the parameters are now stochastic
-    variables and are absorbed into Z. Since in this chapter we will mainly
-    be interested in continuous variables we have used integrations rather
-    than summations in formulating this decomposition. How- ever, the
-    analysis goes through unchanged if some or all of the variables are
-    discrete simply by replacing the integrations with summations as
-    required. As before, we can maximize the lower bound L(q) by optimization
-    with respect to the distribution q(Z), which is equivalent to minimizing
-    the KL divergence. If we allow any possible choice for q(Z), then the
-    maximum of the lower bound occurs when the KL diver- gence vanishes,
-    which occurs when q(Z) equals the posterior distribution p(Z\|X).
-    However, we shall suppose the model is such that working with the true
-    posterior distribution is intractable.
+    <math|\<theta\>> no longer appears, because the parameters are now
+    stochastic variables and are absorbed into <math|Z>. Since in this
+    chapter we will mainly be interested in continuous variables we have used
+    integrations rather than summations in formulating this decomposition.\ 
+
+    However, the analysis goes through unchanged if some or all of the
+    variables are discrete simply by replacing the integrations with
+    summations as required. As before, we can maximize the lower bound
+    <math|\<cal-L\>(q)> by optimization with respect to the distribution
+    <math|q(Z)>, which is equivalent to minimizing the KL divergence.\ 
+
+    If we allow any possible choice for <math|q(Z)>, then the maximum of the
+    lower bound occurs when the KL divergence vanishes, which occurs when
+    <math|q(Z)> equals the posterior distribution <math|p(Z\|X)>. However, we
+    shall suppose the model is such that working with the true posterior
+    distribution is intractable.
   </hidden>|<\hidden>
-    We therefore consider instead a restricted family of distributions q(Z)
-    and then seek the member of this family for which the KL divergence is
-    minimized. Our goal is to restrict the family sufficiently that they
-    comprise only tractable distributions, while at the same time allowing
-    the family to be sufficiently rich and flexible that it can provide a
-    good approximation to the true posterior distribution. It is important to
-    emphasize that the restriction is imposed purely to achieve tractability,
-    and that sub- ject to this requirement we should use as rich a family of
-    approximating distributions as possible. In particular, there is no
-    `over-fitting' associated with highly flexible dis- tributions. Using
-    more flexible approximations simply allows us to approach the true
-    posterior distribution more closely.\ 
+    We therefore consider instead a restricted family of distributions
+    <math|q(Z)> and then seek the member of this family for which the KL
+    divergence is minimized. Our goal is to restrict the family sufficiently
+    that they comprise only tractable distributions, while at the same time
+    allowing the family to be sufficiently rich and flexible that it can
+    provide a good approximation to the true posterior distribution. It is
+    important to emphasize that the restriction is imposed purely to achieve
+    tractability, and that sub- ject to this requirement we should use as
+    rich a family of approximating distributions as possible. In particular,
+    there is no `over-fitting' associated with highly flexible dis-
+    tributions. Using more flexible approximations simply allows us to
+    approach the true posterior distribution more closely.\ 
 
     One way to restrict the family of approximating distributions is to use a
-    paramet- ric distribution q(Z\|\<omega\>) governed by a set of parameters
-    \<omega\>. The lower bound L(q) then becomes a function of \<omega\>, and
-    we can exploit standard nonlinear optimization techniques to determine
-    the optimal values for the parameters. An example of this approach, in
-    which the variational distribution is a Gaussian and we have optimized
-    with respect to its mean and variance, is shown in Figure
-    <reference|fig10.1>.
+    parametric distribution <math|q(Z\|\<omega\>)> governed by a set of
+    parameters <math|\<omega\>>. The lower bound <math|\<cal-L\>(q)> then
+    becomes a function of <math|\<omega\>>, and we can exploit standard
+    nonlinear optimization techniques to determine the optimal values for the
+    parameters. An example of this approach, in which the variational
+    distribution is a Gaussian and we have optimized with respect to its mean
+    and variance, is shown in Figure <reference|fig10.1>.
   </hidden>|<\hidden>
     <\padded-center>
       <small-figure|<image|image/fig_10_1_variational_approximation_example.png|0.93par|||>|<label|fig10.1>Illustration
@@ -269,24 +272,310 @@
     assume that the q distribution factorizes with respect to these groups,
     so that
 
-    <\equation*>
-      q<around*|(|Z|)>=<big|prod><rsub|i=1><rsup|M>q<rsub|i><around*|(|Z<rsub|i>|)>
-    </equation*>
+    <\equation>
+      q<around*|(|Z|)>=<big|prod><rsub|i=1><rsup|M>q<rsub|i><around*|(|Z<rsub|i>|)><label|10.5>
+    </equation>
 
     It should be emphasized that we are making no further assumptions about
     the distri- bution. In particular, we place no restriction on the
     functional forms of the individual factors qi(Zi). This factorized form
     of variational inference corresponds to an ap- proximation framework
-    developed in physics called mean field theory (Parisi, 1988).
+    developed in physics called <strong|mean field theory> (Parisi, 1988).
   </hidden>|<\hidden>
-    Amongst all distributions q(Z) having the form (10.5), we now seek that
-    distri- bution for which the lower bound L(q) is largest. We therefore
-    wish to make a free form (variational) optimization of L(q) with respect
-    to all of the distributions qi(Zi), which we do by optimizing with
-    respect to each of the factors in turn. To achieve this, we first
-    substitute (10.5) into (10.3) and then dissect out the dependence on one
-    of the factors qj (Zj ). Denoting qj (Zj ) by simply qj to keep the
-    notation uncluttered, we then obtain
+    <tit|lower bound>
+
+    Amongst all distributions <math|q(Z)> having the form Eq. <eqref|10.5>,
+    we now seek a distribution where the lower bound <math|\<cal-L\>(q)> is
+    largest.\ 
+
+    We therefore wish to make a free form (variational) optimization of
+    <math|\<cal-L\>(q)> with respect to all of the distributions
+    <math|q<rsub|i>(Z<rsub|i>)>, which we do by optimizing with respect to
+    each of the factors in turn.\ 
+  </hidden>|<\hidden>
+    \;
+
+    To achieve this, we first substitute Eq. <eqref|10.5> into <eqref|10.3>
+    and then dissect out the dependence on one of the factors
+    <math|q<rsub|j>(Z<rsub|j>)>. Denoting <math|q<rsub|j>(Z<rsub|j>)> by
+    simply <math|q<rsub|j>> to keep the notation uncluttered, we then obtain
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-L\><around*|(|q|)>>|<cell|=>|<cell|<big|int><big|prod><rsub|i>q<rsub|i><around*|{|ln
+      p<around*|(|X,Z|)>-<big|sum><rsub|i>ln
+      q<rsub|i>|}>\<mathd\>Z>>|<row|<cell|>|<cell|=>|<cell|<big|int>q<rsub|j><around*|{|<big|int>ln
+      p<around*|(|X,Z|)><big|prod><rsub|i\<neq\>j>q<rsub|i>\<mathd\>Z<rsub|i>|}>\<mathd\>Z<rsub|j>-<big|int>q<rsub|j>ln
+      q<rsub|j>\<mathd\>Z<rsub|j>+const>>|<row|<cell|>|<cell|=>|<cell|<big|int>q<rsub|j>ln<wide|p|~><around*|(|X,Z<rsub|j>|)>\<mathd\>Z<rsub|j>-<big|int>q<rsub|j>ln
+      q<rsub|j>\<mathd\>Z<rsub|j>+const<eq-number><label|10.6>>>>>
+    </eqnarray*>
+
+    <\folded>
+      ...
+    <|folded>
+      where <math|<big|int>q<rsub|i><around*|(|Z<rsub|i>|)>\<mathd\>Z<rsub|i>=1>
+      for any <math|i>.
+    </folded>
+  </hidden>|<\hidden>
+    \;
+
+    where we have defined a new distribution <math|<wide|p|~>(X,Z<rsub|j>)>
+    by the relation
+
+    <\equation*>
+      ln <wide|p|~>(X, Z<rsub|j> ) = \<bbb-E\><rsub|i\<neq\>j> [ln p(X, Z)] +
+      const.
+    </equation*>
+
+    Here the notation <math|\<bbb-E\><rsub|i\<neq\>j><around*|[|\<cdots\>|]>>
+    denotes an expectation with respect to the <math|q> distributions over
+    all variables <math|z<rsub|i>> for <math|i\<neq\>j>, so that\ 
+
+    <\equation*>
+      \<bbb-E\><rsub|i\<neq\>j>[ln p(X,Z)]=<big|int>ln p(X, Z)
+      <big|prod><rsub|i\<neq\>j>q<rsub|i> \<mathd\>Z<rsub|i> .
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|optimal solution>
+
+    Now suppose we keep the <math|{q<rsub|i\<neq\>j>}> fixed and maximize
+    <math|\<cal-L\>(q)> in Eq. <eqref|10.6> with respect to all possible
+    forms for the distribution <math|q<rsub|j>(Z<rsub|j>)>. This is easily
+    done by recognizing that Eq. <eqref|10.6> is a negative Kullback-Leibler
+    divergence between <math|q<rsub|j>(Z<rsub|j>)> and
+    <math|<wide|p|~>(X,Z<rsub|j>)>.\ 
+
+    Thus maximizing Eq. <eqref|10.6> is equivalent to minimizing the
+    Kullback-Leibler divergence, and the minimum occurs when
+    <math|q<rsub|j>(Z<rsub|j>)=<wide|p|~><around*|(|X,Z<rsub|j>|)>>. Thus we
+    obtain a general expression for the optimal solution
+    <math|q<rsub|j>(Z<rsub|j>)> given by
+
+    <\folded>
+      <\equation>
+        ln q<rsub|j><rsup|\<ast\>>(Z<rsub|j>) =\<bbb-E\><rsub|i\<neq\>j>[ln
+        p(X, Z)] + const.<label|10.9>
+      </equation>
+    <|folded>
+      It is worth taking a few moments to study the form of this solution as
+      it provides the basis for applications of variational methods.\ 
+
+      It says that the log of the optimal so- lution for factor
+      <math|q<rsub|j>> is obtained simply by considering the log of the joint
+      distribution over all hidden and visible variables and then taking the
+      expectation with respect to all of the other factors <math|{q<rsub|i>}>
+      for <math|i\<neq\>j>.
+    </folded>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    <tit|additive constant>
+
+    \;
+
+    The additive constant in Eq. <eqref|10.9> is set by normalizing the
+    distribution <math|q<rsub|j><rsup|\<ast\>>(Z<rsub|j>)>. Thus if we take
+    the exponential of both sides and normalize, we have\ 
+
+    <\equation*>
+      q<rsub|j><rsup|\<ast\>> (Z<rsub|j>) = <frac|
+      exp(\<bbb-E\><rsub|i\<neq\>j>[ln p(X,Z)])|exp
+      (\<bbb-E\><rsub|i\<neq\>j>[ln p(X, Z)])\<mathd\>Z<rsub|j> >.\ 
+    </equation*>
+
+    In practice, we shall find it more convenient to work with the form Eq.
+    <eqref|10.9> and then reinstate the normalization constant (where
+    required) by inspection. This will become clear from subsequent examples.\ 
+
+    \;
+  </hidden>|<\hidden>
+    <tit|consistent solution ...>
+
+    \;
+
+    The set of equations given by Eq. <eqref|10.9> for <math|j=1,\<cdots\>,M>
+    represent a set of consistency conditions for the maximum of the lower
+    bound subject to the factorization constraint.\ 
+
+    However, they do not represent an explicit solution because the
+    expression on the right-hand side of Eq. <eqref|10.9> for the optimum
+    <math|q<rsub|j>(Z<rsub|j>)> depends on expectations computed with respect
+    to the other factors <math|q<rsub|i>(Z<rsub|i>)> for <math|i\<neq\>j>.\ 
+
+    We will therefore seek a consistent solution by first initializing all of
+    the factors <math|q<rsub|i>(Z<rsub|i>)> appropriately and then cycling
+    through the factors and replacing each in turn with a revised estimate
+    given by the right-hand side of Eq. <eqref|10.9> evaluated using the
+    current estimates for all of the other factors.\ 
+
+    Convergence is guaranteed because bound is convex with respect to each of
+    the factors <math|q<rsub|i>(Z<rsub|i>)> (Boyd and Vandenberghe, 2004).
+  </hidden>|<\hidden>
+    <tit|Properties of factorized approximations>
+
+    Our approach to variational inference is based on a factorized
+    approximation to the true posterior distribution. Let us consider for a
+    moment the problem of approx- imating a general distribution by a
+    factorized distribution. To begin with, we discuss the problem of
+    approximating a Gaussian distribution using a factorized Gaussian, which
+    will provide useful insight into the types of inaccuracy introduced in
+    using factorized approximations. Consider a Gaussian distribution
+    <math|p(\<b-z\>) = N(\<b-z\>\|\<b-mu\>,\<Lambda\>\<minus\>1)> over two
+    correlated variables <math|\<b-z\>=(z<rsub|1>,z<rsub|2>)> in which the
+    mean and precision have elements\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-mu\>>|<cell|=>|<cell|<matrix|<tformat|<cwith|1|1|1|1|cell-halign|r>|<table|<row|<cell|\<mu\><rsub|1>>|<cell|\<mu\><rsub|2>>>>>><rsup|T>>>|<row|<cell|\<Lambda\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<Lambda\><rsub|11>>|<cell|\<Lambda\><rsub|12>>>|<row|<cell|\<Lambda\><rsub|21>>|<cell|\<Lambda\><rsub|22>>>>>>>>>>
+    </eqnarray*>
+
+    and <math|\<Lambda\><rsub|21>=\<Lambda\><rsub|12>> due to the symmetry of
+    the precision matrix.
+  </hidden>|<\hidden>
+    Now suppose we wish to approximate this distribution using a factorized
+    Gaussian of the form <math|q(\<b-z\>)=q<rsub|1>(z<rsub|1>)q<rsub|2>(z<rsub|2>)>.
+    We first apply the general result Eq. <eqref|10.9> to find an expression
+    for the optimal factor <math|q<rsub|1><rsup|\<ast\>>(z<rsub|1>)>. In
+    doing so it is useful to note that on the right-hand side we only need to
+    retain those terms that have some functional dependence on
+    <math|z<rsub|1>> because all other terms can be absorbed into the
+    normalization constant. Thus we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln q<rsub|1><rsup|\<ast\>><around*|(|z<rsub|1>|)>>|<cell|=>|<cell|\<bbb-E\><rsub|z<rsub|2>><around*|[|ln
+      p<around*|(|\<b-z\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><rsub|z<rsub|2>><around*|[|-<frac|1|2><around*|(|z<rsub|1>-\<mu\><rsub|1>|)><rsup|2>\<Lambda\><rsub|11>|]>-<around*|(|z<rsub|1>-\<mu\><rsub|1>|)>\<Lambda\><rsub|12><around*|(|z<rsub|2>-\<mu\><rsub|2>|)>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2>z<rsub|1><rsup|2>\<Lambda\><rsub|11>+z<rsub|1>\<mu\><rsub|1>\<Lambda\><rsub|11>-z<rsub|1>\<Lambda\><rsub|12><around*|(|\<bbb-E\><around*|[|z<rsub|2>|]>-\<mu\><rsub|2>|)>+const>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    Next we observe that the right-hand side of this expression is a
+    quadratic function of <math|z<rsub|1>>, and so we can identify
+    <math|q(z<rsub|1>)> as a Gaussian distribution. It is worth emphasizing
+    that we did not assume that <math|q(z<rsub|i>)> is Gaussian, but rather
+    we derived this result by variational optimization of the KL divergence
+    over all possible distributions <math|q(zi)>. Note also that we do not
+    need to consider the additive constant in Eq. <eqref|10.9> explicitly
+    because it represents the normalization constant that can be found at the
+    end by inspection if required.<enumerate| >Using the technique of
+    completing the square, we can identify the mean and precision of this
+    Gaussian, giving<enumerate| >
+
+    <\equation*>
+      q<rsup|\<ast\>><rsub|1><around*|(|z<rsub|1>|)>=\<cal-N\><around*|(|z<rsub|1>\|m<rsub|1>,\<Lambda\><rsup|-1><rsub|11>|)>
+    </equation*>
+
+    where
+
+    <\equation*>
+      m<rsub|1>=\<mu\><rsub|1>-\<Lambda\><rsup|-1><rsub|11>\<Lambda\><rsub|12><around*|(|\<bbb-E\><around*|[|z<rsub|2>|]>-\<mu\><rsub|2>|)>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    By symmetry, <math|q<rsub|2>(z<rsub|2>)> is also Gaussian and can be
+    written as
+
+    <\equation*>
+      q<rsup|\<ast\>><rsub|2><around*|(|z<rsub|2>|)>=\<cal-N\><around*|(|z<rsub|2>\|m<rsub|2>,\<Lambda\><rsup|-1><rsub|22>|)>
+    </equation*>
+
+    where
+
+    <\equation*>
+      m<rsub|2>=\<mu\><rsub|2>-\<Lambda\><rsup|-1><rsub|22>\<Lambda\><rsub|21><around*|(|\<bbb-E\><around*|[|z<rsub|1>|]>-\<mu\><rsub|1>|)>
+    </equation*>
+  </hidden>|<\hidden>
+    Note that these solutions are coupled, so that <math|q(z1)> depends on
+    expectations com- puted with respect to <math|q(z2)> and vice versa. In
+    general, we address this by treating the variational solutions as
+    re-estimation equations and cycling through the variables in turn
+    updating them until some convergence criterion is satisfied. We shall see
+    an example of this shortly.\ 
+
+    Here, however, we note that the problem is sufficiently simple that a
+    closed form solution can be found. In particular, because
+    <math|E[z<rsub|1>]=m<rsub|1>> and <math|E[z<rsub|2>]=m<rsub|2>>, we see
+    that the two equations are satisfied if we take
+    <math|E[z<rsub|1>]=\<mu\><rsub|1>> and
+    <math|E[z<rsub|2>]=\<mu\><rsub|2>>, and it is easily shown that this is
+    the only solution provided the dis- tribution is nonsingular. This result
+    is illustrated in Figure <inactive|<reference|fig10.2>>(a).\ 
+
+    We see that the mean is correctly captured but that the variance of
+    <math|q(z)> is controlled by the direction of smallest variance of
+    <math|p(z)>, and that the variance along the orthogonal direction is
+    significantly under-estimated. It is a general result that a factorized
+    variational approximation tends to give approximations to the posterior
+    distribution that are too compact.
+  </hidden>|<\hidden>
+    By way of comparison, suppose instead that we had been minimizing the
+    reverse Kullback-Leibler divergence <math|KL(p\<\|\|\>q)>. As we shall
+    see, this form of KL divergence is used in an alternative approximate
+    inference framework called expectation prop- agation. We therefore
+    consider the general problem of minimizing <math|KL(p\<\|\|\>q)> when
+    <math|q(Z)> is a factorized approximation of the form Eq. <eqref|10.5>.
+    The KL divergence can then be written in the form
+
+    <\equation*>
+      KL<around*|(|p\<\|\|\>q|)>=-<big|int>p<around*|(|Z|)><around*|[|<big|sum><rsub|i=1><rsup|M>ln
+      q<rsub|i><around*|(|Z<rsub|i>|)>|]>\<mathd\>Z+const
+    </equation*>
+
+    where the constant term is simply the entropy of <math|p(Z)> and so does
+    not depend on <math|q(Z)>.\ 
+  </hidden>|<\hidden>
+    We can now optimize with respect to each of the factors
+    <math|q<rsub|j>(Z<rsub|j>)>, which is easily done using a Lagrange
+    multiplier to give
+
+    <\equation*>
+      q<rsup|\<ast\>><rsub|j><around*|(|Z<rsub|j>|)>=<big|int>p<around*|(|Z|)><big|prod><rsub|i\<neq\>j>\<mathd\>Z<rsub|i>=p<around*|(|Z<rsub|j>|)>
+    </equation*>
+
+    In this case, we find that the optimal solution for
+    <math|q<rsub|j>(Z<rsub|j>)> is just given by the corresponding marginal
+    distribution of <math|p(Z)>. Note that this is a closed-form solution and
+    so does not require iteration.
+
+    To apply this result to the illustrative example of a Gaussian
+    distribution <math|p(\<b-z\>)> over a vector <math|\<b-z\>> we can use
+    (2.98), which gives the result shown in Figure
+    <inactive|<reference|fig10.2>>(b). We see that once again the mean of the
+    approximation is correct, but that it places significant probability mass
+    in regions of variable space that have very low probability.\ 
+  </hidden>|<\shown>
+    <\padded-center>
+      <\small-figure|<image|image/fig_10_2_two_KL.png|0.7par|||>>
+        Comparison of the two alternative forms for the Kullback-Leibler
+        divergence. The green contours corresponding to 1, 2, and 3 standard
+        deviations for a correlated Gaussian distribution <math|p(\<b-z\>)>
+        over two variables <math|z<rsub|1>> and <math|z<rsub|2>>, and the red
+        contours represent the corresponding levels for an approximating
+        distribution <math|q(\<b-z\>)> over the same variables given by the
+        product of two independent univariate Gaussian distributions whose
+        parameters are obtained by minimization of (a) the Kullback- Leibler
+        divergence <math|KL(q\<\|\|\>p)>, and (b) the reverse
+        Kullback-Leibler divergence <math|KL(p\<\|\|\>q)>.
+      </small-figure>
+    </padded-center>
+  </shown>|<\hidden>
+    \;
+
+    The difference between these two results can be understood by noting that
+    there is a large positive contribution to the Kullback-Leibler divergence
+
+    <\equation*>
+      KL<around*|(|q\<\|\|\>p|)>=-<big|int>q<around*|(|Z|)>ln<around*|{|<frac|p<around*|(|Z|)>|q<around*|(|Z|)>>|}>\<mathd\>Z
+    </equation*>
+
+    from regions of <math|Z> space in which <math|p(Z)> is near zero unless
+    <math|q(Z)> is also close to zero. Thus minimizing this form of KL
+    divergence leads to distributions <math|q(Z)> that avoid regions in which
+    <math|p(Z)> is small.\ 
+
+    Conversely, the Kullback-Leibler divergence <math|KL(p\<\|\|\>q)> is
+    minimized by distributions <math|q(Z)> that are nonzero in regions where
+    <math|p(Z)> is nonzero.
   </hidden>>
 </body>
 
@@ -301,10 +590,15 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|?|../../../../.TeXmacs/texts/scratch/no_name_18.tm>>
-    <associate|auto-2|<tuple|1|?|../../../../.TeXmacs/texts/scratch/no_name_18.tm>>
-    <associate|auto-3|<tuple|1.1|?|../../../../.TeXmacs/texts/scratch/no_name_18.tm>>
-    <associate|fig10.1|<tuple|1|?|../../../../.TeXmacs/texts/scratch/no_name_18.tm>>
+    <associate|10.3|<tuple|1|?>>
+    <associate|10.5|<tuple|2|?>>
+    <associate|10.6|<tuple|3|?>>
+    <associate|10.9|<tuple|4|?>>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-2|<tuple|1|?>>
+    <associate|auto-3|<tuple|1.1|?>>
+    <associate|auto-4|<tuple|2|?>>
+    <associate|fig10.1|<tuple|1|?>>
   </collection>
 </references>
 
