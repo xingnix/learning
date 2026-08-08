@@ -543,7 +543,7 @@
     <inactive|<reference|fig10.2>>(b). We see that once again the mean of the
     approximation is correct, but that it places significant probability mass
     in regions of variable space that have very low probability.\ 
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <\padded-center>
       <\small-figure|<image|image/fig_10_2_two_KL.png|0.7par|||>>
         Comparison of the two alternative forms for the Kullback-Leibler
@@ -558,7 +558,7 @@
         Kullback-Leibler divergence <math|KL(p\<\|\|\>q)>.
       </small-figure>
     </padded-center>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     \;
 
     The difference between these two results can be understood by noting that
@@ -576,7 +576,91 @@
     Conversely, the Kullback-Leibler divergence <math|KL(p\<\|\|\>q)> is
     minimized by distributions <math|q(Z)> that are nonzero in regions where
     <math|p(Z)> is nonzero.
-  </hidden>>
+  </hidden>|<\hidden>
+    We can gain further insight into the different behaviour of the two KL
+    divergences if we consider approximating a multimodal distribution by a
+    unimodal one, as illustrated in Figure <inactive|<reference|fig10.3>>.\ 
+
+    In practical applications, the true posterior distribution will often be
+    multimodal, with most of the posterior mass concentrated in some number
+    of relatively small regions of parameter space. These multiple modes may
+    arise through nonidentifiability in the latent space or through complex
+    nonlin- ear dependence on the parameters. Both types of multimodality
+    were encountered in Chapter 9 in the context of Gaussian mixtures, where
+    they manifested themselves as multiple maxima in the likelihood function,
+    and a variational treatment based on the minimization of
+    <math|KL(q\<\|\|\>p)> will tend to find one of these modes.\ 
+
+    By contrast, if we were to minimize<math| KL(p\<\|\|\>q)>, the resulting
+    approximations would average across all of the modes and, in the context
+    of the mixture model, would lead to poor predictive distributions
+    (because the average of two good parameter values is typically itself not
+    a good parameter value). It is possible to make use of
+    <math|KL(p\<\|\|\>q)> to define a useful inference procedure, but this
+    requires a rather different approach to the one discussed here, and will
+    be considered in detail when we discuss <strong|expectation propagation>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_10_3_multimodal.png|0.9par|||>|Another
+      comparison of the two alternative forms for the Kullback-Leibler
+      divergence. (a) The blue contours show a bimodal distribution
+      <math|p(Z)> given by a mixture of two Gaussians, and the red contours
+      correspond to the single Gaussian distribution <math|q(Z)> that best
+      approximates <math|p(Z)> in the sense of minimizing the Kullback-
+      Leibler divergence <math|KL(p\<\|\|\>q)>. (b) As in (a) but now the red
+      contours correspond to a Gaussian distribution <math|q(Z)> found by
+      numerical minimization of the Kullback-Leibler divergence<math|
+      KL(q\<\|\|\>p)>. (c) As in (b) but showing a different local minimum of
+      the Kullback-Leibler divergence.>
+    </padded-center>
+  </hidden>|<\hidden>
+    The two forms of Kullback-Leibler divergence are members of the alpha
+    family of divergences (Ali and Silvey, 1966; Amari, 1985; Minka, 2005)
+    defined by
+
+    <\equation*>
+      D<rsub|\<alpha\>><around*|(|p\<\|\|\>q|)>=<frac|4|1-\<alpha\><rsup|2>><around*|(|1-<big|int>p<around*|(|x|)><rsup|<around*|(|1+\<alpha\>|)>/2>q<around*|(|x|)><rsup|<around*|(|1-\<alpha\>|)>/2>\<mathd\>x|)>
+    </equation*>
+
+    where <math|\<minus\>\<infty\> \<less\> \<alpha\> \<less\> \<infty\>> is
+    a continuous parameter.\ 
+
+    The Kullback-Leibler divergence <math|KL(p\<\|\|\>q)> corresponds to the
+    limit <math|\<alpha\> \<rightarrow\>1>, whereas <math|KL(q\<\|\|\>p)>
+    corresponds to the limit <math|\<alpha\>\<rightarrow\>\<minus\>1>. For
+    all values of <math|\<alpha\>> we have
+    <math|D<rsub|\<alpha\>>(p\<\|\|\>q)\<geqslant\>0>, with equality if, and
+    only if, <math|p(x)=q(x)>.\ 
+  </hidden>|<\hidden>
+    \;
+
+    Suppose <math|p(x)> is a fixed distribution, and we minimize
+    <math|D<rsub|\<alpha\>>(p\<\|\|\>q)> with respect to some set of
+    distributions <math|q(x)>.\ 
+
+    Then for <math|\<alpha\>\<leqslant\>\<minus\>1> the divergence is
+    <strong|zero forcing>, so that any values of <math|x> for which
+    <math|p(x)=0> will have <math|q(x)=0>, and typically <math|q(x)> will
+    under-estimate the support of <math|p(x)> and will tend to seek the mode
+    with the largest mass.\ 
+
+    Conversely for <math|\<alpha\>\<gtr\>=1> the divergence is
+    <strong|zero-avoiding>, so that values of <math|x> for which <math|p(x)
+    \<gtr\> 0> will have <math|q(x) \<gtr\> 0>, and typically <math|q(x)>
+    will stretch to cover all of <math|p(x)>, and will over-estimate the
+    support of <math|p(x)>.\ 
+
+    When <math|\<alpha\> = 0> we obtain a symmetric divergence that is
+    linearly related to the Hellinger distance given by
+
+    <\equation*>
+      D<rsub|H><around*|(|p\<\|\|\>q|)>=<big|int><around*|(|p<around*|(|x|)><rsup|1/2>-q<around*|(|x|)><rsup|1/2>|)>\<mathd\>x
+    </equation*>
+  </hidden>|<\shown>
+    <tit|Example: The univariate Gaussian>
+
+    \;
+  </shown>>
 </body>
 
 <\initial>
@@ -597,7 +681,8 @@
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-2|<tuple|1|?>>
     <associate|auto-3|<tuple|1.1|?>>
-    <associate|auto-4|<tuple|2|?>>
+    <associate|auto-4|<tuple|2|1>>
+    <associate|auto-5|<tuple|3|?>>
     <associate|fig10.1|<tuple|1|?>>
   </collection>
 </references>
@@ -611,6 +696,39 @@
       with the Laplace (red) and variational (green) approximations, and the
       right-hand plot shows the negative logarithms of the corresponding
       curves.>|<pageref|auto-2>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|2>|>
+        Comparison of the two alternative forms for the Kullback-Leibler
+        divergence. The green contours corresponding to 1, 2, and 3 standard
+        deviations for a correlated Gaussian distribution
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(\<b-z\>)>>
+        over two variables <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z<rsub|1>>>
+        and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z<rsub|2>>>,
+        and the red contours represent the corresponding levels for an
+        approximating distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q(\<b-z\>)>>
+        over the same variables given by the product of two independent
+        univariate Gaussian distributions whose parameters are obtained by
+        minimization of (a) the Kullback- Leibler divergence
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|KL(q\<\|\|\>p)>>,
+        and (b) the reverse Kullback-Leibler divergence
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|KL(p\<\|\|\>q)>>.
+      </surround>|<pageref|auto-4>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|3>||Another comparison
+      of the two alternative forms for the Kullback-Leibler divergence. (a)
+      The blue contours show a bimodal distribution
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(Z)>>
+      given by a mixture of two Gaussians, and the red contours correspond to
+      the single Gaussian distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q(Z)>>
+      that best approximates <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(Z)>>
+      in the sense of minimizing the Kullback- Leibler divergence
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|KL(p\<\|\|\>q)>>.
+      (b) As in (a) but now the red contours correspond to a Gaussian
+      distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q(Z)>>
+      found by numerical minimization of the Kullback-Leibler
+      divergence<with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|
+      KL(q\<\|\|\>p)>>. (c) As in (b) but showing a different local minimum
+      of the Kullback-Leibler divergence.>|<pageref|auto-5>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Variational
