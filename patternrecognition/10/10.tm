@@ -656,11 +656,194 @@
     <\equation*>
       D<rsub|H><around*|(|p\<\|\|\>q|)>=<big|int><around*|(|p<around*|(|x|)><rsup|1/2>-q<around*|(|x|)><rsup|1/2>|)>\<mathd\>x
     </equation*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|Example: The univariate Gaussian>
 
+    We now illustrate the factorized variational approximation using a
+    Gaussian distribution over a single variable <math|x> (MacKay, 2003). Our
+    goal is to infer the posterior distribution for the mean <math|\<mu\>>
+    and precision <math|\<tau\>>, given a data set <math|D =
+    {x<rsub|1>,\<cdots\>,x<rsub|N>}> of observed values of <math|x> which are
+    assumed to be drawn independently from the Gaussian. The likelihood
+    function is given by
+
+    <\equation*>
+      p<around*|(|\<cal-D\>\|\<mu\>,\<tau\>|)>=<around*|(|<frac|\<tau\>|2\<pi\>>|)><rsup|N/2>exp<around*|{|-<frac|\<tau\>|2><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|}>
+    </equation*>
+
     \;
-  </shown>>
+  </hidden>|<\hidden>
+    <tit|posterior distribution>
+
+    \;
+
+    We now introduce conjugate prior distributions for <math|\<mu\>> and
+    <math|\<tau\>> given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p(\<mu\>\|\<tau\> )
+      >|<cell|=>|<cell|\<cal-N\><around*|(|\<mu\>\|\<mu\><rsub|0>,<around*|(|\<lambda\><rsub|0>\<tau\>|)><rsup|-1>|)>>>|<row|<cell|p<around*|(|\<tau\>|)>>|<cell|=>|<cell|Gam<around*|(|\<tau\>\|a<rsub|0>,b<rsub|0>|)>>>>>
+    </eqnarray*>
+
+    where <math|Gam(\<tau\>\|a<rsub|0>,b<rsub|0>)> is the gamma distribution
+    defined by (2.146). Together these distributions constitute a
+    Gaussian-Gamma conjugate prior distribution.
+
+    For this simple problem the posterior distribution can be found exactly,
+    and again takes the form of a Gaussian-gamma distribution. However, for
+    tutorial purposes we will consider a factorized variational approximation
+    to the posterior distribution given by\ 
+
+    <\equation*>
+      q(\<mu\>,\<tau\>) = q<rsub|\<mu\>>(\<mu\>)q<rsub|\<tau\>>(\<tau\>).
+    </equation*>
+
+    Note that the true posterior distribution does not factorize in this way.
+    </hidden>|<\hidden>
+    <tit|<math|q<rsub|\<mu\>><around*|(|\<mu\>|)>>>
+
+    \;
+
+    The optimum factors <math|q<rsub|\<mu\>>(\<mu\>)> and
+    <math|q<rsub|\<tau\>>(\<tau\>)> can be obtained from the general result
+    Eq. <eqref|10.9> as follows. For <math|q<rsub|\<mu\>>(\<mu\>)> we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln q<rsub|\<mu\>><rsup|\<ast\>><around*|(|\<mu\>|)>>|<cell|=>|<cell|\<bbb-E\><rsub|\<tau\>><around*|[|ln
+      p<around*|(|\<cal-D\>\|\<mu\>,\<tau\>|)>+ln
+      p<around*|(|\<mu\>\|\<tau\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|\<bbb-E\><around*|[|\<tau\>|]>|2><around*|{|\<lambda\><rsub|0><around*|(|\<mu\>-\<mu\><rsub|0>|)><rsup|2>+<big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|}>+const>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Gaussian <math|\<cal-N\><around*|(|\<mu\>\|\<mu\><rsub|N>,\<lambda\><rsub|N><rsup|-1>|)>>>
+
+    Completing the square over <math|\<mu\>> we see that
+    <math|q<rsub|\<mu\>>(\<mu\>)> is a Gaussian
+    <math|\<cal-N\><around*|(|\<mu\>\|\<mu\><rsub|N>,\<lambda\><rsub|N><rsup|-1>|)>>
+    with mean and precision given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<mu\><rsub|N>>|<cell|=>|<cell|<frac|\<lambda\><rsub|0>\<mu\><rsub|0>+N<wide|x|\<bar\>>|\<lambda\><rsub|0>+N><eq-number><label|10.26>>>|<row|<cell|\<lambda\><rsub|N>>|<cell|=>|<cell|<around*|(|\<lambda\><rsub|0>+N|)>\<bbb-E\><around*|[|\<tau\>|]><eq-number><label|10.27>>>>>
+    </eqnarray*>
+
+    Note that for <math|N \<rightarrow\> \<infty\>> this gives the maximum
+    likelihood result in which <math|\<mu\><rsub|N> = x> and the precision is
+    infinite.
+  </hidden>|<\hidden>
+    <tit|<math|q<rsub|\<tau\>><around*|(|\<tau\>|)>>>
+
+    Similarly, the optimal solution for the factor
+    <math|q<rsub|\<tau\>>(\<tau\>)> is given by\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln q<rsub|\<tau\>><rsup|\<ast\>><around*|(|\<tau\>|)>>|<cell|=>|<cell|\<bbb-E\><rsub|\<mu\>><around*|[|ln
+      p<around*|(|\<cal-D\>\|\<mu\>,\<tau\>|)>+ln
+      p<around*|(|\<mu\>\|\<tau\>|)>|]>+ln
+      p<around*|(|\<tau\>|)>+const>>|<row|<cell|>|<cell|=>|<cell|<around*|(|a<rsub|0>-1|)>ln
+      \<tau\>-b<rsub|0>\<tau\>+<frac|N|2>ln
+      \<tau\>-<frac|\<tau\>|2>\<bbb-E\><rsub|\<mu\>><around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>+\<lambda\><rsub|0><around*|(|\<mu\>-\<mu\><rsub|0>|)><rsup|2>|]>+const>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|<math|Gam<around*|(|\<tau\>,a<rsub|N>,b<rsub|N>|)>>>
+
+    and hence <math|q<rsub|\<tau\>>(\<tau\>)> is a gamma distribution
+    <math|Gam(\<tau\>\|a<rsub|N>,b<rsub|N>)> with parameters
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|a<rsub|N>>|<cell|=>|<cell|a<rsub|0>+<frac|N|2><eq-number><label|10.29>>>|<row|<cell|b<rsub|N>>|<cell|=>|<cell|b<rsub|0>+<frac|1|2>\<bbb-E\><rsub|\<mu\>><around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>+\<lambda\><rsub|0><around*|(|\<mu\>-\<mu\><rsub|0>|)><rsup|2>|]><eq-number><label|10.30>>>>>
+    </eqnarray*>
+
+    Again this exhibits the expected behaviour when <math|N \<rightarrow\>
+    \<infty\>>.
+
+    <\folded>
+      ...
+    <|folded>
+      It should be emphasized that we did not assume these specific
+      functional forms for the optimal distributions
+      <math|q<rsub|\<mu\>>(\<mu\>)> and <math|q<rsub|\<tau\>>(\<tau\>)>. They
+      arose naturally from the structure of the likelihood function and the
+      corresponding conjugate priors.
+    </folded>
+  </hidden>|<\hidden>
+    <tit|solution ...>
+
+    Thus we have expressions for the optimal distributions
+    <math|q<rsub|\<mu\>>(\<mu\>)> and <math|q<rsub|\<tau\>>(\<tau\>)> each of
+    which depends on moments evaluated with respect to the other
+    distribution.\ 
+
+    One approach to finding a solution is therefore to make an initial guess
+    for, say, the moment <math|\<bbb-E\>[\<tau\>]> and use this to re-compute
+    the distribution <math|q<rsub|\<mu\>>(\<mu\>)>. Given this revised
+    distribution we can then extract the required moments
+    <math|\<bbb-E\>[\<mu\>]> and <math|\<bbb-E\>[\<mu\><rsup|2>]>, and use
+    these to recompute the distribution <math|q<rsub|\<tau\>>(\<tau\>)>, and
+    so on.\ 
+
+    Since the space of hidden variables for this example is only two
+    dimensional, we can illustrate the variational approxima- tion to the
+    posterior distribution by plotting contours of both the true posterior
+    and the factorized approximation, as illustrated in Figure
+    <inactive|<reference|fig10.4>>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_10_4_univariable_gaussian.png|0.5par|||>|Illustration
+      of variational inference for the mean \<mu\> and precision
+      <math|\<tau\>> of a univariate Gaussian distribution. Contours of the
+      true posterior distribution <math|p(\<mu\>,\<tau\>\|D)> are shown in
+      green. (a) Contours of the initial factorized approximation
+      <math|q<rsub|\<mu\>>(\<mu\>)q<rsub|\<tau\>>(\<tau\>)> are shown in
+      blue. (b) After re-estimating the factor <math|q<rsub|\<mu\>>(\<mu\>)>.
+      (c) After re-estimating the factor <math|q<rsub|\<tau\>>(\<tau\>)>. (d)
+      Contours of the optimal factorized approximation, to which the
+      iterative scheme converges, are shown in red.>
+    </padded-center>
+  </hidden>|<\hidden>
+    In general, we will need to use an iterative approach such as this in
+    order to solve for the optimal factorized posterior distribution. For the
+    very simple example we are considering here, however, we can find an
+    explicit solution by solving the simultaneous equations for the optimal
+    factors <math|q<rsub|\<mu\>>(\<mu\>)> and
+    <math|q<rsub|\<tau\>>(\<tau\>)>.\ 
+
+    Before doing this, we can simplify these expressions by considering
+    broad, noninformative priors in which
+    <math|\<mu\><rsub|0>=a<rsub|0>=b<rsub|0>=\<lambda\><rsub|0>=0>. Although
+    these parameter settings correspond to improper priors, we see that the
+    posterior distribution is still well defined. Using the standard result
+    <math|\<bbb-E\>[\<tau\>]=a<rsub|N>/b<rsub|N>> for the mean of a gamma
+    distribution, together with Eq. <eqref|10.29> and <eqref|10.30>, we have
+
+    <\equation>
+      <frac|1|\<bbb-E\><around*|[|\<tau\>|]>>=\<bbb-E\><around*|[|<frac|1|N+1><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|]>=<frac|N|N+1><around*|(|<wide|x<rsup|2
+      >|\<bar\>>-2<wide|x|\<bar\>>\<bbb-E\><around*|[|\<mu\>|]>+\<bbb-E\><around*|[|\<mu\><rsup|2>|]>|)><label|10.31>
+    </equation>
+
+    Then, using Eq. <eqref|10.26> and <eqref|10.27>, we obtain the first and
+    second order moments of <math|q<rsub|\<mu\>>(\<mu\>)> in the form
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<mu\>|]>>|<cell|=>|<cell|<wide|x|\<bar\>>>>|<row|<cell|\<bbb-E\><around*|[|\<mu\><rsup|2>|]>>|<cell|=>|<cell|<wide|x|\<bar\>><rsup|2>+<frac|1|N\<bbb-E\><around*|[|\<tau\>|]>>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    We can now substitute these moments into <eqref|10.31> and then solve for
+    <math|\<bbb-E\>[\<tau\>]> to give
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|1|\<bbb-E\><around*|[|\<tau\>|]>>>|<cell|=>|<cell|<around*|(|<wide|x<rsup|2
+      >|\<bar\>>-<wide|x|\<bar\>><rsup|2>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-<wide|x|\<bar\>>|)><rsup|2>>>>>
+    </eqnarray*>
+
+    \;
+  </shown>|<\hidden>
+    <tit|Model comparison>
+
+    \;
+  </hidden>>
 </body>
 
 <\initial>
@@ -674,7 +857,12 @@
 
 <\references>
   <\collection>
+    <associate|10.26|<tuple|5|?>>
+    <associate|10.27|<tuple|6|?>>
+    <associate|10.29|<tuple|7|?>>
     <associate|10.3|<tuple|1|?>>
+    <associate|10.30|<tuple|8|?>>
+    <associate|10.31|<tuple|9|?>>
     <associate|10.5|<tuple|2|?>>
     <associate|10.6|<tuple|3|?>>
     <associate|10.9|<tuple|4|?>>
@@ -683,6 +871,7 @@
     <associate|auto-3|<tuple|1.1|?>>
     <associate|auto-4|<tuple|2|1>>
     <associate|auto-5|<tuple|3|?>>
+    <associate|auto-6|<tuple|4|?>>
     <associate|fig10.1|<tuple|1|?>>
   </collection>
 </references>
@@ -729,6 +918,19 @@
       divergence<with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|
       KL(q\<\|\|\>p)>>. (c) As in (b) but showing a different local minimum
       of the Kullback-Leibler divergence.>|<pageref|auto-5>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|4>||Illustration of
+      variational inference for the mean \<mu\> and precision
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<tau\>>>
+      of a univariate Gaussian distribution. Contours of the true posterior
+      distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(\<mu\>,\<tau\>\|D)>>
+      are shown in green. (a) Contours of the initial factorized
+      approximation <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q<rsub|\<mu\>>(\<mu\>)q<rsub|\<tau\>>(\<tau\>)>>
+      are shown in blue. (b) After re-estimating the factor
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q<rsub|\<mu\>>(\<mu\>)>>.
+      (c) After re-estimating the factor <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q<rsub|\<tau\>>(\<tau\>)>>.
+      (d) Contours of the optimal factorized approximation, to which the
+      iterative scheme converges, are shown in red.>|<pageref|auto-6>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Variational
