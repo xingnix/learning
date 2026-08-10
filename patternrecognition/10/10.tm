@@ -699,7 +699,7 @@
     </equation*>
 
     Note that the true posterior distribution does not factorize in this way.
-    </hidden>|<\hidden>
+  </hidden>|<\hidden>
     <tit|<math|q<rsub|\<mu\>><around*|(|\<mu\>|)>>>
 
     \;
@@ -829,7 +829,7 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<mu\>|]>>|<cell|=>|<cell|<wide|x|\<bar\>>>>|<row|<cell|\<bbb-E\><around*|[|\<mu\><rsup|2>|]>>|<cell|=>|<cell|<wide|x|\<bar\>><rsup|2>+<frac|1|N\<bbb-E\><around*|[|\<tau\>|]>>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     We can now substitute these moments into <eqref|10.31> and then solve for
     <math|\<bbb-E\>[\<tau\>]> to give
 
@@ -839,11 +839,22 @@
     </eqnarray*>
 
     \;
-  </shown>|<\hidden>
+  </hidden>|<\shown>
     <tit|Model comparison>
 
-    \;
-  </hidden>>
+    As well as performing inference over the hidden variables <math|Z>, we
+    may also wish to compare a set of candidate models, labelled by the index
+    m, and having prior probabilities <math|p(m)>. Our goal is then to
+    approximate the posterior probabilities <math|p(m\|X)>, where <math|X> is
+    the observed data. This is a slightly more complex situation than that
+    considered so far because different models may have different structure
+    and indeed different dimensionality for the hidden variables <math|Z>. We
+    cannot therefore simply consider a factorized approximation
+    <math|q(Z)q(m)>, but must instead recognize that the posterior over
+    <math|Z> must be conditioned on m, and so we must consider <math|q(Z, m)
+    = q(Z\|m)q(m)>. We can readily verify the following decomposition based
+    on this variational distribution
+  </shown>>
 </body>
 
 <\initial>
