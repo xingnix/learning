@@ -839,7 +839,7 @@
     </eqnarray*>
 
     \;
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|Model comparison>
 
     As well as performing inference over the hidden variables <math|Z>, we
@@ -852,8 +852,135 @@
     cannot therefore simply consider a factorized approximation
     <math|q(Z)q(m)>, but must instead recognize that the posterior over
     <math|Z> must be conditioned on m, and so we must consider <math|q(Z, m)
-    = q(Z\|m)q(m)>. We can readily verify the following decomposition based
-    on this variational distribution
+    = q(Z\|m)q(m)>.\ 
+  </hidden>|<\hidden>
+    We can readily verify the following decomposition based on this
+    variational distribution
+
+    <\equation*>
+      ln p<around*|(|X|)>=\<cal-L\>-<big|sum><rsub|m><big|sum><rsub|Z>q<around*|(|Z\|m|)>q<around*|(|m|)>ln<around*|{|<frac|p<around*|(|Z,m\|X|)>|q<around*|(|Z\|m|)>q<around*|(|m|)>>|}>
+    </equation*>
+
+    where the <math|\<cal-L\>> is a lower bound on <math|ln p(X)> and is
+    given by
+
+    <\equation>
+      \<cal-L\>=<big|sum><rsub|m><big|sum><rsub|Z>q<around*|(|Z\|m|)>q<around*|(|m|)>ln<around*|{|<frac|p<around*|(|Z,X,m|)>|q<around*|(|Z\|m|)>q<around*|(|m|)>>|}><label|10.35>
+    </equation>
+
+    <\folded>
+      ...
+    <|folded>
+      Here we are assuming discrete Z, but the same analysis applies to
+      continuous latent variables provided the summations are replaced with
+      integrations.
+    </folded>
+  </hidden>|<\hidden>
+    We can maximize <math|\<cal-L\>> with respect to the distribution
+    <math|q(m)> using a Lagrange multiplier, with the result
+
+    <\equation>
+      q(m) \<propto\> p(m) exp{\<cal-L\><rsub|m>}. <label|10.36>
+    </equation>
+
+    where\ 
+
+    <\equation*>
+      \<cal-L\><rsub|m> = \ <big|sum><rsub|Z>q(Z\|m)ln{<frac|p(Z,
+      X\|m)|q(Z\|m)> \ } \ .
+    </equation*>
+
+    However, if we maximize <math|\<cal-L\>> with respect to the
+    <math|q(Z\|m)>, we nd that the solutions for different <math|m> are
+    coupled, as we expect because they are conditioned on <math|m>. We
+    proceed instead by rst optimizing each of the <math|q(Z\|m)>
+    individually by optimization of Eq. <eqref|10.35>, or equivalently by
+    \ optimization of <math|\<cal-L\><rsub|m>> and then subsequently
+    determining the <math|q(m)> using Eq. <eqref|10.36>. After normalization
+    the resulting values for <math|q(m>) can be used for model selection or
+    model averaging in the usual way.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Illustration: Variational Mixture of Gaussians>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|Variational Mixture of Gaussians>
+
+    \;
+
+    \;
+
+    We now return to our discussion of the Gaussian mixture model and apply
+    the variational inference machinery developed in the previous section.
+    This will provide a good illustration of the application of variational
+    methods and will also demonstrate how a Bayesian treatment elegantly
+    resolves many of the difculties associated with the maximum likelihood
+    approach (Attias, 1999b). The reader is encouraged to work through this
+    example in detail as it provides many insights into the practical
+    application of variational methods. Many Bayesian models, corresponding
+    to much more sophisticated distributions, can be solved by
+    straightforward extensions and generalizations of this analysis.
+  </hidden>|<\hidden>
+    Our starting point is the likelihood function for the Gaussian mixture
+    model, illustrated by the graphical model in Figure 9.6. For each
+    observation <math|\<b-x\><rsub|n>> we have a corresponding latent
+    variable <math|\<b-z\><rsub|n>> comprising a 1-of-K binary vector with
+    elements <math|z<rsub|n k>> for <math|k=1,\<cdots\>,K>. As before we
+    denote the observed data set by <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}>,
+    and similarly we denote the latent variables by <math|Z =
+    {\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|N> }>. From (9.10) we can write
+    down the conditional distribution of <math|Z>, given the mixing
+    coefficients <math|\<b-pi\>>, in the form
+
+    <\equation*>
+      p<around*|(|Z\|\<b-pi\>|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|z<rsub|n
+      k>>
+    </equation*>
+  </hidden>|<\hidden>
+    Similarly, from (9.11), we can write down the conditional distribution of
+    the observed data vectors, given the latent variables and the component
+    parameters
+
+    <\equation*>
+      p<around*|(|X\|Z,\<b-mu\>,\<Lambda\>|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<Lambda\><rsup|-1><rsub|k>|)><rsup|z<rsub|n
+      k>>
+    </equation*>
+
+    where <math|\<b-mu\>=<around*|{|\<b-mu\><rsub|k>|}>> and
+    <math|\<Lambda\>=\<Lambda\><rsub|k>>.\ 
+
+    Note that we are working in terms of precision matrices rather than
+    covariance matrices as this somewhat simplifies the mathematics.
+  </hidden>|<\shown>
+    Next we introduce priors over the parameters <math|\<b-mu\>,\<Lambda\>>
+    and <math|\<b-pi\>>. The analysis is considerably simplified if we use
+    conjugate prior distributions. We therefore choose a Dirichlet
+    distribution over the mixing coefficients <math|\<b-pi\>>
+
+    <\equation*>
+      p<around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\><rsub|0>|)>=C<around*|(|\<b-alpha\><rsub|0>|)><big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|\<alpha\><rsub|0>-1>
+    </equation*>
+
+    where by symmetry we have chosen the same parameter
+    <math|\<alpha\><rsub|0>> for each of the components, and
+    <math|C<around*|(|\<b-alpha\><rsub|0>|)>> is the normalization constant
+    for the Dirichlet distribution defined by (B.23).\ 
+
+    As we have seen, the parameter <math|\<alpha\><rsub|0>> can be
+    interpreted as the effective prior number of observations associated with
+    each component of the mixture. If the value of <math|\<alpha\><rsub|0>>
+    is small, then the posterior distribution will be in\]uenced primarily by
+    the data rather than by the prior.
   </shown>>
 </body>
 
@@ -874,6 +1001,8 @@
     <associate|10.3|<tuple|1|?>>
     <associate|10.30|<tuple|8|?>>
     <associate|10.31|<tuple|9|?>>
+    <associate|10.35|<tuple|10|?>>
+    <associate|10.36|<tuple|11|?>>
     <associate|10.5|<tuple|2|?>>
     <associate|10.6|<tuple|3|?>>
     <associate|10.9|<tuple|4|?>>
@@ -883,6 +1012,7 @@
     <associate|auto-4|<tuple|2|1>>
     <associate|auto-5|<tuple|3|?>>
     <associate|auto-6|<tuple|4|?>>
+    <associate|auto-7|<tuple|2|?>>
     <associate|fig10.1|<tuple|1|?>>
   </collection>
 </references>
@@ -951,6 +1081,10 @@
       <with|par-left|<quote|1tab>|1.1<space|2spc>Factorized distributions
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-3>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Illustration:
+      Variational Mixture of Gaussians> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-7><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
