@@ -932,36 +932,37 @@
     straightforward extensions and generalizations of this analysis.
   </hidden>|<\hidden>
     Our starting point is the likelihood function for the Gaussian mixture
-    model, illustrated by the graphical model in Figure 9.6. For each
-    observation <math|\<b-x\><rsub|n>> we have a corresponding latent
-    variable <math|\<b-z\><rsub|n>> comprising a 1-of-K binary vector with
-    elements <math|z<rsub|n k>> for <math|k=1,\<cdots\>,K>. As before we
+    model, illustrated by the graphical model in Figure 9.6.\ 
+
+    For each observation <math|\<b-x\><rsub|n>> we have a corresponding
+    latent variable <math|\<b-z\><rsub|n>> comprising a 1-of-K binary vector
+    with elements <math|z<rsub|n k>> for <math|k=1,\<cdots\>,K>. As before we
     denote the observed data set by <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}>,
     and similarly we denote the latent variables by <math|Z =
     {\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|N> }>. From (9.10) we can write
     down the conditional distribution of <math|Z>, given the mixing
     coefficients <math|\<b-pi\>>, in the form
 
-    <\equation*>
+    <\equation>
       p<around*|(|Z\|\<b-pi\>|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|z<rsub|n
-      k>>
-    </equation*>
+      k>><label|10.37>
+    </equation>
   </hidden>|<\hidden>
     Similarly, from (9.11), we can write down the conditional distribution of
     the observed data vectors, given the latent variables and the component
     parameters
 
-    <\equation*>
+    <\equation>
       p<around*|(|X\|Z,\<b-mu\>,\<Lambda\>|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<Lambda\><rsup|-1><rsub|k>|)><rsup|z<rsub|n
-      k>>
-    </equation*>
+      k>><label|10.38>
+    </equation>
 
     where <math|\<b-mu\>=<around*|{|\<b-mu\><rsub|k>|}>> and
     <math|\<Lambda\>=\<Lambda\><rsub|k>>.\ 
 
     Note that we are working in terms of precision matrices rather than
     covariance matrices as this somewhat simplifies the mathematics.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     Next we introduce priors over the parameters <math|\<b-mu\>,\<Lambda\>>
     and <math|\<b-pi\>>. The analysis is considerably simplified if we use
     conjugate prior distributions. We therefore choose a Dirichlet
@@ -981,6 +982,169 @@
     each component of the mixture. If the value of <math|\<alpha\><rsub|0>>
     is small, then the posterior distribution will be in\]uenced primarily by
     the data rather than by the prior.
+  </hidden>|<\hidden>
+    Similarly, we introduce an independent Gaussian-Wishart prior governing
+    the mean and precision of each Gaussian component, given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-mu\>,\<Lambda\>|)>>|<cell|=>|<cell|p<around*|(|\<b-mu\>\|\<Lambda\>|)>p<around*|(|\<Lambda\>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|prod><rsub|k=1><rsup|K>\<cal-N\><around*|(|\<b-mu\><rsub|k>\|\<b-m\><rsub|0>,<around*|(|\<beta\><rsub|0>\<Lambda\><rsub|k>|)><rsup|-1>|)>\<cal-W\><around*|(|\<Lambda\><rsub|k>\|W<rsub|0>,\<nu\><rsub|0>|)><eq-number><label|10.40>>>>>
+    </eqnarray*>
+
+    because this represents the conjugate prior distribution when both the
+    mean and precision are unknown. Typically we would choose
+    <math|\<b-m\><rsub|0>=\<b-0\>> by symmetry.
+
+    The resulting model can be represented as a directed graph as shown in
+    Figure <reference|fig10.5>. Note that there is a link from
+    <math|\<Lambda\>> to <math|\<b-mu\>> since the variance of the
+    distribution over <math|\<b-mu\>> in Eq. <eqref|10.40> is a function of
+    <math|\<Lambda\>>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <\small-figure|<image|image/fig_10_5_bayesian_gm.png|0.32par|||>>
+        <label|fig10.5>Directed acyclic graph representing the Bayesian
+        mixture of Gaussians model, in which the box (plate) denotes a set of
+        <math|N> i.i.d. observations. Here <math|\<b-mu\>> denotes
+        <math|{\<b-mu\><rsub|k>}> and <math|\<Lambda\>> denotes
+        <math|{\<Lambda\><rsub|k>}>.
+      </small-figure>
+    </padded-center>
+
+    This example provides a nice illustration of the distinction between
+    latent variables and parameters. Variables such as \<b-z\>_n that appear
+    inside the plate are regarded as latent variables because the number of
+    such variables grows with the size of the data set. By contrast,
+    variables such as \<b-mu\> that are outside the plate are xed in number
+    independently of the size of the data set, and so are regarded as
+    parameters. From the perspective of graphical models, however, there is
+    really no fundamental difference between them.
+  </hidden>|<\hidden>
+    <tit|Variational distribution>
+
+    In order to formulate a variational treatment of this model, we next
+    write down the joint distribution of all of the random variables, which
+    is given by
+
+    <\equation>
+      p(X, Z, \<b-pi\>,\<b-mu\>, \<Lambda\>) = p(X\|Z,
+      \<b-mu\>,\<Lambda\>)p(Z\|\<b-pi\>)p(\<b-pi\>)p(\<b-mu\>\|\<Lambda\>)p(\<Lambda\>)<label|10.41>
+    </equation>
+
+    in which the various factors are dened above.\ 
+
+    This decomposition does indeed correspond to the probabilistic graphical
+    model shown in Figure <reference|fig10.5>. Note that only the variables
+    <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}> are observed.
+  </hidden>|<\hidden>
+    We now consider a variational distribution which factorizes between the
+    latent variables and the parameters so that
+
+    <\equation*>
+      q(Z, \<pi\>, \<b-mu\>,\<Lambda\>) =
+      q(Z)q(\<b-pi\>,\<b-mu\>,\<Lambda\>).
+    </equation*>
+
+    It is remarkable that this is the only assumption that we need to make in
+    order to obtain a tractable practical solution to our Bayesian mixture
+    model. In particular, the functional form of the factors <math|q(Z)> and
+    <math|q<around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>> will be determined
+    automatically by optimization of the variational distribution.\ 
+
+    Note that we are omitting the subscripts on the <math|q> distributions,
+    much as we do with the <math|p> distributions in Eq. <eqref|10.41>, and
+    are relying on the arguments to distinguish the different distributions.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    We now make use of the decomposition (10.41). Note that we are only
+    interested in the functional dependence of the right-hand side on the
+    variable <math|Z>. Thus any terms that do not depend on <math|Z> can be
+    absorbed into the additive normalization constant, giving
+
+    <\equation*>
+      ln q<rsup|\<ast\>>(Z) = \<bbb-E\><rsub|\<b-pi\>>[ln p(Z\|\<b-pi\>)] +
+      \<bbb-E\><rsub|\<b-mu\>,\<Lambda\>>[ln p(X\|Z,\<b-mu\>,\<Lambda\>)] +
+      const.
+    </equation*>
+
+    \;
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    Substituting for the two conditional distributions on the right-hand
+    side, and again absorbing any terms that are independent of <math|Z> into
+    the additive constant, we have
+
+    <\equation>
+      ln q<rsup|\<ast\>><around*|(|Z|)>=<big|sum><rsub|n=1><rsup|K><big|sum><rsub|k=1><rsup|K>z<rsub|n
+      k>ln \<rho\><rsub|n k>+const<label|10.45>
+    </equation>
+
+    where we have dened
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln \<rho\><rsub|n
+      k>>|<cell|=>|<cell|\<bbb-E\><around*|[|ln
+      \<pi\><rsub|k>|]>+<frac|1|2>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>-<frac|D|2>ln<around*|(|2\<pi\>|)>-<frac|1|2>\<bbb-E\><rsub|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>><around*|[|<around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T>\<Lambda\><rsub|k><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)>|]>>>>>
+    </eqnarray*>
+
+    where <math|D> is the dimensionality of the data variable <math|\<b-x\>>.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    Taking the exponential of both sides of Eq. <eqref|10.45> we obtain
+
+    <\equation*>
+      q<rsup|\<ast\>><around*|(|Z|)>\<propto\><big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    Requiring that this distribution be normalized, and noting that for each
+    value of <math|n> the quantities <math|z<rsub|n k>> are binary and sum to
+    1 over all values of <math|k>, we obtain
+
+    <\equation*>
+      q<rsup|\<ast\>><around*|(|Z|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>r<rsub|n
+      k><rsup|z<rsub|n k>>
+    </equation*>
+
+    where
+
+    <\equation*>
+      r<rsub|n k>=<frac|\<rho\><rsub|n k>|<big|sum><rsub|j=1><rsup|K>\<rho\><rsub|n
+      j>>
+    </equation*>
+
+    We see that the optimal solution for the factor <math|q(Z)> takes the
+    same functional form as the prior <math|p(Z\|\<b-pi\>)>. Note that
+    because \<rho\>nk is given by the exponential of a real quantity, the
+    quantities <math|r<rsub|n k>> will be nonnegative and will sum to one, as
+    required.
+  </hidden>|<\shown>
+    For the discrete distribution <math|q<rsup|\<ast\>>(Z)> we have the
+    standard result
+
+    <\equation*>
+      \<bbb-E\>[z<rsub|n k> ] = r<rsub|n k>
+    </equation*>
+
+    from which we see that the quantities rnk are playing the role of
+    responsibilities.
+
+    Note that the optimal solution for <math|q<rsup|\<ast\>>(Z)> depends on
+    moments evaluated with respect to the distributions of other variables,
+    and so again the variational update equations are coupled and must be
+    solved iteratively.
   </shown>>
 </body>
 
@@ -1003,6 +1167,11 @@
     <associate|10.31|<tuple|9|?>>
     <associate|10.35|<tuple|10|?>>
     <associate|10.36|<tuple|11|?>>
+    <associate|10.37|<tuple|12|?>>
+    <associate|10.38|<tuple|13|?>>
+    <associate|10.40|<tuple|14|?>>
+    <associate|10.41|<tuple|15|?>>
+    <associate|10.45|<tuple|16|?>>
     <associate|10.5|<tuple|2|?>>
     <associate|10.6|<tuple|3|?>>
     <associate|10.9|<tuple|4|?>>
@@ -1013,7 +1182,9 @@
     <associate|auto-5|<tuple|3|?>>
     <associate|auto-6|<tuple|4|?>>
     <associate|auto-7|<tuple|2|?>>
+    <associate|auto-8|<tuple|5|?>>
     <associate|fig10.1|<tuple|1|?>>
+    <associate|fig10.5|<tuple|5|?>>
   </collection>
 </references>
 
@@ -1072,6 +1243,16 @@
       (c) After re-estimating the factor <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q<rsub|\<tau\>>(\<tau\>)>>.
       (d) Contours of the optimal factorized approximation, to which the
       iterative scheme converges, are shown in red.>|<pageref|auto-6>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|5>|>
+        Directed acyclic graph representing the Bayesian mixture of Gaussians
+        model, in which the box (plate) denotes a set of
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|N>>
+        i.i.d. observations. Here <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<b-mu\>>>
+        denotes <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|{\<b-mu\><rsub|k>}>>
+        and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<Lambda\>>>
+        denotes <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|{\<Lambda\><rsub|k>}>>.
+      </surround>|<pageref|auto-8>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Variational
