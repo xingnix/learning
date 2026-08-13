@@ -309,12 +309,12 @@
       q<rsub|j>\<mathd\>Z<rsub|j>+const<eq-number><label|10.6>>>>>
     </eqnarray*>
 
-    <\folded>
+    <\unfolded>
       ...
-    <|folded>
+    <|unfolded>
       where <math|<big|int>q<rsub|i><around*|(|Z<rsub|i>|)>\<mathd\>Z<rsub|i>=1>
       for any <math|i>.
-    </folded>
+    </unfolded>
   </hidden>|<\hidden>
     \;
 
@@ -350,12 +350,12 @@
     obtain a general expression for the optimal solution
     <math|q<rsub|j>(Z<rsub|j>)> given by
 
-    <\folded>
+    <\unfolded>
       <\equation>
         ln q<rsub|j><rsup|\<ast\>>(Z<rsub|j>) =\<bbb-E\><rsub|i\<neq\>j>[ln
         p(X, Z)] + const.<label|10.9>
       </equation>
-    <|folded>
+    <|unfolded>
       It is worth taking a few moments to study the form of this solution as
       it provides the basis for applications of variational methods.\ 
 
@@ -364,7 +364,7 @@
       distribution over all hidden and visible variables and then taking the
       expectation with respect to all of the other factors <math|{q<rsub|i>}>
       for <math|i\<neq\>j>.
-    </folded>
+    </unfolded>
 
     \;
 
@@ -968,9 +968,9 @@
     conjugate prior distributions. We therefore choose a Dirichlet
     distribution over the mixing coefficients <math|\<b-pi\>>
 
-    <\equation*>
-      p<around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\><rsub|0>|)>=C<around*|(|\<b-alpha\><rsub|0>|)><big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|\<alpha\><rsub|0>-1>
-    </equation*>
+    <\equation>
+      p<around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\><rsub|0>|)>=C<around*|(|\<b-alpha\><rsub|0>|)><big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|\<alpha\><rsub|0>-1><label|10.39>
+    </equation>
 
     where by symmetry we have chosen the same parameter
     <math|\<alpha\><rsub|0>> for each of the components, and
@@ -1096,7 +1096,7 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|ln \<rho\><rsub|n
       k>>|<cell|=>|<cell|\<bbb-E\><around*|[|ln
-      \<pi\><rsub|k>|]>+<frac|1|2>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>-<frac|D|2>ln<around*|(|2\<pi\>|)>-<frac|1|2>\<bbb-E\><rsub|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>><around*|[|<around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T>\<Lambda\><rsub|k><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)>|]>>>>>
+      \<pi\><rsub|k>|]>+<frac|1|2>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>-<frac|D|2>ln<around*|(|2\<pi\>|)>-<frac|1|2>\<bbb-E\><rsub|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>><around*|[|<around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T>\<Lambda\><rsub|k><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)>|]><eq-number><label|10.46>>>>>
     </eqnarray*>
 
     where <math|D> is the dimensionality of the data variable <math|\<b-x\>>.\ 
@@ -1182,18 +1182,27 @@
     Note that these are analogous to quantities evaluated in the maximum
     likelihood EM algorithm for the Gaussian mixture model.
   </hidden>|<\hidden>
-    Now let us consider the factor q(\<pi\>, \<mu\>, \<Lambda\>) in the
-    variational posterior distribu-
+    <tit|consider <math|q(\<pi\>, \<mu\>, \<Lambda\>)>>
 
-    tion. Again using the general result Eq. <eqref|10.9> we have
+    \;
+
+    \;
+
+    Now let us consider the factor <math|q(\<pi\>, \<mu\>, \<Lambda\>)> in
+    the variational posterior distribution. Again using the general result
+    Eq. <eqref|10.9> we have
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>>|<cell|=>|<cell|ln
       p<around*|(|\<b-pi\>|)>+<big|sum><rsub|k=1><rsup|K>ln
       p<around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>+\<bbb-E\><rsub|Z><around*|[|ln
       p<around*|(|Z\|\<b-pi\>|)>|]>>>|<row|<cell|>|<cell|>|<cell|+<big|sum><rsub|k=1><rsup|K><big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|z<rsub|n
-      k>|]>ln\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<Lambda\><rsub|k><rsup|-1>|)>+const<label|10.54><eq-number>>>>>
+      k>|]>ln\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<Lambda\><rsub|k><rsup|-1>|)>+const<eq-number><label|10.54>>>>>
     </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|factorize to give <math|q(\<pi\>)q(\<mu\>, \<Lambda\>)>>
 
     We observe that the right-hand side of this expression decomposes into a
     sum of terms involving only <math|\<pi\>> together with terms only
@@ -1207,7 +1216,9 @@
     <\equation>
       q<around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>=q<around*|(|\<b-pi\>|)><big|prod><rsub|k=1><rsup|K>q<around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)><label|10.55>
     </equation>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
+    <tit|<math|q<rsup|\<ast\>><around*|(|\<b-pi\>|)>>>
+
     Identifying the terms on the right-hand side of Eq. <eqref|10.54> that
     depend on <math|\<b-pi\>>, we have
 
@@ -1217,9 +1228,9 @@
       k>ln \<pi\><rsub|k>+const
     </equation*>
 
-    where we have used Eq. <eqref|10.50>. Taking the exponential of both
-    sides, we recognize <math|q<rsup|\<ast\>><around*|(|\<b-pi\>|)>> as a
-    Dirichlet distribution
+    where we have used Eq. <eqref|10.37>,<eqref|10.39> and <eqref|10.50>.
+    Taking the exponential of both sides, we recognize
+    <math|q<rsup|\<ast\>><around*|(|\<b-pi\>|)>> as a Dirichlet distribution
 
     <\equation*>
       q<rsup|\<ast\>><around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\>|)>
@@ -1230,6 +1241,60 @@
     <\equation*>
       \<alpha\><rsub|k>=\<alpha\><rsub|0>+N<rsub|k>
     </equation*>
+  </hidden>|<\hidden>
+    <tit|<math|q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>>>
+
+    The variational posterior distribution
+    <math|q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>>
+    does not factorize into the product of the marginals, but we can use the
+    product rule to write it in the form <math|q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>=q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>\|\<Lambda\><rsub|k>|)>q<rsup|\<ast\>><around*|(|\<Lambda\><rsub|k>|)>>.
+    The two factors can be found by inspecting Eq. <eqref|10.54> and reading
+    off those terms that involve <math|\<b-mu\><rsub|k>> and
+    <math|\<Lambda\><rsub|k>> . The result, as expected, is a
+    Gaussian-Wishart distribution and is given by
+
+    <\equation*>
+      q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>=\<cal-N\><around*|(|\<b-mu\><rsub|k>\|\<b-m\><rsub|k>,<around*|(|\<beta\><rsub|k>\<Lambda\><rsub|k>|)><rsup|-1>|)>\<cal-W\><around*|(|\<Lambda\>\|W<rsub|k>,\<nu\><rsub|k>|)>
+    </equation*>
+
+    where we have defined
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<beta\><rsub|k>>|<cell|=>|<cell|\<beta\><rsub|0>+N<rsub|k>>>|<row|<cell|\<b-m\><rsub|k>>|<cell|=>|<cell|<frac|1|\<beta\><rsub|k>><around*|(|\<beta\><rsub|0>\<b-m\><rsub|0>+N<rsub|k><wide|\<b-x\>|\<wide-bar\>><rsub|k>|)>>>|<row|<cell|W<rsup|-1><rsub|k>>|<cell|=>|<cell|W<rsub|0><rsup|-1>+N<rsub|k>S<rsub|k>+<frac|\<beta\><rsub|0>N<rsub|k>|\<beta\><rsub|0>+N<rsub|k>><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|0>|)><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|0>|)><rsup|T>>>|<row|<cell|\<nu\><rsub|k>>|<cell|=>|<cell|\<mu\><rsub|0>+N<rsub|k>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|analogous ...>
+
+    These update equations are analogous to the M-step equations of the EM
+    algorithm for the maximum likelihood solution of the mixture of
+    Gaussians.\ 
+
+    We see that the computations that must be performed in order to update
+    the variational posterior distribution over the model parameters involve
+    evaluation of the same sums over the data set, as arose in the maximum
+    likelihood treatment.
+  </hidden>|<\shown>
+    <tit|expectations with respect to the variational distributions>
+
+    In order to perform this variational M step, we need the expectations
+    <math|E[z<rsub|nk>] =r<rsub|nk>> representing the responsibilities. These
+    are obtained by normalizing the <math|\<rho\><rsub|nk>> that are given by
+    <eqref|10.46>. We see that this expression involves expectations with
+    respect to the variational distributions of the parameters, and these are
+    easily evaluated to give
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><rsub|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>><around*|[|(\<b-x\><rsub|n>-\<b-mu\><rsub|k>)<rsup|T>\<Lambda\><rsub|k>(\<b-x\><rsub|n>-\<b-mu\><rsub|k>)|]>>|<cell|=>|<cell|D\<beta\><rsub|k><rsup|-1>+\<nu\><rsub|k>(\<b-x\><rsub|n>-\<b-m\><rsub|k>)<rsup|T>W<rsub|k>(\<b-x\><rsub|n>-\<b-m\><rsub|k>)<eq-number><label|10.64>>>|<row|<cell|ln
+      <wide|\<Lambda\>|~><rsub|k>\<equiv\>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>>|<cell|=>|<cell|<big|sum><rsub|i=1><rsup|D>\<varphi\><around*|(|<frac|\<nu\><rsub|k>+1-i|2>|)>+Dln2+ln<around*|\||W<rsub|k>|\|><eq-number><label|10.65>>>|<row|<cell|ln<wide|\<pi\>|~><rsub|k>\<equiv\>\<bbb-E\><around*|[|ln
+      \<pi\><rsub|k>|]>>|<cell|=>|<cell|\<varphi\><around*|(|\<alpha\><rsub|k>|)>-\<varphi\><around*|(|<wide|\<alpha\>|^>|)><eq-number><label|10.66>>>>>
+    </eqnarray*>
+
+    where we have introduced definitions of
+    <math|<wide|\<Lambda\>|^><rsub|k>> and <math|<wide|\<pi\>|~><rsub|k>>,
+    and <math|\<varphi\><around*|(|\<cdummy\>|)>> is the digamma function
+    defined by (B.25), with <math|<wide|\<alpha\>|^>=<big|sum><rsub|k>\<alpha\><rsub|k>>.
+    The results Eq. <eqref|10.65> and Eq. <eqref|10.66> follow from the
+    standard properties of the Wishart and Dirichlet distributions.
   </shown>>
 </body>
 
@@ -1254,14 +1319,19 @@
     <associate|10.36|<tuple|11|38>>
     <associate|10.37|<tuple|12|40>>
     <associate|10.38|<tuple|13|41>>
-    <associate|10.40|<tuple|14|42>>
-    <associate|10.41|<tuple|15|44>>
-    <associate|10.45|<tuple|16|?>>
+    <associate|10.39|<tuple|14|?>>
+    <associate|10.40|<tuple|15|42>>
+    <associate|10.41|<tuple|16|44>>
+    <associate|10.45|<tuple|17|?>>
+    <associate|10.46|<tuple|18|?>>
     <associate|10.5|<tuple|2|12>>
-    <associate|10.50|<tuple|17|?>>
-    <associate|10.54|<tuple|17|?>>
-    <associate|10.55|<tuple|19|?>>
+    <associate|10.50|<tuple|19|?>>
+    <associate|10.54|<tuple|20|?>>
+    <associate|10.55|<tuple|21|?>>
     <associate|10.6|<tuple|3|13>>
+    <associate|10.64|<tuple|22|?>>
+    <associate|10.65|<tuple|23|?>>
+    <associate|10.66|<tuple|24|?>>
     <associate|10.9|<tuple|4|15>>
     <associate|auto-1|<tuple|1|5>>
     <associate|auto-2|<tuple|1|11>>
