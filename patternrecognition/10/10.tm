@@ -1054,14 +1054,19 @@
     much as we do with the <math|p> distributions in Eq. <eqref|10.41>, and
     are relying on the arguments to distinguish the different distributions.
   </hidden>|<\hidden>
-    \;
+    <tit|<math|ln q<rsup|\<ast\>>(Z) >>
 
     \;
 
-    We now make use of the decomposition (10.41). Note that we are only
-    interested in the functional dependence of the right-hand side on the
-    variable <math|Z>. Thus any terms that do not depend on <math|Z> can be
-    absorbed into the additive normalization constant, giving
+    \;
+
+    We now make use of the decomposition Eq. <eqref|10.41> and the general
+    result Eq. <eqref|10.9>.\ 
+
+    Note that we are only interested in the functional dependence of the
+    right-hand side on the variable <math|Z>. Thus any terms that do not
+    depend on <math|Z> can be absorbed into the additive normalization
+    constant, giving
 
     <\equation*>
       ln q<rsup|\<ast\>>(Z) = \<bbb-E\><rsub|\<b-pi\>>[ln p(Z\|\<b-pi\>)] +
@@ -1075,6 +1080,8 @@
 
     \;
   </hidden>|<\hidden>
+    <tit|<math|q<rsup|\<ast\>><around*|(|Z|)>>>
+
     Substituting for the two conditional distributions on the right-hand
     side, and again absorbing any terms that are independent of <math|Z> into
     the additive constant, we have
@@ -1092,13 +1099,7 @@
       \<pi\><rsub|k>|]>+<frac|1|2>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>-<frac|D|2>ln<around*|(|2\<pi\>|)>-<frac|1|2>\<bbb-E\><rsub|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>><around*|[|<around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T>\<Lambda\><rsub|k><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)>|]>>>>>
     </eqnarray*>
 
-    where <math|D> is the dimensionality of the data variable <math|\<b-x\>>.
-  </hidden>|<\hidden>
-    \;
-
-    \;
-
-    \;
+    where <math|D> is the dimensionality of the data variable <math|\<b-x\>>.\ 
 
     Taking the exponential of both sides of Eq. <eqref|10.45> we obtain
 
@@ -1106,9 +1107,9 @@
       q<rsup|\<ast\>><around*|(|Z|)>\<propto\><big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
       k><rsup|z<rsub|n k>>
     </equation*>
-
-    \;
   </hidden>|<\hidden>
+    <tit|<math|r<rsub|n k>>>
+
     Requiring that this distribution be normalized, and noting that for each
     value of <math|n> the quantities <math|z<rsub|n k>> are binary and sum to
     1 over all values of <math|k>, we obtain
@@ -1130,13 +1131,32 @@
     because \<rho\>nk is given by the exponential of a real quantity, the
     quantities <math|r<rsub|n k>> will be nonnegative and will sum to one, as
     required.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|q<rsup|\<ast\>><around*|(|Z|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>q<rsup|\<ast\>><around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|q<rsup|\<ast\>><around*|(|\<b-z\><rsub|n>|)>>|<cell|\<propto\>>|<cell|<big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>|<big|sum><rsub|\<b-z\><rsub|n>><big|prod><rsub|j=1><rsup|K>\<rho\><rsub|n
+      j><rsup|z<rsub|n j>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>|<big|sum><rsub|k=1><rsup|K><big|prod><rsub|j=1><rsup|K>\<rho\><rsub|n
+      j><rsup|z<rsub|n j>>><space|6em>where<space|1em>z<rsub|n
+      j>=\<delta\><around*|(|j-k|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>|<big|sum><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k>>=<big|prod><rsub|k=1><rsup|K><frac|\<rho\><rsub|n k><rsup|z<rsub|n
+      k>>|<big|sum><rsub|j=1><rsup|K>\<rho\><rsub|n
+      j>>>>|<row|<cell|>|<cell|=>|<cell|<big|prod><rsub|k=1><rsup|K><around*|(|<frac|\<rho\><rsub|n
+      k>|<big|sum><rsub|j=1><rsup|K>\<rho\><rsub|n j>>|)><rsup|z<rsub|n
+      k>><space|4em>where <big|sum><rsub|k=1><rsup|K><around*|(|z<rsub|n
+      k>|)>=1,z<rsub|n k>\<in\><around*|{|0,1|}>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|<math|\<bbb-E\>[z<rsub|n k> ] >>
+
     For the discrete distribution <math|q<rsup|\<ast\>>(Z)> we have the
     standard result
 
-    <\equation*>
-      \<bbb-E\>[z<rsub|n k> ] = r<rsub|n k>
-    </equation*>
+    <\equation>
+      \<bbb-E\>[z<rsub|n k> ] = r<rsub|n k><label|10.50>
+    </equation>
 
     from which we see that the quantities rnk are playing the role of
     responsibilities.
@@ -1145,6 +1165,71 @@
     moments evaluated with respect to the distributions of other variables,
     and so again the variational update equations are coupled and must be
     solved iteratively.
+  </hidden>|<\hidden>
+    <tit|dene three statistics of the observed data set>
+
+    At this point, we shall nd it convenient to dene three statistics of
+    the observed data set evaluated with respect to the responsibilities,
+    given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|N<rsub|k>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>r<rsub|n
+      k>>>|<row|<cell|<wide|\<b-x\>|\<wide-bar\>><rsub|k>>|<cell|=>|<cell|<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|N>r<rsub|n
+      k>\<b-x\><rsub|n>>>|<row|<cell|S<rsub|k>>|<cell|=>|<cell|<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|N>r<rsub|n
+      k><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>><rsub|k>|)><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>><rsub|k>|)><rsup|T>>>>>
+    </eqnarray*>
+
+    Note that these are analogous to quantities evaluated in the maximum
+    likelihood EM algorithm for the Gaussian mixture model.
+  </hidden>|<\hidden>
+    Now let us consider the factor q(\<pi\>, \<mu\>, \<Lambda\>) in the
+    variational posterior distribu-
+
+    tion. Again using the general result Eq. <eqref|10.9> we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>>|<cell|=>|<cell|ln
+      p<around*|(|\<b-pi\>|)>+<big|sum><rsub|k=1><rsup|K>ln
+      p<around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>+\<bbb-E\><rsub|Z><around*|[|ln
+      p<around*|(|Z\|\<b-pi\>|)>|]>>>|<row|<cell|>|<cell|>|<cell|+<big|sum><rsub|k=1><rsup|K><big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|z<rsub|n
+      k>|]>ln\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<Lambda\><rsub|k><rsup|-1>|)>+const<label|10.54><eq-number>>>>>
+    </eqnarray*>
+
+    We observe that the right-hand side of this expression decomposes into a
+    sum of terms involving only <math|\<pi\>> together with terms only
+    involving <math|\<mu\>> and <math|\<Lambda\>>, which implies that the
+    variational posterior <math|q(\<pi\>, \<mu\>, \<Lambda\>)> factorizes to
+    give <math|q(\<pi\>)q(\<mu\>, \<Lambda\>)>. Furthermore, the terms
+    involving <math|\<mu\>> and <math|\<Lambda\>> themselves comprise a sum
+    over <math|k> of terms involving <math|\<mu\><rsub|k>> and
+    <math|\<Lambda\><rsub|k>> leading to the further factorization
+
+    <\equation>
+      q<around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>=q<around*|(|\<b-pi\>|)><big|prod><rsub|k=1><rsup|K>q<around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)><label|10.55>
+    </equation>
+  </hidden>|<\shown>
+    Identifying the terms on the right-hand side of Eq. <eqref|10.54> that
+    depend on <math|\<b-pi\>>, we have
+
+    <\equation*>
+      ln q<rsup|\<ast\>><around*|(|\<b-pi\>|)>=<around*|(|\<alpha\><rsub|0>-1|)><big|sum><rsub|k=1><rsup|K>ln
+      \<pi\><rsub|k>+<big|sum><rsub|k=1><rsup|K><big|sum><rsub|n=1><rsup|N>r<rsub|n
+      k>ln \<pi\><rsub|k>+const
+    </equation*>
+
+    where we have used Eq. <eqref|10.50>. Taking the exponential of both
+    sides, we recognize <math|q<rsup|\<ast\>><around*|(|\<b-pi\>|)>> as a
+    Dirichlet distribution
+
+    <\equation*>
+      q<rsup|\<ast\>><around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\>|)>
+    </equation*>
+
+    where <math|\<alpha\>> has components <math|\<alpha\><rsub|k>> given by
+
+    <\equation*>
+      \<alpha\><rsub|k>=\<alpha\><rsub|0>+N<rsub|k>
+    </equation*>
   </shown>>
 </body>
 
@@ -1159,32 +1244,35 @@
 
 <\references>
   <\collection>
-    <associate|10.26|<tuple|5|?>>
-    <associate|10.27|<tuple|6|?>>
-    <associate|10.29|<tuple|7|?>>
-    <associate|10.3|<tuple|1|?>>
-    <associate|10.30|<tuple|8|?>>
-    <associate|10.31|<tuple|9|?>>
-    <associate|10.35|<tuple|10|?>>
-    <associate|10.36|<tuple|11|?>>
-    <associate|10.37|<tuple|12|?>>
-    <associate|10.38|<tuple|13|?>>
-    <associate|10.40|<tuple|14|?>>
-    <associate|10.41|<tuple|15|?>>
+    <associate|10.26|<tuple|5|31>>
+    <associate|10.27|<tuple|6|31>>
+    <associate|10.29|<tuple|7|32>>
+    <associate|10.3|<tuple|1|9>>
+    <associate|10.30|<tuple|8|32>>
+    <associate|10.31|<tuple|9|35>>
+    <associate|10.35|<tuple|10|37>>
+    <associate|10.36|<tuple|11|38>>
+    <associate|10.37|<tuple|12|40>>
+    <associate|10.38|<tuple|13|41>>
+    <associate|10.40|<tuple|14|42>>
+    <associate|10.41|<tuple|15|44>>
     <associate|10.45|<tuple|16|?>>
-    <associate|10.5|<tuple|2|?>>
-    <associate|10.6|<tuple|3|?>>
-    <associate|10.9|<tuple|4|?>>
-    <associate|auto-1|<tuple|1|?>>
-    <associate|auto-2|<tuple|1|?>>
-    <associate|auto-3|<tuple|1.1|?>>
-    <associate|auto-4|<tuple|2|1>>
-    <associate|auto-5|<tuple|3|?>>
-    <associate|auto-6|<tuple|4|?>>
-    <associate|auto-7|<tuple|2|?>>
-    <associate|auto-8|<tuple|5|?>>
-    <associate|fig10.1|<tuple|1|?>>
-    <associate|fig10.5|<tuple|5|?>>
+    <associate|10.5|<tuple|2|12>>
+    <associate|10.50|<tuple|17|?>>
+    <associate|10.54|<tuple|17|?>>
+    <associate|10.55|<tuple|19|?>>
+    <associate|10.6|<tuple|3|13>>
+    <associate|10.9|<tuple|4|15>>
+    <associate|auto-1|<tuple|1|5>>
+    <associate|auto-2|<tuple|1|11>>
+    <associate|auto-3|<tuple|1.1|12>>
+    <associate|auto-4|<tuple|2|23>>
+    <associate|auto-5|<tuple|3|26>>
+    <associate|auto-6|<tuple|4|34>>
+    <associate|auto-7|<tuple|2|39>>
+    <associate|auto-8|<tuple|5|43>>
+    <associate|fig10.1|<tuple|1|11>>
+    <associate|fig10.5|<tuple|5|43>>
   </collection>
 </references>
 
