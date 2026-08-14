@@ -1121,10 +1121,10 @@
 
     where
 
-    <\equation*>
+    <\equation>
       r<rsub|n k>=<frac|\<rho\><rsub|n k>|<big|sum><rsub|j=1><rsup|K>\<rho\><rsub|n
-      j>>
-    </equation*>
+      j>><label|10.49>
+    </equation>
 
     We see that the optimal solution for the factor <math|q(Z)> takes the
     same functional form as the prior <math|p(Z\|\<b-pi\>)>. Note that
@@ -1232,9 +1232,9 @@
     Taking the exponential of both sides, we recognize
     <math|q<rsup|\<ast\>><around*|(|\<b-pi\>|)>> as a Dirichlet distribution
 
-    <\equation*>
-      q<rsup|\<ast\>><around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\>|)>
-    </equation*>
+    <\equation>
+      q<rsup|\<ast\>><around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\>|)><label|10.57>
+    </equation>
 
     where <math|\<alpha\>> has components <math|\<alpha\><rsub|k>> given by
 
@@ -1253,9 +1253,9 @@
     <math|\<Lambda\><rsub|k>> . The result, as expected, is a
     Gaussian-Wishart distribution and is given by
 
-    <\equation*>
-      q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>=\<cal-N\><around*|(|\<b-mu\><rsub|k>\|\<b-m\><rsub|k>,<around*|(|\<beta\><rsub|k>\<Lambda\><rsub|k>|)><rsup|-1>|)>\<cal-W\><around*|(|\<Lambda\>\|W<rsub|k>,\<nu\><rsub|k>|)>
-    </equation*>
+    <\equation>
+      q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>=\<cal-N\><around*|(|\<b-mu\><rsub|k>\|\<b-m\><rsub|k>,<around*|(|\<beta\><rsub|k>\<Lambda\><rsub|k>|)><rsup|-1>|)>\<cal-W\><around*|(|\<Lambda\>\|W<rsub|k>,\<nu\><rsub|k>|)><label|10.59>
+    </equation>
 
     where we have defined
 
@@ -1273,7 +1273,7 @@
     the variational posterior distribution over the model parameters involve
     evaluation of the same sums over the data set, as arose in the maximum
     likelihood treatment.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|expectations with respect to the variational distributions>
 
     In order to perform this variational M step, we need the expectations
@@ -1295,6 +1295,57 @@
     defined by (B.25), with <math|<wide|\<alpha\>|^>=<big|sum><rsub|k>\<alpha\><rsub|k>>.
     The results Eq. <eqref|10.65> and Eq. <eqref|10.66> follow from the
     standard properties of the Wishart and Dirichlet distributions.
+  </hidden>|<\hidden>
+    <tit|result for the responsibilities>
+
+    If we substitute Eq. <eqref|10.64>, <eqref|10.65>, and <eqref|10.66> into
+    <eqref|10.46> and make use of <eqref|10.49>, we obtain the following
+    result for the responsibilities
+
+    <\equation*>
+      r<rsub|n k>\<propto\><wide|\<pi\>|~><rsub|k><wide|\<Lambda\>|~><rsub|k><rsup|1/2>exp<around*|{|-<frac|D|2\<beta\><rsub|k>>-<frac|\<nu\><rsub|k>|2><around*|(|\<b-x\><rsub|n>-\<b-m\><rsub|k>|)><rsup|T>W<rsub|k><around*|(|\<b-x\><rsub|n>-\<b-m\><rsub|k>|)>|}>
+    </equation*>
+
+    Notice the similarity to the corresponding result for the
+    responsibilities in maximum likelihood EM, which from (9.13) can be
+    written in the form
+
+    <\equation*>
+      r<rsub|n k>\<propto\>\<pi\><rsub|k><around*|\||\<Lambda\><rsub|k>|\|><rsup|1/2>exp<around*|{|-<frac|1|2><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T>\<Lambda\><rsub|k><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)>|}>
+    </equation*>
+
+    where we have used the precision in place of the covariance to highlight
+    the similarity.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|two stage optimization>
+
+    Thus the optimization of the variational posterior distribution involves
+    cycling between two stages analogous to the E and M steps of the maximum
+    likelihood EM algorithm.\ 
+
+    In the variational equivalent of the E step, we use the current
+    distributions over the model parameters to evaluate the moments in Eq.
+    <eqref|10.64>, <eqref|10.65>, and <eqref|10.66> and hence evaluate
+
+    <\equation*>
+      E[z<rsub|nk> ]=r<rsub|nk> .
+    </equation*>
+
+    Then in the subsequent variational equivalent of the M step, we keep
+    these responsibilities xed and use them to re-compute the variational
+    distribution over the parameters using Eq. <eqref|10.57> and
+    <eqref|10.59>.
+
+    In each case, we see that the variational posterior distribution has the
+    same functional form as the corresponding factor in the joint
+    distribution Eq. <eqref|10.41>. This is a general result and is a
+    consequence of the choice of conjugate distributions.
+  </hidden>|<\shown>
+    <tit|>
+
+    \;
   </shown>>
 </body>
 
@@ -1324,14 +1375,17 @@
     <associate|10.41|<tuple|16|44>>
     <associate|10.45|<tuple|17|?>>
     <associate|10.46|<tuple|18|?>>
+    <associate|10.49|<tuple|19|?>>
     <associate|10.5|<tuple|2|12>>
-    <associate|10.50|<tuple|19|?>>
-    <associate|10.54|<tuple|20|?>>
-    <associate|10.55|<tuple|21|?>>
+    <associate|10.50|<tuple|20|?>>
+    <associate|10.54|<tuple|21|?>>
+    <associate|10.55|<tuple|22|?>>
+    <associate|10.57|<tuple|23|?>>
+    <associate|10.59|<tuple|24|?>>
     <associate|10.6|<tuple|3|13>>
-    <associate|10.64|<tuple|22|?>>
-    <associate|10.65|<tuple|23|?>>
-    <associate|10.66|<tuple|24|?>>
+    <associate|10.64|<tuple|25|1>>
+    <associate|10.65|<tuple|26|1>>
+    <associate|10.66|<tuple|27|1>>
     <associate|10.9|<tuple|4|15>>
     <associate|auto-1|<tuple|1|5>>
     <associate|auto-2|<tuple|1|11>>
