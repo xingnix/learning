@@ -1238,9 +1238,9 @@
 
     where <math|\<alpha\>> has components <math|\<alpha\><rsub|k>> given by
 
-    <\equation*>
-      \<alpha\><rsub|k>=\<alpha\><rsub|0>+N<rsub|k>
-    </equation*>
+    <\equation>
+      \<alpha\><rsub|k>=\<alpha\><rsub|0>+N<rsub|k><label|10.58>
+    </equation>
   </hidden>|<\hidden>
     <tit|<math|q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>>>
 
@@ -1260,8 +1260,10 @@
     where we have defined
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<beta\><rsub|k>>|<cell|=>|<cell|\<beta\><rsub|0>+N<rsub|k>>>|<row|<cell|\<b-m\><rsub|k>>|<cell|=>|<cell|<frac|1|\<beta\><rsub|k>><around*|(|\<beta\><rsub|0>\<b-m\><rsub|0>+N<rsub|k><wide|\<b-x\>|\<wide-bar\>><rsub|k>|)>>>|<row|<cell|W<rsup|-1><rsub|k>>|<cell|=>|<cell|W<rsub|0><rsup|-1>+N<rsub|k>S<rsub|k>+<frac|\<beta\><rsub|0>N<rsub|k>|\<beta\><rsub|0>+N<rsub|k>><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|0>|)><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|0>|)><rsup|T>>>|<row|<cell|\<nu\><rsub|k>>|<cell|=>|<cell|\<mu\><rsub|0>+N<rsub|k>>>>>
+      <tformat|<table|<row|<cell|\<beta\><rsub|k>>|<cell|=>|<cell|\<beta\><rsub|0>+N<rsub|k><eq-number><label|10.60>>>|<row|<cell|\<b-m\><rsub|k>>|<cell|=>|<cell|<frac|1|\<beta\><rsub|k>><around*|(|\<beta\><rsub|0>\<b-m\><rsub|0>+N<rsub|k><wide|\<b-x\>|\<wide-bar\>><rsub|k>|)><eq-number><label|10.61>>>|<row|<cell|W<rsup|-1><rsub|k>>|<cell|=>|<cell|W<rsub|0><rsup|-1>+N<rsub|k>S<rsub|k>+<frac|\<beta\><rsub|0>N<rsub|k>|\<beta\><rsub|0>+N<rsub|k>><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|0>|)><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|0>|)><rsup|T><eq-number><label|10.62>>>|<row|<cell|\<nu\><rsub|k>>|<cell|=>|<cell|\<mu\><rsub|0>+N<rsub|k><eq-number><label|10.63>>>>>
     </eqnarray*>
+
+    \;
   </hidden>|<\hidden>
     <tit|analogous ...>
 
@@ -1285,7 +1287,8 @@
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<bbb-E\><rsub|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>><around*|[|(\<b-x\><rsub|n>-\<b-mu\><rsub|k>)<rsup|T>\<Lambda\><rsub|k>(\<b-x\><rsub|n>-\<b-mu\><rsub|k>)|]>>|<cell|=>|<cell|D\<beta\><rsub|k><rsup|-1>+\<nu\><rsub|k>(\<b-x\><rsub|n>-\<b-m\><rsub|k>)<rsup|T>W<rsub|k>(\<b-x\><rsub|n>-\<b-m\><rsub|k>)<eq-number><label|10.64>>>|<row|<cell|ln
-      <wide|\<Lambda\>|~><rsub|k>\<equiv\>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>>|<cell|=>|<cell|<big|sum><rsub|i=1><rsup|D>\<varphi\><around*|(|<frac|\<nu\><rsub|k>+1-i|2>|)>+Dln2+ln<around*|\||W<rsub|k>|\|><eq-number><label|10.65>>>|<row|<cell|ln<wide|\<pi\>|~><rsub|k>\<equiv\>\<bbb-E\><around*|[|ln
+      <wide|\<Lambda\>|~><rsub|k>\<equiv\>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>>|<cell|=>|<cell|<big|sum><rsub|i=1><rsup|D>\<varphi\><around*|(|<frac|\<nu\><rsub|k>+1-i|2>|)>+D
+      ln2+ln<around*|\||W<rsub|k>|\|><eq-number><label|10.65>>>|<row|<cell|ln<wide|\<pi\>|~><rsub|k>\<equiv\>\<bbb-E\><around*|[|ln
       \<pi\><rsub|k>|]>>|<cell|=>|<cell|\<varphi\><around*|(|\<alpha\><rsub|k>|)>-\<varphi\><around*|(|<wide|\<alpha\>|^>|)><eq-number><label|10.66>>>>>
     </eqnarray*>
 
@@ -1342,11 +1345,90 @@
     same functional form as the corresponding factor in the joint
     distribution Eq. <eqref|10.41>. This is a general result and is a
     consequence of the choice of conjugate distributions.
-  </hidden>|<\shown>
-    <tit|>
+  </hidden>|<\hidden>
+    Figure 10.6 shows the results of applying this approach to the rescaled
+    Old Faithful data set for a Gaussian mixture model having <math|K=6>
+    components.\ 
 
+    We see that after convergence, there are only two components for which
+    the expected values of the mixing coefcients are numerically
+    distinguishable from their prior values.\ 
+
+    This effect can be understood qualitatively in terms of the automatic
+    trade-off in a Bayesian model between tting the data and the complexity
+    of the model, in which the complexity penalty arises from components
+    whose parameters are pushed away from their prior values.\ 
+
+    Components that take essentially no responsibility for explaining the
+    data points have <math|r<rsub|nk>\<simeq\> 0> and hence <math|N<rsub|k>
+    \<simeq\> 0>.\ 
+
+    From Eq. <eqref|10.58>, we see that <math|\<alpha\><rsub|k>\<simeq\>\<alpha\><rsub|0>>
+    and from Eq. <eqref|10.60>\U<eqref|10.63> we see that the other
+    parameters revert to their prior values.\ 
+
+    In principle such components are tted slightly to the data points, but
+    for broad priors this effect is too small to be seen numerically.\ 
+
+    \ 
+  </hidden>|<\hidden>
+    For the variational Gaussian mixture model the expected values of the
+    mixing coefcients in the posterior distribution are given by
+
+    <\equation*>
+      \ \<bbb-E\>[\<pi\><rsub|k>] =<frac|\<alpha\><rsub|0> +
+      N<rsub|k>|K\<alpha\><rsub|0>+N>
+    </equation*>
+
+    Consider a component for which <math|N<rsub|k>\<simeq\>0> and
+    <math|\<alpha\><rsub|k>\<simeq\>\<alpha\><rsub|0>>. If the prior is broad
+    so that <math|\<alpha\><rsub|0>\<rightarrow\>0>, then
+    <math|\<bbb-E\>[\<pi\><rsub|k> ]\<rightarrow\>0> and the component plays
+    no role in the model, whereas if the prior tightly constrains the mixing
+    coefcients so that <math|\<alpha\><rsub|0>\<rightarrow\>\<infty\>>, then
+    <math|\<bbb-E\>[\<pi\><rsub|k>]\<rightarrow\><frac|1|K>>.
+  </hidden>|<\hidden>
+    In Figure 10.6, the prior over the mixing coefcients is a Dirichlet of
+    the form
+
+    (10.39). Recall from Figure 2.5 that for \<alpha\>0 \<less\> 1 the prior
+    favours solutions in which
+
+    some of the mixing coefcients are zero. Figure 10.6 was obtained using
+    \<alpha\>0 = 10\<minus\>3 ,
+
+    and resulted in two components having nonzero mixing coefcients. If
+    instead we
+
+    choose \<alpha\>0 = 1 we obtain three components with nonzero mixing
+    coefcients, and
+
+    for \<alpha\> = 10 all six components have nonzero mixing coefcients.
+  </hidden>|<\shown>
     \;
-  </shown>>
+  </shown>|<\hidden>
+    As we have seen there is a close similarity between the variational
+    solution for the Bayesian mixture of Gaussians and the EM algorithm for
+    maximum likelihood. In fact if we consider the limit N \<rightarrow\>
+    \<infty\> then the Bayesian treatment converges to the maximum likelihood
+    EM algorithm. For anything other than very small data sets, the dominant
+    computational cost of the variational algorithm for Gaussian mixtures
+    arises from the evaluation of the responsibilities, together with the
+    evaluation and inversion of the weighted data covariance matrices. These
+    computations mirror precisely those that arise in the maximum likelihood
+    EM algorithm, and so there is little computational overhead in using this
+    Bayesian approach as compared to the traditional maximum likelihood one.
+    There are, however, some substantial advantages. First of all, the
+    singularities that arise in maximum likelihood when a Gaussian component
+    `collapses' onto a specic data point are absent in the Bayesian
+    treatment. Indeed, these singularities are removed if we simply introduce
+    a prior and then use a MAP estimate instead of maximum likelihood.
+    Furthermore, there is no over-tting if we choose a large number K of
+    components in the mixture, as we saw in Figure 10.6. Finally, the
+    variational treatment opens up the possibility of determining the optimal
+    number of components in the mixture without resorting to techniques such
+    as cross validation.
+  </hidden>>
 </body>
 
 <\initial>
@@ -1381,11 +1463,16 @@
     <associate|10.54|<tuple|21|?>>
     <associate|10.55|<tuple|22|?>>
     <associate|10.57|<tuple|23|?>>
-    <associate|10.59|<tuple|24|?>>
+    <associate|10.58|<tuple|24|?>>
+    <associate|10.59|<tuple|25|?>>
     <associate|10.6|<tuple|3|13>>
-    <associate|10.64|<tuple|25|1>>
-    <associate|10.65|<tuple|26|1>>
-    <associate|10.66|<tuple|27|1>>
+    <associate|10.60|<tuple|26|?>>
+    <associate|10.61|<tuple|27|?>>
+    <associate|10.62|<tuple|28|?>>
+    <associate|10.63|<tuple|29|?>>
+    <associate|10.64|<tuple|30|1>>
+    <associate|10.65|<tuple|31|1>>
+    <associate|10.66|<tuple|32|1>>
     <associate|10.9|<tuple|4|15>>
     <associate|auto-1|<tuple|1|5>>
     <associate|auto-2|<tuple|1|11>>
