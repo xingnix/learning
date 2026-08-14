@@ -1,0 +1,246 @@
+<TeXmacs|2.1.1>
+
+<style|article>
+
+<\body>
+  <subsection| Predictive density><label|sec10.2.3>
+
+  In applications of the Bayesian mixture of Gaussians model we will often be
+  interested in the predictive density for a new value <math|x> of the
+  observed variable. As- sociated with this observation will be a
+  corresponding latent variable z, and the pre- dictive density is then given
+  by
+
+  <\equation*>
+    p<around*|(|<wide|\<b-x\>|^>\|X|)>=<big|sum><rsub|<wide|\<b-z\>|^>><big|iiint>p<around*|(|<wide|\<b-x\>|^>\|<wide|\<b-z\>|^>,\<b-mu\>,\<Lambda\>|)>p<around*|(|<wide|\<b-z\>|^>\|\<b-pi\>|)>p<around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>\|X|)>\<mathd\>\<b-pi\>\<mathd\>\<b-mu\>\<mathd\>\<Lambda\>
+  </equation*>
+
+  where <math|p(\<b-pi\>,\<b-mu\>,\<Lambda\>\|X)> is the (unknown) true
+  posterior distribution of the parameters. Using (10.37) and (10.38) we can
+  first perform the summation over <math|<wide|\<b-z\>|^>> to give
+
+  <\equation*>
+    p<around*|(|<wide|\<b-x\>|^>\|X|)>=<big|sum><rsub|k=1><rsup|K><big|iiint>\<pi\><rsub|k>\<cal-N\><around*|(|<wide|\<b-x\>|^>\|\<b-mu\><rsub|k>,\<Lambda\><rsub|k><rsup|-1>|)>p<around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>\|X|)>\<mathd\>\<b-pi\>\<mathd\>\<b-mu\>\<mathd\>\<Lambda\>
+  </equation*>
+
+  (note: <math|<big|sum><rsub|\<up-z\>><around*|[|<big|prod><rsub|\<b-z\>>\<pi\><rsub|k><rsup|z<rsub|k>>|]>=<big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>>)
+
+  Because the remaining integrations are intractable, we approximate the
+  predictive density by replacing the true posterior distribution
+  <math|p(\<b-pi\>,\<b-mu\>,\<Lambda\>\|X)> with its variational
+  approximation <math|q(\<b-pi\>)q(\<b-mu\>,\<Lambda\>)> to give
+
+  <\equation*>
+    p<around*|(|<wide|\<b-x\>|^>\|X|)>\<cong\><big|sum><rsub|k=1><rsup|K><big|iiint>\<pi\><rsub|k>\<cal-N\><around*|(|<wide|\<b-x\>|^>\|\<b-mu\><rsub|k>,\<Lambda\><rsup|-1><rsub|k>|)>q<around*|(|\<b-pi\>|)>q<around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>\<mathd\>\<b-pi\>\<mathd\>\<b-mu\><rsub|k>\<mathd\>\<Lambda\><rsub|k>
+  </equation*>
+
+  where we have made use of the factorization (10.55) and in each term we
+  have implicitly integrated out all variables
+  <math|{\<b-mu\><rsub|j>,\<Lambda\><rsub|j>}> for <math|j\<neq\>k> The
+  remaining integrations can now be evaluated analytically giving a mixture
+  of Student's t-distributions
+
+  <\equation*>
+    p<around*|(|<wide|\<b-x\>|^>\|X|)>=<frac|1|<wide|\<alpha\>|^>><big|sum><rsub|k=1><rsup|K>\<alpha\><rsub|k>St<around*|(|<wide|\<b-x\>|^>\|\<b-m\><rsub|k>,L<rsub|k>,\<nu\><rsub|k>+1-D|)>
+  </equation*>
+
+  in which the k'th component has mean <math|\<b-m\><rsub|k>>, and the
+  precision is given by
+
+  <\equation*>
+    L<rsub|k>=<frac|<around*|(|\<nu\><rsub|k>+1-D|)>\<beta\><rsub|k>|<around*|(|1+\<beta\><rsub|k>|)>>W<rsub|k>
+  </equation*>
+
+  in which <math|\<nu\><rsub|k>> is given by (10.63). When the size N of the
+  data set is large the predictive distribution (10.81) reduces to a mixture
+  of Gaussians.
+
+  <subsection|Determining the number of components><label|sec10.2.4>
+
+  We have seen that the variational lower bound can be used to determine a
+  posterior distribution over the number K of components in the mixture
+  model.\ 
+
+  There is, however, one subtlety that needs to be addressed. For any given
+  setting of the parameters in a Gaussian mixture model (except for specific
+  degenerate settings), there will exist other parameter settings for which
+  the density over the observed variables will be identical. These parameter
+  values differ only through a re-labelling of the components.\ 
+
+  For instance, consider a mixture of two Gaussians and a single observed
+  variable x, in which the parameters have the values <math|\<pi\><rsub|1> =
+  a>, <math|\<pi\><rsub|2> = b>, <math|\<mu\><rsub|1> = c>,
+  <math|\<mu\><rsub|2> =d>,<math|\<sigma\><rsub|1>
+  =e>,<math|\<sigma\><rsub|2> =f>. Then the parameter values
+  <math|\<pi\><rsub|1> =b>,<math|\<pi\><rsub|2> =a>,<math|\<mu\><rsub|1> =d>,
+  <math|\<mu\><rsub|2> = c>, <math|\<sigma\><rsub|1> = f>,
+  <math|\<sigma\><rsub|2> = e>, in which the two components have been
+  exchanged, will by symmetry give rise to the same value of <math|p(x)>. If
+  we have a mixture model comprising K components, then each parameter
+  setting will be a member of a family of <math|K!> equivalent settings.
+
+  In the context of maximum likelihood, this redundancy is irrelevant because
+  the parameter optimization algorithm (for example EM) will, depending on
+  the initialization of the parameters, find one specific solution, and the
+  other equivalent solutions play no role. In a Bayesian setting, however, we
+  marginalize over all possible parameter values. We have seen in Figure 10.3
+  that if the true posterior distribution is multimodal, variational
+  inference based on the minimization of <math|KL(q\<\|\|\>p)> will tend to
+  approximate the distribution in the neighbourhood of one of the modes and
+  ignore the others. Again, because equivalent modes have equivalent
+  predictive densities, this is of no concern provided we are considering a
+  model having a specific number K of components. If, however, we wish to
+  compare different values of K, then we need to take account of this
+  multimodality. A simple approximate solution is to add a term <math|ln K!>
+  onto the lower bound when used for model comparison and averaging.
+
+  Figure 10.7 shows a plot of the lower bound, including the multimodality
+  factor, versus the number K of components for the Old Faithful data set. It
+  is worth emphasizing once again that maximum likelihood would lead to
+  values of the likelihood function that increase monotonically with K
+  (assuming the singular solutions have been avoided, and discounting the
+  effects of local maxima) and so cannot be used to determine an appropriate
+  model complexity. By contrast, Bayesian inference automatically makes the
+  trade-off between model complexity and fitting the data.\ 
+
+  <\padded-center>
+    <small-figure|<image|image/fig_10_7_L_K.png|0.3par|||>|Plot of the
+    variational lower bound <math|\<cal-L\>> versus the number <math|K> of
+    components in the Gaussian mixture model, for the Old Faithful data,
+    showing a distinct peak at <math|K = 2> components. For each value of K,
+    the model is trained from 100 different random starts, and the results
+    shown as `+' symbols plotted with small random hori zontal perturbations
+    so that they can be distinguished. Note that some solutions find
+    suboptimal local maxima, but that this happens infrequently.>
+  </padded-center>
+
+  This approach to the determination of K requires that a range of models
+  having different K values be trained and compared. An alternative approach
+  to determining a suitable value for K is to treat the mixing coefficients
+  <math|\<b-pi\>> as parameters and make point estimates of their values by
+  maximizing the lower bound (Corduneanu and Bishop, 2001) with respect to
+  <math|\<b-pi\>> instead of maintaining a probability distribution over them
+  as in the fully Bayesian approach. This leads to the re-estimation equation
+
+  <\equation*>
+    \<pi\><rsub|k>=<frac|1|N><big|sum><rsub|n=1><rsup|N>r<rsub|n k>
+  </equation*>
+
+  and this maximization is interleaved with the variational updates for the
+  <math|q> distribution over the remaining parameters. Components that
+  provide insufficient contribution to explaining the data will have their
+  mixing coefficients driven to zero during the optimization, and so they are
+  effectively removed from the model through <strong|automatic relevance
+  determination>. This allows us to make a single training run in which we
+  start with a relatively large initial value of K, and allow surplus
+  components to be pruned out of the model. The origins of the sparsity when
+  optimizing with respect to hyperparameters is discussed in detail in the
+  context of the relevance vector machine.
+
+  \;
+
+  <subsection|Induced factorizations><label|10.2.5>
+
+  In deriving these variational update equations for the Gaussian mixture
+  model, we assumed a particular factorization of the variational posterior
+  distribution given by (10.42). However, the optimal solutions for the
+  various factors exhibit additional factorizations. In particular, the
+  solution for <math|q <rsup|\<ast\>>(\<b-mu\>,\<Lambda\>)> is given by the
+  product of an independent distribution <math|q<rsup|\<ast\>>(\<b-mu\><rsub|k>,\<Lambda\><rsub|k>)>
+  over each of the components <math|k> of the mixture, whereas the
+  variational posterior distribution <math|q<rsup|\<ast\>>(Z)> over the
+  latent variables, given by (10.48), factorizes into an independent
+  distribution <math|q<rsup|\<ast\>>(\<b-z\><rsub|n>)> for each observation
+  <math|n> (note that it does not further factorize with respect to <math|k>
+  because, for each value of <math|n>, the <math|z<rsub|nk>> are constrained
+  to sum to one over <math|k>). These additional factorizations are a
+  consequence of the interaction between the assumed factorization and the
+  conditional independence properties of the true distribution, as
+  characterized by the directed graph in Figure 10.5.
+
+  We shall refer to these additional factorizations as <strong|induced
+  factorizations> because they arise from an interaction between the
+  factorization assumed in the variational posterior distribution and the
+  conditional independence properties of the true joint distribution. In a
+  numerical implementation of the variational approach it is important to
+  take account of such additional factorizations. For instance, it would be
+  very inefficient to maintain a full precision matrix for the Gaussian
+  distribution over a set of variables if the optimal form for that
+  distribution always had a diagonal precision matrix (corresponding to a
+  factorization with respect to the individual variables described by that
+  Gaussian).
+
+  Such induced factorizations can easily be detected using a simple graphical
+  test based on d-separation as follows. We partition the latent variables
+  into three disjoint groups A, B, C and then let us suppose that we are
+  assuming a factorization between C and the remaining latent variables, so
+  that\ 
+
+  <\equation*>
+    q(A, B, C) = q(A, B)q(C).<space|2em>(10.84)
+  </equation*>
+
+  Using the general result (10.9), together with the product rule for
+  probabilities, we see that the optimal solution for q(A, B) is given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|A,B|)><rsup|*>>|<cell|=>|<cell|\<bbb-E\><rsub|C><around*|[|ln
+    p<around*|(|X,A,B,C|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><rsub|C><around*|[|ln
+    p<around*|(|A,B\|X,C|)>|]>+const>>>>
+  </eqnarray*>
+
+  We now ask whether this resulting solution will factorize between A and B,
+  in other words whether <math|q <rsup|\<ast\>>(A,B) = q<rsup|\<ast\>>
+  (A)q<rsup|\<ast\>> (B)>. This will happen if, and only if, <math|ln
+  p(A,B\|X, C)=ln p(A\|X,C)+ln p(B\|X,C)>, that is, if the conditional
+  independence relation\ 
+
+  <\equation*>
+    A \<bot\>B \| X,C
+  </equation*>
+
+  is satisfied. We can test to see if this relation does hold, for any choice
+  of A and B by making use of the d-separation criterion.
+
+  To illustrate this, consider again the Bayesian mixture of Gaussians
+  represented by the directed graph in Figure 10.5, in which we are assuming
+  a variational factorization given by (10.42). We can see immediately that
+  the variational posterior distribution over the parameters must factorize
+  between <math|\<b-pi\>> and the remaining parameters <math|\<b-mu\>> and
+  <math|\<Lambda\>> because all paths connecting <math|\<b-pi\>> to either
+  <math|\<b-mu\>> or <math|\<Lambda\>> must pass through one of the nodes
+  <math|\<b-z\><rsub|n>> all of which are in the conditioning set for our
+  conditional independence test and all of which are head-to-tail with
+  respect to such paths.
+
+  <section|Variational Linear Regression>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|10.2.5|<tuple|3|?|../../../../.TeXmacs/texts/scratch/no_name_20.tm>>
+    <associate|auto-1|<tuple|1|1|../../../../.TeXmacs/texts/scratch/no_name_20.tm>>
+    <associate|auto-2|<tuple|2|?|../../../../.TeXmacs/texts/scratch/no_name_20.tm>>
+    <associate|auto-3|<tuple|1|?|../../../../.TeXmacs/texts/scratch/no_name_20.tm>>
+    <associate|auto-4|<tuple|3|?|../../../../.TeXmacs/texts/scratch/no_name_20.tm>>
+    <associate|auto-5|<tuple|1|?|../../../../.TeXmacs/texts/scratch/no_name_20.tm>>
+    <associate|sec10.2.3|<tuple|1|1|../../../../.TeXmacs/texts/scratch/no_name_20.tm>>
+    <associate|sec10.2.4|<tuple|2|?|../../../../.TeXmacs/texts/scratch/no_name_20.tm>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <with|par-left|<quote|1tab>|1<space|2spc> Predictive density
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-1>>
+    </associate>
+  </collection>
+</auxiliary>
