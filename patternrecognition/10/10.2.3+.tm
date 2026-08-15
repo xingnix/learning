@@ -229,6 +229,65 @@
   respect to such paths.
 
   <section|Variational Linear Regression>
+
+  As a second illustration of variational inference, we return to the
+  Bayesian linear regression model of Section 3.3. In the evidence framework,
+  we approximated the integration over <math|\<alpha\>> and <math|\<beta\>>
+  by making point estimates obtained by maximizing the log marginal
+  likelihood. A fully Bayesian approach would integrate over the
+  hyperparameters as well as over the parameters. Although exact integration
+  is intractable, we can use variational methods to find a tractable
+  approximation. In order to simplify the discussion, we shall suppose that
+  the noise precision parameter <math|\<beta\>> is known, and is fixed to its
+  true value, although the framework is easily extended to include the
+  distribution over <math|\<beta\>>. For the linear regression model, the
+  variational treatment will turn out to be equivalent to the evidence
+  framework. Nevertheless, it provides a good exercise in the use of
+  variational methods and will also lay the foundation for variational
+  treatment of Bayesian logistic regression in Section 10.6.
+
+  Recall that the likelihood function for <math|\<b-w\>>, and the prior over
+  <math|\<b-w\>>, are given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-t\>\|\<b-w\>|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>\<cal-N\><around*|(|t<rsub|n>\|\<b-w\><rsup|T>\<b-varphi\><rsub|n>,\<beta\><rsup|-1>|)>>>|<row|<cell|p<around*|(|\<b-w\>\|\<alpha\>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-w\>\|\<b-0\>,\<alpha\><rsup|-1>I|)>>>>>
+  </eqnarray*>
+
+  where <math|\<b-varphi\><rsub|n>=\<b-varphi\>(\<b-x\><rsub|n>)>. We now
+  introduce a prior distribution over <math|\<alpha\>>. From our discussion
+  in Section 2.3.6, we know that the conjugate prior for the precision of a
+  Gaussian is given by a gamma distribution, and so we choose
+
+  <\equation*>
+    p(\<alpha\>) = Gam(\<alpha\>\|a<rsub|0>,b<rsub|0>)
+  </equation*>
+
+  where <math|Gam(\<cdummy\>\|\<cdummy\>,\<cdummy\>)> is defined by (B.26).
+  Thus the joint distribution of all the variables is given by\ 
+
+  <\equation>
+    p(\<b-t\>, \<b-w\>, \<alpha\>) = p(\<b-t\>\|\<b-w\>)p(\<b-w\>\|\<alpha\>)p(\<alpha\>).<label|10.90>
+  </equation>
+
+  This can be represented as a directed graphical model as shown in Figure
+  10.8.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_10_8_L_bayes_linear_regression.png|0.3par|||>|Probabilistic
+    graphical model representing the joint distribution Eq. <eqref|10.90> for
+    the Bayesian linear regression model.>
+  </padded-center>
+
+  <subsection|Variational distribution><label|sec10.3.1>
+
+  Our first goal is to find an approximation to the posterior distribution
+  <math|p(\<b-w\>,\<alpha\>\|\<b-t\>)>. To do this, we employ the variational
+  framework of Section 10.1, with a variational posterior distribution given
+  by the factorized expression\ 
+
+  <\equation*>
+    q(\<b-w\>, \<alpha\>) = q(\<b-w\>)q(\<alpha\>).
+  </equation*>
 </body>
 
 <\initial>
@@ -239,14 +298,18 @@
 
 <\references>
   <\collection>
-    <associate|10.2.5|<tuple|3|2>>
+    <associate|10.2.5|<tuple|3|3>>
+    <associate|10.90|<tuple|1|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|1|2>>
-    <associate|auto-4|<tuple|3|2>>
-    <associate|auto-5|<tuple|1|3>>
+    <associate|auto-4|<tuple|3|3>>
+    <associate|auto-5|<tuple|1|4>>
+    <associate|auto-6|<tuple|2|?>>
+    <associate|auto-7|<tuple|1.1|?>>
     <associate|sec10.2.3|<tuple|1|1>>
     <associate|sec10.2.4|<tuple|2|1>>
+    <associate|sec10.3.1|<tuple|1.1|?>>
   </collection>
 </references>
 
