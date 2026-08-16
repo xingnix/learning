@@ -288,6 +288,34 @@
   <\equation*>
     q(\<b-w\>, \<alpha\>) = q(\<b-w\>)q(\<alpha\>).
   </equation*>
+
+  We can find re-estimation equations for the factors in this distribution by
+  making use of the general result (10.9). Recall that for each factor, we
+  take the log of the joint distribution over all variables and then average
+  with respect to those variables not in that factor. Consider first the
+  distribution over <math|\<alpha\>>. Keeping only terms that have a
+  functional dependence on <math|\<alpha\>>, we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|\<alpha\>|)>>|<cell|=>|<cell|ln
+    p<around*|(|\<alpha\>|)>+\<bbb-E\><rsub|\<b-w\>><around*|[|ln
+    p<around*|(|\<b-w\>\|\<alpha\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|<around*|(|a<rsub|0>-1|)>ln\<alpha\>-b<rsub|0>\<alpha\>+<frac|M|2>ln\<alpha\>-<frac|\<alpha\>|2>\<bbb-E\><around*|[|\<b-w\><rsup|T>\<b-w\>|]>+const>>>>
+  </eqnarray*>
+
+  We recognize this as the log of a gamma distribution, and so identifying
+  the coefficients of <math|\<alpha\>> and ln <math|\<alpha\>> we obtain
+
+  <\equation*>
+    q <rsup|\<ast\>>(\<alpha\>)=Gam(\<alpha\>\|a<rsub|N>,b<rsub|N>)
+  </equation*>
+
+  where
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|a<rsub|N>>|<cell|=>|<cell|a<rsub|0>+<frac|M|2>>>|<row|<cell|b<rsub|N>>|<cell|=>|<cell|b<rsub|0>+<frac|1|2>\<bbb-E\><around*|[|\<b-w\><rsup|T>\<b-w\>|]>>>>>
+  </eqnarray*>
+
+  \;
 </body>
 
 <\initial>
@@ -299,17 +327,17 @@
 <\references>
   <\collection>
     <associate|10.2.5|<tuple|3|3>>
-    <associate|10.90|<tuple|1|?>>
+    <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
     <associate|auto-5|<tuple|1|4>>
-    <associate|auto-6|<tuple|2|?>>
-    <associate|auto-7|<tuple|1.1|?>>
+    <associate|auto-6|<tuple|2|4>>
+    <associate|auto-7|<tuple|1.1|4>>
     <associate|sec10.2.3|<tuple|1|1>>
     <associate|sec10.2.4|<tuple|2|1>>
-    <associate|sec10.3.1|<tuple|1.1|?>>
+    <associate|sec10.3.1|<tuple|1.1|4>>
   </collection>
 </references>
 
@@ -326,6 +354,11 @@
       perturbations so that they can be distinguished. Note that some
       solutions find suboptimal local maxima, but that this happens
       infrequently.>|<pageref|auto-3>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|2>||Probabilistic
+      graphical model representing the joint distribution Eq.
+      (<reference|10.90>) for the Bayesian linear regression
+      model.>|<pageref|auto-6>>
     </associate>
     <\associate|toc>
       <with|par-left|<quote|1tab>|1<space|2spc> Predictive density
@@ -343,6 +376,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Variational
       Linear Regression> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-5><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|1.1<space|2spc>Variational distribution
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-7>>
     </associate>
   </collection>
 </auxiliary>
