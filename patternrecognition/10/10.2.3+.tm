@@ -315,7 +315,151 @@
     <tformat|<table|<row|<cell|a<rsub|N>>|<cell|=>|<cell|a<rsub|0>+<frac|M|2>>>|<row|<cell|b<rsub|N>>|<cell|=>|<cell|b<rsub|0>+<frac|1|2>\<bbb-E\><around*|[|\<b-w\><rsup|T>\<b-w\>|]>>>>>
   </eqnarray*>
 
-  \;
+  Similarly, we can find the variational re-estimation equation for the
+  posterior distribution over <math|\<b-w\>>. Again, using the general result
+  (10.9), and keeping only those terms that have a functional dependence on
+  <math|\<b-w\>>, we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|\<b-w\>|)>>|<cell|=>|<cell|ln
+    p<around*|(|\<b-t\>\|\<b-w\>|)>+\<bbb-E\><rsub|\<alpha\>><around*|[|ln
+    p<around*|(|\<b-w\>\|\<alpha\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|\<beta\>|2><big|sum><rsub|n=1><rsup|N><around*|{|\<b-w\><rsup|T>\<b-varphi\><rsub|n>-t<rsub|n>|}><rsup|2>-<frac|1|2>\<bbb-E\><around*|[|\<alpha\>|]>\<b-w\><rsup|T>\<b-w\>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2>\<b-w\><rsup|T><around*|(|\<bbb-E\><around*|[|\<alpha\>|]>I+\<beta\>\<Phi\><rsup|T>\<Phi\>|)>\<b-w\>+\<beta\>\<b-w\><rsup|T>\<Phi\><rsup|T>\<b-t\>+const>>>>
+  </eqnarray*>
+
+  Because this is a quadratic form, the distribution
+  <math|q<rsup|\<ast\>>(\<b-w\>)> is Gaussian, and so we can complete the
+  square in the usual way to identify the mean and covariance, giving
+
+  <\equation*>
+    q<rsup|\<ast\>>(\<b-w\>)=\<cal-N\>(\<b-w\>\|\<b-m\><rsub|N>,S<rsub|N>)
+  </equation*>
+
+  where\ 
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-m\><rsub|N>>|<cell|=>|<cell|\<beta\>S<rsub|N>\<Phi\><rsup|T>\<b-t\>>>|<row|<cell|S<rsub|N>>|<cell|=>|<cell|<around*|(|\<bbb-E\><around*|[|\<alpha\>|]>I+\<beta\>\<Phi\><rsup|T>\<Phi\>|)><rsup|-1>>>>>
+  </eqnarray*>
+
+  Note the close similarity to the posterior distribution (3.52) obtained
+  when <math|\<alpha\>> was treated as a fixed parameter. The difference is
+  that here \<alpha\> is replaced by its expectation <math|E[\<alpha\>]>
+  under the variational distribution. Indeed, we have chosen to use the same
+  notation for the covariance matrix <math|S<rsub|N>> in both cases.\ 
+
+  Using the standard results (B.27), (B.38), and (B.39), we can obtain the
+  required moments as follows
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<alpha\>|]>>|<cell|=>|<cell|a<rsub|N>/b<rsub|N>>>|<row|<cell|\<bbb-E\><around*|[|\<b-w\>\<b-w\><rsup|T>|]>>|<cell|=>|<cell|\<b-m\><rsub|N>\<b-m\><rsub|N><rsup|T>+S<rsub|N>>>>>
+  </eqnarray*>
+
+  The evaluation of the variational posterior distribution begins by
+  initializing the parameters of one of the distributions <math|q(\<b-w\>)>
+  or <math|q(\<alpha\>)>, and then alternately re-estimates these factors in
+  turn until a suitable convergence criterion is satisfied (usually specified
+  in terms of the lower bound to be discussed shortly).\ 
+
+  It is instructive to relate the variational solution to that found using
+  the evidence framework in Section 3.5. To do this consider the case
+  <math|a<rsub|0>=b<rsub|0>=0>, corresponding to the limit of an infinitely
+  broad prior over <math|\<alpha\>>. The mean of the variational posterior
+  distribution <math|q(\<alpha\>)> is then given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<alpha\>|]>>|<cell|=>|<cell|<frac|a<rsub|N>|b<rsub|N>>>>|<row|<cell|>|<cell|=>|<cell|<frac|M/2|\<bbb-E\><around*|[|\<b-w\><rsup|T>\<b-w\>|]>/2>>>|<row|<cell|>|<cell|=>|<cell|<frac|M|\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>+Tr<around*|(|S<rsub|N>|)>>>>>>
+  </eqnarray*>
+
+  Comparison with (9.63) shows that in the case of this particularly simple
+  model, the variational approach gives precisely the same expression as that
+  obtained by maximizing the evidence function using EM except that the point
+  estimate for <math|\<alpha\>> is replaced by its expected value. Because
+  the distribution <math|q(\<b-w\>)> depends on <math|q(\<alpha\>)> only
+  through the expectation <math|E[\<alpha\>]>, we see that the two approaches
+  will give identical results for the case of an infinitely broad prior.
+
+  <subsection|Predictive distribution>
+
+  The predictive distribution over <math|t>, given a new input
+  <math|\<b-x\>>, is easily evaluated for this model using the Gaussian
+  variational posterior for the parameters
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|t\|\<b-x\>,\<b-t\>|)>>|<cell|=>|<cell|<big|int>p<around*|(|t\|\<b-x\>,\<b-w\>|)>p<around*|(|\<b-w\>\|\<b-t\>|)>\<mathd\>\<b-w\>>>|<row|<cell|>|<cell|\<simeq\>>|<cell|<big|int>p<around*|(|t\|\<b-x\>,\<b-w\>|)>q<around*|(|\<b-w\>|)>\<mathd\>\<b-w\>>>|<row|<cell|>|<cell|=>|<cell|<big|int>\<cal-N\><around*|(|t\|\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\>|)>,\<beta\><rsup|-1>|)>\<cal-N\><around*|(|\<b-w\>\|\<b-m\><rsub|N>,S<rsub|N>|)>\<mathd\>\<b-w\>>>|<row|<cell|>|<cell|=>|<cell|\<cal-N\><around*|(|t\|\<b-m\><rsub|N><rsup|T>\<b-varphi\><around*|(|\<b-x\>|)>,\<sigma\><rsup|2><around*|(|\<b-x\>|)>|)>>>>>
+  </eqnarray*>
+
+  where we have evaluated the integral by making use of the result (2.115)
+  for the linear-Gaussian model. Here the input-dependent variance is given
+  by
+
+  <\equation*>
+    \<sigma\><rsup|2><around*|(|\<b-x\>|)>=<frac|1|\<beta\>>+\<b-varphi\><around*|(|x|)><rsup|T>S<rsub|N>\<b-varphi\><around*|(|\<b-x\>|)>
+  </equation*>
+
+  Note that this takes the same form as the result (3.59) obtained with fixed
+  <math|\<alpha\>> except that now the expected value
+  <math|\<bbb-E\>[\<alpha\>]> appears in the definition of <math|S<rsub|N>>.
+
+  <subsection|Lower bound>
+
+  Another quantity of importance is the lower bound <math|\<cal-L\>> defined
+  by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<cal-L\><around*|(|q|)>>|<cell|=>|<cell|\<bbb-E\><around*|[|ln
+    p<around*|(|\<b-w\>,\<alpha\>,\<b-t\>|)>|]>-\<bbb-E\><around*|[|ln
+    q<around*|(|\<b-w\>,\<alpha\>|)>|]>>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><rsub|\<b-w\>><around*|[|ln
+    p<around*|(|\<b-t\>\|\<b-w\>|)>|]>+\<bbb-E\><rsub|\<b-w\>,\<alpha\>><around*|[|ln
+    p<around*|(|\<b-w\>\|\<alpha\>|)>|]>+\<bbb-E\><rsub|\<alpha\>><around*|[|ln
+    p<around*|(|\<alpha\>|)>|]>-\<bbb-E\><rsub|\<b-w\>><around*|[|ln
+    q<around*|(|\<b-w\>|)>|]>-\<bbb-E\><rsub|\<alpha\>><around*|[|ln
+    q<around*|(|\<alpha\>|)>|]>>>>>
+  </eqnarray*>
+
+  Evaluation of the various terms is straightforward, making use of results
+  obtained in previous chapters, and gives
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|E<rsub|\<b-w\>><around*|[|ln
+    p<around*|(|\<b-t\>\|\<b-w\>|)>|]>>|<cell|=>|<cell|<frac|N|2>ln<around*|(|<frac|\<beta\>|2\<pi\>>|)>-<frac|\<beta\>|2>\<b-t\><rsup|T>\<b-t\>+\<beta\>\<b-m\><rsup|T><rsub|N>\<Phi\><rsup|T>\<b-t\>-<frac|\<beta\>|2>Tr<around*|[|\<Phi\><rsup|T>\<Phi\><around*|(|\<b-m\><rsub|N>\<b-m\><rsub|N><rsup|T>+S<rsub|N>|)>|]>>>|<row|<cell|\<bbb-E\><rsub|\<b-w\>,\<alpha\>><around*|[|ln
+    p<around*|(|\<b-w\>\|\<alpha\>|)>|]>>|<cell|=>|<cell|-<frac|M|2>ln<around*|(|2\<pi\>|)>+<frac|M|2><around*|(|\<psi\><around*|(|a<rsub|N>|)>-ln
+    b<rsub|N>|)>-<frac|2a<rsub|N>|2b<rsub|N>><around*|[|\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>+Tr<around*|(|S<rsub|N>|)>|]>>>|<row|<cell|\<bbb-E\><rsub|\<alpha\>><around*|[|ln
+    p<around*|(|\<alpha\>|)>|]>>|<cell|=>|<cell|a<rsub|0>ln
+    b<rsub|0>+<around*|(|a<rsub|0>-1|)><around*|[|\<psi\><around*|(|a<rsub|N>|)>-ln
+    b<rsub|N>|]>-b<rsub|0><frac|a<rsub|N>|b<rsub|N>>-ln\<Gamma\><around*|(|a<rsub|N>|)>>>|<row|<cell|-\<bbb-E\><rsub|\<b-w\>><around*|[|ln
+    q<around*|(|\<b-w\>|)>|]>>|<cell|=>|<cell|<frac|1|2>ln<around*|\||S<rsub|N>|\|>+<frac|M|2><around*|[|1+ln<around*|(|2\<pi\>|)>|]>>>|<row|<cell|-\<bbb-E\><rsub|\<alpha\>><around*|[|ln
+    q<around*|(|\<alpha\>|)>|]>>|<cell|=>|<cell|ln\<Gamma\><around*|(|a<rsub|N>|)>-<around*|(|a<rsub|N>-1|)>\<psi\><around*|(|a<rsub|N>|)>-ln
+    b<rsub|N>+a<rsub|N>>>>>
+  </eqnarray*>
+
+  Figure 10.9 shows a plot of the lower bound <math|\<cal-L\>(q)> versus the
+  degree of a polynomial model for a synthetic data set generated from a
+  degree three polynomial. Here the prior parameters have been set to
+  <math|a<rsub|0>=b<rsub|0>=0>, corresponding to the noninformative prior
+  <math|p(\<alpha\>) \<propto\> 1/\<alpha\>>, which is uniform over
+  <math|ln\<alpha\>> as discussed in Section 2.3.6. As we saw in Section
+  10.1, the quantity <math|\<cal-L\>> represents lower bound on the log
+  marginal likelihood <math|p(\<b-t\>\|M)> for the model. If we assign equal
+  prior probabilities <math|p(M)> to the different values of <math|M>, then
+  we can interpret <math|\<cal-L\>> as an approximation to the posterior
+  model probability <math|p(M\|\<b-t\>)>. Thus the variational framework
+  assigns the highest probability to the model with <math|M=3>. This should
+  be contrasted with the maximum likelihood result, which assigns ever
+  smaller residual error to models of increasing complexity until the
+  residual error is driven to zero, causing maximum likelihood to favour
+  severely over-fitted models.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_10_9_lower_bound_polynomial.png|0.3par|||>|Plot
+    of the lower bound <math|\<cal-L\>> versus the order <math|M> of the
+    polynomial, for a polynomial model, in which a set of 10 data points is
+    generated from a polynomial with <math|M=3> sampled over the interval
+    <math|(\<minus\>5,5)> with additive Gaussian noise of variance
+    <math|0.09>. The value of the bound gives the log probability of the
+    model, and we see that the value of the bound peaks at <math|M=3>,
+    corresponding to the true model from which the data set was generated.>
+  </padded-center>
+
+  <section|Exponential Family Distributions>
 </body>
 
 <\initial>
@@ -329,12 +473,16 @@
     <associate|10.2.5|<tuple|3|3>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|3|7>>
+    <associate|auto-11|<tuple|2|7>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
     <associate|auto-5|<tuple|1|4>>
     <associate|auto-6|<tuple|2|4>>
     <associate|auto-7|<tuple|1.1|4>>
+    <associate|auto-8|<tuple|1.2|6>>
+    <associate|auto-9|<tuple|1.3|6>>
     <associate|sec10.2.3|<tuple|1|1>>
     <associate|sec10.2.4|<tuple|2|1>>
     <associate|sec10.3.1|<tuple|1.1|4>>
@@ -359,6 +507,17 @@
       graphical model representing the joint distribution Eq.
       (<reference|10.90>) for the Bayesian linear regression
       model.>|<pageref|auto-6>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|3>||Plot of the lower
+      bound <with|mode|<quote|math>|\<cal-L\>> versus the order
+      <with|mode|<quote|math>|M> of the polynomial, for a polynomial model,
+      in which a set of 10 data points is generated from a polynomial with
+      <with|mode|<quote|math>|M=3> sampled over the interval
+      <with|mode|<quote|math>|(\<minus\>5,5)> with additive Gaussian noise of
+      variance <with|mode|<quote|math>|0.09>. The value of the bound gives
+      the log probability of the model, and we see that the value of the
+      bound peaks at <with|mode|<quote|math>|M=3>, corresponding to the true
+      model from which the data set was generated.>|<pageref|auto-10>>
     </associate>
     <\associate|toc>
       <with|par-left|<quote|1tab>|1<space|2spc> Predictive density
@@ -380,6 +539,18 @@
       <with|par-left|<quote|1tab>|1.1<space|2spc>Variational distribution
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-7>>
+
+      <with|par-left|<quote|1tab>|1.2<space|2spc>Predictive distribution
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-8>>
+
+      <with|par-left|<quote|1tab>|1.3<space|2spc>Lower bound
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-9>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Exponential
+      Family Distributions> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-11><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
