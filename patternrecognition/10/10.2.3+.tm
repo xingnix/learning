@@ -425,7 +425,7 @@
     b<rsub|N>|)>-<frac|2a<rsub|N>|2b<rsub|N>><around*|[|\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>+Tr<around*|(|S<rsub|N>|)>|]>>>|<row|<cell|\<bbb-E\><rsub|\<alpha\>><around*|[|ln
     p<around*|(|\<alpha\>|)>|]>>|<cell|=>|<cell|a<rsub|0>ln
     b<rsub|0>+<around*|(|a<rsub|0>-1|)><around*|[|\<psi\><around*|(|a<rsub|N>|)>-ln
-    b<rsub|N>|]>-b<rsub|0><frac|a<rsub|N>|b<rsub|N>>-ln\<Gamma\><around*|(|a<rsub|N>|)>>>|<row|<cell|-\<bbb-E\><rsub|\<b-w\>><around*|[|ln
+    b<rsub|N>|]>-b<rsub|0><frac|a<rsub|N>|b<rsub|N>>-ln\<Gamma\><around*|(|a<rsub|0>|)>>>|<row|<cell|-\<bbb-E\><rsub|\<b-w\>><around*|[|ln
     q<around*|(|\<b-w\>|)>|]>>|<cell|=>|<cell|<frac|1|2>ln<around*|\||S<rsub|N>|\|>+<frac|M|2><around*|[|1+ln<around*|(|2\<pi\>|)>|]>>>|<row|<cell|-\<bbb-E\><rsub|\<alpha\>><around*|[|ln
     q<around*|(|\<alpha\>|)>|]>>|<cell|=>|<cell|ln\<Gamma\><around*|(|a<rsub|N>|)>-<around*|(|a<rsub|N>-1|)>\<psi\><around*|(|a<rsub|N>|)>-ln
     b<rsub|N>+a<rsub|N>>>>>
@@ -438,9 +438,9 @@
   <math|p(\<alpha\>) \<propto\> 1/\<alpha\>>, which is uniform over
   <math|ln\<alpha\>> as discussed in Section 2.3.6. As we saw in Section
   10.1, the quantity <math|\<cal-L\>> represents lower bound on the log
-  marginal likelihood <math|p(\<b-t\>\|M)> for the model. If we assign equal
-  prior probabilities <math|p(M)> to the different values of <math|M>, then
-  we can interpret <math|\<cal-L\>> as an approximation to the posterior
+  marginal likelihood <math|ln p(\<b-t\>\|M)> for the model. If we assign
+  equal prior probabilities <math|p(M)> to the different values of <math|M>,
+  then we can interpret <math|\<cal-L\>> as an approximation to the posterior
   model probability <math|p(M\|\<b-t\>)>. Thus the variational framework
   assigns the highest probability to the model with <math|M=3>. This should
   be contrasted with the maximum likelihood result, which assigns ever
@@ -460,6 +460,173 @@
   </padded-center>
 
   <section|Exponential Family Distributions>
+
+  In Chapter 2, we discussed the important role played by the exponential
+  family of distributions and their conjugate priors. For many of the models
+  discussed in this book, the complete-data likelihood is drawn from the
+  exponential family. However, in general this will not be the case for the
+  marginal likelihood function for the observed data. For example, in a
+  mixture of Gaussians, the joint distribution of observations
+  <math|\<b-x\><rsub|n>> and corresponding hidden variables
+  <math|\<b-z\><rsub|n>> is a member of the exponential family, whereas the
+  marginal distribution of <math|\<b-x\><rsub|n>> is a mixture of Gaussians
+  and hence is not.\ 
+
+  Up to now we have grouped the variables in the model into observed
+  variables and hidden variables. We now make a further distinction between
+  latent variables, denoted <math|Z>, and parameters, denoted
+  <math|\<b-theta\>>, where parameters are intensive (fixed in number
+  independent of the size of the data set), whereas latent variables are
+  extensive (scale in number with the size of the data set). For example, in
+  a Gaussian mixture model, the indicator variables <math|z<rsub|kn>> (which
+  specify which component <math|k> is responsible for generating data point
+  <math|\<b-x\><rsub|n>>) represent the latent variables, whereas the means
+  <math|\<b-mu\><rsub|k>>, precisions <math|\<Lambda\><rsub|k>> and mixing
+  proportions <math|\<pi\><rsub|k>> represent the parameters.\ 
+
+  Consider the case of independent identically distributed data. We denote
+  the data values by <math|X={\<b-x\><rsub|n>}>, where <math|n=1,\<cdots\>,N>
+  , with corresponding latent variables <math|Z={\<b-z\><rsub|n>}>. Now
+  suppose that the joint distribution of observed and latent variables is a
+  member of the exponential family, parameterized by natural parameters
+  <math|\<b-eta\>> so that
+
+  <\equation*>
+    p<around*|(|X,Z\|\<b-eta\>|)>=<big|prod><rsub|n=1><rsup|N>h<around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>g<around*|(|\<b-eta\>|)>exp<around*|{|\<b-eta\><rsup|T>\<b-u\><around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>|}>
+  </equation*>
+
+  We shall also use a conjugate prior for <math|\<b-eta\>>, which can be
+  written as
+
+  <\equation*>
+    p<around*|(|\<b-eta\>\|\<nu\><rsub|0>,\<b-v\><rsub|0>|)>=f<around*|(|\<nu\><rsub|0>,\<b-chi\><rsub|0>|)>g<around*|(|\<b-eta\>|)><rsup|\<nu\><rsub|0>>exp<around*|{|\<nu\><rsub|0>\<b-eta\><rsup|T>\<b-chi\><rsub|0>|}>
+  </equation*>
+
+  Recall that the conjugate prior distribution can be interpreted as a prior
+  number <math|\<nu\><rsub|0>> of observations all having the value
+  <math|\<b-chi\><rsub|0>> for the <math|\<b-u\>> vector. Now consider a
+  variational distribution that factorizes between the latent variables and
+  the parameters, so that <math|q(Z,\<b-eta\>) = q(Z)q(\<b-eta\>)>. Using the
+  general result (10.9), we can solve for the two factors as follows
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|Z|)>>|<cell|=>|<cell|\<bbb-E\><rsub|\<b-eta\>><around*|[|ln
+    p<around*|(|X,Z\|\<b-eta\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><around*|{|ln
+    h<around*|(|\<b-x\><rsub|n,>\<b-z\><rsub|n>|)>+\<bbb-E\><around*|[|\<b-eta\><rsup|T>|]>\<b-u\><around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>|}>+const>>>>
+  </eqnarray*>
+
+  Thus we see that this decomposes into a sum of independent terms, one for
+  each value of <math|n>, and hence the solution for
+  <math|q<rsup|\<ast\>>(Z)> will factorize over <math|n> so that
+  <math|q<rsup|\<ast\>><around*|(|Z|)>=<big|prod><rsub|n>q<rsup|\<ast\>><around*|(|\<b-z\><rsub|n>|)>.>
+  This is an example of an induced factorization. Taking the exponential of
+  both sides, we have
+
+  <\equation*>
+    q<rsup|\<ast\>><around*|(|\<b-z\><rsub|n>|)>=h<around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>g<around*|(|\<bbb-E\><around*|[|\<b-eta\>|]>|)>exp<around*|{|\<bbb-E\><around*|[|\<b-eta\><rsup|T>|]>\<b-u\><around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>|}>
+  </equation*>
+
+  where the normalization coefficient has been reinstated by comparison
+  standard form for the exponential family.\ 
+
+  Similarly, for the variational distribution over the parameters, we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|\<b-eta\>|)>>|<cell|=>|<cell|ln
+    p<around*|(|\<b-eta\>\|\<nu\><rsub|0>,\<b-chi\><rsub|0>|)>+\<bbb-E\><rsub|Z><around*|[|ln
+    p<around*|(|X,Z\|\<b-eta\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|\<nu\><rsub|0>ln
+    g<around*|(|\<b-eta\>|)>+\<b-eta\><rsup|T>\<b-chi\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|{|ln
+    g<around*|(|\<b-eta\>|)>+\<b-eta\><rsup|T>\<bbb-E\><rsub|\<b-z\><rsub|n>><around*|[|\<b-u\><around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>|]>|}>+const>>>>
+  </eqnarray*>
+
+  Again, taking the exponential of both sides, and re-instating the
+  normalization coefficient by inspection, we have
+
+  <\equation*>
+    q<rsup|\<ast\>><around*|(|\<b-eta\>|)>=f<around*|(|v<rsub|N>,\<b-chi\><rsub|N>|)>g<around*|(|\<b-eta\>|)><rsup|\<nu\><rsub|N>>exp<around*|{|\<b-eta\><rsup|T>\<b-chi\><rsub|N>|}>
+  </equation*>
+
+  where we have defined
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<nu\><rsub|N>>|<cell|=>|<cell|\<nu\><rsub|0>+N>>|<row|<cell|\<b-chi\><rsub|N>>|<cell|=>|<cell|\<b-chi\><rsub|0>+<big|sum><rsub|n=1><rsup|N>\<bbb-E\><rsub|\<b-z\><rsub|n>><around*|[|\<b-u\><around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>|]>>>>>
+  </eqnarray*>
+
+  Note that the solutions for <math|q<rsup|\<ast\>>(\<b-z\><rsub|n>)> and
+  <math|q<rsup|\<ast\>>(\<b-eta\>)> are coupled, and so we solve them
+  iteratively in a two-stage procedure. In the variational E step, we
+  evaluate the expected sufficient statistics
+  <math|\<bbb-E\>[\<b-u\>(\<b-x\><rsub|n>,\<b-z\><rsub|n>)]> using the
+  current posterior distribution <math|q(z<rsub|n>)> over the latent
+  variables and use this to compute a revised posterior distribution
+  <math|q(\<b-eta\>)> over the parameters. Then in the subsequent variational
+  M step, we use this revised parameter posterior distribution to find the
+  expected natural parameters <math|\<bbb-E\>[\<b-eta\><rsup|T>]>, which
+  gives rise to a revised variational distribution over the latent variables.
+
+  <subsection|Variational message passing>
+
+  We have illustrated the application of variational methods by considering a
+  specific model, the Bayesian mixture of Gaussians, in some detail. This
+  model can be described by the directed graph shown in Figure 10.5. Here we
+  consider more generally the use of variational methods for models described
+  by directed graphs and derive a number of widely applicable results.\ 
+
+  The joint distribution corresponding to a directed graph can be written
+  using the decomposition
+
+  <\equation>
+    p<around*|(|\<b-x\>|)>=<big|prod><rsub|i>p<around*|(|\<b-x\><rsub|i>\|pa<rsub|i>|)><label|10.122>
+  </equation>
+
+  where <math|\<b-x\><rsub|i>> denotes the variable(s) associated with node
+  <math|i>, and <math|pa<rsub|i>> denotes the parent set corresponding to
+  node <math|i>. Note that <math|\<b-x\><rsub|i>> may be a latent variable or
+  it may belong to the set of observed variables. Now consider a variational
+  approximation in which the distribution <math|q(\<b-x\>)> is assumed to
+  factorize with respect to the <math|\<b-x\><rsub|i>> so that
+
+  <\equation*>
+    q<around*|(|\<b-x\>|)>=<big|prod><rsub|i>q<rsub|i><around*|(|\<b-x\><rsub|i>|)>
+  </equation*>
+
+  Note that for observed nodes, there is no factor <math|q(\<b-x\><rsub|i>)>
+  in the variational distribution. We now substitute Eq. <eqref|10.122> into
+  our general result (10.9) to give
+
+  <\equation*>
+    ln q<rsup|\<ast\>><rsub|j><around*|(|\<b-x\><rsub|j>|)>=\<bbb-E\><rsub|i\<neq\>j><around*|[|<big|sum><rsub|i>ln
+    p<around*|(|\<b-x\><rsub|i>\|pa<rsub|i>|)>|]>+const
+  </equation*>
+
+  Any terms on the right-hand side that do not depend on
+  <math|\<b-x\><rsub|j>> can be absorbed into the additive constant. In fact,
+  the only terms that do depend on <math|\<b-x\><rsub|j>> are the conditional
+  distribution for <math|\<b-x\><rsub|j>> given by
+  <math|p(\<b-x\><rsub|j>\|pa<rsub|j>)> together with any other conditional
+  distributions that have <math|\<b-x\><rsub|j>> in the conditioning set. By
+  definition, these conditional distributions correspond to the children of
+  node <math|j>, and they therefore also depend on the <em|co-parents> of the
+  child nodes, i.e., the other parents of the child nodes besides node
+  <math|\<b-x\><rsub|j>> itself. We see that the set of all nodes on which
+  <math|q(<math-bf|x><rsub|j>)> depends corresponds to the Markov blanket of
+  node <math|\<b-x\><rsub|j>>, as illustrated in Figure 8.26. Thus the update
+  of the factors in the variational posterior distribution represents a local
+  calculation on the graph. This makes possible the construction of general
+  purpose software for variational inference in which the form of the model
+  does not need to be specified in advance (Bishop et al., 2003).\ 
+
+  If we now specialize to the case of a model in which all of the conditional
+  distributions have a conjugate-exponential structure, then the variational
+  update procedure can be cast in terms of a local message passing algorithm
+  (Winn and Bishop, 2005). In particular, the distribution associated with a
+  particular node can be updated once that node has received messages from
+  all of its parents and all of its children. This in turn requires that the
+  children have already received messages from their co-parents. The
+  evaluation of the lower bound can also be simplified because many of the
+  required quantities are already evaluated as part of the message passing
+  scheme. This distributed message passing formulation has good scaling
+  properties and is well suited to large networks.
 </body>
 
 <\initial>
@@ -470,11 +637,13 @@
 
 <\references>
   <\collection>
+    <associate|10.122|<tuple|2|?>>
     <associate|10.2.5|<tuple|3|3>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|3|7>>
     <associate|auto-11|<tuple|2|7>>
+    <associate|auto-12|<tuple|2.1|?>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
