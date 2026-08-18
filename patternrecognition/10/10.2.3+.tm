@@ -535,7 +535,7 @@
     <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|\<b-eta\>|)>>|<cell|=>|<cell|ln
     p<around*|(|\<b-eta\>\|\<nu\><rsub|0>,\<b-chi\><rsub|0>|)>+\<bbb-E\><rsub|Z><around*|[|ln
     p<around*|(|X,Z\|\<b-eta\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|\<nu\><rsub|0>ln
-    g<around*|(|\<b-eta\>|)>+\<b-eta\><rsup|T>\<b-chi\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|{|ln
+    g<around*|(|\<b-eta\>|)>+\<nu\><rsub|0>\<b-eta\><rsup|T>\<b-chi\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|{|ln
     g<around*|(|\<b-eta\>|)>+\<b-eta\><rsup|T>\<bbb-E\><rsub|\<b-z\><rsub|n>><around*|[|\<b-u\><around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>|]>|}>+const>>>>
   </eqnarray*>
 
@@ -543,13 +543,13 @@
   normalization coefficient by inspection, we have
 
   <\equation*>
-    q<rsup|\<ast\>><around*|(|\<b-eta\>|)>=f<around*|(|v<rsub|N>,\<b-chi\><rsub|N>|)>g<around*|(|\<b-eta\>|)><rsup|\<nu\><rsub|N>>exp<around*|{|\<b-eta\><rsup|T>\<b-chi\><rsub|N>|}>
+    q<rsup|\<ast\>><around*|(|\<b-eta\>|)>=f<around*|(|v<rsub|N>,\<b-chi\><rsub|N>|)>g<around*|(|\<b-eta\>|)><rsup|\<nu\><rsub|N>>exp<around*|{|\<nu\><rsub|N>\<b-eta\><rsup|T>\<b-chi\><rsub|N>|}>
   </equation*>
 
   where we have defined
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|\<nu\><rsub|N>>|<cell|=>|<cell|\<nu\><rsub|0>+N>>|<row|<cell|\<b-chi\><rsub|N>>|<cell|=>|<cell|\<b-chi\><rsub|0>+<big|sum><rsub|n=1><rsup|N>\<bbb-E\><rsub|\<b-z\><rsub|n>><around*|[|\<b-u\><around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>|]>>>>>
+    <tformat|<table|<row|<cell|\<nu\><rsub|N>>|<cell|=>|<cell|\<nu\><rsub|0>+N>>|<row|<cell|\<nu\><rsub|N>\<b-chi\><rsub|N>>|<cell|=>|<cell|\<nu\><rsub|0>\<b-chi\><rsub|0>+<big|sum><rsub|n=1><rsup|N>\<bbb-E\><rsub|\<b-z\><rsub|n>><around*|[|\<b-u\><around*|(|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>|]>>>>>
   </eqnarray*>
 
   Note that the solutions for <math|q<rsup|\<ast\>>(\<b-z\><rsub|n>)> and
@@ -609,12 +609,13 @@
   node <math|j>, and they therefore also depend on the <em|co-parents> of the
   child nodes, i.e., the other parents of the child nodes besides node
   <math|\<b-x\><rsub|j>> itself. We see that the set of all nodes on which
-  <math|q(<math-bf|x><rsub|j>)> depends corresponds to the Markov blanket of
-  node <math|\<b-x\><rsub|j>>, as illustrated in Figure 8.26. Thus the update
-  of the factors in the variational posterior distribution represents a local
-  calculation on the graph. This makes possible the construction of general
-  purpose software for variational inference in which the form of the model
-  does not need to be specified in advance (Bishop et al., 2003).\ 
+  <math|q<rsup|\<ast\>><rsub|j>(<math-bf|x><rsub|j>)> depends corresponds to
+  the Markov blanket of node <math|\<b-x\><rsub|j>>, as illustrated in Figure
+  8.26. Thus the update of the factors in the variational posterior
+  distribution represents a local calculation on the graph. This makes
+  possible the construction of general purpose software for variational
+  inference in which the form of the model does not need to be specified in
+  advance (Bishop et al., 2003).\ 
 
   If we now specialize to the case of a model in which all of the conditional
   distributions have a conjugate-exponential structure, then the variational
@@ -627,6 +628,335 @@
   required quantities are already evaluated as part of the message passing
   scheme. This distributed message passing formulation has good scaling
   properties and is well suited to large networks.
+
+  <section|Local Variational Methods>
+
+  The variational framework discussed in Sections 10.1 and 10.2 can be
+  considered a `global' method in the sense that it directly seeks an
+  approximation to the full posterior distribution over all random variables.
+  An alternative `local' approach involves finding bounds on functions over
+  individual variables or groups of variables within a model. For instance,
+  we might seek a bound on a conditional distribution <math|p(y\|x)>, which
+  is itself just one factor in a much larger probabilistic model specified by
+  a directed graph. The purpose of introducing the bound of course is to
+  simplify the resulting distribution. This local approximation can be
+  applied to multiple variables in turn until a tractable approximation is
+  obtained, and in Section 10.6.1 we shall give a practical example of this
+  approach in the context of logistic regression. Here we focus on developing
+  the bounds themselves.\ 
+
+  We have already seen in our discussion of the Kullback-Leibler divergence
+  that the convexity of the logarithm function played a key role in
+  developing the lower bound in the global variational approach. We have
+  defined a (strictly) convex func- tion as one for which every chord lies
+  above the function. Convexity also plays a central role in the local
+  variational framework. Note that our discussion will ap- ply equally to
+  concave functions with `min' and `max' interchanged and with lower bounds
+  replaced by upper bounds.\ 
+
+  Let us begin by considering a simple example, namely the function
+  <math|f(x)=exp(\<minus\>x)>, which is a convex function of <math|x>, and
+  which is shown in the left-hand plot of Figure <reference|fig10.10>. Our
+  goal is to approximate <math|f(x)> by a simpler function, in particular a
+  linear function of <math|x>. From Figure <reference|fig10.10>, we see that
+  this linear function will be a lower bound on f(x) if it corresponds to a
+  tangent. We can obtain the tangent line <math|y(x)> at a specific value of
+  <math|x>, say <math|x=\<xi\>>, by making a first order Taylor expansion\ 
+
+  <\equation>
+    y(x) = f(\<xi\>) + f<rprime|'>(\<xi\>)(x \<minus\> \<xi\>)<label|10.125>
+  </equation>
+
+  so that <math|y(x)\<leqslant\>f(x)> with equality when <math|x=\<xi\>>. For
+  our example function <math|f(x)=exp(\<minus\>x)>, we therefore obtain the
+  tangent line in the form\ 
+
+  <\equation*>
+    y(x) = exp(\<minus\>\<xi\>) \<minus\> exp(\<minus\>\<xi\>)(x \<minus\>
+    \<xi\>)
+  </equation*>
+
+  which is a linear function parameterized by <math|\<xi\>>. For consistency
+  with subsequent discussion, let us define
+  <math|\<lambda\>=\<minus\>exp(\<minus\>\<xi\>)> so that\ 
+
+  <\equation*>
+    y(x, \<lambda\>) = \<lambda\>x \<minus\> \<lambda\> + \<lambda\>
+    ln(\<minus\>\<lambda\>).
+  </equation*>
+
+  Different values of <math|\<lambda\>> correspond to different tangent
+  lines, and because all such lines are lower bounds on the function, we have
+  <math|f(x)\<geqslant\>y(x,\<lambda\>)>. Thus we can write the function in
+  the form\ 
+
+  <\equation*>
+    f (x) = max<rsub|\<lambda\>> {\<lambda\>x \<minus\> \<lambda\> +
+    \<lambda\> ln(\<minus\>\<lambda\>)} .
+  </equation*>
+
+  We have succeeded in approximating the convex function <math|f(x)> by a
+  simpler, linear function <math|y(x,\<lambda\>)>. The price we have paid is
+  that we have introduced a variational parameter <math|\<lambda\>>, and to
+  obtain the tightest bound we must optimize with respect to
+  <math|\<lambda\>>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_10_10_lower_bound_tangent.png|0.5par|||>|<label|fig10.10>In
+    the left-hand figure the red curve shows the function exp(\<minus\>x),
+    and the blue line shows the tangent at <math|x=\<xi\>> defined by Eq.
+    <eqref|10.125> with <math|\<xi\>=1>. This line has slope
+    <math|\<lambda\>=f<rprime|'>(\<xi\>)=\<minus\>exp(\<minus\>\<xi\>)>. Note
+    that any other tangent line, for example the ones shown in green, will
+    have a smaller value of y at <math|x=\<xi\>>. The right-hand figure shows
+    the corresponding plot of the function
+    <math|\<lambda\>\<xi\>\<minus\>g(\<lambda\>)>, where <math|g(\<lambda\>)>
+    is given by Eq. <eqref|10.131>, versus <math|\<lambda\>> for
+    <math|\<xi\>=1>, in which the maximum corresponds to
+    <math|\<lambda\>=\<minus\>exp(\<minus\>\<xi\>)=\<minus\>1/e>.>
+  </padded-center>
+
+  \;
+
+  We can formulate this approach more generally using the framework of convex
+  duality (Rockafellar, 1972; Jordan et al., 1999). Consider the illustration
+  of a convex function <math|f(x)> shown in the left-hand plot in Figure
+  <reference|fig10.11>. In this example, the function <math|\<lambda\>x> is a
+  lower bound on <math|f(x)> but it is not the best lower bound that can be
+  achieved by a linear function having slope <math|\<lambda\>>, because the
+  tightest bound is given by the tangent line. Let us write the equation of
+  the tangent line, having slope <math|\<lambda\>> as
+  <math|\<lambda\>x\<minus\>g(\<lambda\>)> where the (negative) intercept
+  <math|g(\<lambda\>)> clearly depends on the slope <math|\<lambda\>> of the
+  tangent. To determine the intercept, we note that the line must be moved
+  vertically by an amount equal to the smallest vertical distance between the
+  line and the function, as shown in Figure <eqref|fig10.11>. Thus
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|-min<rsub|x><around*|{|f<around*|(|x|)>-\<lambda\>x|}>>>|<row|<cell|>|<cell|=>|<cell|max<rsub|x><around*|{|\<lambda\>x-f<around*|(|x|)>|}><eq-number><label|10.129>>>>>
+  </eqnarray*>
+
+  <\padded-center>
+    <\small-figure|<image|image/fig_10_11_convex_duality.png|0.7par|||>>
+      <label|fig10.11>In the left-hand plot the red curve shows a convex
+      function <math|f(x)>, and the blue line represents the linear function
+      <math|\<lambda\>x>, which is a lower bound on <math|f(x)> because
+      <math|f(x)\<gtr\>\<lambda\>x> for all <math|x>. For the given value of
+      slope <math|\<lambda\>> the contact point of the tangent line having
+      the same slope is found by minimizing with respect to <math|x> the
+      discrepancy (shown by the green dashed lines) given by
+      <math|f(x)\<minus\>\<lambda\>x>. This defines the dual function
+      <math|g(\<lambda\>)>, which corresponds to the (negative of the)
+      intercept of the tangent line having slope <math|\<lambda\>>.
+    </small-figure>
+  </padded-center>
+
+  Now, instead of fixing <math|\<lambda\>> and varying <math|x>, we can
+  consider a particular <math|x> and then adjust <math|\<lambda\>> until the
+  tangent plane is tangent at that particular <math|x>. Because the <math|y>
+  value of the tangent line at a particular <math|x> is maximized when that
+  value coincides with its contact point, we have\ 
+
+  <\equation>
+    f (x) = max<rsub|\<lambda\>>{\<lambda\>x \<minus\>
+    g(\<lambda\>)}.<label|10.130>
+  </equation>
+
+  We see that the functions <math|f(x>) and <math|g(\<lambda\>)> play a dual
+  role, and are related through Eq. <eqref|10.129> and <eqref|10.130>.
+
+  Let us apply these duality relations to our simple example
+  <math|f(x)=exp(\<minus\>x)>. From Eq. <eqref|10.129> we see that the
+  maximizing value of <math|x> is given by
+  <math|\<xi\>=\<minus\>ln(\<minus\>\<lambda\>)>, and back-substituting we
+  obtain the conjugate function <math|g(\<lambda\>)> in the form\ 
+
+  <\equation>
+    g(\<lambda\>) = \<lambda\> \<minus\> \<lambda\>
+    ln(\<minus\>\<lambda\>)<label|10.131>
+  </equation>
+
+  as obtained previously. The function <math|\<lambda\>\<xi\>\<minus\>g(\<lambda\>)>
+  is shown, for <math|\<xi\>=1> in the right-hand plot in Figure
+  <reference|fig10.10>. As a check, we can substitute Eq. <eqref|10.131> into
+  Eq. <eqref|10.130>, which gives the maximizing value of
+  <math|\<lambda\>=\<minus\>exp(\<minus\>x)>, and back-substituting then
+  recovers the original function <math|f(x)= exp(\<minus\>x)>.\ 
+
+  For concave functions, we can follow a similar argument to obtain upper
+  bounds, in which \<#2018\>max' is replaced with `min', so that
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|f<around*|(|x|)>>|<cell|=>|<cell|min<rsub|\<lambda\>><around*|{|\<lambda\>x-g<around*|(|\<lambda\>|)>|}><eq-number><label|10.132>>>|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|min<rsub|x><around*|{|\<lambda\>x-f<around*|(|x|)>|}><eq-number><label|10.133>>>>>
+  </eqnarray*>
+
+  \;
+
+  If the function of interest is not convex (or concave), then we cannot
+  directly apply the method above to obtain a bound. However, we can first
+  seek invertible transformations either of the function or of its argument
+  which change it into a convex form. We then calculate the conjugate
+  function and then transform back to the original variables.
+
+  An important example, which arises frequently in pattern recognition, is
+  the logistic sigmoid function defined by\ 
+
+  <\equation>
+    \<sigma\><around*|(|x|)>=<frac|1|1+e<rsup|-x>><label|10.134>
+  </equation>
+
+  As it stands this function is neither convex nor concave. However, if we
+  take the logarithm we obtain a function which is concave, as is easily
+  verified by finding the second derivative. From Eq.<eqref|10.133> the
+  corresponding conjugate function then takes the form\ 
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|min<rsub|x><around*|{|\<lambda\>x-f<around*|(|x|)>|}>>>|<row|<cell|>|<cell|=>|<cell|-\<lambda\>ln\<lambda\>-<around*|(|1-\<lambda\>|)>ln<around*|(|1-\<lambda\>|)>>>>>
+  </eqnarray*>
+
+  which we recognize as the binary entropy function for a variable whose
+  probability of having the value <math|1> is <math|\<lambda\>>. Using Eq.
+  <eqref|10.132>, we then obtain an upper bound on the log sigmoid
+
+  <\equation*>
+    ln \<sigma\>(x)\<leqslant\>\<lambda\>x \<minus\> g(\<lambda\>)
+  </equation*>
+
+  and taking the exponential, we obtain an upper bound on the logistic
+  sigmoid itself of the form\ 
+
+  <\equation>
+    \<sigma\>(x)\<leqslant\> exp(\<lambda\>x \<minus\>
+    g(\<lambda\>))<label|10.137>
+  </equation>
+
+  which is plotted for two values of <math|\<lambda\>> on the left-hand plot
+  in Figure 10.12.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_10_12_bound_sigmoid.png|0.7par|||>|<label|fig10.12>The
+    left-hand plot shows the logistic sigmoid function <math|\<sigma\>(x)>
+    defined by Eq. <eqref|10.134> in red, together with two examples of the
+    exponential upper bound Eq. <eqref|10.137> shown in blue. The right-hand
+    plot shows the logistic sigmoid again in red together with the Gaussian
+    lower bound Eq. <inactive|<eqref|10.144>> shown in blue. Here the
+    parameter <math|\<xi\>=2.5>, and the bound is exact at <math|x=\<xi\>>
+    and <math|x=\<minus\>\<xi\>>, denoted by the dashed green lines.>
+  </padded-center>
+
+  We can also obtain a lower bound on the sigmoid having the functional form
+  of a Gaussian. To do this, we follow Jaakkola and Jordan (2000) and make
+  transformations both of the input variable and of the function itself.
+  First we take the log of the logistic function and then decompose it so
+  that\ 
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln \<sigma\>(x)>|<cell|=>|<cell|\<minus\> ln(1
+    + e<rsup|\<minus\>x>) >>|<row|<cell|>|<cell|=>|<cell| \<minus\> ln
+    <around*|{|e<rsup|-x/2><around*|(|e<rsup|x/2> +
+    e<rsup|\<minus\>x/2>|)>|}>>>|<row|<cell|>|<cell|=>|<cell|x/2 \<minus\>
+    ln(e<rsup|x/2> + e<rsup|\<minus\>x/2>)>>>>
+  </eqnarray*>
+
+  We now note that the function <math|f(x)=\<minus\>ln(e<rsup|x/2> +
+  e<rsup|\<minus\>x/2>)> is a convex function of the variable
+  <math|x<rsup|2>>, as can again be verified by finding the second
+  derivative. This leads to a lower bound on <math|f(x)>, which is a linear
+  function of <math|x<rsup|2>> whose conjugate function is given by
+
+  <\equation*>
+    g<around*|(|\<lambda\>|)>=max<rsub|x<rsup|2>><around*|{|\<lambda\>x<rsup|2>-f<around*|(|<sqrt|x<rsup|2>>|)>|}>
+  </equation*>
+
+  The stationarity condition leads to\ 
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|0>|<cell|=>|<cell|\<lambda\>-<frac|\<mathd\>x|\<mathd\>x<rsup|2>><frac|\<mathd\>|\<mathd\>x>f<around*|(|x|)>>>|<row|<cell|>|<cell|=>|<cell|\<lambda\>+<frac|1|4x>tanh<around*|(|<frac|x|2>|)>>>>>
+  </eqnarray*>
+
+  If we denote this value of <math|x>, corresponding to the contact point of
+  the tangent line for this particular value of <math|\<lambda\>>, by
+  <math|\<xi\>>, then we have\ 
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<lambda\><around*|(|\<xi\>|)>>|<cell|=>|<cell|-<frac|1|4\<xi\>>tanh<around*|(|<frac|\<xi\>|2>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2\<xi\>><around*|[|\<sigma\><around*|(|\<xi\>|)>-<frac|1|2>|]><eq-number><label|10.141>>>>>
+  </eqnarray*>
+
+  Instead of thinking of <math|\<lambda\>> as the variational parameter, we
+  can let <math|\<xi\>> play this role as this leads to simpler expressions
+  for the conjugate function, which is then given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|\<lambda\><around*|(|\<xi\>|)>\<xi\><rsup|2>-f<around*|(|\<xi\>|)>>>|<row|<cell|>|<cell|=>|<cell|\<lambda\><around*|(|\<xi\>|)>\<xi\><rsup|2>+ln<around*|(|e<rsup|\<xi\>/2>+e<rsup|-\<xi\>/2>|)>>>>>
+  </eqnarray*>
+
+  Hence the bound on <math|f(x)> can be written as
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|f<around*|(|x|)>>|<cell|\<geqslant\>>|<cell|\<lambda\>x<rsup|2>-g<around*|(|\<lambda\>|)>>>|<row|<cell|>|<cell|=>|<cell|\<lambda\>x<rsup|2>-\<lambda\>\<xi\><rsup|2>-ln<around*|(|e<rsup|\<xi\>/2>+e<rsup|-\<xi\>/2>|)>>>>>
+  </eqnarray*>
+
+  The bound on the sigmoid then becomes
+
+  <\equation>
+    \<sigma\><around*|(|x|)>\<geqslant\>\<sigma\><around*|(|\<xi\>|)>exp<around*|{|<around*|(|x-\<xi\>|)>/2-\<lambda\><around*|(|\<xi\>|)><around*|(|x<rsup|2>-\<xi\><rsup|2>|)>|}><label|10.144>
+  </equation>
+
+  where <math|\<lambda\>(\<xi\>)> is defined by Eq. <eqref|10.141>. This
+  bound is illustrated in the right-hand plot of Figure <reference|fig10.12>.
+  We see that the bound has the form of the exponential of a quadratic
+  function of <math|x>, which will prove useful when we seek Gaussian
+  representations of posterior distributions defined through logistic sigmoid
+  functions.\ 
+
+  The logistic sigmoid arises frequently in probabilistic models over binary
+  variables because it is the function that transforms a log odds ratio into
+  a posterior probability. The corresponding transformation for a multiclass
+  distribution is given by the softmax function. Unfortunately, the lower
+  bound derived here for the logistic sigmoid does not directly extend to the
+  softmax. Gibbs (1997) proposes a method for constructing a Gaussian
+  distribution that is conjectured to be a bound (although no rigorous proof
+  is given), which may be used to apply local variational methods to
+  multiclass problems.\ 
+
+  We shall see an example of the use of local variational bounds in Sections
+  10.6.1. For the moment, however, it is instructive to consider in general
+  terms how these bounds can be used. Suppose we wish to evaluate an integral
+  of the form
+
+  <\equation*>
+    I=<big|int>\<sigma\><around*|(|a|)>p<around*|(|a|)>\<mathd\>a
+  </equation*>
+
+  where <math|\<sigma\>(a)> is the logistic sigmoid, and <math|p(a)> is a
+  Gaussian probability density. Such integrals arise in Bayesian models when,
+  for instance, we wish to evaluate the predictive distribution, in which
+  case <math|p(a)> represents a posterior parameter distribution. Because the
+  integral is intractable, we employ the variational bound Eq.
+  <eqref|10.144>, which we write in the form
+  <math|\<sigma\>(a)\<geqslant\>f(a,\<xi\>)> where <math|\<xi\>> is a
+  variational parameter. The integral now becomes the product of two
+  exponential-quadratic functions and so can be integrated analytically to
+  give a bound on <math|I>
+
+  <\equation*>
+    I\<geqslant\><big|int>f<around*|(|a,\<xi\>|)>p<around*|(|a|)>\<mathd\>a=F<around*|(|\<xi\>|)>
+  </equation*>
+
+  We now have the freedom to choose the variational parameter <math|\<xi\>>,
+  which we do by finding the value <math|\<xi\>> that maximizes the function
+  <math|F(\<xi\>)>. The resulting value <math|F(\<xi\>)> represents the
+  tightest bound within this family of bounds and can be used as an
+  approximation to <math|I>. This optimized bound, however, will in general
+  not be exact. Although the bound <math|\<sigma\>(a)\<geqslant\>f(a,\<xi\>)>
+  on the logistic sigmoid can be optimized exactly, the required choice for
+  <math|\<xi\>> depends on the value of <math|a>, so that the bound is exact
+  for one value of <math|a> only. Because the quantity <math|F(\<xi\>)> is
+  obtained by integrating over all values of <math|a>, the value of
+  <math|\<xi\>> represents a compromise, weighted by the distribution
+  <math|p(a)>.
+
+  <section|Variational Logistic Regression>
 </body>
 
 <\initial>
@@ -637,13 +967,28 @@
 
 <\references>
   <\collection>
-    <associate|10.122|<tuple|2|?>>
+    <associate|10.122|<tuple|2|8>>
+    <associate|10.125|<tuple|3|9>>
+    <associate|10.129|<tuple|4|10>>
+    <associate|10.130|<tuple|5|10>>
+    <associate|10.131|<tuple|6|10>>
+    <associate|10.132|<tuple|7|11>>
+    <associate|10.133|<tuple|8|11>>
+    <associate|10.134|<tuple|9|11>>
+    <associate|10.137|<tuple|10|11>>
+    <associate|10.141|<tuple|11|?>>
+    <associate|10.144|<tuple|12|?>>
     <associate|10.2.5|<tuple|3|3>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|3|7>>
     <associate|auto-11|<tuple|2|7>>
-    <associate|auto-12|<tuple|2.1|?>>
+    <associate|auto-12|<tuple|2.1|8>>
+    <associate|auto-13|<tuple|3|9>>
+    <associate|auto-14|<tuple|4|10>>
+    <associate|auto-15|<tuple|5|10>>
+    <associate|auto-16|<tuple|6|11>>
+    <associate|auto-17|<tuple|4|?>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
@@ -652,6 +997,9 @@
     <associate|auto-7|<tuple|1.1|4>>
     <associate|auto-8|<tuple|1.2|6>>
     <associate|auto-9|<tuple|1.3|6>>
+    <associate|fig10.10|<tuple|4|10>>
+    <associate|fig10.11|<tuple|5|10>>
+    <associate|fig10.12|<tuple|6|?>>
     <associate|sec10.2.3|<tuple|1|1>>
     <associate|sec10.2.4|<tuple|2|1>>
     <associate|sec10.3.1|<tuple|1.1|4>>
@@ -687,6 +1035,48 @@
       the log probability of the model, and we see that the value of the
       bound peaks at <with|mode|<quote|math>|M=3>, corresponding to the true
       model from which the data set was generated.>|<pageref|auto-10>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|4>||In the left-hand
+      figure the red curve shows the function exp(\<minus\>x), and the blue
+      line shows the tangent at <with|mode|<quote|math>|x=\<xi\>> defined by
+      Eq. (<reference|10.125>) with <with|mode|<quote|math>|\<xi\>=1>. This
+      line has slope <with|mode|<quote|math>|\<lambda\>=f<rprime|'>(\<xi\>)=\<minus\>exp(\<minus\>\<xi\>)>.
+      Note that any other tangent line, for example the ones shown in green,
+      will have a smaller value of y at <with|mode|<quote|math>|x=\<xi\>>.
+      The right-hand figure shows the corresponding plot of the function
+      <with|mode|<quote|math>|\<lambda\>\<xi\>\<minus\>g(\<lambda\>)>, where
+      <with|mode|<quote|math>|g(\<lambda\>)> is given by Eq.
+      (<reference|10.131>), versus <with|mode|<quote|math>|\<lambda\>> for
+      <with|mode|<quote|math>|\<xi\>=1>, in which the maximum corresponds to
+      <with|mode|<quote|math>|\<lambda\>=\<minus\>exp(\<minus\>\<xi\>)=\<minus\>1/e>.>|<pageref|auto-14>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|5>|>
+        In the left-hand plot the red curve shows a convex function
+        <with|mode|<quote|math>|f(x)>, and the blue line represents the
+        linear function <with|mode|<quote|math>|\<lambda\>x>, which is a
+        lower bound on <with|mode|<quote|math>|f(x)> because
+        <with|mode|<quote|math>|f(x)\<gtr\>\<lambda\>x> for all
+        <with|mode|<quote|math>|x>. For the given value of slope
+        <with|mode|<quote|math>|\<lambda\>> the contact point of the tangent
+        line having the same slope is found by minimizing with respect to
+        <with|mode|<quote|math>|x> the discrepancy (shown by the green dashed
+        lines) given by <with|mode|<quote|math>|f(x)\<minus\>\<lambda\>x>.
+        This defines the dual function <with|mode|<quote|math>|g(\<lambda\>)>,
+        which corresponds to the (negative of the) intercept of the tangent
+        line having slope <with|mode|<quote|math>|\<lambda\>>.
+      </surround>|<pageref|auto-15>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|6>||The left-hand plot
+      shows the logistic sigmoid function
+      <with|mode|<quote|math>|\<sigma\>(x)> defined by Eq.
+      (<reference|10.134>) in red, together with two examples of the
+      exponential upper bound Eq. (<reference|10.137>) shown in blue. The
+      right-hand plot shows the logistic sigmoid again in red together with
+      the Gaussian lower bound Eq. <mark|<arg|body>|<inline-tag|eqref|<with|mode|<quote|src>|color|<quote|#228>|font-family|<quote|tt>|10.144>>>
+      shown in blue. Here the parameter <with|mode|<quote|math>|\<xi\>=2.5>,
+      and the bound is exact at <with|mode|<quote|math>|x=\<xi\>> and
+      <with|mode|<quote|math>|x=\<minus\>\<xi\>>, denoted by the dashed green
+      lines.>|<pageref|auto-16>>
     </associate>
     <\associate|toc>
       <with|par-left|<quote|1tab>|1<space|2spc> Predictive density
@@ -720,6 +1110,14 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Exponential
       Family Distributions> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-11><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|2.1<space|2spc>Variational message passing
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-12>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Local
+      Variational Methods> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-13><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
