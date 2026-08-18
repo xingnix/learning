@@ -659,9 +659,10 @@
   which is shown in the left-hand plot of Figure <reference|fig10.10>. Our
   goal is to approximate <math|f(x)> by a simpler function, in particular a
   linear function of <math|x>. From Figure <reference|fig10.10>, we see that
-  this linear function will be a lower bound on f(x) if it corresponds to a
-  tangent. We can obtain the tangent line <math|y(x)> at a specific value of
-  <math|x>, say <math|x=\<xi\>>, by making a first order Taylor expansion\ 
+  this linear function will be a lower bound on <math|f(x)> if it corresponds
+  to a tangent. We can obtain the tangent line <math|y(x)> at a specific
+  value of <math|x>, say <math|x=\<xi\>>, by making a first order Taylor
+  expansion\ 
 
   <\equation>
     y(x) = f(\<xi\>) + f<rprime|'>(\<xi\>)(x \<minus\> \<xi\>)<label|10.125>
@@ -678,42 +679,40 @@
 
   which is a linear function parameterized by <math|\<xi\>>. For consistency
   with subsequent discussion, let us define
-  <math|\<lambda\>=\<minus\>exp(\<minus\>\<xi\>)> so that\ 
+  <math|\<eta\>=\<minus\>exp(\<minus\>\<xi\>)> so that\ 
 
   <\equation*>
-    y(x, \<lambda\>) = \<lambda\>x \<minus\> \<lambda\> + \<lambda\>
+    y(x, \<eta\>) =\<eta\>x \<minus\>\<eta\> + \<eta\>
     ln(\<minus\>\<lambda\>).
   </equation*>
 
-  Different values of <math|\<lambda\>> correspond to different tangent
-  lines, and because all such lines are lower bounds on the function, we have
-  <math|f(x)\<geqslant\>y(x,\<lambda\>)>. Thus we can write the function in
-  the form\ 
+  Different values of <math|\<eta\>> correspond to different tangent lines,
+  and because all such lines are lower bounds on the function, we have
+  <math|f(x)\<geqslant\>y(x,\<eta\>)>. Thus we can write the function in the
+  form\ 
 
   <\equation*>
-    f (x) = max<rsub|\<lambda\>> {\<lambda\>x \<minus\> \<lambda\> +
-    \<lambda\> ln(\<minus\>\<lambda\>)} .
+    f (x) = max<rsub|\<eta\>> {\<eta\>x \<minus\>\<eta\> +\<eta\>
+    ln(\<minus\>\<eta\>)} .
   </equation*>
 
   We have succeeded in approximating the convex function <math|f(x)> by a
-  simpler, linear function <math|y(x,\<lambda\>)>. The price we have paid is
-  that we have introduced a variational parameter <math|\<lambda\>>, and to
-  obtain the tightest bound we must optimize with respect to
-  <math|\<lambda\>>.
+  simpler, linear function <math|y(x,\<eta\>)>. The price we have paid is
+  that we have introduced a variational parameter <math|\<eta\>>, and to
+  obtain the tightest bound we must optimize with respect to <math|\<eta\>>.
 
   <\padded-center>
     <small-figure|<image|image/fig_10_10_lower_bound_tangent.png|0.5par|||>|<label|fig10.10>In
     the left-hand figure the red curve shows the function exp(\<minus\>x),
     and the blue line shows the tangent at <math|x=\<xi\>> defined by Eq.
     <eqref|10.125> with <math|\<xi\>=1>. This line has slope
-    <math|\<lambda\>=f<rprime|'>(\<xi\>)=\<minus\>exp(\<minus\>\<xi\>)>. Note
+    <math|\<eta\>=f<rprime|'>(\<xi\>)=\<minus\>exp(\<minus\>\<xi\>)>. Note
     that any other tangent line, for example the ones shown in green, will
-    have a smaller value of y at <math|x=\<xi\>>. The right-hand figure shows
-    the corresponding plot of the function
-    <math|\<lambda\>\<xi\>\<minus\>g(\<lambda\>)>, where <math|g(\<lambda\>)>
-    is given by Eq. <eqref|10.131>, versus <math|\<lambda\>> for
-    <math|\<xi\>=1>, in which the maximum corresponds to
-    <math|\<lambda\>=\<minus\>exp(\<minus\>\<xi\>)=\<minus\>1/e>.>
+    have a smaller value of <math|y> at <math|x=\<xi\>>. The right-hand
+    figure shows the corresponding plot of the function
+    <math|\<eta\>\<xi\>\<minus\>g(\<eta\>)>, where <math|g(\<eta\>)> is given
+    by Eq. <eqref|10.131>, versus <math|\<eta\>> for <math|\<xi\>=1>, in
+    which the maximum corresponds to <math|\<eta\>=\<minus\>exp(\<minus\>\<xi\>)=\<minus\>1/e>.>
   </padded-center>
 
   \;
@@ -721,73 +720,71 @@
   We can formulate this approach more generally using the framework of convex
   duality (Rockafellar, 1972; Jordan et al., 1999). Consider the illustration
   of a convex function <math|f(x)> shown in the left-hand plot in Figure
-  <reference|fig10.11>. In this example, the function <math|\<lambda\>x> is a
+  <reference|fig10.11>. In this example, the function <math|\<eta\>x> is a
   lower bound on <math|f(x)> but it is not the best lower bound that can be
-  achieved by a linear function having slope <math|\<lambda\>>, because the
+  achieved by a linear function having slope <math|\<eta\>>, because the
   tightest bound is given by the tangent line. Let us write the equation of
-  the tangent line, having slope <math|\<lambda\>> as
-  <math|\<lambda\>x\<minus\>g(\<lambda\>)> where the (negative) intercept
-  <math|g(\<lambda\>)> clearly depends on the slope <math|\<lambda\>> of the
+  the tangent line, having slope <math|\<eta\>> as
+  <math|\<eta\>x\<minus\>g(\<eta\>)> where the (negative) intercept
+  <math|g(\<eta\>)> clearly depends on the slope <math|\<eta\>> of the
   tangent. To determine the intercept, we note that the line must be moved
   vertically by an amount equal to the smallest vertical distance between the
   line and the function, as shown in Figure <eqref|fig10.11>. Thus
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|-min<rsub|x><around*|{|f<around*|(|x|)>-\<lambda\>x|}>>>|<row|<cell|>|<cell|=>|<cell|max<rsub|x><around*|{|\<lambda\>x-f<around*|(|x|)>|}><eq-number><label|10.129>>>>>
+    <tformat|<table|<row|<cell|g<around*|(|\<eta\>|)>>|<cell|=>|<cell|-min<rsub|x><around*|{|f<around*|(|x|)>-\<eta\>x|}>>>|<row|<cell|>|<cell|=>|<cell|max<rsub|x><around*|{|\<eta\>x-f<around*|(|x|)>|}><eq-number><label|10.129>>>>>
   </eqnarray*>
 
   <\padded-center>
     <\small-figure|<image|image/fig_10_11_convex_duality.png|0.7par|||>>
       <label|fig10.11>In the left-hand plot the red curve shows a convex
       function <math|f(x)>, and the blue line represents the linear function
-      <math|\<lambda\>x>, which is a lower bound on <math|f(x)> because
-      <math|f(x)\<gtr\>\<lambda\>x> for all <math|x>. For the given value of
-      slope <math|\<lambda\>> the contact point of the tangent line having
-      the same slope is found by minimizing with respect to <math|x> the
+      <math|\<eta\>x>, which is a lower bound on <math|f(x)> because
+      <math|f(x)\<gtr\>\<eta\>x> for all <math|x>. For the given value of
+      slope <math|\<eta\>> the contact point of the tangent line having the
+      same slope is found by minimizing with respect to <math|x> the
       discrepancy (shown by the green dashed lines) given by
-      <math|f(x)\<minus\>\<lambda\>x>. This defines the dual function
-      <math|g(\<lambda\>)>, which corresponds to the (negative of the)
-      intercept of the tangent line having slope <math|\<lambda\>>.
+      <math|f(x)\<minus\>\<eta\>x>. This defines the dual function
+      <math|g(\<eta\>)>, which corresponds to the (negative of the) intercept
+      of the tangent line having slope <math|\<eta\>>.
     </small-figure>
   </padded-center>
 
-  Now, instead of fixing <math|\<lambda\>> and varying <math|x>, we can
-  consider a particular <math|x> and then adjust <math|\<lambda\>> until the
-  tangent plane is tangent at that particular <math|x>. Because the <math|y>
-  value of the tangent line at a particular <math|x> is maximized when that
-  value coincides with its contact point, we have\ 
+  Now, instead of fixing <math|\<eta\>> and varying <math|x>, we can consider
+  a particular <math|x> and then adjust <math|\<eta\>> until the tangent
+  plane is tangent at that particular <math|x>. Because the <math|y> value of
+  the tangent line at a particular <math|x> is maximized when that value
+  coincides with its contact point, we have\ 
 
   <\equation>
-    f (x) = max<rsub|\<lambda\>>{\<lambda\>x \<minus\>
-    g(\<lambda\>)}.<label|10.130>
+    f (x) = max<rsub|\<eta\>>{\<eta\>x \<minus\> g(\<eta\>)}.<label|10.130>
   </equation>
 
-  We see that the functions <math|f(x>) and <math|g(\<lambda\>)> play a dual
+  We see that the functions <math|f(x>) and <math|g(\<eta\>)> play a dual
   role, and are related through Eq. <eqref|10.129> and <eqref|10.130>.
 
   Let us apply these duality relations to our simple example
   <math|f(x)=exp(\<minus\>x)>. From Eq. <eqref|10.129> we see that the
   maximizing value of <math|x> is given by
-  <math|\<xi\>=\<minus\>ln(\<minus\>\<lambda\>)>, and back-substituting we
-  obtain the conjugate function <math|g(\<lambda\>)> in the form\ 
+  <math|\<xi\>=\<minus\>ln(\<minus\>\<eta\>)>, and back-substituting we
+  obtain the conjugate function <math|g(\<eta\>)> in the form\ 
 
   <\equation>
-    g(\<lambda\>) = \<lambda\> \<minus\> \<lambda\>
-    ln(\<minus\>\<lambda\>)<label|10.131>
+    g(\<eta\>)=\<eta\> \<minus\>\<eta\> ln(\<minus\>\<eta\>)<label|10.131>
   </equation>
 
-  as obtained previously. The function <math|\<lambda\>\<xi\>\<minus\>g(\<lambda\>)>
+  as obtained previously. The function <math|\<eta\>\<xi\>\<minus\>g(\<eta\>)>
   is shown, for <math|\<xi\>=1> in the right-hand plot in Figure
   <reference|fig10.10>. As a check, we can substitute Eq. <eqref|10.131> into
   Eq. <eqref|10.130>, which gives the maximizing value of
-  <math|\<lambda\>=\<minus\>exp(\<minus\>x)>, and back-substituting then
+  <math|\<eta\>=\<minus\>exp(\<minus\>x)>, and back-substituting then
   recovers the original function <math|f(x)= exp(\<minus\>x)>.\ 
 
   For concave functions, we can follow a similar argument to obtain upper
   bounds, in which \<#2018\>max' is replaced with `min', so that
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|f<around*|(|x|)>>|<cell|=>|<cell|min<rsub|\<lambda\>><around*|{|\<lambda\>x-g<around*|(|\<lambda\>|)>|}><eq-number><label|10.132>>>|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|min<rsub|x><around*|{|\<lambda\>x-f<around*|(|x|)>|}><eq-number><label|10.133>>>>>
+    <tformat|<table|<row|<cell|f<around*|(|x|)>>|<cell|=>|<cell|min<rsub|\<eta\>><around*|{|\<eta\>x-g<around*|(|\<eta\>|)>|}><eq-number><label|10.132>>>|<row|<cell|g<around*|(|\<eta\>|)>>|<cell|=>|<cell|min<rsub|x><around*|{|\<eta\>x-f<around*|(|x|)>|}><eq-number><label|10.133>>>>>
   </eqnarray*>
 
   \;
@@ -811,11 +808,11 @@
   corresponding conjugate function then takes the form\ 
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|min<rsub|x><around*|{|\<lambda\>x-f<around*|(|x|)>|}>>>|<row|<cell|>|<cell|=>|<cell|-\<lambda\>ln\<lambda\>-<around*|(|1-\<lambda\>|)>ln<around*|(|1-\<lambda\>|)>>>>>
+    <tformat|<table|<row|<cell|g<around*|(|\<eta\>|)>>|<cell|=>|<cell|min<rsub|x><around*|{|\<eta\>x-f<around*|(|x|)>|}>>>|<row|<cell|>|<cell|=>|<cell|-\<eta\>ln\<eta\>-<around*|(|1-\<eta\>|)>ln<around*|(|1-\<lambda\>|)>>>>>
   </eqnarray*>
 
   which we recognize as the binary entropy function for a variable whose
-  probability of having the value <math|1> is <math|\<lambda\>>. Using Eq.
+  probability of having the value <math|1> is <math|\<eta\>>. Using Eq.
   <eqref|10.132>, we then obtain an upper bound on the log sigmoid
 
   <\equation*>
@@ -826,12 +823,11 @@
   sigmoid itself of the form\ 
 
   <\equation>
-    \<sigma\>(x)\<leqslant\> exp(\<lambda\>x \<minus\>
-    g(\<lambda\>))<label|10.137>
+    \<sigma\>(x)\<leqslant\> exp(\<eta\>x \<minus\> g(\<eta\>))<label|10.137>
   </equation>
 
-  which is plotted for two values of <math|\<lambda\>> on the left-hand plot
-  in Figure 10.12.
+  which is plotted for two values of <math|\<eta\>> on the left-hand plot in
+  Figure 10.12.
 
   <\padded-center>
     <small-figure|<image|image/fig_10_12_bound_sigmoid.png|0.7par|||>|<label|fig10.12>The
@@ -839,9 +835,9 @@
     defined by Eq. <eqref|10.134> in red, together with two examples of the
     exponential upper bound Eq. <eqref|10.137> shown in blue. The right-hand
     plot shows the logistic sigmoid again in red together with the Gaussian
-    lower bound Eq. <inactive|<eqref|10.144>> shown in blue. Here the
-    parameter <math|\<xi\>=2.5>, and the bound is exact at <math|x=\<xi\>>
-    and <math|x=\<minus\>\<xi\>>, denoted by the dashed green lines.>
+    lower bound Eq. <eqref|10.144> shown in blue. Here the parameter
+    <math|\<xi\>=2.5>, and the bound is exact at <math|x=\<xi\>> and
+    <math|x=\<minus\>\<xi\>>, denoted by the dashed green lines.>
   </padded-center>
 
   We can also obtain a lower bound on the sigmoid having the functional form
@@ -865,35 +861,38 @@
   function of <math|x<rsup|2>> whose conjugate function is given by
 
   <\equation*>
-    g<around*|(|\<lambda\>|)>=max<rsub|x<rsup|2>><around*|{|\<lambda\>x<rsup|2>-f<around*|(|<sqrt|x<rsup|2>>|)>|}>
+    g<around*|(|\<eta\>|)>=max<rsub|x<rsup|2>><around*|{|\<eta\>x<rsup|2>-f<around*|(|<sqrt|x<rsup|2>>|)>|}>
   </equation*>
 
   The stationarity condition leads to\ 
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|0>|<cell|=>|<cell|\<lambda\>-<frac|\<mathd\>x|\<mathd\>x<rsup|2>><frac|\<mathd\>|\<mathd\>x>f<around*|(|x|)>>>|<row|<cell|>|<cell|=>|<cell|\<lambda\>+<frac|1|4x>tanh<around*|(|<frac|x|2>|)>>>>>
+    <tformat|<table|<row|<cell|0>|<cell|=>|<cell|\<eta\>-<frac|\<mathd\>x|\<mathd\>x<rsup|2>><frac|\<mathd\>|\<mathd\>x>f<around*|(|x|)>>>|<row|<cell|>|<cell|=>|<cell|\<eta\>+<frac|1|4x>tanh<around*|(|<frac|x|2>|)>>>>>
   </eqnarray*>
 
   If we denote this value of <math|x>, corresponding to the contact point of
-  the tangent line for this particular value of <math|\<lambda\>>, by
+  the tangent line for this particular value of <math|\<eta\>>, by
   <math|\<xi\>>, then we have\ 
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|\<lambda\><around*|(|\<xi\>|)>>|<cell|=>|<cell|-<frac|1|4\<xi\>>tanh<around*|(|<frac|\<xi\>|2>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2\<xi\>><around*|[|\<sigma\><around*|(|\<xi\>|)>-<frac|1|2>|]><eq-number><label|10.141>>>>>
+    <tformat|<table|<row|<cell|\<eta\><around*|(|\<xi\>|)>>|<cell|=>|<cell|-<frac|1|4\<xi\>>tanh<around*|(|<frac|\<xi\>|2>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2\<xi\>><around*|[|\<sigma\><around*|(|\<xi\>|)>-<frac|1|2>|]>=-\<lambda\><around*|(|\<xi\>|)><eq-number><label|10.141>>>>>
   </eqnarray*>
+
+  where we have defined <math|\<lambda\>=\<minus\>\<eta\>> to maintain
+  consistency with Jaakkola and Jordan (2000).
 
   Instead of thinking of <math|\<lambda\>> as the variational parameter, we
   can let <math|\<xi\>> play this role as this leads to simpler expressions
   for the conjugate function, which is then given by
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|\<lambda\><around*|(|\<xi\>|)>\<xi\><rsup|2>-f<around*|(|\<xi\>|)>>>|<row|<cell|>|<cell|=>|<cell|\<lambda\><around*|(|\<xi\>|)>\<xi\><rsup|2>+ln<around*|(|e<rsup|\<xi\>/2>+e<rsup|-\<xi\>/2>|)>>>>>
+    <tformat|<table|<row|<cell|g<around*|(|\<lambda\>|)>>|<cell|=>|<cell|-\<lambda\><around*|(|\<xi\>|)>\<xi\><rsup|2>-f<around*|(|\<xi\>|)>>>|<row|<cell|>|<cell|=>|<cell|-\<lambda\><around*|(|\<xi\>|)>\<xi\><rsup|2>+ln<around*|(|e<rsup|\<xi\>/2>+e<rsup|-\<xi\>/2>|)>>>>>
   </eqnarray*>
 
   Hence the bound on <math|f(x)> can be written as
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|f<around*|(|x|)>>|<cell|\<geqslant\>>|<cell|\<lambda\>x<rsup|2>-g<around*|(|\<lambda\>|)>>>|<row|<cell|>|<cell|=>|<cell|\<lambda\>x<rsup|2>-\<lambda\>\<xi\><rsup|2>-ln<around*|(|e<rsup|\<xi\>/2>+e<rsup|-\<xi\>/2>|)>>>>>
+    <tformat|<table|<row|<cell|f<around*|(|x|)>>|<cell|\<geqslant\>>|<cell|-\<lambda\><around*|(|\<xi\>|)>x<rsup|2>-g<around*|(|\<lambda\>|)>>>|<row|<cell|>|<cell|=>|<cell|-\<lambda\><around*|(|\<xi\>|)>x<rsup|2>+\<lambda\><around*|(|\<xi\>|)>\<xi\><rsup|2>-ln<around*|(|e<rsup|\<xi\>/2>+e<rsup|-\<xi\>/2>|)>>>>>
   </eqnarray*>
 
   The bound on the sigmoid then becomes
@@ -976,8 +975,8 @@
     <associate|10.133|<tuple|8|11>>
     <associate|10.134|<tuple|9|11>>
     <associate|10.137|<tuple|10|11>>
-    <associate|10.141|<tuple|11|?>>
-    <associate|10.144|<tuple|12|?>>
+    <associate|10.141|<tuple|11|12>>
+    <associate|10.144|<tuple|12|12>>
     <associate|10.2.5|<tuple|3|3>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
@@ -988,7 +987,7 @@
     <associate|auto-14|<tuple|4|10>>
     <associate|auto-15|<tuple|5|10>>
     <associate|auto-16|<tuple|6|11>>
-    <associate|auto-17|<tuple|4|?>>
+    <associate|auto-17|<tuple|4|13>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
@@ -999,7 +998,7 @@
     <associate|auto-9|<tuple|1.3|6>>
     <associate|fig10.10|<tuple|4|10>>
     <associate|fig10.11|<tuple|5|10>>
-    <associate|fig10.12|<tuple|6|?>>
+    <associate|fig10.12|<tuple|6|11>>
     <associate|sec10.2.3|<tuple|1|1>>
     <associate|sec10.2.4|<tuple|2|1>>
     <associate|sec10.3.1|<tuple|1.1|4>>
@@ -1118,6 +1117,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Local
       Variational Methods> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-13><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Variational
+      Logistic Regression> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-17><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
