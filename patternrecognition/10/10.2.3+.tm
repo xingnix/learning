@@ -1,4 +1,4 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
 <style|article>
 
@@ -1002,9 +1002,9 @@
   the logistic sigmoid function given by Eq. <eqref|10.144>, which we
   reproduce here for convenience
 
-  <\equation*>
-    \<sigma\><around*|(|z|)>\<geqslant\>\<sigma\><around*|(|\<xi\>|)>exp<around*|{|<around*|(|z-\<xi\>|)>/2-\<lambda\><around*|(|\<xi\>|)><around*|(|z<rsup|2>-\<xi\><rsup|2>|)>|}>
-  </equation*>
+  <\equation>
+    \<sigma\><around*|(|z|)>\<geqslant\>\<sigma\><around*|(|\<xi\>|)>exp<around*|{|<around*|(|z-\<xi\>|)>/2-\<lambda\><around*|(|\<xi\>|)><around*|(|z<rsup|2>-\<xi\><rsup|2>|)>|}><label|10.149>
+  </equation>
 
   where
 
@@ -1029,6 +1029,73 @@
   <\eqnarray*>
     <tformat|<table|<row|<cell|p<around*|(|\<b-t\>,\<b-w\>|)>>|<cell|=>|<cell|p<around*|(|\<b-t\>\|\<b-w\>|)>p<around*|(|\<b-w\>|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|h<around*|(|\<b-w\>,\<b-xi\>|)>p<around*|(|\<b-w\>|)>>>>>
   </eqnarray*>
+
+  where <math|\<xi\>> denotes the set <math|{\<xi\><rsub|n>}> of variational
+  parameters, and
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|h<around*|(|\<b-w\>,\<b-xi\>|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>\<sigma\><around*|(|\<xi\><rsub|n>|)>exp<around*|{|\<b-w\><rsup|T>\<b-varphi\><rsub|n>t<rsub|n>-<around*|(|\<b-w\><rsup|T>\<b-varphi\><rsub|n>+\<xi\><rsub|n>|)>/2-\<lambda\><around*|(|\<xi\><rsub|n>|)><around*|(|<around*|[|\<b-w\><rsup|T>\<b-varphi\><rsub|n>|]><rsup|2>-\<xi\><rsup|2><rsub|n>|)>|}>>>>>
+  </eqnarray*>
+
+  Evaluation of the exact posterior distribution would require normalization
+  of the lefthand side of this inequality. Because this is intractable, we
+  work instead with the right-hand side. Note that the function on the
+  right-hand side cannot be interpreted as a probability density because it
+  is not normalized. Once it is normalized to give a variational posterior
+  distribution <math|q(\<b-w\>)>, however, it no longer represents a bound.
+  \ Because the logarithm function is monotonically increasing, the
+  inequality <math|A\<geqslant\>B> implies <math|ln A\<geqslant\>ln B>. This
+  gives a lower bound on the log of the joint distribution of <math|\<b-t\>>
+  and <math|\<b-w\>> of the form
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln<around*|{|p<around*|(|\<b-t\>\|\<b-w\>|)>p<around*|(|\<b-w\>|)>|}>>|<cell|\<geqslant\>>|<cell|<big|sum><rsub|n=1><rsup|N><around*|{|ln
+    \<sigma\><around*|(|\<xi\><rsub|n>|)>+\<b-w\><rsup|T>\<b-varphi\><rsub|n>t<rsub|n>-<around*|(|\<b-w\><rsup|T>\<b-varphi\><rsub|n>+\<xi\><rsub|n>|)>/2-\<lambda\><around*|(|\<xi\><rsub|n>|)><around*|(|<around*|[|\<b-w\><rsup|T>\<b-varphi\><rsub|n>|]><rsup|2>-\<xi\><rsup|2><rsub|n>|)>|}>>>|<row|<cell|>|<cell|>|<cell|+ln
+    p<around*|(|\<b-w\>|)>>>>>
+  </eqnarray*>
+
+  Substituting for the prior <math|p(\<b-w\>)>, the right-hand side of this
+  inequality becomes, as a function of <math|\<b-w\>>
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|>|<cell|>|<cell|-<frac|1|2><around*|(|\<b-w\>-\<b-m\><rsub|0>|)><rsup|T>S<rsub|0><rsup|-1><around*|(|\<b-w\>-\<b-m\><rsub|0>|)>+<big|sum><rsub|n=1><rsup|N><around*|{|\<b-w\><rsup|T>\<b-varphi\><rsub|n><around*|(|t<rsub|n>-1/2|)>-\<lambda\><around*|(|\<xi\><rsub|n>|)>\<b-w\><rsup|T><around*|(|\<b-varphi\><rsub|n>\<b-varphi\><rsub|n><rsup|T>|)>\<b-w\>|}>+const>>>>
+  </eqnarray*>
+
+  This is a quadratic function of <math|\<b-w\>>, and so we can obtain the
+  corresponding variational approximation to the posterior distribution by
+  identifying the linear and quadratic terms in <math|\<b-w\>>, giving a
+  Gaussian variational posterior of the form \ 
+
+  <\equation*>
+    q(\<b-w\>)=\<cal-N\> (\<b-w\>\|\<b-m\><rsub|N>,S<rsub|N>)
+  </equation*>
+
+  where
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-m\><rsub|N>>|<cell|=>|<cell|S<rsub|N><around*|(|S<rsub|0><rsup|-1>\<b-m\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|(|t<rsub|n>-1/2|)>\<b-varphi\><rsub|n>|)>>>|<row|<cell|S<rsup|-1><rsub|N>>|<cell|=>|<cell|S<rsup|-1><rsub|0>+2<big|sum><rsub|n=1><rsup|N>\<lambda\><around*|(|\<xi\><rsub|n>|)>\<b-varphi\><rsub|n>\<b-varphi\><rsub|n><rsup|T>>>>>
+  </eqnarray*>
+
+  \;
+
+  As with the Laplace framework, we have again obtained a Gaussian
+  approximation to the posterior distribution. However, the additional
+  flexibility provided by the variational parameters <math|{\<xi\><rsub|n>}>
+  leads to improved accuracy in the approximation (Jaakkola and Jordan,
+  2000).\ 
+
+  Here we have considered a batch learning context in which all of the
+  training data is available at once. However, Bayesian methods are
+  intrinsically well suited to sequential learning in which the data points
+  are processed one at a time and then discarded. The formulation of this
+  variational approach for the sequential case is straightforward.
+
+  Note that the bound given by Eq. <eqref|10.149> applies only to the
+  two-class problem and so this approach does not directly generalize to
+  classification problems with <math|K\<gtr\>2> classes. An alternative bound
+  for the multiclass case has been explored by Gibbs (1997).
+
+  <subsection|Optimizing the variational parameters>
 </body>
 
 <\initial>
@@ -1050,6 +1117,7 @@
     <associate|10.137|<tuple|10|11>>
     <associate|10.141|<tuple|11|12>>
     <associate|10.144|<tuple|12|12>>
+    <associate|10.149|<tuple|13|?>>
     <associate|10.2.5|<tuple|3|3>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
@@ -1062,6 +1130,7 @@
     <associate|auto-16|<tuple|6|11>>
     <associate|auto-17|<tuple|4|13>>
     <associate|auto-18|<tuple|4.1|13>>
+    <associate|auto-19|<tuple|4.2|?>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
