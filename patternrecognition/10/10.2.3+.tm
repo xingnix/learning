@@ -956,6 +956,79 @@
   <math|p(a)>.
 
   <section|Variational Logistic Regression>
+
+  We now illustrate the use of local variational methods by returning to the
+  Bayesian logistic regression model studied in Section 4.5. There we
+  focussed on the use of the Laplace approximation, while here we consider a
+  variational treatment based on the approach of Jaakkola and Jordan (2000).
+  Like the Laplace method, this also leads to a Gaussian approximation to the
+  posterior distribution. However, the greater flexibility of the variational
+  approximation leads to improved accuracy compared to the Laplace method.
+  Furthermore (unlike the Laplace method), the variational approach is
+  optimizing a well defined objective function given by a rigourous bound on
+  the model evidence. Logistic regression has also been treated by Dybowski
+  and Roberts (2005) from a Bayesian perspective using Monte Carlo sampling
+  techniques.
+
+  <subsection|Variational posterior distribution>
+
+  Here we shall make use of a variational approximation based on the local
+  bounds introduced in Section 10.5. This allows the likelihood function for
+  logistic regression, which is governed by the logistic sigmoid, to be
+  approximated by the exponential of a quadratic form. It is therefore again
+  convenient to choose a conjugate Gaussian prior of the form (4.140). For
+  the moment, we shall treat the hyperparameters <math|\<b-m\><rsub|0>> and
+  <math|S<rsub|0>> as fixed constants. In Section 10.6.3, we shall
+  demonstrate how the variational formalism can be extended to the case where
+  there are unknown hyperparameters whose values are to be inferred from the
+  data.
+
+  In the variational framework, we seek to maximize a lower bound on the
+  marginal likelihood. For the Bayesian logistic regression model, the
+  marginal likelihood takes the form
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-t\>|)>>|<cell|=>|<cell|<big|int>p<around*|(|\<b-t\>\|\<b-w\>|)>p<around*|(|\<b-w\>|)>\<mathd\>\<b-w\>>>|<row|<cell|>|<cell|=>|<cell|<big|int><around*|[|<big|prod><rsub|n=1><rsup|N>p<around*|(|t<rsub|n>\|\<b-w\>|)>|]>p<around*|(|\<b-w\>|)>\<mathd\>\<b-w\>>>>>
+  </eqnarray*>
+
+  We first note that the conditional distribution for t can be written as
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|t\|\<b-w\>|)>>|<cell|=>|<cell|\<sigma\><around*|(|a|)><rsup|t><around*|{|1-\<sigma\><around*|(|a|)>|}><rsup|1-t>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|<frac|1|1+e<rsup|-a>>|)><rsup|t><around*|(|1-<frac|1|1+e<rsup|-a>>|)><rsup|1-t>>>|<row|<cell|>|<cell|=>|<cell|e<rsup|a*t><frac|e<rsup|-a>|1+e<rsup|-a>>>>|<row|<cell|>|<cell|=>|<cell|e<rsup|a*t>\<sigma\><around*|(|-a|)>>>>>
+  </eqnarray*>
+
+  where <math|a=\<b-w\><rsup|T>\<b-varphi\>>. In order to obtain a lower
+  bound on <math|p(\<b-t\>)>, we make use of the variational lower bound on
+  the logistic sigmoid function given by Eq. <eqref|10.144>, which we
+  reproduce here for convenience
+
+  <\equation*>
+    \<sigma\><around*|(|z|)>\<geqslant\>\<sigma\><around*|(|\<xi\>|)>exp<around*|{|<around*|(|z-\<xi\>|)>/2-\<lambda\><around*|(|\<xi\>|)><around*|(|z<rsup|2>-\<xi\><rsup|2>|)>|}>
+  </equation*>
+
+  where
+
+  <\equation*>
+    \<lambda\><around*|(|\<xi\>|)>=<frac|1|2\<xi\>><around*|[|\<sigma\><around*|(|\<xi\>|)>-<frac|1|2>|]>
+  </equation*>
+
+  We can therefore write
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|t\|\<b-w\>|)>>|<cell|=>|<cell|e<rsup|a*t>\<sigma\><around*|(|-a|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|e<rsup|a*t>\<sigma\><around*|(|\<xi\>|)>exp<around*|{|-<around*|(|a+\<xi\>|)>/2-\<lambda\><around*|(|\<xi\>|)><around*|(|a<rsup|2>-\<xi\><rsup|2>|)>|}>>>>>
+  </eqnarray*>
+
+  Note that because this bound is applied to each of the terms in the
+  likelihood function separately, there is a variational parameter
+  <math|\<xi\><rsub|n>> corresponding to each training set observation
+  <math|(\<b-varphi\><rsub|n>,t<rsub|n>)>. Using
+  <math|a=\<b-w\><rsup|T>\<b-varphi\>>, and multiplying by the prior
+  distribution, we obtain the following bound on the joint distribution of
+  <math|\<b-t\>> and <math|\<b-w\>>
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-t\>,\<b-w\>|)>>|<cell|=>|<cell|p<around*|(|\<b-t\>\|\<b-w\>|)>p<around*|(|\<b-w\>|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|h<around*|(|\<b-w\>,\<b-xi\>|)>p<around*|(|\<b-w\>|)>>>>>
+  </eqnarray*>
 </body>
 
 <\initial>
@@ -988,6 +1061,7 @@
     <associate|auto-15|<tuple|5|10>>
     <associate|auto-16|<tuple|6|11>>
     <associate|auto-17|<tuple|4|13>>
+    <associate|auto-18|<tuple|4.1|13>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
@@ -1039,30 +1113,30 @@
       figure the red curve shows the function exp(\<minus\>x), and the blue
       line shows the tangent at <with|mode|<quote|math>|x=\<xi\>> defined by
       Eq. (<reference|10.125>) with <with|mode|<quote|math>|\<xi\>=1>. This
-      line has slope <with|mode|<quote|math>|\<lambda\>=f<rprime|'>(\<xi\>)=\<minus\>exp(\<minus\>\<xi\>)>.
+      line has slope <with|mode|<quote|math>|\<eta\>=f<rprime|'>(\<xi\>)=\<minus\>exp(\<minus\>\<xi\>)>.
       Note that any other tangent line, for example the ones shown in green,
-      will have a smaller value of y at <with|mode|<quote|math>|x=\<xi\>>.
-      The right-hand figure shows the corresponding plot of the function
-      <with|mode|<quote|math>|\<lambda\>\<xi\>\<minus\>g(\<lambda\>)>, where
-      <with|mode|<quote|math>|g(\<lambda\>)> is given by Eq.
-      (<reference|10.131>), versus <with|mode|<quote|math>|\<lambda\>> for
+      will have a smaller value of <with|mode|<quote|math>|y> at
+      <with|mode|<quote|math>|x=\<xi\>>. The right-hand figure shows the
+      corresponding plot of the function <with|mode|<quote|math>|\<eta\>\<xi\>\<minus\>g(\<eta\>)>,
+      where <with|mode|<quote|math>|g(\<eta\>)> is given by Eq.
+      (<reference|10.131>), versus <with|mode|<quote|math>|\<eta\>> for
       <with|mode|<quote|math>|\<xi\>=1>, in which the maximum corresponds to
-      <with|mode|<quote|math>|\<lambda\>=\<minus\>exp(\<minus\>\<xi\>)=\<minus\>1/e>.>|<pageref|auto-14>>
+      <with|mode|<quote|math>|\<eta\>=\<minus\>exp(\<minus\>\<xi\>)=\<minus\>1/e>.>|<pageref|auto-14>>
 
       <tuple|normal|<\surround|<hidden-binding|<tuple>|5>|>
         In the left-hand plot the red curve shows a convex function
         <with|mode|<quote|math>|f(x)>, and the blue line represents the
-        linear function <with|mode|<quote|math>|\<lambda\>x>, which is a
-        lower bound on <with|mode|<quote|math>|f(x)> because
-        <with|mode|<quote|math>|f(x)\<gtr\>\<lambda\>x> for all
+        linear function <with|mode|<quote|math>|\<eta\>x>, which is a lower
+        bound on <with|mode|<quote|math>|f(x)> because
+        <with|mode|<quote|math>|f(x)\<gtr\>\<eta\>x> for all
         <with|mode|<quote|math>|x>. For the given value of slope
-        <with|mode|<quote|math>|\<lambda\>> the contact point of the tangent
+        <with|mode|<quote|math>|\<eta\>> the contact point of the tangent
         line having the same slope is found by minimizing with respect to
         <with|mode|<quote|math>|x> the discrepancy (shown by the green dashed
-        lines) given by <with|mode|<quote|math>|f(x)\<minus\>\<lambda\>x>.
-        This defines the dual function <with|mode|<quote|math>|g(\<lambda\>)>,
-        which corresponds to the (negative of the) intercept of the tangent
-        line having slope <with|mode|<quote|math>|\<lambda\>>.
+        lines) given by <with|mode|<quote|math>|f(x)\<minus\>\<eta\>x>. This
+        defines the dual function <with|mode|<quote|math>|g(\<eta\>)>, which
+        corresponds to the (negative of the) intercept of the tangent line
+        having slope <with|mode|<quote|math>|\<eta\>>.
       </surround>|<pageref|auto-15>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|6>||The left-hand plot
@@ -1071,9 +1145,9 @@
       (<reference|10.134>) in red, together with two examples of the
       exponential upper bound Eq. (<reference|10.137>) shown in blue. The
       right-hand plot shows the logistic sigmoid again in red together with
-      the Gaussian lower bound Eq. <mark|<arg|body>|<inline-tag|eqref|<with|mode|<quote|src>|color|<quote|#228>|font-family|<quote|tt>|10.144>>>
-      shown in blue. Here the parameter <with|mode|<quote|math>|\<xi\>=2.5>,
-      and the bound is exact at <with|mode|<quote|math>|x=\<xi\>> and
+      the Gaussian lower bound Eq. (<reference|10.144>) shown in blue. Here
+      the parameter <with|mode|<quote|math>|\<xi\>=2.5>, and the bound is
+      exact at <with|mode|<quote|math>|x=\<xi\>> and
       <with|mode|<quote|math>|x=\<minus\>\<xi\>>, denoted by the dashed green
       lines.>|<pageref|auto-16>>
     </associate>
@@ -1121,6 +1195,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Variational
       Logistic Regression> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-17><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|4.1<space|2spc>Variational posterior
+      distribution <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-18>>
     </associate>
   </collection>
 </auxiliary>
