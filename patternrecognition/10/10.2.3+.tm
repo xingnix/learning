@@ -1008,14 +1008,14 @@
 
   where
 
-  <\equation*>
-    \<lambda\><around*|(|\<xi\>|)>=<frac|1|2\<xi\>><around*|[|\<sigma\><around*|(|\<xi\>|)>-<frac|1|2>|]>
-  </equation*>
+  <\equation>
+    \<lambda\><around*|(|\<xi\>|)>=<frac|1|2\<xi\>><around*|[|\<sigma\><around*|(|\<xi\>|)>-<frac|1|2>|]><label|10.150>
+  </equation>
 
   We can therefore write
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|p<around*|(|t\|\<b-w\>|)>>|<cell|=>|<cell|e<rsup|a*t>\<sigma\><around*|(|-a|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|e<rsup|a*t>\<sigma\><around*|(|\<xi\>|)>exp<around*|{|-<around*|(|a+\<xi\>|)>/2-\<lambda\><around*|(|\<xi\>|)><around*|(|a<rsup|2>-\<xi\><rsup|2>|)>|}>>>>>
+    <tformat|<table|<row|<cell|p<around*|(|t\|\<b-w\>|)>>|<cell|=>|<cell|e<rsup|a*t>\<sigma\><around*|(|-a|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|e<rsup|a*t>\<sigma\><around*|(|\<xi\>|)>exp<around*|{|-<around*|(|a+\<xi\>|)>/2-\<lambda\><around*|(|\<xi\>|)><around*|(|a<rsup|2>-\<xi\><rsup|2>|)>|}><eq-number><label|10.151>>>>>
   </eqnarray*>
 
   Note that because this bound is applied to each of the terms in the
@@ -1027,11 +1027,11 @@
   <math|\<b-t\>> and <math|\<b-w\>>
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|p<around*|(|\<b-t\>,\<b-w\>|)>>|<cell|=>|<cell|p<around*|(|\<b-t\>\|\<b-w\>|)>p<around*|(|\<b-w\>|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|h<around*|(|\<b-w\>,\<b-xi\>|)>p<around*|(|\<b-w\>|)>>>>>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-t\>,\<b-w\>|)>>|<cell|=>|<cell|p<around*|(|\<b-t\>\|\<b-w\>|)>p<around*|(|\<b-w\>|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|h<around*|(|\<b-w\>,\<b-xi\>|)>p<around*|(|\<b-w\>|)><label|10.152><eq-number>>>>>
   </eqnarray*>
 
-  where <math|\<xi\>> denotes the set <math|{\<xi\><rsub|n>}> of variational
-  parameters, and
+  where <math|\<b-xi\>> denotes the set <math|{\<xi\><rsub|n>}> of
+  variational parameters, and
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|h<around*|(|\<b-w\>,\<b-xi\>|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>\<sigma\><around*|(|\<xi\><rsub|n>|)>exp<around*|{|\<b-w\><rsup|T>\<b-varphi\><rsub|n>t<rsub|n>-<around*|(|\<b-w\><rsup|T>\<b-varphi\><rsub|n>+\<xi\><rsub|n>|)>/2-\<lambda\><around*|(|\<xi\><rsub|n>|)><around*|(|<around*|[|\<b-w\><rsup|T>\<b-varphi\><rsub|n>|]><rsup|2>-\<xi\><rsup|2><rsub|n>|)>|}>>>>>
@@ -1066,14 +1066,14 @@
   identifying the linear and quadratic terms in <math|\<b-w\>>, giving a
   Gaussian variational posterior of the form \ 
 
-  <\equation*>
-    q(\<b-w\>)=\<cal-N\> (\<b-w\>\|\<b-m\><rsub|N>,S<rsub|N>)
-  </equation*>
+  <\equation>
+    q(\<b-w\>)=\<cal-N\> (\<b-w\>\|\<b-m\><rsub|N>,S<rsub|N>)<label|10.156>
+  </equation>
 
   where
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|\<b-m\><rsub|N>>|<cell|=>|<cell|S<rsub|N><around*|(|S<rsub|0><rsup|-1>\<b-m\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|(|t<rsub|n>-1/2|)>\<b-varphi\><rsub|n>|)>>>|<row|<cell|S<rsup|-1><rsub|N>>|<cell|=>|<cell|S<rsup|-1><rsub|0>+2<big|sum><rsub|n=1><rsup|N>\<lambda\><around*|(|\<xi\><rsub|n>|)>\<b-varphi\><rsub|n>\<b-varphi\><rsub|n><rsup|T>>>>>
+    <tformat|<table|<row|<cell|\<b-m\><rsub|N>>|<cell|=>|<cell|S<rsub|N><around*|(|S<rsub|0><rsup|-1>\<b-m\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|(|t<rsub|n>-1/2|)>\<b-varphi\><rsub|n>|)><label|10.157><eq-number>>>|<row|<cell|S<rsup|-1><rsub|N>>|<cell|=>|<cell|S<rsup|-1><rsub|0>+2<big|sum><rsub|n=1><rsup|N>\<lambda\><around*|(|\<xi\><rsub|n>|)>\<b-varphi\><rsub|n>\<b-varphi\><rsub|n><rsup|T><label|10.158><eq-number>>>>>
   </eqnarray*>
 
   \;
@@ -1096,6 +1096,136 @@
   for the multiclass case has been explored by Gibbs (1997).
 
   <subsection|Optimizing the variational parameters>
+
+  We now have a normalized Gaussian approximation to the posterior
+  distribution, which we shall use shortly to evaluate the predictive
+  distribution for new data points. First, however, we need to determine the
+  variational parameters <math|{\<xi\><rsub|n>}> by maximizing the lower
+  bound on the marginal likelihood.
+
+  To do this, we substitute the inequality Eq. <eqref|10.152> back into the
+  marginal likelihood to give
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln p<around*|(|\<b-t\>|)>>|<cell|=>|<cell|ln<big|int>p<around*|(|\<b-t\>\|\<b-w\>|)>p<around*|(|\<b-w\>|)>\<mathd\>\<b-w\>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|ln<big|int>h<around*|(|\<b-w\>,\<b-xi\>|)>p<around*|(|\<b-w\>|)>\<mathd\>\<b-w\>>>|<row|<cell|>|<cell|=>|<cell|\<cal-L\><around*|(|\<b-xi\>|)><eq-number><label|10.159>>>>>
+  </eqnarray*>
+
+  As with the optimization of the hyperparameter <math|\<alpha\>> in the
+  linear regression model of Section 3.5, there are two approaches to
+  determining the <math|\<xi\><rsub|n>> . In the rst approach, we recognize
+  that the function <math|\<cal-L\>(\<b-xi\>)> is dened by an integration
+  over <math|\<b-w\>> and so we can view <math|\<b-w\>> as a latent variable
+  and invoke the EM algorithm. In the second approach, we integrate over
+  <math|\<b-w\>> analytically and then perform a direct maximization over
+  <math|\<b-xi\>>. Let us begin by considering the EM approach.
+
+  The EM algorithm starts by choosing some initial values for the parameters
+  <math|{\<xi\><rsub|n>}>, which we denote collectively by
+  <math|\<b-xi\><rsup|old>>. In the E step of the EM algorithm,we then use
+  these parameter values to nd the posterior distribution over
+  <math|\<b-w\>>, which is given by Eq. <eqref|10.156>. In the M step, we
+  then maximize the expected complete-data log likelihood which is given by
+
+  <\equation*>
+    Q(\<b-xi\>,\<b-xi\><rsup|old>)=\<bbb-E\>[ln
+    h(\<b-w\>,\<b-xi\>)p(\<b-w\>)]
+  </equation*>
+
+  where the expectation is taken with respect to the posterior distribution
+  <math|q(\<b-w\>)> evaluated using <math|\<b-xi\><rsup|old>>. Noting that
+  <math|p(\<b-w\>)> does not depend on <math|\<b-xi\>>, and substituting for
+  <math|h(\<b-w\>,\<b-xi\>)> we obtain
+
+  <\equation*>
+    Q<around*|(|\<b-xi\>,\<b-xi\><rsup|old>|)>=<big|sum><rsub|n=1><rsup|N><around*|{|ln
+    \<sigma\><around*|(|\<xi\><rsub|n>|)>-<frac|\<xi\><rsub|n>|2>-\<lambda\><around*|(|\<xi\><rsub|n>|)><around*|(|\<b-varphi\><rsub|n><rsup|T>\<bbb-E\><around*|[|\<b-w\>\<b-w\><rsup|T>|]>\<b-varphi\><rsub|n>-\<xi\><rsup|2><rsub|n>|)>|}>+const
+  </equation*>
+
+  where `const' denotes terms that are independent of <math|\<b-xi\>>. We now
+  set the derivative with respect to <math|\<xi\><rsub|n>> equal to zero. A
+  few lines of algebra, making use of the denitions of
+  <math|\<sigma\>(\<b-xi\>)> Eq. <eqref|10.134> and
+  <math|\<lambda\>(\<b-xi\>)> Eq.<eqref|10.150>, then gives
+
+  \ 
+
+  <\equation*>
+    0=\<lambda\><rprime|'><around*|(|\<xi\><rsub|n>|)><around*|(|\<b-varphi\><rsub|n><rsup|T>\<bbb-E\><around*|[|\<b-w\>\<b-w\><rsup|T>|]>\<b-varphi\><rsub|n>-\<xi\><rsup|2><rsub|n>|)>
+  </equation*>
+
+  We now note that <math|\<lambda\><rprime|'><around*|(|\<b-xi\>|)>> is a
+  monotonic function of <math|\<xi\>> for <math|\<xi\>\<geqslant\>0>, and
+  that we can restrict attention to nonnegative values of <math|\<xi\>
+  >without loss of generality due to the symmetry of the bound around
+  <math|\<xi\>=0>. Thus <math|\<lambda\><rprime|'><around*|(|\<xi\>|)>\<neq\>0>,
+  and hence we obtain the following re-estimation equations
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<around*|(|\<xi\><rsub|n><rsup|new>|)><rsup|2>>|<cell|=>|<cell|\<b-varphi\><rsup|T><rsub|n>\<bbb-E\><around*|[|\<b-w\>\<b-w\><rsup|T>|]>\<b-varphi\><rsub|n>>>|<row|<cell|>|<cell|=>|<cell|\<b-varphi\><rsub|n><rsup|T><around*|(|S<rsub|N>+\<b-m\><rsub|N>\<b-m\><rsub|N><rsup|T>|)>\<b-varphi\><rsub|n><eq-number><label|10.163>>>>>
+  </eqnarray*>
+
+  where we have used Eq. <eqref|10.156>.\ 
+
+  Let us summarize the EM algorithm for nding the variational posterior
+  distribution. We rst initialize the variational parameters
+  <math|\<b-xi\><rsup|old>>. In the E step, we evaluate the posterior
+  distribution over <math|\<b-w\>> given by Eq. <eqref|10.156>, in which the
+  mean and covariance are dened by Eq. <eqref|10.157> and <eqref|10.158>. In
+  the M step, we then use this variational posterior to compute a new value
+  for <math|\<b-xi\>> given by Eq. <eqref|10.163>. The E and M steps are
+  repeated until a suitable convergence criterion is satised, which in
+  practice typically requires only a few iterations.
+
+  An alternative approach to obtaining re-estimation equations for
+  <math|\<b-xi\>> is to note that in the integral over <math|\<b-w\>> in the
+  denition Eq. <eqref|10.159> of the lower bound <math|\<cal-L\>(\<b-xi\>)>,
+  the integrand has a Gaussian-like form and so the integral can be evaluated
+  analytically. Having evaluated the integral, we can then differentiate with
+  respect to <math|\<xi\><rsub|n>>. It turns out that this gives rise to
+  exactly the same re-estimation equations as does the EM approach given by
+  Eq. <eqref|10.163>.
+
+  As we have emphasized already, in the application of variational methods it
+  is useful to be able to evaluate the lower bound <math|\<cal-L\>(\<b-xi\>)>
+  given by Eq. <eqref|10.159>. The integration over <math|\<b-w\>> can be
+  performed analytically by noting that <math|p(\<b-w\>)> is Gaussian and
+  <math|h(\<b-w\>,\<b-xi\>)> is the exponential of a quadratic function of
+  <math|\<b-w\>>. Thus, by completing the square and making use of the
+  standard result for the normalization coefcient of a Gaussian
+  distribution, we can obtain a closed form solution which takes the form
+
+  <\equation*>
+    \<cal-L\><around*|(|\<b-xi\>|)>=<frac|1|2>ln<around*|\||<frac|S<rsub|N>|S<rsub|0>>|\|>-<frac|1|2>\<b-m\><rsub|N><rsup|T>S<rsub|N><rsup|-1>\<b-m\><rsub|N>+<frac|1|2>\<b-m\><rsub|0><rsup|T>S<rsub|0><rsup|-1>\<b-m\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|{|ln
+    \<sigma\><around*|(|\<xi\><rsub|n>|)>-<frac|1|2>\<xi\><rsub|n>-\<lambda\><around*|(|\<xi\><rsub|n>|)>\<xi\><rsup|2><rsub|n>|)>
+  </equation*>
+
+  This variational framework can also be applied to situations in which the
+  data is arriving sequentially (Jaakkola and Jordan, 2000). In this case we
+  maintain a Gaussian posterior distribution over <math|\<b-w\>>, which is
+  initialized using the prior <math|p(\<b-w\>)>. As each data point arrives,
+  the posterior is updated by making use of the bound Eq. <eqref|10.151> and
+  then normalized to give an updated posterior distribution.
+
+  The predictive distribution is obtained by marginalizing over the posterior
+  distribution, and takes the same form as for the Laplace approximation
+  discussed in Section 4.5.2. Figure 10.13 shows the variational predictive
+  distributions for a synthetic data set. This example provides interesting
+  insights into the concept of `large margin', which was discussed in Section
+  7.1 and which has qualitatively similar behaviour to the Bayesian solution.
+
+  <subsection|Inference of hyperparameters>
+
+  So far, we have treated the hyperparameter <math|\<alpha\>> in the prior
+  distribution as a known constant. We now extend the Bayesian logistic
+  regression model to allow the value of this parameter to be inferred from
+  the data set. This can be achieved by combining the global and local
+  variational approximations into a single framework, so as to maintain a
+  lower bound on the marginal likelihood at each stage. Such a combined
+  approach was adopted by Bishop and Svensén (2003) in the context of a
+  Bayesian treatment of the hierarchical mixture of experts model.
+
+  Specically, we consider once again a simple isotropic Gaussian prior
+  distribution of the form
 </body>
 
 <\initial>
@@ -1117,7 +1247,15 @@
     <associate|10.137|<tuple|10|11>>
     <associate|10.141|<tuple|11|12>>
     <associate|10.144|<tuple|12|12>>
-    <associate|10.149|<tuple|13|?>>
+    <associate|10.149|<tuple|13|13>>
+    <associate|10.150|<tuple|14|?>>
+    <associate|10.151|<tuple|15|?>>
+    <associate|10.152|<tuple|15|?>>
+    <associate|10.156|<tuple|17|?>>
+    <associate|10.157|<tuple|17|?>>
+    <associate|10.158|<tuple|18|?>>
+    <associate|10.159|<tuple|20|?>>
+    <associate|10.163|<tuple|21|?>>
     <associate|10.2.5|<tuple|3|3>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
@@ -1130,8 +1268,9 @@
     <associate|auto-16|<tuple|6|11>>
     <associate|auto-17|<tuple|4|13>>
     <associate|auto-18|<tuple|4.1|13>>
-    <associate|auto-19|<tuple|4.2|?>>
+    <associate|auto-19|<tuple|4.2|14>>
     <associate|auto-2|<tuple|2|1>>
+    <associate|auto-20|<tuple|4.3|?>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
     <associate|auto-5|<tuple|1|4>>
@@ -1268,6 +1407,10 @@
       <with|par-left|<quote|1tab>|4.1<space|2spc>Variational posterior
       distribution <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-18>>
+
+      <with|par-left|<quote|1tab>|4.2<space|2spc>Optimizing the variational
+      parameters <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-19>>
     </associate>
   </collection>
 </auxiliary>
