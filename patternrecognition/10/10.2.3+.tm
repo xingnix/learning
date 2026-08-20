@@ -1126,10 +1126,10 @@
   <math|\<b-w\>>, which is given by Eq. <eqref|10.156>. In the M step, we
   then maximize the expected complete-data log likelihood which is given by
 
-  <\equation*>
+  <\equation>
     Q(\<b-xi\>,\<b-xi\><rsup|old>)=\<bbb-E\>[ln
-    h(\<b-w\>,\<b-xi\>)p(\<b-w\>)]
-  </equation*>
+    <around*|{|h(\<b-w\>,\<b-xi\>)p(\<b-w\>)|}>]<label|10.160>
+  </equation>
 
   where the expectation is taken with respect to the posterior distribution
   <math|q(\<b-w\>)> evaluated using <math|\<b-xi\><rsup|old>>. Noting that
@@ -1195,8 +1195,8 @@
   distribution, we can obtain a closed form solution which takes the form
 
   <\equation*>
-    \<cal-L\><around*|(|\<b-xi\>|)>=<frac|1|2>ln<around*|\||<frac|S<rsub|N>|S<rsub|0>>|\|>-<frac|1|2>\<b-m\><rsub|N><rsup|T>S<rsub|N><rsup|-1>\<b-m\><rsub|N>+<frac|1|2>\<b-m\><rsub|0><rsup|T>S<rsub|0><rsup|-1>\<b-m\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|{|ln
-    \<sigma\><around*|(|\<xi\><rsub|n>|)>-<frac|1|2>\<xi\><rsub|n>-\<lambda\><around*|(|\<xi\><rsub|n>|)>\<xi\><rsup|2><rsub|n>|)>
+    \<cal-L\><around*|(|\<b-xi\>|)>=<frac|1|2>ln<around*|\||<frac|S<rsub|N>|S<rsub|0>>|\|>+<frac|1|2>\<b-m\><rsub|N><rsup|T>S<rsub|N><rsup|-1>\<b-m\><rsub|N>-<frac|1|2>\<b-m\><rsub|0><rsup|T>S<rsub|0><rsup|-1>\<b-m\><rsub|0>+<big|sum><rsub|n=1><rsup|N><around*|{|ln
+    \<sigma\><around*|(|\<xi\><rsub|n>|)>-<frac|1|2>\<xi\><rsub|n>+\<lambda\><around*|(|\<xi\><rsub|n>|)>\<xi\><rsup|2><rsub|n>|)>
   </equation*>
 
   This variational framework can also be applied to situations in which the
@@ -1356,7 +1356,7 @@
   We recognize this as the log of a gamma distribution, and so we obtain
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|q<around*|(|\<alpha\>|)>>|<cell|=>|<cell|Gam<around*|(|\<alpha\>\|a<rsub|N>,b<rsub|N>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|\<Gamma\><around*|(|a<rsub|0>|)>>a<rsub|0><rsup|b<rsub|0>>\<alpha\><rsup|a<rsub|0>-1>e<rsup|-b<rsub|0>\<alpha\>>>>>>
+    <tformat|<table|<row|<cell|q<around*|(|\<alpha\>|)>>|<cell|=>|<cell|Gam<around*|(|\<alpha\>\|a<rsub|N>,b<rsub|N>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|\<Gamma\><around*|(|a<rsub|N>|)>>a<rsub|0><rsup|b<rsub|N>>\<alpha\><rsup|a<rsub|N>-1>e<rsup|-b<rsub|N>\<alpha\>>>>>>
   </eqnarray*>
 
   where
@@ -1376,7 +1376,7 @@
     h<around*|(|\<b-w\>,\<b-xi\>|)>\<mathd\>\<b-w\>+const
   </equation*>
 
-  Note that this has precisely the same form as Eq. <eqref|10.159>, and so we
+  Note that this has precisely the same form as Eq. <eqref|10.160>, and so we
   can again appeal to our earlier result Eq. <eqref|10.163>, which can be
   obtained by direct optimization of the marginal likelihood function,
   leading to re-estimation equations of the form
@@ -1391,7 +1391,7 @@
   quantities, updating each in turn. The required moments are given by
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<alpha\>|]>>|<cell|=>|<cell|<frac|a<rsub|N>|b<rsub|N>>>>|<row|<cell|\<bbb-E\><around*|[|\<b-w\>\<b-w\><rsup|T>|]>>|<cell|=>|<cell|\<Sigma\><rsub|N>+\<b-mu\><rsub|N><rsup|T>\<b-mu\><rsub|N>>>>>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<alpha\>|]>>|<cell|=>|<cell|<frac|a<rsub|N>|b<rsub|N>>>>|<row|<cell|\<bbb-E\><around*|[|\<b-w\>\<b-w\><rsup|T>|]>>|<cell|=>|<cell|\<Sigma\><rsub|N>+\<b-mu\><rsub|N>\<b-mu\><rsub|N><rsup|T>>>>>
   </eqnarray*>
 
   <section| Expectation Propagation>
@@ -1407,6 +1407,363 @@
   respect to <math|q(\<b-z\>)> when <math|p(\<b-z\>)> is a fixed distribution
   and <math|q(\<b-z\>)> is a member of the exponential family and so, from
   (2.194), can be written in the form
+
+  <\equation*>
+    q<around*|(|\<b-z\>|)>=h<around*|(|\<b-z\>|)>g<around*|(|\<b-eta\>|)>exp<around*|{|\<b-eta\><rsup|T>\<b-u\><around*|(|\<b-z\>|)>|}>
+  </equation*>
+
+  As a function of <math|\<b-eta\>>, the Kullback-Leibler divergence then
+  becomes
+
+  <\equation*>
+    KL(p\<\|\|\>q)=-ln g(\<b-eta\>)-\<b-eta\><rsup|T>
+    \<bbb-E\><rsub|p(\<b-z\>)>[\<b-u\>(\<b-z\>)] + const
+  </equation*>
+
+  where the constant terms are independent of the natural parameters
+  <math|\<b-eta\>>. We can minimize <math|KL(p\<\|\|\>q)> within this family
+  of distributions by setting the gradient with respect to <math|\<b-eta\>>
+  to zero, giving
+
+  <\equation*>
+    -\<nabla\>ln g(\<b-eta\>)=\<bbb-E\><rsub|p(\<b-z\>)>[\<b-u\>(\<b-z\>)].
+  </equation*>
+
+  However, we have already seen in (2.226) that the negative gradient of
+  <math|ln g(\<b-eta\>)> is given by the expectation of
+  <math|\<b-u\><around*|(|\<b-z\>|)>> under the distribution
+  <math|q(\<b-z\>)>. Equating these two results, we obtain
+
+  <\equation>
+    \<bbb-E\><rsub|q<around*|(|\<b-z\>|)>>[\<b-u\>(\<b-z\>)]=\<bbb-E\><rsub|p(\<b-z\>)>[\<b-u\>(\<b-z\>)].<label|10.187>
+  </equation>
+
+  We see that the optimum solution simply corresponds to matching the
+  expected sufcient statistics. So, for instance, if <math|q(\<b-z\>)> is a
+  Gaussian <math|\<cal-N\>(\<b-z\>\|\<b-mu\>,\<Sigma\>)> then we minimize the
+  Kullback-Leibler divergence by setting the mean <math|\<b-mu\>> of
+  <math|q(\<b-z\>)> equal to the mean of the distribution <math|p(\<b-z\>)>
+  and the covariance <math|\<Sigma\>> equal to the covariance of
+  <math|p(\<b-z\>)>. This is sometimes called <em|moment matching>. An
+  example of this was seen in Figure 10.3(a).
+
+  Now let us exploit this result to obtain a practical algorithm for
+  approximate inference. For many probabilistic models, the joint
+  distribution of data <math|\<cal-D\>> and hidden variables (including
+  parameters) <math|\<b-theta\>> comprises a product of factors in the form
+
+  <\equation>
+    p<around*|(|\<cal-D\>,\<b-theta\>|)>=<big|prod><rsub|i>f<rsub|i><around*|(|\<b-theta\>|)><label|10.188>
+  </equation>
+
+  This would arise, for example, in a model for independent, identically
+  distributed data in which there is one factor
+  <math|f<rsub|n>(\<b-theta\>)=p(\<b-x\><rsub|n>\|\<b-theta\>)> for each data
+  point <math|\<b-x\><rsub|n>>, along with a factor
+  <math|f<rsub|0>(\<b-theta\>)=p(\<b-theta\>)> corresponding to the prior.
+  More generally, it would also apply to any model dened by a directed
+  probabilistic graph in which each factor is a conditional distribution
+  corresponding to one of the nodes, or an undirected graph in which each
+  factor is a clique potential. We are interested in evaluating the posterior
+  distribution <math|p(\<b-theta\>\|\<cal-D\>)> for the purpose of making
+  predictions, as well as the model evidence <math|p(\<cal-D\>)> for the
+  purpose of model comparison. From Eq. <eqref|10.188> the posterior is given
+  by
+
+  <\equation>
+    p<around*|(|\<b-theta\>\|\<cal-D\>|)>=<frac|1|p<around*|(|\<cal-D\>|)>><big|prod><rsub|i>f<rsub|i><around*|(|\<b-theta\>|)><label|10.189>
+  </equation>
+
+  and the model evidence is given by
+
+  <\equation>
+    p<around*|(|\<cal-D\>|)>=<big|int><big|prod><rsub|i>f<rsub|i><around*|(|\<cal-D\>|)>\<mathd\>\<b-theta\><label|10.190>
+  </equation>
+
+  Here we are considering continuous variables, but the following discussion
+  applies equally to discrete variables with integrals replaced by
+  summations. We shall suppose that the marginalization over
+  <math|\<b-theta\>>, along with the marginalizations with respect to the
+  posterior distribution required to make predictions, are intractable so
+  that some form of approximation is required.
+
+  Expectation propagation is based on an approximation to the posterior
+  distribution which is also given by a product of factors
+
+  <\equation>
+    q<around*|(|\<b-theta\>|)>=<frac|1|Z><big|prod><rsub|i><wide|f<rsub|i>|~><around*|(|\<b-theta\>|)><label|10.191>
+  </equation>
+
+  in which each factor <math|<wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>> in
+  the approximation corresponds to one of the factors
+  <math|f<rsub|i><around*|(|\<b-theta\>|)>> in the true posterior Eq.
+  <eqref|10.189>, and the factor <math|1/Z> is the normalizing constant
+  needed to ensure that the left-hand side of Eq. <eqref|10.191> integrates
+  to unity. In order to obtain a practical algorithm, we need to constrain
+  the factors <math|<wide|f|~><rsub|i><around*|(|\<b-theta\>|)>> in some way,
+  and in particular we shall assume that they come from the exponential
+  family. The product of the factors will therefore also be from the
+  exponential family and so can be described by a finite set of sufficient
+  statistics. For example, if each of the
+  <math|<wide|f|~><rsub|i><around*|(|\<b-theta\>|)>> is a Gaussian, then the
+  overall approximation <math|q<around*|(|\<b-theta\>|)>> will also be
+  Gaussian. Ideally we would like to determine the
+  <math|<wide|f|~><rsub|i><around*|(|\<b-theta\>|)>> by minimizing the
+  Kullback-Leibler divergence between the true posterior and the
+  approximation given by
+
+  <\equation*>
+    KL<around*|(|p\<\|\|\>q|)>=KL<around*|(|<frac|1|p<around*|(|\<cal-D\>|)>><big|prod><rsub|i>f<rsub|i><around*|(|\<b-theta\>|)><around*|\<\|\|\>|<frac|1|Z><big|prod><wide|f|~><rsub|i><around*|(|\<b-theta\>|)>|\<nobracket\>>|)>
+  </equation*>
+
+  Note that this is the reverse form of KL divergence compared with that used
+  in variational inference. In general, this minimization will be intractable
+  because the KL divergence involves averaging with respect to the true
+  distribution. As a rough approximation, we could instead minimize the KL
+  divergences between the corresponding pairs
+  <math|f<rsub|i><around*|(|\<b-theta\>|)>> and
+  <math|<wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>> of factors. This
+  represents a much simpler problem to solve, and has the advantage that the
+  algorithm is noniterative. However, because each factor is individually
+  approximated, the product of the factors could well give a poor
+  approximation.
+
+  Expectation propagation makes a much better approximation by optimizing
+  each factor in turn in the context of all of the remaining factors. It
+  starts by initializing the factors <math|<wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>>,
+  and then cycles through the factors refining them one at a time. This is
+  similar in spirit to the update of factors in the variational Bayes
+  framework considered earlier. Suppose we wish to refine factor
+  <math|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>>. We first remove this
+  factor from the product to give <math|<big|prod><rsub|i\<neq\>j><wide|f|~><rsub|i><around*|(|\<b-theta\>|)>>.
+  Conceptually, we will now determine a revised form of the factor
+  <math|<wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>> by ensuring that the
+  product
+
+  <\equation>
+    q<rsup|new><around*|(|\<b-theta\>|)>\<propto\><wide|f|~><rsub|j><around*|(|\<b-theta\>|)><big|prod><rsub|i\<neq\>j><wide|f|~><rsub|i><around*|(|\<b-theta\>|)><label|10.193>
+  </equation>
+
+  is as close as possible to
+
+  <\equation*>
+    f<rsub|i><around*|(|\<b-theta\>|)><big|prod><rsub|i\<neq\>j><wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>
+  </equation*>
+
+  in which we keep fixed all of the factors
+  <math|<wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>> for <math|i\<neq\>j>.
+  This ensures that the approximation is most accurate in the regions of high
+  posterior probability as defined by the remaining factors. We shall see an
+  example of this effect when we apply EP to the \<#2018\>clutter
+  problem\<#2019\>. To achieve this, we first remove the factor
+  <math|<wide|f|~><rsub|i><around*|(|\<b-theta\>|)>> from the current
+  approximation to the posterior by defining the unnormalized distribution
+
+  <\equation>
+    q<rsup|\\j><around*|(|\<b-theta\>|)>=<frac|q<around*|(|\<b-theta\>|)>|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>><label|10.195>
+  </equation>
+
+  Note that we could instead nd <math|q<rsup|\\j><around*|(|\<b-theta\>|)>>
+  from the product of factors <math|i\<neq\>j>, although in practice division
+  is usually easier. This is now combined with the factor
+  <math|f<rsub|j><around*|(|\<b-theta\>|)>> to give a distribution
+
+  <\equation>
+    <frac|1|Z<rsub|j>>f<rsub|j><around*|(|\<b-theta\>|)>q<rsup|\\j><around*|(|\<b-theta\>|)><label|10.196>
+  </equation>
+
+  where <math|Z<rsub|j>> is the normalization constant given by
+
+  <\equation>
+    Z<rsub|j>=<big|int>f<rsub|j><around*|(|\<b-theta\>|)>q<rsup|\\j><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\><label|10.197>
+  </equation>
+
+  We now determine a revised factor <math|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>>
+  by minimizing the Kullback-Leibler divergence
+
+  <\equation*>
+    KL<around*|(|<around*|\<nobracket\>|<frac|f<rsub|j><around*|(|\<b-theta\>|)>q<rsup|\\j><around*|(|\<b-theta\>|)>|Z<rsub|j>>|\<\|\|\>>q<rsup|new><around*|(|\<b-theta\>|)>|)>
+  </equation*>
+
+  This is easily solved because the approximating distribution
+  <math|q<rsup|new>(\<b-theta\>)> is from the exponential family, and so we
+  can appeal to the result Eq. <eqref|10.187>, which tells us that the
+  parameters of <math|q<rsup|new>(\<b-theta\>)> are obtained by matching its
+  expected sufcient statistics to the corresponding moments of Eq.
+  <eqref|10.196>. We shall assume that this is a tractable operation. For
+  example, if we choose <math|q(\<b-theta\>)> to be a Gaussian distribution
+  <math|N(\<b-theta\>\|\<b-mu\>,\<Sigma\>)>, then <math|\<b-mu\>> is set
+  equal to the mean of the (unnormalized) distribution
+  <math|f<rsub|j><around*|(|\<b-theta\>|)>q<rsup|\\j><around*|(|\<b-theta\>|)>>),
+  and <math|\<Sigma\>> is set to its covariance. More generally, it is
+  straightforward to obtain the required expectations for any member of the
+  exponential family, provided it can be normalized, because the expected
+  statistics can be related to the derivatives of the normalization
+  coefcient, as given by (2.226). The EP approximation is illustrated in
+  Figure <reference|fig10.14>.
+
+  <\padded-center>
+    <\small-figure|<image|image/fig_10_14_expectation_propagation_gauss.png|.5par|||>>
+      <label|fig10.14> Illustration of the expectation propagation
+      approximation using a Gaussian distribution for the example considered
+      earlier in Figures 4.14 and 10.1. The left-hand plot shows the original
+      distribution (yellow) along with the Laplace (red), global variational
+      (green), and EP (blue) approximations, and the right-hand plot shows
+      the corresponding negative logarithms of the distributions. Note that
+      the EP distribution is broader than that obtained by variational
+      inference, as a consequence of the different form of KL divergence.
+    </small-figure>
+  </padded-center>
+
+  From Eq <eqref|10.193>, we see that the revised factor
+  <math|<wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>> can be found by taking
+  <math|q<rsup|new><around*|(|\<b-theta\>|)>> and dividing out the remaining
+  factors so that
+
+  <\equation>
+    <wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>=K<frac|q<rsup|new><around*|(|\<b-theta\>|)>|q<rsup|\\j><around*|(|\<b-theta\>|)>><label|10.199>
+  </equation>
+
+  where we have used Eq. <eqref|10.195>. The coefcient <math|K> is
+  determined by multiplying both sides of Eq. <eqref|10.199> by
+  <math|q<rsup|\\j><around*|(|\<b-theta\>|)>> and integrating to give
+
+  <\equation*>
+    K=<big|int><wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>q<rsup|\\j><around*|(|*\<b-theta\>|)>\<mathd\>\<b-theta\>
+  </equation*>
+
+  where we have used the fact that <math|q<rsup|new>(\<b-theta\>)> is
+  normalized. The value of <math|K> can therefore be found by matching
+  zeroth-order moments
+
+  <\equation*>
+    <big|int><wide|f|~><rsub|j><around*|(|\<b-theta\>|)>q<rsup|\\j><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\>=<big|int>f<rsub|j><around*|(|\<b-theta\>|)>q<rsup|\\j><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\>
+  </equation*>
+
+  Combining this with Eq. <eqref|10.197>, we then see that<math| K=Z<rsub|j>>
+  and so can be found by evaluating the integral in Eq. <eqref|10.197>.
+
+  In practice, several passes are made through the set of factors, revising
+  each factor in turn. The posterior distribution
+  <math|p<around*|(|\<b-theta\>\|\<cal-D\>|)>> is then approximated using Eq.
+  <eqref|10.191>, and the model evidence <math|p<around*|(|\<cal-D\>|)>> can
+  be approximated by using Eq. <eqref|10.190> with the factors
+  <math|f<rsub|i><around*|(|\<b-theta\>|)>> replaced by their approximations
+  <math|<wide|f|~><rsub|i><around*|(|\<b-theta\>|)>>.
+
+  \;
+
+  Expectation Propagation
+
+  We are given a joint distribution over observed data <math|\<cal-D\>> and
+  stochastic variables <math|\<b-theta\>> in the form of a product of factors
+
+  <\equation*>
+    p<around*|(|\<cal-D\>,\<b-theta\>|)>=<big|prod><rsub|i>f<rsub|i><around*|(|\<b-theta\>|)>
+  </equation*>
+
+  and we wish to approximate the posterior distribution
+  <math|p(\<b-theta\>\|\<cal-D\>)> by a distribution of the form
+
+  <\equation*>
+    q<around*|(|\<b-theta\>|)>=<frac|1|Z><big|prod><rsub|i><wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>
+  </equation*>
+
+  We also wish to approximate the model evidence <math|p(\<cal-D\>)>.
+
+  <\enumerate-numeric>
+    <item>Initialize all of the approximating factors
+    <math|<wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>>.
+
+    <item>Initialize the posterior approximation by setting
+
+    <\equation*>
+      q<around*|(|\<b-theta\>|)>\<propto\><big|prod><rsub|i><wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>
+    </equation*>
+
+    <item>Until convergence:
+
+    <\enumerate-alpha>
+      <item> Choose a factor <math|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>>
+      to refine.
+
+      <item>Remove <math|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>> from
+      the posterior by division
+
+      <\equation*>
+        q<rsup|\\j><around*|(|\<b-theta\>|)>=<frac|q<around*|(|\<b-theta\>|)>|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>>
+      </equation*>
+
+      <item>Evaluate the new posterior by setting the sufcient statistics
+      (moments) of <math|q<rsup|new><around*|(|\<b-theta\>|)>> equal to those
+      of <math|q<rsup|\\j><around*|(|\<b-theta\>|)>f<rsub|j><around*|(|\<b-theta\>|)>>,
+      including evaluation of the normalization constant
+
+      <\equation*>
+        Z<rsub|j>=<big|int>q<rsup|\\j><around*|(|\<b-theta\>|)>f<rsub|j><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\>
+      </equation*>
+
+      <item>Evaluate and store the new factor
+
+      <\equation*>
+        <wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>=Z<rsub|j><frac|q<rsup|new><around*|(|\<b-theta\>|)>|q<rsup|\\j><around*|(|\<b-theta\>|)>>
+      </equation*>
+
+      \;
+
+      \;
+    </enumerate-alpha>
+
+    <item>Evaluate the approximation to the model evidence
+
+    <\equation*>
+      p<around*|(|\<cal-D\>|)>\<simeq\><big|int><big|prod><rsub|i><wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\>
+    </equation*>
+  </enumerate-numeric>
+
+  \;
+
+  A special case of EP, known as<em| assumed density filtering> (ADF) or
+  <em|moment matching> (Maybeck, 1982; Lauritzen, 1992; Boyen and Koller,
+  1998; Opper and Winther, 1999), is obtained by initializing all of the
+  approximating factors except the first to unity and then making one pass
+  through the factors updating each of them once. Assumed density filtering
+  can be appropriate for on-line learning in which data points are arriving
+  in a sequence and we need to learn from each data point and then discard it
+  before considering the next point. However, in a batch setting we have the
+  opportunity to re-use the data points many times in order to achieve
+  improved accuracy, and it is this idea that is exploited in expectation
+  propagation. Furthermore, if we apply ADF to batch data, the results will
+  have an undesirable dependence on the (arbitrary) order in which the data
+  points are considered, which again EP can overcome.
+
+  One disadvantage of expectation propagation is that there is no guarantee
+  that the iterations will converge. However, for approximations
+  <math|q(\<b-theta\>)> in the exponential family, if the iterations do
+  converge, the resulting solution will be a stationary point of a particular
+  energy function (Minka, 2001a), although each iteration of EP does not
+  necessarily decrease the value of this energy function. This is in contrast
+  to variational Bayes, which iteratively maximizes a lower bound on the log
+  marginal likelihood, in which each iteration is guaranteed not to decrease
+  the bound. It is possible to optimize the EP cost function directly, in
+  which case it is guaranteed to converge, although the resulting algorithms
+  can be slower and more complex to implement.
+
+  Another difference between variational Bayes and EP arises from the form of
+  KL divergence that is minimized by the two algorithms, because the former
+  minimizes <math|KL(q\<\|\|\>p)> whereas the latter minimizes
+  <math|KL(p\<\|\|\>q)>. As we saw in Figure 10.3, for distributions
+  <math|p(\<b-theta\>)> which are multimodal, minimizing
+  <math|KL(p\<\|\|\>q)> can lead to poor approximations. In particular, if EP
+  is applied to mixtures the results are not sensible because the
+  approximation tries to capture all of the modes of the posterior
+  distribution. Conversely, in logistic-type models, EP often out-performs
+  both local variational methods and the Laplace approximation (Kuss and
+  Rasmussen, 2006).
+
+  <subsection|Example: The clutter problem>
+
+  \;
 </body>
 
 <\initial>
@@ -1432,14 +1789,25 @@
     <associate|10.150|<tuple|14|13>>
     <associate|10.151|<tuple|15|13>>
     <associate|10.152|<tuple|15|14>>
-    <associate|10.153|<tuple|17|?>>
+    <associate|10.153|<tuple|17|14>>
     <associate|10.156|<tuple|18|14>>
     <associate|10.157|<tuple|18|14>>
     <associate|10.158|<tuple|19|14>>
     <associate|10.159|<tuple|21|15>>
-    <associate|10.163|<tuple|22|15>>
-    <associate|10.165|<tuple|23|?>>
-    <associate|10.166|<tuple|24|?>>
+    <associate|10.160|<tuple|22|?>>
+    <associate|10.163|<tuple|23|15>>
+    <associate|10.165|<tuple|24|16>>
+    <associate|10.166|<tuple|25|16>>
+    <associate|10.187|<tuple|26|?>>
+    <associate|10.188|<tuple|27|?>>
+    <associate|10.189|<tuple|28|?>>
+    <associate|10.190|<tuple|29|?>>
+    <associate|10.191|<tuple|30|?>>
+    <associate|10.193|<tuple|31|?>>
+    <associate|10.195|<tuple|32|?>>
+    <associate|10.196|<tuple|33|?>>
+    <associate|10.197|<tuple|34|?>>
+    <associate|10.199|<tuple|35|?>>
     <associate|10.2.5|<tuple|3|3>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
@@ -1455,8 +1823,10 @@
     <associate|auto-19|<tuple|4.2|14>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-20|<tuple|7|16>>
-    <associate|auto-21|<tuple|4.3|?>>
-    <associate|auto-22|<tuple|5|?>>
+    <associate|auto-21|<tuple|4.3|16>>
+    <associate|auto-22|<tuple|5|18>>
+    <associate|auto-23|<tuple|8|?>>
+    <associate|auto-24|<tuple|5.1|?>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
     <associate|auto-5|<tuple|1|4>>
@@ -1467,6 +1837,7 @@
     <associate|fig10.10|<tuple|4|10>>
     <associate|fig10.11|<tuple|5|10>>
     <associate|fig10.12|<tuple|6|11>>
+    <associate|fig10.14|<tuple|8|?>>
     <associate|sec10.2.3|<tuple|1|1>>
     <associate|sec10.2.4|<tuple|2|1>>
     <associate|sec10.3.1|<tuple|1.1|4>>
@@ -1544,6 +1915,19 @@
       exact at <with|mode|<quote|math>|x=\<xi\>> and
       <with|mode|<quote|math>|x=\<minus\>\<xi\>>, denoted by the dashed green
       lines.>|<pageref|auto-16>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|7>|>
+        \ Illustration of the Bayesian approach to logistic regression for a
+        simple linearly separable data set. The plot on the left shows the
+        predictive distribution obtained using variational inference. We see
+        that the decision boundary lies roughly mid way between the clusters
+        of data points, and that the contours of the predictive distribution
+        splay out away from the data re\]ecting the greater uncertainty in
+        the classication of such regions. The plot on the right shows the
+        decision boundaries corresponding to ve samples of the parameter
+        vector <with|mode|<quote|math>|\<b-w\>> drawn from the posterior
+        distribution <with|mode|<quote|math>|p(\<b-w\>\|t)>.
+      </surround>|<pageref|auto-20>>
     </associate>
     <\associate|toc>
       <with|par-left|<quote|1tab>|1<space|2spc> Predictive density
@@ -1600,7 +1984,11 @@
 
       <with|par-left|<quote|1tab>|4.3<space|2spc>Inference of hyperparameters
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-20>>
+      <no-break><pageref|auto-21>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>
+      Expectation Propagation> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-22><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
