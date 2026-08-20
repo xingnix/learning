@@ -1690,24 +1690,24 @@
       <item>Remove <math|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>> from
       the posterior by division
 
-      <\equation*>
-        q<rsup|\\j><around*|(|\<b-theta\>|)>=<frac|q<around*|(|\<b-theta\>|)>|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>>
-      </equation*>
+      <\equation>
+        q<rsup|\\j><around*|(|\<b-theta\>|)>=<frac|q<around*|(|\<b-theta\>|)>|<wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>><label|10.205>
+      </equation>
 
       <item>Evaluate the new posterior by setting the sufcient statistics
       (moments) of <math|q<rsup|new><around*|(|\<b-theta\>|)>> equal to those
       of <math|q<rsup|\\j><around*|(|\<b-theta\>|)>f<rsub|j><around*|(|\<b-theta\>|)>>,
       including evaluation of the normalization constant
 
-      <\equation*>
-        Z<rsub|j>=<big|int>q<rsup|\\j><around*|(|\<b-theta\>|)>f<rsub|j><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\>
-      </equation*>
+      <\equation>
+        Z<rsub|j>=<big|int>q<rsup|\\j><around*|(|\<b-theta\>|)>f<rsub|j><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\><label|10.206>
+      </equation>
 
       <item>Evaluate and store the new factor
 
-      <\equation*>
-        <wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>=Z<rsub|j><frac|q<rsup|new><around*|(|\<b-theta\>|)>|q<rsup|\\j><around*|(|\<b-theta\>|)>>
-      </equation*>
+      <\equation>
+        <wide|f<rsub|j>|~><around*|(|\<b-theta\>|)>=Z<rsub|j><frac|q<rsup|new><around*|(|\<b-theta\>|)>|q<rsup|\\j><around*|(|\<b-theta\>|)>><label|10.207>
+      </equation>
 
       \;
 
@@ -1716,9 +1716,9 @@
 
     <item>Evaluate the approximation to the model evidence
 
-    <\equation*>
-      p<around*|(|\<cal-D\>|)>\<simeq\><big|int><big|prod><rsub|i><wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\>
-    </equation*>
+    <\equation>
+      p<around*|(|\<cal-D\>|)>\<simeq\><big|int><big|prod><rsub|i><wide|f<rsub|i>|~><around*|(|\<b-theta\>|)>\<mathd\>\<b-theta\><label|10.208>
+    </equation>
   </enumerate-numeric>
 
   \;
@@ -1763,7 +1763,182 @@
 
   <subsection|Example: The clutter problem>
 
-  \;
+  Following Minka (2001b), we illustrate the EP algorithm using a simple
+  example in which the goal is to infer the mean <math|\<b-theta\>> of a
+  multivariate Gaussian distribution over a variable <math|\<b-x\>> given a
+  set of observations drawn from that distribution. To make the problem more
+  interesting, the observations are embedded in background clutter, which
+  itself is also Gaussian distributed, as illustrated in Figure 10.15. The
+  distribution of observed values <math|\<b-x\>> is therefore a mixture of
+  Gaussians, which we take to be of the form
+
+  <\equation*>
+    p<around*|(|\<b-x\>\|\<b-theta\>|)>=<around*|(|1-w|)>\<cal-N\><around*|(|\<b-x\>\|\<b-theta\>,I|)>+w\<cal-N\><around*|(|\<b-x\>\|\<b-0\>,a
+    I|)>
+  </equation*>
+
+  where <math|w> is the proportion of background clutter and is assumed to be
+  known. The prior over <math|\<b-theta\>> is taken to be Gaussian
+
+  <\equation*>
+    p(\<b-theta\>) = \<cal-N\>(\<b-theta\>\|\<b-0\>,b I)
+  </equation*>
+
+  and Minka (2001a) chooses the parameter values <math|a=10, b=100> and
+  <math|w=0.5>. The joint distribution of <math|N> observations
+  <math|D={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}> and <math|\<b-theta\>>
+  is given by
+
+  <\equation*>
+    p<around*|(|\<cal-D\>,\<b-theta\>|)>=p<around*|(|\<b-theta\>|)><big|prod><rsub|n=1><rsup|N>p<around*|(|\<b-x\><rsub|n>\|\<b-theta\>|)>
+  </equation*>
+
+  and so the posterior distribution comprises a mixture of <math|2<rsup|N>>
+  Gaussians. Thus the computational cost of solving this problem exactly
+  would grow exponentially with the size of the data set, and so an exact
+  solution is intractable for moderately large <math|N>.
+
+  To apply EP to the clutter problem, we rst identify the factors
+  <math|f<rsub|0>(\<b-theta\>)=p(\<b-theta\>)> and
+  <math|f<rsub|n>(\<b-theta\>)=p(\<b-x\><rsub|n>\|\<b-theta\>)>. Next we
+  select an approximating distribution from the exponential family, and for
+  this example it is convenient to choose a spherical Gaussian
+
+  <\equation*>
+    q<around*|(|\<b-theta\>|)>=\<cal-N\><around*|(|\<b-theta\>\|\<b-m\>,v
+    I|)>
+  </equation*>
+
+  The factor approximations will therefore take the form of
+  exponential-quadratic functions of the form
+
+  <\equation*>
+    <wide|f|~><rsub|n><around*|(|\<b-theta\>|)>=s<rsub|n>\<cal-N\><around*|(|\<b-theta\>\|\<b-m\><rsub|n>,v<rsub|n>I|)>
+  </equation*>
+
+  where <math|n=1,\<cdots\>,N>, and we set
+  <math|<wide|f|~><rsub|0><around*|(|\<b-theta\>|)>> equal to the prior
+  <math|p<around*|(|\<b-theta\>|)>>. Note that the use of
+  <math|\<cal-N\><around*|(|\<b-theta\>\|\<cdummy\>,\<cdummy\>|)>> does not
+  imply that the right-hand side is a well-defined Gaussian density (in fact,
+  as we shall see, the variance parameter <math|v<rsub|n>> can be negative)
+  but is simply a convenient shorthand notation. The approximations
+  <math|<wide|f|~><rsub|n><around*|(|\<b-theta\>|)>>, for
+  <math|n=1,\<cdots\>,N>, can be initialized to unity, corresponding to
+  <math|s<rsub|n>=<around*|(|2\<pi\>v<rsub|n>|)><rsup|D/2>>,
+  <math|v<rsub|n>\<rightarrow\>\<infty\>> and <math|\<b-m\><rsub|n>=\<b-0\>>,
+  where <math|D> is the dimensionality of <math|\<b-x\>> and hence of
+  <math|\<b-theta\>>. The initial <math|q<around*|(|\<b-theta\>|)>>, defined
+  by Eq. <eqref|10.191>, is therefore equal to the prior.
+
+  We then iteratively reﬁne the factors by taking one factor
+  <math|f<rsub|n><around*|(|\<b-theta\>|)>> at a time and applying Eq.
+  <eqref|10.205>, <eqref|10.206>, and <eqref|10.207>. Note that we do not
+  need to revise the term <math|f<rsub|0><around*|(|\<b-theta\>|)>> because
+  an EP update will leave this term unchanged. Here we state the results and
+  leave the reader to fill in the details.
+
+  First we remove the current estimate <math|<wide|f|~><rsub|n><around*|(|\<b-theta\>|)>>
+  from <math|q<around*|(|\<b-theta\>|)>> by division using Eq. <eqref|10.205>
+  to give <math|q<rsup|\\n><around*|(|\<b-theta\>|)>>, which has mean and
+  inverse variance given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-m\><rsup|\\n>>|<cell|=>|<cell|\<b-m\>+v<rsup|\\n>v<rsub|n><rsup|-1><around*|(|\<b-m\>-\<b-m\><rsub|n>|)>>>|<row|<cell|<around*|(|v<rsup|\\n>|)><rsup|-1>>|<cell|=>|<cell|v<rsup|-1>-v<rsup|-1><rsub|n>>>>>
+  </eqnarray*>
+
+  Next we evaluate the normalization constant <math|Z<rsub|n>> using Eq.
+  <eqref|10.206> to give
+
+  <\equation*>
+    Z<rsub|n>=<around*|(|1-w|)>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-m\><rsup|\\n>,<around*|(|v<rsup|\\n>+1|)>I|)>+w\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-0\>,a
+    I|)>
+  </equation*>
+
+  Similarly, we compute the mean and variance of
+  <math|q<rsup|new><around*|(|\<b-theta\>|)>> by nding the mean and variance
+  of <math|q<rsup|\\n><around*|(|\<b-theta\>|)>f<rsub|n><around*|(|\<b-theta\>|)>>
+  to give
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-m\><rsup|new>>|<cell|=>|<cell|\<b-m\><rsup|\\n>+\<rho\><rsub|n><frac|v<rsup|\\n>|v<rsup|\\n>+1><around*|(|\<b-x\><rsub|n>-\<b-m\><rsup|\\n>|)>>>|<row|<cell|v<rsup|new>>|<cell|=>|<cell|v<rsup|\\n>-\<rho\><rsub|n><frac|<around*|(|v<rsup|\\n>|)><rsup|2>|v<rsup|\\n>+1>+\<rho\><rsub|n><around*|(|1-\<rho\><rsub|n>|)><frac|<around*|(|v<rsup|\\n>|)><rsup|2><around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-m\><rsup|\\n>|\<\|\|\>><rsup|2>|D<around*|(|v<rsup|\\n>+1|)><rsup|2>>>>>>
+  </eqnarray*>
+
+  where the quantity
+
+  <\equation*>
+    \<rho\><rsub|n>=1-<frac|w|Z<rsub|n>>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-0\>,a
+    I|)>
+  </equation*>
+
+  has a simple interpretation as the probability of the point
+  <math|\<b-x\><rsub|n>> not being clutter. Thenwe use Eq. <eqref|10.207> to
+  compute the refined factor <math|<wide|f|~><rsub|n><around*|(|\<b-theta\>|)>>
+  whose parameters are given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|v<rsub|n><rsup|-1>>|<cell|=>|<cell|<around*|(|v<rsup|new>|)><rsup|-1>-<around*|(|v<rsup|\\n>|)><rsup|-1>>>|<row|<cell|\<b-m\><rsub|n>>|<cell|=>|<cell|\<b-m\><rsup|\\n>+<around*|(|v<rsub|n>+v<rsup|\\n>|)><around*|(|v<rsup|\\n>|)><rsup|-1><around*|(|\<b-m\><rsup|new>-\<b-m\><rsup|\\n>|)>>>|<row|<cell|s<rsub|n>>|<cell|=>|<cell|<frac|Z<rsub|n>|<around*|(|2\<pi\>v<rsub|n>|)><rsup|D/2>\<cal-N\><around*|(|\<b-m\><rsub|n>\|\<b-m\><rsup|\\n>,<around*|(|v<rsub|n>+v<rsup|\\n>|)>I|)>>>>>>
+  </eqnarray*>
+
+  This renement process is repeated until a suitable termination criterion
+  is satised, for instance that the maximum change in parameter values
+  resulting from a complete pass through all factors is less than some
+  threshold. Finally, we use Eq. <eqref|10.208> to evaluate the approximation
+  to the model evidence, given by
+
+  <\equation*>
+    p<around*|(|\<cal-D\>|)>\<simeq\><around*|(|2\<pi\>v<rsup|new>|)><rsup|D/2>exp<around*|(|B/2|)><big|prod><rsub|n=1><rsup|N><around*|{|s<rsub|n><around*|(|2\<pi\>v<rsub|n>|)><rsup|-D/2>|}>
+  </equation*>
+
+  where
+
+  <\equation*>
+    B=<frac|<around*|(|\<b-m\><rsup|new>|)><rsup|T><around*|(|\<b-m\><rsup|new>|)>|v>-<big|sum><rsub|n=1><rsup|N><frac|\<b-m\><rsub|n><rsup|T>\<b-m\><rsub|n>|v<rsub|n>>
+  </equation*>
+
+  Examples of factor approximations for the clutter problem with a
+  one-dimensional parameter space <math|\<theta\>> are shown in Figure 10.16.
+  Note that the factor approximations can have innite or even negative
+  values for the `variance' parameter <math|v<rsub|n>> . This simply
+  corresponds to approximations that curve upwards instead of downwards and
+  are not necessarily problematic provided the overall approximate posterior
+  <math|q(\<b-theta\>)> has positive variance. Figure 10.17 compares the
+  performance of EP with variational Bayes (mean eld theory) and the Laplace
+  approximation on the clutter problem.
+
+  <\padded-center>
+    <\small-figure|<image|image/fig_10_15_clutter.png|0.3par|||>>
+      Illustration of the clutter problem for a data space dimensionality of
+      <math|D=1>. Training data points, denoted by the crosses, are drawnfrom
+      a mixture of two Gaussians with components shown in red and green. The
+      goal is to infer the mean of the green Gaussian from the observed data.
+    </small-figure>
+  </padded-center>
+
+  <\padded-center>
+    <\small-figure|<image|image/fig_10_16_clutter_factor.png|.5par|||>>
+      Examples of the approximation of specic factors for a one-dimensional
+      version of the clutter problem, showing <math|f<rsub|n>(\<theta\>)> in
+      blue, <math|<wide|f|~><rsub|n><around*|(|\<theta\>|)>> in red, and
+      <math|q<rsup|\\n>(\<theta\>)> in green. Notice that the current form
+      for <math|q<rsup|\\n>(\<theta\>)> controls the range of
+      <math|\<theta\>> over which <math|<wide|f|~><rsub|n><around*|(|\<theta\>|)>>
+      will be a good approximation to <math|f<rsub|n>(\<theta\>)>.
+    </small-figure>
+  </padded-center>
+
+  <subsection|Expectation propagation on graphs>
+
+  So far in our general discussion of EP, we have allowed the factors
+  <math|f<rsub|i>(\<b-theta\>)> in the distribution <math|p(\<b-theta\>)> to
+  be functions of all of the components of <math|\<b-theta\>>, and similarly
+  for the approximating factors <math|<wide|f|~><around*|(|\<b-theta\>|)>> in
+  the approximating distribution <math|q(\<b-theta\>)>. We now consider
+  situations in which the factors depend only on subsets of the variables.
+  Such restrictions can be conveniently expressed using the framework of
+  probabilistic graphical models, as discussed in Chapter 8. Here we use a
+  factor graph representation because this encompasses both directed and
+  undirected graphs.
 </body>
 
 <\initial>
@@ -1787,28 +1962,32 @@
     <associate|10.144|<tuple|12|12>>
     <associate|10.149|<tuple|13|13>>
     <associate|10.150|<tuple|14|13>>
-    <associate|10.151|<tuple|15|13>>
+    <associate|10.151|<tuple|15|14>>
     <associate|10.152|<tuple|15|14>>
     <associate|10.153|<tuple|17|14>>
     <associate|10.156|<tuple|18|14>>
     <associate|10.157|<tuple|18|14>>
     <associate|10.158|<tuple|19|14>>
     <associate|10.159|<tuple|21|15>>
-    <associate|10.160|<tuple|22|?>>
+    <associate|10.160|<tuple|22|15>>
     <associate|10.163|<tuple|23|15>>
     <associate|10.165|<tuple|24|16>>
     <associate|10.166|<tuple|25|16>>
-    <associate|10.187|<tuple|26|?>>
-    <associate|10.188|<tuple|27|?>>
-    <associate|10.189|<tuple|28|?>>
-    <associate|10.190|<tuple|29|?>>
-    <associate|10.191|<tuple|30|?>>
-    <associate|10.193|<tuple|31|?>>
-    <associate|10.195|<tuple|32|?>>
-    <associate|10.196|<tuple|33|?>>
-    <associate|10.197|<tuple|34|?>>
-    <associate|10.199|<tuple|35|?>>
+    <associate|10.187|<tuple|26|18>>
+    <associate|10.188|<tuple|27|18>>
+    <associate|10.189|<tuple|28|19>>
+    <associate|10.190|<tuple|29|19>>
+    <associate|10.191|<tuple|30|19>>
+    <associate|10.193|<tuple|31|19>>
+    <associate|10.195|<tuple|32|20>>
+    <associate|10.196|<tuple|33|20>>
+    <associate|10.197|<tuple|34|20>>
+    <associate|10.199|<tuple|35|20>>
     <associate|10.2.5|<tuple|3|3>>
+    <associate|10.205|<tuple|36|?>>
+    <associate|10.206|<tuple|37|?>>
+    <associate|10.207|<tuple|38|?>>
+    <associate|10.208|<tuple|39|?>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|3|7>>
@@ -1820,13 +1999,16 @@
     <associate|auto-16|<tuple|6|11>>
     <associate|auto-17|<tuple|4|13>>
     <associate|auto-18|<tuple|4.1|13>>
-    <associate|auto-19|<tuple|4.2|14>>
+    <associate|auto-19|<tuple|4.2|15>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-20|<tuple|7|16>>
     <associate|auto-21|<tuple|4.3|16>>
     <associate|auto-22|<tuple|5|18>>
-    <associate|auto-23|<tuple|8|?>>
-    <associate|auto-24|<tuple|5.1|?>>
+    <associate|auto-23|<tuple|8|20>>
+    <associate|auto-24|<tuple|5.1|22>>
+    <associate|auto-25|<tuple|9|?>>
+    <associate|auto-26|<tuple|10|?>>
+    <associate|auto-27|<tuple|5.2|?>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
     <associate|auto-5|<tuple|1|4>>
@@ -1837,7 +2019,7 @@
     <associate|fig10.10|<tuple|4|10>>
     <associate|fig10.11|<tuple|5|10>>
     <associate|fig10.12|<tuple|6|11>>
-    <associate|fig10.14|<tuple|8|?>>
+    <associate|fig10.14|<tuple|8|20>>
     <associate|sec10.2.3|<tuple|1|1>>
     <associate|sec10.2.4|<tuple|2|1>>
     <associate|sec10.3.1|<tuple|1.1|4>>
@@ -1928,6 +2110,17 @@
         vector <with|mode|<quote|math>|\<b-w\>> drawn from the posterior
         distribution <with|mode|<quote|math>|p(\<b-w\>\|t)>.
       </surround>|<pageref|auto-20>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|8>|>
+        \ Illustration of the expectation propagation approximation using a
+        Gaussian distribution for the example considered earlier in Figures
+        4.14 and 10.1. The left-hand plot shows the original distribution
+        (yellow) along with the Laplace (red), global variational (green),
+        and EP (blue) approximations, and the right-hand plot shows the
+        corresponding negative logarithms of the distributions. Note that the
+        EP distribution is broader than that obtained by variational
+        inference, as a consequence of the different form of KL divergence.
+      </surround>|<pageref|auto-23>>
     </associate>
     <\associate|toc>
       <with|par-left|<quote|1tab>|1<space|2spc> Predictive density
@@ -1989,6 +2182,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>
       Expectation Propagation> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-22><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|5.1<space|2spc>Example: The clutter problem
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-24>>
     </associate>
   </collection>
 </auxiliary>
