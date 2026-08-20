@@ -1034,7 +1034,7 @@
   variational parameters, and
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|h<around*|(|\<b-w\>,\<b-xi\>|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>\<sigma\><around*|(|\<xi\><rsub|n>|)>exp<around*|{|\<b-w\><rsup|T>\<b-varphi\><rsub|n>t<rsub|n>-<around*|(|\<b-w\><rsup|T>\<b-varphi\><rsub|n>+\<xi\><rsub|n>|)>/2-\<lambda\><around*|(|\<xi\><rsub|n>|)><around*|(|<around*|[|\<b-w\><rsup|T>\<b-varphi\><rsub|n>|]><rsup|2>-\<xi\><rsup|2><rsub|n>|)>|}>>>>>
+    <tformat|<table|<row|<cell|h<around*|(|\<b-w\>,\<b-xi\>|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>\<sigma\><around*|(|\<xi\><rsub|n>|)>exp<around*|{|\<b-w\><rsup|T>\<b-varphi\><rsub|n>t<rsub|n>-<around*|(|\<b-w\><rsup|T>\<b-varphi\><rsub|n>+\<xi\><rsub|n>|)>/2-\<lambda\><around*|(|\<xi\><rsub|n>|)><around*|(|<around*|[|\<b-w\><rsup|T>\<b-varphi\><rsub|n>|]><rsup|2>-\<xi\><rsup|2><rsub|n>|)>|}><eq-number><label|10.153>>>>>
   </eqnarray*>
 
   Evaluation of the exact posterior distribution would require normalization
@@ -1213,6 +1213,21 @@
   insights into the concept of `large margin', which was discussed in Section
   7.1 and which has qualitatively similar behaviour to the Bayesian solution.
 
+  <\padded-center>
+    <\small-figure|<image|image/fig_10_13_bayes_classification.png|0.5par|||>>
+      \ Illustration of the Bayesian approach to logistic regression for a
+      simple linearly separable data set. The plot on the left shows the
+      predictive distribution obtained using variational inference. We see
+      that the decision boundary lies roughly mid way between the clusters of
+      data points, and that the contours of the predictive distribution splay
+      out away from the data re\]ecting the greater uncertainty in the
+      classication of such regions. The plot on the right shows the decision
+      boundaries corresponding to ve samples of the parameter vector
+      <math|\<b-w\>> drawn from the posterior distribution
+      <math|p(\<b-w\>\|t)>.
+    </small-figure>
+  </padded-center>
+
   <subsection|Inference of hyperparameters>
 
   So far, we have treated the hyperparameter <math|\<alpha\>> in the prior
@@ -1226,6 +1241,172 @@
 
   Specically, we consider once again a simple isotropic Gaussian prior
   distribution of the form
+
+  <\equation>
+    p<around*|(|\<b-w\>\|\<alpha\>|)>=\<cal-N\><around*|(|\<b-w\>\|\<b-0\>,\<alpha\><rsup|-1>I|)><label|10.165>
+  </equation>
+
+  Our analysis is readily extended to more general Gaussian priors, for
+  instance if we wish to associate a different hyperparameter with different
+  subsets of the parameters <math|w<rsub|j>>. As usual, we consider a
+  conjugate hyperprior over <math|\<alpha\>> given by a gamma distribution
+
+  <\equation>
+    p(\<alpha\>) = Gam(\<alpha\>\|a<rsub|0>,b<rsub|0>)<label|10.166>
+  </equation>
+
+  governed by the constants <math|a<rsub|0>> and <math|b<rsub|0>> .
+
+  The marginal likelihood for this model now takes the form
+
+  <\equation*>
+    p<around*|(|\<b-t\>|)>=<big|int><big|int>p<around*|(|\<b-w\>,\<alpha\>,\<b-t\>|)>\<mathd\>\<b-w\>\<mathd\>\<alpha\>
+  </equation*>
+
+  where the joint distribution is given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-w\>,\<alpha\>,\<b-t\>|)>>|<cell|=>|<cell|p<around*|(|\<b-t\>\|\<b-w\>|)>p<around*|(|\<b-w\>\|\<alpha\>|)>p<around*|(|\<alpha\>|)>>>>>
+  </eqnarray*>
+
+  We are now faced with an analytically intractable integration over
+  <math|\<b-w\>> and <math|\<alpha\>>, which we shall tackle by using both
+  the local and global variational approaches in the same model.
+
+  To begin with, we introduce a variational distribution
+  <math|q<around*|(|\<b-w\>,\<alpha\>|)>>, and then apply the decomposition
+  (10.2), which in this instance takes the form
+
+  <\equation*>
+    ln p(\<b-t\>)=\<cal-L\>(q) + KL(q\<\|\|\>p)
+  </equation*>
+
+  where the lower bound <math|\<cal-L\>(q)> and the Kullback-Leibler
+  divergence <math|KL(q\<\|\|\>p)> are defined by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<cal-L\><around*|(|q|)>>|<cell|=>|<cell|<big|int><big|int>q<around*|(|\<b-w\>,\<alpha\>|)>ln<around*|{|<frac|p<around*|(|\<b-w\>,\<alpha\>,\<b-t\>|)>|q<around*|(|\<b-w\>,\<alpha\>|)>>|}>\<mathd\>\<b-w\>\<mathd\>\<alpha\>>>|<row|<cell|KL<around*|(|q\<\|\|\>p|)>>|<cell|=>|<cell|-<big|int><big|int>q<around*|(|\<b-w\>,\<alpha\>|)>ln<around*|{|<frac|p<around*|(|\<b-w\>,\<alpha\>\|\<b-t\>|)>|q<around*|(|\<b-w\>,\<alpha\>|)>>|}>\<mathd\>\<b-w\>\<mathd\>\<alpha\>>>>>
+  </eqnarray*>
+
+  At this point, the lower bound <math|\<cal-L\>(q)> is still intractable due
+  to the form of the likelihood factor <math|p(\<b-t\>\|\<b-w\>)>. We
+  therefore apply the local variational bound to each of the logistic sigmoid
+  factors as before. This allows us to use the inequality Eq. <eqref|10.152>
+  and place a lower bound on <math|\<cal-L\>(q)>, which will therefore also
+  be a lower bound on the log marginal likelihood
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln p<around*|(|\<b-t\>|)>>|<cell|\<geqslant\>>|<cell|\<cal-L\><around*|(|q|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|<wide|\<cal-L\>|~><around*|(|q,\<b-xi\>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|int><big|int>q<around*|(|\<b-w\>,\<alpha\>|)>ln<around*|{|<frac|h<around*|(|\<b-w\>,\<b-xi\>|)>p<around*|(|\<b-w\>\|\<alpha\>|)>p<around*|(|\<alpha\>|)>|q<around*|(|\<b-w\>,\<alpha\>|)>>|}>\<mathd\>\<b-w\>\<mathd\>\<alpha\>>>>>
+  </eqnarray*>
+
+  Next we assume that the variational distribution factorizes between
+  parameters and hyperparameters so that
+
+  <\equation*>
+    q(\<b-w\>, \<alpha\>) = q(\<b-w\>)q(\<alpha\>).
+  </equation*>
+
+  With this factorization we can appeal to the general result (10.9) to nd
+  expressions for the optimal factors. Consider rst the distribution q(w).
+  Discarding terms that are independent of <math|\<b-w\>>, we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|ln q<around*|(|\<b-w\>|)>>|<cell|=>|<cell|\<bbb-E\><rsub|\<alpha\>><around*|[|ln<around*|{|h<around*|(|\<b-w\>,\<b-xi\>|)>p<around*|(|\<b-w\>\|\<alpha\>|)>p<around*|(|\<alpha\>|)>|}>|]>+const>>|<row|<cell|>|<cell|=>|<cell|ln
+    h<around*|(|\<b-w\>,\<b-xi\>|)>+\<bbb-E\><rsub|\<alpha\>><around*|[|ln
+    p<around*|(|\<b-w\>,\<alpha\>|)>|]>+const>>>>
+  </eqnarray*>
+
+  We now substitute for <math|ln h(\<b-w\>,\<b-xi\>)> using Eq.
+  <eqref|10.153>, and for <math|ln p(\<b-w\>\|\<alpha\>)> using Eq.
+  <eqref|10.165>, giving
+
+  <\equation*>
+    ln q<around*|(|\<b-w\>|)>=-<frac|\<bbb-E\><around*|[|\<alpha\>|]>|2>\<b-w\><rsup|T>\<b-w\>+<big|sum><rsub|n=1><rsup|N><around*|{|<around*|(|t<rsub|n>-<frac|1|2>|)>\<b-w\><rsup|T>\<b-varphi\><rsub|n>-\<lambda\><around*|(|\<xi\><rsub|n>|)>\<b-w\><rsup|T>\<b-varphi\><rsub|n>\<b-varphi\><rsub|n><rsup|T>\<b-w\>|}>+const
+  </equation*>
+
+  We see that this is a quadratic function of <math|\<b-w\>> and so the
+  solution for <math|q(\<b-w\>)> will be Gaussian. Completing the square in
+  the usual way, we obtain
+
+  <\equation*>
+    q(\<b-w\>) = \<cal-N\>(\<b-w\>\|\<b-mu\><rsub|N>, \<Sigma\><rsub|N>)
+  </equation*>
+
+  where we have dened
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<Sigma\><rsub|N><rsup|-1>\<b-mu\><rsub|N>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><around*|(|t<rsub|n>-<frac|1|2>|)>\<b-varphi\><rsub|n>>>|<row|<cell|\<Sigma\><rsub|N><rsup|-1>>|<cell|=>|<cell|\<bbb-E\><around*|[|\<alpha\>|]>I+2<big|sum><rsub|n=1><rsup|N>\<lambda\><around*|(|\<xi\><rsub|n>|)>\<b-varphi\><rsub|n>\<b-varphi\><rsub|n><rsup|T>>>>>
+  </eqnarray*>
+
+  Similarly, the optimal solution for the factor <math|q(\<alpha\>)> is
+  obtained from
+
+  <\equation*>
+    ln q(\<alpha\>) = \<bbb-E\><rsub|\<b-w\>> [ln p(\<b-w\>\|\<alpha\>)] + ln
+    p(\<alpha\>) + const.
+  </equation*>
+
+  Substituting for <math|ln p(\<b-w\>\|\<alpha\>)> using Eq. <eqref|10.165>,
+  and for <math|ln p(\<alpha\>)> using Eq. <eqref|10.166>, we obtain
+
+  <\equation*>
+    ln q<around*|(|\<alpha\>|)>=<frac|M|2>ln\<alpha\>-<frac|\<alpha\>|2>\<bbb-E\><around*|[|\<b-w\><rsup|T>\<b-w\>|]>+<around*|(|a<rsub|0>-1|)>ln\<alpha\>-b<rsub|0>\<alpha\>+const
+  </equation*>
+
+  We recognize this as the log of a gamma distribution, and so we obtain
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|q<around*|(|\<alpha\>|)>>|<cell|=>|<cell|Gam<around*|(|\<alpha\>\|a<rsub|N>,b<rsub|N>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|\<Gamma\><around*|(|a<rsub|0>|)>>a<rsub|0><rsup|b<rsub|0>>\<alpha\><rsup|a<rsub|0>-1>e<rsup|-b<rsub|0>\<alpha\>>>>>>
+  </eqnarray*>
+
+  where
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|a<rsub|N>>|<cell|=>|<cell|a<rsub|0>+<frac|M|2>>>|<row|<cell|b<rsub|N>>|<cell|=>|<cell|b<rsub|0>+<frac|1|2>\<bbb-E\><rsub|\<b-w\>><around*|[|\<b-w\><rsup|T>\<b-w\>|]>>>>>
+  </eqnarray*>
+
+  We also need to optimize the variational parameters <math|\<xi\><rsub|n>>,
+  and this is also done by maximizing the lower bound
+  <math|<wide|\<cal-L\>|~><around*|(|q,\<b-xi\>|)>>. Omitting terms that are
+  independent of <math|\<b-xi\>>, and integrating over <math|\<alpha\>>, we
+  have
+
+  <\equation*>
+    <wide|\<cal-L\>|~><around*|(|q,\<b-xi\>|)>=<big|int>q<around*|(|\<b-w\>|)>ln
+    h<around*|(|\<b-w\>,\<b-xi\>|)>\<mathd\>\<b-w\>+const
+  </equation*>
+
+  Note that this has precisely the same form as Eq. <eqref|10.159>, and so we
+  can again appeal to our earlier result Eq. <eqref|10.163>, which can be
+  obtained by direct optimization of the marginal likelihood function,
+  leading to re-estimation equations of the form
+
+  <\equation*>
+    <around*|(|\<xi\><rsub|n><rsup|new>|)><rsup|2>=\<b-varphi\><rsub|n><rsup|T><around*|(|\<Sigma\><rsub|N>+\<b-mu\><rsub|N>\<b-mu\><rsub|N><rsup|T>|)>\<b-varphi\><rsub|n>
+  </equation*>
+
+  We have obtained re-estimation equations for the three quantities
+  <math|q(\<b-w\>)>, <math|q<around*|(|\<alpha\>|)>>,and <math|\<b-xi\>>, and
+  so after making suitable initializations, we can cycle through these
+  quantities, updating each in turn. The required moments are given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<alpha\>|]>>|<cell|=>|<cell|<frac|a<rsub|N>|b<rsub|N>>>>|<row|<cell|\<bbb-E\><around*|[|\<b-w\>\<b-w\><rsup|T>|]>>|<cell|=>|<cell|\<Sigma\><rsub|N>+\<b-mu\><rsub|N><rsup|T>\<b-mu\><rsub|N>>>>>
+  </eqnarray*>
+
+  <section| Expectation Propagation>
+
+  We conclude this chapter by discussing an alternative form of deterministic
+  approximate inference, known as <em|expectation propagation> or <em|EP>
+  (Minka, 2001a; Minka,2001b). As with the variational Bayes methods
+  discussed so far, this too is based on the minimization of a
+  Kullback-Leibler divergence but now of the reverse form, which gives the
+  approximation rather different properties.
+
+  Consider for a moment the problem of minimizing <math|KL(p\<\|\|\>q)> with
+  respect to <math|q(\<b-z\>)> when <math|p(\<b-z\>)> is a fixed distribution
+  and <math|q(\<b-z\>)> is a member of the exponential family and so, from
+  (2.194), can be written in the form
 </body>
 
 <\initial>
@@ -1248,14 +1429,17 @@
     <associate|10.141|<tuple|11|12>>
     <associate|10.144|<tuple|12|12>>
     <associate|10.149|<tuple|13|13>>
-    <associate|10.150|<tuple|14|?>>
-    <associate|10.151|<tuple|15|?>>
-    <associate|10.152|<tuple|15|?>>
-    <associate|10.156|<tuple|17|?>>
-    <associate|10.157|<tuple|17|?>>
-    <associate|10.158|<tuple|18|?>>
-    <associate|10.159|<tuple|20|?>>
-    <associate|10.163|<tuple|21|?>>
+    <associate|10.150|<tuple|14|13>>
+    <associate|10.151|<tuple|15|13>>
+    <associate|10.152|<tuple|15|14>>
+    <associate|10.153|<tuple|17|?>>
+    <associate|10.156|<tuple|18|14>>
+    <associate|10.157|<tuple|18|14>>
+    <associate|10.158|<tuple|19|14>>
+    <associate|10.159|<tuple|21|15>>
+    <associate|10.163|<tuple|22|15>>
+    <associate|10.165|<tuple|23|?>>
+    <associate|10.166|<tuple|24|?>>
     <associate|10.2.5|<tuple|3|3>>
     <associate|10.90|<tuple|1|4>>
     <associate|auto-1|<tuple|1|1>>
@@ -1270,7 +1454,9 @@
     <associate|auto-18|<tuple|4.1|13>>
     <associate|auto-19|<tuple|4.2|14>>
     <associate|auto-2|<tuple|2|1>>
-    <associate|auto-20|<tuple|4.3|?>>
+    <associate|auto-20|<tuple|7|16>>
+    <associate|auto-21|<tuple|4.3|?>>
+    <associate|auto-22|<tuple|5|?>>
     <associate|auto-3|<tuple|1|2>>
     <associate|auto-4|<tuple|3|3>>
     <associate|auto-5|<tuple|1|4>>
@@ -1411,6 +1597,10 @@
       <with|par-left|<quote|1tab>|4.2<space|2spc>Optimizing the variational
       parameters <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-19>>
+
+      <with|par-left|<quote|1tab>|4.3<space|2spc>Inference of hyperparameters
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-20>>
     </associate>
   </collection>
 </auxiliary>
