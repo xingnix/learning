@@ -1097,6 +1097,78 @@
 
   <section|Gibbs Sampling>
 
+  Gibbs sampling (Geman and Geman, 1984) is a simple and widely applicable
+  Markov chain Monte Carlo algorithm and can be seen as a special case of the
+  Metropolis-Hastings algorithm. Consider the distribution
+  <math|p(\<b-z\>)=p(z<rsub|1>,\<cdots\>,z<rsub|M>)> from which we wish to
+  sample, and suppose that we have chosen some initial state for the Markov
+  chain. Each step of the Gibbs sampling procedure involves replacing the
+  value of one of the variables by a value drawn from the distribution of
+  that variable conditioned on the values of the remaining variables. Thus we
+  replace <math|z<rsub|i>> by a value drawn from the distribution
+  <math|p(z<rsub|i>\|\<b-z\><rsub|\\i>)>, where <math|z<rsub|i>> denotes the
+  i'th component of <math|\<b-z\>>, and <math|\<b-z\><rsub|\\i>> denotes
+  <math|z<rsub|1>,\<cdots\>,z<rsub|M>> but with <math|z<rsub|i>> omitted.
+  This procedure is repeated either by cycling through the variables in some
+  particular order or by choosing the variable to be updated at each step at
+  random from some distribution.
+
+  For example, suppose we have a distribution
+  <math|p(z<rsub|1>,z<rsub|2>,z<rsub|3>)> over three variables, and at step
+  <math|\<tau\>> of the algorithm we have selected values
+  <math|z<rsub|1><rsup|<around*|(|\<tau\>|)>>>,
+  <math|z<rsub|2><rsup|<around*|(|\<tau\>|)>>> and
+  <math|z<rsub|3><rsup|<around*|(|\<tau\>|)>>>. We rst replace
+  <math|z<rsub|1><rsup|<around*|(|\<tau\>|)>>> by a new value
+  <math|z<rsub|1><rsup|<around*|(|\<tau\>+1|)>>> obtained by sampling from
+  the conditional distribution
+
+  <\equation*>
+    p<around*|(|z<rsub|1>\|z<rsub|2><rsup|<around*|(|\<tau\>|)>>,z<rsub|3><rsup|<around*|(|\<tau\>|)>>|)>.
+  </equation*>
+
+  Next we replace <math|z<rsub|2><rsup|<around*|(|\<tau\>|)>>> by a value
+  <math|z<rsub|2><rsup|<around*|(|\<tau\>+1|)>>> obtained by sampling from
+  the conditional distribution
+
+  <\equation*>
+    p<around*|(|z<rsub|2>\|z<rsub|1><rsup|<around*|(|\<tau\>+1|)>>,z<rsub|3><rsup|<around*|(|\<tau\>|)>>|)>
+  </equation*>
+
+  so that the new value for <math|z<rsub|1>> is used straight away in
+  subsequent sampling steps. Then we update <math|z<rsub|3>> with a sample
+  <math|z<rsub|3><rsup|<around*|(|\<tau\>+1|)>>> drawn from
+
+  <\equation*>
+    p<around*|(|z<rsub|3>\|z<rsub|1><rsup|<around*|(|\<tau\>+1|)>>,z<rsub|2><rsup|<around*|(|\<tau\>+1|)>>|)>
+  </equation*>
+
+  and so on, cycling through the three variables in turn.
+
+  Gibbs Sampling
+
+  <\enumerate-numeric>
+    <item>Initialize {zi : i = 1, . . . , M }
+
+    <item>For <math|\<tau\>=1,\<cdots\>,T> :
+
+    <\itemize-minus>
+      <item>Sample <math|z<rsub|1><rsup|<around*|(|\<tau\>+1|)>>\<sim\>p<around*|(|z<rsub|1>\|z<rsub|2><rsup|<around*|(|\<tau\>|)>>,z<rsub|3><rsup|<around*|(|\<tau\>|)>>,\<cdots\>,z<rsub|M><rsup|<around*|(|\<tau\>|)>>|)>.>
+
+      <item>Sample <math|z<rsub|2><rsup|<around*|(|\<tau\>+1|)>>\<sim\>p<around*|(|z<rsub|1>\|z<rsub|1><rsup|<around*|(|\<tau\>|)>>,z<rsub|3><rsup|<around*|(|\<tau\>|)>>,\<cdots\>,z<rsub|M><rsup|<around*|(|\<tau\>|)>>|)>.>
+
+      \<vdots\>
+
+      <item>Sample <math|z<rsub|j><rsup|<around*|(|\<tau\>+1|)>>\<sim\>p<around*|(|z<rsub|1>\|z<rsub|1><rsup|<around*|(|\<tau\>|)>>,z<rsub|2><rsup|<around*|(|\<tau\>|)>>,\<cdots\>,z<rsub|j-1><rsup|<around*|(|\<tau\>|)>>,z<rsub|j+1><rsup|<around*|(|\<tau\>|)>>,\<cdots\>,z<rsub|M><rsup|<around*|(|\<tau\>|)>>|)>.>
+
+      \<vdots\>
+
+      <item>Sample <math|z<rsub|M><rsup|<around*|(|\<tau\>+1|)>>\<sim\>p<around*|(|z<rsub|1>\|z<rsub|1><rsup|<around*|(|\<tau\>|)>>,z<rsub|3><rsup|<around*|(|\<tau\>|)>>,\<cdots\>,z<rsub|M-1><rsup|<around*|(|\<tau\>|)>>|)>.>
+    </itemize-minus>
+  </enumerate-numeric>
+
+  \;
+
   \;
 </body>
 
