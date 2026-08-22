@@ -830,9 +830,9 @@
   for all values of <math|\<b-z\><rsub|A>> and <math|\<b-z\><rsub|B>> . The
   candidate sample is then accepted with probability
 
-  <\equation*>
-    A<around*|(|\<b-z\><rsup|\<ast\>>,\<b-z\><rsup|<around*|(|\<tau\>|)>>|)>=min<around*|(|1,<frac|<wide|p|~><around*|(|\<b-z\><rsup|\<ast\>>|)>|<wide|p|~><around*|(|\<b-z\><rsup|<around*|(|\<tau\>|)>>|)>>|)>
-  </equation*>
+  <\equation>
+    A<around*|(|\<b-z\><rsup|\<ast\>>,\<b-z\><rsup|<around*|(|\<tau\>|)>>|)>=min<around*|(|1,<frac|<wide|p|~><around*|(|\<b-z\><rsup|\<ast\>>|)>|<wide|p|~><around*|(|\<b-z\><rsup|<around*|(|\<tau\>|)>>|)>>|)><label|11.33>
+  </equation>
 
   This can be achieved by choosing a random number <math|u> with uniform
   distribution over the unit interval <math|(0,1)> and then accepting the
@@ -920,7 +920,184 @@
   This of course can be represented as a directed graph in the form of a
   chain, an example of which is shown in Figure 8.38. We can then specify the
   Markov chain by giving the probability distribution for the initial
-  variable <math|p(\<b-z\><rsup|(0)>)> together with the
+  variable <math|p(\<b-z\><rsup|(0)>)> together with the conditional
+  probabilities for subsequent variables in the form of <em|transition
+  probabilities> <math|T<rsub|m><around*|(|\<b-z\><rsup|<around*|(|m|)>>,\<b-z\><rsup|<around*|(|m+1|)>>|)>\<equiv\>p<around*|(|\<b-z\><rsup|<around*|(|m+1|)>>\|\<b-z\><rsup|<around*|(|m|)>>|)>>
+  . A Markov chain is called <em|homogeneous> if the transition probabilities
+  are the same for all m.
+
+  The marginal probability for a particular variable can be expressed in
+  terms of the marginal probability for the previous variable in the chain in
+  the form
+
+  <\equation*>
+    p<around*|(|\<b-z\><rsup|<around*|(|m+1|)>>|)>=<big|sum><rsub|\<b-z\><rsup|<around*|(|m|)>>>p<around*|(|\<b-z\><rsup|<around*|(|m+1|)>>\|\<b-z\><rsup|<around*|(|m|)>>|)>p<around*|(|\<b-z\><rsup|<around*|(|m|)>>|)>.
+  </equation*>
+
+  A distribution is said to be invariant, or stationary, with respect to a
+  Markov chain if each step in the chain leaves that distribution invariant.
+  Thus, for a homogeneous Markov chain with transition probabilities
+  <math|T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)>>, the distribution
+  <math|p<rsup|\<ast\>><around*|(|\<b-z\>|)>> is invariant if
+
+  <\equation*>
+    p<rsup|*\<ast\>><around*|(|\<b-z\>|)>=<big|sum><rsub|\<b-z\><rprime|'>>T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)>p<rsup|*\<ast\>><around*|(|\<b-z\><rprime|'>|)>.
+  </equation*>
+
+  Note that a given Markov chain may have more than one invariant
+  distribution. For instance, if the transition probabilities are given by
+  the identity transformation, then any distribution will be invariant.
+
+  A sufcient (but not necessary) condition for ensuring that the required
+  distribution <math|p(\<b-z\>)> is invariant is to choose the transition
+  probabilities to satisfy the property of <em|detailed balance>, dened by
+
+  <\equation>
+    p<rsup|\<ast\>><around*|(|\<b-z\>|)>T<around*|(|\<b-z\>,\<b-z\><rprime|'>|)>=p<rsup|*\<ast\>><around*|(|\<b-z\><rprime|'>|)>T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)><label|11.40>
+  </equation>
+
+  for the particular distribution <math|p<rsup|\<ast\>><around*|(|\<b-z\>|)>>.
+  It is easily seen that a transition probability that satifies detailed
+  balance with respect to a particular distribution will leave that
+  distribution invariant, because
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<big|sum><rsub|\<b-z\><rprime|'>>p<rsup|*\<ast\>><around*|(|\<b-z\><rprime|'>|)>T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)>>|<cell|=>|<cell|<big|sum><rsub|\<b-z\><rprime|'>>p<rsup|*\<ast\>><around*|(|\<b-z\>|)>T<around*|(|\<b-z\>,\<b-z\><rprime|'>|)>>>|<row|<cell|>|<cell|=>|<cell|p<rsup|*\<ast\>><around*|(|\<b-z\>|)><big|sum><rsub|\<b-z\><rprime|'>>p<around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>>>|<row|<cell|>|<cell|=>|<cell|p<rsup|*\<ast\>><around*|(|\<b-z\>|)>>>>>
+  </eqnarray*>
+
+  A Markov chain that respects detailed balance is said to be
+  <em|reversible>.
+
+  Our goal is to use Markov chains to sample from a given distribution. We
+  can achieve this if we set up a Markov chain such that the desired
+  distribution is invariant. However, we must also require that for
+  <math|m\<rightarrow\>\<infty\>>, the distribution
+  <math|p(\<b-z\><rsup|<around*|(|m|)>>)> converges to the required invariant
+  distribution <math|p<rsup|\<ast\>><around*|(|\<b-z\>|)>>, irrespective of
+  the choice of initial distribution <math|p(\<b-z\><rsup|(0)>)>. This
+  property is called <em|ergodicity>, and the invariant distribution is then
+  called the <em|equilibrium distribution>. Clearly, an ergodic Markov chain
+  can have only one equilibrium distribution. It can be shown that a
+  homogeneous Markov chain will be ergodic, subject only to weak restrictions
+  on the invariant distribution and the transition probabilities (Neal,
+  1993). In practice we often construct the transition probabilities from a
+  set of \<#2018\>base' transitions <math|B<rsub|1>,B<rsub|2>,\<cdots\>,B<rsub|K>>
+  . This can be achieved through a mixture distribution of the form
+
+  <\equation>
+    T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)>=<big|sum><rsub|k=1><rsup|K>\<alpha\><rsub|k>B<rsub|k><around*|(|\<b-z\><rprime|'>,\<b-z\>|)><label|11.42>
+  </equation>
+
+  for some set of mixing coefcients <math|\<alpha\><rsub|1>,\<cdots\>,\<alpha\><rsub|K>>
+  satisfying <math|\<alpha\><rsub|k>\<geqslant\>0> and
+  <math|<big|sum><rsub|k>\<alpha\><rsub|k>=1>. Alternatively, the base
+  transitions may be combined through successive application, so that
+
+  <\equation>
+    T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)>=<big|sum><rsub|\<b-z\><rsub|1>>\<cdots\><big|sum><rsub|z<rsub|n-1>>B<rsub|1><around*|(|\<b-z\><rprime|'>,\<b-z\><rsub|1>|)>\<cdots\>B<rsub|K-1><around*|(|\<b-z\><rsub|k-2>,\<b-z\><rsub|k-1>|)>B<rsub|K><around*|(|\<b-z\><rsub|K-1>,\<b-z\>|)><label|11.43>
+  </equation>
+
+  If a distribution is invariant with respect to each of the base
+  transitions, then obviously it will also be invariant with respect to
+  either of the <math|T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)>> given by Eq.
+  <eqref|11.42> or <eqref|11.43>. For the case of the mixture Eq.
+  <eqref|11.42>, if each of the base transitions satisfies detailed balance,
+  then the mixturetransition <math|T> will also satisfy detailed balance.
+  This does not hold for the transition probability constructed using Eq.
+  <eqref|11.43>, although by symmetrizing the order of application of the
+  base transitions, in the form <math|B<rsub|1>,B<rsub|2>,\<cdots\>,B<rsub|K>>,
+  <math|B<rsub|K>,\<cdots\>,B<rsub|2>B<rsub|1>> detailed balance can be
+  restored. A common example of the use of composite transition probabilities
+  is where each base transition changes only a subset of the variables.
+
+  <subsection|The Metropolis-Hastings algorithm>
+
+  Earlier we introduced the basic Metropolis algorithm, without actually
+  demonstrating that it samples from the required distribution. Before giving
+  a proof, we first discuss a generalization, known as the
+  <em|Metropolis-Hastings> algorithm (Hastings, 1970), to the case where the
+  proposal distribution is no longer a symmetric function of its arguments.
+  In particular at step <math|\<tau\>> of the algorithm, in which the current
+  state is <math|\<b-z\><rsup|<around*|(|\<tau\>|)>>> , we draw a sample
+  <math|\<b-z\><rsup|\<ast\>>> from the distribution
+  <math|q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rsup|*<around*|(|\<tau\>|)>>|)>>
+  and then accept it with probability <math|A<rsub|k><around*|(|\<b-z\><rsup|\<ast\>>,\<b-z\><rsub|\<tau\>>|)>>
+  where
+
+  <\equation>
+    A<rsub|k><around*|(|\<b-z\><rsup|\<ast\>>,\<b-z\><rsup|*<around*|(|\<tau\>|)>>|)>=min<around*|(|1,<frac|<wide|p|~><around*|(|\<b-z\><rsup|\<ast\>>|)>q<rsub|k><around*|(|\<b-z\><rsup|*<around*|(|\<tau\>|)>>\|\<b-z\><rsup|\<ast\>>|)>|<wide|p|~><around*|(|\<b-z\><rsup|*<around*|(|\<tau\>|)>>|)>q<rsub|k><around*|(|\<b-z\><rsup|\<ast\>>\|\<b-z\><rsup|*<around*|(|\<tau\>|)>>|)>>|)>.<label|11.44>
+  </equation>
+
+  Here <math|k> labels the members of the set of possible transitions being
+  considered. Again, the evaluation of the acceptance criterion does not
+  require knowledge of the normalizing constant <math|Z<rsub|p>> in the
+  probability distribution <math|p(\<b-z\>)=<wide|p|~>(\<b-z\>)/Z<rsub|p>>.
+  For a symmetric proposal distribution the Metropolis-Hastings criterion Eq.
+  <eqref|11.44> reduces to the standard Metropolis criterion given by Eq.
+  <eqref|11.33>.
+
+  We can show that <math|p(\<b-z\>)> is an invariant distribution of the
+  Markov chain defined by the Metropolis-Hastings algorithm by showing that
+  detailed balance, defined by <eqref|11.40>, is satisfied. Using Eq.
+  <eqref|11.44> we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>A<rsub|k><around*|(|\<b-z\><rprime|'>,\<b-z\>|)>>|<cell|=>|<cell|min<around*|(|p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>,p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|min<around*|(|p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>,p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>A<rsub|k><around*|(|\<b-z\>,\<b-z\><rprime|'>|)>>>>>
+  </eqnarray*>
+
+  as required.
+
+  The specic choice of proposal distribution can have a marked effect on the
+  performance of the algorithm. For continuous state spaces, a common choice
+  is a Gaussian centred on the current state, leading to an important
+  trade-off in determining the variance parameter of this distribution. If
+  the variance is small, then the proportion of accepted transitions will be
+  high, but progress through the state space takes the form of a slow random
+  walk leading to long correlation times. However, if the variance parameter
+  is large, then the rejection rate will be high because, in the kind of
+  complex problems we are considering, many of the proposed steps will be to
+  states for which the probability <math|p(\<b-z\>)> is low.\ 
+
+  Consider a multivariate distribution <math|p<around*|(|\<b-z\>|)>> having
+  strong correlations between the components of <math|\<b-z\>>, as
+  illustrated in Figure 11.10. The scale <math|\<rho\>> of the proposal
+  distribution should be as large as possible without incurring high
+  rejection rates. This suggests that <math|\<rho\>> should be of the same
+  order as the smallest length scale <math|\<sigma\><rsub|min>> . The system
+  then explores the distribution along the more extended direction by means
+  of a random walk, and so the number of steps to arrive at a state that is
+  more or less independent of the original state is of order
+  <math|(\<sigma\><rsub|max>/\<sigma\><rsub|min>)<rsup|2>> . In fact in two
+  dimensions, the increase in rejection rate as <math|\<rho\>> increases is
+  offset by the larger steps sizes of those transitions that are accepted,
+  and more generally for a multivariate Gaussian the number of steps required
+  to obtain independent samples scales like
+  <math|(\<sigma\><rsub|max>/\<sigma\><rsub|2>)<rsup|2>> where
+  <math|\<sigma\><rsub|2>> is the second-smallest standard deviation (Neal,
+  1993). These details aside, it remains the case that if the length scales
+  over which the distributions vary are very different in different
+  directions, then the Metropolis Hastings algorithm can have very slow
+  convergence.
+
+  <\padded-center>
+    <\small-figure|<image|image/fig_11_10_metropolis_hastings.png|.3par|||>>
+      Schematic illustration of the use of an isotropic Gaussian proposal
+      distribution (blue circle) to sample from a correlated multivariate
+      Gaussian distribution (red ellipse) having very different standard
+      deviations in different directions, using the Metropolis-Hastings
+      algorithm. In order to keep the rejection rate low, the scale
+      <math|\<rho\>> of the proposal distribution should be on the order of
+      the smallest standard deviation <math|\<sigma\><rsub|min>> , which
+      leads to random walk behaviour in which the number of steps separating
+      states that are approximately independent is of order
+      <math|(\<sigma\><rsub|max>/\<sigma\><rsub|min>)<rsup|2>> where
+      <math|\<sigma\><rsub|max>> is the largest standard deviation.
+    </small-figure>
+  </padded-center>
+
+  <section|Gibbs Sampling>
+
+  \;
 </body>
 
 <\initial>
@@ -932,30 +1109,38 @@
 <\references>
   <\collection>
     <associate|11.1|<tuple|1.1|1>>
-    <associate|11.15|<tuple|1.4|5>>
-    <associate|11.2|<tuple|1.2|?>>
-    <associate|11.23|<tuple|1.7|?>>
-    <associate|11.4|<tuple|1.3|?>>
+    <associate|11.15|<tuple|1.4|6>>
+    <associate|11.2|<tuple|1.2|1>>
+    <associate|11.23|<tuple|1.7|9>>
+    <associate|11.33|<tuple|1.8|?>>
+    <associate|11.4|<tuple|1.3|2>>
+    <associate|11.40|<tuple|1.9|?>>
+    <associate|11.42|<tuple|1.10|?>>
+    <associate|11.43|<tuple|1.11|?>>
+    <associate|11.44|<tuple|1.12|?>>
     <associate|11.5|<tuple|1.4|3>>
     <associate|11.6|<tuple|1.5|3>>
-    <associate|11.8|<tuple|1.6|3>>
+    <associate|11.8|<tuple|1.6|4>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.1.3|6>>
     <associate|auto-11|<tuple|1.6|6>>
     <associate|auto-12|<tuple|1.7|7>>
     <associate|auto-13|<tuple|1.1.4|7>>
-    <associate|auto-14|<tuple|1.8|?>>
-    <associate|auto-15|<tuple|1.1.5|?>>
-    <associate|auto-16|<tuple|1.1.6|?>>
-    <associate|auto-17|<tuple|1.2|?>>
-    <associate|auto-18|<tuple|1.9|?>>
-    <associate|auto-19|<tuple|1.2.1|?>>
+    <associate|auto-14|<tuple|1.8|8>>
+    <associate|auto-15|<tuple|1.1.5|10>>
+    <associate|auto-16|<tuple|1.1.6|11>>
+    <associate|auto-17|<tuple|1.2|12>>
+    <associate|auto-18|<tuple|1.9|13>>
+    <associate|auto-19|<tuple|1.2.1|13>>
     <associate|auto-2|<tuple|1.1|1>>
+    <associate|auto-20|<tuple|1.2.2|?>>
+    <associate|auto-21|<tuple|1.10|?>>
+    <associate|auto-22|<tuple|1.3|?>>
     <associate|auto-3|<tuple|1.1|3>>
     <associate|auto-4|<tuple|1.1.1|3>>
     <associate|auto-5|<tuple|1.2|3>>
     <associate|auto-6|<tuple|1.3|4>>
-    <associate|auto-7|<tuple|1.1.2|4>>
+    <associate|auto-7|<tuple|1.1.2|5>>
     <associate|auto-8|<tuple|1.4|5>>
     <associate|auto-9|<tuple|1.5|6>>
     <associate|fig11.1|<tuple|1.1|1>>
@@ -963,11 +1148,11 @@
     <associate|fig11.3|<tuple|1.3|4>>
     <associate|fig11.4|<tuple|1.4|5>>
     <associate|fig11.5|<tuple|1.5|6>>
-    <associate|fig11.6|<tuple|1.6|?>>
+    <associate|fig11.6|<tuple|1.6|6>>
     <associate|fig11.7|<tuple|1.7|7>>
-    <associate|fig11.8|<tuple|1.8|?>>
-    <associate|fig11.9|<tuple|1.9|?>>
-    <associate|sec11.1.2|<tuple|1.1.2|?>>
+    <associate|fig11.8|<tuple|1.8|8>>
+    <associate|fig11.9|<tuple|1.9|13>>
+    <associate|sec11.1.2|<tuple|1.1.2|5>>
   </collection>
 </references>
 
@@ -1030,6 +1215,27 @@
         <with|mode|<quote|math>|q(z)> that is also Gaussian and whose scaled
         version <with|mode|<quote|math>|k q(z)> is shown by the red curve.
       </surround>|<pageref|auto-12>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1.8>|>
+        Importance sampling addresses the problem of evaluating the
+        expectation of a function <with|mode|<quote|math>|f(z)> with respect
+        to a distribution <with|mode|<quote|math>|p(z)> from which it is
+        difcult to draw samples directly. Instead, samples
+        <with|mode|<quote|math>|{z<rsup|(l)>}> are drawn from a simpler
+        distribution <with|mode|<quote|math>|q(z)>, and the corresponding
+        terms in the summation are weighted by the ratios
+        <with|mode|<quote|math>|p(z<rsup|(l)>)/q(z<rsup|(l)>)>.
+      </surround>|<pageref|auto-14>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1.9>|>
+        A simple illustration using Metropolis algorithm to sample from a
+        Gaussian distribution whose one standard-deviation contour is shown
+        by the ellipse. The proposal distribution is an isotropic Gaussian
+        distribution whose standard deviation is
+        <with|mode|<quote|math>|0.2>. Steps that are accepted are shown as
+        green lines, and rejected steps are shown in red. A total of 150
+        candidate samples are generated, of which 43 are rejected.
+      </surround>|<pageref|auto-18>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Sampling
@@ -1055,6 +1261,22 @@
       <with|par-left|<quote|1tab>|1.1.4<space|2spc>Importance sampling
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-13>>
+
+      <with|par-left|<quote|1tab>|1.1.5<space|2spc>Sampling-importance-resampling
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-15>>
+
+      <with|par-left|<quote|1tab>|1.1.6<space|2spc>Sampling and the EM
+      algorithm <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-16>>
+
+      1.2<space|2spc>Markov Chain Monte Carlo
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-17>
+
+      <with|par-left|<quote|1tab>|1.2.1<space|2spc>Markov chains
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-19>>
     </associate>
   </collection>
 </auxiliary>
