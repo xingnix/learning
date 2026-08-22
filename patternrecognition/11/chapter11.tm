@@ -1,6 +1,6 @@
 <TeXmacs|2.1>
 
-<style|book>
+<style|<tuple|book|granite>>
 
 <\body>
   <\chapter>
@@ -387,7 +387,7 @@
     </small-figure>
   </padded-center>
 
-  <subsection|Adaptive rejection sampling>
+  <subsection|Adaptive rejection sampling><label|sec11.1.3>
 
   In many instances where we might wish to apply rejection sampling, it
   proves difcult to determine a suitable analytic form for the envelope
@@ -1169,7 +1169,292 @@
 
   \;
 
+  To show that this procedure samples from the required distribution, we rst
+  of all note that the distribution <math|p(\<b-z\>)> is an invariant of each
+  of the Gibbs sampling steps individually and hence of the whole Markov
+  chain. This follows from the fact that when we sample from
+  <math|p(z<rsub|i>\|<around*|{|z<rsub|\\i>|}>)>, the marginal distribution
+  <math|p(\<b-z\><rsub|\\i>)> is clearly invariant because the value of
+  <math|\<b-z\><rsub|\\i>> is unchanged. Also, each step by denition samples
+  from the correct conditional distribution
+  <math|p(z<rsub|i>\|\<b-z\><rsub|\\i>)>. Because these conditional and
+  marginal distributions together specify the joint distribution, we see that
+  the joint distribution is itself invariant.
+
+  The second requirement to be satised in order that the Gibbs sampling
+  procedure samples from the correct distribution is that it be ergodic. A
+  sufcient condition for ergodicity is that none of the conditional
+  distributions be anywhere zero. If this is the case, then any point in
+  <math|\<b-z\>> space can be reached from any other point in a nite number
+  of steps involving one update of each of the component variables. If this
+  requirement is not satised, so that some of the conditional distributions
+  have zeros, then ergodicity, if it applies, must be proven explicitly.
+
+  The distribution of initial states must also be specified in order to
+  complete the algorithm, although samples drawn after many iterations will
+  effectively become independent of this distribution. Of course, successive
+  samples from the Markov chain will be highly correlated, and so to obtain
+  samples that are nearly independent it will be necessary to subsample the
+  sequence. We can obtain the Gibbs sampling procedure as a particular
+  instance of the Metropolis-Hastings algorithm as follows. Consider a
+  Metropolis-Hastings sampling step involving the variable <math|z<rsub|k>>
+  in which the remaining variables <math|\<b-z\><rsub|\\k>> remain fixed, and
+  for which the transition probability from <math|\<b-z\>> to
+  <math|\<b-z\><rsup|\<ast\>>> is given by
+  <math|q<rsub|k><around*|(|\<b-z\><rsup|\<ast\>>\|\<b-z\>|)>=p<around*|(|z<rsub|k><rsup|\<ast\>>\|\<b-z\><rsub|\\k>|)>>.
+  We note that <math|\<b-z\><rsup|\<ast\>><rsub|\\k>=\<b-z\><rsub|\\k>>
+  because these components are unchanged by the sampling step. Also,
+  <math|p(\<b-z\>) = p(z<rsub|k>\|\<b-z\><rsub|\\k>)p(\<b-z\><rsub|\\k>)>.
+  Thus the factor that determines the acceptance probability in the
+  Metropolis-Hastings Eq. <eqref|11.44> is given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|A<around*|(|\<b-z\><rsup|\<ast\>>,\<b-z\>|)>>|<cell|=>|<cell|<frac|p<around*|(|\<b-z\><rsup|\<ast\>>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rsup|\<ast\>>|)>|p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\><rsup|\<ast\>>\|\<b-z\>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|
+    p(z<rsub|k><rsup|\<ast\>>\|\<b-z\><rsup|\<ast\>><rsub|\\k>)p(\<b-z\><rsup|\<ast\>><rsub|\\k>)p<around*|(|z<rsub|k>\|\<b-z\><rsub|\\k><rsup|\<ast\>>|)>|
+    p(z<rsub|k>\|\<b-z\><rsub|\\k>)p(\<b-z\><rsub|\\k>)p<around*|(|z<rsub|k><rsup|\<ast\>>\|\<b-z\><rsub|\\k>|)>>>>|<row|<cell|>|<cell|=>|<cell|1>>>>
+  </eqnarray*>
+
+  where we have used <math|\<b-z\><rsup|\<ast\>><rsub|\\k
+  >=\<b-z\><rsub|\\k>> . Thus the Metropolis-Hastings steps are always
+  accepted. As with the Metropolis algorithm, we can gain some insight into
+  the behaviour of Gibbs sampling by investigating its application to a
+  Gaussian distribution. Consider a correlated Gaussian in two variables, as
+  illustrated in Figure <reference|fig11.11>, having conditional
+  distributions of width <math|l> and marginal distributions of width
+  <math|L>. The typical step size is governed by the conditional
+  distributions and will be of order <math|l>. Because the state evolves
+  according to a random walk, the number of steps needed to obtain
+  independent samples from the distribution will be of order
+  <math|(L/l)<rsup|2>> . Of course if the Gaussian distribution were
+  uncorrelated, then the Gibbs sampling procedure would be optimally
+  efficient. For this simple problem, we could rotate the coordinate system
+  in order to decorrelate the variables. However, in practical applications
+  it will generally be infeasible to find such transformations.
+
+  <\padded-center>
+    <\small-figure|<image|image/fig_11_11_gibbs_gaussian.png|0.3par|||>>
+      <label|fig11.11>Illustration of Gibbs sampling by alternate updates of
+      two variables whose distribution is a correlated Gaussian. The step
+      size is governed by the standard deviation of the conditional
+      distribution (green curve), and is <math|O(l)>, leading to slow
+      progress in the direction of elongation of the joint distribution (red
+      ellipse). The number of steps needed to obtain an independent sample
+      from the distribution is <math|O((L/l)<rsup|2>)>.
+    </small-figure>
+  </padded-center>
+
+  One approach to reducing random walk behaviour in Gibbs sampling is called
+  <em|over-relaxation> (Adler, 1981). In its original form, this applies to
+  problems for which the conditional distributions are Gaussian, which
+  represents a more general class of distributions than the multivariate
+  Gaussian because, for example, the non-Gaussian distribution <math|p(z, y)
+  \<propto\> exp(\<minus\>z<rsup|2>y<rsup|2>)> has Gaussian conditional
+  distributions. At each step of the Gibbs sampling algorithm, the
+  conditional distribution for a particular component <math|z<rsub|i>> has
+  some mean <math|\<mu\><rsub|i>> and some variance
+  <math|\<sigma\><rsub|i><rsup|2>>. In the over-relaxation framework, the
+  value of <math|z<rsub|i>> is replaced with \ 
+
+  <\equation*>
+    z<rsub|i><rprime|'> = \<mu\><rsub|i>+\<alpha\>(z<rsub|i>\<minus\>\<mu\><rsub|i>)+\<sigma\><rsub|i>(1\<minus\>\<alpha\><rsub|i><rsup|2>)<rsup|1/2>\<nu\>
+    </equation*>
+
+  \ \ where <math|\<nu\> >is a Gaussian random variable with zero mean and
+  unit variance, and <math|\<alpha\>> is a parameter such that
+  <math|\<minus\>1\<less\>\<alpha\>\<less\>1>. For <math|\<alpha\>=0>, the
+  method is equivalent to standard Gibbs sampling, and for
+  <math|\<alpha\>\<less\>0> the step is biased to the opposite side of the
+  mean. This step leaves the desired distribution invariant because if
+  <math|z<rsub|i>> has mean <math|\<mu\><rsub|i>> \ and variance
+  <math|\<sigma\><rsub|i><rsup|2>>, then so too does
+  <math|z<rsub|i><rprime|'>>. The effect of over-relaxation is to encourage
+  directed motion through state space when the variables are highly
+  correlated. The framework of <em|ordered over-relaxation> (Neal, 1999)
+  generalizes this approach to non-Gaussian distributions.
+
+  The practical applicability of Gibbs sampling depends on the ease with
+  which samples can be drawn from the conditional distributions
+  <math|p(z<rsub|k>\|\<b-z\><rsub|\\k>)>. In the case of probability
+  distributions specified using graphical models, the conditional
+  distributions for individual nodes depend only on the variables in the
+  corresponding Markov blankets, as illustrated in Figure
+  <inactive|<reference|fig11.12>>.\ 
+
+  <\padded-center>
+    <\small-figure|<image|image/fig_11_12_gibbs_blanket.png|.3par|||>>
+      \ The Gibbs sampling method requires samples to be drawn from the
+      conditional distribution of a variable conditioned on the remaining
+      variables. For graphical models, this conditional distribution is a
+      function only of the states of the nodes in the Markov blanket. For an
+      undirected graph this comprises the set of neighbours, as shown on the
+      left, while for a directed graph the Markov blanket comprises the
+      parents, the children, and the co-parents, as shown on the right.
+    </small-figure>
+  </padded-center>
+
+  For directed graphs, a wide choice of conditional distributions for the
+  individual nodes conditioned on their parents will lead to conditional
+  distributions for Gibbs sampling that are log concave. The adaptive
+  rejection sampling methods discussed in Section <reference|sec11.1.3>
+  therefore provide a framework for Monte Carlo sampling from directed graphs
+  with broad applicability.\ 
+
+  If the graph is constructed using distributions from the exponential
+  family, and if the parent-child relationships preserve conjugacy, then the
+  full conditional distributions arising in Gibbs sampling will have the same
+  functional form as the original conditional distributions (conditioned on
+  the parents) defining each node, and so standard sampling techniques can be
+  employed. In general, the full conditional distributions will be of a
+  complex form that does not permit the use of standard sampling algorithms.
+  However, if these conditionals are log concave, then sampling can be done
+  efficiently using adaptive rejection sampling (assuming the corresponding
+  variable is a scalar). \ If, at each stage of the Gibbs sampling algorithm,
+  instead of drawing a sample from the corresponding conditional
+  distribution, we make a point estimate of the variable given by the maximum
+  of the conditional distribution, then we obtain the iterated conditional
+  modes (ICM) algorithm discussed in Section 8.3.3. Thus ICM can be seen as a
+  greedy approximation to Gibbs sampling. \ Because the basic Gibbs sampling
+  technique considers one variable at a time, there are strong dependencies
+  between successive samples. At the opposite extreme, if we could draw
+  samples directly from the joint distribution (an operation that we are
+  supposing is intractable), then successive samples would be independent. We
+  can hope to improve on the simple Gibbs sampler by adopting an intermediate
+  strategy in which we sample successively from groups of variables rather
+  than individual variables. This is achieved in the blocking Gibbs sampling
+  algorithm by choosing blocks of variables, not necessarily disjoint, and
+  then sampling jointly from the variables in each block in turn, conditioned
+  on the remaining variables (Jensen et al., 1995).
+
+  <section|Slice Sampling>
+
   \;
+
+  We have seen that one of the difficulties with the Metropolis algorithm is
+  the sensitivity to step size. If this is too small, the result is slow
+  decorrelation due to random walk behaviour, whereas if it is too large the
+  result is inefficiency due to a high rejection rate. The technique of
+  <em|slice sampling> (Neal, 2003) provides an adaptive step size that is
+  automatically adjusted to match the characteristics of the distribution.
+  Again it requires that we are able to evaluate the unnormalized
+  distribution <math|<wide|p|~>(\<b-z\>)>.
+
+  Consider first the univariate case. Slice sampling involves augmenting
+  <math|z> with an additional variable <math|u> and then drawing samples from
+  the joint <math|(z,u)> space. We shall see another example of this approach
+  when we discuss hybrid Monte Carlo in Section 11.5. The goal is to sample
+  uniformly from the area under the distribution given by
+
+  <\equation*>
+    <wide|p|^><around*|(|z,u|)>=<choice|<tformat|<table|<row|<cell|1/Z<rsub|p>>|<cell|if
+    0\<leqslant\>u\<leqslant\><wide|p|~><around*|(|z|)>>>|<row|<cell|0>|<cell|otherwise>>>>>
+  </equation*>
+
+  where <math|Z<rsub|p>=\<big-int\> <wide|p|~>(z) \<mathd\>z>. The marginal
+  distribution over <math|z> is given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<big|int><wide|p|^><around*|(|z,u|)>>|<cell|=>|<cell|<big|int><rsub|0><rsup|<wide|p|~><around*|(|z|)>><frac|1|Z<rsub|p>>\<mathd\>u>>|<row|<cell|>|<cell|=>|<cell|<frac|<wide|p|~><around*|(|z|)>|Z<rsub|p>>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|z|)>>>>>
+  </eqnarray*>
+
+  and so we can sample from <math|p(z)> by sampling from
+  <math|<wide|p|^>(z,u)> and then ignoring the <math|u> values. This can be
+  achieved by alternately sampling <math|z> and <math|u>. Given the value of
+  <math|z> we evaluate <math|<wide|p|^>(z)> and then sample <math|u>
+  uniformly in the range <math|0\<leqslant\>u\<leqslant\>p(z)>, which is
+  straightforward. Then we fix <math|u> and sample <math|z> uniformly from
+  the `slice' through the distribution defined by <math|{z : p(z) \<gtr\>
+  u}>. This is illustrated in Figure <reference|fig11.13>(a).
+
+  <\padded-center>
+    <small-figure|<image|image/fig_11_13_slice_sampling.png|.7par|||>|<label|fig11.13>Illustration
+    of slice sampling. (a) For a given value <math|z<rsup|(\<tau\>)>>, a
+    value of <math|u> is chosen uniformly in the region
+    <math|0\<leqslant\>u\<leqslant\><wide|p|~>(z<rsup|(\<tau\>)>)>, which
+    then defines a `slice' through the distribution, shown by the solid
+    horizontal lines. (b) Because it is infeasible to sample directly from a
+    slice, a new sample of <math|z> is drawn from a region
+    <math|z<rsub|min>\<leqslant\>z\<leqslant\>z<rsub|max>>, which contains
+    the previous value <math|z<rsup|(\<tau\>)>>.>
+  </padded-center>
+
+  In practice, it can be difficult to sample directly from a slice through
+  the distribution and so instead we define a sampling scheme that leaves the
+  uniform distribution under <math|<wide|p|^>(z,u)> invariant, which can be
+  achieved by ensuring that detailed balance is \ satisfied. Suppose the
+  current value of <math|z> is denoted <math|z<rsup|(\<tau\>)>> and that we
+  have obtained a corresponding sample <math|u>. The next value of <math|z>
+  is obtained by considering a region <math|z<rsub|min>\<leqslant\>z\<leqslant\>z<rsub|max>>
+  that contains <math|z(\<tau\>)>. It is in the choice of this region that
+  the adaptation to the characteristic length scales of the distribution
+  takes place. We want the region to encompass as much of the slice as
+  possible so as to allow large moves in <math|z> space while having as
+  little as possible of this region lying outside the slice, because this
+  makes the sampling less efficient. \ One approach to the choice of region
+  involves starting with a region containing <math|z<rsup|(\<tau\>)>> having
+  some width <math|w> and then testing each of the end points to see if they
+  lie within the slice. If either end point does not, then the region is
+  extended in that direction by increments of value <math|w> until the end
+  point lies outside the region. A candidate value <math|z<rprime|'>> is then
+  chosen uniformly from this region, and if it lies within the slice, then it
+  forms <math|z<rsup|(\<tau\>+1)>>. If it lies outside the slice, then the
+  region is shrunk such that <math|z<rprime|'>> forms an end point and such
+  that the region still contains <math|z<rsup|(\<tau\>)>>. Then another
+  candidate point is drawn uniformly from this reduced region and so on,
+  until a value of <math|z> is found that lies within the slice.
+
+  Slice sampling can be applied to multivariate distributions by repeatedly
+  sampling each variable in turn, in the manner of Gibbs sampling. This
+  requires that we are able to compute, for each component <math|z<rsub|i>>,
+  a function that is proportional to <math|p(z<rsub|i>\|\<b-z\><rsub|\\i>)>.
+
+  <section|The Hybrid Monte Carlo Algorithm>
+
+  \;
+
+  As we have already noted, one of the major limitations of the Metropolis
+  algorithm is that it can exhibit random walk behaviour whereby the distance
+  traversed through the state space grows only as the square root of the
+  number of steps. The problem cannot be resolved simply by taking bigger
+  steps as this leads to a high rejection rate. \ In this section, we
+  introduce a more sophisticated class of transitions based on an analogy
+  with physical systems and that has the property of being able to make large
+  changes to the system state while keeping the rejection probability small.
+  It is applicable to distributions over continuous variables for which we
+  can readily evaluate the gradient of the log probability with respect to
+  the state variables. We will discuss the dynamical systems framework in
+  Section 11.5.1, and then in Section 11.5.2 we explain how this may be
+  combined with the Metropolis algorithm to yield the powerful hybrid Monte
+  Carlo algorithm. A background in physics is not required as this section is
+  self-contained and the key results are all derived from first principles.
+
+  <subsection|Dynamical systems>
+
+  The dynamical approach to stochastic sampling has its origins in algorithms
+  for simulating the behaviour of physical systems evolving under
+  <em|Hamiltonian dynamics>. In a Markov chain Monte Carlo simulation, the
+  goal is to sample from a given probability distribution <math|p(\<b-z\>)>.
+  The framework of Hamiltonian dynamics is exploited by casting the
+  probabilistic simulation in the form of a Hamiltonian system. In order to
+  remain in keeping with the literature in this area, we make use of the
+  relevant dynamical systems terminology where appropriate, which will be
+  defined as we go along.
+
+  The dynamics that we consider corresponds to the evolution of the state
+  variable <math|\<b-z\>={z<rsub|i>}> under continuous time, which we denote
+  by <math|\<tau\>> . Classical dynamics is described by Newton's second law
+  of motion in which the acceleration of an object is proportional to the
+  applied force, corresponding to a second-order differential equation over
+  time. We can decompose a second-order equation into two coupled firstorder
+  equations by introducing intermediate momentum variables <math|\<b-r\>>,
+  corresponding to the rate of change of the state variables <math|\<b-z\>>,
+  having components
+
+  <\equation*>
+    r<rsub|i>=<frac|\<mathd\>z<rsub|i>|\<mathd\>\<tau\>>
+  </equation*>
+
+  where the <math|z<rsub|i>> can be regarded as position variables in this
+  dynamics perspective. Thus
 </body>
 
 <\initial>
@@ -1181,15 +1466,16 @@
 <\references>
   <\collection>
     <associate|11.1|<tuple|1.1|1>>
+    <associate|11.13|<tuple|1.13|?>>
     <associate|11.15|<tuple|1.4|6>>
     <associate|11.2|<tuple|1.2|1>>
     <associate|11.23|<tuple|1.7|9>>
-    <associate|11.33|<tuple|1.8|?>>
+    <associate|11.33|<tuple|1.8|12>>
     <associate|11.4|<tuple|1.3|2>>
-    <associate|11.40|<tuple|1.9|?>>
-    <associate|11.42|<tuple|1.10|?>>
-    <associate|11.43|<tuple|1.11|?>>
-    <associate|11.44|<tuple|1.12|?>>
+    <associate|11.40|<tuple|1.9|14>>
+    <associate|11.42|<tuple|1.10|14>>
+    <associate|11.43|<tuple|1.11|14>>
+    <associate|11.44|<tuple|1.12|14>>
     <associate|11.5|<tuple|1.4|3>>
     <associate|11.6|<tuple|1.5|3>>
     <associate|11.8|<tuple|1.6|4>>
@@ -1205,9 +1491,15 @@
     <associate|auto-18|<tuple|1.9|13>>
     <associate|auto-19|<tuple|1.2.1|13>>
     <associate|auto-2|<tuple|1.1|1>>
-    <associate|auto-20|<tuple|1.2.2|?>>
-    <associate|auto-21|<tuple|1.10|?>>
-    <associate|auto-22|<tuple|1.3|?>>
+    <associate|auto-20|<tuple|1.2.2|14>>
+    <associate|auto-21|<tuple|1.10|15>>
+    <associate|auto-22|<tuple|1.3|15>>
+    <associate|auto-23|<tuple|1.11|?>>
+    <associate|auto-24|<tuple|1.12|?>>
+    <associate|auto-25|<tuple|1.4|?>>
+    <associate|auto-26|<tuple|1.13|?>>
+    <associate|auto-27|<tuple|1.5|?>>
+    <associate|auto-28|<tuple|1.5.1|?>>
     <associate|auto-3|<tuple|1.1|3>>
     <associate|auto-4|<tuple|1.1.1|3>>
     <associate|auto-5|<tuple|1.2|3>>
@@ -1216,6 +1508,8 @@
     <associate|auto-8|<tuple|1.4|5>>
     <associate|auto-9|<tuple|1.5|6>>
     <associate|fig11.1|<tuple|1.1|1>>
+    <associate|fig11.11|<tuple|1.11|?>>
+    <associate|fig11.13|<tuple|1.13|?>>
     <associate|fig11.2|<tuple|1.2|3>>
     <associate|fig11.3|<tuple|1.3|4>>
     <associate|fig11.4|<tuple|1.4|5>>
@@ -1225,6 +1519,7 @@
     <associate|fig11.8|<tuple|1.8|8>>
     <associate|fig11.9|<tuple|1.9|13>>
     <associate|sec11.1.2|<tuple|1.1.2|5>>
+    <associate|sec11.1.3|<tuple|1.1.3|?>>
   </collection>
 </references>
 
@@ -1308,6 +1603,22 @@
         green lines, and rejected steps are shown in red. A total of 150
         candidate samples are generated, of which 43 are rejected.
       </surround>|<pageref|auto-18>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1.10>|>
+        Schematic illustration of the use of an isotropic Gaussian proposal
+        distribution (blue circle) to sample from a correlated multivariate
+        Gaussian distribution (red ellipse) having very different standard
+        deviations in different directions, using the Metropolis-Hastings
+        algorithm. In order to keep the rejection rate low, the scale
+        <with|mode|<quote|math>|\<rho\>> of the proposal distribution should
+        be on the order of the smallest standard deviation
+        <with|mode|<quote|math>|\<sigma\><rsub|min>> , which leads to random
+        walk behaviour in which the number of steps separating states that
+        are approximately independent is of order
+        <with|mode|<quote|math>|(\<sigma\><rsub|max>/\<sigma\><rsub|min>)<rsup|2>>
+        where <with|mode|<quote|math>|\<sigma\><rsub|max>> is the largest
+        standard deviation.
+      </surround>|<pageref|auto-21>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Sampling
@@ -1349,6 +1660,13 @@
       <with|par-left|<quote|1tab>|1.2.1<space|2spc>Markov chains
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-19>>
+
+      <with|par-left|<quote|1tab>|1.2.2<space|2spc>The Metropolis-Hastings
+      algorithm <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-20>>
+
+      1.3<space|2spc>Gibbs Sampling <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-22>
     </associate>
   </collection>
 </auxiliary>
