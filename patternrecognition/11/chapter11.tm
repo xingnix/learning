@@ -694,7 +694,7 @@
   with the weights, because
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|f<around*|(|\<b-z\>|)>|]>>|<cell|=>|<cell|<big|int>f<around*|(|\<b-z\>|)>p<around*|(|\<b-z\>|)>\<mathd\>\<b-z\>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|int>f<around*|(|\<b-z\>|)><around*|[|<wide|p|~><around*|(|\<b-z\>|)>/q<around*|(|\<b-z\>|)>|]>q<around*|(|\<b-z\>|)>\<mathd\>\<b-z\>|<big|int><around*|[|<wide|p|~><around*|(|\<b-z\>|)>/q<around*|(|\<b-z\>|)>|]>q<around*|(|\<b-z\>|)>\<mathd\>\<b-z\>>>>|<row|<cell|>|<cell|\<simeq\>>|<cell|<big|sum><rsub|l=1><rsup|L>w<rsub|l>f<around*|(|\<b-z\><rsub|l>|)>>>>>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|f<around*|(|\<b-z\>|)>|]>>|<cell|=>|<cell|<big|int>f<around*|(|\<b-z\>|)>p<around*|(|\<b-z\>|)>\<mathd\>\<b-z\>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|int>f<around*|(|\<b-z\>|)><around*|[|<wide|p|~><around*|(|\<b-z\>|)>/q<around*|(|\<b-z\>|)>|]>q<around*|(|\<b-z\>|)>\<mathd\>\<b-z\>|<big|int><around*|[|<wide|p|~><around*|(|\<b-z\>|)>/q<around*|(|\<b-z\>|)>|]>q<around*|(|\<b-z\>|)>\<mathd\>\<b-z\>>>>|<row|<cell|>|<cell|\<simeq\>>|<cell|<big|sum><rsub|l=1><rsup|L>w<rsub|l>f<around*|(|\<b-z\><rsup|<around*|(|l|)>>|)>>>>>
   </eqnarray*>
 
   <subsection|Sampling and the EM algorithm>
@@ -892,10 +892,10 @@
   </eqnarray*>
 
   where <math|z<rsup|<around*|(|\<tau\>|)>>> denotes the state at step
-  <math|\<tau\>> . If the initial state is <math|z=0>, then by symmetry the
-  expected state at time <math|\<tau\>> will also be zero
-  <math|\<bbb-E\>[z<rsup|(\<tau\>)>]=0>, and similarly it is easily seen that
-  <math|\<bbb-E\>[(z<rsup|(\<tau\>)>)<rsup|2>]=\<tau\>/2>. Thus after
+  <math|\<tau\>> . If the initial state is <math|z<rsup|<around*|(|0|)>>=0>,
+  then by symmetry the expected state at time <math|\<tau\>> will also be
+  zero <math|\<bbb-E\>[z<rsup|(\<tau\>)>]=0>, and similarly it is easily seen
+  that <math|\<bbb-E\>[(z<rsup|(\<tau\>)>)<rsup|2>]=\<tau\>/2>. Thus after
   <math|\<tau\>> steps, the random walk has only travelled a distance that on
   average is proportional to the square root of <math|\<tau\>> . This square
   root dependence is typical of random walk behaviour and shows that random
@@ -994,7 +994,7 @@
   transitions may be combined through successive application, so that
 
   <\equation>
-    T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)>=<big|sum><rsub|\<b-z\><rsub|1>>\<cdots\><big|sum><rsub|z<rsub|n-1>>B<rsub|1><around*|(|\<b-z\><rprime|'>,\<b-z\><rsub|1>|)>\<cdots\>B<rsub|K-1><around*|(|\<b-z\><rsub|k-2>,\<b-z\><rsub|k-1>|)>B<rsub|K><around*|(|\<b-z\><rsub|K-1>,\<b-z\>|)><label|11.43>
+    T<around*|(|\<b-z\><rprime|'>,\<b-z\>|)>=<big|sum><rsub|\<b-z\><rsub|1>>\<cdots\><big|sum><rsub|z<rsub|K-1>>B<rsub|1><around*|(|\<b-z\><rprime|'>,\<b-z\><rsub|1>|)>\<cdots\>B<rsub|K-1><around*|(|\<b-z\><rsub|k-2>,\<b-z\><rsub|k-1>|)>B<rsub|K><around*|(|\<b-z\><rsub|K-1>,\<b-z\>|)><label|11.43>
   </equation>
 
   If a distribution is invariant with respect to each of the base
@@ -1021,7 +1021,7 @@
   state is <math|\<b-z\><rsup|<around*|(|\<tau\>|)>>> , we draw a sample
   <math|\<b-z\><rsup|\<ast\>>> from the distribution
   <math|q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rsup|*<around*|(|\<tau\>|)>>|)>>
-  and then accept it with probability <math|A<rsub|k><around*|(|\<b-z\><rsup|\<ast\>>,\<b-z\><rsub|\<tau\>>|)>>
+  and then accept it with probability <math|A<rsub|k><around*|(|\<b-z\><rsup|\<ast\>>,\<b-z\><rsup|<around*|(|\<tau\>|)>>|)>>
   where
 
   <\equation>
@@ -1042,7 +1042,7 @@
   <eqref|11.44> we have
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>A<rsub|k><around*|(|\<b-z\><rprime|'>,\<b-z\>|)>>|<cell|=>|<cell|min<around*|(|p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>,p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|min<around*|(|p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>,p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>A<rsub|k><around*|(|\<b-z\>,\<b-z\><rprime|'>|)>>>>>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>A<rsub|k><around*|(|\<b-z\><rprime|'>,\<b-z\>|)>>|<cell|=>|<cell|min<around*|(|p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>,p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|min<around*|(|p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>,p<around*|(|\<b-z\>|)>q<rsub|k><around*|(|\<b-z\><rprime|'>\|\<b-z\>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-z\><rprime|'>|)>q<rsub|k><around*|(|\<b-z\>\|\<b-z\><rprime|'>|)>A<rsub|k><around*|(|\<b-z\>,\<b-z\><rprime|'>|)>>>>>
   </eqnarray*>
 
   as required.
@@ -1173,7 +1173,7 @@
   of all note that the distribution <math|p(\<b-z\>)> is an invariant of each
   of the Gibbs sampling steps individually and hence of the whole Markov
   chain. This follows from the fact that when we sample from
-  <math|p(z<rsub|i>\|<around*|{|z<rsub|\\i>|}>)>, the marginal distribution
+  <math|p(z<rsub|i>\|\<b-z\><rsub|\\i>)>, the marginal distribution
   <math|p(\<b-z\><rsub|\\i>)> is clearly invariant because the value of
   <math|\<b-z\><rsub|\\i>> is unchanged. Also, each step by denition samples
   from the correct conditional distribution
@@ -1256,7 +1256,7 @@
   value of <math|z<rsub|i>> is replaced with \ 
 
   <\equation*>
-    z<rsub|i><rprime|'> = \<mu\><rsub|i>+\<alpha\>(z<rsub|i>\<minus\>\<mu\><rsub|i>)+\<sigma\><rsub|i>(1\<minus\>\<alpha\><rsub|i><rsup|2>)<rsup|1/2>\<nu\>
+    z<rsub|i><rprime|'> = \<mu\><rsub|i>+\<alpha\>(z<rsub|i>\<minus\>\<mu\><rsub|i>)+\<sigma\><rsub|i>(1\<minus\>\<alpha\><rsup|2>)<rsup|1/2>\<nu\>
   </equation*>
 
   \ \ where <math|\<nu\> >is a Gaussian random variable with zero mean and
@@ -1520,7 +1520,7 @@
   and that the divergence of this field vanishes
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|div \<b-V\>>|<cell|=>|<cell|<big|sum><rsub|i><around*|{|<frac|\<partial\>|\<partial\>z<rsub|i>><frac|\<mathd\>z<rsub|i>|\<mathd\>\<tau\>>+<frac|\<partial\>|\<partial\>r<rsub|i>><frac|\<mathd\>r<rsub|i>|\<mathd\>\<tau\>>|}>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i><around*|{|-<frac|\<partial\>|\<partial\>z<rsub|i>><frac|\<partial\>H|\<partial\>r<rsub|i>>+<frac|\<partial\>|\<partial\>r<rsub|i>><frac|\<partial\>H|\<partial\>z<rsub|i>>|}>>>|<row|<cell|>|<cell|=>|<cell|0>>>>
+    <tformat|<table|<row|<cell|div \<b-V\>>|<cell|=>|<cell|<big|sum><rsub|i><around*|{|<frac|\<partial\>|\<partial\>z<rsub|i>><frac|\<mathd\>z<rsub|i>|\<mathd\>\<tau\>>+<frac|\<partial\>|\<partial\>r<rsub|i>><frac|\<mathd\>r<rsub|i>|\<mathd\>\<tau\>>|}>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i><around*|{|<frac|\<partial\>|\<partial\>z<rsub|i>><frac|\<partial\>H|\<partial\>r<rsub|i>>-<frac|\<partial\>|\<partial\>r<rsub|i>><frac|\<partial\>H|\<partial\>z<rsub|i>>|}>>>|<row|<cell|>|<cell|=>|<cell|0>>>>
   </eqnarray*>
 
   Now consider the joint distribution over phase space whose total energy is
@@ -1674,9 +1674,9 @@
   using <math|L> leapfrog interactions, the probability of the transition
   going from <math|\<cal-R\>> to <math|\<cal-R\><rprime|'>> is given by
 
-  <\equation*>
-    <frac|1|Z<rsub|H>>exp<around*|(|-H<around*|(|\<cal-R\>|)>|)>\<delta\>V<frac|1|2>min<around*|{|1,exp<around*|(|-H<around*|(|\<cal-R\>|)>+H<around*|(|\<cal-R\><rprime|'>|)>|)>|}>
-  </equation*>
+  <\equation>
+    <frac|1|Z<rsub|H>>exp<around*|(|-H<around*|(|\<cal-R\>|)>|)>\<delta\>V<frac|1|2>min<around*|{|1,exp<around*|(|H<around*|(|\<cal-R\>|)>-H<around*|(|\<cal-R\><rprime|'>|)>|)>|}><label|11.68>
+  </equation>
 
   where the factor of <math|1/2> arises from the probability of choosing to
   integrate with a positive step size rather than a negative one. Similarly,
@@ -1684,11 +1684,156 @@
   integrating backwards in time to end up in region
   <math|\<cal-R\><rprime|'>> is given by
 
+  <\equation>
+    <frac|1|Z<rsub|H>>exp<around*|(|-H<around*|(|\<cal-R\><rprime|'>|)>|)>\<delta\>V<frac|1|2>min<around*|{|1,exp<around*|(|H<around*|(|\<cal-R\><rprime|'>|)>-H<around*|(|\<cal-R\>|)>|)>|}><label|11.69>
+  </equation>
+
+  It is easily seen that the two probabilities (11.68) and (11.69) are equal,
+  and hence detailed balance holds. Note that this proof ignores any overlap
+  between the regions <math|\<cal-R\>> and <math|\<cal-R\><rprime|'>> but is
+  easily generalized to allow for such overlap.
+
+  It is not difficult to construct examples for which the leapfrog algorithm
+  returns to its starting position after a finite number of iterations. In
+  such cases, the random replacement of the momentum values before each
+  leapfrog integration will not be sufficient to ensure ergodicity because
+  the position variables will never be updated. Such phenomena are easily
+  avoided by choosing the magnitude of the step size at random from some
+  small interval, before each leapfrog integration.
+
+  We can gain some insight into the behaviour of the hybrid Monte Carlo
+  algorithm by considering its application to a multivariate Gaussian. For
+  convenience, consider a Gaussian distribution <math|p(\<b-z\>)> with
+  independent components, for which the Hamiltonian is given by
+
   <\equation*>
-    <frac|1|Z<rsub|H>>exp<around*|(|-H<around*|(|\<cal-R\><rprime|'>|)>|)>\<delta\>V<frac|1|2>min<around*|{|1,exp<around*|(|-H<around*|(|\<cal-R\><rprime|'>|)>+H<around*|(|\<cal-R\>|)>|)>|}>
+    H<around*|(|\<b-z\>,\<b-r\>|)>=<frac|1|2><big|sum><rsub|i><frac|1|\<sigma\><rsub|i><rsup|2>>z<rsub|i><rsup|2>+<frac|1|2><big|sum><rsub|i>r<rsub|i><rsup|2>
   </equation*>
 
+  Our conclusions will be equally valid for a Gaussian distribution having
+  correlated components because the hybrid Monte Carlo algorithm exhibits
+  rotational isotropy. During the leapfrog integration, each pair of
+  phase-space variables zi, ri evolves independently. However, the acceptance
+  or rejection of the candidate point is based on the value of H, which
+  depends on the values of all of the variables. Thus, a significant
+  integration error in any one of the variables could lead to a high
+  probability of rejection. In order that the discrete leapfrog integration
+  be a reasonably good approximation to the true continuous-time dynamics, it
+  is necessary for the leapfrog integration scale <math|\<varepsilon\>> to be
+  smaller than the shortest length-scale over which the potential is varying
+  significantly. This is governed by the smallest value of
+  <math|\<sigma\><rsub|i>>, which we denote by <math|\<sigma\><rsub|min>>.
+  Recall that the goal of the leapfrog integration in hybrid Monte Carlo is
+  to move a substantial distance through phase space to a new state that is
+  relatively independent of the initial state and still achieve a high
+  probability of acceptance. In order to achieve this, the leapfrog
+  integration must be continued for a number of iterations of order
+  <math|\<sigma\><rsub|max>/\<sigma\><rsub|min>>.
+
+  By contrast, consider the behaviour of a simple Metropolis algorithm with
+  an isotropic Gaussian proposal distribution of variance <math|s<rsup|2>>,
+  considered earlier. In order to avoid high rejection rates, the value of
+  <math|s> must be of order <math|\<sigma\><rsub|min>>. The exploration of
+  state space then proceeds by a random walk and takes of order
+  <math|(\<sigma\><rsub|max>/\<sigma\><rsub|min>)<rsup|2>> steps to arrive at
+  a roughly independent state.
+
+  <section|Estimating the Partition Function>
+
   \;
+
+  As we have seen, most of the sampling algorithms considered in this chapter
+  require only the functional form of the probability distribution up to a
+  multiplicative constant. Thus if we write
+
+  <\equation*>
+    p<rsub|E><around*|(|\<b-z\>|)>=<frac|1|Z<rsub|E>>exp<around*|(|-E<around*|(|\<b-z\>|)>|)>
+  </equation*>
+
+  then the value of the normalization constant <math|Z<rsub|E>>, also known
+  as the partition function, is not needed in order to draw samples from
+  <math|p(\<b-z\>)>. However, knowledge of the value of <math|Z<rsub|E>> can
+  be useful for Bayesian model comparison since it represents the model
+  evidence (i.e., the probability of the observed data given the model), and
+  so it is of interest to consider how its value might be obtained. We assume
+  that direct evaluation by summing, or integrating, the function
+  <math|exp(\<minus\>E(\<b-z\>))> over the state space of <math|\<b-z\>> is
+  intractable.
+
+  For model comparison, it is actually the ratio of the partition functions
+  for two models that is required. Multiplication of this ratio by the ratio
+  of prior probabilities gives the ratio of posterior probabilities, which
+  can then be used for model selection or model averaging.
+
+  One way to estimate a ratio of partition functions is to use importance
+  sampling from a distribution with energy function <math|G(\<b-z\>)>
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<frac|Z<rsub|E>|Z<rsub|G>>>|<cell|=>|<cell|<frac|<big|sum><rsub|\<b-z\>>exp<around*|(|-E<around*|(|\<b-z\>|)>|)>|<big|sum><rsub|\<b-z\>>exp<around*|(|-G<around*|(|\<b-z\>|)>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|sum><rsub|\<b-z\>>exp<around*|(|-E<around*|(|\<b-z\>|)>+G<around*|(|\<b-z\>|)>|)>exp<around*|(|-G<around*|(|\<b-z\>|)>|)>|<big|sum><rsub|\<b-z\>>exp<around*|(|-G<around*|(|\<b-z\>|)>|)>>>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><rsub|G<around*|(|\<b-z\>|)>><around*|[|exp<around*|(|-E+G|)>|]>>>|<row|<cell|>|<cell|\<simeq\>>|<cell|<frac|1|L><big|sum><rsub|l>exp<around*|(|-E<around*|(|\<b-z\><rsup|<around*|(|l|)>>|)>+G<around*|(|\<b-z\><rsup|<around*|(|l|)>>|)>|)><eq-number><label|11.72>>>>>
+  </eqnarray*>
+
+  where <math|{\<b-z\><rsup|(l)>}> are samples drawn from the distribution
+  defined by <math|p<rsub|G>(\<b-z\>)>. If the distribution
+  <math|p<rsub|G><rsub|>> is one for which the partition function can be
+  evaluated analytically, for example a Gaussian, then the absolute value of
+  <math|Z<rsub|E>> can be obtained.
+
+  This approach will only yield accurate results if the importance sampling
+  distribution <math|p<rsub|G>> is closely matched to the distribution
+  <math|p<rsub|E>>, so that the ratio <math|p<rsub|E>/p<rsub|G>> does not
+  have wide variations. In practice, suitable analytically specified
+  importance sampling distributions cannot readily be found for the kinds of
+  complex models considered in this book.
+
+  An alternative approach is therefore to use the samples obtained from a
+  Markov chain to define the importance-sampling distribution. If the
+  transition probability for the Markov chain is given by
+  <math|T<around*|(|\<b-z\>,\<b-z\><rprime|'>|)>>, and the sample set is
+  given by <math|\<b-z\><rsup|<around*|(|1|)>>,\<cdots\>,\<b-z\><rsup|<around*|(|L|)>>>,
+  then the sampling distribution can be written as
+
+  <\equation*>
+    <frac|1|Z<rsub|G>>exp<around*|(|-G<around*|(|\<b-z\>|)>|)>=<frac|1|L><big|sum><rsub|l=1><rsup|L>T<around*|(|\<b-z\><rsup|<around*|(|l|)>>,\<b-z\>|)>
+  </equation*>
+
+  which can be used directly in Eq. <eqref|11.72>.
+
+  Methods for estimating the ratio of two partition functions require for
+  their success that the two corresponding distributions be reasonably
+  closely matched. This is especially problematic if we wish to find the
+  absolute value of the partition function for a complex distribution because
+  it is only for relatively simple distributions that the partition function
+  can be evaluated directly, and so attempting to estimate the ratio of
+  partition functions directly is unlikely to be successful.
+
+  This problem can be tackled using a technique known as <em|chaining> (Neal,
+  1993; Barber and Bishop, 1997), which involves introducing a succession of
+  intermediate distributions <math|p<rsub|2>,\<cdots\>,p<rsub|M-1>> that
+  interpolate between a simple distribution <math|p<rsub|1>(\<b-z\>)> for
+  which we can evaluate the normalization coefficient <math|Z<rsub|1>> and
+  the desired complex distribution <math|p<rsub|M>(\<b-z\>)>. We then have
+
+  <\equation>
+    <frac|Z<rsub|M>|Z<rsub|1>>=<frac|Z<rsub|2>|Z<rsub|1>><frac|Z<rsub|3>|Z<rsub|2>>\<cdots\><frac|Z<rsub|M>|Z<rsub|M-1>><label|11.74>
+  </equation>
+
+  in which the intermediate ratios can be determined using Monte Carlo
+  methods as discussed above. One way to construct such a sequence of
+  intermediate systems is to use an energy function containing a continuous
+  parameter <math|0\<leqslant\>\<alpha\>\<leqslant\>1> that interpolates
+  between the two distributions
+
+  <\equation*>
+    E<rsub|\<alpha\>><around*|(|\<b-z\>|)>=<around*|(|1-\<alpha\>|)>E<rsub|1><around*|(|\<b-z\>|)>+\<alpha\>E<rsub|M><around*|(|\<b-z\>|)>
+  </equation*>
+
+  If the intermediate ratios in Eq. <eqref|11.74> are to be found using Monte
+  Carlo, it may be more efficient to use a single Markov chain run than to
+  restart the Markov chain for each ratio. In this case, the Markov chain is
+  run initially for the system p1 and then after some suitable number of
+  steps moves on to the next distribution in the sequence. Note, however,
+  that the system must remain close to the equilibrium distribution at each
+  stage.
 </body>
 
 <\initial>
@@ -1719,6 +1864,10 @@
     <associate|11.64|<tuple|1.18|21>>
     <associate|11.65|<tuple|1.19|21>>
     <associate|11.66|<tuple|1.20|21>>
+    <associate|11.68|<tuple|1.21|?>>
+    <associate|11.69|<tuple|1.22|?>>
+    <associate|11.72|<tuple|1.23|?>>
+    <associate|11.74|<tuple|1.24|?>>
     <associate|11.8|<tuple|1.6|3>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.1.3|6>>
@@ -1744,6 +1893,7 @@
     <associate|auto-29|<tuple|1.5.2|21>>
     <associate|auto-3|<tuple|1.1|2>>
     <associate|auto-30|<tuple|1.14|22>>
+    <associate|auto-31|<tuple|1.6|?>>
     <associate|auto-4|<tuple|1.1.1|3>>
     <associate|auto-5|<tuple|1.2|3>>
     <associate|auto-6|<tuple|1.3|4>>
