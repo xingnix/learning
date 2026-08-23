@@ -1095,7 +1095,7 @@
     </small-figure>
   </padded-center>
 
-  <section|Gibbs Sampling>
+  <section|Gibbs Sampling><label|sec11.3>
 
   Gibbs sampling (Geman and Geman, 1984) is a simple and widely applicable
   Markov chain Monte Carlo algorithm and can be seen as a special case of the
@@ -1257,7 +1257,7 @@
 
   <\equation*>
     z<rsub|i><rprime|'> = \<mu\><rsub|i>+\<alpha\>(z<rsub|i>\<minus\>\<mu\><rsub|i>)+\<sigma\><rsub|i>(1\<minus\>\<alpha\><rsub|i><rsup|2>)<rsup|1/2>\<nu\>
-    </equation*>
+  </equation*>
 
   \ \ where <math|\<nu\> >is a Gaussian random variable with zero mean and
   unit variance, and <math|\<alpha\>> is a parameter such that
@@ -1449,12 +1449,246 @@
   corresponding to the rate of change of the state variables <math|\<b-z\>>,
   having components
 
-  <\equation*>
-    r<rsub|i>=<frac|\<mathd\>z<rsub|i>|\<mathd\>\<tau\>>
-  </equation*>
+  <\equation>
+    r<rsub|i>=<frac|\<mathd\>z<rsub|i>|\<mathd\>\<tau\>><label|11.53>
+  </equation>
 
   where the <math|z<rsub|i>> can be regarded as position variables in this
-  dynamics perspective. Thus
+  dynamics perspective. Thus for each position variable there is a
+  corresponding momentum variable, and the joint space of position and
+  momentum variables is called <em|phase space>.
+
+  Without loss of generality, we can write the probability distribution
+  <math|p(\<b-z\>)> in the form
+
+  <\equation*>
+    p<around*|(|\<b-z\>|)>=<frac|1|Z<rsub|p>>exp<around*|(|-E<around*|(|\<b-z\>|)>|)>
+  </equation*>
+
+  where <math|E(\<b-z\>)> is interpreted as the potential energy of the
+  system when in state <math|\<b-z\>>. The system acceleration is the rate of
+  change of momentum and is given by the applied force, which itself is the
+  negative gradient of the potential energy
+
+  <\equation>
+    <frac|\<mathd\>r<rsub|i>|\<mathd\>\<tau\>>=-<frac|\<partial\>E*<around*|(|\<b-z\>|)>|\<partial\>z<rsub|i>><label|11.55>
+  </equation>
+
+  It is convenient to reformulate this dynamical system using the Hamiltonian
+  framework. To do this, we first define the <em|kinetic energy> by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|K<around*|(|\<b-r\>|)>>|<cell|=>|<cell|<frac|1|2><around*|\<\|\|\>|\<b-r\>|\<\|\|\>><rsup|2>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|2><big|sum><rsub|i>r<rsub|i><rsup|2><eq-number><label|11.56>>>>>
+  </eqnarray*>
+
+  The total energy of the system is then the sum of its potential and kinetic
+  energies
+
+  <\equation>
+    H<around*|(|\<b-z\>,\<b-r\>|)>=E<around*|(|\<b-z\>|)>+K<around*|(|\<b-r\>|)><label|11.57>
+  </equation>
+
+  where <math|H> is the <em|Hamiltonian function>. Using Eq. <eqref|11.53>,
+  <eqref|11.55>, <eqref|11.56>, and <eqref|11.57>, we can now express the
+  dynamics of the system in terms of the Hamiltonian equations given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<frac|\<mathd\>z<rsub|i>|\<mathd\>\<tau\>>>|<cell|=>|<cell|<frac|\<partial\>H|\<partial\>r<rsub|i>>>>|<row|<cell|<frac|\<mathd\>r<rsub|i>|\<mathd\>\<tau\>>>|<cell|=>|<cell|-<frac|\<partial\>H|\<partial\>z<rsub|i>>>>>>
+  </eqnarray*>
+
+  During the evolution of this dynamical system, the value of the Hamiltonian
+  <math|H> is constant, as is easily seen by differentiation
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<frac|\<mathd\>H|\<mathd\>\<tau\>>>|<cell|=>|<cell|<big|sum><rsub|i><around*|{|<frac|\<partial\>H|\<partial\>z<rsub|i>><frac|\<mathd\>z<rsub|i>|\<mathd\>\<tau\>>+<frac|\<partial\>H|\<partial\>r<rsub|i>><frac|\<mathd\>r<rsub|i>|\<mathd\>\<tau\>>|}>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i><around*|{|<frac|\<partial\>H|\<partial\>z<rsub|i>><frac|\<mathd\>H|\<mathd\>r<rsub|i>>-<frac|\<partial\>H|\<partial\>r<rsub|i>><frac|\<mathd\>H|\<mathd\>z<rsub|i>>|}>>>|<row|<cell|>|<cell|=>|<cell|0>>>>
+  </eqnarray*>
+
+  \;
+
+  A second important property of Hamiltonian dynamical systems, known as
+  <em|Liouville's Theorem>, is that they preserve volume in phase space. In
+  other words, if we consider a region within the space of variables
+  <math|(\<b-z\>,\<b-r\>)>, then as this region evolves under the equations
+  of Hamiltonian dynamics, its shape may change but its volume will not. This
+  can be seen by noting that the flow field (rate of change of location in
+  phase space) is given by
+
+  <\equation*>
+    \<b-V\>=<around*|(|<frac|\<mathd\>\<b-z\>|\<mathd\>\<tau\>>,<frac|\<mathd\>\<b-r\>|\<mathd\>\<tau\>>|)>
+  </equation*>
+
+  and that the divergence of this field vanishes
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|div \<b-V\>>|<cell|=>|<cell|<big|sum><rsub|i><around*|{|<frac|\<partial\>|\<partial\>z<rsub|i>><frac|\<mathd\>z<rsub|i>|\<mathd\>\<tau\>>+<frac|\<partial\>|\<partial\>r<rsub|i>><frac|\<mathd\>r<rsub|i>|\<mathd\>\<tau\>>|}>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i><around*|{|-<frac|\<partial\>|\<partial\>z<rsub|i>><frac|\<partial\>H|\<partial\>r<rsub|i>>+<frac|\<partial\>|\<partial\>r<rsub|i>><frac|\<partial\>H|\<partial\>z<rsub|i>>|}>>>|<row|<cell|>|<cell|=>|<cell|0>>>>
+  </eqnarray*>
+
+  Now consider the joint distribution over phase space whose total energy is
+  the Hamiltonian, i.e., the distribution given by
+
+  <\equation>
+    p<around*|(|\<b-z\>,\<b-r\>|)>=<frac|1|Z<rsub|H>>exp<around*|(|-H<around*|(|\<b-z\>,\<b-r\>|)>|)><label|11.63>
+  </equation>
+
+  Using the two results of conservation of volume and conservation of
+  <math|H>, it follows that the Hamiltonian dynamics will leave
+  <math|p(\<b-z\>,\<b-r\>)> invariant. This can be seen by considering a
+  small region of phase space over which <math|H> is approximately constant.
+  If we follow the evolution of the Hamiltonian equations for a finite time,
+  then the volume of this region will remain unchanged as will the value of H
+  in this region, and hence the probability density, which is a function only
+  of H, will also be unchanged.
+
+  Although H is invariant, the values of <math|\<b-z\>> and <math|\<b-r\>>
+  will vary, and so by integrating the Hamiltonian dynamics over a finite
+  time duration it becomes possible to make large changes to <math|\<b-z\>>
+  in a systematic way that avoids random walk behaviour.
+
+  Evolution under the Hamiltonian dynamics will not, however, sample
+  ergodically from <math|p(\<b-z\>,\<b-r\>)> because the value of <math|H> is
+  constant. In order to arrive at an ergodic sampling scheme, we can
+  introduce additional moves in phase space that change the value of <math|H>
+  while also leaving the distribution <math|p(\<b-z\>,\<b-r\>)> invariant.
+  The simplest way to achieve this is to replace the value of <math|\<b-r\>>
+  with one drawn from its distribution conditioned on <math|\<b-z\>>. This
+  can be regarded as a Gibbs sampling step, and hence from Section
+  <reference|sec11.3> we see that this also leaves the desired distribution
+  invariant. Noting that <math|\<b-z\>> and <math|\<b-r\>> are independent in
+  the distribution <math|p(\<b-z\>,\<b-r\>)>, we see that the conditional
+  distribution <math|p(\<b-r\>\|\<b-z\>)> is a Gaussian from which it is
+  straightforward to sample.
+
+  In a practical application of this approach, we have to address the problem
+  of performing a numerical integration of the Hamiltonian equations. This
+  will necessarily introduce numerical errors and so we should devise a
+  scheme that minimizes the impact of such errors. In fact, it turns out that
+  integration schemes can be devised for which Liouville's theorem still
+  holds exactly. This property will be important in the hybrid Monte Carlo
+  algorithm, which is discussed in Section <reference|sec11.5.2>. One scheme
+  for achieving this is called the leapfrog discretization and involves
+  alternately updating discrete-time approximations <math|<wide|\<b-z\>|^>>
+  and <math|<wide|\<b-r\>|^>> to the position and momentum variables using
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<wide|r<rsub|i>|^><around*|(|\<tau\>+\<varepsilon\>/2|)>>|<cell|=>|<cell|<wide|r|^><rsub|i><around*|(|\<tau\>|)>-<frac|\<varepsilon\>|2><frac|\<partial\>E|\<partial\>z<rsub|i>><around*|(|<wide|\<b-z\>|^><around*|(|\<tau\>|)>|)><eq-number><label|11.64>>>|<row|<cell|<wide|z|^><rsub|i><around*|(|\<tau\>+\<varepsilon\>|)>>|<cell|=>|<cell|<wide|z|^><rsub|i><around*|(|\<tau\>|)>+\<varepsilon\><wide|r|^><rsub|i><around*|(|\<tau\>+\<varepsilon\>/2|)><eq-number><label|11.65>>>|<row|<cell|<wide|r|^><rsub|i><around*|(|\<tau\>+\<varepsilon\>|)>>|<cell|=>|<cell|<wide|r|^><rsub|i><around*|(|\<tau\>+\<varepsilon\>/2|)>-<frac|\<varepsilon\>|2><frac|\<partial\>E|\<partial\>z<rsub|i>><around*|(|<wide|\<b-z\>|^><around*|(|\<tau\>+\<varepsilon\>|)>|)><eq-number><label|11.66>>>>>
+  </eqnarray*>
+
+  We see that this takes the form of a half-step update of the momentum
+  variables with step size <math|\<varepsilon\>/2>, followed by a full-step
+  update of the position variables with step size <math|\<varepsilon\>>,
+  followed by a second half-step update of the momentum variables. If several
+  leapfrog steps are applied in succession, it can be seen that half-step
+  updates to the momentum variables can be combined into full-step updates
+  with step size <math|\<varepsilon\>>. The successive updates to position
+  and momentum variables then leapfrog over each other. In order to advance
+  the dynamics by a time interval <math|\<tau\>> , we need to take
+  <math|\<tau\>/\<varepsilon\>> steps. The error involved in the discretized
+  approximation to the continuous time dynamics will go to zero, assuming a
+  smooth function <math|E(\<b-z\>)>, in the limit
+  <math|\<varepsilon\>\<rightarrow\>0>. However, for a nonzero
+  <math|\<varepsilon\>> as used in practice, some residual error will remain.
+  We shall see in Section <reference|sec11.5.2> how the effects of such
+  errors can be eliminated in the hybrid Monte Carlo algorithm.
+
+  In summary then, the Hamiltonian dynamical approach involves alternating
+  between a series of leapfrog updates and a resampling of the momentum
+  variables from their marginal distribution.
+
+  Note that the Hamiltonian dynamics method, unlike the basic Metropolis
+  algorithm, is able to make use of information about the gradient of the log
+  probability distribution as well as about the distribution itself. An
+  analogous situation is familiar from the domain of function optimization.
+  In most cases where gradient information is available, it is highly
+  advantageous to make use of it. Informally, this follows from the fact that
+  in a space of dimension <math|D>, the additional computational cost of
+  evaluating a gradient compared with evaluating the function itself will
+  typically be a fixed factor independent of <math|D>, whereas the
+  <math|D>-dimensional gradient vector conveys <math|D> pieces of information
+  compared with the one piece of information given by the function itself.
+
+  <subsection|Hybrid Monte Carlo><label|sec11.5.2>
+
+  As we discussed in the previous section, for a nonzero step size , the
+  discretization of the leapfrog algorithm will introduce errors into the
+  integration of the Hamiltonian dynamical equations. <em|Hybrid Monte Carlo>
+  (Duane et al., 1987; Neal, 1996) combines Hamiltonian dynamics with the
+  Metropolis algorithm and thereby removes any bias associated with the
+  discretization.
+
+  Specifically, the algorithm uses a Markov chain consisting of alternate
+  stochastic updates of the momentum variable <math|\<b-r\>> and Hamiltonian
+  dynamical updates using the leapfrog algorithm. After each application of
+  the leapfrog algorithm, the resulting candidate state is accepted or
+  rejected according to the Metropolis criterion based on the value of the
+  Hamiltonian <math|H>. Thus if <math|<around*|(|\<b-z\>,\<b-r\>|)>> is the
+  initial state and <math|<around*|(|*\<b-z\><rsup|\<ast\>>,\<b-r\><rsup|\<ast\>>|)>>
+  is the state after the leapfrog integration, then this candidate state is
+  accepted with probability
+
+  <\equation*>
+    min<around*|(|1,exp<around*|{|H<around*|(|\<b-z\>,\<b-r\>|)>-H<around*|(|*\<b-z\><rsup|\<ast\>>,\<b-r\><rsup|\<ast\>>|)>|}>|)>
+  </equation*>
+
+  If the leapfrog integration were to simulate the Hamiltonian dynamics
+  perfectly, then every such candidate step would automatically be accepted
+  because the value of <math|H> would be unchanged. Due to numerical errors,
+  the value of <math|H> may sometimes decrease, and we would like the
+  Metropolis criterion to remove any bias due to this effect and ensure that
+  the resulting samples are indeed drawn from the required distribution. In
+  order for this to be the case, we need to ensure that the update equations
+  corresponding to the leapfrog integration satisfy detailed balance Eq.
+  <eqref|11.40>. This is easily achieved by modifying the leapfrog scheme as
+  follows.
+
+  Before the start of each leapfrog integration sequence, we choose at
+  random, with equal probability, whether to integrate forwards in time
+  (using step size <math|\<varepsilon\>>) or backwards in time (using step
+  size <math|-\<varepsilon\>>). We first note that the leapfrog integration
+  scheme Eq. <eqref|11.64>, <eqref|11.65>, and <eqref|11.66> is
+  time-reversible, so that integration for <math|L> steps using step size
+  <math|-\<varepsilon\>> will exactly undo the effect of integration for
+  <math|L> steps using step size <math|\<varepsilon\>>. Next we show that the
+  leapfrog integration preserves phase-space volume exactly. This follows
+  from the fact that each step in the leapfrog scheme updates either a
+  <math|z<rsub|i>> variable or an <math|r<rsub|i>> variable by an amount that
+  is a function only of the other variable. As shown in Figure
+  <reference|fig11.14>, this has the effect of shearing a region of phase
+  space while not altering its volume.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_11_14_leap_frog.png|.5par|||>|<label|fig11.14>Each
+    step of the leapfrog algorithm Eq. <eqref|11.64>\U<eqref|11.66> modifies
+    either a position variable <math|z<rsub|i>> or a momentum variable
+    <math|r<rsub|i>>. Because the change to one variable is a function only
+    of the other, any region in phase space will be sheared without change of
+    volume.>
+  </padded-center>
+
+  Finally, we use these results to show that detailed balance holds. Consider
+  a small region <math|\<cal-R\>> of phase space that, under a sequence of
+  <math|L> leapfrog iterations of step size <math|\<varepsilon\>>, maps to a
+  region <math|\<cal-R\><rprime|'>>. Using conservation of volume under the
+  leapfrog iteration, we see that if <math|\<cal-R\>> has volume
+  <math|\<delta\>V> then so too will <math|\<cal-R\><rprime|'>>. If we choose
+  an initial point from the distribution Eq. <eqref|11.63> and then update it
+  using <math|L> leapfrog interactions, the probability of the transition
+  going from <math|\<cal-R\>> to <math|\<cal-R\><rprime|'>> is given by
+
+  <\equation*>
+    <frac|1|Z<rsub|H>>exp<around*|(|-H<around*|(|\<cal-R\>|)>|)>\<delta\>V<frac|1|2>min<around*|{|1,exp<around*|(|-H<around*|(|\<cal-R\>|)>+H<around*|(|\<cal-R\><rprime|'>|)>|)>|}>
+  </equation*>
+
+  where the factor of <math|1/2> arises from the probability of choosing to
+  integrate with a positive step size rather than a negative one. Similarly,
+  the probability of starting in region <math|\<cal-R\><rprime|'>> and
+  integrating backwards in time to end up in region
+  <math|\<cal-R\><rprime|'>> is given by
+
+  <\equation*>
+    <frac|1|Z<rsub|H>>exp<around*|(|-H<around*|(|\<cal-R\><rprime|'>|)>|)>\<delta\>V<frac|1|2>min<around*|{|1,exp<around*|(|-H<around*|(|\<cal-R\><rprime|'>|)>+H<around*|(|\<cal-R\>|)>|)>|}>
+  </equation*>
+
+  \;
 </body>
 
 <\initial>
@@ -1466,60 +1700,72 @@
 <\references>
   <\collection>
     <associate|11.1|<tuple|1.1|1>>
-    <associate|11.13|<tuple|1.13|?>>
-    <associate|11.15|<tuple|1.4|6>>
+    <associate|11.15|<tuple|1.4|5>>
     <associate|11.2|<tuple|1.2|1>>
-    <associate|11.23|<tuple|1.7|9>>
-    <associate|11.33|<tuple|1.8|12>>
+    <associate|11.23|<tuple|1.7|8>>
+    <associate|11.33|<tuple|1.8|11>>
     <associate|11.4|<tuple|1.3|2>>
-    <associate|11.40|<tuple|1.9|14>>
-    <associate|11.42|<tuple|1.10|14>>
-    <associate|11.43|<tuple|1.11|14>>
+    <associate|11.40|<tuple|1.9|13>>
+    <associate|11.42|<tuple|1.10|13>>
+    <associate|11.43|<tuple|1.11|13>>
     <associate|11.44|<tuple|1.12|14>>
     <associate|11.5|<tuple|1.4|3>>
+    <associate|11.53|<tuple|1.13|19>>
+    <associate|11.55|<tuple|1.14|19>>
+    <associate|11.56|<tuple|1.15|19>>
+    <associate|11.57|<tuple|1.16|20>>
     <associate|11.6|<tuple|1.5|3>>
-    <associate|11.8|<tuple|1.6|4>>
+    <associate|11.63|<tuple|1.17|20>>
+    <associate|11.64|<tuple|1.18|21>>
+    <associate|11.65|<tuple|1.19|21>>
+    <associate|11.66|<tuple|1.20|21>>
+    <associate|11.8|<tuple|1.6|3>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.1.3|6>>
     <associate|auto-11|<tuple|1.6|6>>
     <associate|auto-12|<tuple|1.7|7>>
     <associate|auto-13|<tuple|1.1.4|7>>
     <associate|auto-14|<tuple|1.8|8>>
-    <associate|auto-15|<tuple|1.1.5|10>>
-    <associate|auto-16|<tuple|1.1.6|11>>
-    <associate|auto-17|<tuple|1.2|12>>
-    <associate|auto-18|<tuple|1.9|13>>
-    <associate|auto-19|<tuple|1.2.1|13>>
+    <associate|auto-15|<tuple|1.1.5|9>>
+    <associate|auto-16|<tuple|1.1.6|10>>
+    <associate|auto-17|<tuple|1.2|11>>
+    <associate|auto-18|<tuple|1.9|12>>
+    <associate|auto-19|<tuple|1.2.1|12>>
     <associate|auto-2|<tuple|1.1|1>>
     <associate|auto-20|<tuple|1.2.2|14>>
     <associate|auto-21|<tuple|1.10|15>>
     <associate|auto-22|<tuple|1.3|15>>
-    <associate|auto-23|<tuple|1.11|?>>
-    <associate|auto-24|<tuple|1.12|?>>
-    <associate|auto-25|<tuple|1.4|?>>
-    <associate|auto-26|<tuple|1.13|?>>
-    <associate|auto-27|<tuple|1.5|?>>
-    <associate|auto-28|<tuple|1.5.1|?>>
-    <associate|auto-3|<tuple|1.1|3>>
+    <associate|auto-23|<tuple|1.11|16>>
+    <associate|auto-24|<tuple|1.12|17>>
+    <associate|auto-25|<tuple|1.4|18>>
+    <associate|auto-26|<tuple|1.13|18>>
+    <associate|auto-27|<tuple|1.5|19>>
+    <associate|auto-28|<tuple|1.5.1|19>>
+    <associate|auto-29|<tuple|1.5.2|21>>
+    <associate|auto-3|<tuple|1.1|2>>
+    <associate|auto-30|<tuple|1.14|22>>
     <associate|auto-4|<tuple|1.1.1|3>>
     <associate|auto-5|<tuple|1.2|3>>
     <associate|auto-6|<tuple|1.3|4>>
-    <associate|auto-7|<tuple|1.1.2|5>>
+    <associate|auto-7|<tuple|1.1.2|4>>
     <associate|auto-8|<tuple|1.4|5>>
-    <associate|auto-9|<tuple|1.5|6>>
+    <associate|auto-9|<tuple|1.5|5>>
     <associate|fig11.1|<tuple|1.1|1>>
-    <associate|fig11.11|<tuple|1.11|?>>
-    <associate|fig11.13|<tuple|1.13|?>>
+    <associate|fig11.11|<tuple|1.11|16>>
+    <associate|fig11.13|<tuple|1.13|18>>
+    <associate|fig11.14|<tuple|1.14|22>>
     <associate|fig11.2|<tuple|1.2|3>>
     <associate|fig11.3|<tuple|1.3|4>>
     <associate|fig11.4|<tuple|1.4|5>>
-    <associate|fig11.5|<tuple|1.5|6>>
+    <associate|fig11.5|<tuple|1.5|5>>
     <associate|fig11.6|<tuple|1.6|6>>
     <associate|fig11.7|<tuple|1.7|7>>
     <associate|fig11.8|<tuple|1.8|8>>
-    <associate|fig11.9|<tuple|1.9|13>>
-    <associate|sec11.1.2|<tuple|1.1.2|5>>
-    <associate|sec11.1.3|<tuple|1.1.3|?>>
+    <associate|fig11.9|<tuple|1.9|12>>
+    <associate|sec11.1.2|<tuple|1.1.2|4>>
+    <associate|sec11.1.3|<tuple|1.1.3|6>>
+    <associate|sec11.3|<tuple|1.3|15>>
+    <associate|sec11.5.2|<tuple|1.5.2|21>>
   </collection>
 </references>
 
@@ -1619,6 +1865,45 @@
         where <with|mode|<quote|math>|\<sigma\><rsub|max>> is the largest
         standard deviation.
       </surround>|<pageref|auto-21>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1.11>|>
+        Illustration of Gibbs sampling by alternate updates of two variables
+        whose distribution is a correlated Gaussian. The step size is
+        governed by the standard deviation of the conditional distribution
+        (green curve), and is <with|mode|<quote|math>|O(l)>, leading to slow
+        progress in the direction of elongation of the joint distribution
+        (red ellipse). The number of steps needed to obtain an independent
+        sample from the distribution is <with|mode|<quote|math>|O((L/l)<rsup|2>)>.
+      </surround>|<pageref|auto-23>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1.12>|>
+        \ The Gibbs sampling method requires samples to be drawn from the
+        conditional distribution of a variable conditioned on the remaining
+        variables. For graphical models, this conditional distribution is a
+        function only of the states of the nodes in the Markov blanket. For
+        an undirected graph this comprises the set of neighbours, as shown on
+        the left, while for a directed graph the Markov blanket comprises the
+        parents, the children, and the co-parents, as shown on the right.
+      </surround>|<pageref|auto-24>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.13>||Illustration of
+      slice sampling. (a) For a given value
+      <with|mode|<quote|math>|z<rsup|(\<tau\>)>>, a value of
+      <with|mode|<quote|math>|u> is chosen uniformly in the region
+      <with|mode|<quote|math>|0\<leqslant\>u\<leqslant\><wide|p|~>(z<rsup|(\<tau\>)>)>,
+      which then defines a `slice' through the distribution, shown by the
+      solid horizontal lines. (b) Because it is infeasible to sample directly
+      from a slice, a new sample of <with|mode|<quote|math>|z> is drawn from
+      a region <with|mode|<quote|math>|z<rsub|min>\<leqslant\>z\<leqslant\>z<rsub|max>>,
+      which contains the previous value <with|mode|<quote|math>|z<rsup|(\<tau\>)>>.>|<pageref|auto-26>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.14>||Each step of the
+      leapfrog algorithm Eq. (<reference|11.64>)\U(<reference|11.66>)
+      modifies either a position variable <with|mode|<quote|math>|z<rsub|i>>
+      or a momentum variable <with|mode|<quote|math>|r<rsub|i>>. Because the
+      change to one variable is a function only of the other, any region in
+      phase space will be sheared without change of
+      volume.>|<pageref|auto-30>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Sampling
@@ -1667,6 +1952,21 @@
 
       1.3<space|2spc>Gibbs Sampling <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-22>
+
+      1.4<space|2spc>Slice Sampling <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-25>
+
+      1.5<space|2spc>The Hybrid Monte Carlo Algorithm
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-27>
+
+      <with|par-left|<quote|1tab>|1.5.1<space|2spc>Dynamical systems
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-28>>
+
+      <with|par-left|<quote|1tab>|1.5.2<space|2spc>Hybrid Monte Carlo
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-29>>
     </associate>
   </collection>
 </auxiliary>
