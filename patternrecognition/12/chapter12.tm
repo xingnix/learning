@@ -16,26 +16,26 @@
   embedding it in a larger \ image of size 100\<times\>100 by padding with
   pixels having the value zero (corresponding to white pixels) in which the
   location and orientation of the digit is varied at random, as illustrated
-  in Figure <inactive|<hybrid|eqref|12.1>>. Each of the resulting images is
-  represented by a point in the 100\<times\>100=10,000-dimensional data
-  space. However, across a data set of such images, there are only three
-  <em|degrees of freedom> of variability, corresponding to the vertical and
-  horizontal translations and the rotations. The data points will therefore
-  live on a subspace of the data space whose <em|intrinsic dimensionality> is
-  three. Note that the manifold will be nonlinear because, for instance, if
-  we translate the digit past a particular pixel, that pixel value will go
-  from zero (white) to one (black) and back to zero again, which is clearly a
+  in Figure <reference|fig12.1>. Each of the resulting images is represented
+  by a point in the 100\<times\>100=10,000-dimensional data space. However,
+  across a data set of such images, there are only three <em|degrees of
+  freedom> of variability, corresponding to the vertical and horizontal
+  translations and the rotations. The data points will therefore live on a
+  subspace of the data space whose <em|intrinsic dimensionality> is three.
+  Note that the manifold will be nonlinear because, for instance, if we
+  translate the digit past a particular pixel, that pixel value will go from
+  zero (white) to one (black) and back to zero again, which is clearly a
   nonlinear function of the digit position. In this example, the translation
   and rotation parameters are latent variables because we observe only the
   image vectors and are not told which values of the translation or rotation
   variables were used to create them.
 
   <\padded-center>
-    <small-figure|<image|image/fig_12_1_digit.png|.9par|||>|A synthetic data
-    set obtained by taking one of the off-line digit images and creating
-    multiple copies in each of which the digit has undergone a random
-    displacement and rotation within some larger image field. The resulting
-    images each have 100\<times\>100=10,000 pixels.>
+    <small-figure|<image|image/fig_12_1_digit.png|.9par|||>|<label|fig12.1>A
+    synthetic data set obtained by taking one of the off-line digit images
+    and creating multiple copies in each of which the digit has undergone a
+    random displacement and rotation within some larger image field. The
+    resulting images each have 100\<times\>100=10,000 pixels.>
   </padded-center>
 
   For real digit image data, there will be a further degree of freedom
@@ -134,9 +134,9 @@
   data is <math|\<b-u\><rsub|1><rsup|T><wide|\<b-x\>|\<wide-bar\>>> where
   <wide|<math|\<b-x\>>|\<wide-bar\>> is the sample set mean given by
 
-  <\equation*>
-    <wide|\<b-x\>|\<wide-bar\>>=<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>
-  </equation*>
+  <\equation>
+    <wide|\<b-x\>|\<wide-bar\>>=<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n><label|12.1>
+  </equation>
 
   and the variance of the projected data is given by
 
@@ -146,9 +146,9 @@
 
   where <math|S> is the data covariance matrix defined by
 
-  <\equation*>
-    S=<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><rsup|T>
-  </equation*>
+  <\equation>
+    S=<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><rsup|T><label|12.3>
+  </equation>
 
   We now maximize the projected variance <math|\<b-u\><rsub|1><rsup|T>S\<b-u\><rsub|1>>
   with respect to <math|\<b-u\><rsub|1>>. Clearly, this has to be a
@@ -252,10 +252,10 @@
   first <math|M> of the basis vectors, and so we approximate each data point
   <math|\<b-x\><rsub|n>> by
 
-  <\equation*>
+  <\equation>
     <wide|\<b-x\>|~><rsub|n>=<big|sum><rsub|i=1><rsup|M>z<rsub|n
-    i>\<b-u\><rsub|i>+<big|sum><rsub|i=M+1><rsup|D>b<rsub|i>\<b-u\><rsub|i>
-  </equation*>
+    i>\<b-u\><rsub|i>+<big|sum><rsub|i=M+1><rsup|D>b<rsub|i>\<b-u\><rsub|i><label|12.10>
+  </equation>
 
   where the <math|{z<rsub|n i>}> depend on the particular data point, whereas
   the <math|{b<rsub|i>}> are constants that are the same for all data points.
@@ -276,17 +276,17 @@
   setting the derivative with respect to <math|z<rsub|n j>> to zero, and
   making use of the orthonormality conditions, we obtain
 
-  <\equation*>
-    z<rsub|n j>=\<b-x\><rsup|T><rsub|n>\<b-u\><rsub|j>
-  </equation*>
+  <\equation>
+    z<rsub|n j>=\<b-x\><rsup|T><rsub|n>\<b-u\><rsub|j><label|12.12>
+  </equation>
 
   where <math|j=1,\<cdots\>,M>. Similarly, setting the derivative of <math|J>
   with respect to <math|b<rsub|i>> to zero, and again making use of the
   orthonormality relations, gives
 
-  <\equation*>
-    b<rsub|j>=<wide|\<b-x\>|\<wide-bar\>><rsup|T>\<b-u\><rsub|j>
-  </equation*>
+  <\equation>
+    b<rsub|j>=<wide|\<b-x\>|\<wide-bar\>><rsup|T>\<b-u\><rsub|j><label|12.13>
+  </equation>
 
   where <math|j=M+1,\<cdots\>,D>. If we substitute for <math|z<rsub|n i>> and
   <math|b<rsub|i>>, and make use of the general expansion Eq. <eqref|12.9>,
@@ -354,9 +354,9 @@
   and arbitrary <math|M\<less\>D> is obtained by choosing the
   <math|\<b-u\><rsub|i>> to be eigenvectors of the covariance matrix given by
 
-  <\equation*>
-    S\<b-u\><rsub|i>=\<lambda\><rsub|i>\<b-u\><rsub|i>
-  </equation*>
+  <\equation>
+    S\<b-u\><rsub|i>=\<lambda\><rsub|i>\<b-u\><rsub|i><label|12.17>
+  </equation>
 
   where <math|i=1,\<cdots\>,D>, and as usual the eigenvectors
   <math|<around*|{|\<b-u\><rsub|i>|}>> are chosen to be orthonormal. The
@@ -393,7 +393,287 @@
 
   We can illustrate the use of PCA for data compression by considering the
   offline digits data set. Because each eigenvector of the covariance matrix
-  is a vector
+  is a vector in the original D-dimensional space, we can represent the
+  eigenvectors as images of the same size as the data points. The first five
+  eigenvectors, along with the corresponding eigenvalues, are shown in Figure
+  <reference|fig12.3>. A plot of the complete spectrum of eigenvalues, sorted
+  into decreasing order, is shown in Figure <reference|fig12.4>(a). The
+  distortion measure <math|J> associated with choosing a particular value of
+  <math|M> is given by the sum of the eigenvalues from <math|M+1> up to
+  <math|D> and is plotted for different values of <math|M> in Figure
+  <reference|fig12.4>(b).
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_3_pca_eigenvector.png|.9par|||>|<label|fig12.3>The
+    mean vector <math|<wide|\<b-x\>|\<wide-bar\>>> along with the first four
+    PCA eigenvectors <math|\<b-u\><rsub|1>,\<cdots\>,\<b-u\><rsub|4>> for the
+    off-line digits data set, together with the corresponding eigenvalues.>
+  </padded-center>
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_4_pca_eigenvalue.png|.5par|||>|<label|fig12.4>(a)
+    Plot of the eigenvalue spectrum for the off-line digits data set. (b)
+    Plot of the sum of the discarded eigenvalues, which represents the
+    sum-of-squares distortion <math|J> introduced by projecting the data onto
+    a principal component subspace of dimensionality <math|M> .>
+  </padded-center>
+
+  If we substitute Eq. <reference|12.12> and Eq. <eqref|12.13> into Eq.
+  <eqref|12.10>, we can write the PCA approximation to a data vector
+  <math|\<b-x\><rsub|n>> in the form
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<wide|\<b-x\>|~><rsub|n>>|<cell|=>|<cell|<big|sum><rsub|i=1><rsup|M><around*|(|\<b-x\><rsub|n><rsup|T>\<b-u\><rsub|i>|)>\<b-u\><rsub|i>+<big|sum><rsub|i=M+1><rsup|D><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsup|T>\<b-u\><rsub|i>|)>\<b-u\><rsub|i>>>|<row|<cell|>|<cell|=>|<cell|<wide|\<b-x\>|\<wide-bar\>>+<big|sum><rsub|i=1><rsup|M><around*|(|\<b-x\><rsub|n><rsup|T>\<b-u\><rsub|i>-<wide|\<b-x\>|\<wide-bar\>><rsup|T>\<b-u\><rsub|i>|)>\<b-u\><rsub|i>>>>>
+  </eqnarray*>
+
+  where we have made use of the relation
+
+  <\equation*>
+    <wide|\<b-x\>|\<wide-bar\>>=<big|sum><rsub|i=1><rsup|D><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsup|T>\<b-u\><rsub|i>|)>\<b-u\><rsub|i>
+  </equation*>
+
+  which follows from the completeness of the <math|{\<b-u\><rsub|i>}>. This
+  represents a compression of the data set, because for each data point we
+  have replaced the D-dimensional vector <math|\<b-x\><rsub|n>> with an
+  M-dimensional vector having components <math|\<b-x\><rsub|n><rsup|T>\<b-u\><rsub|i>-<wide|\<b-x\>|\<wide-bar\>><rsup|T>\<b-u\><rsub|i>>.
+  The smaller the value of <math|M> , the greater the degree of compression.
+  Examples of PCA reconstructions of data points for the digits data set are
+  shown in Figure <reference|fig12.5>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_5_pca_reconstruction.png|.9par|||>|<label|fig12.5>An
+    original example from the off-line digits data set together with its PCA
+    reconstructions \ obtained by retaining M principal components for
+    various values of M . As <math|M> increases the reconstruction becomes
+    more accurate and would become perfect when <math|M = D = 28 \<times\> 28
+    = 784.>>
+  </padded-center>
+
+  Another application of principal component analysis is to data
+  pre-processing. In this case, the goal is not dimensionality reduction but
+  rather the transformation of a data set in order to standardize certain of
+  its properties. This can be important in allowing subsequent pattern
+  recognition algorithms to be applied successfully to the data set.
+  Typically, it is done when the original variables are measured in various
+  different units or have significantly different variability. For instance
+  in the Old Faithful data set, the time between eruptions is typically an
+  order of magnitude greater than \ the duration of an eruption. When we
+  applied the K-means algorithm to this data set, we first made a separate
+  linear re-scaling of the individual variables such that \ each variable had
+  zero mean and unit variance. This is known as <em|standardizing> the data,
+  and the covariance matrix for the standardized data has components
+
+  <\equation*>
+    \<rho\><rsub|i j>=<frac|1|N><big|sum><rsub|n=1><rsup|N><frac|*<around*|(|x<rsub|n
+    i>-<wide|x|\<wide-bar\>><rsub|i>|)>|\<sigma\><rsub|i>><frac|<around*|(|x<rsub|n
+    j>-<wide|x|\<wide-bar\>><rsub|j>|)>|\<sigma\><rsub|j>>
+  </equation*>
+
+  where <math|\<sigma\><rsub|i>> is the variance of <math|x<rsub|i>>. This is
+  known as the <em|correlation matrix> of the original data and has the
+  property that if two components <math|x<rsub|i>> and <math|x<rsub|j>> of
+  the data are perfectly correlated, then <math|\<rho\><rsub|i j>=1>, and if
+  they are uncorrelated, then <math|\<rho\><rsub|i j>=0>.
+
+  However, using PCA we can make a more substantial normalization of the data
+  to give it zero mean and unit covariance, so that different variables
+  become decorrelated. To do this, we first write the eigenvector equation
+  Eq. <eqref|12.17> in the form
+
+  <\equation*>
+    S U=U L
+  </equation*>
+
+  where <math|L> is a <math|D\<times\>D> diagonal matrix with elements
+  <math|\<lambda\><rsub|i>>, and <math|U> is a <math|D\<times\>D> orthogonal
+  matrix with columns given by <math|\<b-u\><rsub|i>>. Then we define, for
+  each data point <math|\<b-x\><rsub|n>>, a transformed value given by
+
+  <\equation*>
+    \<b-y\><rsub|n>=L<rsup|-1/2>U<rsup|T><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)>
+  </equation*>
+
+  where <math|<wide|\<b-x\>|\<wide-bar\>>> is the sample mean defined by Eq.
+  <eqref|12.1>. Clearly, the set <math|{\<b-y\><rsub|n>}> has zero mean, and
+  its covariance is given by the identity matrix because
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-y\><rsub|n>\<b-y\><rsub|n><rsup|T>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N>L<rsup|-1/2>U<rsup|T><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><rsup|T>U
+    L<rsup|-1/2>>>|<row|<cell|>|<cell|=>|<cell|L<rsup|-1/2>U<rsup|T>S U
+    L<rsup|-1/2>>>|<row|<cell|>|<cell|=>|<cell|L<rsup|-1/2>U<rsup|T>U L
+    L<rsup|-1/2>>>|<row|<cell|>|<cell|=>|<cell|L<rsup|-1/2>L
+    L<rsup|-1/2>>>|<row|<cell|>|<cell|=>|<cell|I>>>>
+  </eqnarray*>
+
+  This operation is known as <em|whitening> or <em|sphereing> the data and is
+  illustrated for the Old Faithful data set in Figure <reference|fig12.6>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_6_pca_preprocessing.png|.9par|||>|<label|fig12.6>Illustration
+    of the effects of linear pre-processing applied to the Old Faithful data
+    set. The plot on the left shows the original data. The centre plot shows
+    the result of standardizing the individual variables to zero mean and
+    unit variance. Also shown are the principal axes of this normalized data
+    set, plotted over the range \ <math|\<pm\>\<lambda\><rsub|i><rsup|1/2 >>
+    . The plot on the right shows the result of whitening of the data to give
+    it zero mean and unit covariance.>
+  </padded-center>
+
+  It is interesting to compare PCA with the Fisher linear discriminant which
+  was discussed in Section 4.1.4. Both methods can be viewed as techniques
+  for linear dimensionality reduction. However, PCA is unsupervised and
+  depends only on the values <math|\<b-x\><rsub|n>> whereas Fisher linear
+  discriminant also uses class-label information. This difference is
+  highlighted by the example in Figure <reference|fig12.7>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_7_pca_fisher.png|.3par|||>|<label|fig12.7>A
+    comparison of principal component analysis with Fisher's linear
+    discriminant for linear dimensionality reduction. Here the data in two
+    dimensions, belonging to two classes shown in red and blue, is to be
+    projected onto a single dimension. PCA chooses the direction of maximum
+    variance, shown by the magenta curve, which leads to strong class
+    overlap, whereas the Fisher linear discriminant takes account of the
+    class labels and leads to a projection onto the green curve giving much
+    better class separation.>
+  </padded-center>
+
+  Another common application of principal component analysis is to data
+  visualization. Here each data point is projected onto a two-dimensional
+  (<math|M=2>) principal subspace, so that a data point
+  <math|\<b-x\><rsub|n>> is plotted at Cartesian coordinates given by
+  <math|\<b-x\><rsub|n><rsup|T>\<b-u\><rsub|1>> and
+  <math|\<b-x\><rsub|n><rsup|T>\<b-u\><rsub|2>>, where <math|\<b-u\><rsub|1>>
+  and <math|\<b-u\><rsub|2>> are the eigenvectors corresponding to the
+  largest and second largest eigenvalues. An example of such a plot, for the
+  oil flow data set, is \ shown in Figure <inactive|<reference|fig12.8>>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_8_pca_visulization.png|.3par|||>|Visualization
+    of the oil flow data set obtained \ by projecting the data onto the first
+    two principal components. The red, blue, and green points correspond to
+    the `laminar', `homogeneous', and `annular' flow configurations
+    respectively.>
+  </padded-center>
+
+  <subsection|PCA for high-dimensional data>
+
+  \;
+
+  In some applications of principal component analysis, the number of data
+  points is smaller than the dimensionality of the data space. For example,
+  we might want to apply PCA to a data set of a few hundred images, each of
+  which corresponds to a vector in a space of potentially several million
+  dimensions (corresponding to three colour values for each of the pixels in
+  the image). Note that in a D-dimensional space a set of <math|N> points,
+  where <math|N\<less\>D>, defines a linear subspace whose dimensionality is
+  at most <math|N\<minus\>1>, and so there is little point in applying PCA
+  for values of <math|M> that are greater than <math|N\<minus\>1>. Indeed, if
+  we perform PCA we will find that at least <math|D\<minus\>N+1> of the
+  eigenvalues are zero, corresponding to eigenvectors along whose directions
+  the data set has zero variance. Furthermore, typical algorithms for finding
+  the eigenvectors of a <math|D\<times\>D> matrix have a computational cost
+  that scales like <math|O(D<rsup|3>)>, and so for applications such as the
+  image example, a direct application of PCA will be computationally
+  infeasible.
+
+  We can resolve this problem as follows. First, let us define <math|X> to be
+  the (<math|N \<times\> D>)-dimensional centred data matrix, whose n'th row
+  is given by <math|<around*|(|\<b-x\><rsub|<rsub|n>>-<wide|\<b-x\>|\<wide-bar\>>|)>>.
+  The covariance matrix Eq. <eqref|12.3> can then be written as
+  <math|S=N<rsup|-1>X<rsup|T>X>, and the corresponding eigenvector equation
+  becomes
+
+  <\equation*>
+    <frac|1|N>X<rsup|T>X\<b-u\><rsub|i>=\<lambda\><rsub|i>\<b-u\><rsub|i>
+  </equation*>
+
+  Now pre-multiply both sides by <math|X> to give
+
+  <\equation*>
+    <frac|1|N>X X<rsup|T>X\<b-u\><rsub|i>=\<lambda\><rsub|i><around*|(|X\<b-u\><rsub|i>|)>
+  </equation*>
+
+  If we now define <math|\<b-v\><rsub|i> = X\<b-u\><rsub|i>>, we obtain
+
+  <\equation>
+    <frac|1|N>X X<rsup|T>\<b-v\><rsub|i>=\<lambda\>\<b-v\><rsub|i><label|12.28>
+  </equation>
+
+  which is an eigenvector equation for the <math|N\<times\>N> matrix
+  <math|N<rsup|\<minus\>1>X X<rsup|T>>. We see that this has the same
+  <math|N\<minus\>1> eigenvalues as the original covariance matrix (which
+  itself has an additional <math|D\<minus\>N+1> eigenvalues of value zero).
+  Thus we can solve the eigenvector problem in spaces of lower dimensionality
+  with computational cost <math|O(N<rsup|3>)> instead of <math|O(D<rsup|3>)>.
+  In order to determine the eigenvectors, we multiply both sides of Eq.
+  <eqref|12.28> by <math|X<rsup|T>> to give
+
+  <\equation*>
+    <around*|(|<frac|1|N>X<rsup|T>X|)><around*|(|X<rsup|T>\<b-v\><rsub|i>|)>=\<lambda\><rsub|i><around*|(|X<rsup|T>\<b-v\><rsub|i>|)>
+  </equation*>
+
+  from which we see that <math|(X<rsup|T>\<b-v\><rsub|i>)> is an eigenvector
+  of <math|S> with eigenvalue <math|\<lambda\><rsub|i>>. Note, however, that
+  these eigenvectors need not be normalized. To determine the appropriate
+  normalization, we re-scale <math|\<b-u\><rsub|i>\<propto\>X<rsup|T>\<b-v\><rsub|i>>
+  by a constant such that <math|\<\|\|\>\<b-u\><rsub|i>\<\|\|\>=1>, which,
+  assuming <math|\<b-v\><rsub|i>> has been normalized to unit length, gives
+
+  <\equation>
+    \<b-u\><rsub|i>=<frac|1|<around*|(|N\<lambda\><rsub|i>|)><rsup|1/2>>X<rsup|T>\<b-v\><rsub|i><label|12.30>
+  </equation>
+
+  In summary, to apply this approach we first evaluate <math|X X<rsup|T>> and
+  then find its eigenvectors and eigenvalues and then compute the
+  eigenvectors in the original data space using Eq. <eqref|12.30>.
+
+  <section|Probabilistic PCA>
+
+  The formulation of PCA discussed in the previous section was based on a
+  linear projection of the data onto a subspace of lower dimensionality than
+  the original data space. We now show that PCA can also be expressed as the
+  maximum likelihood solution of a probabilistic latent variable model. This
+  reformulation of PCA, known as probabilistic PCA, brings several advantages
+  compared with conventional PCA:
+
+  <\itemize-dot>
+    <item>Probabilistic PCA represents a constrained form of the Gaussian
+    distribution \ in which the number of free parameters can be restricted
+    while still allowing the model to capture the dominant correlations in a
+    data set.
+
+    <item>We can derive an EM algorithm for PCA that is computationally
+    efficient in situations where only a few leading eigenvectors are
+    required and that avoids having to evaluate the data covariance matrix as
+    an intermediate step.
+
+    <item>The combination of a probabilistic model and EM allows us to deal
+    with missing values in the data set.\ 
+
+    <item>Mixtures of probabilistic PCA models can be formulated in a
+    principled way and trained using the EM algorithm.
+
+    <item>Probabilistic PCA forms the basis for a Bayesian treatment of PCA
+    in which the dimensionality of the principal subspace can be found
+    automatically from the data.
+
+    <item>The existence of a likelihood function allows direct comparison
+    with other probabilistic density models. By contrast, conventional PCA
+    will assign a low reconstruction cost to data points that are close to
+    the principal subspace even if they lie arbitrarily far from the training
+    data.
+
+    <item>Probabilistic PCA can be used to model class-conditional densities
+    and hence be applied to classification problems.
+
+    <item>The probabilistic PCA model can be run generatively to provide
+    samples from the distribution.
+  </itemize-dot>
+
+  This formulation of PCA as a probabilistic model was proposed independently
+  by Tipping and Bishop (1997, 1999b) and by Roweis (1998). As we shall see
+  later, it is closely related to <em|factor analysis> (Basilevsky, 1994).
 </body>
 
 <\initial>
@@ -404,15 +684,38 @@
 
 <\references>
   <\collection>
-    <associate|12.9|<tuple|1.1|?>>
+    <associate|12.1|<tuple|1.1|?>>
+    <associate|12.10|<tuple|1.4|?>>
+    <associate|12.12|<tuple|1.5|?>>
+    <associate|12.13|<tuple|1.6|?>>
+    <associate|12.17|<tuple|1.7|?>>
+    <associate|12.28|<tuple|1.8|?>>
+    <associate|12.3|<tuple|1.2|?>>
+    <associate|12.30|<tuple|1.9|?>>
+    <associate|12.6|<tuple|1.6|?>>
+    <associate|12.9|<tuple|1.3|4>>
     <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|1.5|?>>
+    <associate|auto-11|<tuple|1.6|?>>
+    <associate|auto-12|<tuple|1.7|?>>
+    <associate|auto-13|<tuple|1.8|?>>
+    <associate|auto-14|<tuple|1.1.4|?>>
+    <associate|auto-15|<tuple|1.2|?>>
     <associate|auto-2|<tuple|1.1|1>>
-    <associate|auto-3|<tuple|1.1|?>>
-    <associate|auto-4|<tuple|1.2|?>>
-    <associate|auto-5|<tuple|1.1.1|?>>
-    <associate|auto-6|<tuple|1.1.2|?>>
-    <associate|auto-7|<tuple|1.1.3|?>>
-    <associate|fig12.2|<tuple|1.2|?>>
+    <associate|auto-3|<tuple|1.1|2>>
+    <associate|auto-4|<tuple|1.2|2>>
+    <associate|auto-5|<tuple|1.1.1|2>>
+    <associate|auto-6|<tuple|1.1.2|3>>
+    <associate|auto-7|<tuple|1.1.3|5>>
+    <associate|auto-8|<tuple|1.3|?>>
+    <associate|auto-9|<tuple|1.4|?>>
+    <associate|fig12.1|<tuple|1.1|?>>
+    <associate|fig12.2|<tuple|1.2|2>>
+    <associate|fig12.3|<tuple|1.3|?>>
+    <associate|fig12.4|<tuple|1.4|?>>
+    <associate|fig12.5|<tuple|1.5|?>>
+    <associate|fig12.6|<tuple|1.6|?>>
+    <associate|fig12.7|<tuple|1.7|?>>
   </collection>
 </references>
 
@@ -424,11 +727,36 @@
       multiple copies in each of which the digit has undergone a random
       displacement and rotation within some larger image field. The resulting
       images each have 100\<times\>100=10,000 pixels.>|<pageref|auto-2>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.2>||Principal
+      component analysis seeks a space \ of lower dimensionality, known as
+      the principal subspace and denoted by the magenta line, such that the
+      orthogonal projection of the data points (red dots) onto this subspace
+      maximizes the variance of the projected points (green dots). An
+      alternative definition of PCA is based on minimizing the sum-of-squares
+      of the projection errors, indicated by the blue
+      lines.>|<pageref|auto-4>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Continuous
       Latent Variables> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-1><vspace|0.5fn>
+
+      1.1<space|2spc>Principal Component Analysis
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-3>
+
+      <with|par-left|<quote|1tab>|1.1.1<space|2spc>Maximum variance
+      formulation <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-5>>
+
+      <with|par-left|<quote|1tab>|1.1.2<space|2spc>Minimum-error formulation
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-6>>
+
+      <with|par-left|<quote|1tab>|1.1.3<space|2spc>Applications of PCA
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-7>>
     </associate>
   </collection>
 </auxiliary>
