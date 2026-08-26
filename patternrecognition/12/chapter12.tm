@@ -1,4 +1,4 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.1>
 
 <style|<tuple|book|granite>>
 
@@ -686,17 +686,17 @@
   Specifically, the prior distribution over <math|\<b-z\>> is given by a
   zero-mean unit-covariance Gaussian
 
-  <\equation*>
-    p<around*|(|\<b-z\>|)>=\<cal-N\><around*|(|\<b-z\>\|\<b-0\>,I|)>
-  </equation*>
+  <\equation>
+    p<around*|(|\<b-z\>|)>=\<cal-N\><around*|(|\<b-z\>\|\<b-0\>,I|)><label|12.31>
+  </equation>
 
   Similarly, the conditional distribution of the observed variable
   <math|\<b-x\>>, conditioned on the value of the latent variable
   <math|\<b-z\>>, is again Gaussian, of the form
 
-  <\equation*>
-    p<around*|(|\<b-x\>\|\<b-z\>|)>=\<cal-N\><around*|(|\<b-x\>\|W\<b-z\>+\<b-mu\>,\<sigma\><rsup|2>I|)>
-  </equation*>
+  <\equation>
+    p<around*|(|\<b-x\>\|\<b-z\>|)>=\<cal-N\><around*|(|\<b-x\>\|W\<b-z\>+\<b-mu\>,\<sigma\><rsup|2>I|)><label|12.32>
+  </equation>
 
   in which the mean of <math|\<b-x\>> is a general linear function of
   <math|\<b-z\>> governed by the <math|D\<times\>M> matrix <math|W> and the
@@ -840,7 +840,7 @@
   <subsection|Maximum likelihood PCA>
 
   <\padded-center>
-    <small-figure|<image|image/fig_12_10_probabilistic_pca_model.png|0.2par|||>|<label|12.10>The
+    <small-figure|<image|image/fig_12_10_probabilistic_pca_model.png|0.2par|||>|<label|fig12.10>The
     probabilistic PCA model for a data set of <math|N> observations of
     <math|\<b-x\>> can be expressed as a directed graph in which each
     observation <math|\<b-x\><rsub|n>> is associated with a value
@@ -850,8 +850,8 @@
   We next consider the determination of the model parameters using maximum
   likelihood. Given a data set <math|X={\<b-x\><rsub|n>}> of observed data
   points, the probabilistic PCA model can be expressed as a directed graph,
-  as shown in Figure <inactive|<reference|fig12.10>>. The corresponding log
-  likelihood function is given, from Eq. <eqref|12.35>, by
+  as shown in Figure <reference|fig12.10>. The corresponding log likelihood
+  function is given, from Eq. <eqref|12.35>, by
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|ln p<around*|(|X\|\<b-mu\>,W,\<sigma\><rsup|2>|)>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>ln
@@ -1067,10 +1067,134 @@
   \<minus\> 1>, then we recover the standard result for a full covariance
   Gaussian. In this case, the variance along <math|D \<minus\> 1> linearly
   independent directions is controlled by the columns of <math|W>, and the
-  variance along the remaining direction is given by <math|\<sigma\>2>. If
-  <math|M = 0>, the model is equivalent to the isotropic covariance case.
+  variance along the remaining direction is given by
+  <math|\<sigma\><rsup|2>>. If <math|M = 0>, the model is equivalent to the
+  isotropic covariance case.
 
   <subsection|EM algorithm for PCA>
+
+  As we have seen, the probabilistic PCA model can be expressed in terms of a
+  marginalization over a continuous latent space <math|\<b-z\>> in which for
+  each data point <math|\<b-x\><rsub|n>>, there is a corresponding latent
+  variable <math|\<b-z\><rsub|n>>. We can therefore make use of the EM
+  algorithm to find maximum likelihood estimates of the model parameters.
+  This may seem rather pointless because we have already obtained an exact
+  closed-form solution for the maximum likelihood parameter values. However,
+  in spaces of high dimensionality, there may be computational advantages in
+  using an iterative EM procedure rather than working directly with the
+  sample covariance matrix. This EM procedure can also be extended to the
+  factor analysis model, for which there is no \ closed-form solution.
+  Finally, it allows missing data to be handled in a principled way.
+
+  We can derive the EM algorithm for probabilistic PCA by following the
+  general framework for EM. Thus we write down the complete-data log
+  likelihood and take \ its expectation with respect to the posterior
+  distribution of the latent distribution evaluated using `old' parameter
+  values. Maximization of this expected completedata log likelihood then
+  yields the `new' parameter values. Because the data points are assumed
+  independent, the complete-data log likelihood function takes the form
+
+  <\equation*>
+    ln p<around*|(|X,Z\|\<b-mu\>,W,\<sigma\><rsup|2>|)>=<big|sum><rsub|n=1><rsup|N><around*|{|lnp<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>+ln
+    p<around*|(|\<b-z\><rsub|n>|)>|}>
+  </equation*>
+
+  where the n'th row of the matrix <math|Z> is given by
+  <math|\<b-z\><rsub|n>>. We already know that the exact maximum likelihood
+  solution for <math|\<b-mu\>> is given by the sample mean
+  <math|<wide|\<b-x\>|\<bar\>>> defined by Eq. <eqref|12.1>, and it is
+  convenient to substitute for <math|\<b-mu\>> at this stage. Making use of
+  the expressions Eq. <eqref|12.31> and <eqref|12.32> for the latent and
+  conditional distributions, respectively, and taking the expectation with
+  respect to the posterior distribution over the latent variables, we obtain
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|>|<cell|>|<cell|\<bbb-E\><around*|[|ln
+    p<around*|(|X,Z\|\<b-mu\>,W,\<sigma\><rsup|2>|)>|]>>>|<row|<cell|>|<cell|=>|<cell|-<big|sum><rsub|n=1><rsup|N><around*|{|<frac|D
+    ln<around*|(|2\<pi\>\<sigma\><rsup|2>|)>|2>+<frac|Tr<around*|(|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>|)>|2>+<frac|<around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\>|\<\|\|\>><rsup|2>|2\<sigma\><rsup|2>>-<frac|\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>W<rsup|T><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)>|\<sigma\><rsup|2>>+<frac|Tr<around*|(|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>W<rsup|T>W|)>|2\<sigma\><rsup|2>>|}>>>>>
+  </eqnarray*>
+
+  Note that this depends on the posterior distribution only through the
+  sufficient statistics of the Gaussian. Thus in the E step, we use the old
+  parameter values to evaluate
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|n>|]>>|<cell|=>|<cell|M<rsup|-1>W<rsup|T><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<bar\>>|)><eq-number><label|12.54>>>|<row|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>>|<cell|=>|<cell|\<sigma\><rsup|2>M<rsup|-1>+\<bbb-E\><around*|[|\<b-z\><rsub|n>|]>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T><eq-number><label|12.55>>>>>
+  </eqnarray*>
+
+  which follow directly from the posterior distribution Eq. <eqref|12.42>
+  together with the standard result <math|\<bbb-E\>[\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>]
+  = cov[\<b-z\><rsub|n>]+\<bbb-E\>[\<b-z\><rsub|N>]\<bbb-E\>[\<b-z\><rsub|n>]<rsup|T>>.
+  Here M is defined by Eq. <eqref|12.41>.
+
+  In the M step, we maximize with respect to <math|W> and
+  <math|\<sigma\><rsup|2>>, keeping the posterior statistics fixed.
+  Maximization with respect to <math|\<sigma\><rsup|2>> is straightforward.
+  For the maximization with respect to <math|W> we make use of (C.24), and
+  obtain the M-step equations
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|W<rsub|new>>|<cell|=>|<cell|<around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<bar\>>|)>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>|]><around*|[|<big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>|]><rsup|-1><eq-number><label|12.56>>>|<row|<cell|\<sigma\><rsup|2><rsub|new>>|<cell|=>|<cell|<frac|1|N
+    D><big|sum><rsub|n=1><rsup|N><around*|{|<around*|\<\|\|\>|\<b-x\><rsub|n>-<wide|\<b-x\>|\<bar\>>|\<\|\|\>><rsup|2>-2\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>W<rsup|T><rsub|new><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<bar\>>|)>+Tr<around*|(|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>W<rsup|T><rsub|new>W<rsub|new>|]>|)>|}><eq-number><label|12.57>>>>>
+  </eqnarray*>
+
+  The EM algorithm for probabilistic PCA proceeds by initializing the
+  parameters and then alternately computing the sufficient statistics of the
+  latent space posterior distribution using Eq. <eqref|12.54> and Eq.
+  <eqref|12.55> in the E step and revising the parameter values using Eq.
+  <eqref|12.56> and <eqref|12.57> in the M step.
+
+  One of the benefits of the EM algorithm for PCA is computational efficiency
+  for large-scale applications (Roweis, 1998). Unlike conventional PCA based
+  on an eigenvector decomposition of the sample covariance matrix, the EM
+  approach is iterative and so might appear to be less attractive. However,
+  each cycle of the EM algorithm can be computationally much more efficient
+  than conventional PCA in spaces of high dimensionality.
+
+  To see this, we note that the eigendecomposition of the covariance matrix
+  requires <math|O(D<rsup|3>)> computation. Often we are interested only in
+  the first <math|M> eigenvectors and their corresponding eigenvalues, in
+  which case we can use algorithms that are <math|O(M D<rsup|2>)>. However,
+  the evaluation of the covariance matrix itself takes <math|O(N D<rsup|2>)>
+  computations, where <math|N> is the number of data points. Algorithms such
+  as the snapshot method (Sirovich, 1987), which assume that the eigenvectors
+  are linear combinations of the data vectors, avoid direct evaluation of the
+  covariance matrix but are <math|O(N<rsup|3>)> and hence unsuited to large
+  data sets.
+
+  The EM algorithm described here also does not construct the covariance
+  matrix explicitly. Instead, the most computationally demanding steps are
+  those involving sums over the data set that are <math|O(N D M)>. For large
+  <math|D>, and <math|M\<ll\>D>, this can be a significant saving compared to
+  <math|O(N D<rsup|2>)> and can offset the iterative nature of the EM
+  algorithm.
+
+  Note that this EM algorithm can be implemented in an on-line form in which
+  each D-dimensional data point is read in and processed and then discarded
+  before the next data point is considered. To see this, note that the
+  quantities evaluated in the E step (an M-dimensional vector and an
+  <math|M\<times\>M> matrix) can be computed for each data point separately,
+  and in the M step we need to accumulate sums over data points, which we can
+  do incrementally. This approach can be advantageous if both <math|N> and
+  <math|D> are large.
+
+  Because we now have a fully probabilistic model for PCA, we can deal with
+  missing data, provided that it is missing at random, by marginalizing over
+  the distribution of the unobserved variables. Again these missing values
+  can be treated using the EM algorithm. We give an example of the use of
+  this approach for data visualization in Figure
+  <inactive|<reference|fig12.11>>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_10_probabilistic_pca_em.png|0.5par|||>|Probabilistic
+    PCA visualization of a portion of the oil flow data set for the first 100
+    data points. The left-hand plot shows the posterior mean projections of
+    the data points on the principal subspace. The right-hand plot is
+    obtained by first randomly omitting <math|30%> of the variable values and
+    then using EM to handle the missing values. Note that each data point
+    then has at least one missing measurement but that the plot is very
+    similar to the one obtained without missing values.>
+  </padded-center>
 
   \;
 </body>
@@ -1084,19 +1208,25 @@
 <\references>
   <\collection>
     <associate|12.1|<tuple|1.1|3>>
-    <associate|12.10|<tuple|1.10|12>>
+    <associate|12.10|<tuple|1.4|4>>
     <associate|12.12|<tuple|1.5|4>>
     <associate|12.13|<tuple|1.6|4>>
     <associate|12.17|<tuple|1.7|5>>
     <associate|12.28|<tuple|1.8|9>>
     <associate|12.3|<tuple|1.2|3>>
     <associate|12.30|<tuple|1.9|9>>
-    <associate|12.33|<tuple|1.10|10>>
-    <associate|12.35|<tuple|1.11|11>>
-    <associate|12.36|<tuple|1.12|11>>
-    <associate|12.41|<tuple|1.13|11>>
-    <associate|12.42|<tuple|1.14|11>>
-    <associate|12.46|<tuple|1.15|12>>
+    <associate|12.31|<tuple|1.10|?>>
+    <associate|12.32|<tuple|1.11|?>>
+    <associate|12.33|<tuple|1.12|10>>
+    <associate|12.35|<tuple|1.13|11>>
+    <associate|12.36|<tuple|1.14|11>>
+    <associate|12.41|<tuple|1.15|11>>
+    <associate|12.42|<tuple|1.16|11>>
+    <associate|12.46|<tuple|1.17|12>>
+    <associate|12.54|<tuple|1.18|?>>
+    <associate|12.55|<tuple|1.19|?>>
+    <associate|12.56|<tuple|1.20|?>>
+    <associate|12.57|<tuple|1.21|?>>
     <associate|12.9|<tuple|1.3|4>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.5|6>>
@@ -1108,8 +1238,9 @@
     <associate|auto-16|<tuple|1.9|10>>
     <associate|auto-17|<tuple|1.2.1|12>>
     <associate|auto-18|<tuple|1.10|12>>
-    <associate|auto-19|<tuple|1.2.2|?>>
+    <associate|auto-19|<tuple|1.2.2|14>>
     <associate|auto-2|<tuple|1.1|1>>
+    <associate|auto-20|<tuple|1.11|?>>
     <associate|auto-3|<tuple|1.1|2>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.1.1|2>>
@@ -1118,6 +1249,7 @@
     <associate|auto-8|<tuple|1.3|6>>
     <associate|auto-9|<tuple|1.4|6>>
     <associate|fig12.1|<tuple|1.1|1>>
+    <associate|fig12.10|<tuple|1.10|12>>
     <associate|fig12.2|<tuple|1.2|2>>
     <associate|fig12.3|<tuple|1.3|6>>
     <associate|fig12.4|<tuple|1.4|6>>
@@ -1245,6 +1377,10 @@
       <with|par-left|<quote|1tab>|1.2.1<space|2spc>Maximum likelihood PCA
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-17>>
+
+      <with|par-left|<quote|1tab>|1.2.2<space|2spc>EM algorithm for PCA
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-19>>
     </associate>
   </collection>
 </auxiliary>
