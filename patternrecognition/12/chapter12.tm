@@ -1,4 +1,4 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
 <style|<tuple|book|granite>>
 
@@ -856,7 +856,7 @@
   <\eqnarray*>
     <tformat|<table|<row|<cell|ln p<around*|(|X\|\<b-mu\>,W,\<sigma\><rsup|2>|)>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>ln
     p<around*|(|\<b-x\><rsub|n>\|W,\<b-mu\>,\<sigma\><rsup|2>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|N
-    D|2>ln<around*|(|2\<pi\>|)>-<frac|N|2>ln<around*|\||C|\|>-<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)><rsup|T>C<rsup|-1><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)>>>>>
+    D|2>ln<around*|(|2\<pi\>|)>-<frac|N|2>ln<around*|\||C|\|>-<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)><rsup|T>C<rsup|-1><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)><eq-number><label|12.43>>>>>
   </eqnarray*>
 
   Setting the derivative of the log likelihood with respect to
@@ -1182,11 +1182,10 @@
   missing data, provided that it is missing at random, by marginalizing over
   the distribution of the unobserved variables. Again these missing values
   can be treated using the EM algorithm. We give an example of the use of
-  this approach for data visualization in Figure
-  <inactive|<reference|fig12.11>>.
+  this approach for data visualization in Figure <reference|fig12.11>.
 
   <\padded-center>
-    <small-figure|<image|image/fig_12_10_probabilistic_pca_em.png|0.5par|||>|Probabilistic
+    <small-figure|<image|image/fig_12_11_probabilistic_pca_em.png|0.5par|||>|<label|fig12.11>Probabilistic
     PCA visualization of a portion of the oil flow data set for the first 100
     data points. The left-hand plot shows the posterior mean projections of
     the data points on the principal subspace. The right-hand plot is
@@ -1195,6 +1194,235 @@
     then has at least one missing measurement but that the plot is very
     similar to the one obtained without missing values.>
   </padded-center>
+
+  Another elegant feature of the EM approach is that we can take the limit
+  <math|\<sigma\><rsup|2>\<rightarrow\>0>, corresponding to standard PCA, and
+  still obtain a valid EM-like algorithm (Roweis, 1998). From Eq.
+  <eqref|12.55>, we see that the only quantity we need to compute in the E
+  step is <math|\<bbb-E\>[\<b-z\><rsub|n>]>. Furthermore, the M step is
+  simplified because <math|M=W<rsup|T>W>. To emphasize \ the simplicity of
+  the algorithm, let us define <math|<wide|X|~>> to be a matrix of size
+  <math|N\<times\>D> whose n'th row is given by the vector
+  <math|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>> and similarly define
+  <math|\<Omega\>> to be a matrix of size <math|M\<times\>N> whose n'th
+  column is given by the vector <math|\<bbb-E\><around*|[|\<b-z\><rsub|n>|]>>.
+  The E step Eq. <eqref|12.54> of the EM algorithm for PCA then becomes
+
+  <\equation>
+    \<Omega\>=<around*|(|W<rsup|T><rsub|old>W<rsub|old>|)><rsup|-1>W<rsub|old><rsup|T><wide|X|~><label|12.58>
+  </equation>
+
+  and the M step Eq. <eqref|12.56> takes the form
+
+  <\equation>
+    W<rsub|new>=<wide|X|~><rsup|T>\<Omega\><rsup|T>(\<Omega\>\<Omega\><rsup|T>)<rsup|\<minus\>1>.<label|12.59>
+  </equation>
+
+  Again these can be implemented in an on-line form. These equations have a
+  simple interpretation as follows. From our earlier discussion, we see that
+  the E step involves an orthogonal projection of the data points onto the
+  current estimate for the principal subspace. Correspondingly, the M step
+  represents a re-estimation of the principal subspace to minimize the
+  squared reconstruction error in which the projections are fixed.
+
+  We can give a simple physical analogy for this EM algorithm, which is
+  easily visualized for <math|D=2> and <math|M=1>. Consider a collection of
+  data points in two dimensions, and let the one-dimensional principal
+  subspace be represented by a solid rod. Now attach each data point to the
+  rod via a spring obeying Hooke's law (stored energy is proportional to the
+  square of the spring's length). In the E step, we keep the rod fixed and
+  allow the attachment points to slide up and down the rod so as to minimize
+  the energy. This causes each attachment point (independently) to position
+  itself at the orthogonal projection of the corresponding data point onto
+  the rod. In the M step, we keep the attachment points fixed and then
+  release the rod and allow it to move to the minimum energy position. The E
+  and M steps are then repeated until a suitable convergence criterion is
+  satisfied, as is illustrated in Figure <reference|fig12.12>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_12_probabilistic_pca_limit.png|.5par|||>|<label|fig12.12>Synthetic
+    data illustrating the EM algorithm for PCA defined by Eq. <eqref|12.58>
+    and Eq. <eqref|12.59>. (a) A data set <math|X> with the data points shown
+    in green, together with the true principal components (shown as
+    eigenvectors scaled by the square roots of the eigenvalues). (b) Initial
+    configuration of the principal subspace defined by <math|W>, \ shown in
+    red, together with the projections of the latent points <math|Z> into the
+    data space, given by <math|Z W<rsup|T>>, shown in cyan. (c) After one M
+    step, the latent space has been updated with <math|Z> held fixed. (d)
+    After the successive E step, the values of <math|Z> have been updated,
+    giving orthogonal projections, with <math|W> held fixed. (e) After the
+    second M step. (f) After the second E step.>
+  </padded-center>
+
+  <subsection|Bayesian PCA>
+
+  \;
+
+  So far in our discussion of PCA, we have assumed that the value <math|M>
+  for the dimensionality of the principal subspace is given. In practice, we
+  must choose a suitable value according to the application. For
+  visualization, we generally choose <math|M=2>, whereas for other
+  applications the appropriate choice for <math|M> may be less clear. One
+  approach is to plot the eigenvalue spectrum for the data set, analogous to
+  the example in Figure <reference|fig12.4> for the off-line digits data set,
+  and look to see if the eigenvalues naturally form two groups comprising a
+  set of small values separated by a significant gap from a set of relatively
+  large values, indicating a natural choice for <math|M> . In practice, such
+  a gap is often not seen.
+
+  Because the probabilistic PCA model has a well-defined likelihood function,
+  we could employ cross-validation to determine the value of dimensionality
+  by selecting \ the largest log likelihood on a validation data set. Such an
+  approach, however, can become computationally costly, particularly if we
+  consider a probabilistic mixture of PCA models (Tipping and Bishop, 1999a)
+  in which we seek to determine the appropriate dimensionality separately for
+  each component in the mixture.
+
+  Given that we have a probabilistic formulation of PCA, it seems natural to
+  seek a Bayesian approach to model selection. To do this, we need to
+  marginalize out the model parameters <math|\<b-mu\>, W>, and
+  <math|\<sigma\><rsup|2>> with respect to appropriate prior distributions.
+  This can be done by using a variational framework to approximate the
+  analytically intractable marginalizations (Bishop, 1999b). The marginal
+  likelihood values, given by the variational lower bound, can then be
+  compared for a range of different values of <math|M> and the value giving
+  the largest marginal likelihood selected.
+
+  Here we consider a simpler approach introduced by based on the <em|evidence
+  approximation>, which is appropriate when the number of data points is
+  relatively large and the corresponding posterior distribution is tightly
+  peaked (Bishop, 1999a). It involves a specific choice of prior over
+  <math|W> that allows surplus dimensions in the principal subspace to be
+  pruned out of the model. This corresponds to an example of <em|automatic
+  relevance determination>, or ARD, discussed in Section 7.2.2. Specifically,
+  we define an independent Gaussian prior over each column of <math|W>, which
+  represent the vectors defining the principal subspace. Each such Gaussian
+  has an independent variance governed by a precision hyperparameter
+  <math|\<alpha\><rsub|i>> so that
+
+  <\equation*>
+    p<around*|(|W\|\<b-alpha\>|)>=<big|prod><rsub|i=1><rsup|M><around*|(|<frac|\<alpha\><rsub|i>|2\<pi\>>|)><rsup|D/2>exp<around*|{|-<frac|1|2>\<alpha\><rsub|i>\<b-w\><rsub|i><rsup|T>\<b-w\><rsub|i>|}>
+  </equation*>
+
+  where <math|\<b-w\><rsub|i>> is the <math|i>'th column of <math|W>. The
+  resulting model can be represented using the directed graph shown in Figure
+  <reference|fig12.13>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_13_bayesian_pca_model.png|.2par|||>|<label|fig12.13>Probabilistic
+    graphical model for Bayesian PCA in \ which the distribution over the
+    parameter matrix <math|W> is governed by a vector <math|\<b-alpha\>> of
+    hyperparameters.>
+  </padded-center>
+
+  The values for <math|\<alpha\><rsub|i>> will be found iteratively by
+  maximizing the marginal likelihood function in which <math|W> has been
+  integrated out. As a result of this optimization, some of the
+  <math|\<alpha\><rsub|i>> may be driven to infinity, with the corresponding
+  parameters vector <math|\<b-w\><rsub|i>> being driven to zero (the
+  posterior distribution becomes a delta function at the origin) giving a
+  sparse solution. The effective dimensionality of the principal subspace is
+  then determined by the number of finite <math|\<alpha\><rsub|i>> values,
+  and the corresponding vectors <math|\<b-w\><rsub|i>> can be thought of as
+  `relevant' for modelling the data distribution. In this way, the Bayesian
+  approach is automatically making the trade-off between improving the fit to
+  the data, by using a larger number of vectors <math|\<b-w\><rsub|i>> with
+  their corresponding eigenvalues <math|\<lambda\><rsub|i>> each tuned to the
+  data, and reducing the complexity of the model by suppressing some of the
+  <math|\<b-w\><rsub|i>> vectors. The origins of this sparsity were discussed
+  earlier in the context of relevance vector machines.
+
+  The values of <math|\<alpha\><rsub|i>> are re-estimated during training by
+  maximizing the log marginal likelihood given by
+
+  <\equation*>
+    p<around*|(|X\|\<b-alpha\>,\<b-mu\>,\<sigma\><rsup|2>|)>=<big|int>p<around*|(|X\|W,\<b-mu\>,\<sigma\><rsup|2>|)>p<around*|(|W\|\<b-alpha\>|)>\<mathd\>W
+  </equation*>
+
+  where the log of <math|p(X\|W,\<b-mu\>,\<sigma\><rsup|2>)> is given by Eq.
+  <eqref|12.43>. Note that for simplicity we also treat <math|\<b-mu\>> and
+  <math|\<sigma\><rsup|2>> as parameters to be estimated, rather than
+  defining priors over these parameters.
+
+  Because this integration is intractable, we make use of the Laplace
+  approximation. If we assume that the posterior distribution is sharply
+  peaked, as will occur for \ sufficiently large data sets, then the
+  re-estimation equations obtained by maximizing the marginal likelihood with
+  respect to <math|\<alpha\><rsub|i>> take the simple form
+
+  <\equation*>
+    \<alpha\><rsub|i><rsup|new>=<frac|D|\<b-w\><rsub|i><rsup|T>\<b-w\><rsub|i>>
+  </equation*>
+
+  which follows from (3.98), noting that the dimensionality of
+  <math|\<b-w\><rsub|i>> is <math|D>. These reestimations are interleaved
+  with the EM algorithm updates for determining <math|W> and
+  <math|\<sigma\><rsup|2>>. The E-step equations are again given by Eq.
+  <eqref|12.54> and <eqref|12.55>. Similarly, the M step equation for
+  <math|\<sigma\><rsup|2>> is again given by Eq. <eqref|12.57>. The only
+  change is to the M-step equation for <math|W>, which is modified to give
+
+  <\equation*>
+    W<rsub|new>=<around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>|]><around*|[|<big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>+\<sigma\><rsup|2>A|]><rsup|-1>
+  </equation*>
+
+  where <math|A=diag(\<alpha\><rsub|i>)>. The value of <math|\<b-mu\>> is
+  given by the sample mean, as before.
+
+  If we choose <math|M = D \<minus\> 1> then, if all <math|\<alpha\><rsub|i>>
+  values are finite, the model represents a full-covariance Gaussian, while
+  if all the <math|\<alpha\><rsub|i>> go to infinity the model is equivalent
+  to an isotropic Gaussian, and so the model can encompass all permissible
+  values for the effective dimensionality of the principal subspace. It is
+  also possible to consider smaller values of M , which will save on
+  computational cost but which will limit the maximum dimensionality of the
+  subspace. A comparison of the results of this algorithm with standard
+  probabilistic PCA is shown in Figure <reference|fig12.14>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_14_bayesian_pca_w.png|.5par|||>|<label|fig12.14>`Hinton'
+    diagrams of the matrix <math|W> in which each element of the matrix is
+    depicted as a square (white for positive and black for negative values)
+    whose area is proportional to the magnitude of that element. The
+    synthetic data set comprises 300 data points in <math|D = 10> dimensions
+    sampled from a Gaussian distribution having standard deviation 1.0 in 3
+    directions and standard deviation 0.5 in the remaining 7 directions for a
+    data set in <math|D=10> dimensions having <math|M=3> directions with
+    larger variance than the remaining 7 directions. The left-hand plot shows
+    the result from maximum likelihood probabilistic PCA, and the left-hand
+    plot shows the corresponding result from Bayesian PCA. We see how the
+    Bayesian model is able to discover the appropriate dimensionality by
+    suppressing the 6 surplus degrees of freedom.>
+  </padded-center>
+
+  Bayesian PCA provides an opportunity to illustrate the Gibbs sampling
+  algorithm discussed in Section 11.3. Figure <reference|fig12.15> shows an
+  example of the samples from the hyperparameters <math|ln \<alpha\><rsub|i>>
+  for a data set in <math|D=4> dimensions in which the dimensionality of the
+  latent space is <math|M=3> but in which the data set is generated from a
+  probabilistic PCA model having one direction of high variance, with the
+  remaining directions comprising low variance noise. This result shows
+  clearly the presence of three distinct modes in the posterior distribution.
+  At each step of the iteration, one of the hyperparameters has a small value
+  and the remaining two have large values, so that two of the three latent
+  variables are suppressed. During the course of the Gibbs sampling, the
+  solution makes sharp transitions between the three modes.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_15_bayesian_pca_gibs.png|.3par|||>|<label|fig12.15>Gibbs
+    sampling for Bayesian \ PCA showing plots of ln <math|\<alpha\><rsub|i>>
+    versus iteration number for three <math|\<alpha\>> values, showing
+    transitions between the three modes of the posterior distribution.>
+  </padded-center>
+
+  The model described here involves a prior only over the matrix <math|W>. A
+  fully Bayesian treatment of PCA, including priors over <math|\<b-mu\>,
+  \<sigma\><rsup|2>>, and <math|\<b-alpha\>>, and solved using variational
+  methods, is described in Bishop (1999b). For a discussion of various
+  Bayesian approaches to determining the appropriate dimensionality for a PCA
+  model, see Minka (2001c).
+
+  <subsection|Factor analysis>
 
   \;
 </body>
@@ -1215,18 +1443,21 @@
     <associate|12.28|<tuple|1.8|9>>
     <associate|12.3|<tuple|1.2|3>>
     <associate|12.30|<tuple|1.9|9>>
-    <associate|12.31|<tuple|1.10|?>>
-    <associate|12.32|<tuple|1.11|?>>
+    <associate|12.31|<tuple|1.10|10>>
+    <associate|12.32|<tuple|1.11|10>>
     <associate|12.33|<tuple|1.12|10>>
     <associate|12.35|<tuple|1.13|11>>
     <associate|12.36|<tuple|1.14|11>>
     <associate|12.41|<tuple|1.15|11>>
     <associate|12.42|<tuple|1.16|11>>
-    <associate|12.46|<tuple|1.17|12>>
-    <associate|12.54|<tuple|1.18|?>>
-    <associate|12.55|<tuple|1.19|?>>
-    <associate|12.56|<tuple|1.20|?>>
-    <associate|12.57|<tuple|1.21|?>>
+    <associate|12.43|<tuple|1.17|?>>
+    <associate|12.46|<tuple|1.18|12>>
+    <associate|12.54|<tuple|1.19|15>>
+    <associate|12.55|<tuple|1.20|15>>
+    <associate|12.56|<tuple|1.21|15>>
+    <associate|12.57|<tuple|1.22|15>>
+    <associate|12.58|<tuple|1.23|?>>
+    <associate|12.59|<tuple|1.24|?>>
     <associate|12.9|<tuple|1.3|4>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.5|6>>
@@ -1240,7 +1471,13 @@
     <associate|auto-18|<tuple|1.10|12>>
     <associate|auto-19|<tuple|1.2.2|14>>
     <associate|auto-2|<tuple|1.1|1>>
-    <associate|auto-20|<tuple|1.11|?>>
+    <associate|auto-20|<tuple|1.11|16>>
+    <associate|auto-21|<tuple|1.12|?>>
+    <associate|auto-22|<tuple|1.2.3|?>>
+    <associate|auto-23|<tuple|1.13|?>>
+    <associate|auto-24|<tuple|1.14|?>>
+    <associate|auto-25|<tuple|1.15|?>>
+    <associate|auto-26|<tuple|1.2.4|?>>
     <associate|auto-3|<tuple|1.1|2>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.1.1|2>>
@@ -1250,6 +1487,11 @@
     <associate|auto-9|<tuple|1.4|6>>
     <associate|fig12.1|<tuple|1.1|1>>
     <associate|fig12.10|<tuple|1.10|12>>
+    <associate|fig12.11|<tuple|1.11|?>>
+    <associate|fig12.12|<tuple|1.12|?>>
+    <associate|fig12.13|<tuple|1.13|?>>
+    <associate|fig12.14|<tuple|1.14|?>>
+    <associate|fig12.15|<tuple|1.15|?>>
     <associate|fig12.2|<tuple|1.2|2>>
     <associate|fig12.3|<tuple|1.3|6>>
     <associate|fig12.4|<tuple|1.4|6>>
@@ -1345,6 +1587,16 @@
       <with|mode|<quote|math>|\<b-x\><rsub|n>> is associated with a value
       <with|mode|<quote|math>|\<b-z\><rsub|n>> of the latent
       variable.>|<pageref|auto-18>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.11>||Probabilistic
+      PCA visualization of a portion of the oil flow data set for the first
+      100 data points. The left-hand plot shows the posterior mean
+      projections of the data points on the principal subspace. The
+      right-hand plot is obtained by first randomly omitting
+      <with|mode|<quote|math>|30%> of the variable values and then using EM
+      to handle the missing values. Note that each data point then has at
+      least one missing measurement but that the plot is very similar to the
+      one obtained without missing values.>|<pageref|auto-20>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Continuous
