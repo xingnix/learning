@@ -1424,7 +1424,808 @@
 
   <subsection|Factor analysis>
 
+  Factor analysis is a linear-Gaussian latent variable model that is closely
+  related to probabilistic PCA. Its definition differs from that of
+  probabilistic PCA only in that the conditional distribution of the observed
+  variable <math|\<b-x\>> given the latent variable <math|\<b-x\>> is taken
+  to have a diagonal rather than an isotropic covariance so that
+
+  <\equation*>
+    p(\<b-x\>\|\<b-z\>)=\<cal-N\>(\<b-x\>\|W\<b-z\>+\<b-mu\>,\<Psi\>)
+  </equation*>
+
+  where <math|\<Psi\>> is a <math|D\<times\>D> diagonal matrix. Note that the
+  factor analysis model, in common with probabilistic PCA, assumes that the
+  observed variables <math|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|D>> are
+  independent, given the latent variable <math|\<b-z\>>. In essence, the
+  factor analysis model is explaining the observed covariance structure of
+  the data by representing the independent variance associated with each
+  coordinate in the matrix <math|\<Psi\>> and capturing the covariance
+  between variables in the matrix <math|W>. In the factor analysis
+  literature, the columns of <math|W>, which capture the correlations between
+  observed variables, are called <em|factor loadings>, and the diagonal
+  elements of \<Psi\>, which represent the independent noise variances for
+  each of the variables, are called <em|uniquenesses>.
+
+  The origins of factor analysis are as old as those of PCA, and discussions
+  of factor analysis can be found in the books by Everitt (1984), Bartholomew
+  (1987), and Basilevsky (1994). Links between factor analysis and PCA were
+  investigated by Lawley (1953) and Anderson (1963) who showed that at
+  stationary points of the likelihood function, for a factor analysis model
+  with <math|\<Psi\>=\<sigma\><rsup|2>I>, the columns of <math|W> are scaled
+  eigenvectors of the sample covariance matrix, and <math|\<sigma\><rsup|2>>
+  is the average of the discarded eigenvalues. Later, Tipping and Bishop
+  (1999b) showed that the maximum of the log likelihood function occurs when
+  the eigenvectors comprising <math|W> are chosen to be the principal
+  eigenvectors.
+
+  Making use of (2.115), we see that the marginal distribution for the
+  observed variable is given by\ 
+
+  <\equation*>
+    p(\<b-x\>) = \<cal-N\> (\<b-x\>\|\<b-mu\>, C)\ 
+  </equation*>
+
+  where now
+
+  <\equation*>
+    C = W W<rsup|T>+\<Psi\>.
+  </equation*>
+
+  As with probabilistic PCA, this model is invariant to rotations in the
+  latent space.
+
+  Historically, factor analysis has been the subject of controversy when
+  attempts have been made to place an interpretation on the individual
+  factors (the coordinates in z-space), which has proven problematic due to
+  the nonidentifiability of factor analysis associated with rotations in this
+  space. From our perspective, however, we shall view factor analysis as a
+  form of latent variable density model, in which the form of the latent
+  space is of interest but not the particular choice of coordinates used to
+  describe it. If we wish to remove the degeneracy associated with latent
+  space rotations, we must consider non-Gaussian latent variable
+  distributions, giving rise to Section 12.4 independent component analysis
+  (ICA) models.
+
+  We can determine the parameters <math|\<b-mu\>>, <math|W>, and
+  <math|\<Psi\>> in the factor analysis model by maximum likelihood. The
+  solution for <math|\<b-mu\>> is again given by the sample mean. However,
+  unlike probabilistic PCA, there is no longer a closed-form maximum
+  likelihood solution for <math|W>, which must therefore be found
+  iteratively. Because factor analysis is a latent variable model, this can
+  be done using an EM algorithm (Rubin and Thayer, \ 1982) that is analogous
+  to the one used for probabilistic PCA. Specifically, the E-step equations
+  are given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|n>|]>>|<cell|=>|<cell|G
+    W<rsup|T>\<Psi\><rsup|-1><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)>>>|<row|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>>|<cell|=>|<cell|G+\<bbb-E\><around*|[|\<b-z\><rsub|n>|]>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>>>>>
+  </eqnarray*>
+
+  where we have defined \ 
+
+  <\equation*>
+    G = (I + W<rsup|T>\<Psi\><rsup|\<minus\>1>W)<rsup|\<minus\>1>.
+  </equation*>
+
+  Note that this is expressed in a form that involves inversion of matrices
+  of size <math|M\<times\>M> rather than <math|D\<times\>D> (except for the
+  <math|D\<times\>D> diagonal matrix <math|\<Psi\>> whose inverse is trivial
+  to compute in <math|O(D)> steps), which is convenient because often
+  <math|M\<ll\>D>. Similarly, the M-step equations take the form
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|W<rsup|new>>|<cell|=>|<cell|<around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>|]><around*|[|<big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>|]><rsup|-1>>>|<row|<cell|\<Psi\><rsup|new>>|<cell|=>|<cell|diag<around*|{|S-W<rsup|new><frac|1|N><big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><rsup|T>|}>>>>>
+  </eqnarray*>
+
+  where the `diag' operator sets all of the nondiagonal elements of a matrix
+  to zero. A Bayesian treatment of the factor analysis model can be obtained
+  by a straightforward application of the techniques discussed in this book.
+
+  Another difference between probabilistic PCA and factor analysis concerns
+  their different behaviour under transformations of the data set. For PCA
+  and probabilistic PCA, if we rotate the coordinate system in data space,
+  then we obtain exactly the same fit to the data but with the <math|W>
+  matrix transformed by the corresponding rotation matrix. However, for
+  factor analysis, the analogous property is that if we make a component-wise
+  re-scaling of the data vectors, then this is absorbed into a corresponding
+  re-scaling of the elements of \<Psi\>.
+
+  <section|Kernel PCA>
+
   \;
+
+  In Chapter 6, we saw how the technique of kernel substitution allows us to
+  take an algorithm expressed in terms of scalar products of the form
+  <math|\<b-x\><rsup|T>\<b-x\><rprime|'>> and generalize that algorithm by
+  replacing the scalar products with a nonlinear kernel. Here we apply this
+  technique of kernel substitution to principal component analysis, thereby
+  obtaining a nonlinear generalization called <em|kernel PCA>
+  (Sch<wide|o|\<ddot\>>lkopf et al., 1998).
+
+  Consider a data set <math|<around*|{|\<b-x\><rsub|n>|}>> of observations,
+  where <math|n=1,\<cdots\>,N> , in a space of dimensionality <math|D>. In
+  order to keep the notation uncluttered, we shall assume that we have
+  already subtracted the sample mean from each of the vectors
+  <math|\<b-x\><rsub|n>>, so that \ <math|<big|sum><rsub|n>\<b-x\><rsub|n>=\<b-0\>>.
+  The first step is to express conventional PCA in such a form that the data
+  vectors <math|<around*|{|\<b-x\><rsub|n>|}>> appear only in the form of the
+  scalar products <math|\<b-x\><rsub|n><rsup|T>\<b-x\><rsub|m>>. Recall that
+  the principal components are defined by the eigenvectors
+  <math|\<b-u\><rsub|i>> of the covariance matrix
+
+  <\equation*>
+    S \<b-u\><rsub|i>=\<lambda\><rsub|i>\<b-u\><rsub|i>
+  </equation*>
+
+  where <math|i=1,\<cdots\>,D>. Here the <math|D\<times\>D> sample covariance
+  matrix <math|S> is defined by
+
+  <\equation*>
+    S=<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>\<b-x\><rsub|n><rsup|T>
+  </equation*>
+
+  and the eigenvectors are normalized such that
+  <math|\<b-u\><rsub|i><rsup|T>\<b-u\><rsub|i>=1>.
+
+  Now consider a nonlinear transformation <math|\<b-varphi\>(\<b-x\>)> into
+  an M-dimensional feature space, so that each data point
+  <math|\<b-x\><rsub|n>> is thereby projected onto a point
+  <math|\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>>. We can now perform
+  standard PCA in the feature space, which implicitly defines a nonlinear
+  principal component model in the original data space, as illustrated in
+  Figure <reference|fig12.16>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_16_kernel_pca.png|.5par|||>|<label|fig12.16>Schematic
+    illustration of kernel PCA. A data set in the original data space
+    (left-hand plot) is projected by a nonlinear transformation
+    <math|\<b-varphi\><around*|(|\<b-x\>|)>> into a feature space (right-hand
+    plot). By performing PCA in the feature space, we obtain the principal
+    components, of which the first is shown in blue and is denoted by the
+    vector v1. The green lines in feature space indicate the linear
+    projections onto the first principal component, which correspond to
+    nonlinear projections in the original data space. Note that in general it
+    is not possible to represent the nonlinear principal component by a
+    vector in <math|\<b-x\>> space.>
+  </padded-center>
+
+  For the moment, let us assume that the projected data set also has zero
+  mean, so that <math|<big|sum><rsub|n>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>=\<b-0\>>.
+  We shall return to this point shortly. The <math|M\<times\>M> sample
+  covariance matrix in feature space is given by
+
+  <\equation*>
+    C=<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T>
+  </equation*>
+
+  and its eigenvector expansion is defined by
+
+  <\equation*>
+    C\<b-v\><rsub|i>=\<lambda\><rsub|i>\<b-v\><rsub|i>
+  </equation*>
+
+  <math|i=1,\<cdots\>,M>. Our goal is to solve this eigenvalue problem
+  without having to work explicitly in the feature space. From the definition
+  of <math|C>, the eigenvector equations tells us that <math|\<b-v\><rsub|i>>
+  satisfies
+
+  <\equation*>
+    <frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><around*|{|\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T>\<b-v\><rsub|i>|}>=\<lambda\><rsub|i>\<b-v\><rsub|i>
+  </equation*>
+
+  and so we see that (provided <math|\<lambda\><rsub|i>\<gtr\>0>) the vector
+  <math|\<b-v\><rsub|i>> is given by a linear combination of the
+  <math|\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>> and so can be written in
+  the form
+
+  <\equation>
+    \<b-v\><rsub|i>=<big|sum><rsub|n=1><rsup|N>a<rsub|i
+    n>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><label|12.76>
+  </equation>
+
+  Substituting this expansion back into the eigenvector equation, we obtain
+
+  <\equation*>
+    <frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T><big|sum><rsub|m=1><rsup|N>a<rsub|i
+    m>\<b-varphi\><around*|(|\<b-x\><rsub|m>|)>=\<lambda\><rsub|i><big|sum><rsub|n=1><rsup|N>a<rsub|i
+    n>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>
+  </equation*>
+
+  \;
+
+  The key step is now to express this in terms of the kernel function
+  <math|k(\<b-x\><rsub|n>,\<b-x\><rsub|m>)=\<b-varphi\>(\<b-x\><rsub|n>)<rsup|T>\<b-varphi\>(\<b-x\><rsub|m>)>,
+  which we do by multiplying both sides by
+  <math|\<b-varphi\><around*|(|\<b-x\><rsub|l>|)><rsup|T>> to give
+
+  <\equation*>
+    <frac|1|N><big|sum><rsub|n=1><rsup|N>k<around*|(|\<b-x\><rsub|l>,\<b-x\><rsub|n>|)><big|sum><rsub|m=1><rsup|m>a<rsub|i
+    m>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>=\<lambda\><rsub|i><big|sum><rsub|n=1><rsup|N>a<rsub|i
+    n>k<around*|(|\<b-x\><rsub|l>,\<b-x\><rsub|n>|)>
+  </equation*>
+
+  This can be written in matrix notation as
+
+  <\equation>
+    K<rsup|2>\<b-a\><rsub|i>=\<lambda\><rsub|i>N
+    K\<b-a\><rsub|i><label|12.79>
+  </equation>
+
+  where <math|\<b-a\><rsub|i>> is an N-dimensional column vector with
+  elements <math|a<rsub|n i>> for <math|n=1,\<cdots\>,N>. We can find
+  solutions for <math|\<b-a\><rsub|i>> by solving the following eigenvalue
+  problem
+
+  <\equation>
+    K\<b-a\><rsub|i>=\<lambda\><rsub|i>N\<b-a\><rsub|i><label|12.80>
+  </equation>
+
+  in which we have removed a factor of <math|K> from both sides of Eq.
+  <eqref|12.79>. Note that the solutions of Eq. <eqref|12.79> and Eq.
+  <eqref|12.80> differ only by eigenvectors of <math|K> having zero
+  eigenvalues that do not affect the principal components projection.
+
+  The normalization condition for the coefficients <math|\<b-a\><rsub|i>> is
+  obtained by requiring that the eigenvectors in feature space be normalized.
+  Using Eq. <eqref|12.76> and <eqref|12.80>, we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|1>|<cell|=>|<cell|\<b-v\><rsub|i><rsup|T>\<b-v\><rsub|i>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><big|sum><rsub|m=1><rsup|N>a<rsub|i
+    n>a<rsub|i m>\<b-varphi\>*<around*|(|\<b-x\><rsub|n>|)><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|m>|)>>>|<row|<cell|>|<cell|=>|<cell|\<b-a\><rsub|i><rsup|T>K\<b-a\><rsub|i>>>|<row|<cell|>|<cell|=>|<cell|\<lambda\><rsub|i>N\<b-a\><rsub|i><rsup|T>\<b-a\><rsub|i>>>>>
+  </eqnarray*>
+
+  Having solved the eigenvector problem, the resulting principal component
+  projections can then also be cast in terms of the kernel function so that,
+  using Eq. <eqref|12.76>, the projection of a point <math|\<b-x\>> onto
+  eigenvector <math|i> is given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|y<rsub|i><around*|(|\<b-x\>|)>>|<cell|=>|<cell|\<b-varphi\><around*|(|\<b-x\>|)><rsup|T>\<b-v\><rsub|i>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|i
+    n>\<b-varphi\><around*|(|\<b-x\>|)><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>a<rsub|i
+    n>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>>>>>
+  </eqnarray*>
+
+  and so again is expressed in terms of the kernel function.
+
+  In the original D-dimensional <math|\<b-x\>> space there are <math|D>
+  orthogonal eigenvectors and hence we can find at most <math|D> linear
+  principal components. The dimensionality <math|M> of the feature space,
+  however, can be much larger than <math|D> (even infinite), and thus we can
+  find a number of nonlinear principal components that can exceed <math|D>.
+  Note, however, that the number of nonzero eigenvalues cannot exceed the
+  number <math|N> of data points, because (even if <math|M\<gtr\>N> ) the
+  covariance matrix in feature space has rank at most equal to <math|N>. This
+  is reflected in the fact that kernel PCA involves the eigenvector expansion
+  of the <math|N\<times\>N> matrix <math|K>.
+
+  So far we have assumed that the projected data set given by
+  <math|\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>> has zero mean, which in
+  general will not be the case. We cannot simply compute and then subtract
+  off the mean, since we wish to avoid working directly in feature space, and
+  so again, we formulate the algorithm purely in terms of the kernel
+  function. The projected data points after centralizing, denoted
+  <math|<wide|\<b-varphi\>|~><around*|(|\<b-x\><rsub|n>|)>>, are given by
+
+  <\equation*>
+    <wide|\<b-varphi\>|~><around*|(|\<b-x\><rsub|n>|)>=\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>-<frac|1|N><big|sum><rsub|l=1><rsup|N>\<b-varphi\><around*|(|\<b-x\><rsub|l>|)>
+  </equation*>
+
+  and the corresponding elements of the Gram matrix are given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<wide|K|~><rsub|n
+    m>>|<cell|=>|<cell|<wide|\<b-varphi\>|~><around*|(|\<b-x\><rsub|n>|)><wide|\<b-varphi\>|~><around*|(|\<b-x\><rsub|m>|)>>>|<row|<cell|>|<cell|=>|<cell|\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|m>|)>-<frac|1|N><big|sum><rsub|l=1><rsup|N>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|l>|)>-<frac|1|N><big|sum><rsub|l=1><rsup|N>\<b-varphi\><around*|(|\<b-x\><rsub|L>|)><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|m>|)>+<frac|1|N<rsup|2>><big|sum><rsub|j=1><rsup|N><big|sum><rsub|l=1><rsup|N>\<b-varphi\><around*|(|\<b-x\><rsub|j>|)><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|l>|)>>>|<row|<cell|>|<cell|=>|<cell|k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>-<frac|1|N><big|sum><rsub|l=1><rsup|N>k<around*|(|\<b-x\><rsub|l>,\<b-x\><rsub|m>|)>-<frac|1|N><big|sum><rsub|l=1><rsup|N>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|l>|)>+<frac|1|N<rsup|2>><big|sum><rsub|j=1><rsup|N><big|sum><rsub|l=1><rsup|N>k<around*|(|\<b-x\><rsub|j>,\<b-x\><rsub|l>|)>>>>>
+  </eqnarray*>
+
+  This can be expressed in matrix notation as
+
+  <\equation*>
+    <wide|K|~>=K-\<b-1\><rsub|N>K-K\<b-1\><rsub|N>+\<b-1\><rsub|N>K\<b-1\><rsub|N>
+  </equation*>
+
+  where <math|\<b-1\><rsub|N>> denotes the <math|N\<times\>N> matrix in which
+  every element takes the value <math|1/N> . \ Thus we can evaluate
+  <math|<wide|K|~>> using only the kernel function and then use
+  <math|<wide|K|~>> to determine the eigenvalues and eigenvectors. Note that
+  the standard PCA algorithm is recovered as a special case if we use a
+  linear kernel <math|k(\<b-x\>,\<b-x\><rprime|'>)=\<b-x\><rsup|T>\<b-x\><rprime|'>>.
+  Figure <reference|fig12.17> shows an \ example of kernel PCA applied to a
+  synthetic data set (Sch<wide|o|\<ddot\>>lkopf et al., 1998). Here a
+  `Gaussian' kernel of the form
+
+  <\equation*>
+    k(\<b-x\>,\<b-x\><rprime|'>)=exp(\<minus\>\<\|\|\>\<b-x\>
+    \<minus\>\<up-x\><rprime|'>\<\|\|\><rsup|2>/0.1)
+  </equation*>
+
+  is applied to a synthetic data set. The lines correspond to contours along
+  which the projection onto the corresponding principal component, defined by
+  \ 
+
+  <\equation*>
+    \<b-varphi\>(\<b-x\>)<rsup|T>\<b-v\><rsub|i>=<big|sum><rsub|n=1><rsup|N>a<rsub|i
+    n>k(\<b-x\>,\<b-x\><rsub|n>)
+  </equation*>
+
+  is constant.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_17_kernel_pca_example.png|.7par|||>|<label|fig12.17>Example
+    of kernel PCA, with a Gaussian kernel applied to a synthetic data set in
+    two dimensions, showing the first eight eigenfunctions along with their
+    eigenvalues. The contours are lines along which the projection onto the
+    corresponding principal component is constant. Note how the first two
+    eigenvectors separate the three clusters, the next three eigenvectors
+    split each of the cluster into halves, and the following three
+    eigenvectors again split the clusters into halves along directions
+    orthogonal to the previous splits.>
+  </padded-center>
+
+  One obvious disadvantage of kernel PCA is that it involves finding the
+  eigenvectors of the <math|N\<times\>N> matrix <math|<wide|K|~>> rather than
+  the <math|D\<times\>D> matrix <math|S> of conventional linear PCA, and so
+  in practice for large data sets approximations are often used.
+
+  Finally, we note that in standard linear PCA, we often retain some reduced
+  number <math|L\<less\>D> of eigenvectors and then approximate a data vector
+  <math|\<b-x\><rsub|n>> by its projection <math|<wide|\<b-x\>|^><rsub|n>>
+  onto the L-dimensional principal subspace, defined by
+
+  <\equation*>
+    <wide|\<b-x\>|^><rsub|n>=<big|sum><rsub|i=1><rsup|L><around*|(|\<b-x\><rsub|n><rsup|T>\<b-u\><rsub|i>|)>\<b-u\><rsub|i>
+  </equation*>
+
+  In kernel PCA, this will in general not be possible. To see this, note that
+  the mapping <math|\<b-varphi\><around*|(|\<b-x\>|)>> maps the D-dimensional
+  <math|\<b-x\>> space into a D-dimensional <em|manifold> in the
+  M-dimensional feature space <math|\<b-varphi\>>. The vector <math|\<b-x\>>
+  is known as the pre-image of the corresponding point
+  <math|\<b-varphi\><around*|(|\<b-x\>|)>>. However, the projection of points
+  in feature space onto the linear PCA subspace in that space will typically
+  not lie on the nonlinear D-dimensional manifold and so will not have a
+  corresponding pre-image in data space. Techniques have therefore been
+  proposed for finding approximate pre-images (Bakir et al., 2004)
+
+  <section|Nonlinear Latent Variable Models>
+
+  \;
+
+  In this chapter, we have focussed on the simplest class of models having
+  continuous latent variables, namely those based on linear-Gaussian
+  distributions. As well as having great practical importance, these models
+  are relatively easy to analyse and to fit to data and can also be used as
+  components in more complex models. Here we consider briefly some
+  generalizations of this framework to models that are either nonlinear or
+  non-Gaussian, or both.
+
+  In fact, the issues of nonlinearity and non-Gaussianity are related because
+  a general probability density can be obtained from a simple fixed reference
+  density, such as a Gaussian, by making a nonlinear change of variables.
+  This idea forms the \ basis of several practical latent variable models as
+  we shall see shortly.
+
+  <subsection|Independent component analysis>
+
+  \;
+
+  We begin by considering models in which the observed variables are related
+  linearly to the latent variables, but for which the latent distribution is
+  non-Gaussian. An important class of such models, known as<em| independent
+  component analysis>, or ICA, arises when we consider a distribution over
+  the latent variables that factorizes, so that \ 
+
+  <\equation*>
+    p(z) = \ <big|sum><rsub|j=1><rsup|M>p(z<rsub|j>)
+  </equation*>
+
+  \ \ To understand the role of such models, consider a situation in which
+  two people are talking at the same time, and we record their voices using
+  two microphones. If we ignore effects such as time delay and echoes, then
+  the signals received by the microphones at any point in time will be given
+  by linear combinations of the amplitudes of the two voices. The
+  coefficients of this linear combination will be constant, and if we can
+  infer their values from sample data, then we can invert the mixing process
+  (assuming it is nonsingular) and thereby obtain two clean signals each of
+  which contains the voice of just one person. This is an example of a
+  problem called <em|blind source separation> in which `blind' refers to the
+  fact that we are given only the mixed data, and neither the original
+  sources nor the mixing coefficients are observed (Cardoso, 1998).
+
+  This type of problem is sometimes addressed using the following approach
+  (MacKay, 2003) in which we ignore the temporal nature of the signals and
+  treat the successive samples as i.i.d. We consider a generative model in
+  which there are two latent variables corresponding to the unobserved speech
+  signal amplitudes, and there are two observed variables given by the signal
+  values at the microphones. The latent variables have a joint distribution
+  that factorizes as above, and the observed variables are given by a linear
+  combination of the latent variables. There is no need to include a noise
+  distribution because the number of latent variables equals the number of
+  observed variables, and therefore the marginal distribution of the observed
+  variables will not in general be singular, so the observed variables are
+  simply deterministic linear combinations of the latent variables. Given a
+  data set of observations, the likelihood function for this model is a
+  function of the coefficients in the linear combination. The log likelihood
+  can be maximized using gradient-based optimization giving rise to a
+  particular version of independent component analysis.
+
+  The success of this approach requires that the latent variables have
+  non-Gaussian distributions. To see this, recall that in probabilistic PCA
+  (and in factor analysis) the latent-space distribution is given by a
+  zero-mean isotropic Gaussian. The model therefore cannot distinguish
+  between two different choices for the latent variables where these differ
+  simply by a rotation in latent space. This can be verified directly by
+  noting that the marginal density Eq. <eqref|12.35>, and hence the
+  likelihood function, is unchanged if we make the transformation
+  <math|W\<rightarrow\>WR> where <math|R> is an orthogonal matrix satisfying
+  <math|R R<rsup|T>=I>, because the matrix <math|C> given by Eq.
+  <eqref|12.36> is itself invariant. Extending the model to allow more
+  general Gaussian latent distributions does not change this conclusion
+  because, as we have seen, such a model is equivalent to the zero-mean
+  isotropic Gaussian latent variable model.
+
+  Another way to see why a Gaussian latent variable distribution in a linear
+  model is insufficient to find independent components is to note that the
+  principal components represent a rotation of the coordinate system in data
+  space such as to diagonalize the covariance matrix, so that the data
+  distribution in the new coordinates is then uncorrelated. Although zero
+  correlation is a necessary condition for independence it is not, however,
+  sufficient. In practice, a common choice for the latent-variable
+  \ distribution is given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|z<rsub|j>|)>>|<cell|=>|<cell|<frac|1|\<pi\>cosh<around*|(|z<rsub|j>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|\<pi\><around*|(|e<rsup|z<rsub|j>>+e<rsup|-z<rsub|j>>|)>>>>>>
+  </eqnarray*>
+
+  which has heavy tails compared to a Gaussian, reflecting the observation
+  that many real-world distributions also exhibit this property.
+
+  The original ICA model (Bell and Sejnowski, 1995) was based on the
+  optimization of an objective function defined by information maximization.
+  One advantage of a probabilistic latent variable formulation is that it
+  helps to motivate and formulate generalizations of basic ICA. For instance,
+  independent factor analysis (Attias, 1999a) considers a model in which the
+  number of latent and observed variables can differ, the observed variables
+  are noisy, and the individual latent variables have flexible distributions
+  modelled by mixtures of Gaussians. The log likelihood for this model is
+  maximized using EM, and the reconstruction of the latent variables is
+  approximated using a variational approach. Many other types of model have
+  been considered, and there is now a huge literature on ICA and its
+  applications (Jutten and Herault, 1991; Comon et al., 1991; Amari et al.,
+  1996; Pearlmutter and Parra, 1997; Hyv<wide|a|\<ddot\>>rinen and Oja, 1997;
+  Hinton et al., 2001; Miskin and MacKay, 2001; Hojen-Sorensen et al., 2002;
+  Choudrey and Roberts, 2003; Chan et al., 2003; Stone, 2004).
+
+  <subsection|Autoassociative neural networks>
+
+  \;
+
+  In Chapter 5 we considered neural networks in the context of supervised
+  learning, where the role of the network is to predict the output variables
+  given values for the input variables. However, neural networks have also
+  been applied to unsupervised learning where they have been used for
+  dimensionality reduction. This is achieved by using a network having the
+  same number of outputs as inputs, and optimizing the weights so as to
+  minimize some measure of the reconstruction error between inputs and
+  outputs with respect to a set of training data.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_18_autoassociativel_2_layer_ann.png|.3par|||>|<label|fig12.18>An
+    autoassociative multilayer perceptron having \ two layers of weights.
+    Such a network is trained to map input vectors onto themselves by
+    minimization of a sum-of-squares error. Even with nonlinear units in the
+    hidden layer, such a network is equivalent to linear principal component
+    analysis. Links representing bias parameters have been omitted for
+    clarity.>
+  </padded-center>
+
+  Consider first a multilayer perceptron of the form shown in Figure
+  <reference|fig12.18>, having <math|D> inputs, <math|D> output units and
+  <math|M> hidden units, with <math|M\<less\>D>. The targets used to train
+  the network are simply the input vectors themselves, so that the network is
+  attempting to map each input vector onto itself. Such a network is said to
+  form an <em|autoassociative> mapping. Since the number of hidden units is
+  smaller than the number of inputs, a perfect reconstruction of all input
+  vectors is not in general possible. We therefore determine the network
+  parameters <math|\<b-w\>> by minimizing an error function which captures
+  the degree of mismatch between the input vectors and their reconstructions.
+  In particular, we shall choose a sum-of-squares error of the form
+
+  <\equation>
+    E<around*|(|\<b-w\>|)>=<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|\<\|\|\>|y<around*|(|\<b-x\><rsub|n>,\<b-w\>|)>-\<b-x\><rsub|n>|\<\|\|\>><rsup|2><label|12.91>
+  </equation>
+
+  If the hidden units have linear activations functions, then it can be shown
+  that the error function has a unique global minimum, and that at this
+  minimum the network performs a projection onto the M-dimensional subspace
+  which is spanned by the first M principal components of the data (Bourlard
+  and Kamp, 1988; Baldi and Hornik, 1989). Thus, the vectors of weights which
+  lead into the hidden units in Figure <reference|fig12.18> form a basis set
+  which spans the principal subspace. Note, however, that these vectors need
+  not be orthogonal or normalized. This result is unsurprising, since both
+  principal component analysis and the neural network are using linear
+  dimensionality reduction and are minimizing the same sum-of-squares error
+  function.
+
+  It might be thought that the limitations of a linear dimensionality
+  reduction could be overcome by using nonlinear (sigmoidal) activation
+  functions for the hidden units in the network in Figure
+  <reference|fig12.18>. However, even with nonlinear hidden units, the
+  minimum error solution is again given by the projection onto the principal
+  component subspace (Bourlard and Kamp, 1988). There is therefore no
+  advantage in using twolayer neural networks to perform dimensionality
+  reduction. Standard techniques for principal component analysis (based on
+  singular value decomposition) are guaranteed to give the correct solution
+  in finite time, and they also generate an ordered set of eigenvalues with
+  corresponding orthonormal eigenvectors.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_19_autoassociativel_4_layer_ann.png|.3par|||>|<label|fig12.19>Addition
+    of extra hidden layers of nonlinear units gives an autoassociative
+    network which can perform a nonlinear dimensionality reduction.>
+  </padded-center>
+
+  The situation is different, however, if additional hidden layers are
+  permitted in the network. Consider the four-layer autoassociative network
+  shown in Figure <reference|fig12.19>. Again the output units are linear,
+  and the M units in the second hidden layer can also be linear, however, the
+  first and third hidden layers have sigmoidal nonlinear activation
+  functions. The network is again trained by minimization of the error
+  function Eq. <eqref|12.91>. We can view this network as two successive
+  functional mappings <math|F<rsub|1>> and <math|F<rsub|2>>, as indicated in
+  Figure <reference|fig12.19>. The first mapping <math|F<rsub|1>> projects
+  the original Ddimensional data onto an M-dimensional subspace
+  <math|\<cal-S\>> defined by the activations of the units in the second
+  hidden layer. Because of the presence of the first hidden layer of
+  nonlinear units, this mapping is very general, and in particular is not
+  restricted to being linear. Similarly, the second half of the network
+  defines an arbitrary functional mapping from the M -dimensional space back
+  into the original D-dimensional input space. This has a simple geometrical
+  interpretation, as indicated for the case <math|D=3> and <math|M=2> in
+  Figure <reference|fig12.20>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_20_autoassociativel_4_layer_ann_mapping.png|.6par|||>|<label|fig12.20>Geometrical
+    interpretation of the mappings performed by the network in Figure
+    <reference|fig12.19> for the case of <math|D=3> inputs and <math|M=2>
+    units in the middle hidden layer. The function <math|F<rsub|2>> maps from
+    an M-dimensional space <math|\<cal-S\>> into a D-dimensional space and
+    therefore defines the way in which the space <math|\<cal-S\>> is embedded
+    within the original <math|\<b-x\>>-space. Since the mapping
+    <math|F<rsub|2>> can be nonlinear, the embedding of <math|\<cal-S\>> can
+    be nonplanar, as indicated in the figure. The mapping <math|F<rsub|1>>
+    then defines a projection of points in the original D-dimensional space
+    into the M-dimensional subspace <math|\<cal-S\>>.>
+  </padded-center>
+
+  Such a network effectively performs a nonlinear principal component
+  analysis. It has the advantage of not being limited to linear
+  transformations, although it contains standard principal component analysis
+  as a special case. However, training the network now involves a nonlinear
+  optimization problem, since the error function Eq. <eqref|12.91> is no
+  longer a quadratic function of the network parameters. Computationally
+  intensive nonlinear optimization techniques must be used, and there is the
+  risk of finding a suboptimal local minimum of the error function. Also, the
+  dimensionality of the subspace must be specified before training the
+  network.
+
+  <subsection|Modelling nonlinear manifolds>
+
+  \;
+
+  As we have already noted, many natural sources of data correspond to
+  lowdimensional, possibly noisy, nonlinear manifolds embedded within the
+  higher dimensional observed data space. Capturing this property explicitly
+  can lead to improved density modelling compared with more general methods.
+  Here we consider briefly a range of techniques that attempt to do this.
+
+  One way to model the nonlinear structure is through a combination of linear
+  models, so that we make a piece-wise linear approximation to the manifold.
+  This can be obtained, for instance, by using a clustering technique such as
+  K-means based on Euclidean distance to partition the data set into local
+  groups with standard PCA applied to each group. A better approach is to use
+  the reconstruction error for cluster assignment (Kambhatla and Leen, 1997;
+  Hinton et al., 1997) as then a common cost function is being optimized in
+  each stage. However, these approaches still suffer from limitations due to
+  the absence of an overall density model. By using probabilistic PCA it is
+  straightforward to define a fully probabilistic model simply by considering
+  a mixture distribution in which the components are probabilistic PCA models
+  (Tipping and Bishop, 1999a). Such a model has both discrete latent
+  variables, corresponding to the discrete mixture, as well as continuous
+  latent variables, and the likelihood function can be maximized using the EM
+  algorithm. A fully Bayesian treatment, based on variational inference
+  (Bishop and Winn, 2000), allows the number of components in the mixture, as
+  well as the effective dimensionalities of the individual models, to be
+  inferred from the data. There are many variants of this model in which
+  parameters such as the <math|W> matrix or the noise variances are tied
+  across components in the mixture, or in which the isotropic noise
+  distributions are replaced by diagonal ones, giving rise to a mixture of
+  factor analysers (Ghahramani and Hinton, 1996a; Ghahramani and Beal, 2000).
+  The mixture of probabilistic PCA models can also be extended hierarchically
+  to produce an interactive data visualization algorithm (Bishop and Tipping,
+  1998).
+
+  An alternative to considering a mixture of linear models is to consider a
+  single nonlinear model. Recall that conventional PCA finds a linear
+  subspace that passes close to the data in a least-squares sense. This
+  concept can be extended to onedimensional nonlinear surfaces in the form of
+  <em|principal curves> (Hastie and Stuetzle, 1989). We can describe a curve
+  in a D-dimensional data space using a vector-valued function
+  <math|\<b-f\>(\<lambda\>)>, which is a vector each of whose elements is a
+  function of the scalar <math|\<lambda\>>. There are many possible ways to
+  parameterize the curve, of which a natural choice is the arc length along
+  the curve. For any given point <math|<wide|\<b-x\>|^>> in data space, we
+  can find the point on the curve that is closest in Euclidean distance. We
+  denote this point by <math|\<lambda\>=g<rsub|f>(\<b-x\>)> because it
+  depends on the particular curve <math|\<b-f\>(\<lambda\>)>. For a
+  continuous data density <math|p(\<b-x\>)>, a principal curve is defined as
+  one for which every point on the curve is the mean of all those points in
+  data space that project to it, so that
+
+  <\equation*>
+    \<bbb-E\><around*|[|\<b-x\>\|g<rsub|\<b-f\>><around*|(|\<b-x\>|)>=\<lambda\>|]>=\<b-f\><around*|(|\<lambda\>|)>
+  </equation*>
+
+  For a given continuous density, there can be many principal curves. In
+  practice, we are interested in finite data sets, and we also wish to
+  restrict attention to smooth curves. Hastie and Stuetzle (1989) propose a
+  two-stage iterative procedure for finding such principal curves, somewhat
+  reminiscent of the EM algorithm for PCA. The curve is initialized using the
+  first principal component, and then the algorithm alternates between a data
+  projection step and curve re-estimation step. In the projection step, each
+  data point is assigned to a value of \<lambda\> corresponding to the
+  closest point on the curve. Then in the re-estimation step, each point on
+  the curve is given by a weighted average of those points that project to
+  nearby points on the curve, with points closest on the curve given the
+  greatest weight. In the case where the subspace is constrained to be
+  linear, the procedure converges to the first principal component and is
+  equivalent to the power method for finding the largest eigenvector of the
+  covariance matrix. Principal curves can be generalized to multidimensional
+  manifolds called <em|principal surfaces> although these have found limited
+  use due to the difficulty of data smoothing in higher dimensions even for
+  two-dimensional manifolds.
+
+  PCA is often used to project a data set onto a lower-dimensional space, for
+  example two dimensional, for the purposes of visualization. Another linear
+  technique with a similar aim is <em|multidimensional scaling>, or MDS (Cox
+  and Cox, 2000). It finds a low-dimensional projection of the data such as
+  to preserve, as closely as possible, the pairwise distances between data
+  points, and involves finding the eigenvectors of the distance matrix. In
+  the case where the distances are Euclidean, it gives equivalent results to
+  PCA. The MDS concept can be extended to a wide variety of data types
+  specified in terms of a similarity matrix, <em|giving nonmetric> MDS.
+
+  Two other nonprobabilistic methods for dimensionality reduction and data
+  visualization are worthy of mention. <em|Locally linear embedding>, or LLE
+  (Roweis and Saul, 2000) first computes the set of coefficients that best
+  reconstructs each data point from its neighbours. These coefficients are
+  arranged to be invariant to rotations, translations, and scalings of that
+  data point and its neighbours, and hence they characterize the local
+  geometrical properties of the neighbourhood. LLE then maps the
+  high-dimensional data points down to a lower dimensional space while
+  preserving these neighbourhood coefficients. If the local neighbourhood for
+  a particular data point can be considered linear, then the transformation
+  can be achieved using a combination of translation, rotation, and scaling,
+  such as to preserve the angles formed between the data points and their
+  neighbours. Because the weights are invariant to these transformations, we
+  expect the same weight values to reconstruct the data points in the
+  low-dimensional space as in the high-dimensional data space. In spite of
+  the nonlinearity, the optimization for LLE does not exhibit local minima.
+
+  In <em|isometric feature mapping>, or isomap (Tenenbaum et al., 2000), the
+  goal is to project the data to a lower-dimensional space using MDS, but
+  where the dissimilarities are defined in terms of the <em|geodesic>
+  distances measured along the manifold. For instance, if two points lie on a
+  circle, then the geodesic is the arc-length distance measured around the
+  circumference of the circle not the straight line distance measured along
+  the chord connecting them. The algorithm first defines the neighbourhood
+  for each data point, either by finding the <math|K> nearest neighbours or
+  by finding all points within a sphere of radius <math|\<varepsilon\>>. A
+  graph is then constructed by linking all neighbouring points and labelling
+  them with their Euclidean distance. The geodesic distance between any pair
+  of points is then approximated by the sum of the arc lengths along the
+  shortest path connecting them (which itself is found using standard
+  algorithms). Finally, metric MDS is applied to the geodesic distance matrix
+  to find the low-dimensional projection.
+
+  Our focus in this chapter has been on models for which the observed
+  variables are continuous. We can also consider models having continuous
+  latent variables together with discrete observed variables, giving rise to
+  <em|latent trait> models (Bartholomew, 1987). In this case, the
+  marginalization over the continuous latent variables, even for a linear
+  relationship between latent and observed variables, cannot be performed
+  analytically, and so more sophisticated techniques are required. Tipping
+  (1999) uses variational inference in a model with a two-dimensional latent
+  space, allowing a binary data set to be visualized analogously to the use
+  of PCA to visualize continuous data. Note that this model is the dual of
+  the Bayesian logistic regression problem discussed in Section 4.5. In the
+  case of logistic regression we have <math|N> observations of the feature
+  vector <math|\<b-varphi\><rsub|n>> which are parameterized by a single
+  parameter vector <math|\<b-w\>>, whereas in the latent space visualization
+  model there is a single latent space variable <math|\<b-x\>> (analogous to
+  <math|\<b-varphi\>>) and <math|N> copies of the latent variable
+  <math|\<b-w\><rsub|n>>. A generalization of probabilistic latent variable
+  models to general exponential family distributions is described in Collins
+  et al. (2002).
+
+  We have already noted that an arbitrary distribution can be formed by
+  taking a Gaussian random variable and transforming it through a suitable
+  nonlinearity. This is exploited in a general latent variable model called a
+  <em|density network> (MacKay, 1995; MacKay and Gibbs, 1999) in which the
+  nonlinear function is governed by a multilayered neural network. If the
+  network has enough hidden units, it can approximate a given nonlinear
+  function to any desired accuracy. The downside of having \ such a flexible
+  model is that the marginalization over the latent variables, required in
+  order to obtain the likelihood function, is no longer analytically
+  tractable. Instead, the likelihood is approximated using Monte Carlo
+  techniques by drawing samples \ from the Gaussian prior. The
+  marginalization over the latent variables then becomes a simple sum with
+  one term for each sample. However, because a large number of sample points
+  may be required in order to give an accurate representation of the
+  marginal, this procedure can be computationally costly.
+
+  If we consider more restricted forms for the nonlinear function, and make
+  an appropriate choice of the latent variable distribution, then we can
+  construct a latent variable model that is both nonlinear and efficient to
+  train. The<em| generative topographic mapping>, or GTM (Bishop et al.,
+  1996; Bishop et al., 1997a; Bishop et al., 1998b) uses a latent
+  distribution that is defined by a finite regular grid of delta functions
+  over the (typically two-dimensional) latent space. Marginalization over the
+  latent space then simply involves summing over the contributions from each
+  of the grid locations. The nonlinear mapping is given by a linear
+  regression model that allows for general \ nonlinearity while being a
+  linear function of the adaptive parameters. Note that the usual limitation
+  of linear regression models arising from the curse of dimensionality does
+  not arise in the context of the GTM since the manifold generally has two
+  dimensions irrespective of the dimensionality of the data space. A
+  consequence of these two choices is that the likelihood function can be
+  expressed analytically in closed form and can be optimized efficiently
+  using the EM algorithm. The resulting GTM model fits a two-dimensional
+  nonlinear manifold to the data set, and by evaluating the posterior
+  distribution over latent space for the data points, they can be projected
+  back to the latent space for visualization purposes. Figure
+  <reference|fig12.21> shows a comparison of the oil data set visualized with
+  linear PCA and with the nonlinear GTM.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_12_21_gtm.png|.7par|||>|<label|fig12.21>Plot
+    of the oil flow data set visualized using PCA on the left and GTM on the
+    right. For the GTM model, each data point is plotted at the mean of its
+    posterior distribution in latent space. The nonlinearity of the GTM model
+    allows the separation between the groups of data points to be seen more
+    clearly.>
+  </padded-center>
+
+  The GTM can be seen as a probabilistic version of an earlier model called
+  the self organizing map, or SOM (Kohonen, 1982; Kohonen, 1995), which also
+  represents a two-dimensional nonlinear manifold as a regular array of
+  discrete points. The SOM is somewhat reminiscent of the K-means algorithm
+  in that data points are assigned to nearby prototype vectors that are then
+  subsequently updated. Initially, the prototypes are distributed at random,
+  and during the training process they `self organize' so as to approximate a
+  smooth manifold. Unlike K-means, however, the SOM is not optimizing any
+  well-defined cost function (Erwin et al., 1992) making it difficult to set
+  the parameters of the model and to assess convergence. There is also no
+  guarantee that the `self-organization' will take place as this is dependent
+  on the choice of appropriate parameter values for any particular data set.
+
+  By contrast, GTM optimizes the log likelihood function, and the resulting
+  model defines a probability density in data space. In fact, it corresponds
+  to a constrained mixture of Gaussians in which the components share a
+  common variance, and the means are constrained to lie on a smooth
+  two-dimensional manifold. This probabilistic foundation also makes it very
+  straightforward to define generalizations of GTM (Bishop et al., 1998a)
+  such as a Bayesian treatment, dealing with missing values, a principled
+  extension to discrete variables, the use of Gaussian processes to \ define
+  the manifold, or a hierarchical GTM model (Tino and Nabney, 2002).
+
+  Because the manifold in GTM is defined as a continuous surface, not just at
+  the prototype vectors as in the SOM, it is possible to compute the
+  <em|magnification factors> corresponding to the local expansions and
+  compressions of the manifold needed to fit the data set (Bishop et al.,
+  1997b) as well as the <em|directional curvatures> of the manifold (Tino et
+  al., 2001). These can be visualized along with the projected data and
+  provide additional insight into the model.
 </body>
 
 <\initial>
@@ -1440,6 +2241,7 @@
     <associate|12.12|<tuple|1.5|4>>
     <associate|12.13|<tuple|1.6|4>>
     <associate|12.17|<tuple|1.7|5>>
+    <associate|12.19|<tuple|1.19|?>>
     <associate|12.28|<tuple|1.8|9>>
     <associate|12.3|<tuple|1.2|3>>
     <associate|12.30|<tuple|1.9|9>>
@@ -1448,17 +2250,21 @@
     <associate|12.33|<tuple|1.12|10>>
     <associate|12.35|<tuple|1.13|11>>
     <associate|12.36|<tuple|1.14|11>>
-    <associate|12.41|<tuple|1.15|11>>
-    <associate|12.42|<tuple|1.16|11>>
-    <associate|12.43|<tuple|1.17|?>>
-    <associate|12.46|<tuple|1.18|12>>
+    <associate|12.41|<tuple|1.15|12>>
+    <associate|12.42|<tuple|1.16|12>>
+    <associate|12.43|<tuple|1.17|12>>
+    <associate|12.46|<tuple|1.18|13>>
     <associate|12.54|<tuple|1.19|15>>
     <associate|12.55|<tuple|1.20|15>>
     <associate|12.56|<tuple|1.21|15>>
     <associate|12.57|<tuple|1.22|15>>
-    <associate|12.58|<tuple|1.23|?>>
-    <associate|12.59|<tuple|1.24|?>>
+    <associate|12.58|<tuple|1.23|16>>
+    <associate|12.59|<tuple|1.24|16>>
+    <associate|12.76|<tuple|1.25|?>>
+    <associate|12.79|<tuple|1.26|?>>
+    <associate|12.80|<tuple|1.27|?>>
     <associate|12.9|<tuple|1.3|4>>
+    <associate|12.91|<tuple|1.28|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.5|6>>
     <associate|auto-11|<tuple|1.6|7>>
@@ -1466,19 +2272,30 @@
     <associate|auto-13|<tuple|1.8|8>>
     <associate|auto-14|<tuple|1.1.4|8>>
     <associate|auto-15|<tuple|1.2|9>>
-    <associate|auto-16|<tuple|1.9|10>>
+    <associate|auto-16|<tuple|1.9|11>>
     <associate|auto-17|<tuple|1.2.1|12>>
     <associate|auto-18|<tuple|1.10|12>>
-    <associate|auto-19|<tuple|1.2.2|14>>
+    <associate|auto-19|<tuple|1.2.2|15>>
     <associate|auto-2|<tuple|1.1|1>>
     <associate|auto-20|<tuple|1.11|16>>
-    <associate|auto-21|<tuple|1.12|?>>
-    <associate|auto-22|<tuple|1.2.3|?>>
-    <associate|auto-23|<tuple|1.13|?>>
-    <associate|auto-24|<tuple|1.14|?>>
-    <associate|auto-25|<tuple|1.15|?>>
-    <associate|auto-26|<tuple|1.2.4|?>>
+    <associate|auto-21|<tuple|1.12|17>>
+    <associate|auto-22|<tuple|1.2.3|17>>
+    <associate|auto-23|<tuple|1.13|18>>
+    <associate|auto-24|<tuple|1.14|19>>
+    <associate|auto-25|<tuple|1.15|19>>
+    <associate|auto-26|<tuple|1.2.4|19>>
+    <associate|auto-27|<tuple|1.3|?>>
+    <associate|auto-28|<tuple|1.16|?>>
+    <associate|auto-29|<tuple|1.17|?>>
     <associate|auto-3|<tuple|1.1|2>>
+    <associate|auto-30|<tuple|1.4|?>>
+    <associate|auto-31|<tuple|1.4.1|?>>
+    <associate|auto-32|<tuple|1.4.2|?>>
+    <associate|auto-33|<tuple|1.18|?>>
+    <associate|auto-34|<tuple|1.19|?>>
+    <associate|auto-35|<tuple|1.20|?>>
+    <associate|auto-36|<tuple|1.4.3|?>>
+    <associate|auto-37|<tuple|1.21|?>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.1.1|2>>
     <associate|auto-6|<tuple|1.1.2|3>>
@@ -1487,18 +2304,24 @@
     <associate|auto-9|<tuple|1.4|6>>
     <associate|fig12.1|<tuple|1.1|1>>
     <associate|fig12.10|<tuple|1.10|12>>
-    <associate|fig12.11|<tuple|1.11|?>>
-    <associate|fig12.12|<tuple|1.12|?>>
-    <associate|fig12.13|<tuple|1.13|?>>
-    <associate|fig12.14|<tuple|1.14|?>>
-    <associate|fig12.15|<tuple|1.15|?>>
+    <associate|fig12.11|<tuple|1.11|16>>
+    <associate|fig12.12|<tuple|1.12|17>>
+    <associate|fig12.13|<tuple|1.13|18>>
+    <associate|fig12.14|<tuple|1.14|19>>
+    <associate|fig12.15|<tuple|1.15|19>>
+    <associate|fig12.16|<tuple|1.16|?>>
+    <associate|fig12.17|<tuple|1.17|?>>
+    <associate|fig12.18|<tuple|1.18|?>>
+    <associate|fig12.19|<tuple|1.19|?>>
     <associate|fig12.2|<tuple|1.2|2>>
+    <associate|fig12.20|<tuple|1.20|?>>
+    <associate|fig12.21|<tuple|1.21|?>>
     <associate|fig12.3|<tuple|1.3|6>>
     <associate|fig12.4|<tuple|1.4|6>>
     <associate|fig12.5|<tuple|1.5|6>>
     <associate|fig12.6|<tuple|1.6|7>>
     <associate|fig12.7|<tuple|1.7|8>>
-    <associate|fig12.9|<tuple|1.9|10>>
+    <associate|fig12.9|<tuple|1.9|11>>
   </collection>
 </references>
 
@@ -1597,6 +2420,52 @@
       to handle the missing values. Note that each data point then has at
       least one missing measurement but that the plot is very similar to the
       one obtained without missing values.>|<pageref|auto-20>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.12>||Synthetic data
+      illustrating the EM algorithm for PCA defined by Eq.
+      (<reference|12.58>) and Eq. (<reference|12.59>). (a) A data set
+      <with|mode|<quote|math>|X> with the data points shown in green,
+      together with the true principal components (shown as eigenvectors
+      scaled by the square roots of the eigenvalues). (b) Initial
+      configuration of the principal subspace defined by
+      <with|mode|<quote|math>|W>, \ shown in red, together with the
+      projections of the latent points <with|mode|<quote|math>|Z> into the
+      data space, given by <with|mode|<quote|math>|Z W<rsup|T>>, shown in
+      cyan. (c) After one M step, the latent space has been updated with
+      <with|mode|<quote|math>|Z> held fixed. (d) After the successive E step,
+      the values of <with|mode|<quote|math>|Z> have been updated, giving
+      orthogonal projections, with <with|mode|<quote|math>|W> held fixed. (e)
+      After the second M step. (f) After the second E
+      step.>|<pageref|auto-21>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.13>||Probabilistic
+      graphical model for Bayesian PCA in \ which the distribution over the
+      parameter matrix <with|mode|<quote|math>|W> is governed by a vector
+      <with|mode|<quote|math>|\<b-alpha\>> of
+      hyperparameters.>|<pageref|auto-23>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.14>||`Hinton'
+      diagrams of the matrix <with|mode|<quote|math>|W> in which each element
+      of the matrix is depicted as a square (white for positive and black for
+      negative values) whose area is proportional to the magnitude of that
+      element. The synthetic data set comprises 300 data points in
+      <with|mode|<quote|math>|D = 10> dimensions sampled from a Gaussian
+      distribution having standard deviation 1.0 in 3 directions and standard
+      deviation 0.5 in the remaining 7 directions for a data set in
+      <with|mode|<quote|math>|D=10> dimensions having
+      <with|mode|<quote|math>|M=3> directions with larger variance than the
+      remaining 7 directions. The left-hand plot shows the result from
+      maximum likelihood probabilistic PCA, and the left-hand plot shows the
+      corresponding result from Bayesian PCA. We see how the Bayesian model
+      is able to discover the appropriate dimensionality by suppressing the 6
+      surplus degrees of freedom.>|<pageref|auto-24>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.15>||Gibbs sampling
+      for Bayesian \ PCA showing plots of ln
+      <with|mode|<quote|math>|\<alpha\><rsub|i>> versus iteration number for
+      three <with|mode|<quote|math>|\<alpha\>> values, showing transitions
+      between the three modes of the posterior
+      distribution.>|<pageref|auto-25>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Continuous
@@ -1633,6 +2502,14 @@
       <with|par-left|<quote|1tab>|1.2.2<space|2spc>EM algorithm for PCA
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-19>>
+
+      <with|par-left|<quote|1tab>|1.2.3<space|2spc>Bayesian PCA
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-22>>
+
+      <with|par-left|<quote|1tab>|1.2.4<space|2spc>Factor analysis
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-26>>
     </associate>
   </collection>
 </auxiliary>
