@@ -289,8 +289,8 @@
   </equation>
 
   where <math|j=M+1,\<cdots\>,D>. If we substitute for <math|z<rsub|n i>> and
-  <math|b<rsub|i>>, and make use of the general expansion Eq. <eqref|12.9>,
-  we obtain
+  <math|b<rsub|i>> in Eq. <eqref|12.10>, and make use of the general
+  expansion Eq. <eqref|12.9>, we obtain
 
   <\equation*>
     \<b-x\>-<wide|\<b-x\>|~><rsub|n>=<big|sum><rsub|i=M+1><rsup|D><around*|{|<around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|~>|)><rsup|T>\<b-u\><rsub|i>|}>\<b-u\><rsub|i>
@@ -392,10 +392,11 @@
   \;
 
   We can illustrate the use of PCA for data compression by considering the
-  offline digits data set. Because each eigenvector of the covariance matrix
-  is a vector in the original D-dimensional space, we can represent the
-  eigenvectors as images of the same size as the data points. The first five
-  eigenvectors, along with the corresponding eigenvalues, are shown in Figure
+  offline digits data set, \ restricting our attention to images of the digit
+  three. Because each eigenvector of the covariance matrix is a vector in the
+  original D-dimensional space, we can represent the eigenvectors as images
+  of the same size as the data points. The first four eigenvectors, along
+  with the corresponding eigenvalues, are shown in Figure
   <reference|fig12.3>. A plot of the complete spectrum of eigenvalues, sorted
   into decreasing order, is shown in Figure <reference|fig12.4>(a). The
   distortion measure <math|J> associated with choosing a particular value of
@@ -407,15 +408,18 @@
     <small-figure|<image|image/fig_12_3_pca_eigenvector.png|.9par|||>|<label|fig12.3>The
     mean vector <math|<wide|\<b-x\>|\<wide-bar\>>> along with the first four
     PCA eigenvectors <math|\<b-u\><rsub|1>,\<cdots\>,\<b-u\><rsub|4>> for the
-    off-line digits data set, together with the corresponding eigenvalues.>
+    digit three from \ the off-line digits data set, together with the
+    corresponding eigenvalues. Blue corresponds to positive values, white is
+    zero and yellow corresponds to negative values.>
   </padded-center>
 
   <\padded-center>
     <small-figure|<image|image/fig_12_4_pca_eigenvalue.png|.5par|||>|<label|fig12.4>(a)
-    Plot of the eigenvalue spectrum for the off-line digits data set. (b)
-    Plot of the sum of the discarded eigenvalues, which represents the
-    sum-of-squares distortion <math|J> introduced by projecting the data onto
-    a principal component subspace of dimensionality <math|M> .>
+    Plot of the eigenvalue spectrum for the digit three from the off-line
+    digits data set. (b) Plot of the sum of the discarded eigenvalues, which
+    represents the sum-of-squares distortion <math|J> introduced by
+    projecting the data onto a principal component subspace of dimensionality
+    <math|M> .>
   </padded-center>
 
   If we substitute Eq. <reference|12.12> and Eq. <eqref|12.13> into Eq.
@@ -437,7 +441,7 @@
   have replaced the D-dimensional vector <math|\<b-x\><rsub|n>> with an
   M-dimensional vector having components <math|\<b-x\><rsub|n><rsup|T>\<b-u\><rsub|i>-<wide|\<b-x\>|\<wide-bar\>><rsup|T>\<b-u\><rsub|i>>.
   The smaller the value of <math|M> , the greater the degree of compression.
-  Examples of PCA reconstructions of data points for the digits data set are
+  Examples of reconstructions of a sample from the digit three data set are
   shown in Figure <reference|fig12.5>.
 
   <\padded-center>
@@ -469,11 +473,12 @@
     j>-<wide|x|\<wide-bar\>><rsub|j>|)>|\<sigma\><rsub|j>>
   </equation*>
 
-  where <math|\<sigma\><rsub|i>> is the variance of <math|x<rsub|i>>. This is
-  known as the <em|correlation matrix> of the original data and has the
-  property that if two components <math|x<rsub|i>> and <math|x<rsub|j>> of
-  the data are perfectly correlated, then <math|\<rho\><rsub|i j>=1>, and if
-  they are uncorrelated, then <math|\<rho\><rsub|i j>=0>.
+  where <math|\<sigma\><rsub|i>> is the standard deviation of
+  <math|x<rsub|i>>. This is known as the <em|correlation matrix> of the
+  original data and has the property that if two components <math|x<rsub|i>>
+  and <math|x<rsub|j>> of the data are perfectly correlated, then
+  <math|\<rho\><rsub|i j>=1>, and if they are uncorrelated, then
+  <math|\<rho\><rsub|i j>=0>.
 
   However, using PCA we can make a more substantial normalization of the data
   to give it zero mean and unit covariance, so that different variables
@@ -812,7 +817,7 @@
   reduced by making use of the matrix inversion identity (C.7) to give
 
   <\equation*>
-    C<rsup|-1>=\<sigma\><rsup|-1>I-\<sigma\><rsup|-2>W M<rsup|-1>W<rsup|T>
+    C<rsup|-1>=\<sigma\><rsup|-2>I-\<sigma\><rsup|-2>W M<rsup|-1>W<rsup|T>
   </equation*>
 
   where the <math|M\<times\>M> matrix <math|M> is defined by
@@ -831,7 +836,7 @@
   models to give
 
   <\equation>
-    p<around*|(|\<b-z\>\|\<b-x\>|)>=\<cal-N\><around*|(|\<b-z\>\|M<rsup|-1>W<rsup|T><around*|(|\<b-x\>-\<b-mu\>|)>,\<sigma\><rsup|-2>M|)><label|12.42>
+    p<around*|(|\<b-z\>\|\<b-x\>|)>=\<cal-N\><around*|(|\<b-z\>\|M<rsup|-1>W<rsup|T><around*|(|\<b-x\>-\<b-mu\>|)>,\<sigma\><rsup|-2>M<rsup|-1>|)><label|12.42>
   </equation>
 
   Note that the posterior mean depends on <math|\<b-x\>>, whereas the
@@ -912,19 +917,19 @@
   associated with the discarded dimensions.
 
   Because <math|R> is orthogonal, it can be interpreted as a rotation matrix
-  in the <math|M\<times\>M> latent space. If we substitute the solution for
+  in the M-dimensional latent space. If we substitute the solution for
   <math|W> into the expression for <math|C>, and make use of the
   orthogonality property <math|R R<rsup|T>=I>, we see that <math|C> is
   independent of <math|R>. This simply says that the predictive density is
   unchanged by rotations in the latent space as discussed earlier. For the
   particular case of <math|R=I>, we see that the columns of <math|W> are the
-  principal component eigenvectors scaled by the variance parameters
-  <math|\<lambda\><rsub|i>\<minus\>\<sigma\><rsup|2>>. The interpretation of
-  these scaling factors is clear once we recognize that for a convolution of
-  independent Gaussian distributions (in this case the latent space
-  distribution and the noise model) the variances are additive. Thus the
-  variance <math|\<lambda\><rsub|i>> in the direction of an eigenvector
-  <math|\<b-u\><rsub|i>> is composed of the sum of a contribution
+  principal component eigenvectors scaled by the square root of \ the
+  variance parameter <math|<sqrt|\<lambda\><rsub|i>\<minus\>\<sigma\><rsup|2>>>.
+  The interpretation of these scaling factors is clear once we recognize that
+  for a convolution of independent Gaussian distributions (in this case the
+  latent space distribution and the noise model) the variances are additive.
+  Thus the variance <math|\<lambda\><rsub|i>> in the direction of an
+  eigenvector <math|\<b-u\><rsub|i>> is composed of the sum of a contribution
   <math|\<lambda\><rsub|i>-\<sigma\><rsup|2>> from the projection of the
   unit-variance latent space distribution into data space through the
   corresponding column of <math|W>, plus an isotropic contribution of
@@ -1073,6 +1078,8 @@
 
   <subsection|EM algorithm for PCA>
 
+  \;
+
   As we have seen, the probabilistic PCA model can be expressed in terms of a
   marginalization over a continuous latent space <math|\<b-z\>> in which for
   each data point <math|\<b-x\><rsub|n>>, there is a corresponding latent
@@ -1089,10 +1096,10 @@
   We can derive the EM algorithm for probabilistic PCA by following the
   general framework for EM. Thus we write down the complete-data log
   likelihood and take \ its expectation with respect to the posterior
-  distribution of the latent distribution evaluated using `old' parameter
-  values. Maximization of this expected completedata log likelihood then
-  yields the `new' parameter values. Because the data points are assumed
-  independent, the complete-data log likelihood function takes the form
+  distribution of the latent variable evaluated using `old' parameter values.
+  Maximization of this expected completedata log likelihood then yields the
+  `new' parameter values. Because the data points are assumed independent,
+  the complete-data log likelihood function takes the form
 
   <\equation*>
     ln p<around*|(|X,Z\|\<b-mu\>,W,\<sigma\><rsup|2>|)>=<big|sum><rsub|n=1><rsup|N><around*|{|lnp<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>+ln
@@ -1110,8 +1117,9 @@
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|>|<cell|>|<cell|\<bbb-E\><around*|[|ln
-    p<around*|(|X,Z\|\<b-mu\>,W,\<sigma\><rsup|2>|)>|]>>>|<row|<cell|>|<cell|=>|<cell|-<big|sum><rsub|n=1><rsup|N><around*|{|<frac|D
-    ln<around*|(|2\<pi\>\<sigma\><rsup|2>|)>|2>+<frac|Tr<around*|(|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>|)>|2>+<frac|<around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\>|\<\|\|\>><rsup|2>|2\<sigma\><rsup|2>>-<frac|\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>W<rsup|T><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)>|\<sigma\><rsup|2>>+<frac|Tr<around*|(|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>W<rsup|T>W|)>|2\<sigma\><rsup|2>>|}>>>>>
+    p<around*|(|X,Z\|\<b-mu\>,W,\<sigma\><rsup|2>|)>|]>>>|<row|<cell|>|<cell|=>|<cell|-<frac|N
+    M ln(2\<pi\>)|2>>>|<row|<cell|>|<cell|>|<cell|-<big|sum><rsub|n=1><rsup|N><around*|{|<frac|
+    D ln<around*|(|2\<pi\>\<sigma\><rsup|2>|)>|2>+<frac|Tr<around*|(|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>|)>|2>+<frac|<around*|\<\|\|\>|\<b-x\><rsub|n>-\<b-mu\>|\<\|\|\>><rsup|2>|2\<sigma\><rsup|2>>-<frac|\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>W<rsup|T><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)>|\<sigma\><rsup|2>>+<frac|Tr<around*|(|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>W<rsup|T>W|)>|2\<sigma\><rsup|2>>|}>>>>>
   </eqnarray*>
 
   Note that this depends on the posterior distribution only through the
@@ -1209,7 +1217,7 @@
   The E step Eq. <eqref|12.54> of the EM algorithm for PCA then becomes
 
   <\equation>
-    \<Omega\>=<around*|(|W<rsup|T><rsub|old>W<rsub|old>|)><rsup|-1>W<rsub|old><rsup|T><wide|X|~><label|12.58>
+    \<Omega\>=<around*|(|W<rsup|T><rsub|old>W<rsub|old>|)><rsup|-1>W<rsub|old><rsup|T><wide|X|~><rsup|T><label|12.58>
   </equation>
 
   and the M step Eq. <eqref|12.56> takes the form
@@ -1251,7 +1259,7 @@
     step, the latent space has been updated with <math|Z> held fixed. (d)
     After the successive E step, the values of <math|Z> have been updated,
     giving orthogonal projections, with <math|W> held fixed. (e) After the
-    second M step. (f) After the second E step.>
+    second M step. (f)The converged solution.>
   </padded-center>
 
   <subsection|Bayesian PCA>
@@ -1288,7 +1296,7 @@
   compared for a range of different values of <math|M> and the value giving
   the largest marginal likelihood selected.
 
-  Here we consider a simpler approach introduced by based on the <em|evidence
+  Here we consider a simpler approach based on the <em|evidence
   approximation>, which is appropriate when the number of data points is
   relatively large and the corresponding posterior distribution is tightly
   peaked (Bishop, 1999a). It involves a specific choice of prior over
@@ -1333,7 +1341,7 @@
   earlier in the context of relevance vector machines.
 
   The values of <math|\<alpha\><rsub|i>> are re-estimated during training by
-  maximizing the log marginal likelihood given by
+  maximizing the marginal likelihood given by
 
   <\equation*>
     p<around*|(|X\|\<b-alpha\>,\<b-mu\>,\<sigma\><rsup|2>|)>=<big|int>p<around*|(|X\|W,\<b-mu\>,\<sigma\><rsup|2>|)>p<around*|(|W\|\<b-alpha\>|)>\<mathd\>W
@@ -1389,7 +1397,7 @@
     directions and standard deviation 0.5 in the remaining 7 directions for a
     data set in <math|D=10> dimensions having <math|M=3> directions with
     larger variance than the remaining 7 directions. The left-hand plot shows
-    the result from maximum likelihood probabilistic PCA, and the left-hand
+    the result from maximum likelihood probabilistic PCA, and the right-hand
     plot shows the corresponding result from Bayesian PCA. We see how the
     Bayesian model is able to discover the appropriate dimensionality by
     suppressing the 6 surplus degrees of freedom.>
@@ -1515,7 +1523,7 @@
   <math|M\<ll\>D>. Similarly, the M-step equations take the form
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|W<rsup|new>>|<cell|=>|<cell|<around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>|]><around*|[|<big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>|]><rsup|-1>>>|<row|<cell|\<Psi\><rsup|new>>|<cell|=>|<cell|diag<around*|{|S-W<rsup|new><frac|1|N><big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><rsup|T>|}>>>>>
+    <tformat|<table|<row|<cell|W<rsub|new>>|<cell|=>|<cell|<around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><rsup|T>|]><around*|[|<big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>|]><rsup|-1>>>|<row|<cell|\<Psi\><rsub|new>>|<cell|=>|<cell|diag<around*|{|S-W<rsub|new><frac|1|N><big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>>|)><rsup|T>|}>>>>>
   </eqnarray*>
 
   where the `diag' operator sets all of the nondiagonal elements of a matrix
@@ -1640,7 +1648,7 @@
   <math|\<b-varphi\><around*|(|\<b-x\><rsub|l>|)><rsup|T>> to give
 
   <\equation*>
-    <frac|1|N><big|sum><rsub|n=1><rsup|N>k<around*|(|\<b-x\><rsub|l>,\<b-x\><rsub|n>|)><big|sum><rsub|m=1><rsup|m>a<rsub|i
+    <frac|1|N><big|sum><rsub|n=1><rsup|N>k<around*|(|\<b-x\><rsub|l>,\<b-x\><rsub|n>|)><big|sum><rsub|m=1><rsup|N>a<rsub|i
     m>k<around*|(|\<b-x\><rsub|n>,\<b-x\><rsub|m>|)>=\<lambda\><rsub|i><big|sum><rsub|n=1><rsup|N>a<rsub|i
     n>k<around*|(|\<b-x\><rsub|l>,\<b-x\><rsub|n>|)>
   </equation*>
@@ -1653,7 +1661,7 @@
   </equation>
 
   where <math|\<b-a\><rsub|i>> is an N-dimensional column vector with
-  elements <math|a<rsub|n i>> for <math|n=1,\<cdots\>,N>. We can find
+  elements <math|a<rsub|i n>> for <math|n=1,\<cdots\>,N>. We can find
   solutions for <math|\<b-a\><rsub|i>> by solving the following eigenvalue
   problem
 
@@ -1874,7 +1882,7 @@
   \ distribution is given by
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|p<around*|(|z<rsub|j>|)>>|<cell|=>|<cell|<frac|1|\<pi\>cosh<around*|(|z<rsub|j>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|\<pi\><around*|(|e<rsup|z<rsub|j>>+e<rsup|-z<rsub|j>>|)>>>>>>
+    <tformat|<table|<row|<cell|p<around*|(|z<rsub|j>|)>>|<cell|=>|<cell|<frac|1|\<pi\>cosh<around*|(|z<rsub|j>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|2|\<pi\><around*|(|e<rsup|z<rsub|j>>+e<rsup|-z<rsub|j>>|)>>>>>>
   </eqnarray*>
 
   which has heavy tails compared to a Gaussian, reflecting the observation
@@ -1935,7 +1943,7 @@
     E<around*|(|\<b-w\>|)>=<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|\<\|\|\>|y<around*|(|\<b-x\><rsub|n>,\<b-w\>|)>-\<b-x\><rsub|n>|\<\|\|\>><rsup|2><label|12.91>
   </equation>
 
-  If the hidden units have linear activations functions, then it can be shown
+  If the hidden units have linear activation functions, then it can be shown
   that the error function has a unique global minimum, and that at this
   minimum the network performs a projection onto the M-dimensional subspace
   which is spanned by the first M principal components of the data (Bourlard
@@ -2241,7 +2249,6 @@
     <associate|12.12|<tuple|1.5|4>>
     <associate|12.13|<tuple|1.6|4>>
     <associate|12.17|<tuple|1.7|5>>
-    <associate|12.19|<tuple|1.19|?>>
     <associate|12.28|<tuple|1.8|9>>
     <associate|12.3|<tuple|1.2|3>>
     <associate|12.30|<tuple|1.9|9>>
@@ -2260,11 +2267,11 @@
     <associate|12.57|<tuple|1.22|15>>
     <associate|12.58|<tuple|1.23|16>>
     <associate|12.59|<tuple|1.24|16>>
-    <associate|12.76|<tuple|1.25|?>>
-    <associate|12.79|<tuple|1.26|?>>
-    <associate|12.80|<tuple|1.27|?>>
+    <associate|12.76|<tuple|1.25|22>>
+    <associate|12.79|<tuple|1.26|22>>
+    <associate|12.80|<tuple|1.27|22>>
     <associate|12.9|<tuple|1.3|4>>
-    <associate|12.91|<tuple|1.28|?>>
+    <associate|12.91|<tuple|1.28|26>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.5|6>>
     <associate|auto-11|<tuple|1.6|7>>
@@ -2284,18 +2291,18 @@
     <associate|auto-24|<tuple|1.14|19>>
     <associate|auto-25|<tuple|1.15|19>>
     <associate|auto-26|<tuple|1.2.4|19>>
-    <associate|auto-27|<tuple|1.3|?>>
-    <associate|auto-28|<tuple|1.16|?>>
-    <associate|auto-29|<tuple|1.17|?>>
+    <associate|auto-27|<tuple|1.3|21>>
+    <associate|auto-28|<tuple|1.16|21>>
+    <associate|auto-29|<tuple|1.17|24>>
     <associate|auto-3|<tuple|1.1|2>>
-    <associate|auto-30|<tuple|1.4|?>>
-    <associate|auto-31|<tuple|1.4.1|?>>
-    <associate|auto-32|<tuple|1.4.2|?>>
-    <associate|auto-33|<tuple|1.18|?>>
-    <associate|auto-34|<tuple|1.19|?>>
-    <associate|auto-35|<tuple|1.20|?>>
-    <associate|auto-36|<tuple|1.4.3|?>>
-    <associate|auto-37|<tuple|1.21|?>>
+    <associate|auto-30|<tuple|1.4|24>>
+    <associate|auto-31|<tuple|1.4.1|24>>
+    <associate|auto-32|<tuple|1.4.2|26>>
+    <associate|auto-33|<tuple|1.18|26>>
+    <associate|auto-34|<tuple|1.19|27>>
+    <associate|auto-35|<tuple|1.20|27>>
+    <associate|auto-36|<tuple|1.4.3|27>>
+    <associate|auto-37|<tuple|1.21|30>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.1.1|2>>
     <associate|auto-6|<tuple|1.1.2|3>>
@@ -2309,13 +2316,13 @@
     <associate|fig12.13|<tuple|1.13|18>>
     <associate|fig12.14|<tuple|1.14|19>>
     <associate|fig12.15|<tuple|1.15|19>>
-    <associate|fig12.16|<tuple|1.16|?>>
-    <associate|fig12.17|<tuple|1.17|?>>
-    <associate|fig12.18|<tuple|1.18|?>>
-    <associate|fig12.19|<tuple|1.19|?>>
+    <associate|fig12.16|<tuple|1.16|21>>
+    <associate|fig12.17|<tuple|1.17|24>>
+    <associate|fig12.18|<tuple|1.18|26>>
+    <associate|fig12.19|<tuple|1.19|27>>
     <associate|fig12.2|<tuple|1.2|2>>
-    <associate|fig12.20|<tuple|1.20|?>>
-    <associate|fig12.21|<tuple|1.21|?>>
+    <associate|fig12.20|<tuple|1.20|27>>
+    <associate|fig12.21|<tuple|1.21|30>>
     <associate|fig12.3|<tuple|1.3|6>>
     <associate|fig12.4|<tuple|1.4|6>>
     <associate|fig12.5|<tuple|1.5|6>>
@@ -2466,6 +2473,64 @@
       three <with|mode|<quote|math>|\<alpha\>> values, showing transitions
       between the three modes of the posterior
       distribution.>|<pageref|auto-25>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.16>||Schematic
+      illustration of kernel PCA. A data set in the original data space
+      (left-hand plot) is projected by a nonlinear transformation
+      <with|mode|<quote|math>|\<b-varphi\><around*|(|\<b-x\>|)>> into a
+      feature space (right-hand plot). By performing PCA in the feature
+      space, we obtain the principal components, of which the first is shown
+      in blue and is denoted by the vector v1. The green lines in feature
+      space indicate the linear projections onto the first principal
+      component, which correspond to nonlinear projections in the original
+      data space. Note that in general it is not possible to represent the
+      nonlinear principal component by a vector in
+      <with|mode|<quote|math>|\<b-x\>> space.>|<pageref|auto-28>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.17>||Example of
+      kernel PCA, with a Gaussian kernel applied to a synthetic data set in
+      two dimensions, showing the first eight eigenfunctions along with their
+      eigenvalues. The contours are lines along which the projection onto the
+      corresponding principal component is constant. Note how the first two
+      eigenvectors separate the three clusters, the next three eigenvectors
+      split each of the cluster into halves, and the following three
+      eigenvectors again split the clusters into halves along directions
+      orthogonal to the previous splits.>|<pageref|auto-29>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.18>||An
+      autoassociative multilayer perceptron having \ two layers of weights.
+      Such a network is trained to map input vectors onto themselves by
+      minimization of a sum-of-squares error. Even with nonlinear units in
+      the hidden layer, such a network is equivalent to linear principal
+      component analysis. Links representing bias parameters have been
+      omitted for clarity.>|<pageref|auto-33>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.19>||Addition of
+      extra hidden layers of nonlinear units gives an autoassociative network
+      which can perform a nonlinear dimensionality
+      reduction.>|<pageref|auto-34>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.20>||Geometrical
+      interpretation of the mappings performed by the network in Figure
+      <reference|fig12.19> for the case of <with|mode|<quote|math>|D=3>
+      inputs and <with|mode|<quote|math>|M=2> units in the middle hidden
+      layer. The function <with|mode|<quote|math>|F<rsub|2>> maps from an
+      M-dimensional space <with|mode|<quote|math>|\<cal-S\>> into a
+      D-dimensional space and therefore defines the way in which the space
+      <with|mode|<quote|math>|\<cal-S\>> is embedded within the original
+      <with|mode|<quote|math>|\<b-x\>>-space. Since the mapping
+      <with|mode|<quote|math>|F<rsub|2>> can be nonlinear, the embedding of
+      <with|mode|<quote|math>|\<cal-S\>> can be nonplanar, as indicated in
+      the figure. The mapping <with|mode|<quote|math>|F<rsub|1>> then defines
+      a projection of points in the original D-dimensional space into the
+      M-dimensional subspace <with|mode|<quote|math>|\<cal-S\>>.>|<pageref|auto-35>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.21>||Plot of the oil
+      flow data set visualized using PCA on the left and GTM on the right.
+      For the GTM model, each data point is plotted at the mean of its
+      posterior distribution in latent space. The nonlinearity of the GTM
+      model allows the separation between the groups of data points to be
+      seen more clearly.>|<pageref|auto-37>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Continuous
@@ -2510,6 +2575,25 @@
       <with|par-left|<quote|1tab>|1.2.4<space|2spc>Factor analysis
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-26>>
+
+      1.3<space|2spc>Kernel PCA <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-27>
+
+      1.4<space|2spc>Nonlinear Latent Variable Models
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-30>
+
+      <with|par-left|<quote|1tab>|1.4.1<space|2spc>Independent component
+      analysis <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-31>>
+
+      <with|par-left|<quote|1tab>|1.4.2<space|2spc>Autoassociative neural
+      networks <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-32>>
+
+      <with|par-left|<quote|1tab>|1.4.3<space|2spc>Modelling nonlinear
+      manifolds <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-36>>
     </associate>
   </collection>
 </auxiliary>
