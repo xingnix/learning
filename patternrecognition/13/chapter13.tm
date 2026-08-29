@@ -94,7 +94,7 @@
   observations in the form
 
   <\equation*>
-    p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>|)>=<big|prod><rsub|n=1><rsup|N>p<around*|(|\<b-x\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>|)>
+    p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>|)>=p<around*|(|\<b-x\><rsub|1>|)><big|prod><rsub|n=2><rsup|N>p<around*|(|\<b-x\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>|)>
   </equation*>
 
   If we now assume that each of the conditional distributions on the
@@ -305,6 +305,295 @@
   </equation*>
 
   where <math|<big|sum><rsub|k>\<pi\><rsub|k>=1>.
+
+  The transition matrix is sometimes illustrated diagrammatically by drawing
+  the states as nodes in a state transition diagram as shown in Figure
+  <reference|fig13.6> for the case of <math|K=3>. Note that this does not
+  represent a probabilistic graphical model, because the nodes are not
+  separate variables but rather states of a single variable, and so we have
+  shown the states as boxes rather than circles.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_6_transition_diagram.png|0.2par|||>|<label|fig13.6>Transition
+    diagram showing a model whose latent variables have three possible states
+    corresponding to the three boxes. The black lines denote the elements of
+    the transition matrix \ <math|A<rsub|j k>>.>
+  </padded-center>
+
+  It is sometimes useful to take a state transition diagram, of the kind
+  shown in Figure <reference|fig13.6>, and unfold it over time. This gives an
+  alternative representation of the transitions between latent states, known
+  as a <em|lattice> or <em|trellis> diagram, and which is \ shown for the
+  case of the hidden Markov model in Figure <reference|fig13.7>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_7_lattice_trellis_diagram.png|.3par|||>|<label|fig13.7>If
+    we unfold the state transition diagram of Figure <reference|fig13.6> over
+    time, we obtain a lattice, or trellis, representation of the latent
+    states. Each column of this diagram corresponds to one of the latent
+    variables <math|\<b-z\><rsub|n>>.>
+  </padded-center>
+
+  The specification of the probabilistic model is completed by defining the
+  conditional distributions of the observed variables
+  <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>, \<b-varphi\>)>, where
+  <math|\<b-varphi\> >is a set of parameters governing the distribution.
+  These are known as emission probabilities, and might for example be given
+  by Gaussians of the form (9.11) if the elements of <math|\<b-x\>> are
+  continuous variables, or by conditional probability tables if
+  <math|\<b-x\>> is discrete. Because <math|\<b-x\><rsub|n>> is observed, the
+  distribution <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>,\<b-varphi\>)>
+  consists, for a given value of <math|\<b-varphi\>>, of a vector of <math|K>
+  numbers corresponding to the <math|K> possible states of the binary vector
+  <math|\<b-z\><rsub|n>>. We can represent the emission probabilities in the
+  form
+
+  <\equation*>
+    p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>,\<b-varphi\>|)>=<big|prod><rsub|k=1><rsup|K>p<around*|(|\<b-x\><rsub|n>\|\<b-varphi\><rsub|k>|)><rsup|z<rsub|n
+    k>>.
+  </equation*>
+
+  \;
+
+  We shall focuss attention on <em|homogeneous> models for which all of the
+  conditional distributions governing the latent variables share the same
+  parameters <math|A>, and similarly all of the emission distributions share
+  the same parameters <math|\<b-varphi\>> (the extension to more general
+  cases is straightforward). Note that a mixture model for an i.i.d. data set
+  corresponds to the special case in which the parameters <math|A<rsub|j k>>
+  are the same for all values of <math|j>, so that the conditional
+  distribution <math|p(\<b-z\><rsub|n>\|\<b-z\><rsub|n\<minus\>1>)> is
+  independent of <math|\<b-z\><rsub|n\<minus\>1>>. This corresponds to
+  deleting the horizontal links in the graphical model shown in Figure
+  <reference|fig13.5>.
+
+  The joint probability distribution over both latent and observed variables
+  is then given by
+
+  <\equation>
+    p<around*|(|X,Z\|\<b-theta\>|)>=p<around*|(|\<b-z\><rsub|1><around*|\||\<b-pi\>|\|>|)><around*|[|<big|prod><rsup|N><rsub|n=2>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>,A|)>|]><big|prod><rsub|m=1><rsup|N>p<around*|(|\<b-x\><rsub|m>\|\<b-z\><rsub|m>,\<b-varphi\>|)><label|13.10>
+  </equation>
+
+  where <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}>,
+  <math|Z={\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|N>}>, and
+  <math|\<b-theta\>={\<b-pi\>,A,\<b-varphi\>}> denotes the set of parameters
+  governing the model. Most of our discussion of the hidden Markov model will
+  be independent of the particular choice of the emission probabilities.
+  Indeed, the model is tractable for a wide range of emission distributions
+  including discrete tables, Gaussians, and mixtures of Gaussians. It is also
+  possible to exploit discriminative models such as neural networks. These
+  can be used to model the emission density <math|p(\<b-x\>\|\<b-z\>)>
+  directly, or to provide a representation for <math|p(\<b-z\>\|\<b-cal-x\>)>
+  that can be converted into the required emission density
+  <math|p(\<b-x\>\|\<b-z\>)> using Bayes' theorem (Bishop et al., 2004).
+
+  We can gain a better understanding of the hidden Markov model by
+  considering it from a generative point of view. Recall that to generate
+  samples from a mixture of Gaussians, we first chose one of the components
+  at random with probability given by the mixing coefficients
+  <math|\<pi\><rsub|k>> and then generate a sample vector <math|\<b-x\>> from
+  the corresponding Gaussian component. This process is repeated <math|N>
+  times to generate a data set of <math|N> independent samples. In the case
+  of the hidden Markov model, this procedure is modified as follows. We first
+  choose the initial latent variable <math|\<b-z\><rsub|1>> with
+  probabilities governed by the parameters <math|\<pi\><rsub|k>> and then
+  sample the corresponding observation <math|\<b-x\><rsub|1>>. Now we choose
+  the state of the variable <math|\<b-z\><rsub|2>> according to the
+  transition probabilities <math|p(\<b-z\><rsub|2>\|\<b-z\><rsub|1>)> using
+  the already instantiated value of <math|\<b-z\><rsub|1>>. Thus suppose that
+  the sample for <math|\<b-z\><rsub|1>> corresponds to state <math|j>. Then
+  we choose the state <math|k> of <math|\<b-z\><rsub|2>> with probabilities
+  <math|A<rsub|j k>> for <math|k=1, \<cdots\>,K>. Once we know
+  <math|\<b-z\><rsub|2>> we can draw a sample for <math|\<b-x\><rsub|2>> and
+  also sample the next latent variable <math|\<b-z\><rsub|3>> and so on. This
+  is an example of ancestral sampling for a directed graphical model. If, for
+  instance, we have a model in which the diagonal transition elements
+  <math|A<rsub|k k>> are much larger than the off-diagonal elements, then a
+  typical data sequence will have long runs of points generated from a single
+  component, with infrequent transitions from one component to another. The
+  generation of samples from a hidden Markov model is illustrated in Figure
+  <reference|fig13.8>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_8_hmm_sampling.png|.5par|||>|<label|fig13.8>Illustration
+    of sampling from a hidden Markov model having a 3-state latent variable
+    <math|\<b-z\>> and a Gaussian emission model <math|p(\<b-x\>\|\<b-z\>)>
+    where <math|\<b-x\>> is 2-dimensional. (a) Contours of constant
+    probability density for the emission distributions corresponding to each
+    of the three states of the latent variable. (b) A sample of 50 points
+    drawn from the hidden Markov model, colour coded according to the
+    component that generated them and with lines connecting the successive
+    observations. Here the transition matrix was fixed so that in any state
+    there is a 5% probability of making a transition to each of the other
+    states, and consequently a 90% probability of remaining in the same
+    state.>
+  </padded-center>
+
+  There are many variants of the standard HMM model, obtained for instance by
+  imposing constraints on the form of the transition matrix <math|A>
+  (Rabiner, 1989). Here we mention one of particular practical importance
+  called the <em|left-to-right> HMM, which is obtained by setting the
+  elements <math|A<rsub|j k>> of <math|A> to zero if <math|k\<less\>j>, as
+  illustrated in the state transition diagram for a 3-state HMM in Figure
+  <reference|fig13.9>.\ 
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_9_hmm_left2right.png|0.2par|||>|<label|fig13.9>Example
+    of the state transition diagram for a 3-state \ left-to-right hidden
+    Markov model. Note that once a state has been vacated, it cannot later be
+    re-entered.>
+  </padded-center>
+
+  Typically for such models the initial state probabilities for
+  <math|p(\<b-z\><rsub|1>)> are modified so that <math|p(\<b-z\><rsub|11>)=1>
+  and <math|p(\<b-z\><rsub|1j>)=0> for <math|j\<neq\>1>, in other words every
+  sequence is constrained to start in state <math|j=1>. The transition matrix
+  may be further constrained to ensure that large changes in the state index
+  do not occur, so that <math|A<rsub|j k>=0> if <math|k\<gtr\>j+\<#2206\>>.
+  This type of model is illustrated using a lattice diagram in Figure
+  <reference|fig13.10>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_10_hmm_left2right_lattice.png|.3par|||>|<label|fig13.10>Lattice
+    diagram for a 3-state leftto-right HMM in which the state index <math|k>
+    is allowed to increase by at most 1 at each transition.>
+  </padded-center>
+
+  Many applications of hidden Markov models, for example speech recognition,
+  or on-line character recognition, make use of left-to-right architectures.
+  As an illustration of the left-to-right hidden Markov model, we consider an
+  example involving handwritten digits. This uses on-line data, meaning that
+  each digit is represented by the trajectory of the pen as a function of
+  time in the form of a sequence of pen coordinates, in contrast to the
+  off-line digits data, discussed in Appendix A, which comprises static
+  two-dimensional pixellated images of the ink. Examples of the online digits
+  are shown in Figure <reference|fig13.11>.\ 
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_11_online_digit_2.png|0.3par|||>|<label|fig13.11>Top
+    row: examples of on-line handwritten digits. Bottom row: synthetic digits
+    sampled generatively from a left-to-right hidden Markov model that has
+    been trained on a data set of 45 handwritten digits.>
+  </padded-center>
+
+  Here we train a hidden Markov model on a subset of data comprising 45
+  examples of the digit `2'. There are <math|K=16> states, each of which can
+  generate a line segment of fixed length having one of 16 possible angles,
+  and so the emission distribution is simply a 16\<times\>16 table of
+  probabilities associated with the allowed angle values for each state index
+  value. Transition probabilities are all set to zero except for those that
+  keep the state index <math|k> the same or that increment it by 1, and the
+  model parameters are optimized using 25 iterations of EM. We can gain some
+  insight into the resulting model by running it generatively, as shown in
+  Figure <reference|fig13.11>.
+
+  One of the most powerful properties of hidden Markov models is their
+  ability to exhibit some degree of invariance to local warping (compression
+  and stretching) of the time axis. To understand this, consider the way in
+  which the digit `2' is written in the on-line handwritten digits example. A
+  typical digit comprises two distinct sections joined at a cusp. The first
+  part of the digit, which starts at the top left, has a sweeping arc down to
+  the cusp or loop at the bottom left, followed by a second more-or-less
+  straight sweep ending at the bottom right. Natural variations in writing
+  style will cause the relative sizes of the two sections to vary, and hence
+  the location of the cusp or loop within the temporal sequence will vary.
+  From a generative perspective such variations can be accommodated by the
+  hidden Markov model through changes in the number of transitions to the
+  same state versus the number of transitions to the successive state. Note,
+  however, that if a digit `2' is written in the reverse order, that is,
+  starting at the bottom right and ending at the top left, then even though
+  the pen tip coordinates may be identical to an example from the training
+  set, the probability of the observations under the model will be extremely
+  small. In the speech recognition context, warping of the time axis is
+  associated with natural variations in the speed of speech, and again the
+  hidden Markov model can accommodate such a distortion and not penalize it
+  too heavily.
+
+  <subsection|Maximum likelihood for the HMM>
+
+  \;
+
+  If we have observed a data set <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}>,
+  we can determine the parameters of an HMM using maximum likelihood. The
+  likelihood function is obtained from the joint distribution <eqref|13.10>
+  by marginalizing over the latent variables
+
+  <\equation>
+    p<around*|(|\<b-X\>\|\<b-theta\>|)>=<big|sum><rsub|Z>p<around*|(|X,Z\|\<b-theta\>|)><label|13.11>
+  </equation>
+
+  Because the joint distribution <math|p(X,Z\|\<b-theta\>)> does not
+  factorize over <math|n> (in contrast to the mixture distribution considered
+  in Chapter 9), we cannot simply treat each of the summations over
+  <math|\<b-z\><rsub|n>> independently. Nor can we perform the summations
+  explicitly because there are <math|N> variables to be summed over, each of
+  which has <math|K> states, resulting in a total of <math|K<rsup|N>> terms.
+  Thus the number of terms in the summation grows exponentially with the
+  length of the chain. In fact, the summation in Eq. <eqref|13.11>
+  corresponds to summing over exponentially many paths through the lattice
+  diagram in Figure <reference|fig13.7>.
+
+  We have already encountered a similar difficulty when we considered the
+  inference problem for the simple chain of variables in Figure 8.32. There
+  we were able to make use of the conditional independence properties of the
+  graph to re-order the summations in order to obtain an algorithm whose cost
+  scales linearly, instead of exponentially, with the length of the chain. We
+  shall apply a similar technique to the hidden Markov model.
+
+  A further difficulty with the expression <eqref|13.11> for the likelihood
+  function is that, because it corresponds to a generalization of a mixture
+  distribution, it represents a summation over the emission models for
+  different settings of the latent variables. Direct maximization of the
+  likelihood function will therefore lead to complex expressions with no
+  closed-form solutions, as was the case for simple mixture models \ (recall
+  that a mixture model for i.i.d. data is a special case of the HMM).
+
+  We therefore turn to the expectation maximization algorithm to find an
+  efficient framework for maximizing the likelihood function in hidden Markov
+  models. The EM algorithm starts with some initial selection for the model
+  parameters, which we denote by <math|\<b-theta\><rsup|old>>. In the E step,
+  we take these parameter values and find the posterior distribution of the
+  latent variables <math|p(Z\|X, \<b-theta\><rsup|old>)>. We then use this
+  posterior distribution to evaluate the expectation of the logarithm of the
+  complete-data likelihood function, as a function of the parameters
+  <math|\<b-theta\>>, to give the function <math|Q(\<b-theta\>,
+  \<b-theta\><rsup|old>)> defined by
+
+  <\equation*>
+    Q<around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=<big|sum><rsub|Z>p<around*|(|Z\|X,\<b-theta\><rsup|old>|)>ln
+    p<around*|(|X,Z\|\<b-theta\>|)>
+  </equation*>
+
+  At this point, it is convenient to introduce some notation. We shall use
+  <math|\<gamma\>(\<b-z\><rsub|n>)> to denote the marginal posterior
+  distribution of a latent variable <math|\<b-z\><rsub|n>>, and
+  <math|\<xi\>(\<b-z\><rsub|n\<minus\>1>, \<b-z\><rsub|n>)> to denote the
+  joint posterior distribution of two successive latent variables, so that
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<gamma\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n>\|X,\<b-theta\><rsup|old>|)>>>|<row|<cell|\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>\|X,\<b-theta\><rsup|old>|)>>>>>
+  </eqnarray*>
+
+  For each value of n, we can store <math|\<gamma\>(\<b-z\><rsub|n>)> using a
+  set of K nonnegative numbers that sum to unity, and similarly we can store
+  <math|\<xi\>(\<b-z\><rsub|n\<minus\>1>,\<b-z\><rsub|n>)> using a
+  <math|K\<times\>K> matrix of nonnegative numbers that again sum to unity.
+  We shall also use <math|\<gamma\>(z<rsub|n k>)> to denote the conditional
+  probability of <math|z<rsub|n k>=1>, with a similar use of notation for
+  <math|\<xi\>(z<rsub|n\<minus\>1,j>,z<rsub|n k>)> and for other
+  probabilistic variables introduced later. Because the expectation of a
+  binary random variable is just the probability that it takes the value 1,
+  we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<gamma\><around*|(|z<rsub|n
+    k>|)>>|<cell|=>|<cell|\<bbb-E\><around*|[|z<rsub|n
+    k>|]>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|\<b-z\><rsub|n>>\<gamma\><around*|(|\<b-z\><rsub|n>|)>z<rsub|n
+    k>>>|<row|<cell|\<xi\><around*|(|z<rsub|n-1,j>,z<rsub|n
+    k>|)>>|<cell|=>|<cell|\<bbb-E\><around*|[|z<rsub|n-1,j>z<rsub|n
+    k>|]>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>>\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>z<rsub|n-1,j>z<rsub|n
+    k>>>>>
+  </eqnarray*>
 </body>
 
 <\initial>
@@ -315,19 +604,33 @@
 
 <\references>
   <\collection>
-    <associate|13.2|<tuple|1.1|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-1|<tuple|1|1|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-2|<tuple|1.1|1|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-3|<tuple|1.1|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-4|<tuple|1.2|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-5|<tuple|1.3|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-6|<tuple|1.4|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-7|<tuple|1.5|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-8|<tuple|1.2|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|fig12.4|<tuple|1.4|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|fig13.1|<tuple|1.1|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|fig13.4|<tuple|1.4|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|fig13.5|<tuple|1.5|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
+    <associate|13.10|<tuple|1.2|5>>
+    <associate|13.11|<tuple|1.3|8>>
+    <associate|13.2|<tuple|1.1|2>>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|1.7|5>>
+    <associate|auto-11|<tuple|1.8|6>>
+    <associate|auto-12|<tuple|1.9|6>>
+    <associate|auto-13|<tuple|1.10|7>>
+    <associate|auto-14|<tuple|1.11|7>>
+    <associate|auto-15|<tuple|1.2.1|7>>
+    <associate|auto-2|<tuple|1.1|1>>
+    <associate|auto-3|<tuple|1.1|2>>
+    <associate|auto-4|<tuple|1.2|2>>
+    <associate|auto-5|<tuple|1.3|2>>
+    <associate|auto-6|<tuple|1.4|3>>
+    <associate|auto-7|<tuple|1.5|4>>
+    <associate|auto-8|<tuple|1.2|4>>
+    <associate|auto-9|<tuple|1.6|5>>
+    <associate|fig13.1|<tuple|1.1|1>>
+    <associate|fig13.10|<tuple|1.10|7>>
+    <associate|fig13.11|<tuple|1.11|7>>
+    <associate|fig13.4|<tuple|1.4|3>>
+    <associate|fig13.5|<tuple|1.5|4>>
+    <associate|fig13.6|<tuple|1.6|5>>
+    <associate|fig13.7|<tuple|1.7|5>>
+    <associate|fig13.8|<tuple|1.8|6>>
+    <associate|fig13.9|<tuple|1.9|6>>
   </collection>
 </references>
 
@@ -338,11 +641,87 @@
       spectrogram of the spoken words \PBayes' theorem\Q showing a plot of
       the intensity of the spectral coefficients versus time
       index.>|<pageref|auto-2>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.2>||The simplest
+      approach to modelling a sequence of observations is to treat them as
+      independent, corresponding to a graph without links.>|<pageref|auto-4>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.3>||A first-order
+      Markov chain of observations <with|mode|<quote|math>|<around*|{|\<b-x\><rsub|n>|}>
+      >in which the distribution <with|mode|<quote|math>|p<around*|(|\<b-x\><rsub|n>\|\<b-x\><rsub|n-1>|)>>
+      of a particular observation <with|mode|<quote|math>|\<b-x\><rsub|n>> is
+      conditioned on the value of the previous observation
+      <with|mode|<quote|math>|\<b-x\><rsub|n-1>>.>|<pageref|auto-5>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.4>||A second-order
+      Markov chain, in \ which the conditional distribution of a particular
+      observation xn depends on the values of the two previous observations
+      xn\<minus\>1 and \ xn\<minus\>2.>|<pageref|auto-6>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.5>||We can represent
+      sequential data using a Markov chain of latent variables, with each
+      observation conditioned on the state of the corresponding latent
+      variable. This important graphical structure forms the foundation both
+      for the hidden Markov model and for linear dynamical
+      systems.>|<pageref|auto-7>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.6>||Transition
+      diagram showing a model whose latent variables have three possible
+      states corresponding to the three boxes. The black lines denote the
+      elements of the transition matrix \ <with|mode|<quote|math>|A<rsub|j
+      k>>.>|<pageref|auto-9>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.7>||If we unfold the
+      state transition diagram of Figure <reference|fig13.6> over time, we
+      obtain a lattice, or trellis, representation of the latent states. Each
+      column of this diagram corresponds to one of the latent variables
+      <with|mode|<quote|math>|\<b-z\><rsub|n>>.>|<pageref|auto-10>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.8>||Illustration of
+      sampling from a hidden Markov model having a 3-state latent variable
+      <with|mode|<quote|math>|\<b-z\>> and a Gaussian emission model
+      <with|mode|<quote|math>|p(\<b-x\>\|\<b-z\>)> where
+      <with|mode|<quote|math>|\<b-x\>> is 2-dimensional. (a) Contours of
+      constant probability density for the emission distributions
+      corresponding to each of the three states of the latent variable. (b) A
+      sample of 50 points drawn from the hidden Markov model, colour coded
+      according to the component that generated them and with lines
+      connecting the successive observations. Here the transition matrix was
+      fixed so that in any state there is a 5% probability of making a
+      transition to each of the other states, and consequently a 90%
+      probability of remaining in the same state.>|<pageref|auto-11>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.9>||Example of the
+      state transition diagram for a 3-state \ left-to-right hidden Markov
+      model. Note that once a state has been vacated, it cannot later be
+      re-entered.>|<pageref|auto-12>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.10>||Lattice diagram
+      for a 3-state leftto-right HMM in which the state index
+      <with|mode|<quote|math>|k> is allowed to increase by at most 1 at each
+      transition.>|<pageref|auto-13>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.11>||Top row:
+      examples of on-line handwritten digits. Bottom row: synthetic digits
+      sampled generatively from a left-to-right hidden Markov model that has
+      been trained on a data set of 45 handwritten
+      digits.>|<pageref|auto-14>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Sequential
       \ Data> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-1><vspace|0.5fn>
+
+      1.1<space|2spc>Markov Models <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-3>
+
+      1.2<space|2spc>Hidden Markov Models
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-8>
+
+      <with|par-left|<quote|1tab>|1.2.1<space|2spc>Maximum likelihood for the
+      HMM <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-15>>
     </associate>
   </collection>
 </auxiliary>
