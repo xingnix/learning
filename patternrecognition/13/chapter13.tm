@@ -1,4 +1,4 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.1>
 
 <style|<tuple|book|granite>>
 
@@ -559,10 +559,10 @@
   <math|\<b-theta\>>, to give the function <math|Q(\<b-theta\>,
   \<b-theta\><rsup|old>)> defined by
 
-  <\equation*>
+  <\equation>
     Q<around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=<big|sum><rsub|Z>p<around*|(|Z\|X,\<b-theta\><rsup|old>|)>ln
-    p<around*|(|X,Z\|\<b-theta\>|)>
-  </equation*>
+    p<around*|(|X,Z\|\<b-theta\>|)><label|13.12>
+  </equation>
 
   At this point, it is convenient to introduce some notation. We shall use
   <math|\<gamma\>(\<b-z\><rsub|n>)> to denote the marginal posterior
@@ -594,6 +594,329 @@
     k>|]>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>>\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>z<rsub|n-1,j>z<rsub|n
     k>>>>>
   </eqnarray*>
+
+  If we substitute the joint distribution <math|p(X, Z\|\<b-theta\>)> given
+  by Eq. <eqref|13.10> into Eq. <eqref|13.12>, and make use of the
+  definitions of <math|\<gamma\>> and <math|\<xi\>> , we obtain
+
+  <\equation>
+    Q<around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=<big|sum><rsub|k=1><rsup|K>\<gamma\><around*|(|z<rsub|1k>|)>ln\<pi\><rsub|k>+<big|sum><rsub|n=2><rsup|N><big|sum><rsub|j=1><rsup|K><big|sum><rsub|k=1><rsup|K>\<xi\><around*|(|z<rsub|n-1,j>,z<rsub|n
+    k>|)>ln A<rsub|j k>+<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>\<gamma\><around*|(|z<rsub|n
+    k>|)>ln p<around*|(|\<b-x\><rsub|n>\|\<b-varphi\><rsub|k>|)><label|13.17>
+  </equation>
+
+  The goal of the E step will be to evaluate the quantities
+  <math|\<gamma\>(\<b-z\><rsub|n>)> and <math|\<xi\>(\<b-z\><rsub|n\<minus\>1>,
+  \<b-z\><rsub|n>)> efficiently, and we shall discuss this in detail shortly.
+
+  In the M step, we maximize <math|Q(\<b-theta\>, \<b-theta\><rsup|old>)>
+  with respect to the parameters <math|\<b-theta\>={\<b-pi\>,A,\<b-varphi\>}>
+  in which we treat <math|\<gamma\>(\<b-z\><rsub|n>)> and
+  <math|\<xi\>(\<b-z\><rsub|n\<minus\>1>,\<b-z\><rsub|n>)> as constant.
+  Maximization with respect to <math|\<b-pi\>> and <math|A> is easily
+  achieved using appropriate Lagrange multipliers with the results
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<pi\><rsub|k>>|<cell|=>|<cell|<frac|\<gamma\><around*|(|z<rsub|1k>|)>|<big|sum><rsub|j=1><rsup|K>\<gamma\><around*|(|z<rsub|1j>|)>>>>|<row|<cell|A<rsub|j
+    k>>|<cell|=>|<cell|<frac|<big|sum><rsub|n=2><rsup|N>\<xi\><around*|(|z<rsub|n-1,j>,z<rsub|n
+    k>|)>|<big|sum><rsub|l=1><rsup|K><big|sum><rsub|n=2><rsup|N>\<xi\><around*|(|z<rsub|n-1,j>,z<rsub|n
+    l>|)>>>>>>
+  </eqnarray*>
+
+  The EM algorithm must be initialized by choosing starting values for
+  <math|\<b-pi\>> and <math|A>, which should of course respect the summation
+  constraints associated with their probabilistic interpretation. Note that
+  any elements of <math|\<b-pi\>> or <math|A> that are set to zero initially
+  will remain zero in subsequent EM updates. A typical initialization
+  procedure would involve selecting random starting values for these
+  parameters subject to the summation and non-negativity constraints. Note
+  that no particular modification to the EM results are required for the case
+  of left-to-right models beyond choosing initial values for the elements
+  <math|A<rsub|j k>> in which the appropriate elements are set to zero,
+  because these will remain zero throughout.
+
+  To maximize <math|Q(\<b-theta\>,\<b-theta\><rsup|old>)> with respect to
+  <math|\<b-varphi\><rsub|k>>, we notice that only the final term \ in Eq.
+  <eqref|13.17> depends on <math|\<b-varphi\><rsub|k>>, and furthermore this
+  term has exactly the same form as the data-dependent term in the
+  corresponding function for a standard mixture distribution for i.i.d. data,
+  as can be seen by comparison with (9.40) for the case of a Gaussian
+  mixture. Here the quantities <math|\<gamma\>(z<rsub|n k>)> are playing the
+  role of the responsibilities. If the parameters <math|\<b-varphi\><rsub|k>>
+  are independent for the different components, then this term decouples into
+  a sum of terms one for each value of <math|k>, each of which can be
+  maximized independently. We are then simply maximizing the weighted log
+  likelihood function for the emission density
+  <math|p(\<b-x\>\|\<b-varphi\><rsub|k>)> with weights
+  <math|\<gamma\>(z<rsub|n k>)>. Here we shall suppose that this maximization
+  can be done efficiently. For instance, in the case of Gaussian emission
+  densities we have <math|p(\<b-x\>\|\<b-varphi\><rsub|k>)=\<cal-N\>(\<b-x\>\|\<b-mu\><rsub|k>,\<Sigma\><rsub|k>)>,
+  and maximization of the function <math|Q(\<b-theta\>,\<b-theta\><rsup|old>)>
+  then gives
+
+  <\eqnarray*>
+    <tformat|<cwith|2|2|3|3|cell-halign|l>|<table|<row|<cell|\<b-mu\><rsub|k>>|<cell|=>|<cell|<frac|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+    k>|)>\<b-x\><rsub|n>|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+    k>|)>><eq-number><label|13.20>>>|<row|<cell|\<Sigma\><rsub|k>>|<cell|=>|<cell|<frac|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+    k>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T>|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+    k>|)>>>>>>
+  </eqnarray*>
+
+  For the case of discrete multinomial observed variables, the conditional
+  distribution of the observations takes the form
+
+  <\equation*>
+    p<around*|(|\<b-x\>\|\<b-z\>|)>=<big|prod><rsub|i=1><rsup|D><big|prod><rsub|k=1><rsup|K>\<mu\><rsub|i
+    k><rsup|x<rsub|i>z<rsub|k>>
+  </equation*>
+
+  and the corresponding M-step equations are given by
+
+  <\equation*>
+    \<mu\><rsub|i k>=<frac|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+    k>|)>x<rsub|n i>|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+    k>|)>>.
+  </equation*>
+
+  An analogous result holds for Bernoulli observed variables.
+
+  The EM algorithm requires initial values for the parameters of the emission
+  distribution. One way to set these is first to treat the data initially as
+  i.i.d. and fit the emission density by maximum likelihood, and then use the
+  resulting values to initialize the parameters for EM.
+
+  <subsection|The forward-backward algorithm>
+
+  \;
+
+  Next we seek an efficient procedure for evaluating the quantities
+  <math|\<gamma\>(z<rsub|n k>)> and <math|\<xi\>(z<rsub|n\<minus\>1,j>,z<rsub|n
+  k>)>, corresponding to the E step of the EM algorithm. The graph for the
+  hidden Markov model, shown in Figure <reference|fig13.5>, is a tree, and so
+  we know that the posterior distribution of the latent variables can be
+  obtained efficiently using a two stage message passing algorithm. In the
+  particular context of the hidden Markov \ model, this is known as the
+  <em|forward-backward> algorithm (Rabiner, 1989), or the <em|Baum-Welch>
+  algorithm (Baum, 1972). There are in fact several variants of the basic
+  algorithm, all of which lead to the exact marginals, according to the
+  precise form of the messages that are propagated along the chain (Jordan,
+  2007). We shall focus on the most widely used of these, known as the
+  <em|alpha-beta> algorithm.
+
+  As well as being of great practical importance in its own right, the
+  forwardbackward algorithm provides us with a nice illustration of many of
+  the concepts introduced in earlier chapters. We shall therefore begin in
+  this section with a `conventional' derivation of the forward-backward
+  equations, making use of the sum and product rules of probability, and
+  exploiting conditional independence properties which we shall obtain from
+  the corresponding graphical model using d-separation. Then in Section
+  <reference|sec13.2.3>, we shall see how the forward-backward algorithm can
+  be obtained very simply as a specific example of the sum-product algorithm
+  introduced in Section 8.4.4.
+
+  It is worth emphasizing that evaluation of the posterior distributions of
+  the latent variables is independent of the form of the emission density
+  <math|p(\<b-x\>\|\<b-z\>)> or indeed of whether the observed variables are
+  continuous or discrete. All we require is the values of the quantities
+  <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)> for each value of
+  <math|\<b-z\><rsub|n>> for every <math|n>. Also, in this section and the
+  next we shall omit the explicit dependence on the model parameters
+  <math|\<b-theta\><rsup|old>> because these fixed throughout.
+
+  We therefore begin by writing down the following conditional independence
+  properties (Jordan, 2007)
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|X\|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n>|)><eq-number><label|13.24>>>|<row|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-z\><rsub|n>|)><eq-number><label|13.25>>>|<row|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-z\><rsub|n-1>|)><eq-number><label|13.26>>>|<row|<cell|p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n>,\<b-z\><rsub|n+1>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n+1>|)><eq-number><label|13.27>>>|<row|<cell|p<around*|(|\<b-x\><rsub|n+2>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n+1>,\<b-x\><rsub|n+1>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n+2>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n+1>|)><eq-number><label|13.28>>>|<row|<cell|p<around*|(|X\|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n>|)>>>|<row|<cell|p<around*|(|\<b-x\><rsub|N+1>\|X,\<b-z\><rsub|N+1>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|N+1>\|\<b-z\><rsub|N+1>|)>>>|<row|<cell|p<around*|(|\<b-z\><rsub|N+1>\|\<b-z\><rsub|N>,X|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|N+1>\|\<b-z\><rsub|N>|)>>>>>
+  </eqnarray*>
+
+  where <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}>. These relations
+  are most easily proved using d-separation. For instance in the first of
+  these results, we note that every path from any one of the nodes
+  <math|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>> to the node
+  <math|\<b-x\><rsub|n>> passes through the node <math|\<b-z\><rsub|n>>,
+  which is observed. Because all such paths are head-to-tail, it follows that
+  the conditional independence property must hold. The reader should take a
+  few moments to verify each of these properties in turn, as an exercise in
+  the application of d-separation. These relations can also be proved
+  directly, though with significantly greater effort, from the joint
+  distribution for the hidden Markov model using the sum and product rules of
+  probability.
+
+  Let us begin by evaluating <math|\<gamma\>(z<rsub|n k>)>. Recall that for a
+  discrete multinomial random variable the expected value of one of its
+  components is just the probability of that component having the value 1.
+  Thus we are interested in finding the posterior distribution
+  <math|p(\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>)> of
+  <math|\<b-z\><rsub|n>> given the observed data set
+  <math|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>>. This represents a vector
+  of length <math|K> whose entries correspond to the expected values of
+  <math|z<rsub|n k>>. Using Bayes' theorem, we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<gamma\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n>\|X|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|X\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>|)>|p<around*|(|X|)>>>>>>
+  </eqnarray*>
+
+  Note that the denominator <math|p(X)> is implicitly conditioned on the
+  parameters <math|\<b-theta\><rsup|old>> of the HMM and hence represents the
+  likelihood function. Using the conditional independence property
+  <eqref|13.24>, together with the product rule of probability, we obtain
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<gamma\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|<frac|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>|p<around*|(|X|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|\<b-z\><rsub|n>|)>\<beta\><around*|(|\<b-z\><rsub|n>|)>|p<around*|(|X|)>><eq-number><label|13.33>>>>>
+  </eqnarray*>
+
+  where we have defined
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<alpha\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>,\<b-z\><rsub|n>|)><eq-number><label|13.34>>>|<row|<cell|\<beta\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><eq-number><label|13.35>>>>>
+  </eqnarray*>
+
+  The quantity <math|\<alpha\>(\<b-z\><rsub|n>)> represents the joint
+  probability of observing all of the given data up to time <math|n> and the
+  value of <math|\<b-z\><rsub|n>>, whereas <math|\<beta\>(\<b-z\><rsub|n>)>
+  represents the conditional probability of all future data from time
+  <math|n+1> up to <math|N> given the value of <math|\<b-z\><rsub|n>>. Again,
+  <math|\<alpha\>(\<b-z\><rsub|n>)> and <math|\<beta\>(\<b-z\><rsub|n>)> each
+  represent set of <math|K> numbers, one for each of the possible settings of
+  the 1-of-K coded binary vector <math|\<b-z\><rsub|n>>. We shall use the
+  notation \<alpha\><math|(z<rsub|n k>)> to denote the value of
+  <math|\<alpha\>(\<b-z\><rsub|n>)> when <math|z<rsub|n k>=1>, with an
+  analogous interpretation of <math|\<beta\>(z<rsub|n k>)>.
+
+  We now derive recursion relations that allow
+  <math|\<alpha\>(\<b-z\><rsub|n>)> and <math|\<beta\>(\<b-z\><rsub|n>)> to
+  be evaluated efficiently. Again, we shall make use of conditional
+  independence properties, in particular Eq. <eqref|13.25> and <eqref|13.26>,
+  together with the sum and product rules, allowing us to express
+  <math|\<alpha\>(\<b-z\><rsub|n>)> in terms of
+  <math|\<alpha\>(\<b-z\><rsub|n\<minus\>1>)> as follows
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<alpha\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>,\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>,\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><big|sum><rsub|\<b-z\><rsub|n-1>>p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>,\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><big|sum><rsub|\<b-z\><rsub|n-1>>p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>,\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n-1>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><big|sum><rsub|\<b-z\><rsub|n-1>>p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n-1>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><big|sum><rsub|\<b-z\><rsub|n-1>>p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>,\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>>>>>
+  </eqnarray*>
+
+  Making use of the definition <eqref|13.34> for
+  <math|\<alpha\>(\<b-z\><rsub|n>)>, we then obtain
+
+  <\equation>
+    \<alpha\><around*|(|\<b-z\><rsub|n>|)>=p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><big|sum><rsub|\<b-z\><rsub|n-1>>\<alpha\><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)><label|13.36>
+  </equation>
+
+  It is worth taking a moment to study this recursion relation in some
+  detail. Note that there are <math|K> terms in the summation, and the
+  right-hand side has to be evaluated for each of the <math|K> values of
+  <math|\<b-z\><rsub|n>> so each step of the <math|\<alpha\>> recursion has
+  computational cost that scaled like <math|O(K<rsup|2>)>. The forward
+  recursion equation for <math|\<alpha\>(\<b-z\><rsub|n>)> is illustrated
+  using a lattice diagram in Figure <reference|fig13.12>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_12_forward_resursion.png|0.3par|||>|<label|fig13.12>Illustration
+    of the forward recursion <eqref|13.36> for evaluation of the
+    <math|\<alpha\>> variables. In this fragment of the lattice, we see that
+    the quantity <math|\<alpha\>(z<rsub|n1>)> is obtained by taking the
+    elements <math|\<alpha\>(z<rsub|n\<minus\>1,j>)> of
+    <math|\<alpha\>(\<b-z\><rsub|n\<minus\>1>)> at step <math|n\<minus\>1>
+    and summing them up with weights given by <math|A<rsub|j1>>,
+    corresponding to the values of <math|p(\<b-z\><rsub|n>\|\<b-z\><rsub|n\<minus\>1>)>,
+    and then multiplying by the data contribution
+    <math|p(\<b-x\><rsub|n>\|z<rsub|n1>)>.>
+  </padded-center>
+
+  In order to start this recursion, we need an initial condition that is
+  given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<alpha\><around*|(|\<b-z\><rsub|1>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|1>,\<b-z\><rsub|1>|)>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|1>|)>p<around*|(|\<b-x\><rsub|1>\|\<b-z\><rsub|1>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|prod><rsub|k=1><rsup|K><around*|{|\<pi\><rsub|k>p<around*|(|\<b-x\><rsub|1>\|\<b-varphi\><rsub|k>|)>|}><rsup|z<rsub|1k>>>>>>
+  </eqnarray*>
+
+  which tells us that <math|\<alpha\>(z<rsub|1k>)>, for
+  <math|k=1,\<cdots\>,K>, takes the value
+  <math|\<pi\><rsub|k>p(\<b-x\><rsub|1>\|\<b-varphi\><rsub|k>)>. Starting at
+  the first node of the chain, we can then work along the chain and evaluate
+  <math|\<alpha\>(\<b-z\><rsub|n>)> for every latent node. Because each step
+  of the recursion involves multiplying by a <math|K\<times\>K> matrix, the
+  overall cost of evaluating these quantities for the whole chain is of
+  <math|O(K<rsup|2>N)>.
+
+  We can similarly find a recursion relation for the quantities
+  <math|\<beta\>(\<b-z\><rsub|n>)> by making use of the conditional
+  independence properties <eqref|13.27> and <eqref|13.28> giving
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<beta\><around*|(|\<b-z\><rsub|N>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|\<b-z\><rsub|n+1>>p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>,\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|\<b-z\><rsub|n+1>>p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n>,\<b-z\><rsub|n+1>|)>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|\<b-z\><rsub|n+1>>p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|\<b-z\><rsub|n+1>>p<around*|(|\<b-x\><rsub|n+2>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>>>>>
+  </eqnarray*>
+
+  Making use of the definition <eqref|13.35> for
+  <math|\<beta\>(\<b-z\><rsub|n>)>, we then obtain \ 
+
+  <\equation>
+    \<beta\>(\<b-z\><rsub|n>) = \ <big|sum><rsub|\<b-z\><rsub|n+1>>\<beta\>(\<b-z\><rsub|n+1>)p(\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>)p(\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>).<label|13.38>
+  </equation>
+
+  Note that in this case we have a backward message passing algorithm that
+  evaluates<math| \<beta\>(\<b-z\><rsub|n>)> in terms of
+  <math|\<beta\>(\<b-z\><rsub|n+1>)>. At each step, we absorb the effect of
+  observation <math|\<b-x\><rsub|n+1>> through the emission probability
+  <math|p(\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>)>, multiply by the transition
+  matrix <math|p(\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>)>, and then marginalize
+  out <math|\<b-z\><rsub|n+1>>. This is illustrated in Figure
+  <inactive|<reference|fig13.13>>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_13_backward_resursion.png|.3par|||>|Illustration
+    of the backward recursion <eqref|13.38> for evaluation of the
+    <math|\<beta\>> variables. In this fragment of the lattice, we see that
+    the quantity <math|\<beta\>(z<rsub|n1>)> is obtained by taking the
+    components <math|\<beta\>(z<rsub|n+1,k>)> of
+    <math|\<beta\>(\<b-z\><rsub|n+1>)> at step <math|n+1> and summing them up
+    with weights given by the products of <math|A<rsub|1k>>, corresponding to
+    the values of <math|p(\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>)> and the
+    corresponding values of the emission density
+    <math|p(\<b-x\><rsub|n>\|z<rsub|n+1,k>)>.>
+  </padded-center>
+
+  Again we need a starting condition for the recursion, namely a value for
+  <math|\<beta\>(\<b-z\><rsub|N>)>. This can be obtained by setting
+  <math|n=N> in Eq. <eqref|13.33> and replacing
+  <math|\<alpha\>(\<b-z\><rsub|N>)> with its definition <eqref|13.34> to give
+
+  <\equation*>
+    p<around*|(|\<b-z\><rsub|N>\|X|)>=<frac|p<around*|(|X,\<b-z\><rsub|N>|)>\<beta\><around*|(|\<b-z\><rsub|N>|)>|p<around*|(|X|)>>
+  </equation*>
+
+  which we see will be correct provided we take
+  <math|\<beta\>(\<b-z\><rsub|N>)=1> for all settings of
+  <math|\<b-z\><rsub|N>>.
+
+  In the M step equations, the quantity <math|p(X)> will cancel out, as can
+  be seen, for instance, in the M-step equation for \<mu\>k given by Eq.
+  <eqref|13.20>, which takes the form
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-mu\><rsub|k>>|<cell|=>|<cell|<frac|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+    k>|)>\<b-x\><rsub|n>|<big|sum><rsub|n=1><rsup|N>\<gamma\><around*|(|z<rsub|n
+    k>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|sum><rsub|n=1><rsup|N>\<alpha\><around*|(|z<rsub|n
+    k>|)>\<beta\><around*|(|z<rsub|n k>|)>\<b-x\><rsub|n>|<big|sum><rsub|n=1><rsup|N>\<alpha\><around*|(|z<rsub|n
+    k>|)>\<beta\><around*|(|z<rsub|n k>|)>>>>>>
+  </eqnarray*>
+
+  However, the quantity <math|p(X>) represents the likelihood function whose
+  value we typically wish to monitor during the EM optimization, and so it is
+  useful to be able to evaluate it. If we sum both sides of Eq. <eqref|13.33>
+  over <math|\<b-z\><rsub|n>>, and use the fact that the left-hand side is a
+  normalized distribution, we obtain
+
+  <\equation*>
+    p<around*|(|X|)>=<big|sum><rsub|\<b-z\><rsub|n>>\<alpha\><around*|(|\<b-z\><rsub|n>|)>\<beta\><around*|(|\<b-z\><rsub|n>|)>
+  </equation*>
+
+  <subsection|The sum-product algorithm for the HMM><label|sec13.2.3>
+
+  \;
+
+  \;
 </body>
 
 <\initial>
@@ -606,7 +929,20 @@
   <\collection>
     <associate|13.10|<tuple|1.2|5>>
     <associate|13.11|<tuple|1.3|8>>
+    <associate|13.12|<tuple|1.4|8>>
+    <associate|13.17|<tuple|1.5|8>>
     <associate|13.2|<tuple|1.1|2>>
+    <associate|13.20|<tuple|1.6|?>>
+    <associate|13.24|<tuple|1.7|?>>
+    <associate|13.25|<tuple|1.8|?>>
+    <associate|13.26|<tuple|1.9|?>>
+    <associate|13.27|<tuple|1.10|?>>
+    <associate|13.28|<tuple|1.11|?>>
+    <associate|13.33|<tuple|1.12|?>>
+    <associate|13.34|<tuple|1.13|?>>
+    <associate|13.35|<tuple|1.14|?>>
+    <associate|13.36|<tuple|1.15|?>>
+    <associate|13.38|<tuple|1.16|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
@@ -614,6 +950,10 @@
     <associate|auto-13|<tuple|1.10|7>>
     <associate|auto-14|<tuple|1.11|7>>
     <associate|auto-15|<tuple|1.2.1|7>>
+    <associate|auto-16|<tuple|1.2.2|9>>
+    <associate|auto-17|<tuple|1.12|?>>
+    <associate|auto-18|<tuple|1.13|?>>
+    <associate|auto-19|<tuple|1.2.3|?>>
     <associate|auto-2|<tuple|1.1|1>>
     <associate|auto-3|<tuple|1.1|2>>
     <associate|auto-4|<tuple|1.2|2>>
@@ -625,12 +965,14 @@
     <associate|fig13.1|<tuple|1.1|1>>
     <associate|fig13.10|<tuple|1.10|7>>
     <associate|fig13.11|<tuple|1.11|7>>
+    <associate|fig13.12|<tuple|1.12|?>>
     <associate|fig13.4|<tuple|1.4|3>>
     <associate|fig13.5|<tuple|1.5|4>>
     <associate|fig13.6|<tuple|1.6|5>>
     <associate|fig13.7|<tuple|1.7|5>>
     <associate|fig13.8|<tuple|1.8|6>>
     <associate|fig13.9|<tuple|1.9|6>>
+    <associate|sec13.2.3|<tuple|1.2.3|?>>
   </collection>
 </references>
 
@@ -722,6 +1064,10 @@
       <with|par-left|<quote|1tab>|1.2.1<space|2spc>Maximum likelihood for the
       HMM <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-15>>
+
+      <with|par-left|<quote|1tab>|1.2.2<space|2spc>The forward-backward
+      algorithm <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-16>>
     </associate>
   </collection>
 </auxiliary>
