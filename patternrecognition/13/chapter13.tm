@@ -1,4 +1,4 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
 <style|<tuple|book|granite>>
 
@@ -151,8 +151,9 @@
   <\padded-center>
     <small-figure|<image|image/fig_13_4_secondt_order_markov.png|.3par|||>|<label|fig13.4>A
     second-order Markov chain, in \ which the conditional distribution of a
-    particular observation xn depends on the values of the two previous
-    observations xn\<minus\>1 and \ xn\<minus\>2.>
+    particular observation <math|x<rsub|n>> depends on the values of the two
+    previous observations <math|x<rsub|n\<minus\>1>> and
+    \ <math|x<rsub|n\<minus\>2>>.>
   </padded-center>
 
   The joint distribution is now given by
@@ -228,9 +229,9 @@
 
   The joint distribution for this model is given by
 
-  <\equation*>
-    p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>,\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|N>|)>=p<around*|(|\<b-z\><rsub|1>|)><around*|[|<big|prod><rsub|n=2><rsup|N>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>|]><big|prod><rsub|n=1><rsup|N>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>
-  </equation*>
+  <\equation>
+    p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>,\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|N>|)>=p<around*|(|\<b-z\><rsub|1>|)><around*|[|<big|prod><rsub|n=2><rsup|N>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>|]><big|prod><rsub|n=1><rsup|N>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><label|13.6>
+  </equation>
 
   Using the d-separation criterion, we see that there is always a path
   connecting any two observed variables <math|\<b-x\><rsub|n>> and
@@ -1073,7 +1074,7 @@
   which the factors are given by
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|h<around*|(|\<b-z\><rsub|1>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|1>|)>p<around*|(|\<b-x\><rsub|1>\|\<b-z\><rsub|1>|)>>>|<row|<cell|f<rsub|n><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><eq-number><label|13.46>>>>>
+    <tformat|<table|<row|<cell|h<around*|(|\<b-z\><rsub|1>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|1>|)>p<around*|(|\<b-x\><rsub|1>\|\<b-z\><rsub|1>|)><eq-number><label|13.45>>>|<row|<cell|f<rsub|n><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><eq-number><label|13.46>>>>>
   </eqnarray*>
 
   \;
@@ -1169,9 +1170,279 @@
 
   \;
 
-  \;
+  There is an important issue that must be addressed before we can make use
+  of the forward backward algorithm in practice. From the recursion relation
+  Eq. <eqref|13.36>, we note that at each step the new value
+  <math|\<alpha\>(\<b-z\><rsub|n>)> is obtained from the previous value
+  <math|\<alpha\>(\<b-z\><rsub|n\<minus\>1>)> by multiplying by quantities
+  <math|p(\<b-z\><rsub|n>\|\<b-z\><rsub|n\<minus\>1>)> and
+  <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)>. Because these probabilities are
+  often significantly less than unity, as we work our way forward along the
+  chain, the values of <math|\<alpha\>(\<b-z\><rsub|n>)> can go to zero
+  exponentially quickly. For moderate lengths of chain (say 100 or so), the
+  calculation of the <math|\<alpha\>(\<b-z\><rsub|n>)> will soon exceed the
+  dynamic range of the computer, even if double precision floating point is
+  used.
+
+  In the case of i.i.d. data, we implicitly circumvented this problem with
+  the evaluation of likelihood functions by taking logarithms. Unfortunately,
+  this will not help here because we are forming sums of products of small
+  numbers (we are in fact implicitly summing over all possible paths through
+  the lattice diagram of Figure <reference|fig13.7>. We therefore work with
+  re-scaled versions of <math|\<alpha\>(\<b-z\><rsub|n>)> and
+  <math|\<beta\>(\<b-z\><rsub|n>)> whose values remain of order unity. As we
+  shall see, the corresponding scaling factors cancel out when we use these
+  re-scaled quantities in the EM algorithm.
+
+  In Eq. <eqref|13.34>, we defined <math|\<alpha\>(\<b-z\><rsub|n>)=p(\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>,\<b-z\><rsub|n>)>
+  representing the joint distribution of all the observations up to
+  <math|\<b-x\><rsub|n>> and the latent variable <math|\<b-z\><rsub|n>>. Now
+  we define a normalized version of <math|\<alpha\>> given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|\<b-z\><rsub|n>|)>|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>|)>>>>>>
+  </eqnarray*>
+
+  which we expect to be well behaved numerically because it is a probability
+  distribution over <math|K> variables for any value of n. In order to relate
+  the scaled and original alpha variables, we introduce scaling factors
+  defined by conditional distributions over the observed variables
+
+  <\equation*>
+    c<rsub|n>=p<around*|(|\<b-x\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>|)>
+  </equation*>
+
+  From the product rule, we then have
+
+  <\equation>
+    p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>|)>=<big|prod><rsub|m=1><rsup|n>c<rsub|m><label|13.57>
+  </equation>
+
+  and so
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<alpha\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>|)>p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|<big|prod><rsub|m=1><rsup|n>c<rsub|m>|)><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)>>>>>
+  </eqnarray*>
+
+  We can then turn the recursion equation <eqref|13.36> for <math|\<alpha\>>
+  into one for <math|<wide|\<alpha\>|^>> given by
+
+  <\equation>
+    c<rsub|n><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)>=p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><big|sum><rsub|\<b-z\><rsub|n-1>><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)><label|13.59>
+  </equation>
+
+  Note that at each stage of the forward message passing phase, used to
+  evaluate <math|\<alpha\>(\<b-z\><rsub|n>)>, we have to evaluate and store
+  <math|c<rsub|n>>, which is easily done because it is the coefficient that
+  normalizes the right-hand side of Eq. <eqref|13.59> to give
+  <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n>)>.
+
+  We can similarly define re-scaled variables
+  <math|<wide|\<beta\>|^>(\<b-z\><rsub|n>)> using
+
+  <\equation*>
+    \<beta\><around*|(|\<b-z\><rsub|n>|)>=<around*|(|<big|prod><rsub|m=n+1><rsup|N>c<rsub|m>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>
+  </equation*>
+
+  which will again remain within machine precision because, from Eq.
+  <eqref|13.35>, the quantities <math|<wide|\<beta\>|^>(\<b-z\><rsub|n>)> are
+  simply the ratio of two conditional probabilities
+
+  <\equation*>
+    <wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>=<frac|p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-z\><rsub|n>|)>|p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|N>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>|)>>
+  </equation*>
+
+  The recursion result <eqref|13.38> for <math|\<beta\>> then gives the
+  following recursion for the re-scaled variables
+
+  <\equation*>
+    c<rsub|n+1><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>=<big|sum><rsub|\<b-z\><rsub|n+1>><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>
+  </equation*>
+
+  In applying this recursion relation, we make use of the scaling factors
+  <math|c<rsub|n>> that were previously computed in the <math|\<alpha\>>
+  phase.
+
+  From Eq. <eqref|13.57>, we see that the likelihood function can be found
+  using
+
+  <\equation>
+    p<around*|(|X|)>=<big|prod><rsub|n=1><rsup|N>c<rsub|n><label|13.63>
+  </equation>
+
+  Similarly, using Eq. <eqref|13.33> and <eqref|13.43>, together with Eq.
+  <eqref|13.63>, we see that the required \ marginals are given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<gamma\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|<wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|c<rsub|n><rsup|-1><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>>>>>
+  </eqnarray*>
 
   \;
+
+  Finally, we note that there is an alternative formulation of the
+  forward-backward algorithm (Jordan, 2007) in which the backward pass is
+  defined by a recursion based on the quantities
+  <math|\<gamma\><around*|(|\<b-z\><rsub|n>|)>=<wide|\<alpha\>|^>(\<b-z\><rsub|n>)<wide|\<beta\>|^>(\<b-z\><rsub|n>)>
+  instead of using <math|<wide|\<beta\>|^>(\<b-z\><rsub|n>)>. This
+  <math|\<alpha\>\U\<gamma\>> recursion requires that the forward pass be
+  completed first so that all the quantities
+  <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n>)> are available for the backward
+  pass, whereas the forward and backward passes of the
+  <math|\<alpha\>\U\<beta\>> algorithm can be done independently. Although
+  these two algorithms have comparable computational cost, the
+  <math|\<alpha\>\U\<beta\>> version is the most commonly encountered one in
+  the case of hidden Markov models, whereas for linear dynamical systems a
+  \ recursion analogous to the <math|\<alpha\>\U\<gamma\>> form is more
+  usual.
+
+  <subsection|The Viterbi algorithm>
+
+  \;
+
+  In many applications of hidden Markov models, the latent variables have
+  some meaningful interpretation, and so it is often of interest to find the
+  most probable sequence of hidden states for a given observation sequence.
+  For instance in speech recognition, we might wish to find the most probable
+  phoneme sequence for a given series of acoustic observations. Because the
+  graph for the hidden Markov model is a directed tree, this problem can be
+  solved exactly using the max-sum algorithm. We recall from our discussion
+  in Section 8.4.5 that the problem of finding the most probable sequence of
+  latent states is not the same as that of finding the set of states that are
+  individually the most probable. The latter problem can be solved by first
+  running the forward-backward (sum-product) algorithm to find the latent
+  variable marginals <math|\<gamma\>(\<b-z\><rsub|n>)> and then maximizing
+  each of these individually (Duda et al., 2001). However, the set of such
+  states will not, in general, correspond to the most probable sequence of
+  states. In fact, this set of states might even represent a sequence having
+  zero probability, if it so happens that two successive states, which in
+  isolation are individually the most probable, are such that the transition
+  matrix element connecting them is zero.
+
+  In practice, we are usually interested in finding the most probable
+  sequence of states, and this can be solved efficiently using the max-sum
+  algorithm, which in the context of hidden Markov models is known as the
+  Viterbi algorithm (Viterbi, 1967). Note that the max-sum algorithm works
+  with log probabilities and so there is no need to use re-scaled variables
+  as was done with the forward-backward algorithm. Figure
+  <reference|fig13.16> shows a fragment of the hidden Markov model expanded
+  as lattice diagram. As we have already noted, the number of possible paths
+  through the lattice grows exponentially with the length of the chain. The
+  Viterbi algorithm searches this space of paths efficiently to find the most
+  probable path with a computational cost that grows only linearly with the
+  length of the chain.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_16_hmm_fragment_2_path.png|.3par|||>|<label|fig13.16>A
+    fragment of the HMM lattice showing two possible paths. The Viterbi
+    algorithm efficiently determines the most probable path from amongst the
+    exponentially many possibilities. For any given path, the corresponding
+    probability is given by the product of the elements of the transition
+    matrix <math|A<rsub|j k>>, corresponding to the probabilities
+    <math|p(\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>)> for each segment of the
+    path, along with the emission densities <math|p(\<b-x\><rsub|n>\|k)>
+    associated with each node on the path.>
+  </padded-center>
+
+  As with the sum-product algorithm, we first represent the hidden Markov
+  model as a factor graph, as shown in Figure <reference|fig13.15>. Again, we
+  treat the variable node <math|\<b-z\><rsub|N>> as the root, and pass
+  messages to the root starting with the leaf nodes. Using the results (8.93)
+  and (8.94), we see that the messages passed in the max-sum algorithm are
+  given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<mu\><rsub|\<b-z\><rsub|n>\<rightarrow\>f<rsub|n+1>><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|\<mu\><rsub|f<rsub|n>\<rightarrow\>\<b-z\><rsub|n>><around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|\<mu\><rsub|f<rsub|n+1>\<rightarrow\>\<b-z\><rsub|n+1>><around*|(|\<b-z\><rsub|n+1>|)>>|<cell|=>|<cell|max<rsub|\<b-z\><rsub|n>><around*|{|ln
+    f<rsub|n+1><around*|(|\<b-z\><rsub|n>,\<b-z\><rsub|n+1>|)>+\<mu\><rsub|\<b-z\><rsub|n>\<rightarrow\>f<rsub|n+1>><around*|(|\<b-z\><rsub|n>|)>|}>>>>>
+  </eqnarray*>
+
+  If we eliminate <math|\<mu\><rsub|\<b-z\><rsub|n>\<rightarrow\>f<rsub|n+1>>(\<b-z\><rsub|n>)>
+  between these two equations, and make use of Eq. <eqref|13.46>, we obtain a
+  recursion for the <math|f\<rightarrow\>z> messages of the form
+
+  <\equation*>
+    w<around*|(|\<b-z\><rsub|n+1>|)>=ln p<around*|(|\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>|)>+max<rsub|z<rsub|n>><around*|{|ln
+    p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>+w<around*|(|\<b-z\><rsub|n>|)>|}>
+  </equation*>
+
+  where we have introduced the notation <math|\<omega\>(\<b-z\><rsub|n>)\<equiv\>\<mu\><rsub|f<rsub|n>\<rightarrow\>\<b-z\><rsub|n>>(\<b-z\><rsub|n>)>.
+
+  From (8.95) and (8.96), these messages are initialized using
+
+  <\equation*>
+    w<around*|(|\<b-z\><rsub|1>|)>=ln p<around*|(|\<b-z\><rsub|1>|)>+ln
+    p<around*|(|\<b-x\><rsub|1>\|\<b-z\><rsub|1>|)>
+  </equation*>
+
+  where we have used Eq. <eqref|13.45>. Note that to keep the notation
+  uncluttered, we omit the dependence on the model parameters
+  <math|\<b-theta\>> that are held fixed when finding the most probable
+  sequence.
+
+  The Viterbi algorithm can also be derived directly from the definition
+  <eqref|13.6> of the joint distribution by taking the logarithm and then
+  exchanging maximizations and summations. It is easily seen that the
+  quantities <math|\<omega\>(\<b-z\><rsub|n>)> have the probabilistic
+  \ interpretation
+
+  <\equation*>
+    w<around*|(|\<b-z\><rsub|n>|)>=max<rsub|\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|n-1>>ln
+    p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>,\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|n>|)>
+  </equation*>
+
+  \;
+
+  Once we have completed the final maximization over <math|\<b-z\><rsub|N>> ,
+  we will obtain the value of the joint distribution <math|p(X,Z)>
+  corresponding to the most probable path. We also wish to find the sequence
+  of latent variable values that corresponds to this path. To do this, we
+  simply make use of the back-tracking procedure discussed in Section 8.4.5.
+  Specifically, we note that the maximization over <math|\<b-z\><rsub|n>>
+  must be performed for each of the <math|K> possible values of
+  <math|\<b-z\><rsub|n+1>>. Suppose we keep a record of the values of
+  <math|\<b-z\><rsub|n>> that correspond to the maxima for each value of the
+  <math|K> values of <math|\<b-z\><rsub|n+1>>. Let us denote this function by
+  <math|\<psi\>(k<rsub|n>)> where <math|k\<in\>{1,\<cdots\>,K}>. Once we have
+  passed messages to the end of the chain and found the most probable state
+  of <math|\<b-z\><rsub|N>> , we can then use this function to backtrack
+  along the chain by applying it recursively
+
+  <\equation*>
+    k<rsub|n-1><rsup|max>=\<psi\><around*|(|k<rsub|n><rsup|max>|)>
+  </equation*>
+
+  \;
+
+  Intuitively, we can understand the Viterbi algorithm as follows. Naively,
+  we could consider explicitly all of the exponentially many paths through
+  the lattice, evaluate the probability for each, and then select the path
+  having the highest probability. However, we notice that we can make a
+  dramatic saving in computational cost as follows. Suppose that for each
+  path we evaluate its probability by summing up products of transition and
+  emission probabilities as we work our way forward along each path through
+  the lattice. Consider a particular time step <math|n> and a particular
+  state <math|k> at that time step. There will be many possible paths
+  converging on the corresponding node in the lattice diagram. However, we
+  need only retain that particular path that so far has the highest
+  probability. Because there are <math|K> states at time step <math|n>, we
+  need to keep track of <math|K> such paths. At time step <math|n+1>, there
+  will be <math|K<rsup|2>> possible paths to consider, comprising <math|K>
+  possible paths leading out of each of the <math|K> current states, but
+  again we need only retain <math|K> of these corresponding to the best path
+  for each state at time <math|n+1>. When we reach the final time step
+  <math|N> we will discover which state corresponds to the overall most
+  probable path. Because there is a unique path coming into that state we can
+  trace the path back to step <math|N\<minus\>1> to see what state it
+  occupied at that time, and so on back through the lattice to the state
+  <math|n=1>.
+
+  <subsection|Extensions of the hidden Markov model>
+
+  \;
+
+  The basic hidden Markov model, along with the standard training algorithm
+  based on maximum likelihood, has been extended in numerous ways to meet the
+  requirements of particular applications. Here we discuss a few of the more
+  important examples.
 </body>
 
 <\initial>
@@ -1182,33 +1453,37 @@
 
 <\references>
   <\collection>
-    <associate|13.10|<tuple|1.2|5>>
-    <associate|13.11|<tuple|1.3|8>>
-    <associate|13.12|<tuple|1.4|8>>
-    <associate|13.17|<tuple|1.5|8>>
+    <associate|13.10|<tuple|1.3|5>>
+    <associate|13.11|<tuple|1.4|8>>
+    <associate|13.12|<tuple|1.5|8>>
+    <associate|13.17|<tuple|1.6|8>>
     <associate|13.2|<tuple|1.1|2>>
-    <associate|13.2.2|<tuple|1.2.2|?>>
-    <associate|13.20|<tuple|1.6|9>>
-    <associate|13.24|<tuple|1.7|10>>
-    <associate|13.25|<tuple|1.8|10>>
-    <associate|13.26|<tuple|1.9|10>>
-    <associate|13.27|<tuple|1.10|10>>
-    <associate|13.28|<tuple|1.11|10>>
-    <associate|13.29|<tuple|1.12|10>>
-    <associate|13.30|<tuple|1.13|10>>
-    <associate|13.31|<tuple|1.14|10>>
-    <associate|13.33|<tuple|1.15|10>>
-    <associate|13.34|<tuple|1.16|11>>
-    <associate|13.35|<tuple|1.17|11>>
-    <associate|13.36|<tuple|1.18|11>>
-    <associate|13.37|<tuple|1.19|11>>
-    <associate|13.38|<tuple|1.20|12>>
-    <associate|13.42|<tuple|1.21|13>>
-    <associate|13.43|<tuple|1.22|?>>
-    <associate|13.44|<tuple|1.23|14>>
-    <associate|13.46|<tuple|1.24|15>>
-    <associate|13.47|<tuple|1.25|15>>
-    <associate|13.48|<tuple|1.26|15>>
+    <associate|13.20|<tuple|1.7|9>>
+    <associate|13.24|<tuple|1.8|10>>
+    <associate|13.25|<tuple|1.9|10>>
+    <associate|13.26|<tuple|1.10|10>>
+    <associate|13.27|<tuple|1.11|10>>
+    <associate|13.28|<tuple|1.12|10>>
+    <associate|13.29|<tuple|1.13|10>>
+    <associate|13.30|<tuple|1.14|10>>
+    <associate|13.31|<tuple|1.15|10>>
+    <associate|13.33|<tuple|1.16|10>>
+    <associate|13.34|<tuple|1.17|11>>
+    <associate|13.35|<tuple|1.18|11>>
+    <associate|13.36|<tuple|1.19|11>>
+    <associate|13.37|<tuple|1.20|11>>
+    <associate|13.38|<tuple|1.21|12>>
+    <associate|13.42|<tuple|1.22|13>>
+    <associate|13.43|<tuple|1.23|13>>
+    <associate|13.44|<tuple|1.24|14>>
+    <associate|13.45|<tuple|1.25|?>>
+    <associate|13.46|<tuple|1.26|15>>
+    <associate|13.47|<tuple|1.27|15>>
+    <associate|13.48|<tuple|1.28|15>>
+    <associate|13.57|<tuple|1.29|?>>
+    <associate|13.59|<tuple|1.30|?>>
+    <associate|13.6|<tuple|1.2|?>>
+    <associate|13.63|<tuple|1.31|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
@@ -1223,7 +1498,10 @@
     <associate|auto-2|<tuple|1.1|1>>
     <associate|auto-20|<tuple|1.14|15>>
     <associate|auto-21|<tuple|1.15|15>>
-    <associate|auto-22|<tuple|1.2.4|?>>
+    <associate|auto-22|<tuple|1.2.4|16>>
+    <associate|auto-23|<tuple|1.2.5|?>>
+    <associate|auto-24|<tuple|1.16|?>>
+    <associate|auto-25|<tuple|1.2.6|?>>
     <associate|auto-3|<tuple|1.1|2>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.3|2>>
@@ -1236,7 +1514,8 @@
     <associate|fig13.11|<tuple|1.11|7>>
     <associate|fig13.12|<tuple|1.12|11>>
     <associate|fig13.14|<tuple|1.14|15>>
-    <associate|fig13.15|<tuple|1.15|?>>
+    <associate|fig13.15|<tuple|1.15|15>>
+    <associate|fig13.16|<tuple|1.16|?>>
     <associate|fig13.4|<tuple|1.4|3>>
     <associate|fig13.5|<tuple|1.5|4>>
     <associate|fig13.6|<tuple|1.6|5>>
@@ -1244,7 +1523,7 @@
     <associate|fig13.8|<tuple|1.8|6>>
     <associate|fig13.9|<tuple|1.9|6>>
     <associate|sec13.2.1|<tuple|1.2.1|7>>
-    <associate|sec13.2.2|<tuple|1.2.2|?>>
+    <associate|sec13.2.2|<tuple|1.2.2|9>>
     <associate|sec13.2.3|<tuple|1.2.3|14>>
   </collection>
 </references>
@@ -1378,6 +1657,10 @@
       <with|par-left|<quote|1tab>|1.2.3<space|2spc>The sum-product algorithm
       for the HMM <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-19>>
+
+      <with|par-left|<quote|1tab>|1.2.4<space|2spc>Scaling factors
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-22>>
     </associate>
   </collection>
 </auxiliary>
