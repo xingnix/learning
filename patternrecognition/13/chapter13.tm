@@ -685,7 +685,7 @@
   i.i.d. and fit the emission density by maximum likelihood, and then use the
   resulting values to initialize the parameters for EM.
 
-  <subsection|The forward-backward algorithm>
+  <subsection|The forward-backward algorithm><label|sec13.2.2>
 
   \;
 
@@ -949,7 +949,7 @@
   and applying Bayes' theorem, we have
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>\|X|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|X\|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>|p<around*|(|X|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n-1>|)>|p<around*|(|X|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>\<beta\><around*|(|\<b-z\><rsub|n>|)>|p<around*|(|X|)>>>>>>
+    <tformat|<table|<row|<cell|\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>\|X|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|X\|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>|p<around*|(|X|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|n+1>,\<cdots\>,\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n-1>|)>|p<around*|(|X|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>\<beta\><around*|(|\<b-z\><rsub|n>|)>|p<around*|(|X|)>><eq-number><label|13.43>>>>>
   </eqnarray*>
 
   where we have made use of the conditional independence property
@@ -1069,8 +1069,8 @@
   be conditioning on the variables <math|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>>,
   and so we can simplify the factor graph by absorbing the emission
   probabilities into the transition probability factors. This leads to the
-  simplified factor graph representation in Figure
-  <inactive|<hybrid|ref|fig13.15>>, in which the factors are given by
+  simplified factor graph representation in Figure <reference|fig13.15>, in
+  which the factors are given by
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|h<around*|(|\<b-z\><rsub|1>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|1>|)>p<around*|(|\<b-x\><rsub|1>\|\<b-z\><rsub|1>|)>>>|<row|<cell|f<rsub|n><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><eq-number><label|13.46>>>>>
@@ -1079,7 +1079,7 @@
   \;
 
   <\padded-center>
-    <small-figure|<image|image/fig_13_15_simplified_factor_graph_hmm.png|.5par|||>|A
+    <small-figure|<image|image/fig_13_15_simplified_factor_graph_hmm.png|.5par|||>|<label|fig13.15>A
     simplified form of factor graph to describe the hidden Markov model.>
   </padded-center>
 
@@ -1122,6 +1122,53 @@
   is the same, and because they are iteratively computed using the same
   equation, all subsequent <math|\<alpha\>> quantities must be the same.
 
+  Next we consider the messages that are propagated from the root node back
+  to the leaf node. These take the form
+
+  <\equation*>
+    \<mu\><rsub|f<rsub|n+1>\<rightarrow\>f<rsub|n>><around*|(|\<b-z\><rsub|n>|)>=<big|sum><rsub|\<b-z\><rsub|n+1>>f<rsub|n+1><around*|(|\<b-z\><rsub|n>,\<b-z\><rsub|n+1>|)>\<mu\><rsub|f<rsub|n+2>\<rightarrow\>f<rsub|n+1>><around*|(|\<b-z\><rsub|n+1>|)>
+  </equation*>
+
+  where, as before, we have eliminated the messages of the type
+  <math|z\<rightarrow\>f> since the variable nodes perform no computation.
+  Using the definition <eqref|13.46> to substitute for
+  <math|f<rsub|n+1>(\<b-z\><rsub|n>,\<b-z\><rsub|n+1>)>, and defining
+
+  <\equation*>
+    \<beta\><around*|(|\<b-z\><rsub|n>|)>=\<mu\><rsub|f<rsub|n+1>\<rightarrow\>\<b-z\><rsub|n>><around*|(|\<b-z\><rsub|n>|)>
+  </equation*>
+
+  we obtain the beta recursion given by Eq. <eqref|13.38>. Again, we can
+  verify that the beta variables themselves are equivalent by noting that
+  (8.70) implies that the initial message send by the root variable node is
+  <math|\<mu\><rsub|\<b-z\><rsub|N>\<rightarrow\>f<rsub|N>>(\<b-z\><rsub|N>)=1>,
+  which is identical to the initialization of
+  <math|\<beta\>(\<b-z\><rsub|N>)> given in Section <reference|sec13.2.2>.
+
+  The sum-product algorithm also specifies how to evaluate the marginals once
+  all the messages have been evaluated. In particular, the result (8.63)
+  shows that the local marginal at the node <math|\<b-z\><rsub|n>> is given
+  by the product of the incoming messages. Because we have conditioned on the
+  variables <math|X=<around*|{|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>|}>>,
+  we are computing the joint distribution
+
+  <\equation*>
+    p<around*|(|\<b-z\><rsub|n>,X|)>=\<mu\><rsub|f<rsub|n>\<rightarrow\>\<b-z\><rsub|n>><around*|(|\<b-z\><rsub|n>|)>\<mu\><rsub|f<rsub|n+1>\<rightarrow\>\<b-z\><rsub|n>><around*|(|\<b-z\><rsub|n>|)>=\<alpha\><around*|(|\<b-z\><rsub|n>|)>\<beta\><around*|(|\<b-z\><rsub|n>|)>
+  </equation*>
+
+  Dividing both sides by <math|p(X)>, we then obtain
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<gamma\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|<frac|p<around*|(|\<b-z\><rsub|n>,X|)>|p<around*|(|X|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|\<b-z\><rsub|n>|)>\<beta\><around*|(|\<b-z\><rsub|n>|)>|p<around*|(|X|)>>>>>>
+  </eqnarray*>
+
+  in agreement with Eq. <eqref|13.33>. The result <eqref|13.43> can similarly
+  be derived from (8.72).
+
+  <subsection|Scaling factors>
+
+  \;
+
   \;
 
   \;
@@ -1140,26 +1187,28 @@
     <associate|13.12|<tuple|1.4|8>>
     <associate|13.17|<tuple|1.5|8>>
     <associate|13.2|<tuple|1.1|2>>
+    <associate|13.2.2|<tuple|1.2.2|?>>
     <associate|13.20|<tuple|1.6|9>>
     <associate|13.24|<tuple|1.7|10>>
     <associate|13.25|<tuple|1.8|10>>
     <associate|13.26|<tuple|1.9|10>>
     <associate|13.27|<tuple|1.10|10>>
     <associate|13.28|<tuple|1.11|10>>
-    <associate|13.29|<tuple|1.12|?>>
-    <associate|13.30|<tuple|1.13|?>>
-    <associate|13.31|<tuple|1.14|?>>
+    <associate|13.29|<tuple|1.12|10>>
+    <associate|13.30|<tuple|1.13|10>>
+    <associate|13.31|<tuple|1.14|10>>
     <associate|13.33|<tuple|1.15|10>>
     <associate|13.34|<tuple|1.16|11>>
     <associate|13.35|<tuple|1.17|11>>
     <associate|13.36|<tuple|1.18|11>>
-    <associate|13.37|<tuple|1.19|?>>
+    <associate|13.37|<tuple|1.19|11>>
     <associate|13.38|<tuple|1.20|12>>
-    <associate|13.42|<tuple|1.21|?>>
-    <associate|13.44|<tuple|1.22|?>>
-    <associate|13.46|<tuple|1.23|?>>
-    <associate|13.47|<tuple|1.24|?>>
-    <associate|13.48|<tuple|1.25|?>>
+    <associate|13.42|<tuple|1.21|13>>
+    <associate|13.43|<tuple|1.22|?>>
+    <associate|13.44|<tuple|1.23|14>>
+    <associate|13.46|<tuple|1.24|15>>
+    <associate|13.47|<tuple|1.25|15>>
+    <associate|13.48|<tuple|1.26|15>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
@@ -1170,10 +1219,11 @@
     <associate|auto-16|<tuple|1.2.2|9>>
     <associate|auto-17|<tuple|1.12|11>>
     <associate|auto-18|<tuple|1.13|12>>
-    <associate|auto-19|<tuple|1.2.3|13>>
+    <associate|auto-19|<tuple|1.2.3|14>>
     <associate|auto-2|<tuple|1.1|1>>
-    <associate|auto-20|<tuple|1.14|?>>
-    <associate|auto-21|<tuple|1.15|?>>
+    <associate|auto-20|<tuple|1.14|15>>
+    <associate|auto-21|<tuple|1.15|15>>
+    <associate|auto-22|<tuple|1.2.4|?>>
     <associate|auto-3|<tuple|1.1|2>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.3|2>>
@@ -1185,15 +1235,17 @@
     <associate|fig13.10|<tuple|1.10|7>>
     <associate|fig13.11|<tuple|1.11|7>>
     <associate|fig13.12|<tuple|1.12|11>>
-    <associate|fig13.14|<tuple|1.14|?>>
+    <associate|fig13.14|<tuple|1.14|15>>
+    <associate|fig13.15|<tuple|1.15|?>>
     <associate|fig13.4|<tuple|1.4|3>>
     <associate|fig13.5|<tuple|1.5|4>>
     <associate|fig13.6|<tuple|1.6|5>>
     <associate|fig13.7|<tuple|1.7|5>>
     <associate|fig13.8|<tuple|1.8|6>>
     <associate|fig13.9|<tuple|1.9|6>>
-    <associate|sec13.2.1|<tuple|1.2.1|?>>
-    <associate|sec13.2.3|<tuple|1.2.3|13>>
+    <associate|sec13.2.1|<tuple|1.2.1|7>>
+    <associate|sec13.2.2|<tuple|1.2.2|?>>
+    <associate|sec13.2.3|<tuple|1.2.3|14>>
   </collection>
 </references>
 
@@ -1294,6 +1346,14 @@
       the values of <with|mode|<quote|math>|p(\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>)>
       and the corresponding values of the emission density
       <with|mode|<quote|math>|p(\<b-x\><rsub|n>\|z<rsub|n+1,k>)>.>|<pageref|auto-18>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.14>||A fragment of
+      the factor graph representation for the hidden Markov
+      model.>|<pageref|auto-20>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.15>||A simplified
+      form of factor graph to describe the hidden Markov
+      model.>|<pageref|auto-21>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Sequential
