@@ -1,4 +1,4 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.1>
 
 <style|<tuple|book|granite>>
 
@@ -216,7 +216,7 @@
   given <math|\<b-z\><rsub|n>>, so that
 
   <\equation>
-    \<b-z\><rsub|n+1>\<bot\>\<b-z\><rsub|n-1>\|\<b-z\><rsub|n><label|13.5>
+    \<b-z\><rsub|n+1>\<bot\><move|\<bot\>|-1.2ex|>\<b-z\><rsub|n-1>\|\<b-z\><rsub|n><label|13.5>
   </equation>
 
   <\padded-center>
@@ -1837,6 +1837,7 @@
 
 <\initial>
   <\collection>
+    <associate|global-title|chapter13.tm>
     <associate|page-medium|paper>
   </collection>
 </initial>
