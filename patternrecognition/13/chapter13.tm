@@ -1,4 +1,4 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
 <style|<tuple|book|granite>>
 
@@ -1548,6 +1548,290 @@
     <math|\<b-x\><rsub|n\<minus\>1>> and <math|\<b-x\><rsub|n\<minus\>2>>.>
   </padded-center>
 
+  We have seen that the autoregressive HMM appears as a natural extension of
+  the standard HMM when viewed as a graphical model. In fact the
+  probabilistic graphical modelling viewpoint motivates a plethora of
+  different graphical structures based on the HMM. Another example is the
+  <em|input-output> hidden Markov model (Bengio and Frasconi, 1995), in which
+  we have a sequence of observed variables
+  <math|\<b-u\><rsub|1>,\<cdots\>,\<b-u\><rsub|N>>, in addition to the output
+  variables <math|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>>, whose values
+  influence either the distribution of latent variables or output variables,
+  or both. An example is shown in Figure <reference|fig13.18>. This extends
+  the HMM framework to the domain of supervised learning for sequential data.
+  It is again easy to show, through the use of the d-separation criterion,
+  that the Markov property <eqref|13.5> for the chain of latent variables
+  still holds. To verify this, simply note that there is only one path from
+  node <math|\<b-z\><rsub|n\<minus\>1>> to node <math|\<b-z\><rsub|n+1>> and
+  this is head-to-tail with respect to the observed node
+  <math|\<b-z\><rsub|n>>. This conditional independence property again allows
+  the formulation of a computationally efficient learning algorithm. In
+  particular, we can determine the parameters <math|\<b-theta\>> of the model
+  by maximizing the likelihood function <math|L(\<b-theta\>)=p(X\|U,\<b-theta\>)>
+  where <math|U> is a matrix whose rows are given by
+  <math|\<b-u\><rsub|n><rsup|T>>. As a consequence of the conditional
+  independence property <eqref|13.5> this likelihood function can be
+  maximized efficiently using an EM algorithm in which the E step involves
+  forward and backward recursions.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_18_input_output_hmm.png|.3par|||>|<label|fig13.18>Example
+    of an input-output hidden \ Markov model. In this case, both the emission
+    probabilities and the transition probabilities depend on the values of a
+    sequence of observations <math|\<b-u\><rsub|1>,\<cdots\>,\<b-u\><rsub|N>>.>
+
+    \;
+  </padded-center>
+
+  Another variant of the HMM worthy of mention is the <em|factorial hidden
+  Markov model> (Ghahramani and Jordan, 1997), in which there are multiple
+  independent Markov chains of latent variables, and the distribution of the
+  observed variable at a given time step is conditional on the states of all
+  of the corresponding latent variables at that same time step. Figure
+  <inactive|<hybrid|ref|fig13.19>> shows the corresponding graphical model.
+  The motivation for considering factorial HMM can be seen by noting that in
+  order to represent, say, 10 bits of information at a given time step, a
+  standard HMM would need <math|K=2<rsup|10>=1024> latent states, whereas a
+  factorial HMM could make use of 10 binary latent chains.\ 
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_19_factorial_hmm.png|.3par|||>|<label|fig13.19>A
+    factorial hidden Markov model comprising two Markov chains of latent
+    variables. For continuous observed variables <math|\<b-x\>>, one possible
+    choice of emission model is a linear-Gaussian density in which the mean
+    of the Gaussian is a linear combination of the states of the
+    corresponding latent variables.>
+  </padded-center>
+
+  The primary disadvantage of factorial HMMs, however, lies in the additional
+  complexity of training them. The M step for the factorial HMM model is
+  straightforward. However, observation of the <math|\<b-x\>> variables
+  introduces dependencies between the latent chains, leading to difficulties
+  with the E step. This can be seen by noting that in Figure
+  <reference|fig13.19>, the variables <math|\<b-z\><rsup|(n1)>> and
+  <math|\<b-z\><rsup|(n2)>> are connected by a path which is head-to-head at
+  node <math|\<b-x\><rsub|n>> and hence they are not d-separated. The exact E
+  step for this model does not correspond to running forward and backward
+  recursions along the M Markov chains independently. This is confirmed by
+  noting that the key conditional independence property <eqref|13.5> is not
+  satisfied for the individual Markov chains in the factorial HMM model, as
+  is shown using d-separation in Figure <reference|fig13.20>.\ 
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_20_factorial_hmm_conditional_independence.png|.3par|||>|<label|fig13.20>Example
+    of a path, highlighted in green, \ which is head-to-head at the observed
+    nodes <math|\<b-x\><rsub|n\<minus\>1>> and <math|\<b-x\><rsub|n+1>>, and
+    head-to-tail at the unobserved nodes <math|\<b-z\><rsup|(2)><rsub|n\<minus\>1>>,
+    <math|\<b-z\><rsup|(2)><rsub|n>> and \ <math|z<rsup|(2)><rsub|n+1>>. Thus
+    the path is not blocked and so the conditional independence property
+    <eqref|13.5> does not hold for the individual latent chains of the
+    factorial HMM model. As a consequence, there is no efficient exact E step
+    for this model.>
+  </padded-center>
+
+  Now suppose that there are M chains of hidden nodes and for simplicity
+  suppose that all latent variables have the same number <math|K> of states.
+  Then one approach would be to note that there are <math|K<rsup|M>>
+  combinations of latent variables at a given time step and so we can
+  transform the model into an equivalent standard HMM having a single chain
+  of latent variables each of which has <math|K<rsup|M>> latent states. We
+  can then run the standard forward-backward recursions in the E step. This
+  has computational complexity <math|O(N K<rsup|2M>)> that is exponential in
+  the number <math|M> of latent chains and so will be intractable for
+  anything other than small values of <math|M> . One solution would be to use
+  sampling methods (discussed in Chapter 11). As an elegant deterministic
+  alternative, Ghahramani and Jordan (1997) exploited variational inference
+  techniques \ to obtain a tractable algorithm for approximate inference.
+  This can be done using a simple variational posterior distribution that is
+  fully factorized with respect to the latent variables, or alternatively by
+  using a more powerful approach in which the variational distribution is
+  described by independent Markov chains corresponding to the chains of
+  latent variables in the original model. In the latter case, the variational
+  inference algorithms involves running independent forward and backward
+  recursions along each chain, which is computationally efficient and yet is
+  also able to capture correlations between variables within the same chain.
+
+  Clearly, there are many possible probabilistic structures that can be
+  constructed according to the needs of particular applications. Graphical
+  models provide a general technique for motivating, describing, and
+  analysing such structures, and variational methods provide a powerful
+  framework for performing inference in those models for which exact solution
+  is intractable.
+
+  <section|Linear Dynamical Systems>
+
+  In order to motivate the concept of linear dynamical systems, let us
+  consider the following simple problem, which often arises in practical
+  settings. Suppose we wish to measure the value of an unknown quantity z
+  using a noisy sensor that returns a observation <math|x> representing the
+  value of <math|z> plus zero-mean Gaussian noise. Given a single
+  measurement, our best guess for <math|z> is to assume that <math|z=x>.
+  However, we can improve our estimate for <math|z> by taking lots of
+  measurements and averaging them, because the random noise terms will tend
+  to cancel each other. Now let's make the situation more complicated by
+  assuming that we wish to measure a quantity <math|z> that is changing over
+  time. We can take regular measurements of <math|x> so that at some point in
+  time we have obtained <math|x<rsub|1>,\<cdots\>,x<rsub|N>> and we wish to
+  find the corresponding values <math|z<rsub|1>,\<cdots\>,z<rsub|N>>. If we
+  simply average the measurements, the error due to random noise will be
+  reduced, but unfortunately we will just obtain a single averaged estimate,
+  in which we have averaged over the changing value of <math|z>, thereby
+  introducing a new source of error.
+
+  Intuitively, we could imagine doing a bit better as follows. To estimate
+  the value of <math|z<rsub|N>> , we take only the most recent few
+  measurements, say <math|x<rsub|N-L>,\<cdots\>,x<rsub|N>> and just average
+  these. If <math|z> is changing slowly, and the random noise level in the
+  sensor is high, it would make sense to choose a relatively long window of
+  observations to average. Conversely, if the signal is changing quickly, and
+  the noise levels are small, we might be better just to use <math|x<rsub|N>>
+  directly as our estimate of <math|z<rsub|N>> . Perhaps we could do even
+  better if we take a weighted average, in which more recent measurements
+  make a greater contribution than less recent ones.
+
+  Although this sort of intuitive argument seems plausible, it does not tell
+  us how to form a weighted average, and any sort of hand-crafted weighing is
+  hardly likely to be optimal. Fortunately, we can address problems such as
+  this much more systematically by defining a probabilistic model that
+  captures the time evolution and measurement processes and then applying the
+  inference and learning methods developed in earlier chapters. Here we shall
+  focus on a widely used model known as a <em|linear dynamical system>.
+
+  As we have seen, the HMM corresponds to the state space model shown in
+  Figure <reference|fig13.5> in which the latent variables are discrete but
+  with arbitrary emission probability distributions. This graph of course
+  describes a much broader class of probability distributions, all of which
+  factorize according to Eq. <eqref|13.6>. We now consider extensions to
+  other distributions for the latent variables. In particular, we consider
+  continuous latent variables in which the summations of the sum-product
+  algorithm become integrals. The general form of the inference algorithms
+  will, however, be the same as for the hidden Markov model. It is
+  interesting to note that, historically, hidden Markov models and linear
+  dynamical systems were developed independently. Once they are both
+  expressed as graphical models, however, the deep relationship between them
+  immediately becomes apparent.
+
+  One key requirement is that we retain an efficient algorithm for inference
+  which is linear in the length of the chain. This requires that, for
+  instance, when we take a quantity <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n\<minus\>1>)>,
+  representing the posterior probability of <math|\<b-z\><rsub|n>> given
+  observations <math|\<b-x\><rsub|1>,\<cdots\>\<b-x\><rsub|N>>, and multiply
+  by the transition probability <math|p(\<b-z\><rsub|n>\|\<b-z\><rsub|n\<minus\>1>)>
+  and the emission probability <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)> and
+  then marginalize over <math|\<b-z\><rsub|n\<minus\>1>>, we obtain a
+  distribution over <math|\<b-z\><rsub|n>> that is of the same functional
+  form as that over <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n\<minus\>1>)>.
+  That is to say, the distribution must not become more complex at each
+  stage, but must only change in its parameter values. Not surprisingly, the
+  only distributions that have this property of being closed under
+  multiplication are those belonging to the exponential family.
+
+  Here we consider the most important example from a practical perspective,
+  which is the Gaussian. In particular, we consider a linear-Gaussian state
+  space model so that the latent variables <math|{\<b-z\><rsub|n>}>, as well
+  as the observed variables <math|{\<b-x\><rsub|n>}>, are multivariate
+  Gaussian distributions whose means are linear functions of the states of
+  their parents in the graph. We have seen that a directed graph of
+  linear-Gaussian units is equivalent to a joint Gaussian distribution over
+  all of the variables. Furthermore, marginals such as
+  <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n>)> are also Gaussian, so that the
+  functional form of the messages is preserved and we will obtain an
+  efficient inference algorithm. By contrast, suppose that the emission
+  densities <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)> comprise a mixture of
+  <math|K> Gaussians each of which has a mean that is linear in
+  <math|\<b-z\><rsub|n>>. Then even if <math|<wide|\<alpha\>|^>(\<b-z\><rsub|1>)>
+  is Gaussian, the \ quantity <math|<wide|\<alpha\>|^>(\<b-z\><rsub|2>)> will
+  be a mixture of <math|K> Gaussians, <math|<wide|\<alpha\>|^>(\<b-z\><rsub|3>)>
+  will be a mixture of <math|K<rsup|2>> Gaussians, and so on, and exact
+  inference will not be of practical value.
+
+  We have seen that the hidden Markov model can be viewed as an extension of
+  the mixture models of Chapter 9 to allow for sequential correlations in the
+  data. In a similar way, we can view the linear dynamical system as a
+  generalization of the continuous latent variable models of Chapter 12 such
+  as probabilistic PCA and factor analysis. Each pair of nodes
+  <math|{\<b-z\><rsub|n>,\<b-x\><rsub|n>}> represents a linear-Gaussian
+  latent variable model for that particular observation. However, the latent
+  variables <math|{\<b-z\><rsub|n>}> are no longer treated as independent but
+  now form a Markov chain.
+
+  Because the model is represented by a tree-structured directed graph,
+  inference problems can be solved efficiently using the sum-product
+  algorithm. The forward recursions, analogous to the <math|\<alpha\>>
+  messages of the hidden Markov model, are known as the <em|Kalman filter>
+  equations (Kalman, 1960; Zarchan and Musoff, 2005), and the backward
+  recursions, analogous to the <math|\<beta\>> messages, are known as the
+  <em|Kalman smoother> equations, or the <em|Rauch-Tung-Striebel> (RTS)
+  equations (Rauch et al., 1965). The Kalman filter is widely used in many
+  real-time tracking applications.
+
+  Because the linear dynamical system is a linear-Gaussian model, the joint
+  distribution over all variables, as well as all marginals and conditionals,
+  will be Gaussian. It follows that the sequence of individually most
+  probable latent variable values is the same as the most probable latent
+  sequence. There is thus no need to consider the \ analogue of the Viterbi
+  algorithm for the linear dynamical system.
+
+  Because the model has linear-Gaussian conditional distributions, we can
+  write the transition and emission distributions in the general form
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-z\><rsub|n>\|A\<b-z\><rsub|n-1>,\<Gamma\>|)>>>|<row|<cell|p<around*|(|*\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\><rsub|n>\|C\<b-z\><rsub|n>,\<Sigma\>|)>>>>>
+  </eqnarray*>
+
+  The initial latent variable also has a Gaussian distribution which we write
+  as
+
+  <\equation*>
+    p<around*|(|\<b-z\><rsub|1>|)>=\<cal-N\><around*|(|\<b-z\><rsub|1>\|\<b-mu\><rsub|0>,V<rsub|0>|)>
+  </equation*>
+
+  Note that in order to simplify the notation, we have omitted additive
+  constant terms from the means of the Gaussians. In fact, it is
+  straightforward to include them if desired. Traditionally, these
+  distributions are more commonly expressed in an equivalent form in terms of
+  noisy linear equations given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-z\><rsub|n>>|<cell|=>|<cell|A\<b-z\><rsub|n-1>+\<b-w\><rsub|n>>>|<row|<cell|\<b-x\><rsub|n>>|<cell|=>|<cell|C\<b-z\><rsub|n>+\<b-v\><rsub|n>>>|<row|<cell|\<b-z\><rsub|1>>|<cell|=>|<cell|\<b-mu\><rsub|0>+\<b-u\>>>>>
+  </eqnarray*>
+
+  where the noise terms have the distributions
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-w\>>|<cell|\<sim\>>|<cell|\<cal-N\><around*|(|\<b-w\>\|\<b-0\>,\<Gamma\>|)>>>|<row|<cell|\<b-v\>>|<cell|\<sim\>>|<cell|\<cal-N\><around*|(|\<b-v\>\|\<b-0\>,\<Sigma\>|)>>>|<row|<cell|\<b-u\>>|<cell|\<sim\>>|<cell|\<cal-N\><around*|(|\<b-u\>\|\<b-0\>,V<rsub|0>|)>>>>>
+  </eqnarray*>
+
+  The parameters of the model, denoted by
+  <math|\<b-theta\>={A,\<Gamma\>,C,\<Sigma\>,\<b-mu\><rsub|0>,V<rsub|0>}>,
+  can be determined using maximum likelihood through the EM algorithm. In the
+  E step, we need to solve the inference problem of determining the local
+  posterior marginals for the latent variables, which can be solved
+  efficiently using the sum-product algorithm, as we discuss in the next
+  section.
+
+  <subsection|Inference in LDS>
+
+  \;
+
+  We now turn to the problem of finding the marginal distributions for the
+  latent variables conditional on the observation sequence. For given
+  parameter settings, we also wish to make predictions of the next latent
+  state <math|\<b-z\><rsub|n>> and of the next observation
+  <math|\<b-x\><rsub|n>> conditioned on the observed data
+  <math|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n-1>> for use in real-time
+  applications. These inference problems can be solved efficiently using the
+  sum-product algorithm, which in the context of the linear dynamical system
+  gives rise to the Kalman filter and Kalman smoother equations.
+
+  It is worth emphasizing that because the linear dynamical system is a
+  linearGaussian model, the joint distribution over all latent and observed
+  variables is simply a Gaussian, and so in principle we could solve
+  inference problems by using the standard results derived in previous
+  chapters for the marginals and conditionals of a multivariate Gaussian. The
+  role of the sum-product algorithm is to provide a more efficient way to
+  perform such computations.
+
   \;
 </body>
 
@@ -1586,12 +1870,12 @@
     <associate|13.46|<tuple|1.27|15>>
     <associate|13.47|<tuple|1.28|15>>
     <associate|13.48|<tuple|1.29|15>>
-    <associate|13.5|<tuple|1.2|?>>
+    <associate|13.5|<tuple|1.2|3>>
     <associate|13.57|<tuple|1.30|16>>
-    <associate|13.59|<tuple|1.31|16>>
+    <associate|13.59|<tuple|1.31|17>>
     <associate|13.6|<tuple|1.3|4>>
     <associate|13.63|<tuple|1.32|17>>
-    <associate|13.73|<tuple|1.33|?>>
+    <associate|13.73|<tuple|1.33|19>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
@@ -1610,8 +1894,13 @@
     <associate|auto-23|<tuple|1.2.5|17>>
     <associate|auto-24|<tuple|1.16|18>>
     <associate|auto-25|<tuple|1.2.6|19>>
-    <associate|auto-26|<tuple|1.17|?>>
+    <associate|auto-26|<tuple|1.17|20>>
+    <associate|auto-27|<tuple|1.18|21>>
+    <associate|auto-28|<tuple|1.19|21>>
+    <associate|auto-29|<tuple|1.20|22>>
     <associate|auto-3|<tuple|1.1|2>>
+    <associate|auto-30|<tuple|1.3|22>>
+    <associate|auto-31|<tuple|1.3.1|24>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.3|2>>
     <associate|auto-6|<tuple|1.4|3>>
@@ -1625,7 +1914,10 @@
     <associate|fig13.14|<tuple|1.14|15>>
     <associate|fig13.15|<tuple|1.15|15>>
     <associate|fig13.16|<tuple|1.16|18>>
-    <associate|fig13.17|<tuple|1.17|?>>
+    <associate|fig13.17|<tuple|1.17|20>>
+    <associate|fig13.18|<tuple|1.18|21>>
+    <associate|fig13.19|<tuple|1.19|21>>
+    <associate|fig13.20|<tuple|1.20|22>>
     <associate|fig13.4|<tuple|1.4|3>>
     <associate|fig13.5|<tuple|1.5|4>>
     <associate|fig13.6|<tuple|1.6|5>>
@@ -1755,6 +2047,39 @@
       for each segment of the path, along with the emission densities
       <with|mode|<quote|math>|p(\<b-x\><rsub|n>\|k)> associated with each
       node on the path.>|<pageref|auto-24>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.17>||Section of an
+      autoregressive hidden Markov model, in which the distribution of the
+      observation <with|mode|<quote|math>|\<b-x\><rsub|n>> depends on a
+      subset of the previous observations as well as on the hidden state
+      <with|mode|<quote|math>|\<b-z\><rsub|n>>. In this example, the
+      distribution of <with|mode|<quote|math>|\<b-x\><rsub|n>> depends on the
+      two previous observations <with|mode|<quote|math>|\<b-x\><rsub|n\<minus\>1>>
+      and <with|mode|<quote|math>|\<b-x\><rsub|n\<minus\>2>>.>|<pageref|auto-26>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.18>||Example of an
+      input-output hidden \ Markov model. In this case, both the emission
+      probabilities and the transition probabilities depend on the values of
+      a sequence of observations <with|mode|<quote|math>|\<b-u\><rsub|1>,\<cdots\>,\<b-u\><rsub|N>>.>|<pageref|auto-27>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.19>||A factorial
+      hidden Markov model comprising two Markov chains of latent variables.
+      For continuous observed variables <with|mode|<quote|math>|\<b-x\>>, one
+      possible choice of emission model is a linear-Gaussian density in which
+      the mean of the Gaussian is a linear combination of the states of the
+      corresponding latent variables.>|<pageref|auto-28>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.20>||Example of a
+      path, highlighted in green, \ which is head-to-head at the observed
+      nodes <with|mode|<quote|math>|\<b-x\><rsub|n\<minus\>1>> and
+      <with|mode|<quote|math>|\<b-x\><rsub|n+1>>, and head-to-tail at the
+      unobserved nodes <with|mode|<quote|math>|\<b-z\><rsup|(2)><rsub|n\<minus\>1>>,
+      <with|mode|<quote|math>|\<b-z\><rsup|(2)><rsub|n>> and
+      \ <with|mode|<quote|math>|z<rsup|(2)><rsub|n+1>>. Thus the path is not
+      blocked and so the conditional independence property (<reference|13.5>)
+      does not hold for the individual latent chains of the factorial HMM
+      model. As a consequence, there is no efficient exact E step for this
+      model.>|<pageref|auto-29>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Sequential
@@ -1791,6 +2116,14 @@
       <with|par-left|<quote|1tab>|1.2.6<space|2spc>Extensions of the hidden
       Markov model <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-25>>
+
+      1.3<space|2spc>Linear Dynamical Systems
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-30>
+
+      <with|par-left|<quote|1tab>|1.3.1<space|2spc>Inference in LDS
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-31>>
     </associate>
   </collection>
 </auxiliary>
