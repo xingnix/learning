@@ -34,6 +34,8 @@
 #+latex_header: \mode<beamer>{\usecolortheme{dove}}
 # +latex_header: \mode<article>{\hypersetup{colorlinks=true,pdfborder={0 0 0}}}
 
+#+LATEX_CLASS_options: [aspectratio=169]
+
 #+TITLE:  机器学习的基本概念
 #+AUTHOR:    
 #+EMAIL:
@@ -181,7 +183,7 @@ Then Profitable-Customer? = Yes
 
 ** Software that Customizes to User
 \center
-#+attr_latex: :width 0.5\textwidth
+#+attr_latex: :height 0.7\textheight
 [[./image/wisewire.png]]
 
 \centerline{http://www.wisewire.com}
@@ -196,21 +198,46 @@ Then Profitable-Customer? = Yes
      - 衡量任务提高的标准；
      - 经验的来源。
 
+
+
 ** 西洋跳棋学习问题：
 - 任务T：下西洋跳棋
 - 性能标准P：比赛中击败对手的百分比
 - 训练经验E：和自己进行对弈
 
+
+** 
+
+#+attr_latex: :width 0.7\textwidth
+[[./image/draughts.png]]
+
+https://draughts.org/
+
+
 ** 手写识别学习问题
 - 任务T：识别和分类图像中的手写文字
 - 性能标准P：分类的正确率
 - 训练经验E：已知分类的手写文字数据库
+
+
+** 
+
+#+attr_latex: :width 0.8\textwidth
+[[./image/mnist.png]]
+
+
 ** 机器人驾驶学习问题
-- 任务T：通过视觉传感器在四车道高速公路上驾驶
+- 任务T：通过视觉传感器在路上驾驶
 - 性能标准P：平均无差错行驶里程（差错由人类的监督裁定）
 - 训练经验E：注视人类驾驶时录制的一系列图像和驾驶指令
 
+ 
+** 
+#+attr_latex: :width 0.7\textwidth
+[[./image/tesla-autopilot-full-self-driving-fsd-1400x933.jpeg]]
+
 * 设计一个学习系统
+
 
 ** 西洋跳棋学习问题：
 - 任务T：下西洋跳棋
@@ -255,7 +282,11 @@ Then Profitable-Customer? = Yes
 - ...
 
 ** 目标函数表示
-\[ w_{0} + w_{1}\cdot bp(b) + w_{2}\cdot rp(b) + w_{3}\cdot bk(b) + w_{4}\cdot rk(b) + w_{5}\cdot bt(b) + w_{6}\cdot rt(b) \]
+\begin{eqnarray*}
+&&\sum_{i=0}^6 w_i f_i \\
+&=&w_{0} + w_{1}\cdot bp(b) + w_{2}\cdot rp(b) + w_{3}\cdot bk(b) + w_{4}\cdot rk(b) + w_{5}\cdot bt(b) + w_{6}\cdot rt(b)
+\end{eqnarray*}
+
 
 - $bp(b)$: number of black pieces on board $b$
 - $rp(b)$: number of red pieces on $b$
@@ -288,7 +319,7 @@ LMS 权值更新法则(LMS Weight update rule)
 
 ** 最终设计
 \center
-#+attr_latex: :width 0.7\textwidth
+#+attr_latex: :height 0.7\textheight
 [[./image/intro-final-design.png]]
 
 ** 最终设计
@@ -305,8 +336,8 @@ LMS 权值更新法则(LMS Weight update rule)
 它的角色是挑选新的练习问题，以使整个系统的学习速率最大化。
 
 ** 设计过程
-\center
-#+attr_latex: :width 0.5\textwidth
+
+#+attr_latex: :height 0.7\textheight
 [[./image/intro-f1.png]]
 
 * 机器学习的问题
@@ -343,7 +374,7 @@ LMS 权值更新法则(LMS Weight update rule)
     Machine Learning slide (LaTeX source )
   - http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/mlbook/latex-support.html 
     Machine Learning slide (LaTeX source )
-  - https://learnxinyminutes.com  \
+  - https://learnxinyminutes.com  
     各种程序设计语言快速入门
   - http://cos.name/
     统计技术社区
