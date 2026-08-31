@@ -1,4 +1,4 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.1>
 
 <style|<tuple|book|granite>>
 
@@ -215,9 +215,9 @@
   that <math|\<b-z\><rsub|n-1>> and <math|\<b-z\><rsub|n+1>> are independent
   given <math|\<b-z\><rsub|n>>, so that
 
-  <\equation*>
-    \<b-z\><rsub|n+1>\<bot\>\<b-z\><rsub|n-1>\|\<b-z\><rsub|n>
-  </equation*>
+  <\equation>
+    \<b-z\><rsub|n+1>\<bot\>\<b-z\><rsub|n-1>\|\<b-z\><rsub|n><label|13.5>
+  </equation>
 
   <\padded-center>
     <small-figure|<image|image/fig_13_5_latent_markov.png|.5par|||>|<label|fig13.5>We
@@ -1443,6 +1443,112 @@
   based on maximum likelihood, has been extended in numerous ways to meet the
   requirements of particular applications. Here we discuss a few of the more
   important examples.
+
+  We see from the digits example in Figure <reference|fig13.11> that hidden
+  Markov models can be quite poor generative models for the data, because
+  many of the synthetic digits look quite unrepresentative of the training
+  data. If the goal is sequence classification, there can be significant
+  benefit in determining the parameters of hidden Markov models using
+  discriminative rather than maximum likelihood techniques. Suppose we have a
+  training set of <math|R> observation sequences <math|X<rsub|r>>, where
+  <math|r=1,\<cdots\>,R>, each of which is labelled according to its class
+  <math|m>, where <math|m=1,\<cdots\>,M>. For each class, we have a separate
+  hidden Markov model with its own parameters <math|\<b-theta\><rsub|m>>, and
+  we treat the problem of determining the parameter values as a standard
+  classification problem in which we optimize the cross-entropy
+
+  <\equation*>
+    <big|sum><rsub|r=1><rsup|R>ln p<around*|(|m<rsub|r>\|X<rsub|r>|)>.
+  </equation*>
+
+  Using Bayes' theorem this can be expressed in terms of the sequence
+  probabilities associated with the hidden Markov models
+
+  <\equation>
+    <big|sum><rsub|r=1><rsup|R>ln<around*|{|<frac|p<around*|(|X<rsub|r><around*|\||\<b-theta\><rsub|r>|\<nobracket\>>|)>p<around*|(|m<rsub|r>|)>|<big|sum><rsub|l=1><rsup|M>p<around*|(|X<rsub|r>\|\<b-theta\><rsub|l>|)>p<around*|(|l<rsub|r>|)>>|}><label|13.73>
+  </equation>
+
+  where <math|p(m)> is the prior probability of class <math|m>. Optimization
+  of this cost function is more complex than for maximum likelihood (Kapadia,
+  1998), and in particular requires that every training sequence be evaluated
+  under each of the models in order to compute the denominator in Eq.
+  <eqref|13.73>. Hidden Markov models, coupled with discriminative training
+  methods, are widely used in speech recognition (Kapadia, 1998).
+
+  A significant weakness of the hidden Markov model is the way in which it
+  represents the distribution of times for which the system remains in a
+  given state. To see the problem, note that the probability that a sequence
+  sampled from a given hidden Markov model will spend precisely <math|T>
+  steps in state <math|k> and then make a transition to a different state is
+  given by
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|T|)>>|<cell|=>|<cell|<around*|(|A<rsub|k
+    k>|)><rsup|T><around*|(|1-A<rsub|k k>|)>>>|<row|<cell|>|<cell|\<propto\>>|<cell|exp<around*|(|T
+    ln A<rsub|k k>|)>>>>>
+  </eqnarray*>
+
+  and so is an exponentially decaying function of <math|T> . For many
+  applications, this will be a very unrealistic model of state duration. The
+  problem can be resolved by modelling state duration directly in which the
+  diagonal coefficients <math|A<rsub|k k>> are all set to zero, and each
+  state <math|k> is explicitly associated with a probability distribution
+  <math|p(T\|k)> of possible duration times. From a generative point of view,
+  when a state <math|k> is entered, a value <math|T> representing the number
+  of time steps that the system will remain in state <math|k> is then drawn
+  from <math|p(T\|k)>. The model then emits <math|T> values of the observed
+  variable <math|\<b-x\><rsub|t>>, which are generally assumed to be
+  independent so that the corresponding emission density is simply
+  <math|<big|prod><rsub|t=1><rsup|T>p(\<b-x\><rsub|t>\|k)>. This approach
+  requires some straightforward \ modifications to the EM optimization
+  procedure (Rabiner, 1989).
+
+  Another limitation of the standard HMM is that it is poor at capturing
+  longrange correlations between the observed variables (i.e., between
+  variables that are separated by many time steps) because these must be
+  mediated via the first-order Markov chain of hidden states. Longer-range
+  effects could in principle be included by adding extra links to the
+  graphical model of Figure <reference|fig13.5>. One way to address this is
+  to generalize the HMM to give the <em|autoregressive hidden Markov model>
+  (Ephraim et al., 1989), an example of which is shown in Figure
+  <inactive|<reference|fig13.17>>. For discrete observations, this
+  corresponds to expanded tables of conditional probabilities for the
+  emission distributions. In the case of a Gaussian emission density, we can
+  use the linearGaussian framework in which the conditional distribution for
+  <math|\<b-x\><rsub|n>> given the values of the previous observations, and
+  the value of <math|\<b-z\><rsub|n>>, is a Gaussian whose mean is a linear
+  combination of the values of the conditioning variables. Clearly the number
+  of additional links in the graph must be limited to avoid an excessive the
+  number of free parameters. In the example shown in Figure
+  <inactive|<reference|fig13.17>>, each observation depends on the two
+  preceding observed variables as well as on the hidden state. Although this
+  graph looks messy, we can again appeal to d-separation to see that in fact
+  it still has a simple probabilistic structure. In particular, if we imagine
+  conditioning on zn we see that, as with the standard HMM, the values of
+  <math|\<b-z\><rsub|n\<minus\>1>> and <math|\<b-z\><rsub|n+1>> are
+  independent, corresponding to the conditional independence property
+  <eqref|13.5>. This is easily verified by noting that every path from node
+  <math|\<b-z\><rsub|n\<minus\>1>> to node <math|\<b-z\><rsub|n+1>> passes
+  through at least one observed node that is head-to-tail with respect to
+  that path. As a consequence, we can again use a forward-backward recursion
+  in the E step of the EM algorithm to determine the posterior distributions
+  of the latent variables in a computational time that is linear in the
+  length of the chain. Similarly, the M step involves only a minor
+  modification of the standard M-step equations. In the case of Gaussian
+  emission densities this involves estimating the parameters using the
+  standard linear regression equations, discussed in Chapter 3.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_17_autoregressive_hmm.png|.3par|||>|<label|fig13.17>Section
+    of an autoregressive hidden Markov model, in which the distribution of
+    the observation <math|\<b-x\><rsub|n>> depends on a subset of the
+    previous observations as well as on the hidden state
+    <math|\<b-z\><rsub|n>>. In this example, the distribution of
+    <math|\<b-x\><rsub|n>> depends on the two previous observations
+    <math|\<b-x\><rsub|n\<minus\>1>> and <math|\<b-x\><rsub|n\<minus\>2>>.>
+  </padded-center>
+
+  \;
 </body>
 
 <\initial>
@@ -1453,37 +1559,39 @@
 
 <\references>
   <\collection>
-    <associate|13.10|<tuple|1.3|5>>
-    <associate|13.11|<tuple|1.4|8>>
-    <associate|13.12|<tuple|1.5|8>>
-    <associate|13.17|<tuple|1.6|8>>
+    <associate|13.10|<tuple|1.4|5>>
+    <associate|13.11|<tuple|1.5|8>>
+    <associate|13.12|<tuple|1.6|8>>
+    <associate|13.17|<tuple|1.7|8>>
     <associate|13.2|<tuple|1.1|2>>
-    <associate|13.20|<tuple|1.7|9>>
-    <associate|13.24|<tuple|1.8|10>>
-    <associate|13.25|<tuple|1.9|10>>
-    <associate|13.26|<tuple|1.10|10>>
-    <associate|13.27|<tuple|1.11|10>>
-    <associate|13.28|<tuple|1.12|10>>
-    <associate|13.29|<tuple|1.13|10>>
-    <associate|13.30|<tuple|1.14|10>>
-    <associate|13.31|<tuple|1.15|10>>
-    <associate|13.33|<tuple|1.16|10>>
-    <associate|13.34|<tuple|1.17|11>>
-    <associate|13.35|<tuple|1.18|11>>
-    <associate|13.36|<tuple|1.19|11>>
-    <associate|13.37|<tuple|1.20|11>>
-    <associate|13.38|<tuple|1.21|12>>
-    <associate|13.42|<tuple|1.22|13>>
-    <associate|13.43|<tuple|1.23|13>>
-    <associate|13.44|<tuple|1.24|14>>
-    <associate|13.45|<tuple|1.25|?>>
-    <associate|13.46|<tuple|1.26|15>>
-    <associate|13.47|<tuple|1.27|15>>
-    <associate|13.48|<tuple|1.28|15>>
-    <associate|13.57|<tuple|1.29|?>>
-    <associate|13.59|<tuple|1.30|?>>
-    <associate|13.6|<tuple|1.2|?>>
-    <associate|13.63|<tuple|1.31|?>>
+    <associate|13.20|<tuple|1.8|9>>
+    <associate|13.24|<tuple|1.9|10>>
+    <associate|13.25|<tuple|1.10|10>>
+    <associate|13.26|<tuple|1.11|10>>
+    <associate|13.27|<tuple|1.12|10>>
+    <associate|13.28|<tuple|1.13|10>>
+    <associate|13.29|<tuple|1.14|10>>
+    <associate|13.30|<tuple|1.15|10>>
+    <associate|13.31|<tuple|1.16|10>>
+    <associate|13.33|<tuple|1.17|10>>
+    <associate|13.34|<tuple|1.18|11>>
+    <associate|13.35|<tuple|1.19|11>>
+    <associate|13.36|<tuple|1.20|11>>
+    <associate|13.37|<tuple|1.21|11>>
+    <associate|13.38|<tuple|1.22|12>>
+    <associate|13.42|<tuple|1.23|13>>
+    <associate|13.43|<tuple|1.24|13>>
+    <associate|13.44|<tuple|1.25|14>>
+    <associate|13.45|<tuple|1.26|15>>
+    <associate|13.46|<tuple|1.27|15>>
+    <associate|13.47|<tuple|1.28|15>>
+    <associate|13.48|<tuple|1.29|15>>
+    <associate|13.5|<tuple|1.2|?>>
+    <associate|13.57|<tuple|1.30|16>>
+    <associate|13.59|<tuple|1.31|16>>
+    <associate|13.6|<tuple|1.3|4>>
+    <associate|13.63|<tuple|1.32|17>>
+    <associate|13.73|<tuple|1.33|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
@@ -1499,9 +1607,10 @@
     <associate|auto-20|<tuple|1.14|15>>
     <associate|auto-21|<tuple|1.15|15>>
     <associate|auto-22|<tuple|1.2.4|16>>
-    <associate|auto-23|<tuple|1.2.5|?>>
-    <associate|auto-24|<tuple|1.16|?>>
-    <associate|auto-25|<tuple|1.2.6|?>>
+    <associate|auto-23|<tuple|1.2.5|17>>
+    <associate|auto-24|<tuple|1.16|18>>
+    <associate|auto-25|<tuple|1.2.6|19>>
+    <associate|auto-26|<tuple|1.17|?>>
     <associate|auto-3|<tuple|1.1|2>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.3|2>>
@@ -1515,7 +1624,8 @@
     <associate|fig13.12|<tuple|1.12|11>>
     <associate|fig13.14|<tuple|1.14|15>>
     <associate|fig13.15|<tuple|1.15|15>>
-    <associate|fig13.16|<tuple|1.16|?>>
+    <associate|fig13.16|<tuple|1.16|18>>
+    <associate|fig13.17|<tuple|1.17|?>>
     <associate|fig13.4|<tuple|1.4|3>>
     <associate|fig13.5|<tuple|1.5|4>>
     <associate|fig13.6|<tuple|1.6|5>>
@@ -1549,8 +1659,9 @@
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|1.4>||A second-order
       Markov chain, in \ which the conditional distribution of a particular
-      observation xn depends on the values of the two previous observations
-      xn\<minus\>1 and \ xn\<minus\>2.>|<pageref|auto-6>>
+      observation <with|mode|<quote|math>|x<rsub|n>> depends on the values of
+      the two previous observations <with|mode|<quote|math>|x<rsub|n\<minus\>1>>
+      and \ <with|mode|<quote|math>|x<rsub|n\<minus\>2>>.>|<pageref|auto-6>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|1.5>||We can represent
       sequential data using a Markov chain of latent variables, with each
@@ -1633,6 +1744,17 @@
       <tuple|normal|<surround|<hidden-binding|<tuple>|1.15>||A simplified
       form of factor graph to describe the hidden Markov
       model.>|<pageref|auto-21>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.16>||A fragment of
+      the HMM lattice showing two possible paths. The Viterbi algorithm
+      efficiently determines the most probable path from amongst the
+      exponentially many possibilities. For any given path, the corresponding
+      probability is given by the product of the elements of the transition
+      matrix <with|mode|<quote|math>|A<rsub|j k>>, corresponding to the
+      probabilities <with|mode|<quote|math>|p(\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>)>
+      for each segment of the path, along with the emission densities
+      <with|mode|<quote|math>|p(\<b-x\><rsub|n>\|k)> associated with each
+      node on the path.>|<pageref|auto-24>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Sequential
@@ -1661,6 +1783,14 @@
       <with|par-left|<quote|1tab>|1.2.4<space|2spc>Scaling factors
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-22>>
+
+      <with|par-left|<quote|1tab>|1.2.5<space|2spc>The Viterbi algorithm
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-23>>
+
+      <with|par-left|<quote|1tab>|1.2.6<space|2spc>Extensions of the hidden
+      Markov model <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-25>>
     </associate>
   </collection>
 </auxiliary>
