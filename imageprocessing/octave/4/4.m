@@ -1,9 +1,10 @@
 % -*- coding: utf-8 -*-
-% sampling with 1.9 stride
-%
 
 pkg load image
 
+=======
+%sampling with 1.9 stride
+%
 l=155
 a=abs(round(sin(pi*(1:l)/2)));
 sprintf("%d",a)
@@ -19,6 +20,7 @@ w=(imag(fft2(a)));
 v1=[w(51:100,:) ;w(1:50,:)];
 v2=[v1(:,51:100) v1(:,1:50)];
 surf((v2))
+<<<<<<< Updated upstream
 imshow(abs(v2))
 
 
@@ -26,6 +28,13 @@ imshow(abs(v2))
 im=imresize(imread("../../beamer/4/image/Grenoble_-_ancien_évêché_-_Joseph_Fourier.JPG"),0.1);
 %im1=im(1:10:end,1:10:end,1);
 im1=im;
+=======
+
+
+% restore image with phase
+im=resize(imread("Grenoble_-_ancien_évêché_-_Joseph_Fourier.JPG",100,100,1);
+im1=im(1:10:end,1:10:end,1);
+>>>>>>> Stashed changes
 fm1=fft2(im1);
 re=ifft2(exp(i*angle(fm1)));
 surf(abs(re(:,:,1))/max(abs(re(:))))
@@ -34,6 +43,7 @@ imshow(abs(re(:,:,1))/max(abs(re(:))))
 
 % restore image with phase
 im=imread("Treasure_Hunt_Map_Outdoor_color_garden_screen1_b6736c9f-f66a-452d-8ee2-d2563090a4f7.webp");
+%im=imread("~/Downloads/treasure-map1.jpeg");
 f=fft2(im);
 a=angle(f);
 b=ifft2(exp(i*a))(:,:,1);

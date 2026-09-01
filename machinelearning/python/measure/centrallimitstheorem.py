@@ -23,4 +23,4 @@ for i in range(len(b)-1):
 	g[i]=np.exp(-0.5*(b[i])**2)/np.sqrt(2*np.pi)*delta
 	f.write(str(h[i])+" "+str(h1[i])+" "+str(g[i])+"\n")
 f.close()
-os.system('gnuplot -e \'plot "central_tmp.txt" using ($0):($3) w l lt rgb "red","central_tmp.txt" using ($0):($1) w l lt rgb "green" , "central_tmp.txt" using ($0):($2) w l lt rgb "blue";pause -1;\'')
+os.system('gnuplot -e \'plot "central_tmp.txt" using ($0):($3) w l lt rgb "red" title "normal","central_tmp.txt" using ($0):($1) w l lt rgb "green" title "binominal sample", "central_tmp.txt" using ($0):($2) w l lt rgb "blue" title "normal sample";pause -1;\'')

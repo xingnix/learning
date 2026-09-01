@@ -45,4 +45,5 @@ def train(weak,x,t):
 y=train(linear_classifier,x,t)
 o=y(x)
 #print(np.abs(t-o))
-print(np.sum((np.abs(t-o)/2)))
+print("error rate:")
+print(np.sum((np.abs(t-o)/2)/x.shape[0]))

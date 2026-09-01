@@ -1,0 +1,1773 @@
+<TeXmacs|2.1.1>
+
+<style|<tuple|beamer|manila-paper>>
+
+<\body>
+  <screens|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <doc-data|<doc-title|Approximate Inference>>
+  </hidden>|<\hidden>
+    <tit|Table of contents>
+
+    <\compact>
+      <reference|sec10.1> Variational Inference\ 
+
+      <reference|sec10.1.1> Factorized distributions
+
+      <reference|sec10.1.2> Properties of factorized approximations
+
+      <reference|sec10.1.3> Example: The univariate Gaussian
+
+      <reference|sec10.1.4> Model comparison
+
+      <reference|sec10.2><space|2spc>Illustration: Variational Mixture of
+      Gaussians\ 
+
+      <reference|sec10.2.1><space|2spc>Variational distribution
+
+      <reference|sec10.2.2> Variational lower bound
+
+      <reference|sec10.2.3> Predictive density
+
+      3 Variational Linear Regression
+    </compact>
+  </hidden>|<\hidden>
+    <tit|evaluation of the posterior distribution>
+
+    \;
+
+    A central task in the application of probabilistic models is the
+    evaluation of the posterior distribution <math|p(Z\|X)> of the latent
+    variables <math|Z> given the observed (visible) data variables <math|X>,
+    and the evaluation of expectations computed with respect to this
+    distribution.\ 
+
+    The model might also contain some deterministic parameters, which we will
+    leave implicit for the moment, or it may be a fully Bayesian model in
+    which any unknown parameters are given prior distributions and are
+    absorbed into the set of latent variables denoted by the vector <math|Z>.
+
+    For instance, in the EM algorithm we need to evaluate the expectation of
+    the complete-data log likelihood with respect to the posterior
+    distribution of the latent variables.\ 
+
+    \;
+  </hidden>|<\hidden>
+    <tit|infeasible to evaluate in practice>
+
+    \;
+
+    For many models of practical interest, it will be infeasible to evaluate
+    the posterior distribution or indeed to compute expectations with respect
+    to this distribution. This could be because the dimensionality of the
+    latent space is too high to work with directly or because the posterior
+    distribution has a highly complex form for which expectations are not
+    analytically tractable.
+
+    In the case of continuous variables, the required integrations may not
+    have closed-form analytical solutions, while the dimensionality of the
+    space and the complexity of the integrand may prohibit numerical
+    integration.\ 
+
+    For discrete variables, the marginalizations involve summing over all
+    possible configurations of the hidden variables, and though this is
+    always possible in principle, we often find in practice that there may be
+    exponentially many hidden states so that exact calculation is
+    prohibitively expensive.
+  </hidden>|<\hidden>
+    <tit|stochastic or deterministic approximations>
+
+    In such situations, we need to resort to approximation schemes, and these
+    fall broadly into two classes, according to whether they rely on
+    stochastic or deterministic approximations.\ 
+
+    Stochastic techniques such as Markov chain Monte Carlo, de- scribed in
+    Chapter 11, have enabled the widespread use of Bayesian methods across
+    many domains.\ 
+
+    They generally have the property that given infinite computational
+    resource, they can generate exact results, and the approximation arises
+    from the use of a finite amount of processor time.
+
+    In practice, sampling methods can be computationally demanding, often
+    limiting their use to small-scale problems. Also, it can be difficult to
+    know whether a sampling scheme is generating independent samples from the
+    required distribution.\ 
+
+    \;
+  </hidden>|<\hidden>
+    <tit|variational inference>
+
+    In this chapter, we introduce a range of deterministic approximation
+    schemes, some of which scale well to large applications. These are based
+    on analytical approximations to the posterior distribution, for example
+    by assuming that it factorizes in a particular way or that it has a
+    specific parametric form such as a Gaussian. As such, they can never
+    generate exact results, and so their strengths and weaknesses are
+    complementary to those of sampling methods.\ 
+
+    In Section 4.4, we discussed the Laplace approximation, which is based on
+    a local Gaussian approximation to a mode (i.e., a maximum) of the
+    distribution. Here we turn to a family of approximation techniques called
+    <strong|variational inference> or <strong|variational Bayes>, which use
+    more global criteria and which have been widely applied. We conclude with
+    a brief introduction to an alternative variational framework known as
+    expectation propagation.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Variational Inference><label|sec10.1>
+    </padded-center>
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Variational methods>
+
+    Variational methods have their origins in the 18'th century with the work
+    of Euler, Lagrange, and others on the calculus of variations. Standard
+    calculus is concerned with finding derivatives of functions. We can think
+    of a function as a mapping that takes the value of a variable as the
+    input and returns the value of the function as the output. The derivative
+    of the function then describes how the output value varies as we make
+    infinitesimal changes to the input value.
+
+    Similarly, we can define a functional as a mapping that takes a function
+    as the input and that returns the value of the functional as the output.
+    An example would be the entropy <math|H[p]>, which takes a probability
+    distribution <math|p(x)> as the input and returns the quantity\ 
+
+    <\equation*>
+      H[p] = <big|int>p(x) ln p(x) \<mathd\>x
+    </equation*>
+
+    as the output.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    We can the introduce the concept of a functional derivative, which
+    expresses how the value of the functional changes in response to
+    infinitesimal changes to the input function (Feynman et al., 1964).\ 
+
+    The rules for the calculus of variations mirror those of standard
+    calculus and are discussed in Appendix D. Many problems can be expressed
+    in terms of an optimization problem in which the quantity being optimized
+    is a functional. The solution is obtained by exploring all possible input
+    functions to find the one that maximizes, or minimizes, the functional.\ 
+
+    Variational methods have broad applicability and include such areas as
+    finite element methods (Kapur, 1989) and maximum entropy (Schwarz, 1988).
+  </hidden>|<\hidden>
+    <tit|factorization assumption>
+
+    \;
+
+    \;
+
+    Although there is nothing intrinsically approximate about variational
+    methods, they do naturally lend themselves to finding approximate
+    solutions.\ 
+
+    This is done by restricting the range of functions over which the
+    optimization is performed, for instance by considering only quadratic
+    functions or by considering functions composed of a linear combination of
+    fixed basis functions in which only the coefficients of the linear
+    combination can vary.\ 
+
+    In the case of applications to probabilistic inference, the restriction
+    may for example take the form of factorization assumptions (Jordan et
+    al., 1999; Jaakkola, 2001).
+  </hidden>|<\hidden>
+    <tit|more detail <text-dots>>
+
+    Now let us consider in more detail how the concept of variational
+    optimization can be applied to the inference problem.\ 
+
+    Suppose we have a fully Bayesian model in which all parameters are given
+    prior distributions.\ 
+
+    The model may also have latent variables as well as parameters, and we
+    shall denote the set of all latent variables and parameters by <math|Z>.\ 
+
+    Similarly, we denote the set of all observed variables by <math|X>.\ 
+
+    For example, we might have a set of <math|N> independent, identically
+    distributed data, for which <math|X =
+    {\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}> and <math|Z =
+    {\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|N>}>.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    Our probabilistic model specifies the joint distribution <math|p(X,Z)>,
+    and our goal is to find an approximation for the posterior distribution
+    <math|p(Z\|X)> as well as for the model evidence <math|p(X)>. As in our
+    discussion of EM, we can decompose the log marginal probability using\ 
+
+    <\equation*>
+      ln p<around*|(|X|)>=\<cal-L\><around*|(|q|)>+KL<around*|(|q\<\|\|\>p|)>
+    </equation*>
+
+    where we have defined
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-L\><around*|(|q|)>>|<cell|=>|<cell|<big|int>q<around*|(|Z|)>ln<around*|{|<frac|p<around*|(|X,Z|)>|q<around*|(|Z|)>>|}>\<mathd\>Z<eq-number><label|10.3>>>|<row|<cell|KL<around*|(|q\<\|\|\>p|)>>|<cell|=>|<cell|-<big|int>q<around*|(|Z|)>ln<around*|{|<frac|p<around*|(|Z\|X|)>|q<around*|(|Z|)>>|}>\<mathd\>Z>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    This differs from our discussion of EM only in that the parameter vector
+    <math|\<theta\>> no longer appears, because the parameters are now
+    stochastic variables and are absorbed into <math|Z>. Since in this
+    chapter we will mainly be interested in continuous variables we have used
+    integrations rather than summations in formulating this decomposition.\ 
+
+    However, the analysis goes through unchanged if some or all of the
+    variables are discrete simply by replacing the integrations with
+    summations as required. As before, we can maximize the lower bound
+    <math|\<cal-L\>(q)> by optimization with respect to the distribution
+    <math|q(Z)>, which is equivalent to minimizing the KL divergence.\ 
+
+    If we allow any possible choice for <math|q(Z)>, then the maximum of the
+    lower bound occurs when the KL divergence vanishes, which occurs when
+    <math|q(Z)> equals the posterior distribution <math|p(Z\|X)>. However, we
+    shall suppose the model is such that working with the true posterior
+    distribution is intractable.
+  </hidden>|<\hidden>
+    We therefore consider instead a restricted family of distributions
+    <math|q(Z)> and then seek the member of this family for which the KL
+    divergence is minimized. Our goal is to restrict the family sufficiently
+    that they comprise only tractable distributions, while at the same time
+    allowing the family to be sufficiently rich and flexible that it can
+    provide a good approximation to the true posterior distribution. It is
+    important to emphasize that the restriction is imposed purely to achieve
+    tractability, and that subject to this requirement we should use as rich
+    a family of approximating distributions as possible. In particular, there
+    is no `over-fitting' associated with highly flexible distributions. Using
+    more flexible approximations simply allows us to approach the true
+    posterior distribution more closely.\ 
+
+    One way to restrict the family of approximating distributions is to use a
+    parametric distribution <math|q(Z\|\<omega\>)> governed by a set of
+    parameters <math|\<omega\>>. The lower bound <math|\<cal-L\>(q)> then
+    becomes a function of <math|\<omega\>>, and we can exploit standard
+    nonlinear optimization techniques to determine the optimal values for the
+    parameters. An example of this approach, in which the variational
+    distribution is a Gaussian and we have optimized with respect to its mean
+    and variance, is shown in Figure <reference|fig10.1>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_10_1_variational_approximation_example.png|0.93par|||>|<label|fig10.1>
+      Illustration of the variational approximation for the example
+      considered earlier in Figure 4.14. The left-hand plot shows the
+      original distribution (yellow) along with the Laplace (red) and
+      variational (green) approximations, and the right-hand plot shows the
+      negative logarithms of the corresponding curves.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|<subsection|Factorized distributions><label|sec10.1.1>>
+
+    Here we consider an alternative way in which to restrict the family of
+    distributions <math|q(Z)>. Suppose we partition the elements of <math|Z>
+    into disjoint groups that we denote by <math|Z<rsub|i>> where
+    <math|i=1,\<cdots\>,M>. We then assume that the <math|q> distribution
+    factorizes with respect to these groups, so that
+
+    <\equation>
+      q<around*|(|Z|)>=<big|prod><rsub|i=1><rsup|M>q<rsub|i><around*|(|Z<rsub|i>|)><label|10.5>
+    </equation>
+
+    It should be emphasized that we are making no further assumptions about
+    the distribution. In particular, we place no restriction on the
+    functional forms of the individual factors <math|q<rsub|i>(Z<rsub|i>)>.
+    This factorized form of variational inference corresponds to an
+    approximation framework developed in physics called <strong|mean field
+    theory> (Parisi, 1988).
+  </hidden>|<\hidden>
+    <tit|lower bound>
+
+    Amongst all distributions <math|q(Z)> having the form Eq. <eqref|10.5>,
+    we now seek a distribution where the lower bound <math|\<cal-L\>(q)> is
+    largest.\ 
+
+    We therefore wish to make a free form (variational) optimization of
+    <math|\<cal-L\>(q)> with respect to all of the distributions
+    <math|q<rsub|i>(Z<rsub|i>)>, which we do by optimizing with respect to
+    each of the factors in turn.\ 
+  </hidden>|<\hidden>
+    \;
+
+    To achieve this, we first substitute Eq. <eqref|10.5> into <eqref|10.3>
+    and then dissect out the dependence on one of the factors
+    <math|q<rsub|j>(Z<rsub|j>)>. Denoting <math|q<rsub|j>(Z<rsub|j>)> by
+    simply <math|q<rsub|j>> to keep the notation uncluttered, we then obtain
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-L\><around*|(|q|)>>|<cell|=>|<cell|<big|int><big|prod><rsub|i>q<rsub|i><around*|{|ln
+      p<around*|(|X,Z|)>-<big|sum><rsub|i>ln
+      q<rsub|i>|}>\<mathd\>Z>>|<row|<cell|>|<cell|=>|<cell|<big|int>q<rsub|j><around*|{|<big|int>ln
+      p<around*|(|X,Z|)><big|prod><rsub|i\<neq\>j>q<rsub|i>\<mathd\>Z<rsub|i>|}>\<mathd\>Z<rsub|j>-<big|int>q<rsub|j>ln
+      q<rsub|j>\<mathd\>Z<rsub|j>+const>>|<row|<cell|>|<cell|=>|<cell|<big|int>q<rsub|j>ln<wide|p|~><around*|(|X,Z<rsub|j>|)>\<mathd\>Z<rsub|j>-<big|int>q<rsub|j>ln
+      q<rsub|j>\<mathd\>Z<rsub|j>+const<eq-number><label|10.6>>>>>
+    </eqnarray*>
+
+    <\unfolded>
+      ...
+    <|unfolded>
+      where <math|<big|int>q<rsub|i><around*|(|Z<rsub|i>|)>\<mathd\>Z<rsub|i>=1>
+      for any <math|i>.
+    </unfolded>
+  </hidden>|<\hidden>
+    \;
+
+    where we have defined a new distribution <math|<wide|p|~>(X,Z<rsub|j>)>
+    by the relation
+
+    <\equation*>
+      ln <wide|p|~>(X, Z<rsub|j> ) = \<bbb-E\><rsub|i\<neq\>j> [ln p(X, Z)] +
+      const.
+    </equation*>
+
+    Here the notation <math|\<bbb-E\><rsub|i\<neq\>j><around*|[|\<cdots\>|]>>
+    denotes an expectation with respect to the <math|q> distributions over
+    all variables <math|z<rsub|i>> for <math|i\<neq\>j>, so that\ 
+
+    <\equation*>
+      \<bbb-E\><rsub|i\<neq\>j>[ln p(X,Z)]=<big|int>ln p(X, Z)
+      <big|prod><rsub|i\<neq\>j>q<rsub|i> \<mathd\>Z<rsub|i> .
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|optimal solution>
+
+    Now suppose we keep the <math|{q<rsub|i\<neq\>j>}> fixed and maximize
+    <math|\<cal-L\>(q)> in Eq. <eqref|10.6> with respect to all possible
+    forms for the distribution <math|q<rsub|j>(Z<rsub|j>)>. This is easily
+    done by recognizing that Eq. <eqref|10.6> is a negative Kullback-Leibler
+    divergence between <math|q<rsub|j>(Z<rsub|j>)> and
+    <math|<wide|p|~>(X,Z<rsub|j>)>.\ 
+
+    Thus maximizing Eq. <eqref|10.6> is equivalent to minimizing the
+    Kullback-Leibler divergence, and the minimum occurs when
+    <math|q<rsub|j>(Z<rsub|j>)=<wide|p|~><around*|(|X,Z<rsub|j>|)>>. Thus we
+    obtain a general expression for the optimal solution
+    <math|q<rsub|j>(Z<rsub|j>)> given by
+
+    <\unfolded>
+      <\equation>
+        ln q<rsub|j><rsup|\<ast\>>(Z<rsub|j>) =\<bbb-E\><rsub|i\<neq\>j>[ln
+        p(X, Z)] + const.<label|10.9>
+      </equation>
+    <|unfolded>
+      It is worth taking a few moments to study the form of this solution as
+      it provides the basis for applications of variational methods.\ 
+
+      It says that the log of the optimal solution for factor
+      <math|q<rsub|j>> is obtained simply by considering the log of the joint
+      distribution over all hidden and visible variables and then taking the
+      expectation with respect to all of the other factors <math|{q<rsub|i>}>
+      for <math|i\<neq\>j>.
+    </unfolded>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    <tit|additive constant>
+
+    \;
+
+    The additive constant in Eq. <eqref|10.9> is set by normalizing the
+    distribution <math|q<rsub|j><rsup|\<ast\>>(Z<rsub|j>)>. Thus if we take
+    the exponential of both sides and normalize, we have\ 
+
+    <\equation*>
+      q<rsub|j><rsup|\<ast\>> (Z<rsub|j>) = <frac|
+      exp(\<bbb-E\><rsub|i\<neq\>j>[ln p(X,Z)])|exp
+      (\<bbb-E\><rsub|i\<neq\>j>[ln p(X, Z)])\<mathd\>Z<rsub|j> >.\ 
+    </equation*>
+
+    In practice, we shall find it more convenient to work with the form Eq.
+    <eqref|10.9> and then reinstate the normalization constant (where
+    required) by inspection. This will become clear from subsequent examples.\ 
+
+    \;
+  </hidden>|<\hidden>
+    <tit|consistent solution ...>
+
+    \;
+
+    The set of equations given by Eq. <eqref|10.9> for <math|j=1,\<cdots\>,M>
+    represent a set of consistency conditions for the maximum of the lower
+    bound subject to the factorization constraint.\ 
+
+    However, they do not represent an explicit solution because the
+    expression on the right-hand side of Eq. <eqref|10.9> for the optimum
+    <math|q<rsub|j>(Z<rsub|j>)> depends on expectations computed with respect
+    to the other factors <math|q<rsub|i>(Z<rsub|i>)> for <math|i\<neq\>j>.\ 
+
+    We will therefore seek a consistent solution by first initializing all of
+    the factors <math|q<rsub|i>(Z<rsub|i>)> appropriately and then cycling
+    through the factors and replacing each in turn with a revised estimate
+    given by the right-hand side of Eq. <eqref|10.9> evaluated using the
+    current estimates for all of the other factors.\ 
+
+    Convergence is guaranteed because bound is convex with respect to each of
+    the factors <math|q<rsub|i>(Z<rsub|i>)> (Boyd and Vandenberghe, 2004).
+  </hidden>|<\hidden>
+    <tit|<subsection|Properties of factorized
+    approximations><label|sec10.1.2>>
+
+    Our approach to variational inference is based on a factorized
+    approximation to the true posterior distribution. Let us consider for a
+    moment the problem of approx- imating a general distribution by a
+    factorized distribution. To begin with, we discuss the problem of
+    approximating a Gaussian distribution using a factorized Gaussian, which
+    will provide useful insight into the types of inaccuracy introduced in
+    using factorized approximations. Consider a Gaussian distribution
+    <math|p(\<b-z\>) = N(\<b-z\>\|\<b-mu\>,\<Lambda\>\<minus\>1)> over two
+    correlated variables <math|\<b-z\>=(z<rsub|1>,z<rsub|2>)> in which the
+    mean and precision have elements\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-mu\>>|<cell|=>|<cell|<matrix|<tformat|<cwith|1|1|1|1|cell-halign|r>|<table|<row|<cell|\<mu\><rsub|1>>|<cell|\<mu\><rsub|2>>>>>><rsup|T>>>|<row|<cell|\<Lambda\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<Lambda\><rsub|11>>|<cell|\<Lambda\><rsub|12>>>|<row|<cell|\<Lambda\><rsub|21>>|<cell|\<Lambda\><rsub|22>>>>>>>>>>
+    </eqnarray*>
+
+    and <math|\<Lambda\><rsub|21>=\<Lambda\><rsub|12>> due to the symmetry of
+    the precision matrix.
+  </hidden>|<\hidden>
+    Now suppose we wish to approximate this distribution using a factorized
+    Gaussian of the form <math|q(\<b-z\>)=q<rsub|1>(z<rsub|1>)q<rsub|2>(z<rsub|2>)>.
+    We first apply the general result Eq. <eqref|10.9> to find an expression
+    for the optimal factor <math|q<rsub|1><rsup|\<ast\>>(z<rsub|1>)>. In
+    doing so it is useful to note that on the right-hand side we only need to
+    retain those terms that have some functional dependence on
+    <math|z<rsub|1>> because all other terms can be absorbed into the
+    normalization constant. Thus we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln q<rsub|1><rsup|\<ast\>><around*|(|z<rsub|1>|)>>|<cell|=>|<cell|\<bbb-E\><rsub|z<rsub|2>><around*|[|ln
+      p<around*|(|\<b-z\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><rsub|z<rsub|2>><around*|[|-<frac|1|2><around*|(|z<rsub|1>-\<mu\><rsub|1>|)><rsup|2>\<Lambda\><rsub|11>|]>-<around*|(|z<rsub|1>-\<mu\><rsub|1>|)>\<Lambda\><rsub|12><around*|(|z<rsub|2>-\<mu\><rsub|2>|)>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2>z<rsub|1><rsup|2>\<Lambda\><rsub|11>+z<rsub|1>\<mu\><rsub|1>\<Lambda\><rsub|11>-z<rsub|1>\<Lambda\><rsub|12><around*|(|\<bbb-E\><around*|[|z<rsub|2>|]>-\<mu\><rsub|2>|)>+const>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    Next we observe that the right-hand side of this expression is a
+    quadratic function of <math|z<rsub|1>>, and so we can identify
+    <math|q(z<rsub|1>)> as a Gaussian distribution. It is worth emphasizing
+    that we did not assume that <math|q(z<rsub|i>)> is Gaussian, but rather
+    we derived this result by variational optimization of the KL divergence
+    over all possible distributions <math|q(zi)>. Note also that we do not
+    need to consider the additive constant in Eq. <eqref|10.9> explicitly
+    because it represents the normalization constant that can be found at the
+    end by inspection if required.<enumerate| >Using the technique of
+    completing the square, we can identify the mean and precision of this
+    Gaussian, giving<enumerate| >
+
+    <\equation*>
+      q<rsup|\<ast\>><rsub|1><around*|(|z<rsub|1>|)>=\<cal-N\><around*|(|z<rsub|1>\|m<rsub|1>,\<Lambda\><rsup|-1><rsub|11>|)>
+    </equation*>
+
+    where
+
+    <\equation*>
+      m<rsub|1>=\<mu\><rsub|1>-\<Lambda\><rsup|-1><rsub|11>\<Lambda\><rsub|12><around*|(|\<bbb-E\><around*|[|z<rsub|2>|]>-\<mu\><rsub|2>|)>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    By symmetry, <math|q<rsub|2>(z<rsub|2>)> is also Gaussian and can be
+    written as
+
+    <\equation*>
+      q<rsup|\<ast\>><rsub|2><around*|(|z<rsub|2>|)>=\<cal-N\><around*|(|z<rsub|2>\|m<rsub|2>,\<Lambda\><rsup|-1><rsub|22>|)>
+    </equation*>
+
+    where
+
+    <\equation*>
+      m<rsub|2>=\<mu\><rsub|2>-\<Lambda\><rsup|-1><rsub|22>\<Lambda\><rsub|21><around*|(|\<bbb-E\><around*|[|z<rsub|1>|]>-\<mu\><rsub|1>|)>
+    </equation*>
+  </hidden>|<\hidden>
+    Note that these solutions are coupled, so that <math|q(z1)> depends on
+    expectations com- puted with respect to <math|q(z2)> and vice versa. In
+    general, we address this by treating the variational solutions as
+    re-estimation equations and cycling through the variables in turn
+    updating them until some convergence criterion is satisfied. We shall see
+    an example of this shortly.\ 
+
+    Here, however, we note that the problem is sufficiently simple that a
+    closed form solution can be found. In particular, because
+    <math|E[z<rsub|1>]=m<rsub|1>> and <math|E[z<rsub|2>]=m<rsub|2>>, we see
+    that the two equations are satisfied if we take
+    <math|E[z<rsub|1>]=\<mu\><rsub|1>> and
+    <math|E[z<rsub|2>]=\<mu\><rsub|2>>, and it is easily shown that this is
+    the only solution provided the dis- tribution is nonsingular. This result
+    is illustrated in Figure <reference|fig10.2>(a).\ 
+
+    We see that the mean is correctly captured but that the variance of
+    <math|q(z)> is controlled by the direction of smallest variance of
+    <math|p(z)>, and that the variance along the orthogonal direction is
+    significantly under-estimated. It is a general result that a factorized
+    variational approximation tends to give approximations to the posterior
+    distribution that are too compact.
+  </hidden>|<\hidden>
+    By way of comparison, suppose instead that we had been minimizing the
+    reverse Kullback-Leibler divergence <math|KL(p\<\|\|\>q)>. As we shall
+    see, this form of KL divergence is used in an alternative approximate
+    inference framework called expectation prop- agation. We therefore
+    consider the general problem of minimizing <math|KL(p\<\|\|\>q)> when
+    <math|q(Z)> is a factorized approximation of the form Eq. <eqref|10.5>.
+    The KL divergence can then be written in the form
+
+    <\equation*>
+      KL<around*|(|p\<\|\|\>q|)>=-<big|int>p<around*|(|Z|)><around*|[|<big|sum><rsub|i=1><rsup|M>ln
+      q<rsub|i><around*|(|Z<rsub|i>|)>|]>\<mathd\>Z+const
+    </equation*>
+
+    where the constant term is simply the entropy of <math|p(Z)> and so does
+    not depend on <math|q(Z)>.\ 
+  </hidden>|<\hidden>
+    We can now optimize with respect to each of the factors
+    <math|q<rsub|j>(Z<rsub|j>)>, which is easily done using a Lagrange
+    multiplier to give
+
+    <\equation*>
+      q<rsup|\<ast\>><rsub|j><around*|(|Z<rsub|j>|)>=<big|int>p<around*|(|Z|)><big|prod><rsub|i\<neq\>j>\<mathd\>Z<rsub|i>=p<around*|(|Z<rsub|j>|)>
+    </equation*>
+
+    In this case, we find that the optimal solution for
+    <math|q<rsub|j>(Z<rsub|j>)> is just given by the corresponding marginal
+    distribution of <math|p(Z)>. Note that this is a closed-form solution and
+    so does not require iteration.
+
+    To apply this result to the illustrative example of a Gaussian
+    distribution <math|p(\<b-z\>)> over a vector <math|\<b-z\>> we can use
+    (2.98), which gives the result shown in Figure <reference|fig10.2>(b). We
+    see that once again the mean of the approximation is correct, but that it
+    places significant probability mass in regions of variable space that
+    have very low probability.\ 
+  </hidden>|<\hidden>
+    <\padded-center>
+      <\small-figure|<image|image/fig_10_2_two_KL.png|0.7par|||>>
+        <label|fig10.2>Comparison of the two alternative forms for the
+        Kullback-Leibler divergence. The green contours corresponding to 1,
+        2, and 3 standard deviations for a correlated Gaussian distribution
+        <math|p(\<b-z\>)> over two variables <math|z<rsub|1>> and
+        <math|z<rsub|2>>, and the red contours represent the corresponding
+        levels for an approximating distribution <math|q(\<b-z\>)> over the
+        same variables given by the product of two independent univariate
+        Gaussian distributions whose parameters are obtained by minimization
+        of (a) the Kullback- Leibler divergence <math|KL(q\<\|\|\>p)>, and
+        (b) the reverse Kullback-Leibler divergence <math|KL(p\<\|\|\>q)>.
+      </small-figure>
+    </padded-center>
+  </hidden>|<\hidden>
+    \;
+
+    The difference between these two results can be understood by noting that
+    there is a large positive contribution to the Kullback-Leibler divergence
+
+    <\equation*>
+      KL<around*|(|q\<\|\|\>p|)>=-<big|int>q<around*|(|Z|)>ln<around*|{|<frac|p<around*|(|Z|)>|q<around*|(|Z|)>>|}>\<mathd\>Z
+    </equation*>
+
+    from regions of <math|Z> space in which <math|p(Z)> is near zero unless
+    <math|q(Z)> is also close to zero. Thus minimizing this form of KL
+    divergence leads to distributions <math|q(Z)> that avoid regions in which
+    <math|p(Z)> is small.\ 
+
+    Conversely, the Kullback-Leibler divergence <math|KL(p\<\|\|\>q)> is
+    minimized by distributions <math|q(Z)> that are nonzero in regions where
+    <math|p(Z)> is nonzero.
+  </hidden>|<\hidden>
+    We can gain further insight into the different behaviour of the two KL
+    divergences if we consider approximating a multimodal distribution by a
+    unimodal one, as illustrated in Figure <reference|fig10.3>.\ 
+
+    In practical applications, the true posterior distribution will often be
+    multimodal, with most of the posterior mass concentrated in some number
+    of relatively small regions of parameter space. These multiple modes may
+    arise through nonidentifiability in the latent space or through complex
+    nonlin- ear dependence on the parameters. Both types of multimodality
+    were encountered in Chapter 9 in the context of Gaussian mixtures, where
+    they manifested themselves as multiple maxima in the likelihood function,
+    and a variational treatment based on the minimization of
+    <math|KL(q\<\|\|\>p)> will tend to find one of these modes.\ 
+
+    By contrast, if we were to minimize<math| KL(p\<\|\|\>q)>, the resulting
+    approximations would average across all of the modes and, in the context
+    of the mixture model, would lead to poor predictive distributions
+    (because the average of two good parameter values is typically itself not
+    a good parameter value). It is possible to make use of
+    <math|KL(p\<\|\|\>q)> to define a useful inference procedure, but this
+    requires a rather different approach to the one discussed here, and will
+    be considered in detail when we discuss <strong|expectation propagation>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_10_3_multimodal.png|0.9par|||>|<label|fig10.3>Another
+      comparison of the two alternative forms for the Kullback-Leibler
+      divergence. (a) The blue contours show a bimodal distribution
+      <math|p(Z)> given by a mixture of two Gaussians, and the red contours
+      correspond to the single Gaussian distribution <math|q(Z)> that best
+      approximates <math|p(Z)> in the sense of minimizing the Kullback-
+      Leibler divergence <math|KL(p\<\|\|\>q)>. (b) As in (a) but now the red
+      contours correspond to a Gaussian distribution <math|q(Z)> found by
+      numerical minimization of the Kullback-Leibler divergence<math|
+      KL(q\<\|\|\>p)>. (c) As in (b) but showing a different local minimum of
+      the Kullback-Leibler divergence.>
+    </padded-center>
+  </hidden>|<\hidden>
+    The two forms of Kullback-Leibler divergence are members of the alpha
+    family of divergences (Ali and Silvey, 1966; Amari, 1985; Minka, 2005)
+    defined by
+
+    <\equation*>
+      D<rsub|\<alpha\>><around*|(|p\<\|\|\>q|)>=<frac|4|1-\<alpha\><rsup|2>><around*|(|1-<big|int>p<around*|(|x|)><rsup|<around*|(|1+\<alpha\>|)>/2>q<around*|(|x|)><rsup|<around*|(|1-\<alpha\>|)>/2>\<mathd\>x|)>
+    </equation*>
+
+    where <math|\<minus\>\<infty\> \<less\> \<alpha\> \<less\> \<infty\>> is
+    a continuous parameter.\ 
+
+    The Kullback-Leibler divergence <math|KL(p\<\|\|\>q)> corresponds to the
+    limit <math|\<alpha\> \<rightarrow\>1>, whereas <math|KL(q\<\|\|\>p)>
+    corresponds to the limit <math|\<alpha\>\<rightarrow\>\<minus\>1>. For
+    all values of <math|\<alpha\>> we have
+    <math|D<rsub|\<alpha\>>(p\<\|\|\>q)\<geqslant\>0>, with equality if, and
+    only if, <math|p(x)=q(x)>.\ 
+  </hidden>|<\hidden>
+    \;
+
+    Suppose <math|p(x)> is a fixed distribution, and we minimize
+    <math|D<rsub|\<alpha\>>(p\<\|\|\>q)> with respect to some set of
+    distributions <math|q(x)>.\ 
+
+    Then for <math|\<alpha\>\<leqslant\>\<minus\>1> the divergence is
+    <strong|zero forcing>, so that any values of <math|x> for which
+    <math|p(x)=0> will have <math|q(x)=0>, and typically <math|q(x)> will
+    under-estimate the support of <math|p(x)> and will tend to seek the mode
+    with the largest mass.\ 
+
+    Conversely for <math|\<alpha\>\<gtr\>=1> the divergence is
+    <strong|zero-avoiding>, so that values of <math|x> for which <math|p(x)
+    \<gtr\> 0> will have <math|q(x) \<gtr\> 0>, and typically <math|q(x)>
+    will stretch to cover all of <math|p(x)>, and will over-estimate the
+    support of <math|p(x)>.\ 
+
+    When <math|\<alpha\> = 0> we obtain a symmetric divergence that is
+    linearly related to the Hellinger distance given by
+
+    <\equation*>
+      D<rsub|H><around*|(|p\<\|\|\>q|)>=<big|int><around*|(|p<around*|(|x|)><rsup|1/2>-q<around*|(|x|)><rsup|1/2>|)>\<mathd\>x
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|<subsection|Example: The univariate Gaussian><label|sec10.1.3>>
+
+    We now illustrate the factorized variational approximation using a
+    Gaussian distribution over a single variable <math|x> (MacKay, 2003). Our
+    goal is to infer the posterior distribution for the mean <math|\<mu\>>
+    and precision <math|\<tau\>>, given a data set <math|D =
+    {x<rsub|1>,\<cdots\>,x<rsub|N>}> of observed values of <math|x> which are
+    assumed to be drawn independently from the Gaussian. The likelihood
+    function is given by
+
+    <\equation*>
+      p<around*|(|\<cal-D\>\|\<mu\>,\<tau\>|)>=<around*|(|<frac|\<tau\>|2\<pi\>>|)><rsup|N/2>exp<around*|{|-<frac|\<tau\>|2><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|}>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|posterior distribution>
+
+    \;
+
+    We now introduce conjugate prior distributions for <math|\<mu\>> and
+    <math|\<tau\>> given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p(\<mu\>\|\<tau\> )
+      >|<cell|=>|<cell|\<cal-N\><around*|(|\<mu\>\|\<mu\><rsub|0>,<around*|(|\<lambda\><rsub|0>\<tau\>|)><rsup|-1>|)>>>|<row|<cell|p<around*|(|\<tau\>|)>>|<cell|=>|<cell|Gam<around*|(|\<tau\>\|a<rsub|0>,b<rsub|0>|)>>>>>
+    </eqnarray*>
+
+    where <math|Gam(\<tau\>\|a<rsub|0>,b<rsub|0>)> is the gamma distribution
+    defined by (2.146). Together these distributions constitute a
+    Gaussian-Gamma conjugate prior distribution.
+
+    For this simple problem the posterior distribution can be found exactly,
+    and again takes the form of a Gaussian-gamma distribution. However, for
+    tutorial purposes we will consider a factorized variational approximation
+    to the posterior distribution given by\ 
+
+    <\equation*>
+      q(\<mu\>,\<tau\>) = q<rsub|\<mu\>>(\<mu\>)q<rsub|\<tau\>>(\<tau\>).
+    </equation*>
+
+    Note that the true posterior distribution does not factorize in this way.
+  </hidden>|<\hidden>
+    <tit|<math|q<rsub|\<mu\>><around*|(|\<mu\>|)>>>
+
+    \;
+
+    The optimum factors <math|q<rsub|\<mu\>>(\<mu\>)> and
+    <math|q<rsub|\<tau\>>(\<tau\>)> can be obtained from the general result
+    Eq. <eqref|10.9> as follows. For <math|q<rsub|\<mu\>>(\<mu\>)> we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln q<rsub|\<mu\>><rsup|\<ast\>><around*|(|\<mu\>|)>>|<cell|=>|<cell|\<bbb-E\><rsub|\<tau\>><around*|[|ln
+      p<around*|(|\<cal-D\>\|\<mu\>,\<tau\>|)>+ln
+      p<around*|(|\<mu\>\|\<tau\>|)>|]>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|\<bbb-E\><around*|[|\<tau\>|]>|2><around*|{|\<lambda\><rsub|0><around*|(|\<mu\>-\<mu\><rsub|0>|)><rsup|2>+<big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|}>+const>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Gaussian <math|\<cal-N\><around*|(|\<mu\>\|\<mu\><rsub|N>,\<lambda\><rsub|N><rsup|-1>|)>>>
+
+    Completing the square over <math|\<mu\>> we see that
+    <math|q<rsub|\<mu\>>(\<mu\>)> is a Gaussian
+    <math|\<cal-N\><around*|(|\<mu\>\|\<mu\><rsub|N>,\<lambda\><rsub|N><rsup|-1>|)>>
+    with mean and precision given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<mu\><rsub|N>>|<cell|=>|<cell|<frac|\<lambda\><rsub|0>\<mu\><rsub|0>+N<wide|x|\<bar\>>|\<lambda\><rsub|0>+N><eq-number><label|10.26>>>|<row|<cell|\<lambda\><rsub|N>>|<cell|=>|<cell|<around*|(|\<lambda\><rsub|0>+N|)>\<bbb-E\><around*|[|\<tau\>|]><eq-number><label|10.27>>>>>
+    </eqnarray*>
+
+    Note that for <math|N \<rightarrow\> \<infty\>> this gives the maximum
+    likelihood result in which <math|\<mu\><rsub|N> = x> and the precision is
+    infinite.
+  </hidden>|<\hidden>
+    <tit|<math|q<rsub|\<tau\>><around*|(|\<tau\>|)>>>
+
+    Similarly, the optimal solution for the factor
+    <math|q<rsub|\<tau\>>(\<tau\>)> is given by\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln q<rsub|\<tau\>><rsup|\<ast\>><around*|(|\<tau\>|)>>|<cell|=>|<cell|\<bbb-E\><rsub|\<mu\>><around*|[|ln
+      p<around*|(|\<cal-D\>\|\<mu\>,\<tau\>|)>+ln
+      p<around*|(|\<mu\>\|\<tau\>|)>|]>+ln
+      p<around*|(|\<tau\>|)>+const>>|<row|<cell|>|<cell|=>|<cell|<around*|(|a<rsub|0>-1|)>ln
+      \<tau\>-b<rsub|0>\<tau\>+<frac|N|2>ln
+      \<tau\>-<frac|\<tau\>|2>\<bbb-E\><rsub|\<mu\>><around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>+\<lambda\><rsub|0><around*|(|\<mu\>-\<mu\><rsub|0>|)><rsup|2>|]>+const>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|<math|Gam<around*|(|\<tau\>,a<rsub|N>,b<rsub|N>|)>>>
+
+    and hence <math|q<rsub|\<tau\>>(\<tau\>)> is a gamma distribution
+    <math|Gam(\<tau\>\|a<rsub|N>,b<rsub|N>)> with parameters
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|a<rsub|N>>|<cell|=>|<cell|a<rsub|0>+<frac|N|2><eq-number><label|10.29>>>|<row|<cell|b<rsub|N>>|<cell|=>|<cell|b<rsub|0>+<frac|1|2>\<bbb-E\><rsub|\<mu\>><around*|[|<big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>+\<lambda\><rsub|0><around*|(|\<mu\>-\<mu\><rsub|0>|)><rsup|2>|]><eq-number><label|10.30>>>>>
+    </eqnarray*>
+
+    Again this exhibits the expected behaviour when <math|N \<rightarrow\>
+    \<infty\>>.
+
+    <\folded>
+      ...
+    <|folded>
+      It should be emphasized that we did not assume these specific
+      functional forms for the optimal distributions
+      <math|q<rsub|\<mu\>>(\<mu\>)> and <math|q<rsub|\<tau\>>(\<tau\>)>. They
+      arose naturally from the structure of the likelihood function and the
+      corresponding conjugate priors.
+    </folded>
+  </hidden>|<\hidden>
+    <tit|solution ...>
+
+    Thus we have expressions for the optimal distributions
+    <math|q<rsub|\<mu\>>(\<mu\>)> and <math|q<rsub|\<tau\>>(\<tau\>)> each of
+    which depends on moments evaluated with respect to the other
+    distribution.\ 
+
+    One approach to finding a solution is therefore to make an initial guess
+    for, say, the moment <math|\<bbb-E\>[\<tau\>]> and use this to re-compute
+    the distribution <math|q<rsub|\<mu\>>(\<mu\>)>. Given this revised
+    distribution we can then extract the required moments
+    <math|\<bbb-E\>[\<mu\>]> and <math|\<bbb-E\>[\<mu\><rsup|2>]>, and use
+    these to recompute the distribution <math|q<rsub|\<tau\>>(\<tau\>)>, and
+    so on.\ 
+
+    Since the space of hidden variables for this example is only two
+    dimensional, we can illustrate the variational approxima- tion to the
+    posterior distribution by plotting contours of both the true posterior
+    and the factorized approximation, as illustrated in Figure
+    <inactive|<reference|fig10.4>>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_10_4_univariable_gaussian.png|0.5par|||>|<label|fig10.4>
+      Illustration of variational inference for the mean \<mu\> and precision
+      <math|\<tau\>> of a univariate Gaussian distribution. Contours of the
+      true posterior distribution <math|p(\<mu\>,\<tau\>\|D)> are shown in
+      green. (a) Contours of the initial factorized approximation
+      <math|q<rsub|\<mu\>>(\<mu\>)q<rsub|\<tau\>>(\<tau\>)> are shown in
+      blue. (b) After re-estimating the factor <math|q<rsub|\<mu\>>(\<mu\>)>.
+      (c) After re-estimating the factor <math|q<rsub|\<tau\>>(\<tau\>)>. (d)
+      Contours of the optimal factorized approximation, to which the
+      iterative scheme converges, are shown in red.>
+    </padded-center>
+  </hidden>|<\hidden>
+    In general, we will need to use an iterative approach such as this in
+    order to solve for the optimal factorized posterior distribution. For the
+    very simple example we are considering here, however, we can find an
+    explicit solution by solving the simultaneous equations for the optimal
+    factors <math|q<rsub|\<mu\>>(\<mu\>)> and
+    <math|q<rsub|\<tau\>>(\<tau\>)>.\ 
+
+    Before doing this, we can simplify these expressions by considering
+    broad, noninformative priors in which
+    <math|\<mu\><rsub|0>=a<rsub|0>=b<rsub|0>=\<lambda\><rsub|0>=0>. Although
+    these parameter settings correspond to improper priors, we see that the
+    posterior distribution is still well defined. Using the standard result
+    <math|\<bbb-E\>[\<tau\>]=a<rsub|N>/b<rsub|N>> for the mean of a gamma
+    distribution, together with Eq. <eqref|10.29> and <eqref|10.30>, we have
+
+    <\equation>
+      <frac|1|\<bbb-E\><around*|[|\<tau\>|]>>=\<bbb-E\><around*|[|<frac|1|N+1><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|]>=<frac|N|N+1><around*|(|<wide|x<rsup|2
+      >|\<bar\>>-2<wide|x|\<bar\>>\<bbb-E\><around*|[|\<mu\>|]>+\<bbb-E\><around*|[|\<mu\><rsup|2>|]>|)><label|10.31>
+    </equation>
+
+    Then, using Eq. <eqref|10.26> and <eqref|10.27>, we obtain the first and
+    second order moments of <math|q<rsub|\<mu\>>(\<mu\>)> in the form
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<mu\>|]>>|<cell|=>|<cell|<wide|x|\<bar\>>>>|<row|<cell|\<bbb-E\><around*|[|\<mu\><rsup|2>|]>>|<cell|=>|<cell|<wide|x|\<bar\>><rsup|2>+<frac|1|N\<bbb-E\><around*|[|\<tau\>|]>>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    We can now substitute these moments into <eqref|10.31> and then solve for
+    <math|\<bbb-E\>[\<tau\>]> to give
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|1|\<bbb-E\><around*|[|\<tau\>|]>>>|<cell|=>|<cell|<around*|(|<wide|x<rsup|2
+      >|\<bar\>>-<wide|x|\<bar\>><rsup|2>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-<wide|x|\<bar\>>|)><rsup|2>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|<subsection|Model comparison><label|sec10.1.4>>
+
+    As well as performing inference over the hidden variables <math|Z>, we
+    may also wish to compare a set of candidate models, labelled by the index
+    m, and having prior probabilities <math|p(m)>. Our goal is then to
+    approximate the posterior probabilities <math|p(m\|X)>, where <math|X> is
+    the observed data. This is a slightly more complex situation than that
+    considered so far because different models may have different structure
+    and indeed different dimensionality for the hidden variables <math|Z>. We
+    cannot therefore simply consider a factorized approximation
+    <math|q(Z)q(m)>, but must instead recognize that the posterior over
+    <math|Z> must be conditioned on m, and so we must consider <math|q(Z, m)
+    = q(Z\|m)q(m)>.\ 
+  </hidden>|<\hidden>
+    We can readily verify the following decomposition based on this
+    variational distribution
+
+    <\equation*>
+      ln p<around*|(|X|)>=\<cal-L\>-<big|sum><rsub|m><big|sum><rsub|Z>q<around*|(|Z\|m|)>q<around*|(|m|)>ln<around*|{|<frac|p<around*|(|Z,m\|X|)>|q<around*|(|Z\|m|)>q<around*|(|m|)>>|}>
+    </equation*>
+
+    where the <math|\<cal-L\>> is a lower bound on <math|ln p(X)> and is
+    given by
+
+    <\equation>
+      \<cal-L\>=<big|sum><rsub|m><big|sum><rsub|Z>q<around*|(|Z\|m|)>q<around*|(|m|)>ln<around*|{|<frac|p<around*|(|Z,X,m|)>|q<around*|(|Z\|m|)>q<around*|(|m|)>>|}><label|10.35>
+    </equation>
+
+    <\folded>
+      ...
+    <|folded>
+      Here we are assuming discrete Z, but the same analysis applies to
+      continuous latent variables provided the summations are replaced with
+      integrations.
+    </folded>
+  </hidden>|<\hidden>
+    We can maximize <math|\<cal-L\>> with respect to the distribution
+    <math|q(m)> using a Lagrange multiplier, with the result
+
+    <\equation>
+      q(m) \<propto\> p(m) exp{\<cal-L\><rsub|m>}. <label|10.36>
+    </equation>
+
+    where\ 
+
+    <\equation*>
+      \<cal-L\><rsub|m> = \ <big|sum><rsub|Z>q(Z\|m)ln{<frac|p(Z,
+      X\|m)|q(Z\|m)> \ } \ .
+    </equation*>
+
+    However, if we maximize <math|\<cal-L\>> with respect to the
+    <math|q(Z\|m)>, we nd that the solutions for different <math|m> are
+    coupled, as we expect because they are conditioned on <math|m>. We
+    proceed instead by rst optimizing each of the <math|q(Z\|m)>
+    individually by optimization of Eq. <eqref|10.35>, or equivalently by
+    \ optimization of <math|\<cal-L\><rsub|m>> and then subsequently
+    determining the <math|q(m)> using Eq. <eqref|10.36>. After normalization
+    the resulting values for <math|q(m>) can be used for model selection or
+    model averaging in the usual way.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Illustration: Variational Mixture of Gaussians><label|sec10.2>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|Variational Mixture of Gaussians>
+
+    \;
+
+    \;
+
+    We now return to our discussion of the Gaussian mixture model and apply
+    the variational inference machinery developed in the previous section.
+    This will provide a good illustration of the application of variational
+    methods and will also demonstrate how a Bayesian treatment elegantly
+    resolves many of the difculties associated with the maximum likelihood
+    approach (Attias, 1999b). The reader is encouraged to work through this
+    example in detail as it provides many insights into the practical
+    application of variational methods. Many Bayesian models, corresponding
+    to much more sophisticated distributions, can be solved by
+    straightforward extensions and generalizations of this analysis.
+  </hidden>|<\hidden>
+    Our starting point is the likelihood function for the Gaussian mixture
+    model, illustrated by the graphical model in Figure 9.6.\ 
+
+    For each observation <math|\<b-x\><rsub|n>> we have a corresponding
+    latent variable <math|\<b-z\><rsub|n>> comprising a 1-of-K binary vector
+    with elements <math|z<rsub|n k>> for <math|k=1,\<cdots\>,K>. As before we
+    denote the observed data set by <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}>,
+    and similarly we denote the latent variables by <math|Z =
+    {\<b-z\><rsub|1>,\<cdots\>,\<b-z\><rsub|N> }>. From (9.10) we can write
+    down the conditional distribution of <math|Z>, given the mixing
+    coefficients <math|\<b-pi\>>, in the form
+
+    <\equation>
+      p<around*|(|Z\|\<b-pi\>|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|z<rsub|n
+      k>><label|10.37>
+    </equation>
+  </hidden>|<\hidden>
+    Similarly, from (9.11), we can write down the conditional distribution of
+    the observed data vectors, given the latent variables and the component
+    parameters
+
+    <\equation>
+      p<around*|(|X\|Z,\<b-mu\>,\<Lambda\>|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<Lambda\><rsup|-1><rsub|k>|)><rsup|z<rsub|n
+      k>><label|10.38>
+    </equation>
+
+    where <math|\<b-mu\>=<around*|{|\<b-mu\><rsub|k>|}>> and
+    <math|\<Lambda\>=\<Lambda\><rsub|k>>.\ 
+
+    Note that we are working in terms of precision matrices rather than
+    covariance matrices as this somewhat simplifies the mathematics.
+  </hidden>|<\hidden>
+    Next we introduce priors over the parameters <math|\<b-mu\>,\<Lambda\>>
+    and <math|\<b-pi\>>. The analysis is considerably simplified if we use
+    conjugate prior distributions. We therefore choose a Dirichlet
+    distribution over the mixing coefficients <math|\<b-pi\>>
+
+    <\equation>
+      p<around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\><rsub|0>|)>=C<around*|(|\<b-alpha\><rsub|0>|)><big|prod><rsub|k=1><rsup|K>\<pi\><rsub|k><rsup|\<alpha\><rsub|0>-1><label|10.39>
+    </equation>
+
+    where by symmetry we have chosen the same parameter
+    <math|\<alpha\><rsub|0>> for each of the components, and
+    <math|C<around*|(|\<b-alpha\><rsub|0>|)>> is the normalization constant
+    for the Dirichlet distribution defined by (B.23).\ 
+
+    As we have seen, the parameter <math|\<alpha\><rsub|0>> can be
+    interpreted as the effective prior number of observations associated with
+    each component of the mixture. If the value of <math|\<alpha\><rsub|0>>
+    is small, then the posterior distribution will be in\]uenced primarily by
+    the data rather than by the prior.
+  </hidden>|<\hidden>
+    Similarly, we introduce an independent Gaussian-Wishart prior governing
+    the mean and precision of each Gaussian component, given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-mu\>,\<Lambda\>|)>>|<cell|=>|<cell|p<around*|(|\<b-mu\>\|\<Lambda\>|)>p<around*|(|\<Lambda\>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|prod><rsub|k=1><rsup|K>\<cal-N\><around*|(|\<b-mu\><rsub|k>\|\<b-m\><rsub|0>,<around*|(|\<beta\><rsub|0>\<Lambda\><rsub|k>|)><rsup|-1>|)>\<cal-W\><around*|(|\<Lambda\><rsub|k>\|W<rsub|0>,\<nu\><rsub|0>|)><eq-number><label|10.40>>>>>
+    </eqnarray*>
+
+    because this represents the conjugate prior distribution when both the
+    mean and precision are unknown. Typically we would choose
+    <math|\<b-m\><rsub|0>=\<b-0\>> by symmetry.
+
+    The resulting model can be represented as a directed graph as shown in
+    Figure <reference|fig10.5>. Note that there is a link from
+    <math|\<Lambda\>> to <math|\<b-mu\>> since the variance of the
+    distribution over <math|\<b-mu\>> in Eq. <eqref|10.40> is a function of
+    <math|\<Lambda\>>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <\small-figure|<image|image/fig_10_5_bayesian_gm.png|0.32par|||>>
+        <label|fig10.5> Directed acyclic graph representing the Bayesian
+        mixture of Gaussians model, in which the box (plate) denotes a set of
+        <math|N> i.i.d. observations. Here <math|\<b-mu\>> denotes
+        <math|{\<b-mu\><rsub|k>}> and <math|\<Lambda\>> denotes
+        <math|{\<Lambda\><rsub|k>}>.
+      </small-figure>
+    </padded-center>
+
+    This example provides a nice illustration of the distinction between
+    latent variables and parameters. Variables such as \<b-z\>_n that appear
+    inside the plate are regarded as latent variables because the number of
+    such variables grows with the size of the data set. By contrast,
+    variables such as \<b-mu\> that are outside the plate are xed in number
+    independently of the size of the data set, and so are regarded as
+    parameters. From the perspective of graphical models, however, there is
+    really no fundamental difference between them.
+  </hidden>|<\hidden>
+    <tit|<subsection|Variational distribution><label|sec10.2.1>>
+
+    In order to formulate a variational treatment of this model, we next
+    write down the joint distribution of all of the random variables, which
+    is given by
+
+    <\equation>
+      p(X, Z, \<b-pi\>,\<b-mu\>, \<Lambda\>) = p(X\|Z,
+      \<b-mu\>,\<Lambda\>)p(Z\|\<b-pi\>)p(\<b-pi\>)p(\<b-mu\>\|\<Lambda\>)p(\<Lambda\>)<label|10.41>
+    </equation>
+
+    in which the various factors are dened above.\ 
+
+    This decomposition does indeed correspond to the probabilistic graphical
+    model shown in Figure <reference|fig10.5>. Note that only the variables
+    <math|X={\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|N>}> are observed.
+  </hidden>|<\hidden>
+    We now consider a variational distribution which factorizes between the
+    latent variables and the parameters so that
+
+    <\equation*>
+      q(Z, \<pi\>, \<b-mu\>,\<Lambda\>) =
+      q(Z)q(\<b-pi\>,\<b-mu\>,\<Lambda\>).
+    </equation*>
+
+    It is remarkable that this is the only assumption that we need to make in
+    order to obtain a tractable practical solution to our Bayesian mixture
+    model. In particular, the functional form of the factors <math|q(Z)> and
+    <math|q<around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>> will be determined
+    automatically by optimization of the variational distribution.\ 
+
+    Note that we are omitting the subscripts on the <math|q> distributions,
+    much as we do with the <math|p> distributions in Eq. <eqref|10.41>, and
+    are relying on the arguments to distinguish the different distributions.
+  </hidden>|<\hidden>
+    <tit|<math|ln q<rsup|\<ast\>>(Z) >>
+
+    \;
+
+    \;
+
+    We now make use of the decomposition Eq. <eqref|10.41> and the general
+    result Eq. <eqref|10.9>.\ 
+
+    Note that we are only interested in the functional dependence of the
+    right-hand side on the variable <math|Z>. Thus any terms that do not
+    depend on <math|Z> can be absorbed into the additive normalization
+    constant, giving
+
+    <\equation*>
+      ln q<rsup|\<ast\>>(Z) = \<bbb-E\><rsub|\<b-pi\>>[ln p(Z\|\<b-pi\>)] +
+      \<bbb-E\><rsub|\<b-mu\>,\<Lambda\>>[ln p(X\|Z,\<b-mu\>,\<Lambda\>)] +
+      const.
+    </equation*>
+
+    \;
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    <tit|<math|q<rsup|\<ast\>><around*|(|Z|)>>>
+
+    Substituting for the two conditional distributions on the right-hand
+    side, and again absorbing any terms that are independent of <math|Z> into
+    the additive constant, we have
+
+    <\equation>
+      ln q<rsup|\<ast\>><around*|(|Z|)>=<big|sum><rsub|n=1><rsup|K><big|sum><rsub|k=1><rsup|K>z<rsub|n
+      k>ln \<rho\><rsub|n k>+const<label|10.45>
+    </equation>
+
+    where we have dened
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln \<rho\><rsub|n
+      k>>|<cell|=>|<cell|\<bbb-E\><around*|[|ln
+      \<pi\><rsub|k>|]>+<frac|1|2>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>-<frac|D|2>ln<around*|(|2\<pi\>|)>-<frac|1|2>\<bbb-E\><rsub|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>><around*|[|<around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T>\<Lambda\><rsub|k><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)>|]><eq-number><label|10.46>>>>>
+    </eqnarray*>
+
+    where <math|D> is the dimensionality of the data variable <math|\<b-x\>>.\ 
+
+    Taking the exponential of both sides of Eq. <eqref|10.45> we obtain
+
+    <\equation*>
+      q<rsup|\<ast\>><around*|(|Z|)>\<propto\><big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|<math|r<rsub|n k>>>
+
+    Requiring that this distribution be normalized, and noting that for each
+    value of <math|n> the quantities <math|z<rsub|n k>> are binary and sum to
+    1 over all values of <math|k>, we obtain
+
+    <\equation*>
+      q<rsup|\<ast\>><around*|(|Z|)>=<big|prod><rsub|n=1><rsup|N><big|prod><rsub|k=1><rsup|K>r<rsub|n
+      k><rsup|z<rsub|n k>>
+    </equation*>
+
+    where
+
+    <\equation>
+      r<rsub|n k>=<frac|\<rho\><rsub|n k>|<big|sum><rsub|j=1><rsup|K>\<rho\><rsub|n
+      j>><label|10.49>
+    </equation>
+
+    We see that the optimal solution for the factor <math|q(Z)> takes the
+    same functional form as the prior <math|p(Z\|\<b-pi\>)>. Note that
+    because \<rho\>nk is given by the exponential of a real quantity, the
+    quantities <math|r<rsub|n k>> will be nonnegative and will sum to one, as
+    required.
+  </hidden>|<\hidden>
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|q<rsup|\<ast\>><around*|(|Z|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>q<rsup|\<ast\>><around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|q<rsup|\<ast\>><around*|(|\<b-z\><rsub|n>|)>>|<cell|\<propto\>>|<cell|<big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>|<big|sum><rsub|\<b-z\><rsub|n>><big|prod><rsub|j=1><rsup|K>\<rho\><rsub|n
+      j><rsup|z<rsub|n j>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>|<big|sum><rsub|k=1><rsup|K><big|prod><rsub|j=1><rsup|K>\<rho\><rsub|n
+      j><rsup|z<rsub|n j>>><space|6em>where<space|1em>z<rsub|n
+      j>=\<delta\><around*|(|j-k|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|prod><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k><rsup|z<rsub|n k>>|<big|sum><rsub|k=1><rsup|K>\<rho\><rsub|n
+      k>>=<big|prod><rsub|k=1><rsup|K><frac|\<rho\><rsub|n k><rsup|z<rsub|n
+      k>>|<big|sum><rsub|j=1><rsup|K>\<rho\><rsub|n
+      j>>>>|<row|<cell|>|<cell|=>|<cell|<big|prod><rsub|k=1><rsup|K><around*|(|<frac|\<rho\><rsub|n
+      k>|<big|sum><rsub|j=1><rsup|K>\<rho\><rsub|n j>>|)><rsup|z<rsub|n
+      k>><space|4em>where <big|sum><rsub|k=1><rsup|K><around*|(|z<rsub|n
+      k>|)>=1,z<rsub|n k>\<in\><around*|{|0,1|}>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|<math|\<bbb-E\>[z<rsub|n k> ] >>
+
+    For the discrete distribution <math|q<rsup|\<ast\>>(Z)> we have the
+    standard result
+
+    <\equation>
+      \<bbb-E\>[z<rsub|n k> ] = r<rsub|n k><label|10.50>
+    </equation>
+
+    from which we see that the quantities rnk are playing the role of
+    responsibilities.
+
+    Note that the optimal solution for <math|q<rsup|\<ast\>>(Z)> depends on
+    moments evaluated with respect to the distributions of other variables,
+    and so again the variational update equations are coupled and must be
+    solved iteratively.
+  </hidden>|<\hidden>
+    <tit|dene three statistics of the observed data set>
+
+    At this point, we shall nd it convenient to dene three statistics of
+    the observed data set evaluated with respect to the responsibilities,
+    given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|N<rsub|k>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>r<rsub|n
+      k>>>|<row|<cell|<wide|\<b-x\>|\<wide-bar\>><rsub|k>>|<cell|=>|<cell|<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|N>r<rsub|n
+      k>\<b-x\><rsub|n>>>|<row|<cell|S<rsub|k>>|<cell|=>|<cell|<frac|1|N<rsub|k>><big|sum><rsub|n=1><rsup|N>r<rsub|n
+      k><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>><rsub|k>|)><around*|(|\<b-x\><rsub|n>-<wide|\<b-x\>|\<wide-bar\>><rsub|k>|)><rsup|T>>>>>
+    </eqnarray*>
+
+    Note that these are analogous to quantities evaluated in the maximum
+    likelihood EM algorithm for the Gaussian mixture model.
+  </hidden>|<\hidden>
+    <tit|consider <math|q(\<pi\>, \<mu\>, \<Lambda\>)>>
+
+    \;
+
+    \;
+
+    Now let us consider the factor <math|q(\<pi\>, \<mu\>, \<Lambda\>)> in
+    the variational posterior distribution. Again using the general result
+    Eq. <eqref|10.9> we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln q<rsup|\<ast\>><around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>>|<cell|=>|<cell|ln
+      p<around*|(|\<b-pi\>|)>+<big|sum><rsub|k=1><rsup|K>ln
+      p<around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>+\<bbb-E\><rsub|Z><around*|[|ln
+      p<around*|(|Z\|\<b-pi\>|)>|]>>>|<row|<cell|>|<cell|>|<cell|+<big|sum><rsub|k=1><rsup|K><big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|z<rsub|n
+      k>|]>ln\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,\<Lambda\><rsub|k><rsup|-1>|)>+const<eq-number><label|10.54>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|factorize to give <math|q(\<pi\>)q(\<mu\>, \<Lambda\>)>>
+
+    We observe that the right-hand side of this expression decomposes into a
+    sum of terms involving only <math|\<pi\>> together with terms only
+    involving <math|\<mu\>> and <math|\<Lambda\>>, which implies that the
+    variational posterior <math|q(\<pi\>, \<mu\>, \<Lambda\>)> factorizes to
+    give <math|q(\<pi\>)q(\<mu\>, \<Lambda\>)>. Furthermore, the terms
+    involving <math|\<mu\>> and <math|\<Lambda\>> themselves comprise a sum
+    over <math|k> of terms involving <math|\<mu\><rsub|k>> and
+    <math|\<Lambda\><rsub|k>> leading to the further factorization
+
+    <\equation>
+      q<around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>=q<around*|(|\<b-pi\>|)><big|prod><rsub|k=1><rsup|K>q<around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)><label|10.55>
+    </equation>
+  </hidden>|<\hidden>
+    <tit|<math|q<rsup|\<ast\>><around*|(|\<b-pi\>|)>>>
+
+    Identifying the terms on the right-hand side of Eq. <eqref|10.54> that
+    depend on <math|\<b-pi\>>, we have
+
+    <\equation*>
+      ln q<rsup|\<ast\>><around*|(|\<b-pi\>|)>=<around*|(|\<alpha\><rsub|0>-1|)><big|sum><rsub|k=1><rsup|K>ln
+      \<pi\><rsub|k>+<big|sum><rsub|k=1><rsup|K><big|sum><rsub|n=1><rsup|N>r<rsub|n
+      k>ln \<pi\><rsub|k>+const
+    </equation*>
+
+    where we have used Eq. <eqref|10.37>,<eqref|10.39> and <eqref|10.50>.
+    Taking the exponential of both sides, we recognize
+    <math|q<rsup|\<ast\>><around*|(|\<b-pi\>|)>> as a Dirichlet distribution
+
+    <\equation>
+      q<rsup|\<ast\>><around*|(|\<b-pi\>|)>=Dir<around*|(|\<b-pi\>\|\<b-alpha\>|)><label|10.57>
+    </equation>
+
+    where <math|\<alpha\>> has components <math|\<alpha\><rsub|k>> given by
+
+    <\equation>
+      \<alpha\><rsub|k>=\<alpha\><rsub|0>+N<rsub|k><label|10.58>
+    </equation>
+  </hidden>|<\hidden>
+    <tit|<math|q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>>>
+
+    The variational posterior distribution
+    <math|q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>>
+    does not factorize into the product of the marginals, but we can use the
+    product rule to write it in the form <math|q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>=q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>\|\<Lambda\><rsub|k>|)>q<rsup|\<ast\>><around*|(|\<Lambda\><rsub|k>|)>>.
+    The two factors can be found by inspecting Eq. <eqref|10.54> and reading
+    off those terms that involve <math|\<b-mu\><rsub|k>> and
+    <math|\<Lambda\><rsub|k>> . The result, as expected, is a
+    Gaussian-Wishart distribution and is given by
+
+    <\equation>
+      q<rsup|\<ast\>><around*|(|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>|)>=\<cal-N\><around*|(|\<b-mu\><rsub|k>\|\<b-m\><rsub|k>,<around*|(|\<beta\><rsub|k>\<Lambda\><rsub|k>|)><rsup|-1>|)>\<cal-W\><around*|(|\<Lambda\>\|W<rsub|k>,\<nu\><rsub|k>|)><label|10.59>
+    </equation>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    where we have defined
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<beta\><rsub|k>>|<cell|=>|<cell|\<beta\><rsub|0>+N<rsub|k><eq-number><label|10.60>>>|<row|<cell|\<b-m\><rsub|k>>|<cell|=>|<cell|<frac|1|\<beta\><rsub|k>><around*|(|\<beta\><rsub|0>\<b-m\><rsub|0>+N<rsub|k><wide|\<b-x\>|\<wide-bar\>><rsub|k>|)><eq-number><label|10.61>>>|<row|<cell|W<rsup|-1><rsub|k>>|<cell|=>|<cell|W<rsub|0><rsup|-1>+N<rsub|k>S<rsub|k>+<frac|\<beta\><rsub|0>N<rsub|k>|\<beta\><rsub|0>+N<rsub|k>><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|0>|)><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|0>|)><rsup|T><eq-number><label|10.62>>>|<row|<cell|\<nu\><rsub|k>>|<cell|=>|<cell|\<mu\><rsub|0>+N<rsub|k><eq-number><label|10.63>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|analogous ...>
+
+    These update equations are analogous to the M-step equations of the EM
+    algorithm for the maximum likelihood solution of the mixture of
+    Gaussians.\ 
+
+    We see that the computations that must be performed in order to update
+    the variational posterior distribution over the model parameters involve
+    evaluation of the same sums over the data set, as arose in the maximum
+    likelihood treatment.
+  </hidden>|<\hidden>
+    <tit|expectations with respect to the variational distributions>
+
+    In order to perform this variational M step, we need the expectations
+    <math|E[z<rsub|nk>] =r<rsub|nk>> representing the responsibilities. These
+    are obtained by normalizing the <math|\<rho\><rsub|nk>> that are given by
+    <eqref|10.46>. We see that this expression involves expectations with
+    respect to the variational distributions of the parameters, and these are
+    easily evaluated to give
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><rsub|\<b-mu\><rsub|k>,\<Lambda\><rsub|k>><around*|[|(\<b-x\><rsub|n>-\<b-mu\><rsub|k>)<rsup|T>\<Lambda\><rsub|k>(\<b-x\><rsub|n>-\<b-mu\><rsub|k>)|]>>|<cell|=>|<cell|D\<beta\><rsub|k><rsup|-1>+\<nu\><rsub|k>(\<b-x\><rsub|n>-\<b-m\><rsub|k>)<rsup|T>W<rsub|k>(\<b-x\><rsub|n>-\<b-m\><rsub|k>)<eq-number><label|10.64>>>|<row|<cell|ln
+      <wide|\<Lambda\>|~><rsub|k>\<equiv\>\<bbb-E\><around*|[|ln<around*|\||\<Lambda\><rsub|k>|\|>|]>>|<cell|=>|<cell|<big|sum><rsub|i=1><rsup|D>\<varphi\><around*|(|<frac|\<nu\><rsub|k>+1-i|2>|)>+D
+      ln2+ln<around*|\||W<rsub|k>|\|><eq-number><label|10.65>>>|<row|<cell|ln<wide|\<pi\>|~><rsub|k>\<equiv\>\<bbb-E\><around*|[|ln
+      \<pi\><rsub|k>|]>>|<cell|=>|<cell|\<varphi\><around*|(|\<alpha\><rsub|k>|)>-\<varphi\><around*|(|<wide|\<alpha\>|^>|)><eq-number><label|10.66>>>>>
+    </eqnarray*>
+
+    where we have introduced definitions of
+    <math|<wide|\<Lambda\>|^><rsub|k>> and <math|<wide|\<pi\>|~><rsub|k>>,
+    and <math|\<varphi\><around*|(|\<cdummy\>|)>> is the digamma function
+    defined by (B.25), with <math|<wide|\<alpha\>|^>=<big|sum><rsub|k>\<alpha\><rsub|k>>.
+    The results Eq. <eqref|10.65> and Eq. <eqref|10.66> follow from the
+    standard properties of the Wishart and Dirichlet distributions.
+  </hidden>|<\hidden>
+    <tit|result for the responsibilities>
+
+    If we substitute Eq. <eqref|10.64>, <eqref|10.65>, and <eqref|10.66> into
+    <eqref|10.46> and make use of <eqref|10.49>, we obtain the following
+    result for the responsibilities
+
+    <\equation*>
+      r<rsub|n k>\<propto\><wide|\<pi\>|~><rsub|k><wide|\<Lambda\>|~><rsub|k><rsup|1/2>exp<around*|{|-<frac|D|2\<beta\><rsub|k>>-<frac|\<nu\><rsub|k>|2><around*|(|\<b-x\><rsub|n>-\<b-m\><rsub|k>|)><rsup|T>W<rsub|k><around*|(|\<b-x\><rsub|n>-\<b-m\><rsub|k>|)>|}>
+    </equation*>
+
+    Notice the similarity to the corresponding result for the
+    responsibilities in maximum likelihood EM, which from (9.13) can be
+    written in the form
+
+    <\equation*>
+      r<rsub|n k>\<propto\>\<pi\><rsub|k><around*|\||\<Lambda\><rsub|k>|\|><rsup|1/2>exp<around*|{|-<frac|1|2><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)><rsup|T>\<Lambda\><rsub|k><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|k>|)>|}>
+    </equation*>
+
+    where we have used the precision in place of the covariance to highlight
+    the similarity.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|two stage optimization>
+
+    Thus the optimization of the variational posterior distribution involves
+    cycling between two stages analogous to the E and M steps of the maximum
+    likelihood EM algorithm.\ 
+
+    In the variational equivalent of the E step, we use the current
+    distributions over the model parameters to evaluate the moments in Eq.
+    <eqref|10.64>, <eqref|10.65>, and <eqref|10.66> and hence evaluate
+
+    <\equation*>
+      E[z<rsub|nk> ]=r<rsub|nk> .
+    </equation*>
+
+    Then in the subsequent variational equivalent of the M step, we keep
+    these responsibilities xed and use them to re-compute the variational
+    distribution over the parameters using Eq. <eqref|10.57> and
+    <eqref|10.59>.
+
+    In each case, we see that the variational posterior distribution has the
+    same functional form as the corresponding factor in the joint
+    distribution Eq. <eqref|10.41>. This is a general result and is a
+    consequence of the choice of conjugate distributions.
+  </hidden>|<\hidden>
+    Figure <reference|fig10.6> shows the results of applying this approach to
+    the rescaled Old Faithful data set for a Gaussian mixture model having
+    <math|K=6> components.\ 
+
+    We see that after convergence, there are only two components for which
+    the expected values of the mixing coefcients are numerically
+    distinguishable from their prior values.\ 
+
+    This effect can be understood qualitatively in terms of the automatic
+    trade-off in a Bayesian model between tting the data and the complexity
+    of the model, in which the complexity penalty arises from components
+    whose parameters are pushed away from their prior values.\ 
+
+    Components that take essentially no responsibility for explaining the
+    data points have <math|r<rsub|nk>\<simeq\> 0> and hence <math|N<rsub|k>
+    \<simeq\> 0>.\ 
+
+    From Eq. <eqref|10.58>, we see that <math|\<alpha\><rsub|k>\<simeq\>\<alpha\><rsub|0>>
+    and from Eq. <eqref|10.60>\U<eqref|10.63> we see that the other
+    parameters revert to their prior values.\ 
+
+    In principle such components are tted slightly to the data points, but
+    for broad priors this effect is too small to be seen numerically.\ 
+
+    \ 
+  </hidden>|<\hidden>
+    For the variational Gaussian mixture model the expected values of the
+    mixing coefcients in the posterior distribution are given by
+
+    <\equation*>
+      \ \<bbb-E\>[\<pi\><rsub|k>] =<frac|\<alpha\><rsub|0> +
+      N<rsub|k>|K\<alpha\><rsub|0>+N>
+    </equation*>
+
+    Consider a component for which <math|N<rsub|k>\<simeq\>0> and
+    <math|\<alpha\><rsub|k>\<simeq\>\<alpha\><rsub|0>>. If the prior is broad
+    so that <math|\<alpha\><rsub|0>\<rightarrow\>0>, then
+    <math|\<bbb-E\>[\<pi\><rsub|k> ]\<rightarrow\>0> and the component plays
+    no role in the model, whereas if the prior tightly constrains the mixing
+    coefcients so that <math|\<alpha\><rsub|0>\<rightarrow\>\<infty\>>, then
+    <math|\<bbb-E\>[\<pi\><rsub|k>]\<rightarrow\><frac|1|K>>.
+
+    In Figure <reference|fig10.6>, the prior over the mixing coefcients is a
+    Dirichlet of the form Eq. <eqref|10.39>. Recall from Figure 2.5 that for
+    <math|\<alpha\><rsub|0>\<less\>1> the prior favours solutions in which
+    some of the mixing coefcients are zero.\ 
+
+    Figure <reference|fig10.6> was obtained using
+    <math|\<alpha\><rsub|0>=10<rsup|\<minus\>3>>, and resulted in two
+    components having nonzero mixing coefcients. If instead we choose
+    <math|\<alpha\><rsub|0>=1> we obtain three components with nonzero mixing
+    coefcients, and for <math|\<alpha\><rsub|0>=10> all six components have
+    nonzero mixing coefcients.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <\small-figure|<image|image/fig_10_6_variational_gm_result.png|0.38par|||>>
+        <label|fig10.6> Variational Bayesian mixture of <math|K = 6>
+        Gaussians applied to the Old Faithful data set, in which the ellipses
+        denote the one standard-deviation density contours for each of the
+        components, and the density of red ink inside each ellipse
+        corresponds to the mean value of the mixing coefcient for each
+        component. The number in the top left of each diagram shows the
+        number of iterations of variational inference. Components whose
+        expected mixing coefcient are numerically indistinguishable from
+        zero are not plotted.
+      </small-figure>
+    </padded-center>
+  </hidden>|<\hidden>
+    As we have seen there is a close similarity between the variational
+    solution for the Bayesian mixture of Gaussians and the EM algorithm for
+    maximum likelihood. In fact if we consider the limit <math|N
+    \<rightarrow\> \<infty\>> then the Bayesian treatment converges to the
+    maximum likelihood EM algorithm.\ 
+
+    For anything other than very small data sets, the dominant computational
+    cost of the variational algorithm for Gaussian mixtures arises from the
+    evaluation of the responsibilities, together with the evaluation and
+    inversion of the weighted data covariance matrices. These computations
+    mirror precisely those that arise in the maximum likelihood EM algorithm,
+    and so there is little computational overhead in using this Bayesian
+    approach as compared to the traditional maximum likelihood one.\ 
+
+    There are, however, some substantial advantages. First of all, the
+    singularities that arise in maximum likelihood when a Gaussian component
+    `collapses' onto a specic data point are absent in the Bayesian
+    treatment. Indeed, these singularities are removed if we simply introduce
+    a prior and then use a MAP estimate instead of maximum likelihood.
+    Furthermore, there is no over-tting if we choose a large number K of
+    components in the mixture, as we saw in Figure <reference|fig10.6>.
+    Finally, the variational treatment opens up the possibility of
+    determining the optimal number of components in the mixture without
+    resorting to techniques such as cross validation.
+  </hidden>|<\hidden>
+    <tit| <subsection|Variational lower bound><label|sec10.2.2>>
+
+    We can also straightforwardly evaluate the lower bound Eq. <eqref|10.3>
+    for this model.
+
+    In practice, it is useful to be able to monitor the bound during the
+    re-estimation in order to test for convergence. It can also provide a
+    valuable check on both the mathematical expressions for the solutions and
+    their software implementation, because at each step of the iterative
+    re-estimation procedure the value of this bound should not decrease.\ 
+
+    We can take this a stage further to provide a deeper test of the
+    correctness of both the mathematical derivation of the update equations
+    and of their software implementation by using nite differences to check
+    that each update does indeed give a (constrained) maximum of the bound
+    (Svensén and Bishop, 2004).
+  </hidden>|<\hidden>
+    For the variational mixture of Gaussians, the lower bound Eq.
+    <eqref|10.3> is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-L\>>|<cell|=>|<cell|<big|sum><rsub|Z><big|iiint>q<around*|(|Z,\<b-pi\>,\<b-mu\>,\<Lambda\>|)>ln<around*|{|<frac|p<around*|(|X,Z,\<b-pi\>,\<b-mu\>,\<Lambda\>|)>|q<around*|(|Z,\<b-pi\>,\<b-mu\>,\<Lambda\>|)>>|}>\<mathd\>\<b-pi\>\<mathd\>\<b-mu\>\<mathd\>\<Lambda\>>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><around*|[|ln
+      p<around*|(|X,Z,\<b-pi\>,\<b-mu\>,\<Lambda\>|)>|]>-\<bbb-E\><around*|[|ln
+      q<around*|(|Z,\<b-pi\>,\<b-mu\>,\<Lambda\>|)>|]>>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><around*|[|ln
+      p<around*|(|X\|Z,\<b-mu\>,\<Lambda\>|)>|]>+\<bbb-E\><around*|[|ln
+      p<around*|(|Z\|\<b-pi\>|)>|]>+\<bbb-E\><around*|[|ln
+      p<around*|(|\<b-pi\>|)>|]>+\<bbb-E\><around*|[|ln
+      p<around*|(|\<b-mu\>,\<Lambda\>|)>|]>>>|<row|<cell|>|<cell|>|<cell|-\<bbb-E\><around*|[|ln
+      q<around*|(|Z|)>|]>-\<bbb-E\><around*|[|ln
+      q<around*|(|\<b-pi\>|)>|]>-\<bbb-E\><around*|[|ln
+      q<around*|(|\<b-mu\>,\<Lambda\>|)>|]>>>>>
+    </eqnarray*>
+
+    where, to keep the notation uncluttered, we have omitted the
+    <math|\<ast\>> superscript on the <math|q> distributions, along with the
+    subscripts on the expectation operators because each expectation is taken
+    with respect to all of the random variables in its argument.
+  </hidden>|<\hidden>
+    \ The various terms in the bound are easily evaluated to give the
+    following results
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|ln
+      p<around*|(|X\|Z,\<b-mu\>,\<Lambda\>|)>|]>>|<cell|=>|<cell|<frac|1|2><big|sum><rsub|k=1><rsup|K>N<rsub|k><around*|{|ln|}><wide|\<Lambda\>|~><rsub|k>-D\<beta\><rsub|k><rsup|-1>-\<nu\><rsub|k>Tr<around*|(|S<rsub|k>W<rsub|k>|)>>>|<row|<cell|>|<cell|>|<cell|-\<nu\><rsub|k><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|k>|)><rsup|T>W<rsub|k><around*|(|<wide|\<b-x\>|\<wide-bar\>><rsub|k>-\<b-m\><rsub|k>|)>-D
+      ln<around*|(|2\<pi\>|)>>>|<row|<cell|\<bbb-E\><around*|[|ln
+      p<around*|(|Z\|\<b-pi\>|)>|]>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>r<rsub|nk>ln<wide|\<pi\>|~><rsub|k>>>|<row|<cell|\<bbb-E\><around*|[|ln
+      p<around*|(|\<b-pi\>|)>|]>>|<cell|=>|<cell|ln
+      C<around*|(|\<b-alpha\><rsub|0>|)>+<around*|(|\<alpha\><rsub|0>-1|)><big|sum><rsub|k=1><rsup|K>ln<wide|\<pi\>|~><rsub|k>>>|<row|<cell|\<bbb-E\><around*|[|ln
+      p<around*|(|\<b-mu\>,\<Lambda\>|)>|]>>|<cell|=>|<cell|<frac|1|2><big|sum><rsub|k=1><rsup|K><around*|{|D
+      ln<around*|(|<frac|\<beta\><rsub|0>|2\<pi\>>|)>+ln<wide|\<Lambda\>|~><rsub|k>-<frac|D\<beta\><rsub|0>|\<beta\><rsub|k>>-\<beta\><rsub|0>\<nu\><rsub|k><around*|(|\<b-m\><rsub|k>-\<b-m\><rsub|0>|)><rsup|T>W<rsub|k><around*|(|\<b-m\><rsub|k>-\<b-m\><rsub|0>|)>|}>>>|<row|<cell|>|<cell|>|<cell|+K
+      ln B<around*|(|W<rsub|0>,\<nu\><rsub|0>|)>+<frac|<around*|(|\<nu\><rsub|0>-D-1|)>|2><big|sum><rsub|k=1><rsup|K>ln<wide|\<Lambda\>|~><rsub|k>-<frac|1|2><big|sum><rsub|k=1><rsup|K>\<nu\><rsub|k>Tr<around*|(|W<rsub|0><rsup|-1>W<rsub|k>|)>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|ln
+      q<around*|(|Z|)>|]>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>r<rsub|nk>ln
+      r<rsub|nk>>>|<row|<cell|\<bbb-E\><around*|[|ln
+      q<around*|(|\<b-pi\>|)>|]>>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|K><around*|(|\<alpha\><rsub|k>-1|)>ln<wide|\<pi\>|~><rsub|k>+ln
+      C<around*|(|\<b-alpha\>|)>>>|<row|<cell|\<bbb-E\><around*|[|ln
+      q<around*|(|\<b-mu\>,\<Lambda\>|)>|]>>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|K><around*|{|<frac|1|2>ln<wide|\<Lambda\>|~><rsub|k>+<frac|D|2>ln<around*|(|<frac|\<beta\><rsub|k>|2\<pi\>>|)>-<frac|D|2>-H<around*|[|q<around*|(|\<Lambda\><rsub|k>|)>|]>|}>>>>>
+    </eqnarray*>
+
+    where <math|D> is the dimensionality of <math|\<b-x\>>,
+    <math|H[q(\<Lambda\><rsub|k>)]> is the entropy of the Wishart
+    distribution given by (B.82), and the coefcients <math|C(\<b-alpha\>)>
+    and <math|B(W,\<nu\>)> are dened by (B.23) and (B.79), respectively.
+    Note that the terms involving expectations of the logs of the <math|q>
+    distributions simply represent the negative entropies of those
+    distributions. Some simplications and combination of terms can be
+    performed when these expressions are summed to give the lower bound.
+    However, we have kept the expressions separate for ease of understanding.
+  </hidden>|<\hidden>
+    Finally, it is worth noting that the lower bound provides an alternative
+    approach for deriving the variational re-estimation equations obtained in
+    Section <reference|sec10.2.1>.\ 
+
+    To do this we use the fact that, since the model has conjugate priors,
+    the functional form of the factors in the variational posterior
+    distribution is known, namely discrete for <math|Z>, Dirichlet for
+    <math|\<b-pi\>>, and Gaussian-Wishart for
+    <math|(\<b-mu\><rsub|k>,\<Lambda\><rsub|k>)>.\ 
+
+    By taking general parametric forms for these distributions we can derive
+    the form of the lower bound as a function of the parameters of the
+    distributions.\ 
+
+    Maximizing the bound with respect to these parameters then gives the
+    required re-estimation equations.
+  </hidden>|<\shown>
+    <\tit>
+      <subsection|Predictive density><label|sec10.2.3>
+    </tit>
+
+    In applications of the Bayesian mixture of Gaussians model we will often
+    be interested in the predictive density for a new value
+    <math|<wide|\<b-x\>|^>> \ of the observed variable. Associated with this
+    observation will be a corresponding latent variable
+    <math|<wide|\<b-z\>|^>>, and the predictive density is then given by
+
+    <\equation*>
+      p<around*|(|<wide|\<b-x\>|^>\|X|)>=<big|sum><rsub|<wide|\<b-z\>|^>><big|iiint>p<around*|(|<wide|\<b-x\>|^>\|<wide|\<b-z\>|^>,\<b-mu\>,\<Lambda\>|)>p<around*|(|<wide|\<b-z\>|^>\|\<b-pi\>|)>p<around*|(|\<b-pi\>,\<b-mu\>,\<Lambda\>|)>\<mathd\>\<b-pi\>\<mathd\>\<b-mu\>\<mathd\>\<Lambda\>
+    </equation*>
+
+    \;
+  </shown>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-height|auto>
+    <associate|page-medium|paper>
+    <associate|page-type|16:9>
+    <associate|page-width|auto>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|10.26|<tuple|5|31>>
+    <associate|10.27|<tuple|6|31>>
+    <associate|10.29|<tuple|7|32>>
+    <associate|10.3|<tuple|1|9>>
+    <associate|10.30|<tuple|8|32>>
+    <associate|10.31|<tuple|9|35>>
+    <associate|10.35|<tuple|10|37>>
+    <associate|10.36|<tuple|11|38>>
+    <associate|10.37|<tuple|12|40>>
+    <associate|10.38|<tuple|13|41>>
+    <associate|10.39|<tuple|14|?>>
+    <associate|10.40|<tuple|15|42>>
+    <associate|10.41|<tuple|16|44>>
+    <associate|10.45|<tuple|17|?>>
+    <associate|10.46|<tuple|18|?>>
+    <associate|10.49|<tuple|19|?>>
+    <associate|10.5|<tuple|2|12>>
+    <associate|10.50|<tuple|20|?>>
+    <associate|10.54|<tuple|21|?>>
+    <associate|10.55|<tuple|22|?>>
+    <associate|10.57|<tuple|23|?>>
+    <associate|10.58|<tuple|24|?>>
+    <associate|10.59|<tuple|25|?>>
+    <associate|10.6|<tuple|3|13>>
+    <associate|10.60|<tuple|26|?>>
+    <associate|10.61|<tuple|27|?>>
+    <associate|10.62|<tuple|28|?>>
+    <associate|10.63|<tuple|29|?>>
+    <associate|10.64|<tuple|30|1>>
+    <associate|10.65|<tuple|31|1>>
+    <associate|10.66|<tuple|32|1>>
+    <associate|10.9|<tuple|4|15>>
+    <associate|auto-1|<tuple|1|5>>
+    <associate|auto-10|<tuple|2|?>>
+    <associate|auto-11|<tuple|5|?>>
+    <associate|auto-12|<tuple|2.1|?>>
+    <associate|auto-13|<tuple|6|?>>
+    <associate|auto-14|<tuple|2.2|?>>
+    <associate|auto-15|<tuple|2.3|1>>
+    <associate|auto-2|<tuple|1|11>>
+    <associate|auto-3|<tuple|1.1|12>>
+    <associate|auto-4|<tuple|1.2|23>>
+    <associate|auto-5|<tuple|2|26>>
+    <associate|auto-6|<tuple|3|34>>
+    <associate|auto-7|<tuple|1.3|39>>
+    <associate|auto-8|<tuple|4|43>>
+    <associate|auto-9|<tuple|1.4|1>>
+    <associate|fig10.1|<tuple|1|11>>
+    <associate|fig10.2|<tuple|2|?>>
+    <associate|fig10.3|<tuple|3|?>>
+    <associate|fig10.4|<tuple|4|?>>
+    <associate|fig10.5|<tuple|5|43>>
+    <associate|fig10.6|<tuple|6|1>>
+    <associate|sec10.1|<tuple|1|?>>
+    <associate|sec10.1.1|<tuple|1.1|?>>
+    <associate|sec10.1.2|<tuple|1.2|?>>
+    <associate|sec10.1.3|<tuple|1.3|?>>
+    <associate|sec10.1.4|<tuple|1.4|?>>
+    <associate|sec10.2|<tuple|2|?>>
+    <associate|sec10.2.1|<tuple|2.1|?>>
+    <associate|sec10.2.2|<tuple|2.2|?>>
+    <associate|sec10.2.3|<tuple|2.3|1>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|figure>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1>|| Illustration of
+      the variational approximation for the example considered earlier in
+      Figure 4.14. The left-hand plot shows the original distribution
+      (yellow) along with the Laplace (red) and variational (green)
+      approximations, and the right-hand plot shows the negative logarithms
+      of the corresponding curves.>|<pageref|auto-2>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|2>|>
+        Comparison of the two alternative forms for the Kullback-Leibler
+        divergence. The green contours corresponding to 1, 2, and 3 standard
+        deviations for a correlated Gaussian distribution
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(\<b-z\>)>>
+        over two variables <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z<rsub|1>>>
+        and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z<rsub|2>>>,
+        and the red contours represent the corresponding levels for an
+        approximating distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q(\<b-z\>)>>
+        over the same variables given by the product of two independent
+        univariate Gaussian distributions whose parameters are obtained by
+        minimization of (a) the Kullback- Leibler divergence
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|KL(q\<\|\|\>p)>>,
+        and (b) the reverse Kullback-Leibler divergence
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|KL(p\<\|\|\>q)>>.
+      </surround>|<pageref|auto-5>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|3>||Another comparison
+      of the two alternative forms for the Kullback-Leibler divergence. (a)
+      The blue contours show a bimodal distribution
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(Z)>>
+      given by a mixture of two Gaussians, and the red contours correspond to
+      the single Gaussian distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q(Z)>>
+      that best approximates <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(Z)>>
+      in the sense of minimizing the Kullback- Leibler divergence
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|KL(p\<\|\|\>q)>>.
+      (b) As in (a) but now the red contours correspond to a Gaussian
+      distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q(Z)>>
+      found by numerical minimization of the Kullback-Leibler
+      divergence<with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|
+      KL(q\<\|\|\>p)>>. (c) As in (b) but showing a different local minimum
+      of the Kullback-Leibler divergence.>|<pageref|auto-6>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|4>|| Illustration of
+      variational inference for the mean \<mu\> and precision
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<tau\>>>
+      of a univariate Gaussian distribution. Contours of the true posterior
+      distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(\<mu\>,\<tau\>\|D)>>
+      are shown in green. (a) Contours of the initial factorized
+      approximation <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q<rsub|\<mu\>>(\<mu\>)q<rsub|\<tau\>>(\<tau\>)>>
+      are shown in blue. (b) After re-estimating the factor
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q<rsub|\<mu\>>(\<mu\>)>>.
+      (c) After re-estimating the factor <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q<rsub|\<tau\>>(\<tau\>)>>.
+      (d) Contours of the optimal factorized approximation, to which the
+      iterative scheme converges, are shown in red.>|<pageref|auto-8>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|5>|>
+        \ Directed acyclic graph representing the Bayesian mixture of
+        Gaussians model, in which the box (plate) denotes a set of
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|N>>
+        i.i.d. observations. Here <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<b-mu\>>>
+        denotes <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|{\<b-mu\><rsub|k>}>>
+        and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<Lambda\>>>
+        denotes <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|{\<Lambda\><rsub|k>}>>.
+      </surround>|<pageref|auto-11>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|6>|>
+        \ Variational Bayesian mixture of
+        <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|K
+        = 6>> Gaussians applied to the Old Faithful data set, in which the
+        ellipses denote the one standard-deviation density contours for each
+        of the components, and the density of red ink inside each ellipse
+        corresponds to the mean value of the mixing coefcient for each
+        component. The number in the top left of each diagram shows the
+        number of iterations of variational inference. Components whose
+        expected mixing coefcient are numerically indistinguishable from
+        zero are not plotted.
+      </surround>|<pageref|auto-13>>
+    </associate>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Variational
+      Inference> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|1.1<space|2spc>Factorized distributions
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-3>>
+
+      <with|par-left|<quote|1tab>|1.2<space|2spc>Properties of factorized
+      approximations <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-4>>
+
+      <with|par-left|<quote|1tab>|1.3<space|2spc>Example: The univariate
+      Gaussian <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-7>>
+
+      <with|par-left|<quote|1tab>|1.4<space|2spc>Model comparison
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-9>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Illustration:
+      Variational Mixture of Gaussians> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-10><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|2.1<space|2spc>Variational distribution
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-12>>
+
+      <with|par-left|<quote|1tab>|2.2<space|2spc>Variational lower bound
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-14>>
+
+      <with|par-left|<quote|1tab>|2.3<space|2spc>Predictive density
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-15>>
+    </associate>
+  </collection>
+</auxiliary>

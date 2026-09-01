@@ -20,7 +20,7 @@ function nonlinear()
     f(p,x)= p[1]*x[1]/(1+p[2]*x[2]^2)
     l(p,x,t)=sum((f(p,x)-t).^2)
     p=randn(2).+1.5
-    for i in 1:5000
+    for i in 1:50
          x=randn(2)
          t=x[1]/(1+2*x[2]^2)
          g=gradient((p)->l(p,x,t),p)[1]
