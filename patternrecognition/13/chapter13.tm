@@ -1,4 +1,4 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
 <style|<tuple|book|granite>>
 
@@ -1776,15 +1776,15 @@
   write the transition and emission distributions in the general form
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-z\><rsub|n>\|A\<b-z\><rsub|n-1>,\<Gamma\>|)>>>|<row|<cell|p<around*|(|*\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\><rsub|n>\|C\<b-z\><rsub|n>,\<Sigma\>|)>>>>>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-z\><rsub|n>\|A\<b-z\><rsub|n-1>,\<Gamma\>|)><eq-number><label|13.75>>>|<row|<cell|p<around*|(|*\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\><rsub|n>\|C\<b-z\><rsub|n>,\<Sigma\>|)><eq-number><label|13.76>>>>>
   </eqnarray*>
 
   The initial latent variable also has a Gaussian distribution which we write
   as
 
-  <\equation*>
-    p<around*|(|\<b-z\><rsub|1>|)>=\<cal-N\><around*|(|\<b-z\><rsub|1>\|\<b-mu\><rsub|0>,V<rsub|0>|)>
-  </equation*>
+  <\equation>
+    p<around*|(|\<b-z\><rsub|1>|)>=\<cal-N\><around*|(|\<b-z\><rsub|1>\|\<b-mu\><rsub|0>,V<rsub|0>|)><label|13.77>
+  </equation>
 
   Note that in order to simplify the notation, we have omitted additive
   constant terms from the means of the Gaussians. In fact, it is
@@ -1832,7 +1832,37 @@
   role of the sum-product algorithm is to provide a more efficient way to
   perform such computations.
 
-  \;
+  Linear dynamical systems have the identical factorization, given by Eq.
+  <eqref|13.6>, to hidden Markov models, and are again described by the
+  factor graphs in Figures <reference|fig13.14> and <reference|fig13.15>.
+  Inference algorithms therefore take precisely the same form except that
+  summations over latent variables are replaced by integrations. We begin by
+  considering the forward equations in which we treat <math|\<b-z\><rsub|N>>
+  as the root node, and propagate messages from the leaf node
+  <math|h(\<b-z\><rsub|1>)> to the root. From Eq. <eqref|13.77>, the initial
+  message will be Gaussian, and because each of the factors is Gaussian, all
+  subsequent messages will also be Gaussian. By convention, we shall
+  propagate messages that are normalized marginal distributions corresponding
+  to <math|p(\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>)>,
+  which we denote by
+
+  <\equation>
+    <wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)>=\<cal-N\><around*|(|\<b-z\><rsub|n>\|\<b-mu\><rsub|n>,V<rsub|n>|)><label|13.84>
+  </equation>
+
+  This is precisely analogous to the propagation of scaled variables
+  <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n>)> given by Eq. <eqref|13.59> in
+  the discrete case of the hidden Markov model, and so the recursion equation
+  now takes the form
+
+  <\equation>
+    c<rsub|n><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)>=p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)><big|int><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n-1><label|13.85>
+  </equation>
+
+  Substituting for the conditionals <math|p(\<b-z\><rsub|n>\|\<b-z\><rsub|n\<minus\>1>)>
+  and <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)>, using Eq. <eqref|13.75> and
+  <eqref|13.76>, respectively, and making use of Eq. <eqref|13.84>, we see
+  that Eq. <eqref|13.85> becomes
 </body>
 
 <\initial>
@@ -1877,6 +1907,11 @@
     <associate|13.6|<tuple|1.3|4>>
     <associate|13.63|<tuple|1.32|17>>
     <associate|13.73|<tuple|1.33|19>>
+    <associate|13.75|<tuple|1.34|?>>
+    <associate|13.76|<tuple|1.35|?>>
+    <associate|13.77|<tuple|1.36|?>>
+    <associate|13.84|<tuple|1.37|?>>
+    <associate|13.85|<tuple|1.38|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
