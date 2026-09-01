@@ -31,7 +31,7 @@ def backpropogation(training_examples, eta, n_in, n_out, n_hidden):
             L[1]['w'][:, -1] += eta*L[1]['delta']
             L[0]['w'] += eta*np.outer(L[0]['delta'], x)
         p = precision(training_examples, L)
-        print ("iteration: ", n, "  precision: ", np.int(p*100), "%")
+        print ("iteration: ", n, "  precision: ", int(p*100), "%")
         if(p == 1):
             break
 
