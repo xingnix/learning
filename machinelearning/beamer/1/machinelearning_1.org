@@ -66,7 +66,56 @@
 
 
 
+* AI历史
+
+** 幻想中的AI
+#+attr_latex: :height 0.7\textheight
+[[./image/1757126005661qhgmmo2v.png]]
+
+** AI的梦想
+#+attr_latex: :height 0.7\textheight
+[[./image/1757126255123zb33yfo0.png]]
+
+** AI的翅膀
+#+attr_latex: :height 0.7\textheight
+[[./image/magicstudio-art.jpg]]
+
+** AI与飞行
+#+attr_latex: :height 0.7\textheight
+[[./image/image.jpeg]]
+
+** The Engine in Jonathan Swift’s  Gulliver’s Travels 
+
+#+attr_latex: :width 0.7\textwidth
+[[./image/magic-hour-ai-gulliver-engine.png]]
+
+https://magichour.ai/products/ai-image-generator
+
+** chess-playing machine , Leonardo Torresy Quevedo
+
+#+attr_latex: :height 0.7\textheight
+[[./image/080224_Bruderer_Fig.-7-Wiener_Torres-Quevedo-1951-1.jpg]]
+
+https://cacm.acm.org/blogcacm/technical-marvels-part-5-chess-automatons/
+
+
+** A play named R.U.R (Rossum’s Universal Robots) opens in London.
+#+attr_latex: :height 0.7\textheight
+[[./image/scene-from-rur-rossums-universal-robots-by-karel-capek-guild-tour-company-museum-private-collection-author-vandamm-studio-R5MMRE.jpeg]]
+
+
+**  Alan-Turing
+#+attr_latex: :height 0.7\textheight
+[[./image/Alan-Turing.png]]
+
+
+** John Mccarthy
+#+attr_latex: :height 0.7\textheight
+[[./image/john-mccarthy-stanford.jpg]]
+
+
 * 课程简介
+
 ** 机器学习 
 *** 定义							    :B_block:
     :PROPERTIES:
@@ -86,6 +135,7 @@
 - 基于实例的学习
 - 遗传算法
 - 增强学习
+
 
 ** 与其它课程关系
 
@@ -399,6 +449,12 @@ LMS 权值更新法则(LMS Weight update rule)
    - https://www.tensorflow.org
    - http://www.deeplearning.net/software/theano/
    - https://github.com/NervanaSystems/neon
+
+** Scikit-learn
+#+attr_latex: :height 0.7\textheight
+[[./image/ml_map.png]]
+
+   
 ** Java
      - http://www.cs.waikato.ac.nz/ml/weka/index.html
      - http://moa.cms.waikato.ac.nz/

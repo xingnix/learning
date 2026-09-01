@@ -1,4 +1,4 @@
-% Created 2026-08-31 Mon 23:54
+% Created 2026-09-01 Tue 11:34
 % Intended LaTeX compiler: xelatex
 \documentclass[aspectratio=169]{beamer}
 \usepackage{graphicx}
@@ -49,14 +49,67 @@
 \tableofcontents
 \end{frame}
 
+\section{AI历史}
+\label{sec:org8e7dd3f}
+
+\begin{frame}[label={sec:org427a9ef}]{幻想中的AI}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/1757126005661qhgmmo2v.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org6ff81e8}]{AI的梦想}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/1757126255123zb33yfo0.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:orgc9f7408}]{AI的翅膀}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/magicstudio-art.jpg}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org1589be0}]{AI与飞行}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/image.jpeg}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:orgb7cb6d6}]{The Engine in Jonathan Swift’s  Gulliver’s Travels}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{./image/magic-hour-ai-gulliver-engine.png}
+\end{center}
+
+\url{https://magichour.ai/products/ai-image-generator}
+\end{frame}
+\begin{frame}[label={sec:org894437c}]{chess-playing machine , Leonardo Torresy Quevedo}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/080224_Bruderer_Fig.-7-Wiener_Torres-Quevedo-1951-1.jpg}
+\end{center}
+
+\url{https://cacm.acm.org/blogcacm/technical-marvels-part-5-chess-automatons/}
+\end{frame}
+\begin{frame}[label={sec:org11d8e76}]{A play named R.U.R (Rossum’s Universal Robots) opens in London.}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/scene-from-rur-rossums-universal-robots-by-karel-capek-guild-tour-company-museum-private-collection-author-vandamm-studio-R5MMRE.jpeg}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:orgd7ea7f2}]{Alan-Turing}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/Alan-Turing.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org820dfcb}]{John Mccarthy}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/john-mccarthy-stanford.jpg}
+\end{center}
+\end{frame}
 \section{课程简介}
-\label{sec:orgdcbd5e1}
-\begin{frame}[label={sec:org26761b5}]{机器学习}
+\label{sec:orgb8dcc59}
+
+\begin{frame}[label={sec:orgb9c9f71}]{机器学习}
 \begin{block}{定义}
 对于某类任务 \(T\) 和性能度量 \(P\) 如果一个计算机程序在T上以P衡量的性能随着经验E而自我完善，那么我们称这个计算机程序在从经验E学习。
 \end{block}
 \end{frame}
-\begin{frame}[label={sec:orgeb45874}]{课程主要内容}
+\begin{frame}[label={sec:org2eca1f2}]{课程主要内容}
 \begin{itemize}
 \item 概念学习
 \item 决策树学习
@@ -69,7 +122,7 @@
 \item 增强学习
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6ea11f1}]{与其它课程关系}
+\begin{frame}[label={sec:org2b28887}]{与其它课程关系}
 \begin{itemize}
 \item 概率与数理统计
 \item 人工智能
@@ -83,8 +136,8 @@
 \end{itemize}
 \end{frame}
 \section{机器学习示例}
-\label{sec:org6464b0f}
-\begin{frame}[label={sec:org1fca072}]{机器学习示例}
+\label{sec:orge9c5b1e}
+\begin{frame}[label={sec:org440d175}]{机器学习示例}
 \begin{itemize}
 \item 无人驾驶汽车
 \item 手写识别
@@ -92,7 +145,7 @@
 \item 垃圾邮件过滤
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgbea627c}]{Typical Datamining Task}
+\begin{frame}[label={sec:org813b965}]{Typical Datamining Task}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./image/csec.png}
 \end{center}
@@ -109,7 +162,7 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgb8956aa},fragile]{Datamining Result}
+\begin{frame}[label={sec:orgbc4c45b},fragile]{Datamining Result}
  \begin{itemize}
 \item Data:
 \end{itemize}
@@ -131,7 +184,7 @@ Then Probability of Emergency C-Section is 0.6
 \end{verbatim}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org5ebb056},fragile]{Credit Risk Analysis}
+\begin{frame}[label={sec:orgb2b325f},fragile]{Credit Risk Analysis}
  Data:
 
 \begin{center}
@@ -152,27 +205,27 @@ Then Profitable-Customer? = Yes
      [Accept Credit Card application]
 \end{verbatim}
 \end{frame}
-\begin{frame}[label={sec:orgde81738}]{Customer purchase behavior:}
+\begin{frame}[label={sec:orge3886c8}]{Customer purchase behavior:}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./image/customer-outcomes.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org5813c9a}]{Customer retention:}
+\begin{frame}[label={sec:org3467e5c}]{Customer retention:}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./image/bank-customer.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org51f3820}]{Process optimization:}
+\begin{frame}[label={sec:orgfcdd688}]{Process optimization:}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./image/process-outcomes.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org01d070b}]{ALVINN [Pomerleau] drives 70 mph on highways}
+\begin{frame}[label={sec:org72bd803}]{ALVINN [Pomerleau] drives 70 mph on highways}
 \includegraphics[width=0.3\textwidth]{./image/nl5-interior-front-color.png}
 \includegraphics[width=0.3\textwidth]{./image/alvinn1.png}
 \includegraphics[width=0.3\textwidth]{./image/alvinn2.png}
 \end{frame}
-\begin{frame}[label={sec:orgfc4dde6}]{Software that Customizes to User}
+\begin{frame}[label={sec:orgd291f27}]{Software that Customizes to User}
 \center
 \begin{center}
 \includegraphics[height=0.7\textheight]{./image/wisewire.png}
@@ -181,8 +234,8 @@ Then Profitable-Customer? = Yes
 \centerline{http://www.wisewire.com}
 \end{frame}
 \section{学习问题的标准描述}
-\label{sec:org785f2f4}
-\begin{frame}[label={sec:org078ae45}]{定义}
+\label{sec:org166ba60}
+\begin{frame}[label={sec:org39ad0a5}]{定义}
 对于某类任务 \(T\) 和性能度量 \(P\) ，如果一个计算机程序在 \(T\) 上以 \(P\) 衡量的性能随着经验 \(E\) 而自我完善，那么我们称这个计算机程序在从经验 \(E\) 学习。
 
 \begin{itemize}
@@ -195,49 +248,49 @@ Then Profitable-Customer? = Yes
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org8495daa}]{西洋跳棋学习问题：}
+\begin{frame}[label={sec:org2e3de9b}]{西洋跳棋学习问题：}
 \begin{itemize}
 \item 任务T：下西洋跳棋
 \item 性能标准P：比赛中击败对手的百分比
 \item 训练经验E：和自己进行对弈
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orged71c50}]{}
+\begin{frame}[label={sec:org4788ae0}]{}
 \begin{center}
 \includegraphics[width=0.7\textwidth]{./image/draughts.png}
 \end{center}
 
 \url{https://draughts.org/}
 \end{frame}
-\begin{frame}[label={sec:orgdb764b8}]{手写识别学习问题}
+\begin{frame}[label={sec:org6f4d73a}]{手写识别学习问题}
 \begin{itemize}
 \item 任务T：识别和分类图像中的手写文字
 \item 性能标准P：分类的正确率
 \item 训练经验E：已知分类的手写文字数据库
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgb30e5f2}]{}
+\begin{frame}[label={sec:orge525fa1}]{}
 \begin{center}
 \includegraphics[width=0.8\textwidth]{./image/mnist.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgedb632c}]{机器人驾驶学习问题}
+\begin{frame}[label={sec:org0af0eca}]{机器人驾驶学习问题}
 \begin{itemize}
 \item 任务T：通过视觉传感器在路上驾驶
 \item 性能标准P：平均无差错行驶里程（差错由人类的监督裁定）
 \item 训练经验E：注视人类驾驶时录制的一系列图像和驾驶指令
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgf8c2e90}]{}
+\begin{frame}[label={sec:org3aca658}]{}
 \begin{center}
 \includegraphics[width=0.7\textwidth]{./image/tesla-autopilot-full-self-driving-fsd-1400x933.jpeg}
 \end{center}
 \end{frame}
 \section{设计一个学习系统}
-\label{sec:orgc713285}
+\label{sec:org98fd8df}
 
 
-\begin{frame}[label={sec:org98c81c5}]{西洋跳棋学习问题：}
+\begin{frame}[label={sec:orgc1943ac}]{西洋跳棋学习问题：}
 \begin{itemize}
 \item 任务T：下西洋跳棋
 \item 性能标准P：世界锦标赛上击败对手的百分比
@@ -252,7 +305,7 @@ Then Profitable-Customer? = Yes
 \item 一种学习机制
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org3469549}]{选取训练经验的类型}
+\begin{frame}[label={sec:orgd45e38e}]{选取训练经验的类型}
 \begin{itemize}
 \item 直接或间接
 \begin{itemize}
@@ -268,7 +321,7 @@ Then Profitable-Customer? = Yes
 \item 训练样例的分布是否代表实例分布
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6ed6102}]{选择目标函数}
+\begin{frame}[label={sec:orgc559305}]{选择目标函数}
 \begin{itemize}
 \item 目标函数1, 对任何给定的棋局(合法棋局集合中的棋盘状态)能选出最好的走法(从合法走子集合中产生某个走子作为输出)
 $$ChooseMove: Board \rightarrow Move$$
@@ -276,7 +329,7 @@ $$ChooseMove: Board \rightarrow Move$$
 $$V: Board \rightarrow \Re$$
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org2406b8a}]{定义目标函数（ \(V\) ）}
+\begin{frame}[label={sec:org0e400c0}]{定义目标函数（ \(V\) ）}
 \begin{itemize}
 \item 例：
 \begin{itemize}
@@ -288,7 +341,7 @@ $$V: Board \rightarrow \Re$$
 \item 注：正确，但不可操作
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org0352658}]{选择目标函数表示}
+\begin{frame}[label={sec:org7c61b54}]{选择目标函数表示}
 \begin{itemize}
 \item 一组规则
 \item 神经网络
@@ -296,7 +349,7 @@ $$V: Board \rightarrow \Re$$
 \item \ldots{}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgd59bb55}]{目标函数表示}
+\begin{frame}[label={sec:org47af54f}]{目标函数表示}
 \begin{eqnarray*}
 &&\sum_{i=0}^6 w_i f_i \\
 &=&w_{0} + w_{1}\cdot bp(b) + w_{2}\cdot rp(b) + w_{3}\cdot bk(b) + w_{4}\cdot rk(b) + w_{5}\cdot bt(b) + w_{6}\cdot rt(b)
@@ -313,7 +366,7 @@ on black's next turn)
 \item \(rt(b)\):  number of black pieces threatened by red
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgd140fa4}]{估计训练值}
+\begin{frame}[label={sec:orgfc80ebb}]{估计训练值}
 \begin{itemize}
 \item \(V(b)\): 真实目标函数
 \item \(\hat{V}(b)\) : 学习到的函数
@@ -325,7 +378,7 @@ $$V_{train}(b) \leftarrow \hat{V}(Successor(b))$$
 \(Successor(b)\) 表示 一个回合后的棋盘状态。
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orga10c8ef}]{权值调整}
+\begin{frame}[label={sec:org4b271d0}]{权值调整}
 LMS 权值更新法则(LMS Weight update rule)
 \begin{itemize}
 \item Do repeatedly:
@@ -339,13 +392,13 @@ LMS 权值更新法则(LMS Weight update rule)
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org2217a94}]{最终设计}
+\begin{frame}[label={sec:orgebce476}]{最终设计}
 \center
 \begin{center}
 \includegraphics[height=0.7\textheight]{./image/intro-final-design.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgb49d2b0}]{最终设计}
+\begin{frame}[label={sec:org099e9e2}]{最终设计}
 \begin{itemize}
 \item 执行系统（Performance system），这个模块是用学会的目标函数来解决给定的任务，在此就是对弈西洋跳棋。
 \end{itemize}
@@ -365,13 +418,13 @@ LMS 权值更新法则(LMS Weight update rule)
 \end{itemize}
 它的角色是挑选新的练习问题，以使整个系统的学习速率最大化。
 \end{frame}
-\begin{frame}[label={sec:org435ef22}]{设计过程}
+\begin{frame}[label={sec:org9d9cd16}]{设计过程}
 \begin{center}
 \includegraphics[height=0.7\textheight]{./image/intro-f1.png}
 \end{center}
 \end{frame}
 \section{机器学习的问题}
-\label{sec:org9b538a7}
+\label{sec:org59d022e}
 
 \begin{itemize}
 \item 从特定的训练数据学习一般的目标函数存在什么样的算法？
@@ -399,16 +452,16 @@ LMS 权值更新法则(LMS Weight update rule)
 \item 学习器怎样自动地改变表示法来提高表示和学习目标函数的能力？
 \end{itemize}
 \section{机器学习相关资源}
-\label{sec:org12e3064}
+\label{sec:orge8a9e9a}
 
-\begin{frame}[label={sec:org06745b1}]{课程}
+\begin{frame}[label={sec:org1159f5f}]{课程}
 \begin{itemize}
 \item \url{https://www.coursera.org/learn/machine-learning}  Machine Learning Stanford University (coursera)
 \item \url{http://open.163.com/special/opencourse/machinelearning.html}  斯坦福大学公开课 ：机器学习课程（网易公开课）
 \item \url{http://open.163.com/special/opencourse/learningfromdata.html} 加州理工学院公开课：机器学习与数据挖掘
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org29b3268}]{资料}
+\begin{frame}[label={sec:org3a0b684}]{资料}
 \begin{itemize}
 \item \url{https://www.kaggle.com/}
 数据科学竞赛平台、社区
@@ -427,8 +480,8 @@ Spark在线学习
 \end{itemize}
 \end{frame}
 \section{工具}
-\label{sec:org9bdc728}
-\begin{frame}[label={sec:orgab07a8a}]{C/C++}
+\label{sec:orgb66f138}
+\begin{frame}[label={sec:org835067e}]{C/C++}
 \begin{itemize}
 \item \url{http://dlib.net}
 \item \url{http://mlpack.org/}
@@ -437,13 +490,13 @@ Spark在线学习
 \item \url{http://mxnet.io/}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgbd866d6}]{Lua}
+\begin{frame}[label={sec:org2a9758d}]{Lua}
 \begin{itemize}
 \item \url{http://torch.ch}
 \item \url{https://github.com/torchnet/}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6e2b6a2}]{Python}
+\begin{frame}[label={sec:org250755b}]{Python}
 \begin{itemize}
 \item \url{https://pytorch.org}
 \item \url{http://scikit-learn.org/}
@@ -452,7 +505,12 @@ Spark在线学习
 \item \url{https://github.com/NervanaSystems/neon}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org3cab0b6}]{Java}
+\begin{frame}[label={sec:orgf8d3740}]{Scikit-learn}
+\begin{center}
+\includegraphics[height=0.7\textheight]{./image/ml_map.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org7cd0415}]{Java}
 \begin{itemize}
 \item \url{http://www.cs.waikato.ac.nz/ml/weka/index.html}
 \item \url{http://moa.cms.waikato.ac.nz/}
@@ -464,7 +522,7 @@ Spark在线学习
 \item \url{http://airbnb.io/aerosolve/}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org454fa70}]{科学计算}
+\begin{frame}[label={sec:orgf46e2d4}]{科学计算}
 \begin{itemize}
 \item Rstudio(R)
 \item Matlab/Octave
