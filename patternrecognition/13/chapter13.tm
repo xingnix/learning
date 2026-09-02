@@ -1863,6 +1863,52 @@
   and <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)>, using Eq. <eqref|13.75> and
   <eqref|13.76>, respectively, and making use of Eq. <eqref|13.84>, we see
   that Eq. <eqref|13.85> becomes
+
+  <\equation>
+    c<rsub|n>\<cal-N\><around*|(|\<b-z\><rsub|n>\|\<b-mu\><rsub|n>,V<rsub|n>|)>=\<cal-N\><around*|(|\<b-x\><rsub|n>\|C\<b-z\><rsub|n>,\<Sigma\>|)><big|int>\<cal-N\><around*|(|\<b-z\><rsub|n>\|A\<b-z\><rsub|n-1>,\<Gamma\>|)>\<cal-N\><around*|(|\<b-z\><rsub|n-1>\|\<b-mu\><rsub|n-1>,V<rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n-1><label|13.86>
+  </equation>
+
+  Here we are supposing that <math|\<b-mu\><rsub|n\<minus\>1>> and
+  <math|V<rsub|n\<minus\>1>> are known, and by evaluating the integral in Eq.
+  <eqref|13.86>, we wish to determine values for <math|\<b-mu\><rsub|n>> and
+  <math|V<rsub|n>>. The integral is easily evaluated by making use of the
+  result (2.115), from which it follows that
+
+  <\equation*>
+    <big|int>\<cal-N\><around*|(|\<b-z\><rsub|n>\|A\<b-z\><rsub|n-1>,\<Gamma\>|)>\<cal-N\><around*|(|\<b-z\><rsub|n-1>\|\<b-mu\><rsub|n-1>,V<rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n-1>=\<cal-N\><around*|(|\<b-z\><rsub|n>\|A\<b-mu\><rsub|n-1>,P<rsub|n-1>|)>
+  </equation*>
+
+  where we have defined
+
+  <\equation*>
+    P<rsub|n-1>=A V<rsub|n-1>A<rsup|T>+\<Gamma\>
+  </equation*>
+
+  We can now combine this result with the first factor on the right-hand side
+  of Eq. <eqref|13.86> by making use of (2.115) and (2.116) to give
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-mu\><rsub|n>>|<cell|=>|<cell|A\<b-mu\><rsub|n-1>+K<rsub|n><around*|(|\<b-x\><rsub|n>-C
+    A\<b-mu\><rsub|n-1>|)>>>|<row|<cell|V<rsub|n>>|<cell|=>|<cell|<around*|(|I-K<rsub|n>C|)>P<rsub|n-1>>>|<row|<cell|c<rsub|n>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\><rsub|n>\|C
+    A\<b-mu\><rsub|n-1>,C P<rsub|n-1>C<rsup|T>+\<Sigma\>|)>>>>>
+  </eqnarray*>
+
+  Here we have made use of the matrix inverse identities (C.5) and (C.7) and
+  also defined the Kalman gain matrix
+
+  <\equation*>
+    K<rsub|n>=P<rsub|n-1>C<rsup|T><around*|(|C
+    P<rsub|n-1>C<rsup|T>+\<Sigma\>|)><rsup|-1>
+  </equation*>
+
+  Thus, given the values of <math|\<b-mu\><rsub|n\<minus\>1>> and
+  <math|V<rsub|n\<minus\>1>>, together with the new observation
+  <math|\<b-x\><rsub|n>>, \ we can evaluate the Gaussian marginal for
+  <math|\<b-z\><rsub|n>> having mean <math|\<b-mu\><rsub|n>> and covariance
+  <math|V<rsub|n>>, as well as the normalization coefficient
+  <math|c<rsub|n>>.
+
+  \;
 </body>
 
 <\initial>
@@ -1907,11 +1953,12 @@
     <associate|13.6|<tuple|1.3|4>>
     <associate|13.63|<tuple|1.32|17>>
     <associate|13.73|<tuple|1.33|19>>
-    <associate|13.75|<tuple|1.34|?>>
-    <associate|13.76|<tuple|1.35|?>>
-    <associate|13.77|<tuple|1.36|?>>
-    <associate|13.84|<tuple|1.37|?>>
-    <associate|13.85|<tuple|1.38|?>>
+    <associate|13.75|<tuple|1.34|23>>
+    <associate|13.76|<tuple|1.35|23>>
+    <associate|13.77|<tuple|1.36|24>>
+    <associate|13.84|<tuple|1.37|24>>
+    <associate|13.85|<tuple|1.38|24>>
+    <associate|13.86|<tuple|1.39|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
