@@ -6,7 +6,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.13.0
+      jupytext_version: 1.15.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -166,7 +166,7 @@ Fetal_Presentation = 3: [8+,22-] .27+ .73-
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## 例
 ```
-   Day   Outlook    Temperature   Humidity   Wind    Launch
+   Day   Outlook    Temperature   Humidity   Wind     Launch
   ----- ---------- ------------- ---------- -------- ------------
   D1    Sunny      Hot           High       Weak     No
   D2    Sunny      Hot           High       Strong   No
@@ -428,7 +428,7 @@ $$  error_{train}(h) < error_{train}(h') $$ 但在整个实例分布上 $h'$
 ```
   ------------------ ---- ---- ----- ----- ----- ----
   {*Temperature*}:   40   48   60    72    80    90
-  {*PlayTennis*}:    No   No   Yes   Yes   Yes   No
+  {*Launch*}:    No   No   Yes   Yes   Yes   No
   ------------------ ---- ---- ----- ----- ----- ----
 ```
 <!-- #endregion -->
@@ -458,7 +458,7 @@ What if some examples missing values of $A$?
 -   赋给它结点 $n$ 的具有同样目标值的训练样例中该属性的最常见值。
 -   为A的每个可能值赋与一个概率，按此比例将样例分配到子树中。
     -   例如，给定一个布尔属性A，如果结点n包含6个已知A=1和6个A=0的样例，那么A(x)=1的概率是0.6，A(x)=0的概率是0.4。
-        实例x的 60% 被分配到 A=1 的分支，40% 被分配到另一个分支。
+        实例x的 60\% 被分配到 A=1 的分支，40\% 被分配到另一个分支。
 
 <!-- #endregion -->
 <!-- #region slideshow={"slide_type": "subslide"} -->
