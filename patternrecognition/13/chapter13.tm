@@ -1255,9 +1255,9 @@
   The recursion result <eqref|13.38> for <math|\<beta\>> then gives the
   following recursion for the re-scaled variables
 
-  <\equation*>
-    c<rsub|n+1><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>=<big|sum><rsub|\<b-z\><rsub|n+1>><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>
-  </equation*>
+  <\equation>
+    c<rsub|n+1><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>=<big|sum><rsub|\<b-z\><rsub|n+1>><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)><label|13.62>
+  </equation>
 
   In applying this recursion relation, we make use of the scaling factors
   <math|c<rsub|n>> that were previously computed in the <math|\<alpha\>>
@@ -1274,7 +1274,7 @@
   <eqref|13.63>, we see that the required \ marginals are given by
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|\<gamma\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|<wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|c<rsub|n><rsup|-1><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>>>>>
+    <tformat|<table|<row|<cell|\<gamma\><around*|(|\<b-z\><rsub|n>|)>>|<cell|=>|<cell|<wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|c<rsub|n><rsup|-1><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)><eq-number><label|13.65>>>>>
   </eqnarray*>
 
   \;
@@ -1889,12 +1889,12 @@
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|\<b-mu\><rsub|n>>|<cell|=>|<cell|A\<b-mu\><rsub|n-1>+K<rsub|n><around*|(|\<b-x\><rsub|n>-C
-    A\<b-mu\><rsub|n-1>|)>>>|<row|<cell|V<rsub|n>>|<cell|=>|<cell|<around*|(|I-K<rsub|n>C|)>P<rsub|n-1>>>|<row|<cell|c<rsub|n>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\><rsub|n>\|C
-    A\<b-mu\><rsub|n-1>,C P<rsub|n-1>C<rsup|T>+\<Sigma\>|)>>>>>
+    A\<b-mu\><rsub|n-1>|)><eq-number><label|13.89>>>|<row|<cell|V<rsub|n>>|<cell|=>|<cell|<around*|(|I-K<rsub|n>C|)>P<rsub|n-1><eq-number><label|13.90>>>|<row|<cell|c<rsub|n>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\><rsub|n>\|C
+    A\<b-mu\><rsub|n-1>,C P<rsub|n-1>C<rsup|T>+\<Sigma\>|)><eq-number><label|13.91>>>>>
   </eqnarray*>
 
   Here we have made use of the matrix inverse identities (C.5) and (C.7) and
-  also defined the Kalman gain matrix
+  also defined the <em|Kalman gain matrix>
 
   <\equation*>
     K<rsub|n>=P<rsub|n-1>C<rsup|T><around*|(|C
@@ -1907,6 +1907,178 @@
   <math|\<b-z\><rsub|n>> having mean <math|\<b-mu\><rsub|n>> and covariance
   <math|V<rsub|n>>, as well as the normalization coefficient
   <math|c<rsub|n>>.
+
+  The initial conditions for these recursion equations are obtained from
+
+  <\equation*>
+    c<rsub|1><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|1>|)>=p<around*|(|\<b-z\><rsub|1>|)>p<around*|(|\<b-x\><rsub|1>\|\<b-z\><rsub|1>|)>
+  </equation*>
+
+  Because <math|p(\<b-z\><rsub|1>)> is given by Eq. <eqref|13.77>, and
+  <math|p(\<b-x\><rsub|1>\|\<b-z\><rsub|1>)> is given by Eq. <eqref|13.76>,
+  we can again make use of (2.115) to calculate <math|c<rsub|1>> and (2.116)
+  to calculate <math|\<b-mu\><rsub|1>> and <math|V<rsub|1>> giving
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-mu\><rsub|1>>|<cell|=>|<cell|\<b-mu\><rsub|0>+K<rsub|1><around*|(|\<b-x\><rsub|1>-C\<b-mu\><rsub|0>|)>>>|<row|<cell|V<rsub|1>>|<cell|=>|<cell|<around*|(|*I-K<rsub|1>C|)>V<rsub|0>>>|<row|<cell|c<rsub|1>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\><rsub|1>\|C\<b-mu\><rsub|0>,C
+    V<rsub|0>C<rsup|T>+\<Sigma\>|)>>>>>
+  </eqnarray*>
+
+  where
+
+  <\equation*>
+    K<rsub|1>=V<rsub|0>C<rsup|T><around*|(|C
+    V<rsub|0>C<rsup|T>+\<Sigma\>|)><rsup|-1>
+  </equation*>
+
+  Similarly, the likelihood function for the linear dynamical system is given
+  by Eq, <eqref|13.63> in which the factors <math|c<rsub|n>> are found using
+  the Kalman filtering equations.
+
+  We can interpret the steps involved in going from the posterior marginal
+  over <math|\<b-z\><rsub|n\<minus\>1>> to the posterior marginal over
+  <math|\<b-z\><rsub|n>> as follows. In Eq. <eqref|13.89>, we can view the
+  quantity <math|A\<b-mu\><rsub|n\<minus\>1>> as the prediction of the mean
+  over <math|\<b-z\><rsub|n>> obtained by simply taking the mean over
+  zn\<minus\>1 and projecting it forward one step using the transition
+  probability matrix <math|A>. This predicted mean would give a predicted
+  observation for <math|\<b-x\><rsub|n>> given by <math|C
+  A\<b-z\><rsub|n\<minus\>1>> obtained by applying the emission probability
+  matrix <math|C> to the predicted hidden state mean. We can view the update
+  equation <eqref|13.89> for the mean of the hidden variable distribution as
+  taking the predicted mean <math|A\<b-mu\><rsub|n\<minus\>1>> and then
+  adding \ a correction that is proportional to the error
+  <math|\<b-x\><rsub|n>\<minus\>C A\<b-z\><rsub|n\<minus\>1>> between the
+  predicted observation and the actual observation. The coefficient of this
+  correction is given by the Kalman gain matrix. Thus we can view the Kalman
+  filter as a process of making successive predictions and then correcting
+  these predictions in the light of the new observations. This is illustrated
+  graphically in Figure <reference|fig13.21>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_21_linear_dynamical_predict_correct.png|.7par|||>|<label|fig13.21>The
+    linear dynamical system can be viewed as a sequence of steps in which
+    increasing uncertainty in the state variable due to diffusion is
+    compensated by the arrival of new data. In the left-hand plot, the blue
+    curve shows the distribution <math|p(\<b-z\><rsub|n\<minus\>1>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n\<minus\>1>)>,
+    which incorporates all the data up to step <math|n\<minus\>1>. The
+    diffusion arising from the nonzero variance of the transition probability
+    <math|p(\<b-z\><rsub|n>\|\<b-z\><rsub|n\<minus\>1>)> gives the
+    distribution <math|p(\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n\<minus\>1>)>,
+    shown in red in the centre plot. Note that this is broader and shifted
+    relative to the blue curve (which is shown dashed in the centre plot for
+    comparison). The next data observation xn contributes through the
+    emission density <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)>, which is
+    shown as a function of <math|\<b-z\><rsub|n>> in green on the right-hand
+    plot. Note that this is not a density with respect to
+    <math|\<b-z\><rsub|n>> and so is not normalized to one. Inclusion of this
+    new data point leads to a revised distribution
+    <math|p(\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>)> for
+    the state density shown in blue. We see that observation of the data has
+    shifted and narrowed the distribution compared to
+    <math|p(\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n\<minus\>1>)>
+    (which is shown in dashed in the right-hand plot for comparison).>
+  </padded-center>
+
+  If we consider a situation in which the measurement noise is small compared
+  to the rate at which the latent variable is evolving, then we find that the
+  posterior distribution for <math|\<b-z\><rsub|n>> depends only on the
+  current measurement <math|\<b-x\><rsub|n>>, in accordance with \ the
+  intuition from our simple example at the start of the section. Similarly,
+  if the latent variable is evolving slowly relative to the observation noise
+  level, we find that the posterior mean for <math|\<b-z\><rsub|n>> is
+  obtained by averaging all of the measurements obtained up to that time.
+
+  One of the most important applications of the Kalman filter is to tracking,
+  and this is illustrated using a simple example of an object moving in two
+  dimensions in Figure <reference|fig13.22>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_22_linear_dynamical_tracking.png|.3par|||>|<label|fig13.22>An
+    illustration of a linear dynamical system being used to track a moving
+    object. The blue points indicate the true positions of the object in a
+    two-dimensional space at successive time steps, the green points denote
+    noisy measurements of the positions, and the red crosses indicate the
+    means of the inferred posterior distributions of the positions obtained
+    by running the Kalman filtering equations. The covariances of the
+    inferred positions are indicated by the red ellipses, which correspond to
+    contours having one standard deviation.>
+  </padded-center>
+
+  So far, we have solved the inference problem of finding the posterior
+  marginal for a node <math|\<b-z\><rsub|n>> given observations from
+  <math|\<b-x\><rsub|1>> up to <math|\<b-x\><rsub|n>>. Next we turn to the
+  problem of finding the marginal for a node <math|\<b-z\><rsub|n>> given all
+  observations <math|\<b-x\><rsub|1>> to <math|\<b-x\><rsub|N>> . For
+  temporal data, this corresponds to the inclusion of future as well as past
+  observations. Although this cannot be used for real-time prediction, it
+  plays a key role in learning the parameters of the model. By analogy with
+  the hidden Markov model, this problem can be solved by propagating messages
+  from node <math|\<b-x\><rsub|N>> back to node <math|\<b-x\><rsub|1>> and
+  combining this information with that obtained during the forward message
+  passing stage used to compute the <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n>)>.
+
+  In the LDS literature, it is usual to formulate this backward recursion in
+  terms \ of <math|\<gamma\>(\<b-z\><rsub|n>) =
+  <wide|\<alpha\>|^>(\<b-z\><rsub|n>)<wide|\<beta\>|^>(\<b-z\><rsub|n>)>
+  rather than in terms of <math|<wide|\<beta\>|^>(\<b-z\><rsub|n>)>. Because
+  <math|\<gamma\><around*|(|\<b-z\><rsub|n>|)>> must also be Gaussian, we
+  write it in the form
+
+  <\equation>
+    \<gamma\><around*|(|\<b-z\><rsub|n>|)>=<wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>=\<cal-N\><around*|(|\<b-z\><rsub|n>\|<wide|\<b-mu\>|^><rsub|n>,<wide|V|^><rsub|n>|)><label|13.98>
+  </equation>
+
+  To derive the required recursion, we start from the backward recursion
+  <eqref|13.62> for <math|<wide|\<beta\>|^>(\<b-z\><rsub|n>)>, which, for
+  continuous latent variables, can be written in the form
+
+  <\equation>
+    c<rsub|n+1><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>=<big|int><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>|)>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>\<mathd\>\<b-z\><rsub|n+1><label|13.99>
+  </equation>
+
+  We now multiply both sides of Eq. <eqref|13.99> by
+  <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n>)> and substitute for
+  <math|p(\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1>)> and
+  p<math|(\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>)> using Eq. <eqref|13.75> and
+  <eqref|13.76>. Then we make use of Eq. <eqref|13.89>, <eqref|13.90> and
+  <eqref|13.91>, together with Eq. <eqref|13.98>, and after some manipulation
+  we obtain
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|<wide|\<b-mu\>|^><rsub|n>>|<cell|=>|<cell|\<mu\><rsub|n>+J<rsub|n><around*|(|<wide|\<b-mu\>|^><rsub|n+1>-A\<b-mu\><rsub|N>|)>>>|<row|<cell|<wide|V|^><rsub|n>>|<cell|=>|<cell|V<rsub|n>+J<rsub|n><around*|(|<wide|V|^><rsub|n+1>-P<rsub|n>|)>J<rsub|n><rsup|T>>>>>
+  </eqnarray*>
+
+  where we have defined
+
+  <\equation*>
+    J<rsub|n>=V<rsub|n>A<rsup|T><around*|(|P<rsub|n>|)><rsup|-1>
+  </equation*>
+
+  and we have made use of <math|A V<rsub|n>=P<rsub|n>J<rsub|n><rsup|T>>. Note
+  that these recursions require that the forward pass be completed first so
+  that the quantities <math|\<b-mu\><rsub|n>> and <math|V<rsub|n>> will be
+  available for the backward pass.
+
+  For the EM algorithm, we also require the pairwise posterior marginals,
+  which can be obtained from Eq. <eqref|13.65> in the form
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<xi\><around*|(|\<b-z\><rsub|n-1>,\<b-z\><rsub|n>|)>>|<cell|=>|<cell|<around*|(|c<rsub|n>|)><rsup|-1><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n-1>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>|)><wide|\<beta\>|^><around*|(|\<b-z\><rsub|n>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<cal-N\><around*|(|\<b-z\><rsub|n-1>\|\<b-mu\><rsub|n-1>,V<rsub|n-1>|)>\<cal-N\><around*|(|\<b-z\><rsub|n>\|A\<b-z\><rsub|n-1>,\<Gamma\>|)>\<cal-N\><around*|(|\<b-x\><rsub|n>\|C\<b-z\><rsub|n>,\<Sigma\>|)>\<cal-N\><around*|(|\<b-z\><rsub|n>\|<wide|\<b-mu\>|^><rsub|n>,<wide|V|^><rsub|n>|)>|c<rsub|n><wide|\<alpha\>|^><around*|(|\<b-z\><rsub|n>|)>>>>>>
+  </eqnarray*>
+
+  Substituting for <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n>)> using Eq.
+  <eqref|13.84> and rearranging, we see that
+  <math|\<xi\>(\<b-z\><rsub|n-1>,\<b-z\><rsub|n>)> is a Gaussian with mean
+  given with components <math|\<gamma\>(\<b-z\><rsub|n\<minus\>1>)> and
+  <math|\<gamma\>(\<b-z\><rsub|n>)>, and a covariance between
+  <math|\<b-z\><rsub|n>> and <math|\<b-z\><rsub|n-1>> given by
+
+  <\equation*>
+    cov<around*|[|\<b-z\><rsub|n>,\<b-z\><rsub|n-1>|]>=J<rsub|n-1><wide|V|^><rsub|n>
+  </equation*>
+
+  <subsection|Learning in LDS>
 
   \;
 </body>
@@ -1951,14 +2123,21 @@
     <associate|13.57|<tuple|1.30|16>>
     <associate|13.59|<tuple|1.31|17>>
     <associate|13.6|<tuple|1.3|4>>
-    <associate|13.63|<tuple|1.32|17>>
-    <associate|13.73|<tuple|1.33|19>>
-    <associate|13.75|<tuple|1.34|23>>
-    <associate|13.76|<tuple|1.35|23>>
-    <associate|13.77|<tuple|1.36|24>>
-    <associate|13.84|<tuple|1.37|24>>
-    <associate|13.85|<tuple|1.38|24>>
-    <associate|13.86|<tuple|1.39|?>>
+    <associate|13.62|<tuple|1.32|17>>
+    <associate|13.63|<tuple|1.33|17>>
+    <associate|13.65|<tuple|1.34|17>>
+    <associate|13.73|<tuple|1.35|19>>
+    <associate|13.75|<tuple|1.36|23>>
+    <associate|13.76|<tuple|1.37|23>>
+    <associate|13.77|<tuple|1.38|24>>
+    <associate|13.84|<tuple|1.39|24>>
+    <associate|13.85|<tuple|1.40|24>>
+    <associate|13.86|<tuple|1.41|25>>
+    <associate|13.89|<tuple|1.42|25>>
+    <associate|13.90|<tuple|1.43|25>>
+    <associate|13.91|<tuple|1.44|25>>
+    <associate|13.98|<tuple|1.45|26>>
+    <associate|13.99|<tuple|1.46|27>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
@@ -1984,6 +2163,9 @@
     <associate|auto-3|<tuple|1.1|2>>
     <associate|auto-30|<tuple|1.3|22>>
     <associate|auto-31|<tuple|1.3.1|24>>
+    <associate|auto-32|<tuple|1.21|26>>
+    <associate|auto-33|<tuple|1.22|26>>
+    <associate|auto-34|<tuple|1.3.2|27>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.3|2>>
     <associate|auto-6|<tuple|1.4|3>>
@@ -2001,6 +2183,8 @@
     <associate|fig13.18|<tuple|1.18|21>>
     <associate|fig13.19|<tuple|1.19|21>>
     <associate|fig13.20|<tuple|1.20|22>>
+    <associate|fig13.21|<tuple|1.21|26>>
+    <associate|fig13.22|<tuple|1.22|26>>
     <associate|fig13.4|<tuple|1.4|3>>
     <associate|fig13.5|<tuple|1.5|4>>
     <associate|fig13.6|<tuple|1.6|5>>
@@ -2163,6 +2347,41 @@
       does not hold for the individual latent chains of the factorial HMM
       model. As a consequence, there is no efficient exact E step for this
       model.>|<pageref|auto-29>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.21>||The linear
+      dynamical system can be viewed as a sequence of steps in which
+      increasing uncertainty in the state variable due to diffusion is
+      compensated by the arrival of new data. In the left-hand plot, the blue
+      curve shows the distribution <with|mode|<quote|math>|p(\<b-z\><rsub|n\<minus\>1>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n\<minus\>1>)>,
+      which incorporates all the data up to step
+      <with|mode|<quote|math>|n\<minus\>1>. The diffusion arising from the
+      nonzero variance of the transition probability
+      <with|mode|<quote|math>|p(\<b-z\><rsub|n>\|\<b-z\><rsub|n\<minus\>1>)>
+      gives the distribution <with|mode|<quote|math>|p(\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n\<minus\>1>)>,
+      shown in red in the centre plot. Note that this is broader and shifted
+      relative to the blue curve (which is shown dashed in the centre plot
+      for comparison). The next data observation xn contributes through the
+      emission density <with|mode|<quote|math>|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)>,
+      which is shown as a function of <with|mode|<quote|math>|\<b-z\><rsub|n>>
+      in green on the right-hand plot. Note that this is not a density with
+      respect to <with|mode|<quote|math>|\<b-z\><rsub|n>> and so is not
+      normalized to one. Inclusion of this new data point leads to a revised
+      distribution <with|mode|<quote|math>|p(\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>)>
+      for the state density shown in blue. We see that observation of the
+      data has shifted and narrowed the distribution compared to
+      <with|mode|<quote|math>|p(\<b-z\><rsub|n>\|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n\<minus\>1>)>
+      (which is shown in dashed in the right-hand plot for
+      comparison).>|<pageref|auto-32>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1.22>||An illustration
+      of a linear dynamical system being used to track a moving object. The
+      blue points indicate the true positions of the object in a
+      two-dimensional space at successive time steps, the green points denote
+      noisy measurements of the positions, and the red crosses indicate the
+      means of the inferred posterior distributions of the positions obtained
+      by running the Kalman filtering equations. The covariances of the
+      inferred positions are indicated by the red ellipses, which correspond
+      to contours having one standard deviation.>|<pageref|auto-33>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Sequential
@@ -2207,6 +2426,10 @@
       <with|par-left|<quote|1tab>|1.3.1<space|2spc>Inference in LDS
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-31>>
+
+      <with|par-left|<quote|1tab>|1.3.2<space|2spc>Learning in LDS
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-34>>
     </associate>
   </collection>
 </auxiliary>
