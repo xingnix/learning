@@ -2200,6 +2200,143 @@
   the forward recursion equations <eqref|13.85> will lead to a mixture of
   <math|K> Gaussians over each hidden variable <math|\<b-z\><rsub|n>>, and so
   the model is again tractable.
+
+  For many applications, the Gaussian emission density is a poor
+  approximation. If instead we try to use a mixture of <math|K> Gaussians as
+  the emission density, then the posterior
+  <math|<wide|\<alpha\>|^>(\<b-z\><rsub|1>)> will also be a mixture of
+  <math|K> Gaussians. However, from Eq. <eqref|13.85> the posterior
+  <math|<wide|\<alpha\>|^>(\<b-z\><rsub|2>)> will comprise a mixture of
+  <math|K<rsup|2>> Gaussians, and so on, with
+  <math|<wide|\<alpha\>|^>(\<b-z\><rsub|n>)> \ being given by a mixture of
+  <math|K<rsup|n>> Gaussians. Thus the number of components grows
+  exponentially with the length of the chain, and so this model is
+  impractical.
+
+  More generally, introducing transition or emission models that depart from
+  the linear-Gaussian (or other exponential family) model leads to an
+  intractable inference problem. We can make deterministic approximations
+  such as assumed density filtering or expectation propagation, or we can
+  make use of sampling methods, \ as discussed in Section
+  <reference|sec13.3.4>. One widely used approach is to make a Gaussian
+  approximation by linearizing around the mean of the predicted distribution,
+  which gives rise to the <em|extended Kalman filter> (Zarchan and Musoff,
+  2005).
+
+  As with hidden Markov models, we can develop interesting extensions of the
+  basic linear dynamical system by expanding its graphical representation.
+  For example, the<em| switching state space model> (Ghahramani and Hinton,
+  1998) can be viewed as a combination of the hidden Markov model with a set
+  of linear dynamical systems. The model has multiple Markov chains of
+  continuous linear-Gaussian latent variables, each of which is analogous to
+  the latent chain of the linear dynamical system discussed earlier, together
+  with a Markov chain of discrete variables of the form used in a hidden
+  Markov model. The output at each time step is determined by stochastically
+  choosing one of the continuous latent chains, using the state of the
+  discrete latent variable as a switch, and then emitting an observation from
+  the corresponding conditional output distribution. Exact inference in this
+  model is intractable, but variational methods lead to an efficient
+  inference scheme involving forward-backward recursions along each of the
+  continuous and discrete Markov chains independently. Note that, if we
+  consider multiple chains of discrete latent variables, and use one as the
+  switch to select from the remainder, we obtain an analogous model having
+  only discrete latent variables known as the <em|switching hidden Markov
+  model>.
+
+  <subsection|Particle filters><label|sec13.3.4>
+
+  \;
+
+  For dynamical systems which do not have a linear-Gaussian, for example, if
+  they use a non-Gaussian emission density, we can turn to sampling methods
+  in order to find a tractable inference algorithm. In particular, we can
+  apply the sampling-importance-resampling formalism of Section 11.1.5 to
+  obtain a sequential Monte Carlo algorithm known as the particle filter.
+
+  Consider the class of distributions represented by the graphical model in
+  Figure <reference|fig13.5>, and suppose we are given the observed values
+  <math|X<rsub|n>=<around*|(|\<b-x\><rsub|1>,\<cdots\>,\<b-x\><rsub|n>|)>>
+  and we wish to draw <math|L> samples from the posterior distribution
+  <math|p(\<b-z\><rsub|n>\|X<rsub|n>)>. Using Bayes' theorem, we have
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|f<around*|(|\<b-z\><rsub|n>|)>|]>>|<cell|=>|<cell|<big|int>f<around*|(|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|X<rsub|n>|)>\<mathd\>\<b-z\><rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<big|int>f<around*|(|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-x\><rsub|n>,X<rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|int>f<around*|(|\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|X<rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n>|<big|int>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|X<rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n>>>>|<row|<cell|>|<cell|\<simeq\>>|<cell|<big|sum><rsub|l=1><rsup|L>w<rsub|n><rsup|<around*|(|l|)>>f<around*|(|\<b-z\><rsub|n><rsup|<around*|(|l|)>>|)>>>>>
+  </eqnarray*>
+
+  where <math|{\<b-z\><rsub|n><rsup|<around*|(|l|)>>}> is a set of samples
+  drawn from <math|p(\<b-z\><rsub|n>\|X<rsub|n\<minus\>1>)> and we have made
+  use of the conditional independence property
+  <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>,X<rsub|n\<minus\>1>)=p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>)>,
+  which follows from the graph in Figure <reference|fig13.5>. The sampling
+  weights <math|{w<rsub|n><rsup|(l)>}> are defined by
+
+  <\equation*>
+    w<rsub|n><rsup|<around*|(|l|)>>=<frac|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n><rsup|<around*|(|l|)>>|)>|<big|sum><rsub|m=1><rsup|L>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n><rsup|<around*|(|m|)>>|)>>
+  </equation*>
+
+  where the same samples are used in the numerator as in the denominator.
+  Thus the posterior distribution<math| p(\<b-z\><rsub|n>\|\<b-x\><rsub|n>)>
+  is represented by the set of samples <math|{\<b-z\><rsub|n><rsup|(l)>}>
+  together with the corresponding weights <math|{w<rsub|n><rsup|(l)>}>. Note
+  that these weights satisfy <math|0\<leqslant\>w<rsub|n><rsup|<around*|(|*l|)>>\<leqslant\>1>
+  and <math|<big|sum><rsub|l>w<rsub|n><rsup|<around*|(|l|)>>=1>.
+
+  Because we wish to find a sequential sampling scheme, we shall suppose that
+  a set of samples and weights have been obtained at time step <math|n>, and
+  that we have subsequently observed the value of <math|\<b-x\><rsub|n+1>>,
+  and we wish to find the weights and samples at time step <math|n+1>. We
+  first sample from the distribution <math|p(\<b-z\><rsub|n+1>\|X<rsub|n>)>.
+  This is straightforward since, again using Bayes' theorem
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-z\><rsub|n+1>\|X<rsub|n>|)>>|<cell|=>|<cell|<big|int>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>,X<rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|X<rsub|n>|)>\<mathd\>\<b-z\><rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<big|int>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|X<rsub|n>|)>\<mathd\>\<b-z\><rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<big|int>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|\<b-x\><rsub|n>,X<rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<frac|<big|int>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|X<rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n>|<big|int>p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>p<around*|(|\<b-z\><rsub|n>\|X<rsub|n-1>|)>\<mathd\>\<b-z\><rsub|n>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|l><rsup|L>w<rsub|n><rsup|<around*|(|l|)>>p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n><rsup|<around*|(|l|)>>|)><eq-number><label|13.119>>>>>
+  </eqnarray*>
+
+  where we have made use of the conditional independence properties
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>,X<rsub|n>|)>>|<cell|=>|<cell|p<around*|(|\<b-z\><rsub|n+1>\|\<b-z\><rsub|n>|)>>>|<row|<cell|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>,X<rsub|n-1>|)>>|<cell|=>|<cell|p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>|)>>>>>
+  </eqnarray*>
+
+  which follow from the application of the d-separation criterion to the
+  graph in Figure <reference|fig13.5>. The distribution given by Eq.
+  <eqref|13.119> is a mixture distribution, and samples can be drawn by
+  choosing a component <math|l> with probability given by the mixing
+  coefficients <math|w<rsup|(l)>> and then drawing a sample from the
+  corresponding component.
+
+  In summary, we can view each step of the particle filter algorithm as
+  comprising two stages. At time step <math|n>, we have a sample
+  representation of the posterior distribution
+  <math|p(\<b-z\><rsub|n>\|X<rsub|n>)> expressed as samples
+  <math|{\<b-z\><rsub|n><rsup|<around*|(|l|)>>}> with corresponding weights
+  <math|<around*|{|w<rsub|n><rsup|<around*|(|l|)>>|}>>. This can be viewed as
+  a mixture representation of the form <eqref|13.119>. To obtain the
+  corresponding representation for the next time step, we first draw <math|L>
+  samples from the mixture distribution <eqref|13.119>, and then for each
+  sample we use the new observation <math|\<b-x\><rsub|n+1>> to evaluate the
+  corresponding weights <math|w<rsub|n+1><rsup|<around*|(|l|)>>\<propto\>p<around*|(|\<b-x\><rsub|n+1>\|\<b-z\><rsub|n+1><rsup|<around*|(|l|)>>|)>>.
+  This is illustrated, for the case of a single variable <math|z>, in Figure
+  <reference|fig13.23>.
+
+  <\padded-center>
+    <small-figure|<image|image/fig_13_23_particle_filter.png|.5par|||>|<label|fig13.23>Schematic
+    illustration of the operation of the particle filter for a
+    one-dimensional latent space. At time step <math|n>, the posterior
+    <math|p(z<rsub|n>\|x<rsub|n>)> is represented as a mixture distribution,
+    shown schematically as circles whose sizes are proportional to the
+    weights <math|w<rsub|n><rsup|<around*|(|l|)>>>. A set of <math|L> samples
+    is then drawn from this distribution and the new weights
+    <math|w<rsub|n+1><rsup|<around*|(|l|)>>> evaluated using
+    <math|p<around*|(|x<rsub|n+1>\|z<rsub|n+1><rsup|<around*|(|l|)>>|)>>.>
+  </padded-center>
+
+  The particle filtering, or sequential Monte Carlo, approach has appeared in
+  the literature under various names including the <em|bootstrap filter>
+  (Gordon et al., 1993), <em|survival of the fittest> (Kanazawa et al.,
+  1995), and the <em|condensation> algorithm (Isard and Blake, 1998).
+
+  \;
 </body>
 
 <\initial>
@@ -2215,6 +2352,7 @@
     <associate|13.104|<tuple|1.47|27>>
     <associate|13.108|<tuple|1.48|27>>
     <associate|13.11|<tuple|1.5|8>>
+    <associate|13.119|<tuple|1.49|?>>
     <associate|13.12|<tuple|1.6|8>>
     <associate|13.17|<tuple|1.7|8>>
     <associate|13.2|<tuple|1.1|2>>
@@ -2287,7 +2425,9 @@
     <associate|auto-32|<tuple|1.21|26>>
     <associate|auto-33|<tuple|1.22|26>>
     <associate|auto-34|<tuple|1.3.2|27>>
-    <associate|auto-35|<tuple|1.3.3|?>>
+    <associate|auto-35|<tuple|1.3.3|28>>
+    <associate|auto-36|<tuple|1.3.4|?>>
+    <associate|auto-37|<tuple|1.23|?>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.3|2>>
     <associate|auto-6|<tuple|1.4|3>>
@@ -2307,6 +2447,7 @@
     <associate|fig13.20|<tuple|1.20|22>>
     <associate|fig13.21|<tuple|1.21|26>>
     <associate|fig13.22|<tuple|1.22|26>>
+    <associate|fig13.23|<tuple|1.23|?>>
     <associate|fig13.4|<tuple|1.4|3>>
     <associate|fig13.5|<tuple|1.5|4>>
     <associate|fig13.6|<tuple|1.6|5>>
@@ -2316,6 +2457,7 @@
     <associate|sec13.2.1|<tuple|1.2.1|7>>
     <associate|sec13.2.2|<tuple|1.2.2|9>>
     <associate|sec13.2.3|<tuple|1.2.3|14>>
+    <associate|sec13.3.4|<tuple|1.3.4|?>>
   </collection>
 </references>
 
@@ -2552,6 +2694,10 @@
       <with|par-left|<quote|1tab>|1.3.2<space|2spc>Learning in LDS
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-34>>
+
+      <with|par-left|<quote|1tab>|1.3.3<space|2spc>Extensions of LDS
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-35>>
     </associate>
   </collection>
 </auxiliary>
