@@ -2074,11 +2074,74 @@
   <math|\<gamma\>(\<b-z\><rsub|n>)>, and a covariance between
   <math|\<b-z\><rsub|n>> and <math|\<b-z\><rsub|n-1>> given by
 
-  <\equation*>
-    cov<around*|[|\<b-z\><rsub|n>,\<b-z\><rsub|n-1>|]>=J<rsub|n-1><wide|V|^><rsub|n>
-  </equation*>
+  <\equation>
+    cov<around*|[|\<b-z\><rsub|n>,\<b-z\><rsub|n-1>|]>=J<rsub|n-1><wide|V|^><rsub|n><label|13.104>
+  </equation>
 
   <subsection|Learning in LDS>
+
+  \;
+
+  So far, we have considered the inference problem for linear dynamical
+  systems, assuming that the model parameters
+  <math|\<theta\>={A,\<Gamma\>,C,\<Sigma\>,\<b-mu\><rsub|0>,V<rsub|0>}> are
+  known. Next, we consider the determination of these parameters using
+  maximum likelihood (Ghahramani and Hinton, 1996b). Because the model has
+  latent variables, this can be addressed using the EM algorithm, which was
+  discussed in general terms in Chapter 9.
+
+  We can derive the EM algorithm for the linear dynamical system as follows.
+  Let us denote the estimated parameter values at some particular cycle of
+  the algorithm by <math|\<b-theta\><rsup|old>>. For these parameter values,
+  we can run the inference algorithm to determine \ the posterior
+  distribution of the latent variables <math|p(Z\|X,\<b-theta\><rsup|old>)>,
+  or more precisely those local posterior marginals that are required in the
+  M step. In particular, we shall require the following expectations
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|n>|]>>|<cell|=>|<cell|<wide|\<b-mu\>|^><rsub|n>>>|<row|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n-1><rsup|T>|]>>|<cell|=>|<cell|J<rsub|n-1><wide|V|^><rsub|n>+<wide|\<b-mu\>|^><rsub|n><wide|\<b-mu\>|^><rsub|n-1><rsup|T>>>|<row|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>>|<cell|=>|<cell|<wide|V|^><rsub|n>+<wide|\<b-mu\>|^><rsub|n><wide|\<b-mu\>|^><rsup|T><rsub|n>>>>>
+  </eqnarray*>
+
+  where we have used Eq. <eqref|13.104>.
+
+  Now we consider the complete-data log likelihood function, which is
+  obtained by taking the logarithm of Eq. <eqref|13.6> and is therefore given
+  by
+
+  <\equation>
+    ln p<around*|(|X,Z\|\<b-theta\>|)>=ln
+    p<around*|(|\<b-z\><rsub|1>\|\<b-mu\><rsub|0>,V<rsub|0>|)>+<big|sum><rsub|n=2><rsup|N>ln
+    p<around*|(|\<b-z\><rsub|n>\|\<b-z\><rsub|n-1>,A,\<Gamma\>|)>+<big|sum><rsub|n=1><rsup|N>ln
+    p<around*|(|\<b-x\><rsub|n>\|\<b-z\><rsub|n>,C,\<Sigma\>|)><label|13.108>
+  </equation>
+
+  in which we have made the dependence on the parameters explicit. We now
+  take the expectation of the complete-data log likelihood with respect to
+  the posterior distribution <math|p(Z\|X,\<b-theta\><rsup|old>)> which
+  defines the function
+
+  <\equation*>
+    Q<around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=\<bbb-E\><rsub|Z\|\<b-theta\><rsup|old>><around*|[|ln
+    p<around*|(|X,Z\|\<b-theta\>|)>|]>
+  </equation*>
+
+  In the M step, this function is maximized with respect to the components of
+  <math|\<b-theta\>>.
+
+  Consider first the parameters <math|\<b-mu\><rsub|0>> and <math|V<rsub|0>>.
+  If we substitute for <math|p(\<b-z\><rsub|1>\|\<b-mu\><rsub|0>,V<rsub|0>)>
+  in Eq. <eqref|13.108> using Eq. <eqref|13.77>, and then take the
+  expectation with respect to <math|Z>, we obtain
+
+  <\equation*>
+    Q<around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=-<frac|1|2>ln<around*|\||V<rsub|0>|\|>-\<bbb-E\><rsub|Z\|\<b-theta\><rsup|old>><around*|[|<frac|1|2><around*|(|\<b-z\><rsub|1>-\<b-mu\><rsub|0>|)><rsup|T>V<rsub|0><rsup|-1><around*|(|\<b-z\><rsub|1>-\<b-mu\><rsub|0>|)>|]>+const
+  </equation*>
+
+  where all terms not dependent on <math|\<b-mu\><rsub|0>> or
+  <math|V<rsub|0>> have been absorbed into the additive \ constant.
+  Maximization with respect to <math|\<b-mu\><rsub|0>> and <math|V<rsub|0>>
+  is easily performed by making use of the maximum likelihood solution for a
+  Gaussian distribution discussed in Section 2.3.4, giving
 
   \;
 </body>
@@ -2093,6 +2156,8 @@
 <\references>
   <\collection>
     <associate|13.10|<tuple|1.4|5>>
+    <associate|13.104|<tuple|1.47|?>>
+    <associate|13.108|<tuple|1.48|?>>
     <associate|13.11|<tuple|1.5|8>>
     <associate|13.12|<tuple|1.6|8>>
     <associate|13.17|<tuple|1.7|8>>
@@ -2137,7 +2202,7 @@
     <associate|13.90|<tuple|1.43|25>>
     <associate|13.91|<tuple|1.44|25>>
     <associate|13.98|<tuple|1.45|26>>
-    <associate|13.99|<tuple|1.46|27>>
+    <associate|13.99|<tuple|1.46|26>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|1.7|5>>
     <associate|auto-11|<tuple|1.8|6>>
