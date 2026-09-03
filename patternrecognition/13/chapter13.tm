@@ -2143,7 +2143,63 @@
   is easily performed by making use of the maximum likelihood solution for a
   Gaussian distribution discussed in Section 2.3.4, giving
 
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|\<b-mu\><rsub|0><rsup|new>>|<cell|=>|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|1>|]>>>|<row|<cell|V<rsub|0><rsup|new>>|<cell|=>|<cell|\<bbb-E\><around*|[|\<b-z\><rsub|1>\<b-z\><rsub|1><rsup|T>|]>-\<bbb-E\><around*|[|\<b-z\><rsub|1>|]>\<bbb-E\><around*|[|\<b-z\><rsub|1><rsup|T>|]>>>>>
+  </eqnarray*>
+
+  Similarly, to optimize <math|A> and <math|\<Gamma\>>, we substitute for
+  <math|p(\<b-z\><rsub|n>\|\<b-z\><rsub|n\<minus\>1>,A,\<Gamma\>)> in Eq.
+  <eqref|13.108> using Eq. <eqref|13.75> giving
+
+  <\equation*>
+    Q<around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=-<frac|N-1|2>ln<around*|\||\<Gamma\>|\|>-\<bbb-E\><rsub|Z\|\<b-theta\><rsup|old>><around*|[|<frac|1|2><big|sum><rsub|n=2><rsup|N><around*|(|\<b-z\><rsub|n>-A\<b-z\><rsub|n-1>|)><rsup|T>\<Gamma\><rsup|-1><around*|(|\<b-z\><rsub|n>-A\<b-z\><rsub|n-1>|)>|]>+const
+  </equation*>
+
+  in which the constant comprises terms that are independent of <math|A> and
+  <math|\<Gamma\>>. Maximizing with respect to these parameters then gives
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|A<rsup|new>>|<cell|=>|<cell|<around*|(|<big|sum><rsub|n=2><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n-1><rsup|T>|]>|)><around*|(|<big|sum><rsub|n=2><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n-1>z<rsub|n-1><rsup|T>|]>|)>>>|<row|<cell|\<Gamma\><rsup|new>>|<cell|=>|<cell|<frac|1|N-1><big|sum><rsub|n=2><rsup|N><around*|{|\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>-A<rsup|new>\<bbb-E\><around*|[|\<b-z\><rsub|n-1>\<b-z\><rsub|n><rsup|T>|]>-\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n-1><rsup|T>|]>A<rsup|new>+A<rsup|new>\<bbb-E\><around*|[|\<b-z\><rsub|n-1>\<b-z\><rsub|n-1><rsup|T>|]><around*|(|A<rsup|new>|)><rsup|T>|}>.>>>>
+  </eqnarray*>
+
+  Note that <math|A<rsup|new>> must be evaluated first, and the result can
+  then be used to determine \ <math|\<Gamma\><rsup|new>> .
+
+  Finally, in order to determine the new values of <math|C> and
+  <math|\<Sigma\>>, we substitute for <math|p(\<b-x\><rsub|n>\|\<b-z\><rsub|n>,C,\<Sigma\>)>
+  in Eq. <eqref|13.108> using Eq. <eqref|13.76> giving
+
+  <\equation*>
+    Q<around*|(|\<b-theta\>,\<b-theta\><rsup|old>|)>=-<frac|N|2>ln<around*|\||\<Sigma\>|\|>-\<bbb-E\><rsub|Z\|\<b-theta\><rsup|old>><around*|[|<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-C\<b-z\><rsub|n>|)><rsup|T>\<Sigma\><rsup|-1><around*|(|\<b-x\><rsub|n>-C\<b-z\><rsub|n>|)>|]>+const
+  </equation*>
+
+  Maximizing with respect to <math|C> and <math|\<Sigma\>> then gives
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|C<rsup|new>>|<cell|=>|<cell|<around*|(|<big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>\<bbb-E\><around*|[|\<b-z\><rsub|n><rsup|T>|]>|)><around*|(|<big|sum><rsub|n=1><rsup|N>\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>|)><rsup|-1>>>|<row|<cell|\<Sigma\><rsup|new>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|{|\<b-x\><rsub|n>\<b-x\><rsub|n><rsup|T>-C<rsup|new>\<bbb-E\><around*|[|\<b-z\><rsub|n>|]>\<b-x\><rsub|n><rsup|T>-\<b-x\><rsub|n>\<bbb-E\><around*|[|\<b-z\><rsub|n><rsup|T>|]>C<rsup|new>+C<rsup|new>\<bbb-E\><around*|[|\<b-z\><rsub|n>\<b-z\><rsub|n><rsup|T>|]>C<rsup|new>|}>.>>>>
+  </eqnarray*>
+
+  We have approached parameter learning in the linear dynamical system using
+  maximum likelihood. Inclusion of priors to give a MAP estimate is
+  straightforward, and a fully Bayesian treatment can be found by applying
+  the analytical approximation techniques discussed in Chapter 10, though a
+  detailed treatment is precluded here due to lack of space.
+
+  <subsection|Extensions of LDS>
+
   \;
+
+  As with the hidden Markov model, there is considerable interest in
+  extending the basic linear dynamical system in order to increase its
+  capabilities. Although the assumption of a linear-Gaussian model leads to
+  efficient algorithms for inference and learning, it also implies that the
+  marginal distribution of the observed variables is simply a Gaussian, which
+  represents a significant limitation. One simple extension of the linear
+  dynamical system is to use a Gaussian mixture as the initial distribution
+  for <math|\<b-z\><rsub|1>>. If this mixture has <math|K> components, then
+  the forward recursion equations <eqref|13.85> will lead to a mixture of
+  <math|K> Gaussians over each hidden variable <math|\<b-z\><rsub|n>>, and so
+  the model is again tractable.
 </body>
 
 <\initial>
@@ -2156,8 +2212,8 @@
 <\references>
   <\collection>
     <associate|13.10|<tuple|1.4|5>>
-    <associate|13.104|<tuple|1.47|?>>
-    <associate|13.108|<tuple|1.48|?>>
+    <associate|13.104|<tuple|1.47|27>>
+    <associate|13.108|<tuple|1.48|27>>
     <associate|13.11|<tuple|1.5|8>>
     <associate|13.12|<tuple|1.6|8>>
     <associate|13.17|<tuple|1.7|8>>
@@ -2231,6 +2287,7 @@
     <associate|auto-32|<tuple|1.21|26>>
     <associate|auto-33|<tuple|1.22|26>>
     <associate|auto-34|<tuple|1.3.2|27>>
+    <associate|auto-35|<tuple|1.3.3|?>>
     <associate|auto-4|<tuple|1.2|2>>
     <associate|auto-5|<tuple|1.3|2>>
     <associate|auto-6|<tuple|1.4|3>>
