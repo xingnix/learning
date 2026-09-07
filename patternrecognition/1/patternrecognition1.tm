@@ -5,8 +5,6 @@
 <\body>
   <screens|<\hidden>
     \;
-  </hidden>|<\hidden>
-    \;
 
     \;
 
@@ -79,8 +77,6 @@
       Pattern recognition emerged as one of the practical questions this
       broader framework raised: <em|how does a system decide what category an
       input belongs to?>
-    </shown>|<\shown>
-      \;
     </shown>>
   </hidden>|<\hidden>
     <unroll-greyed|<\shown>
@@ -181,7 +177,7 @@
     categories of its closest neighbors in the training data. Despite its
     simplicity, KNN remains a useful baseline method to this day.
 
-    <space|2em><with|gr-mode|<tuple|edit|point>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|-1.43001gh>>|gr-geometry|<tuple|geometry|.9par|5em|center>|gr-point-size|1ln|gr-grid|<tuple|cartesian|<point|0|0>|1>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-color|blue|<graphics||<with|color|red|point-size|1ln|<point|-3|3.3>>|<with|color|red|point-size|1ln|<point|-2.7|3.7>>|<with|color|red|point-size|1ln|<point|-1.3|3.7>>|<with|color|red|point-size|1ln|<point|-0.8|3.2>>|<with|color|red|point-size|1ln|<point|-1.7|2.8>>|<with|color|red|point-size|1ln|<point|-2|3.4>>|<with|color|red|point-size|1ln|<point|-3.3|2.8>>|<with|color|red|point-size|1ln|<point|-3.3|3.5>>|<with|color|red|point-size|1ln|<point|-2.3|3.1>>|<with|color|red|point-size|1ln|<point|-2.2|3.8>>|<with|color|green|point-size|1ln|<point|2|3.6>>|<with|color|green|point-size|1ln|<point|1|3.8>>|<with|color|green|point-size|1ln|<point|-0.4|3.8>>|<with|color|green|point-size|1ln|<point|-0.7|3.5>>|<with|color|green|point-size|1ln|<point|-0.2|3>>|<with|color|green|point-size|1ln|<point|0|3.4>>|<with|color|green|point-size|1ln|<point|-2.1|2.8>>|<with|color|green|point-size|1ln|<point|-1.4|3.3>>|<with|color|green|point-size|1ln|<point|-1.8|3.8>>|<with|color|green|point-size|1ln|<point|-0.7|2.7>>|<with|color|green|point-size|1ln|<point|-1|2.9>>|<with|color|green|point-size|1ln|<point|-0.7|4>>|<with|color|green|point-size|1ln|<point|0.8|2.8>>|<with|color|green|point-size|1ln|<point|0.7|3.4>>|<with|color|blue|point-size|1ln|<point|-2|3.7>>>>
+    <space|2em><with|gr-mode|<tuple|group-edit|edit-props>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|-1.43001gh>>|gr-geometry|<tuple|geometry|.9par|5em|center>|gr-point-size|1ln|gr-grid|<tuple|cartesian|<point|0|0>|1>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-color|blue|<graphics||<with|color|red|point-size|2ln|<point|-3|3.3>>|<with|color|red|point-size|2ln|<point|-2.7|3.7>>|<with|color|red|point-size|2ln|<point|-1.3|3.7>>|<with|color|red|point-size|2ln|<point|-0.8|3.2>>|<with|color|red|point-size|2ln|<point|-1.7|2.8>>|<with|color|red|point-size|2ln|<point|-2.0|3.5>>|<with|color|red|point-size|2ln|<point|-3.3|2.8>>|<with|color|red|point-size|2ln|<point|-3.3|3.5>>|<with|color|red|point-size|2ln|<point|-2.3|3.1>>|<with|color|red|point-size|2ln|<point|-2.2|3.8>>|<with|color|green|point-size|2ln|<point|2|3.6>>|<with|color|green|point-size|2ln|<point|1|3.8>>|<with|color|green|point-size|2ln|<point|-0.4|3.8>>|<with|color|green|point-size|2ln|<point|-0.7|3.5>>|<with|color|green|point-size|2ln|<point|-0.2|3>>|<with|color|green|point-size|2ln|<point|0|3.4>>|<with|color|green|point-size|2ln|<point|-2.1|2.8>>|<with|color|green|point-size|2ln|<point|-1.4|3.3>>|<with|color|green|point-size|2ln|<point|-1.9|3.8>>|<with|color|green|point-size|2ln|<point|-0.7|2.7>>|<with|color|green|point-size|2ln|<point|-1|2.9>>|<with|color|green|point-size|2ln|<point|-0.7|4>>|<with|color|green|point-size|2ln|<point|0.8|2.8>>|<with|color|green|point-size|2ln|<point|0.7|3.4>>|<with|color|blue|point-size|2ln|<point|-2|3.7>>>>
   </hidden>|<\hidden>
     Early syntactic pattern recognition, sometimes called structural pattern
     recognition, took a completely different approach. Instead of
@@ -262,7 +258,7 @@
     valuable for exploratory analysis and cases where labels were scarce or
     expensive to obtain.
 
-    <with|gr-mode|<tuple|group-edit|edit-props>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|.9par|10em|center>|gr-grid|<tuple|cartesian|<point|0|0>|1>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-color|red|<graphics||<with|color|blue|<point|0.7|-0.7>>|<with|color|blue|<point|1.2|-0.4>>|<with|color|blue|<point|1.6|0>>|<with|color|blue|<point|2.2|0.3>>|<with|color|blue|<point|3.1|0.4>>|<with|color|blue|<point|4|0.8>>|<with|color|blue|<point|5|1.5>>|<with|color|blue|<point|4.5|1.2>>|<with|color|red|<point|-4.8|0.5>>|<with|color|red|<point|-4.3|0.6>>|<with|color|red|<point|-3.7|0.1>>|<with|color|red|<point|-3.8|-0.3>>|<with|color|red|<point|-4.2|-0.4>>|<with|color|red|<point|-4.9|-0.4>>|<with|color|red|<point|-4.8|0>>|<with|color|red|<point|-4.3|0.2>>|<with|color|red|<point|-2.2|0.7>>|<with|color|red|<point|-2.6|0.4>>|<with|color|red|<point|-2.6|0>>|<with|color|red|<point|-1.9|-0.2>>|<with|color|red|<point|-1.5|0.2>>|<with|color|red|<point|-1.6|0.7>>|<with|color|red|<point|-1.9|0.7>>|<with|color|red|<point|-2|0.2>>>>
+    <with|gr-mode|<tuple|edit|point>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|.9par|10em|center>|gr-grid|<tuple|cartesian|<point|0|0>|1>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-color|cyan|<graphics||<with|color|blue|<point|0.7|-0.7>>|<with|color|blue|<point|1.2|-0.4>>|<with|color|blue|<point|1.6|0>>|<with|color|blue|<point|2.2|0.3>>|<with|color|blue|<point|3.1|0.4>>|<with|color|blue|<point|4|0.8>>|<with|color|blue|<point|5|1.5>>|<with|color|blue|<point|4.5|1.2>>|<with|color|red|<point|-4.8|0.5>>|<with|color|red|<point|-4.3|0.6>>|<with|color|red|<point|-3.7|0.1>>|<with|color|red|<point|-3.8|-0.3>>|<with|color|red|<point|-4.2|-0.4>>|<with|color|red|<point|-4.9|-0.4>>|<with|color|red|<point|-4.8|0>>|<with|color|red|<point|-4.3|0.2>>|<with|color|red|<point|-2.2|0.7>>|<with|color|red|<point|-2.6|0.4>>|<with|color|red|<point|-2.6|0>>|<with|color|red|<point|-1.9|-0.2>>|<with|color|red|<point|-1.5|0.2>>|<with|color|red|<point|-1.6|0.7>>|<with|color|red|<point|-1.9|0.7>>|<with|color|red|<point|-2|0.2>>>>
   </hidden>|<\hidden>
     <\tit>
       The Rise of Support Vector Machines (1992 \U 2005)
@@ -384,11 +380,11 @@
     <tit|Image recognition>
 
     <space|4em><image|image/catdot.png|.6par|||>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|Object detection>
 
     <space|7em><image|image/objectdetection.png|.6par|||>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|Image segmentation>
 
     <image|image/instancesegmentation.png|1par|||>
@@ -430,21 +426,29 @@
       <item>IEEE Transactions on Pattern Analysis and Machine Intelligence
       (TPAMI)
     </itemize>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <tit|Software>
 
-    opencv
+    <\description-dash>
+      <item*|opencv>https://opencv.org
 
-    scikit-image
+      <item*|scikit-image>https://scikit-image.org/
 
-    scikit-learn
+      <item*|scikit-learn>https://scikit-learn.org/
 
-    tensorflow
+      <item*|tensorflow>https://www.tensorflow.org/
 
-    pytorch
+      <item*|pytorch>https://pytorch.org
 
-    keras
-  </hidden>>
+      <item*|jax>https://docs.jax.dev/en/latest/
+
+      <item*|keras>https://keras.io/
+
+      <item*|weka>https://ml.cms.waikato.ac.nz/weka
+
+      \ 
+    </description-dash>
+  </shown>>
 </body>
 
 <\initial>
@@ -455,9 +459,3 @@
     <associate|page-width|auto>
   </collection>
 </initial>
-
-<\references>
-  <\collection>
-    <associate|auto-1|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
-  </collection>
-</references>
