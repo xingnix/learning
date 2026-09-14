@@ -44,7 +44,7 @@
     denoted\ 
 
     <\equation*>
-      \<b-t\> \<equiv\> (t1, . . . , tN )T.
+      \<b-t\> \<equiv\> (t<rsub|1>,\<cdots\>,t<rsub|N>)<rsup|T>.
     </equation*>
 
     Figure <reference|fig1.2> shows a plot of a training set comprising<math|
@@ -131,6 +131,10 @@
     function <math|sin(2\<pi\>x)>. This latter behaviour is known as
     <em|over-fitting>.
   </hidden>|<\hidden>
+    <tit|test set>
+
+    \;
+
     As we have noted earlier, the goal is to achieve good generalization by
     making accurate predictions for new data.
 
@@ -141,8 +145,13 @@
     random noise values included in the target values.
 
     For each choice of <math|M> , we can then evaluate the residual value of
-    <math|E(\<b-w\>)> given by <eqref|1.2> for the training data, and we can
-    also evaluate <math|E(\<b-w\>)> for the test data set.\ 
+    <math|E(\<b-w\><rsup|\<ast\>>)> given by <eqref|1.2> for the training
+    data, and we can also evaluate <math|E(\<b-w\><rsup|\<ast\>>)> for the
+    test data set.\ 
+
+    \;
+  </hidden>|<\hidden>
+    <tit|<math|E<rsub|RMS>>>
 
     It is sometimes more convenient to use the root-mean-square (RMS) error
     defined by
@@ -305,10 +314,10 @@
       p(X = x<rsub|i>) = <frac|c<rsub|i>|N> .<label|1.6>
     </equation>
   </hidden>|<\hidden>
-    Because the number of instances in column i in Figure <reference|fig1.10>
-    is just the sum of the number of instances in each cell of that column,
-    we have <math|c<rsub|i> = <big|sum><rsub|j>n<rsub|i j>> and therefore,
-    from Eq. <eqref|1.5> and <eqref|1.6>, we have
+    Because the number of instances in column <math|i> in Figure
+    <reference|fig1.10> is just the sum of the number of instances in each
+    cell of that column, we have <math|c<rsub|i> = <big|sum><rsub|j>n<rsub|i
+    j>> and therefore, from Eq. <eqref|1.5> and <eqref|1.6>, we have
 
     <\equation*>
       p<around*|(|X=x<rsub|i>|)>=<big|sum><rsub|j=1><rsup|L>p<around*|(|X=x<rsub|i>,Y=y<rsub|j>|)>
@@ -448,16 +457,16 @@
       p(\<b-x\>) = p(x<rsub|1>,\<cdots\>,x<rsub|D>)
     </equation*>
 
-    such that the probability of <math|x> falling in an infinitesimal volume
-    <math|\<delta\>\<b-x\>> containing the point <math|\<b-x\>> is given by
-    <math|p(\<b-x\>)\<delta\>\<b-x\>>. This multivariate probability density
-    must satisfy
+    such that the probability of <math|\<b-x\>> falling in an infinitesimal
+    volume <math|\<delta\>\<b-x\>> containing the point <math|\<b-x\>> is
+    given by <math|p(\<b-x\>)\<delta\>\<b-x\>>. This multivariate probability
+    density must satisfy
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|p<around*|(|\<b-x\>|)>>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|<big|int>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>>|<cell|=>|<cell|1>>>>
     </eqnarray*>
 
-    in which the integral is taken over the whole of x space.\ 
+    in which the integral is taken over the whole of <math|\<b-x\>> space.\ 
   </hidden>|<\hidden>
     \;
 
@@ -678,8 +687,8 @@
       p<around*|(|\<b-w\>\|\<cal-D\>|)>=<frac|p<around*|(|\<cal-D\>\|\<b-w\>|)>p<around*|(|\<b-w\>|)>|p<around*|(|\<cal-D\>|)>><label|1.43>
     </equation>
 
-    then allows us to evaluate the uncertainty in w after we have observed
-    <math|\<cal-D\>> in the form of the posterior probability
+    then allows us to evaluate the uncertainty in <math|\<b-w\>> after we
+    have observed <math|\<cal-D\>> in the form of the posterior probability
     <math|p(\<b-w\>\|\<cal-D\>)>.
   </hidden>|<\hidden>
     <tit|<em|likelihood function>>
@@ -811,13 +820,13 @@
     Frequentist evaluation methods offer some protection from such problems,
     and techniques such as cross-validation remain useful in areas such as
     model \ comparison.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|The Gaussian distribution>
 
     <small-figure|<image|img/fig_1_13_gaussian.png|.5par|||>|Plot of the
     univariate Gaussian \ showing the mean <math|\<mu\>> and the standard
     deviation <math|\<sigma\>>.>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <\tit>
       Gaussian Mean and Variance
     </tit>
@@ -842,9 +851,10 @@
       <math-up|><math-up|<strong|x>>= (x<rsub|1>, . . . , x<rsub|N>)<rsup|T>,
     </equation*>
 
-    representing <math|N> observations of the scalar variable <math|x>. Note
-    that we are using the typeface <math|<math-up|<strong|x>>> to distinguish
-    this from a single observation of the vector-valued variable
+    representing <math|N> observations of the scalar variable <math|x>.\ 
+
+    Note that we are using the typeface <math|<math-up|<strong|x>>> to
+    distinguish this from a single observation of the vector-valued variable
     <math|(x<rsub|1>, . . . , x<rsub|D>)<rsup|T>>, which we denote by
     <math|\<b-x\>>.
 
@@ -981,6 +991,12 @@
     an example of a phenomenon called bias and is related to the problem of
     over-fitting encountered in the context of polynomial curve fitting.
 
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
     We first note that the maximum likelihood solutions
     <math|\<mu\><rsub|ML>> and <math|\<sigma\><rsup|2><rsub|ML>> are
     functions of the data set values <math|x<rsub|1>, . . . , x<rsub|N>>.
@@ -992,7 +1008,18 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<mu\><rsub|ML>|]>>|<cell|=>|<cell|\<mu\>>>|<row|<cell|\<bbb-E\><around*|[|\<sigma\><rsup|2><rsub|ML>|]>>|<cell|=>|<cell|<around*|(|<frac|N-1|N>|)>\<sigma\><rsup|2>>>>>
     </eqnarray*>
-  </hidden>>
+  </hidden>|<\shown>
+    <small-figure|<image|img/fig_1_15_bias_variance_gaussian.png|.3par|||>|Illustration
+    of how bias arises in using maximum likelihood to determine the variance
+    of a Gaussian. The green curve shows the true Gaussian distribution from
+    which data is generated, and the three red curves show the Gaussian
+    distributions obtained by fitting to three data sets, each consisting of
+    two data points shown in blue, using the maximum likelihood results
+    <eqref|1.55> and <eqref|1.56>. Averaged across the three data sets, the
+    mean is correct, but the variance is systematically under-estimated
+    because it is measured relative to the sample mean and not relative to
+    the true mean.>
+  </shown>>
 </body>
 
 <\initial>
@@ -1023,8 +1050,9 @@
     <associate|auto-12|<tuple|10|?>>
     <associate|auto-13|<tuple|11|?>>
     <associate|auto-14|<tuple|12|?>>
-    <associate|auto-15|<tuple|13|?>>
+    <associate|auto-15|<tuple|13|1>>
     <associate|auto-16|<tuple|14|?>>
+    <associate|auto-17|<tuple|15|1>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|3|1>>
     <associate|auto-4|<tuple|4|1>>
@@ -1173,6 +1201,17 @@
       of the blue values. Maximizing the likelihood involves adjusting the
       mean and variance of the Gaussian so as to maximize this
       product.>|<pageref|auto-16>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|15>||Illustration of
+      how bias arises in using maximum likelihood to determine the variance
+      of a Gaussian. The green curve shows the true Gaussian distribution
+      from which data is generated, and the three red curves show the
+      Gaussian distributions obtained by fitting to three data sets, each
+      consisting of two data points shown in blue, using the maximum
+      likelihood results (<reference|1.55>) and (<reference|1.56>). Averaged
+      across the three data sets, the mean is correct, but the variance is
+      systematically under-estimated because it is measured relative to the
+      sample mean and not relative to the true mean.>|<pageref|auto-17>>
     </associate>
     <\associate|table>
       <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Table of the
