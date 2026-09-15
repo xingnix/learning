@@ -136,13 +136,13 @@
     <\padded-center>
       <section|<with|font|fireflysung|\<#57FA\>\<#672C\>\<#7684\>\<#51B3\>\<#7B56\>\<#6811\>\<#5B66\>\<#4E60\>\<#7B97\>\<#6CD5\>>>
     </padded-center>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|Ross Quinlan>
 
-    <image|image/Ross Quinlan.png|0.5par|||>
+    <space|9em><image|image/Ross Quinlan.png|0.5par|||>
 
-    https://www.rulequest.com/Personal/
-  </shown>|<\hidden>
+    <space|10em>https://www.rulequest.com/Personal/
+  </hidden>|<\hidden>
     <tit|ID3(Examples\<#FF0C\>Target_Attribute\<#FF0C\>Attributes)>
 
     \;
@@ -290,7 +290,7 @@
   </hidden>|<\hidden>
     <tit|\<#4F8B\>>
 
-    <padded-center|<tabular*|<tformat|<cwith|1|-1|1|1|cell-halign|l>|<cwith|1|-1|1|1|cell-lborder|0ln>|<cwith|1|-1|2|2|cell-halign|l>|<cwith|1|-1|3|3|cell-halign|l>|<cwith|1|-1|4|4|cell-halign|l>|<cwith|1|-1|5|5|cell-halign|l>|<cwith|1|-1|6|6|cell-halign|l>|<cwith|1|-1|6|6|cell-rborder|0ln>|<cwith|1|-1|1|-1|cell-valign|c>|<cwith|1|1|1|-1|cell-valign|top>|<cwith|1|1|1|-1|cell-vmode|exact>|<cwith|1|1|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|1|1|1|-1|cell-bborder|1ln>|<cwith|2|2|1|-1|cell-valign|top>|<cwith|2|2|1|-1|cell-vmode|exact>|<cwith|2|2|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|3|3|1|-1|cell-valign|top>|<cwith|3|3|1|-1|cell-vmode|exact>|<cwith|3|3|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|4|4|1|-1|cell-valign|top>|<cwith|4|4|1|-1|cell-vmode|exact>|<cwith|4|4|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|5|5|1|-1|cell-valign|top>|<cwith|5|5|1|-1|cell-vmode|exact>|<cwith|5|5|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|6|6|1|-1|cell-valign|top>|<cwith|6|6|1|-1|cell-vmode|exact>|<cwith|6|6|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|7|7|1|-1|cell-valign|top>|<cwith|7|7|1|-1|cell-vmode|exact>|<cwith|7|7|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|8|8|1|-1|cell-valign|top>|<cwith|8|8|1|-1|cell-vmode|exact>|<cwith|8|8|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|9|9|1|-1|cell-valign|top>|<cwith|9|9|1|-1|cell-vmode|exact>|<cwith|9|9|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|10|10|1|-1|cell-valign|top>|<cwith|10|10|1|-1|cell-vmode|exact>|<cwith|10|10|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|11|11|1|-1|cell-valign|top>|<cwith|11|11|1|-1|cell-vmode|exact>|<cwith|11|11|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|12|12|1|-1|cell-valign|top>|<cwith|12|12|1|-1|cell-vmode|exact>|<cwith|12|12|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|13|13|1|-1|cell-valign|top>|<cwith|13|13|1|-1|cell-vmode|exact>|<cwith|13|13|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|14|14|1|-1|cell-valign|top>|<cwith|14|14|1|-1|cell-vmode|exact>|<cwith|14|14|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|15|15|1|-1|cell-valign|top>|<cwith|15|15|1|-1|cell-vmode|exact>|<cwith|15|15|1|-1|cell-height|<plus|1fn|0pt>>|<table|<row|<cell|Day>|<cell|Outlook>|<cell|Temperature>|<cell|Humidity>|<cell|Wind>|<cell|PlayTennis>>|<row|<cell|D1>|<cell|Sunny>|<cell|Hot>|<cell|High>|<cell|Weak>|<cell|No>>|<row|<cell|D2>|<cell|Sunny>|<cell|Hot>|<cell|High>|<cell|Strong>|<cell|No>>|<row|<cell|D3>|<cell|Overcast>|<cell|Hot>|<cell|High>|<cell|Weak>|<cell|Yes>>|<row|<cell|D4>|<cell|Rain>|<cell|Mild>|<cell|High>|<cell|Weak>|<cell|Yes>>|<row|<cell|D5>|<cell|Rain>|<cell|Cool>|<cell|Normal>|<cell|Weak>|<cell|Yes>>|<row|<cell|D6>|<cell|Rain>|<cell|Cool>|<cell|Normal>|<cell|Strong>|<cell|No>>|<row|<cell|D7>|<cell|Overcast>|<cell|Cool>|<cell|Normal>|<cell|Strong>|<cell|Yes>>|<row|<cell|D8>|<cell|Sunny>|<cell|Mild>|<cell|High>|<cell|Weak>|<cell|No>>|<row|<cell|D9>|<cell|Sunny>|<cell|Cool>|<cell|Normal>|<cell|Weak>|<cell|Yes>>|<row|<cell|D10>|<cell|Rain>|<cell|Mild>|<cell|Normal>|<cell|Weak>|<cell|Yes>>|<row|<cell|D11>|<cell|Sunny>|<cell|Mild>|<cell|Normal>|<cell|Strong>|<cell|Yes>>|<row|<cell|D12>|<cell|Overcast>|<cell|Mild>|<cell|High>|<cell|Strong>|<cell|Yes>>|<row|<cell|D13>|<cell|Overcast>|<cell|Hot>|<cell|Normal>|<cell|Weak>|<cell|Yes>>|<row|<cell|D14>|<cell|Rain>|<cell|Mild>|<cell|High>|<cell|Strong>|<cell|No>>>>>>
+    <padded-center|<tabular*|<tformat|<cwith|1|-1|1|1|cell-halign|l>|<cwith|1|-1|1|1|cell-lborder|0ln>|<cwith|1|-1|2|2|cell-halign|l>|<cwith|1|-1|3|3|cell-halign|l>|<cwith|1|-1|4|4|cell-halign|l>|<cwith|1|-1|5|5|cell-halign|l>|<cwith|1|-1|6|6|cell-halign|l>|<cwith|1|-1|6|6|cell-rborder|0ln>|<cwith|1|-1|1|-1|cell-valign|c>|<cwith|1|1|1|-1|cell-valign|top>|<cwith|1|1|1|-1|cell-vmode|exact>|<cwith|1|1|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|1|1|1|-1|cell-bborder|1ln>|<cwith|2|2|1|-1|cell-valign|top>|<cwith|2|2|1|-1|cell-vmode|exact>|<cwith|2|2|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|3|3|1|-1|cell-valign|top>|<cwith|3|3|1|-1|cell-vmode|exact>|<cwith|3|3|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|4|4|1|-1|cell-valign|top>|<cwith|4|4|1|-1|cell-vmode|exact>|<cwith|4|4|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|5|5|1|-1|cell-valign|top>|<cwith|5|5|1|-1|cell-vmode|exact>|<cwith|5|5|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|6|6|1|-1|cell-valign|top>|<cwith|6|6|1|-1|cell-vmode|exact>|<cwith|6|6|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|7|7|1|-1|cell-valign|top>|<cwith|7|7|1|-1|cell-vmode|exact>|<cwith|7|7|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|8|8|1|-1|cell-valign|top>|<cwith|8|8|1|-1|cell-vmode|exact>|<cwith|8|8|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|9|9|1|-1|cell-valign|top>|<cwith|9|9|1|-1|cell-vmode|exact>|<cwith|9|9|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|10|10|1|-1|cell-valign|top>|<cwith|10|10|1|-1|cell-vmode|exact>|<cwith|10|10|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|11|11|1|-1|cell-valign|top>|<cwith|11|11|1|-1|cell-vmode|exact>|<cwith|11|11|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|12|12|1|-1|cell-valign|top>|<cwith|12|12|1|-1|cell-vmode|exact>|<cwith|12|12|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|13|13|1|-1|cell-valign|top>|<cwith|13|13|1|-1|cell-vmode|exact>|<cwith|13|13|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|14|14|1|-1|cell-valign|top>|<cwith|14|14|1|-1|cell-vmode|exact>|<cwith|14|14|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|15|15|1|-1|cell-valign|top>|<cwith|15|15|1|-1|cell-vmode|exact>|<cwith|15|15|1|-1|cell-height|<plus|1fn|0pt>>|<table|<row|<cell|Day>|<cell|Outlook>|<cell|Temperature>|<cell|Humidity>|<cell|Wind>|<cell|Action>>|<row|<cell|D1>|<cell|Sunny>|<cell|Hot>|<cell|High>|<cell|Weak>|<cell|No>>|<row|<cell|D2>|<cell|Sunny>|<cell|Hot>|<cell|High>|<cell|Strong>|<cell|No>>|<row|<cell|D3>|<cell|Overcast>|<cell|Hot>|<cell|High>|<cell|Weak>|<cell|Yes>>|<row|<cell|D4>|<cell|Rain>|<cell|Mild>|<cell|High>|<cell|Weak>|<cell|Yes>>|<row|<cell|D5>|<cell|Rain>|<cell|Cool>|<cell|Normal>|<cell|Weak>|<cell|Yes>>|<row|<cell|D6>|<cell|Rain>|<cell|Cool>|<cell|Normal>|<cell|Strong>|<cell|No>>|<row|<cell|D7>|<cell|Overcast>|<cell|Cool>|<cell|Normal>|<cell|Strong>|<cell|Yes>>|<row|<cell|D8>|<cell|Sunny>|<cell|Mild>|<cell|High>|<cell|Weak>|<cell|No>>|<row|<cell|D9>|<cell|Sunny>|<cell|Cool>|<cell|Normal>|<cell|Weak>|<cell|Yes>>|<row|<cell|D10>|<cell|Rain>|<cell|Mild>|<cell|Normal>|<cell|Weak>|<cell|Yes>>|<row|<cell|D11>|<cell|Sunny>|<cell|Mild>|<cell|Normal>|<cell|Strong>|<cell|Yes>>|<row|<cell|D12>|<cell|Overcast>|<cell|Mild>|<cell|High>|<cell|Strong>|<cell|Yes>>|<row|<cell|D13>|<cell|Overcast>|<cell|Hot>|<cell|Normal>|<cell|Weak>|<cell|Yes>>|<row|<cell|D14>|<cell|Rain>|<cell|Mild>|<cell|High>|<cell|Strong>|<cell|No>>>>>>
   </hidden>|<\hidden>
     <tit|Selecting the Next Attribute>
 
@@ -419,13 +419,15 @@
       <item>ID3<with|font|fireflysung|\<#4E0D\>\<#5F7B\>\<#5E95\>\<#5730\>\<#641C\>\<#7D22\>\<#8FD9\>\<#4E2A\>\<#7A7A\>\<#95F4\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#4EC5\>\<#4ECE\>\<#7B80\>\<#5355\>\<#7684\>\<#5047\>\<#8BBE\>\<#5230\>\<#590D\>\<#6742\>\<#7684\>\<#5047\>\<#8BBE\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#7136\>\<#540E\>\<#9047\>\<#5230\>\<#7EC8\>\<#6B62\>\<#6761\>\<#4EF6\>><with|font|roman|\<#FF08\>><with|font|fireflysung|\<#4F8B\>\<#5982\>><with|font|roman|\<#FF1A\>><with|font|fireflysung|\<#53D1\>\<#73B0\>\<#4E86\>\<#4E00\>\<#4E2A\>\<#4E0E\>\<#6570\>\<#636E\>\<#4E00\>\<#81F4\>\<#7684\>\<#5047\>\<#8BBE\>><with|font|roman|\<#FF09\>>\<#3002\>
 
       <item>ID3<with|font|fireflysung|\<#7684\>\<#5F52\>\<#7EB3\>\<#504F\>\<#7F6E\>\<#5B8C\>\<#5168\>\<#662F\>\<#641C\>\<#7D22\>\<#7B56\>\<#7565\>\<#6392\>\<#5E8F\>\<#5047\>\<#8BBE\>\<#7684\>\<#7ED3\>\<#679C\>>\<#3002\><with|font|fireflysung|\<#5B83\>\<#7684\>\<#5047\>\<#8BBE\>\<#7A7A\>\<#95F4\>\<#6CA1\>\<#6709\>\<#5F15\>\<#5165\>\<#989D\>\<#5916\>\<#7684\>\<#504F\>\<#7F6E\>>\<#3002\>
+    </itemize>
 
+    <\itemize-minus>
       <item>VSCE<with|font|fireflysung|\<#7684\>\<#641C\>\<#7D22\>\<#8303\>\<#56F4\>\<#662F\>\<#4E0D\>\<#5B8C\>\<#6574\>\<#7684\>\<#5047\>\<#8BBE\>\<#7A7A\>\<#95F4\>><with|font|roman|\<#FF08\>><with|font|fireflysung|\<#5373\>\<#4E00\>\<#4E2A\>\<#4EC5\>\<#80FD\>\<#8868\>\<#793A\>\<#6F5C\>\<#5728\>\<#53EF\>\<#6559\>\<#6388\>\<#6982\>\<#5FF5\>\<#5B50\>\<#96C6\>\<#7684\>\<#7A7A\>\<#95F4\>><with|font|roman|\<#FF09\>>\<#3002\>
 
       <item>VSCE<with|font|fireflysung|\<#5F7B\>\<#5E95\>\<#5730\>\<#641C\>\<#7D22\>\<#8FD9\>\<#4E2A\>\<#7A7A\>\<#95F4\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#67E5\>\<#627E\>\<#6240\>\<#6709\>\<#4E0E\>\<#8BAD\>\<#7EC3\>\<#6570\>\<#636E\>\<#4E00\>\<#81F4\>\<#7684\>\<#5047\>\<#8BBE\>>\<#3002\>
 
       <item>VSCE<with|font|fireflysung|\<#7684\>\<#5F52\>\<#7EB3\>\<#504F\>\<#7F6E\>\<#5B8C\>\<#5168\>\<#662F\>\<#5047\>\<#8BBE\>\<#8868\>\<#793A\>\<#7684\>\<#8868\>\<#8FBE\>\<#80FD\>\<#529B\>\<#7684\>\<#7ED3\>\<#679C\>>\<#3002\><with|font|fireflysung|\<#5B83\>\<#7684\>\<#641C\>\<#7D22\>\<#7B56\>\<#7565\>\<#6CA1\>\<#6709\>\<#5F15\>\<#5165\>\<#989D\>\<#5916\>\<#7684\>\<#504F\>\<#7F6E\>>\<#3002\>
-    </itemize>
+    </itemize-minus>
   </hidden>|<\hidden>
     <tit|\<#9650\>\<#5B9A\>\<#504F\>\<#7F6E\>\<#548C\>\<#4F18\>\<#9009\>\<#504F\>\<#7F6E\>>
 
@@ -445,6 +447,34 @@
       bias<with|font|roman|\<#FF09\>\<#FF09\>>\<#3002\>
     </itemize>
   </hidden>|<\hidden>
+    <tit|\<#5965\>\<#574E\>\<#59C6\>\<#5243\>\<#5200\> (Occam's Razor)>
+
+    <space|8em><image|image/william_of_occam.png|.5par|||>
+
+    William of Ockham (c. 1287\U1347) was the English Franciscan friar whose
+    name is permanently attached to <strong|Ockham's razor> \V the principle
+    that, of two equally good explanations, the simpler should win.
+
+    <with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://www.philosophyprofessor.com/philosophers/william-of-ockham/>
+  </hidden>|<\hidden>
+    <tit|Ockham, Surrey>
+
+    <space|6em><image|image/Ockham, Surrey.png|.7par|||>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    <space|3em><image|image/occam_villege.png|.35par|||><space|5em><image|image/occam_villege_map.png|.3par|||>
+
+    \;
+  </hidden>|<\shown>
+    <space|3em><image|image/ockham_parish_council.png|.5par|||><space|1em><image|image/occam_memorial.png|.3par|||>
+
+    https://www.ockhamrazorcompany.com/blog/2015/3/10/ockham-village
+  </shown>|<\hidden>
     <tit|\<#5965\>\<#574E\>\<#59C6\>\<#5243\>\<#5200\> (Occam's Razor)>
 
     <with|font|fireflysung|\<#4F18\>\<#5148\>\<#9009\>\<#62E9\>\<#62DF\>\<#5408\>\<#6570\>\<#636E\>\<#7684\>\<#6700\>\<#7B80\>\<#5355\>\<#5047\>\<#8BBE\>>\<#3002\>
@@ -786,7 +816,6 @@
     <associate|auto-3|<tuple|3|?>>
     <associate|auto-4|<tuple|4|?>>
     <associate|auto-5|<tuple|5|?>>
-    <associate|auto-6|<tuple|5|?>>
   </collection>
 </references>
 
