@@ -992,7 +992,7 @@
     over-fitting encountered in the context of polynomial curve fitting.
 
     \;
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     \;
 
     \;
@@ -1008,7 +1008,13 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<mu\><rsub|ML>|]>>|<cell|=>|<cell|\<mu\>>>|<row|<cell|\<bbb-E\><around*|[|\<sigma\><rsup|2><rsub|ML>|]>>|<cell|=>|<cell|<around*|(|<frac|N-1|N>|)>\<sigma\><rsup|2>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+
+    The following estimate for the variance parameter is unbiased
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<wide|\<sigma\>|~><rsup|2>>|<cell|=>|<cell|<frac|N|N-1>\<sigma\><rsup|2><rsub|ML>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|N-1><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\><rsub|ML>|)><rsup|2>>>>>
+    </eqnarray*>
+  </shown>|<\hidden>
     <small-figure|<image|img/fig_1_15_bias_variance_gaussian.png|.3par|||>|Illustration
     of how bias arises in using maximum likelihood to determine the variance
     of a Gaussian. The green curve shows the true Gaussian distribution from
@@ -1019,7 +1025,9 @@
     mean is correct, but the variance is systematically under-estimated
     because it is measured relative to the sample mean and not relative to
     the true mean.>
-  </shown>>
+  </hidden>|<\hidden>
+    \;
+  </hidden>>
 </body>
 
 <\initial>
