@@ -64,9 +64,9 @@
     consider a simple approach based on curve fitting. In particular, we
     shall fit the data using a polynomial function of the form
 
-    <\equation*>
-      y<around*|(|x,\<b-w\>|)>=w<rsub|0>+w<rsub|1>x+w<rsub|2>x<rsup|2>+\<cdots\>+w<rsub|M>x<rsup|M>=<big|sum><rsub|j=0><rsup|M>w<rsub|j>x<rsup|j>
-    </equation*>
+    <\equation>
+      y<around*|(|x,\<b-w\>|)>=w<rsub|0>+w<rsub|1>x+w<rsub|2>x<rsup|2>+\<cdots\>+w<rsub|M>x<rsup|M>=<big|sum><rsub|j=0><rsup|M>w<rsub|j>x<rsup|j><label|1.1>
+    </equation>
 
     where <math|M> is the order of the polynomial, and <math|x<rsub|j>>
     denotes <math|x> raised to the power of <math|j>.
@@ -992,7 +992,7 @@
     over-fitting encountered in the context of polynomial curve fitting.
 
     \;
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     \;
@@ -1014,7 +1014,7 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|<wide|\<sigma\>|~><rsup|2>>|<cell|=>|<cell|<frac|N|N-1>\<sigma\><rsup|2><rsub|ML>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|N-1><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\><rsub|ML>|)><rsup|2>>>>>
     </eqnarray*>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <small-figure|<image|img/fig_1_15_bias_variance_gaussian.png|.3par|||>|Illustration
     of how bias arises in using maximum likelihood to determine the variance
     of a Gaussian. The green curve shows the true Gaussian distribution from
@@ -1026,8 +1026,215 @@
     because it is measured relative to the sample mean and not relative to
     the true mean.>
   </hidden>|<\hidden>
+    <tit|Curve Fitting Re-visited>
+
+    Goal in the curve fitting problem:\ 
+
+    be able to make predictions for the target variable <math|t> given some
+    new value of the input variable <math|x>\ 
+
+    Condition:
+
+    a set of training data <math|<math-up|<strong|x>>=(x<rsub|1>,\<cdots\>,x<rsub|N>
+    )<rsup|T>> and their corresponding target values <math|\<b-t\> =
+    (t<rsub|1>,\<cdots\>,t<rsub|N>)<rsup|T>>.
+
+    Express uncertainty over the value of the target variable using a
+    probability distribution.
+
+    Assume:
+
+    given the value of <math|x>, the corresponding value of <math|t> has a
+    Gaussian distribution with a mean equal to the value <math|y(x,\<b-w\>)>
+    of the polynomial curve given by Eq. <eqref|1.1>.\ 
+
+    Thus:
+
+    <\equation>
+      p(t\|x, \<b-w\>, \<beta\>) = \<cal-N\>(t\|y(x,\<b-w\>),\<beta\><rsup|\<minus\>1>)
+      <label|1.60>
+    </equation>
+
+    where, <math|\<beta\>> is the precision parameter(inverse variance).
+    Illustrated schematically in Figure <reference|fig1.16>.
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_16_gaussian_conditional_t_x.png|.6par|||>|<label|fig1.16>Schematic
+    illustration of a Gaussian conditional distribution for <math|t> given
+    <math|x> given by Eq. <eqref|1.60>, in which the mean is given by the
+    polynomial function <math|y(x,w)>, and the precision is given by the
+    parameter <math|\<beta\>>, which is related to the variance by
+    <math|\<beta\><rsup|\<minus\>1>=\<sigma\><rsup|2>>.>
+  </hidden>|<\hidden>
+    <\tit>
+      likelihood & error function
+    </tit>
+
+    likelihood function
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-t\>\|\<b-up-x\>,\<b-w\>,\<beta\>|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>\<cal-N\><around*|(|t<rsub|n>\|y<around*|(|x<rsub|n>,\<b-w\>|)>,\<beta\><rsup|-1>|)>>>>>
+    </eqnarray*>
+
+    log likelihood function
+
+    <\equation>
+      ln p<around*|(|\<b-t\>\|\<b-up-x\>,\<b-w\>,\<beta\>|)>=-<wide*|<frac|\<beta\>|2><big|sum><rsub|n=1><rsup|N><around*|{|y<around*|(|x<rsub|n>,\<b-w\>|)>-t<rsub|n>|}><rsup|2
+      >|\<wide-underbrace\>><rsub|\<beta\>E<around*|(|\<b-w\>|)>>+<frac|N|2>ln\<beta\>-<frac|N|2>ln<around*|(|2\<pi\>|)><label|1.62>
+    </equation>
+
+    maximizing likelihood is equivalent, so far as determining w is
+    concerned, to minimizing the <em|sum-of-squares error function> defined
+    by Eq. <eqref|1.2>. Thus the sum-of-squares error function has arisen as
+    a consequence of maximizing likelihood under the assumption of a Gaussian
+    noise distribution.
+  </hidden>|<\hidden>
+    <tit|<math|\<b-w\>,\<beta\>>>
+
     \;
-  </hidden>>
+
+    Determine <math|\<b-w\>> by minimizing sum-of-squares error
+    <math|E<around*|(|\<b-w\>|)>>.
+
+    \;
+
+    Maximizing Eq. <eqref|1.62> with respect to <math|\<beta\>> gives
+
+    <\equation*>
+      <frac|1|\<beta\>>=<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|{|y<around*|(|x<rsub|n>,\<b-w\><rsub|ML>|)>-t<rsub|n>|}><rsup|2>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|predict>
+
+    \;
+
+    Having determined the parameters <math|\<b-w\>> and <math|\<beta\>>, we
+    can now make predictions for new values of <math|x>.\ 
+
+    Because we now have a probabilistic model, these are expressed in terms
+    of the <em|predictive distribution> that gives the probability
+    distribution over <math|t>, rather than simply a point estimate, and is
+    obtained by substituting the maximum likelihood parameters into Eq.
+    <eqref|1.60> to give
+
+    <\equation*>
+      p<around*|(|t\|x,\<b-w\><rsub|ML>,\<beta\><rsub|ML>|)>=\<cal-N\><around*|(|t\|y<around*|(|x,\<b-w\><rsub|ML>|)>,\<beta\><rsup|-1><rsub|ML>|)>
+    </equation*>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    <\tit>
+      MAP: A Step towards Bayes
+    </tit>
+
+    a prior distribution over the polynomial coefficients <math|\<b-w\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-w\>\|\<alpha\>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-w\>\|\<b-0\>,\<alpha\><rsup|-1>\<b-I\>|)>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|<frac|\<alpha\>|2\<pi\>>|)><rsup|<around*|(|M+1|)>/2>exp<around*|{|-<frac|\<alpha\>|2>\<b-w\><rsup|T>\<b-w\>|}><eq-number><label|1.65>>>>>
+    </eqnarray*>
+
+    where <math|\<alpha\>> is the precision of the distribution, and <math|M
+    +1> is the total number of elements in the vector <math|\<b-w\>> for an
+    M'th order polynomial.
+
+    Variables such as <math|\<alpha\>>, which control the distribution of
+    model parameters, are called <em|hyperparameters>.
+  </hidden>|<\hidden>
+    \;
+
+    Using Bayes' theorem, the posterior distribution for <math|\<b-w\>> is
+    proportional to the product of the prior distribution and the likelihood
+    function
+
+    <\equation>
+      p<around*|(|\<b-w\>\|\<b-up-x\>,\<b-t\>,\<alpha\>,\<beta\>|)>\<propto\>p<around*|(|\<b-t\>\|\<b-up-x\>,\<b-w\>,\<beta\>|)>p<around*|(|\<b-w\>\|\<alpha\>|)><label|1.66>
+    </equation>
+
+    We can now determine <math|\<b-w\>> by finding the most probable value of
+    <math|\<b-w\>> given the data, in other words by maximizing the posterior
+    distribution.
+
+    This technique is called <em|maximum posterior>, or simply MAP.\ 
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    Taking the negative logarithm of Eq. <eqref|1.66> and combining with Eq.
+    <eqref|1.62> and <eqref|1.65>, we find that the maximum of the posterior
+    is given by the minimum of
+
+    <\equation*>
+      <frac|\<beta\>|2><big|sum><rsub|n=1><rsup|N><around*|{|y<around*|(|x<rsub|n>,\<b-w\>|)>-t<rsub|n>|}><rsup|2>+<frac|\<alpha\>|2>\<b-w\><rsup|T>\<b-w\>
+    </equation*>
+
+    Thus we see that maximizing the posterior distribution is equivalent to
+    minimizing the regularized sum-of-squares error function encountered
+    earlier in the form <eqref|1.4>, with a regularization parameter given by
+    <math|\<lambda\> = \<alpha\>/\<beta\>>.
+  </hidden>|<\hidden>
+    <tit|Bayesian curve fitting>
+
+    In the curve fitting problem, we are given the training data
+    <math|\<b-up-x\>> and <math|\<b-t\>>, along with a new test point
+    <math|x>, and our goal is to predict the value of <math|t>. We therefore
+    wish to evaluate the predictive distribution
+    <math|p(t\|x,\<b-up-x\>,\<b-t\>)>. Assume that the parameters
+    <math|\<alpha\>> and <math|\<beta\>> are fixed and known in advance.
+
+    A Bayesian treatment simply corresponds to a consistent application of
+    the sum and product rules of probability, which allow the predictive
+    distribution to be written in the form
+
+    <\equation>
+      p<around*|(|t\|x,\<b-up-x\>,\<b-t\>|)>=<big|int>p<around*|(|t\|x,\<b-w\>|)>p<around*|(|\<b-w\>\|\<b-up-x\>,\<b-t\>|)>\<mathd\>\<b-w\><label|1.68>
+    </equation>
+
+    Here <math|p(t\|x,\<b-w\>)> is given by Eq. <eqref|1.60>, and we have
+    omitted the dependence on <math|\<alpha\>> and <math|\<beta\>> to
+    simplify the notation.
+
+    <math|p(w\|\<b-up-x\>,\<b-t\>)> is the posterior distribution over
+    parameters, and can be found by normalizing the right-hand side of Eq.
+    <eqref|1.66>. We shall see in Section 3.3 that, for problems such as the
+    curve-fitting example, this posterior distribution is a Gaussian and can
+    be evaluated analytically.
+  </hidden>|<\hidden>
+    Similarly, the integration in Eq. <eqref|1.68> can also be performed
+    analytically with the result that the predictive distribution is given by
+    a Gaussian of the form
+
+    <\equation*>
+      p<around*|(|t\|x,\<b-up-x\>,\<b-t\>|)>=\<cal-N\><around*|(|t\|m<around*|(|x|)>,s<rsup|2><around*|(|x|)>|)>
+    </equation*>
+
+    where the mean and variance are given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|m<around*|(|x|)>>|<cell|=>|<cell|\<beta\>\<b-varphi\><around*|(|x|)><rsup|T>S<big|sum><rsub|n=1><rsup|N>\<b-varphi\><around*|(|x<rsub|n>|)>t<rsub|n>>>|<row|<cell|s<rsup|2><around*|(|x|)>>|<cell|=>|<cell|\<beta\><rsup|-1>+\<b-varphi\><around*|(|x|)><rsup|T>S\<b-varphi\><around*|(|x|)>>>>>
+    </eqnarray*>
+
+    Here the matrix <math|S> is given by\ 
+
+    <\equation*>
+      S<rsup|-1>=\<alpha\>\<b-I\>+\<beta\><big|sum><rsub|n=1><rsup|N>\<b-varphi\><around*|(|x<rsub|n>|)>\<b-varphi\><around*|(|x<rsub|n>|)><rsup|T>
+    </equation*>
+
+    where <math|I> is the unit matrix, and we have defined the vector
+    <math|\<b-varphi\>(x)> with elements <math|\<varphi\><rsub|i>(x)=x<rsup|i>>
+    for <math|i = 0, . . . , M>.
+  </hidden>|<\shown>
+    <small-figure|<image|img/fig_1_17_bayesian_polynomial_fitting.png|.5par|||>|The
+    predictive distribution resulting from a Bayesian treatment of polynomial
+    curve fitting using an M = 9 polynomial, with the fixed \ parameters
+    <math|\<alpha\> = 5 \<times\> 10<rsup|\<minus\>3>> and <math|\<beta\> =
+    11.1> (corresponding to the known noise variance), in which the red curve
+    denotes the mean of the predictive distribution and the red region
+    corresponds to <math|\<pm\>1> standard deviation around the mean.>
+  </shown>>
 </body>
 
 <\initial>
@@ -1041,39 +1248,48 @@
 
 <\references>
   <\collection>
-    <associate|1.2|<tuple|1|?>>
-    <associate|1.3|<tuple|2|?>>
-    <associate|1.4|<tuple|3|?>>
-    <associate|1.43|<tuple|7|?>>
-    <associate|1.5|<tuple|4|?>>
-    <associate|1.53|<tuple|8|?>>
-    <associate|1.54|<tuple|9|?>>
-    <associate|1.55|<tuple|10|?>>
-    <associate|1.56|<tuple|11|?>>
-    <associate|1.6|<tuple|5|?>>
-    <associate|1.8|<tuple|6|?>>
+    <associate|1.1|<tuple|1|5>>
+    <associate|1.2|<tuple|2|6>>
+    <associate|1.3|<tuple|3|11>>
+    <associate|1.4|<tuple|4|17>>
+    <associate|1.43|<tuple|8|40>>
+    <associate|1.5|<tuple|5|23>>
+    <associate|1.53|<tuple|9|50>>
+    <associate|1.54|<tuple|10|53>>
+    <associate|1.55|<tuple|11|54>>
+    <associate|1.56|<tuple|12|54>>
+    <associate|1.6|<tuple|6|23>>
+    <associate|1.60|<tuple|13|58>>
+    <associate|1.62|<tuple|14|?>>
+    <associate|1.65|<tuple|15|?>>
+    <associate|1.66|<tuple|16|1>>
+    <associate|1.68|<tuple|17|?>>
+    <associate|1.8|<tuple|7|24>>
     <associate|auto-1|<tuple|1|1>>
-    <associate|auto-10|<tuple|8|?>>
-    <associate|auto-11|<tuple|9|?>>
-    <associate|auto-12|<tuple|10|?>>
-    <associate|auto-13|<tuple|11|?>>
-    <associate|auto-14|<tuple|12|?>>
-    <associate|auto-15|<tuple|13|1>>
-    <associate|auto-16|<tuple|14|?>>
-    <associate|auto-17|<tuple|15|1>>
-    <associate|auto-2|<tuple|2|1>>
-    <associate|auto-3|<tuple|3|1>>
-    <associate|auto-4|<tuple|4|1>>
-    <associate|auto-5|<tuple|5|?>>
-    <associate|auto-6|<tuple|1|?>>
-    <associate|auto-7|<tuple|6|2>>
-    <associate|auto-8|<tuple|7|1>>
-    <associate|auto-9|<tuple|2|?>>
-    <associate|fig1.10|<tuple|10|?>>
-    <associate|fig1.14|<tuple|14|?>>
-    <associate|fig1.2|<tuple|2|?>>
-    <associate|fig1.4|<tuple|4|?>>
-    <associate|fig1.7|<tuple|7|1>>
+    <associate|auto-10|<tuple|8|20>>
+    <associate|auto-11|<tuple|9|21>>
+    <associate|auto-12|<tuple|10|22>>
+    <associate|auto-13|<tuple|11|27>>
+    <associate|auto-14|<tuple|12|28>>
+    <associate|auto-15|<tuple|13|46>>
+    <associate|auto-16|<tuple|14|51>>
+    <associate|auto-17|<tuple|15|57>>
+    <associate|auto-18|<tuple|16|59>>
+    <associate|auto-19|<tuple|17|?>>
+    <associate|auto-2|<tuple|2|3>>
+    <associate|auto-3|<tuple|3|7>>
+    <associate|auto-4|<tuple|4|9>>
+    <associate|auto-5|<tuple|5|12>>
+    <associate|auto-6|<tuple|1|13>>
+    <associate|auto-7|<tuple|6|14>>
+    <associate|auto-8|<tuple|7|18>>
+    <associate|auto-9|<tuple|2|19>>
+    <associate|fig1.10|<tuple|10|22>>
+    <associate|fig1.14|<tuple|14|51>>
+    <associate|fig1.16|<tuple|16|59>>
+    <associate|fig1.2|<tuple|2|3>>
+    <associate|fig1.4|<tuple|4|9>>
+    <associate|fig1.7|<tuple|7|18>>
   </collection>
 </references>
 
@@ -1220,6 +1436,17 @@
       across the three data sets, the mean is correct, but the variance is
       systematically under-estimated because it is measured relative to the
       sample mean and not relative to the true mean.>|<pageref|auto-17>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|16>||Schematic
+      illustration of a Gaussian conditional distribution for
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|t>>
+      given <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>
+      given by Eq. (<reference|1.60>), in which the mean is given by the
+      polynomial function <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|y(x,w)>>,
+      and the precision is given by the parameter
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<beta\>>>,
+      which is related to the variance by
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<beta\><rsup|\<minus\>1>=\<sigma\><rsup|2>>>.>|<pageref|auto-18>>
     </associate>
     <\associate|table>
       <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Table of the
