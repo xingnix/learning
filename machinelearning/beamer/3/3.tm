@@ -83,7 +83,7 @@
       <item><with|font|fireflysung|\<#8BAD\>\<#7EC3\>\<#6570\>\<#636E\>\<#53EF\>\<#4EE5\>\<#5305\>\<#542B\>\<#7F3A\>\<#5C11\>\<#5C5E\>\<#6027\>\<#503C\>\<#7684\>\<#5B9E\>\<#4F8B\>>\<#3002\>
     </itemize>
   </hidden>|<\hidden>
-    <tit|Decision Tree for <em|PlayTennis>>
+    <tit|Decision Tree Example>
 
     <space|6em><image|./image/dt-f1.png|.7par|||>
   </hidden>|<\hidden>
@@ -470,11 +470,11 @@
     <space|3em><image|image/occam_villege.png|.35par|||><space|5em><image|image/occam_villege_map.png|.3par|||>
 
     \;
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <space|3em><image|image/ockham_parish_council.png|.5par|||><space|1em><image|image/occam_memorial.png|.3par|||>
 
     https://www.ockhamrazorcompany.com/blog/2015/3/10/ockham-village
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|\<#5965\>\<#574E\>\<#59C6\>\<#5243\>\<#5200\> (Occam's Razor)>
 
     <with|font|fireflysung|\<#4F18\>\<#5148\>\<#9009\>\<#62E9\>\<#62DF\>\<#5408\>\<#6570\>\<#636E\>\<#7684\>\<#6700\>\<#7B80\>\<#5355\>\<#5047\>\<#8BBE\>>\<#3002\>
@@ -526,20 +526,45 @@
     Consider adding noisy training example No. 15:
 
     <\equation*>
-      Sunny,Hot,Normal,Strong,Launch=No
+      Sunny,Hot,Normal,Strong,Action=No
     </equation*>
 
     What effect on earlier tree?
 
     \;
   </hidden>|<\hidden>
-    \;
-
-    \;
-
-    <\padded-center>
-      <image|./image/dt-f1.png|0.5par|||>
-    </padded-center>
+    <with|font|Bbb*|font-family|sans|font-base-size|8|<verbatim|\|--decision
+    : Outlook[9+,6-]<next-line>\|--Sunny<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--decision :
+    Temperature[2+,4-]<next-line>: <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--Mild<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--decision :
+    Humidity[1+,1-]<next-line>: <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--Normal<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>label : Yes[1+,0-]<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--High<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>label : No[0+,1-]<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--Hot<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>label : No[0+,3-]<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--Cool<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>label :
+    Yes[1+,0-]<next-line>\|--Rain<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--decision :
+    Wind[3+,2-]<next-line>: <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--Strong<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>label : No[0+,2-]<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>\|--Weak<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>label :
+    Yes[3+,0-]<next-line>\|--Overcast<next-line>:
+    <nbsp><nbsp><nbsp><nbsp><nbsp><nbsp>label : Yes[4+,0-]>>
   </hidden>|<\hidden>
     <with|font|fireflysung|\<#8003\>\<#8651\>\<#5047\>\<#8BBE\> ><math|h>
     <with|font|fireflysung|\<#9519\>\<#8BEF\>\<#7387\> >
@@ -563,7 +588,7 @@
       >
 
       <\equation*>
-        e*r*r*o*r<rsub|t*r*a*i*n><around|(|h|)>\<less\>e*r*r*o*r<rsub|t*r*a*i*n><around|(|h<rprime|'>|)>
+        error<rsub|t*r*a*i*n><around|(|h|)>\<less\>error<rsub|t*r*a*i*n><around|(|h<rprime|'>|)>
       </equation*>
 
       <with|font|fireflysung|\<#4F46\>\<#5728\>\<#6574\>\<#4E2A\>\<#5B9E\>\<#4F8B\>\<#5206\>\<#5E03\>\<#4E0A\>
@@ -571,7 +596,7 @@
       >
 
       <\equation*>
-        e*r*r*o*r<rsub|\<cal-D\>><around|(|h|)>\<gtr\>e*r*r*o*r<rsub|\<cal-D\>><around|(|h<rprime|'>|)>
+        error<rsub|\<cal-D\>><around|(|h|)>\<gtr\>error<rsub|\<cal-D\>><around|(|h<rprime|'>|)>
       </equation*>
 
       <with|font|fireflysung|\<#90A3\>\<#4E48\>\<#5C31\>\<#8BF4\>\<#5047\>\<#8BBE\>
@@ -616,17 +641,17 @@
         Description Length<with|font|roman|\<#FF09\>><with|font|fireflysung|\<#7684\>\<#51C6\>\<#5219\>
         >
 
-        <item>MDL: minimize <math|size<around|(|tree|)>+size<around|(|misclassifications<around|(|tree|\<nobracket\>>|)>>
+        <item>MDL: minimize <math|length<around|(|tree
+        structure|)>+length<around|(|tree error|)>>
       </itemize>
     </itemize>
   </hidden>|<\hidden>
     <tit|\<#9519\>\<#8BEF\>\<#7387\>\<#964D\>\<#4F4E\>\<#4FEE\>\<#526A\>>
 
     <with|font|fireflysung|\<#5C06\>\<#6570\>\<#636E\>\<#5206\>\<#4E3A\>\<#8BAD\>\<#7EC3\>><with|font|roman|\<#FF08\>
-    ><math|t*r*a*i*n*i*n*g> <with|font|roman|\<#FF09\>
-    ><with|font|fireflysung|\<#4E0E\>\<#9A8C\>\<#8BC1\>
-    ><with|font|roman|\<#FF08\> ><math|v*a*l*i*d*a*t*i*o*n>
-    <with|font|roman|\<#FF09\> ><with|font|fireflysung|\<#96C6\>\<#5408\>>\<#3002\>
+    >training <with|font|roman|\<#FF09\> ><with|font|fireflysung|\<#4E0E\>\<#9A8C\>\<#8BC1\>
+    ><with|font|roman|\<#FF08\> >validation <with|font|roman|\<#FF09\>
+    ><with|font|fireflysung|\<#96C6\>\<#5408\>>\<#3002\>
 
     <with|font|fireflysung|\<#8FD9\>\<#6837\>\<#4FBF\>\<#4F7F\>\<#56E0\>\<#4E3A\>\<#8BAD\>\<#7EC3\>\<#96C6\>\<#5408\>\<#7684\>\<#5DE7\>\<#5408\>\<#89C4\>\<#5F8B\>\<#6027\>\<#800C\>\<#52A0\>\<#5165\>\<#7684\>\<#7ED3\>\<#70B9\>\<#5F88\>\<#53EF\>\<#80FD\>\<#88AB\>\<#5220\>\<#9664\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#56E0\>\<#4E3A\>\<#540C\>\<#6837\>\<#7684\>\<#5DE7\>\<#5408\>\<#4E0D\>\<#5927\>\<#4F1A\>\<#53D1\>\<#751F\>\<#5728\>\<#9A8C\>\<#8BC1\>\<#96C6\>\<#5408\>\<#4E2D\>>\<#3002\><with|font|fireflysung|\<#53CD\>\<#590D\>\<#5730\>\<#4FEE\>\<#526A\>\<#7ED3\>\<#70B9\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#6BCF\>\<#6B21\>\<#603B\>\<#662F\>\<#9009\>\<#53D6\>\<#5B83\>\<#7684\>\<#5220\>\<#9664\>\<#53EF\>\<#4EE5\>\<#6700\>\<#5927\>\<#63D0\>\<#9AD8\>\<#51B3\>\<#7B56\>\<#6811\>\<#5728\>\<#9A8C\>\<#8BC1\>\<#96C6\>\<#5408\>\<#4E0A\>\<#7684\>\<#7CBE\>\<#5EA6\>\<#7684\>\<#7ED3\>\<#70B9\>>\<#3002\>
 
@@ -702,13 +727,13 @@
     <with|font|fireflysung|\<#52A8\>\<#6001\>\<#5730\>\<#5B9A\>\<#4E49\>\<#65B0\>\<#7684\>\<#79BB\>\<#6563\>\<#503C\>\<#5C5E\>\<#6027\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#5373\>\<#5148\>\<#628A\>\<#8FDE\>\<#7EED\>\<#503C\>\<#5C5E\>\<#6027\>\<#7684\>\<#503C\>\<#57DF\>\<#5206\>\<#5272\>\<#4E3A\>\<#79BB\>\<#6563\>\<#7684\>\<#533A\>\<#95F4\>\<#96C6\>\<#5408\>>\<#3002\>
 
     <\itemize>
-      <item><math|T*e*m*p*e*r*a*t*u*r*e=82.5>
+      <item>Temperature\<gtr\>54
 
-      <item><math|<around|(|T*e*m*p*e*r*a*t*u*r*e\<gtr\>72.3|)>=t,f>
+      <item>Temperature\<gtr\>85
     </itemize>
 
     <\padded-center>
-      <tabular*|<tformat|<cwith|1|-1|1|1|cell-halign|l>|<cwith|1|-1|1|1|cell-lborder|0ln>|<cwith|1|-1|2|2|cell-halign|r>|<cwith|1|-1|3|3|cell-halign|r>|<cwith|1|-1|4|4|cell-halign|r>|<cwith|1|-1|5|5|cell-halign|r>|<cwith|1|-1|6|6|cell-halign|r>|<cwith|1|-1|7|7|cell-halign|r>|<cwith|1|-1|7|7|cell-rborder|0ln>|<cwith|1|-1|1|-1|cell-valign|c>|<cwith|1|1|1|-1|cell-valign|top>|<cwith|1|1|1|-1|cell-vmode|exact>|<cwith|1|1|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|2|2|1|-1|cell-valign|top>|<cwith|2|2|1|-1|cell-vmode|exact>|<cwith|2|2|1|-1|cell-height|<plus|1fn|0pt>>|<table|<row|<cell|{<with|font-shape|italic|Temperature}:>>|<cell|40>|<cell|48>|<cell|60>|<cell|72>|<cell|80>|<cell|90>>|<row|<cell|{<with|font-shape|right|Launch}:>>|<cell|No>|<cell|No>|<cell|Yes>|<cell|Yes>|<cell|Yes>|<cell|No>>>>>
+      <tabular*|<tformat|<cwith|1|-1|1|1|cell-halign|l>|<cwith|1|-1|1|1|cell-lborder|0ln>|<cwith|1|-1|2|2|cell-halign|r>|<cwith|1|-1|3|3|cell-halign|r>|<cwith|1|-1|4|4|cell-halign|r>|<cwith|1|-1|5|5|cell-halign|r>|<cwith|1|-1|6|6|cell-halign|r>|<cwith|1|-1|7|7|cell-halign|r>|<cwith|1|-1|7|7|cell-rborder|0ln>|<cwith|1|-1|1|-1|cell-valign|c>|<cwith|1|1|1|-1|cell-valign|top>|<cwith|1|1|1|-1|cell-vmode|exact>|<cwith|1|1|1|-1|cell-height|<plus|1fn|0pt>>|<cwith|2|2|1|-1|cell-valign|top>|<cwith|2|2|1|-1|cell-vmode|exact>|<cwith|2|2|1|-1|cell-height|<plus|1fn|0pt>>|<table|<row|<cell|Temperature:>|<cell|40>|<cell|48>|<cell|60>|<cell|72>|<cell|80>|<cell|90>>|<row|<cell|Action:>|<cell|No>|<cell|No>|<cell|Yes>|<cell|Yes>|<cell|Yes>|<cell|No>>>>>
     </padded-center>
   </hidden>|<\hidden>
     <tit|\<#5C5E\>\<#6027\>\<#9009\>\<#62E9\>\<#7684\>\<#5176\>\<#5B83\>\<#5EA6\>\<#91CF\>\<#6807\>\<#51C6\>>
@@ -722,8 +747,8 @@
       <item>Imagine using <math|D*a*t*e=J*u*n_3_1996> as attribute
     </itemize>
 
-    <with|font|fireflysung|\<#589E\>\<#76CA\>\<#6BD4\>\<#7387\> >(
-    <math|G*a*i*n*R*a*t*i*o> )
+    <with|font|fireflysung|\<#589E\>\<#76CA\>\<#6BD4\>\<#7387\> >( Gain Ratio
+    )
 
     <\equation*>
       G*a*i*n*R*a*t*i*o<around|(|S,A|)>\<equiv\><frac|G*a*i*n*<around|(|S,A|)>|S*p*l*i*t*I*n*f*o*r*m*a*t*i*o*n*<around|(|S,A|)>>
@@ -755,14 +780,14 @@
       <item><with|font|fireflysung|\<#4E3A\>>A<with|font|fireflysung|\<#7684\>\<#6BCF\>\<#4E2A\>\<#53EF\>\<#80FD\>\<#503C\>\<#8D4B\>\<#4E0E\>\<#4E00\>\<#4E2A\>\<#6982\>\<#7387\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#6309\>\<#6B64\>\<#6BD4\>\<#4F8B\>\<#5C06\>\<#6837\>\<#4F8B\>\<#5206\>\<#914D\>\<#5230\>\<#5B50\>\<#6811\>\<#4E2D\>>\<#3002\>
 
       <\itemize>
-        <item><with|font|fireflysung|\<#4F8B\>\<#5982\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#7ED9\>\<#5B9A\>\<#4E00\>\<#4E2A\>\<#5E03\>\<#5C14\>\<#5C5E\>\<#6027\>>A<with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#5982\>\<#679C\>\<#7ED3\>\<#70B9\>>n<with|font|fireflysung|\<#5305\>\<#542B\>>6<with|font|fireflysung|\<#4E2A\>\<#5DF2\>\<#77E5\>>A=1<with|font|fireflysung|\<#548C\>>6<with|font|fireflysung|\<#4E2A\>>A=0<with|font|fireflysung|\<#7684\>\<#6837\>\<#4F8B\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#90A3\>\<#4E48\>>A(x)=1<with|font|fireflysung|\<#7684\>\<#6982\>\<#7387\>\<#662F\>>0.6<with|font|roman|\<#FF0C\>>A(x)=0<with|font|fireflysung|\<#7684\>\<#6982\>\<#7387\>\<#662F\>>0.4\<#3002\>
+        <item><with|font|fireflysung|\<#4F8B\>\<#5982\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#7ED9\>\<#5B9A\>\<#4E00\>\<#4E2A\>\<#5E03\>\<#5C14\>\<#5C5E\>\<#6027\>>A<with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#5982\>\<#679C\>\<#7ED3\>\<#70B9\>>n<with|font|fireflysung|\<#5305\>\<#542B\>>6<with|font|fireflysung|\<#4E2A\>\<#5DF2\>\<#77E5\>>A=1<with|font|fireflysung|\<#548C\>>4<with|font|fireflysung|\<#4E2A\>>A=0<with|font|fireflysung|\<#7684\>\<#6837\>\<#4F8B\>><with|font|roman|\<#FF0C\>><with|font|fireflysung|\<#90A3\>\<#4E48\>>A(x)=1<with|font|fireflysung|\<#7684\>\<#6982\>\<#7387\>\<#662F\>>0.6<with|font|roman|\<#FF0C\>>A(x)=0<with|font|fireflysung|\<#7684\>\<#6982\>\<#7387\>\<#662F\>>0.4\<#3002\>
         <with|font|fireflysung|\<#5B9E\>\<#4F8B\>>x<with|font|fireflysung|\<#7684\>
         >60% <with|font|fireflysung|\<#88AB\>\<#5206\>\<#914D\>\<#5230\> >A=1
         <with|font|fireflysung|\<#7684\>\<#5206\>\<#652F\>><with|font|roman|\<#FF0C\>
         >40% <with|font|fireflysung|\<#88AB\>\<#5206\>\<#914D\>\<#5230\>\<#53E6\>\<#4E00\>\<#4E2A\>\<#5206\>\<#652F\>>\<#3002\>
       </itemize>
     </itemize>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <tit|\<#5904\>\<#7406\>\<#4EE3\>\<#4EF7\>\<#4E0D\>\<#540C\>\<#7684\>\<#5C5E\>\<#6027\>(Attributes
     with Costs)>
 
@@ -785,8 +810,6 @@
         <frac|G*a*i*n<rsup|2><around|(|S,A|)>|C*o*s*t<around|(|A|)>>
       </equation*>
 
-      <item>
-
       <item>Nunez (1988)
 
       <\equation*>
@@ -797,11 +820,12 @@
       ><math|w\<in\><around|[|0,1|]>> <with|font|fireflysung|\<#51B3\>\<#5B9A\>\<#4EE3\>\<#4EF7\>\<#7684\>\<#91CD\>\<#8981\>\<#6027\>
       >
     </itemize>
-  </hidden>>
+  </shown>>
 </body>
 
 <\initial>
   <\collection>
+    <associate|info-flag|minimal>
     <associate|page-height|auto>
     <associate|page-medium|paper>
     <associate|page-type|16:9>
