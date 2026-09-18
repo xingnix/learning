@@ -5,7 +5,7 @@ if sys.version > '3':
     from functools import reduce
 
 input_string = """
-Day Outlook   Temperature  Humidity   Wind   PlayTennis
+Day Outlook   Temperature  Humidity   Wind   Action
 D1  Sunny     Hot          High       Weak   No
 D2  Sunny     Hot          High       Strong No
 D3  Overcast  Hot          High       Weak   Yes
@@ -19,13 +19,14 @@ D10 Rain      Mild         Normal     Weak   Yes
 D11 Sunny     Mild         Normal     Strong Yes
 D12 Overcast  Mild         High       Strong Yes
 D13 Overcast  Hot          Normal     Weak   Yes
-D14 Rain      Mild         High       Strong No"""
+D14 Rain      Mild         High       Strong No
+D15 Sunny     Hot          Normal     Strong No"""
 
 using_date=False
 lines = list(map(lambda x: list(filter(lambda y: y != '',
                              re.split(' +', x)))[0 if using_date else 1:],  # drop first item "Example"
             list(filter(lambda x: x != '', re.split('\n', input_string)))))
-names, data = lines[0], lines[0:]
+names, data = lines[0], lines[1:]
 data_lines = list(map(lambda x: dict(zip(names, x)), data))
 values = dict(zip(names,
                   reduce(lambda x, y:
@@ -95,6 +96,7 @@ def id3(indices,attributes):
             attributes_v.remove(node['decision'])
             node[v]=id3(indices_v,attributes_v)
     return node
+
 
 tree=id3(range(14),names)
 def prettytreeview(tree,space):
