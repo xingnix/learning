@@ -27,7 +27,7 @@ using_date=True
 lines = list(map(lambda x: list(filter(lambda y: y != '',
                              re.split(' +', x)))[0 if using_date else 1:],  # drop first item "Example"
             list(filter(lambda x: x != '', re.split('\n', input_string)))))
-names, data = lines[0], lines[0:]
+names, data = lines[0], lines[1:]
 data_lines = list(map(lambda x: dict(zip(names, x)), data))
 values = dict(zip(names,
                   reduce(lambda x, y:
@@ -65,12 +65,16 @@ power_on_split=2
 
 def gainratio(indices,name):
     gain=entropy(indices)
-    split_information=0.0;
+    split_information=0.001;
     for v in (values[name]):
        indices_v=subindices(indices,name,v)
        gain=gain-float(len(indices_v))/len(indices)*entropy(indices_v)
        s=float(len(indices_v))/len(indices)
        split_information=split_information-s*math.log(s if s>0 else 1)/math.log(2)
+    print("-------------")
+    print(values[name])
+    print(indices)
+    print(split_information)
     return gain/(split_information ** power_on_split)
 
 def bestattribute(indices,attributes):
