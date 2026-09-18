@@ -29,7 +29,11 @@
     <\padded-center>
       <section|<with|font|fireflysung|\<#7B80\>\<#4ECB\>>>
     </padded-center>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
+    \;
+
+    <space|5em><image|image/neuralnetworktimeline.png|.7par|||>
+  </shown>|<\hidden>
     <tit|\<#4EBA\>\<#5DE5\>\<#795E\>\<#7ECF\>\<#7F51\>\<#7EDC\>\<#FF08\>Artificial
     Neural Networks\V\VANNs\<#FF09\>>
 
@@ -573,7 +577,7 @@
     <tit|Learning Hidden Layer Representations(result)>
 
     <padded-center|<tabular*|<tformat|<cwith|1|-1|1|1|cell-halign|r>|<cwith|1|-1|1|1|cell-lborder|0ln>|<cwith|1|-1|2|2|cell-halign|l>|<cwith|1|-1|3|3|cell-halign|r>|<cwith|1|-1|4|4|cell-halign|r>|<cwith|1|-1|5|5|cell-halign|r>|<cwith|1|-1|6|6|cell-halign|l>|<cwith|1|-1|7|7|cell-halign|r>|<cwith|1|-1|7|7|cell-rborder|0ln>|<cwith|1|-1|1|-1|cell-valign|c>|<table|<row|<cell|10000000>|<cell|<math|\<rightarrow\>>>|<cell|.89>|<cell|.04>|<cell|.08>|<cell|<math|\<rightarrow\>>>|<cell|10000000>>|<row|<cell|01000000>|<cell|<math|\<rightarrow\>>>|<cell|.01>|<cell|.11>|<cell|.88>|<cell|<math|\<rightarrow\>>>|<cell|01000000>>|<row|<cell|00100000>|<cell|<math|\<rightarrow\>>>|<cell|.01>|<cell|.97>|<cell|.27>|<cell|<math|\<rightarrow\>>>|<cell|00100000>>|<row|<cell|00010000>|<cell|<math|\<rightarrow\>>>|<cell|.99>|<cell|.97>|<cell|.71>|<cell|<math|\<rightarrow\>>>|<cell|00010000>>|<row|<cell|00001000>|<cell|<math|\<rightarrow\>>>|<cell|.03>|<cell|.05>|<cell|.02>|<cell|<math|\<rightarrow\>>>|<cell|00001000>>|<row|<cell|00000100>|<cell|<math|\<rightarrow\>>>|<cell|.22>|<cell|.99>|<cell|.99>|<cell|<math|\<rightarrow\>>>|<cell|00000100>>|<row|<cell|00000010>|<cell|<math|\<rightarrow\>>>|<cell|.80>|<cell|.01>|<cell|.98>|<cell|<math|\<rightarrow\>>>|<cell|00000010>>|<row|<cell|00000001>|<cell|<math|\<rightarrow\>>>|<cell|.60>|<cell|.94>|<cell|.01>|<cell|<math|\<rightarrow\>>>|<cell|00000001>>>>>>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|\<#5176\>\<#5B83\>\<#8BEF\>\<#5DEE\>\<#51FD\>\<#6570\>>
 
     <\itemize>
@@ -598,7 +602,7 @@
       <item><with|font|fireflysung|\<#6743\>\<#503C\>\<#5171\>\<#4EAB\>><with|font|roman|\<#FF08\>>weight
       sharing<with|font|roman|\<#FF09\> >
     </itemize>
-  </shown>>
+  </hidden>>
 </body>
 
 <\initial>
@@ -612,9 +616,9 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|2|../../../../../.TeXmacs/texts/scratch/no_name_7.tm>>
-    <associate|auto-2|<tuple|2|11|../../../../../.TeXmacs/texts/scratch/no_name_7.tm>>
-    <associate|auto-3|<tuple|3|21|../../../../../.TeXmacs/texts/scratch/no_name_7.tm>>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|11>>
+    <associate|auto-3|<tuple|3|21>>
   </collection>
 </references>
 
