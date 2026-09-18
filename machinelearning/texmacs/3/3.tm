@@ -1,4 +1,4 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
 <style|<tuple|beamer|blackboard|chinese>>
 
@@ -185,7 +185,7 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|J>|<cell|=>|<cell|<frac|\<b-w\><rsup|T>S<rsub|b>\<b-w\>|\<b-w\><rsup|T>S<rsub|w>\<b-w\>>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \<#4F18\>\<#5316\>
 
     <\eqnarray*>
@@ -195,11 +195,11 @@
     \<#5F97\>\<#FF1A\>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|J<around*|(|\<b-w\>|)>>|<cell|=>|<cell|-\<b-w\><rsup|T>S<rsub|b>\<b-w\>+\<lambda\><rprime|'><around*|(|\<b-w\><rsup|T>S<rsub|w>\<b-w\>-1|)>>>|<row|<cell|<frac|\<partial\>J|\<partial\>\<b-w\>>>|<cell|=>|<cell|-\<b-w\><rsup|T>S<rsub|b>+\<lambda\><lprime|`>\<b-w\><rsup|T>S<rsub|w>>>|<row|<cell|0>|<cell|=>|<cell|-S<rsub|b>\<b-w\>+\<lambda\><rprime|'>S<rsub|w>\<b-w\>>>|<row|<cell|0>|<cell|=>|<cell|-S<rsub|b>\<b-w\>+\<lambda\><rprime|'><around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)><around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)><rsup|T>\<b-w\>>>|<row|<cell|S<rsub|b>\<b-w\>>|<cell|=>|<cell|\<lambda\><around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)><space|4em>\<lambda\>=\<lambda\><rprime|'><around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)><rsup|T>\<b-w\>>>|<row|<cell|\<b-w\>>|<cell|=>|<cell|S<rsub|b><rsup|-1>\<lambda\><around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)>>>>>
+      <tformat|<table|<row|<cell|J<around*|(|\<b-w\>|)>>|<cell|=>|<cell|-\<b-w\><rsup|T>S<rsub|b>\<b-w\>+\<lambda\><rprime|'><around*|(|\<b-w\><rsup|T>S<rsub|w>\<b-w\>-1|)>>>|<row|<cell|<frac|\<partial\>J|\<partial\>\<b-w\>>>|<cell|=>|<cell|-\<b-w\><rsup|T>S<rsub|b>+\<lambda\><lprime|`>\<b-w\><rsup|T>S<rsub|w>>>|<row|<cell|0>|<cell|=>|<cell|-S<rsub|b>\<b-w\>+\<lambda\><rprime|'>S<rsub|w>\<b-w\>>>|<row|<cell|0>|<cell|=>|<cell|-<around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)><around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)><rsup|T>\<b-w\>+\<lambda\><rprime|'>S<rsub|w>\<b-w\>>>|<row|<cell|S<rsub|w>\<b-w\>>|<cell|=>|<cell|\<lambda\><around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)><space|4em>\<lambda\>=<around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)><rsup|T>\<b-w\>/\<lambda\><rprime|'>>>|<row|<cell|\<b-w\>>|<cell|=>|<cell|S<rsub|w><rsup|-1>\<lambda\><around*|(|\<b-mu\><rsub|0>-\<b-mu\><rsub|1>|)>>>>>
     </eqnarray*>
 
     \;
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|\<#591A\>\<#5206\>\<#7C7B\>>
 
     <math|n>\<#4E2A\>\<#7C7B\>\<#522B\>\<#FF0C\>\<#5747\>\<#503C\>\<#4E3A\><math|\<b-mu\>>
@@ -217,7 +217,7 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|S<rsub|b>>|<cell|=>|<cell|<big|sum><rsub|j=1><rsup|n>m<rsub|j><around*|(|\<b-mu\><rsub|j>-\<b-mu\>|)><around*|(|\<b-mu\><rsub|j>-\<b-mu\>|)><rsup|T>>>>>
     </eqnarray*>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     \<#4F18\>\<#5316\>\<#76EE\>\<#6807\>
 
     <\equation*>
@@ -230,8 +230,8 @@
       <tformat|<table|<row|<cell|S<rsub|b>W>|<cell|=>|<cell|\<lambda\>S<rsub|w>W>>|<row|<cell|S<rsub|w><rsup|-1>S<rsub|b>W>|<cell|=>|<cell|\<lambda\>W>>>>
     </eqnarray*>
 
-    <math|W>\<#7684\>\<#89E3\>\<#662F\><math|S<rsub|w><rsup|-1>S<rsub|b>>\<#7684\><math|N-1>\<#4E2A\>\<#6700\>\<#5927\>\<#5E7F\>\<#4E49\>\<#7279\>\<#5F81\>\<#503C\>\<#5BF9\>\<#5E94\>\<#7684\>\<#7279\>\<#5F81\>\<#5411\>\<#91CF\>\<#7EC4\>\<#6210\>\<#7684\>\<#77E9\>\<#9635\>\<#3002\>
-  </hidden>|<\hidden>
+    <math|W>\<#7684\>\<#89E3\>\<#662F\><math|S<rsub|w><rsup|-1>S<rsub|b>>\<#7684\><math|d>\<#4E2A\>\<#6700\>\<#5927\>\<#5E7F\>\<#4E49\>\<#7279\>\<#5F81\>\<#503C\>\<#5BF9\>\<#5E94\>\<#7684\>\<#7279\>\<#5F81\>\<#5411\>\<#91CF\>\<#7EC4\>\<#6210\>\<#7684\>\<#77E9\>\<#9635\>\<#3002\>
+  </shown>|<\hidden>
     <tit|\<#591A\>\<#5206\>\<#7C7B\>\<#5B66\>\<#4E60\>>
 
     \;
