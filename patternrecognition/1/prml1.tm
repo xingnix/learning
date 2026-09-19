@@ -23,6 +23,18 @@
     <small-figure|<image|img/fig_1_1_digits.png|.7par|||>|Examples of
     hand-written digits taken from US zip codes.>
   </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Example: Polynomial Curve Fitting>
+    </padded-center>
+  </hidden>|<\hidden>
     <tit|Polynomial Curve Fitting>
 
     <small-figure|<image|img/fig_1_2_polynomial_curve_fitting.png|.45par|||>|<label|fig1.2>Plot
@@ -270,7 +282,19 @@
     of the root-mean-square error <eqref|1.3> versus <math|ln \<lambda\>> for
     the <math|M = 9> polynomial.>
   </hidden>|<\hidden>
-    <tit|Probability Theory>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Probability Theory>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|basic ideas of probability>
 
     <small-figure|<image|img/fig_1_9_apple_orange.png|.5par|||>|We use a
     simple example of two coloured boxes each containing fruit (apples shown
@@ -1226,7 +1250,7 @@
     where <math|I> is the unit matrix, and we have defined the vector
     <math|\<b-varphi\>(x)> with elements <math|\<varphi\><rsub|i>(x)=x<rsup|i>>
     for <math|i = 0, . . . , M>.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <small-figure|<image|img/fig_1_17_bayesian_polynomial_fitting.png|.5par|||>|The
     predictive distribution resulting from a Bayesian treatment of polynomial
     curve fitting using an M = 9 polynomial, with the fixed \ parameters
@@ -1234,6 +1258,61 @@
     11.1> (corresponding to the known noise variance), in which the red curve
     denotes the mean of the predictive distribution and the red region
     corresponds to <math|\<pm\>1> standard deviation around the mean.>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Model Selection>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|cross-validation>
+
+    <small-figure|<image|img/fig_1_18_cross_validation.png|.3par|||>|The
+    technique of S-fold cross-validation, illustrated here for the case of
+    <math|S=4>, involves taking the available data and partitioning it into
+    <math|S> groups (in the simplest case these are of equal size). Then
+    <math|S\<minus\>1> of the groups are used to train a set of models that
+    are then evaluated on the remaining group. This procedure is then
+    repeated for all <math|S> possible choices for the held-out group,
+    indicated here by the red blocks, and the performance scores from the
+    <math|S> runs are then averaged.>
+  </hidden>|<\hidden>
+    <tit|Akaike information criterion(AIC)>
+
+    Historically various `information criteria' have been proposed that
+    attempt to correct for the bias of maximum likelihood by the addition of
+    a penalty term to compensate for the over-fitting of more complex models.\ 
+
+    For example, the Akaike information criterion, or AIC (Akaike, 1974),
+    chooses the model for which the quantity
+
+    <\equation*>
+      ln p(\<cal-D\>\|\<b-w\><rsub|ML>) \<minus\> M
+    </equation*>
+
+    is largest. Here <math|p(\<cal-D\>\|\<b-w\><rsub|ML>)> is the best-fit
+    log likelihood, and <math|M> is the number of adjustable parameters in
+    the model.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|The Curse of Dimensionality>
+    </padded-center>
+  </hidden>|<\shown>
+    \;
   </shown>>
 </body>
 
@@ -1266,24 +1345,29 @@
     <associate|1.68|<tuple|17|?>>
     <associate|1.8|<tuple|7|24>>
     <associate|auto-1|<tuple|1|1>>
-    <associate|auto-10|<tuple|8|20>>
-    <associate|auto-11|<tuple|9|21>>
-    <associate|auto-12|<tuple|10|22>>
-    <associate|auto-13|<tuple|11|27>>
-    <associate|auto-14|<tuple|12|28>>
-    <associate|auto-15|<tuple|13|46>>
-    <associate|auto-16|<tuple|14|51>>
-    <associate|auto-17|<tuple|15|57>>
-    <associate|auto-18|<tuple|16|59>>
-    <associate|auto-19|<tuple|17|?>>
-    <associate|auto-2|<tuple|2|3>>
-    <associate|auto-3|<tuple|3|7>>
-    <associate|auto-4|<tuple|4|9>>
-    <associate|auto-5|<tuple|5|12>>
-    <associate|auto-6|<tuple|1|13>>
-    <associate|auto-7|<tuple|6|14>>
-    <associate|auto-8|<tuple|7|18>>
-    <associate|auto-9|<tuple|2|19>>
+    <associate|auto-10|<tuple|2|20>>
+    <associate|auto-11|<tuple|8|21>>
+    <associate|auto-12|<tuple|2|22>>
+    <associate|auto-13|<tuple|9|27>>
+    <associate|auto-14|<tuple|10|28>>
+    <associate|auto-15|<tuple|11|46>>
+    <associate|auto-16|<tuple|12|51>>
+    <associate|auto-17|<tuple|13|57>>
+    <associate|auto-18|<tuple|14|59>>
+    <associate|auto-19|<tuple|15|1>>
+    <associate|auto-2|<tuple|1|3>>
+    <associate|auto-20|<tuple|16|?>>
+    <associate|auto-21|<tuple|17|?>>
+    <associate|auto-22|<tuple|3|?>>
+    <associate|auto-23|<tuple|18|?>>
+    <associate|auto-24|<tuple|4|?>>
+    <associate|auto-3|<tuple|2|7>>
+    <associate|auto-4|<tuple|3|9>>
+    <associate|auto-5|<tuple|4|12>>
+    <associate|auto-6|<tuple|5|13>>
+    <associate|auto-7|<tuple|1|14>>
+    <associate|auto-8|<tuple|6|18>>
+    <associate|auto-9|<tuple|7|19>>
     <associate|fig1.10|<tuple|10|22>>
     <associate|fig1.14|<tuple|14|51>>
     <associate|fig1.16|<tuple|16|59>>
@@ -1309,24 +1393,24 @@
       used to generate the data. Our goal is to predict the value of
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|t>>
       for some new value of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>,
-      without knowledge of the green curve.>|<pageref|auto-2>>
+      without knowledge of the green curve.>|<pageref|auto-3>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|3>||The error function
       (<reference|1.2>) corresponds to (one half of) the sum of the squares
       of the displacements (shown by the vertical green bars) of each data
       point from the function <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|y(x,
-      w)>>.>|<pageref|auto-3>>
+      w)>>.>|<pageref|auto-4>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|4>||Plots of
       polynomials having various orders <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|M>>
       , shown as red curves, fitted to the data set shown in Figure
-      <reference|fig1.2>.>|<pageref|auto-4>>
+      <reference|fig1.2>.>|<pageref|auto-5>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|5>||Graphs of the
       root-mean-square \ error, defined by (<reference|1.3>), evaluated on
       the training set and on an independent test set for various values of
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|M>>
-      .>|<pageref|auto-5>>
+      .>|<pageref|auto-6>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|6>||Plots of the
       solutions obtained by minimizing the sum-of-squares error function
@@ -1334,7 +1418,7 @@
       = 9>> polynomial for <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|N
       = 15>> data points (left plot) and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|N
       = 100>> data points (right plot). We see that increasing the size of
-      the data set reduces the over-fitting problem.>|<pageref|auto-7>>
+      the data set reduces the over-fitting problem.>|<pageref|auto-8>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|7>||Plots of
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|M=9>>
@@ -1347,18 +1431,18 @@
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\>
       = 0>>, corresponding to <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|ln
       \<lambda\> = \<minus\>\<infty\>>>, is shown at the bottom right of
-      Figure <reference|fig1.4>.>|<pageref|auto-8>>
+      Figure <reference|fig1.4>.>|<pageref|auto-9>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|8>||Graph of the
       root-mean-square error (<reference|1.3>) versus
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|ln
       \<lambda\>>> for the <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|M
-      = 9>> polynomial.>|<pageref|auto-10>>
+      = 9>> polynomial.>|<pageref|auto-11>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|9>||We use a simple
       example of two coloured boxes each containing fruit (apples shown in
       green and oranges shown in orange) to introduce the basic ideas of
-      probability.>|<pageref|auto-11>>
+      probability.>|<pageref|auto-13>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|10>||We can derive the
       sum and product rules of probability by considering two random
@@ -1383,7 +1467,7 @@
       = x<rsub|i>>>, is denoted by <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|c<rsub|i>>>,
       and the number of points in row <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|j>>,
       corresponding to <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|Y
-      = y<rsub|j>>>, is denoted by <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|r<rsub|j>>>.>|<pageref|auto-12>>
+      = y<rsub|j>>>, is denoted by <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|r<rsub|j>>>.>|<pageref|auto-14>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|11>||An illustration of
       a distribution over two variables, <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|X>>,
@@ -1397,7 +1481,7 @@
       as well as the conditional distribution
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(X\|Y
       = 1)>> corresponding to the bottom row in the lower
-      right.>|<pageref|auto-13>>
+      right.>|<pageref|auto-15>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|12>||The concept of
       probability for \ discrete variables can be extended to that of a
@@ -1410,12 +1494,12 @@
       for <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<delta\>x
       \<rightarrow\> 0>>. The probability density can be expressed as the
       derivative of a cumulative distribution function
-      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|P(x)>>.>|<pageref|auto-14>>
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|P(x)>>.>|<pageref|auto-16>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|13>||Plot of the
       univariate Gaussian \ showing the mean
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\>>>
-      and the standard deviation <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<sigma\>>>.>|<pageref|auto-15>>
+      and the standard deviation <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<sigma\>>>.>|<pageref|auto-17>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|14>||Illustration of
       the likelihood function for a Gaussian distribution, shown by the red
@@ -1424,7 +1508,7 @@
       and the likelihood function given by (1.53) corresponds to the product
       of the blue values. Maximizing the likelihood involves adjusting the
       mean and variance of the Gaussian so as to maximize this
-      product.>|<pageref|auto-16>>
+      product.>|<pageref|auto-18>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|15>||Illustration of
       how bias arises in using maximum likelihood to determine the variance
@@ -1435,7 +1519,7 @@
       likelihood results (<reference|1.55>) and (<reference|1.56>). Averaged
       across the three data sets, the mean is correct, but the variance is
       systematically under-estimated because it is measured relative to the
-      sample mean and not relative to the true mean.>|<pageref|auto-17>>
+      sample mean and not relative to the true mean.>|<pageref|auto-19>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|16>||Schematic
       illustration of a Gaussian conditional distribution for
@@ -1446,13 +1530,39 @@
       and the precision is given by the parameter
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<beta\>>>,
       which is related to the variance by
-      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<beta\><rsup|\<minus\>1>=\<sigma\><rsup|2>>>.>|<pageref|auto-18>>
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<beta\><rsup|\<minus\>1>=\<sigma\><rsup|2>>>.>|<pageref|auto-20>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|17>||The predictive
+      distribution resulting from a Bayesian treatment of polynomial curve
+      fitting using an M = 9 polynomial, with the fixed \ parameters
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<alpha\>
+      = 5 \<times\> 10<rsup|\<minus\>3>>> and
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<beta\>
+      = 11.1>> (corresponding to the known noise variance), in which the red
+      curve denotes the mean of the predictive distribution and the red
+      region corresponds to <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<pm\>1>>
+      standard deviation around the mean.>|<pageref|auto-21>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|18>||The technique of
+      S-fold cross-validation, illustrated here for the case of
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|S=4>>,
+      involves taking the available data and partitioning it into
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|S>>
+      groups (in the simplest case these are of equal size). Then
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|S\<minus\>1>>
+      of the groups are used to train a set of models that are then evaluated
+      on the remaining group. This procedure is then repeated for all
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|S>>
+      possible choices for the held-out group, indicated here by the red
+      blocks, and the performance scores from the
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|S>>
+      runs are then averaged.>|<pageref|auto-23>>
     </associate>
     <\associate|table>
       <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Table of the
       coefficients w for \ polynomials of various order. Observe how the
       typical magnitude of the coefficients increases dramatically as the
-      order of the polynomial increases.>|<pageref|auto-6>>
+      order of the polynomial increases.>|<pageref|auto-7>>
 
       <tuple|normal|<surround|<hidden-binding|<tuple>|2>||Table of the
       coefficients <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<b-w\><rsup|\<ast\>>>>
@@ -1464,7 +1574,24 @@
       i.e., to the graph at the bottom right in Figure <reference|fig1.4>. We
       see that, as the value of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\>>>
       increases, the typical magnitude of the coefficients gets
-      smaller.>|<pageref|auto-9>>
+      smaller.>|<pageref|auto-10>>
+    </associate>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Example:
+      Polynomial Curve Fitting> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-2><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Probability
+      Theory> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-12><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Model
+      Selection> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-22><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>The
+      Curse of Dimensionality> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-24><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
