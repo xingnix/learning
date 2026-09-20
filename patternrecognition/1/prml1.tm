@@ -1311,9 +1311,336 @@
     <\padded-center>
       <section|The Curse of Dimensionality>
     </padded-center>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_19_oil_flow_x6_x7.png|.45par|||>|Scatter
+    plot of the oil flow data \ for input variables <math|x<rsub|6>> and
+    <math|x<rsub|7>>, in which red denotes the `homogenous' class, green
+    denotes the `annular' class, and blue denotes the `laminar' class. Our
+    goal is to classify the new test point denoted by `\<times\>'.>
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_20_oil_flow_x6_x7_grid.png|.45par|||>|Illustration
+    of a simple approach \ to the solution of a classification problem in
+    which the input space is divided into cells and any new test point is
+    assigned to the class that has a majority number of representatives in
+    the same cell as the test point. As we shall see shortly, this simplistic
+    approach has some severe shortcomings.>
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_21_d1d2d3.png|.9par|||>|Illustration of
+    the curse of dimensionality, showing how the number of regions of a
+    regular grid grows exponentially with the dimensionality <math|D> of the
+    space. For clarity, only a subset of the cubical regions are shown for
+    <math|D=3>.>
+  </hidden>|<\hidden>
+    <tit|The Curse of Dimensionality>
+
+    Divide a region of a space into regular cells, then the number of such
+    cells grows exponentially\ 
+
+    with the dimensionality of the space.
+
+    Need an exponentially large quantity of training data in order to ensure
+    that the cells are not empty.
+  </hidden>|<\hidden>
+    <tit|polynomial curve fitting>
+
+    If we have <math|D> input variables, then a general polynomial with
+    coefficients up to order 3 would take the form
+
+    <\equation*>
+      y<around*|(|\<b-x\>,\<b-w\>|)>=w<rsub|0>+<big|sum><rsub|i=1><rsup|D>w<rsub|i>x<rsub|i>+<big|sum><rsub|i=1><rsup|D><big|sum><rsub|i=1><rsup|D>w<rsub|ij>x<rsub|i>x<rsub|j>+<big|sum><rsub|i=1><rsup|D><big|sum><rsub|i=1><rsup|D><big|sum><rsub|i=1><rsup|D>w<rsub|ijk>x<rsub|i>x<rsub|j>x<rsub|k>
+    </equation*>
+
+    As <math|D> increases, so the number of independent coefficients (not all
+    of the coefficients are independent due to interchange symmetries amongst
+    the <math|\<b-x\>> variables) grows proportionally to <math|D<rsup|3>>.
+
+    In practice, to capture complex dependencies in the data, we may need to
+    use a higher-order polynomial. For a polynomial of order <math|M> , the
+    growth in the number of coefficients is like <math|D<rsup|M>>. Although
+    this is now a <em|power law> growth, \ rather than an exponential growth,
+    it still points to the method becoming rapidly unwieldy and of limited
+    practical utility.
+  </hidden>|<\hidden>
+    <tit|volume of the shell>
+
+    Our geometrical intuitions, formed through a life spent in a space of
+    three dimensions, can fail badly when we consider spaces of higher
+    dimensionality.As a simple example, consider a sphere of radius
+    <math|r=1> in a space of <math|D> dimensions, and ask what is the
+    fraction of the volume of the sphere that lies between radius
+    <math|r=1\<minus\>\<varepsilon\>> and <math|r=1>.
+
+    We can evaluate this fraction by noting that the volume of a sphere of
+    radius <math|r> in <math|D> dimensions must scale as <math|r<rsup|D>>,
+    and so we write
+
+    <\equation*>
+      V<rsub|D>*<around*|(|r|)>=K<rsub|D>r<rsup|D>
+    </equation*>
+
+    where the constant <math|K<rsub|D>> depends only on <math|D>. Thus the
+    required fraction is given by
+
+    <\equation*>
+      <frac|V<rsub|D>(1) \<minus\> V<rsub|D>(1 \<minus\>\<varepsilon\>)
+      |V<rsub|D><around*|(|1|)>>=1\<minus\>(1\<minus\>\<varepsilon\>)<rsup|D>
+    </equation*>
+
+    which is plotted as a function of <math|\<varepsilon\>> for various
+    values of <math|D> in Figure <reference|fig1.22>.
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_22_vol_shell.png|.45par|||>|<label|fig1.22>Plot
+    of the fraction of the volume of \ a sphere lying in the range
+    <math|r=1-\<varepsilon\>> to <math|r=1> for various values of the
+    dimensionality <math|D>.>
+  </hidden>|<\hidden>
+    <tit|Gaussian distribution in a high-dimensional space>
+
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      As a further example, of direct relevance to pattern recognition,
+      consider the behaviour of a Gaussian distribution in a high-dimensional
+      space.
+    </shown>|<\shown>
+      If we transform from Cartesian to polar coordinates, and then integrate
+      out the directional variables, we obtain an expression for the density
+      <math|p(r)> as a function of radius <math|r> from the origin.
+    </shown>|<\shown>
+      Thus <math|p(r)\<delta\>r> is the probability mass inside a thin shell
+      of thickness <math|\<delta\>r> located at radius <math|r>.\ 
+    </shown>|<\shown>
+      This distribution is plotted, for various values of <math|D>, in Figure
+      <reference|fig1.23>, and we see that for large <math|D> the probability
+      mass of the Gaussian is concentrated in a thin shell.
+    </shown>>
+
     \;
-  </shown>>
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_23_p(r).png|.5par|||>|<label|fig1.23>Plot
+    of the probability density with respect to radius <math|r> of a Gaussian
+    distribution for various values of the dimensionality <math|D>. In a
+    high-dimensional space, most of the probability mass of a Gaussian is
+    located within a thin shell at a specific radius.>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Decision Theory>
+    </padded-center>
+  </hidden>|<\hidden>
+    <unroll-greyed|<\shown>
+      Here we turn to a discussion of decision theory that, when combined
+      with probability theory, allows us to make optimal decisions in
+      situations involving uncertainty such as those encountered in pattern
+      recognition.
+    </shown>|<\shown>
+      Suppose we have input vectors <math|X> together with a corresponding
+      vector <math|\<b-t\>> of target variables, and our goal is to predict
+      <math|t> given a new value for <math|x>. For regression problems,
+      <math|t> will comprise continuous variables, whereas for classification
+      problems <math|t> will represent class labels.\ 
+    </shown>|<\shown>
+      The joint probability distribution <math|p(\<b-x\>,t)> provides a
+      complete summary of the uncertainty associated with these variables.
+      Determination of <math|p(\<b-x\>,t)> from a set of training data is an
+      example of <em|inference>.\ 
+    </shown>|<\shown>
+      In a practical application, however, we must often make a specific
+      prediction for the value of <math|t>, or more generally take a specific
+      action based on our understanding of the values <math|t> is likely to
+      take, and this aspect is the subject of <em|decision theory>.
+    </shown>|<\hidden*>
+      \;
+    </hidden*>>
+  </hidden>|<\hidden>
+    <tit|role of probabilities>
+
+    \;
+
+    Consider informally how we might expect probabilities to play a role in
+    making decisions.\ 
+
+    Our goal is to decide which of the two classes to assign to the input.
+
+    The probabilities of the two classes given the input are given by
+    <math|p(\<cal-C\><rsub|k>\|\<b-x\>)>.\ 
+
+    Using Bayes' theorem, these probabilities can be expressed in the form
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|P<around*|(|\<cal-C\><rsub|k>\|\<b-x\>|)>>|<cell|=>|<cell|<frac|p<around*|(|\<b-x\>,\<cal-C\><rsub|k>|)>|p<around*|(|\<b-x\>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|\<b-x\>\|\<cal-C\><rsub|k>|)>p<around*|(|\<cal-C\><rsub|k>|)><rsub|>|p<around*|(|\<b-x\>|)>>>>>>
+    </eqnarray*>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Minimizing the misclassification rate>
+
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      Suppose that the goal is simply to make as few misclassifications as
+      possible.\ 
+    </shown>|<\shown>
+      Need a rule that assigns each value of <math|x> to one of the available
+      classes.
+    </shown>|<\shown>
+      Such a rule will divide the input space into regions
+      <math|\<cal-R\><rsub|k>> called <em|decision regions>, one for each
+      class, such that all points in <math|\<cal-R\><rsub|k>> are assigned to
+      class <math|\<cal-C\><rsub|k>>.
+    </shown>|<\shown>
+      The boundaries between decision regions are called <em|decision
+      boundaries> or <em|decision surfaces>.
+    </shown>|<\shown>
+      Note that each decision region need not be contiguous but could
+      comprise some number of disjoint regions.
+    </shown>>
+  </hidden>|<\hidden>
+    <tit|optimal decision rule>
+
+    In order to find the optimal decision rule, consider first of all the
+    case of two classes.
+
+    A mistake occurs when an input vector belonging to class
+    <math|\<cal-C\><rsub|1>> is assigned to class <math|\<cal-C\><rsub|2>> or
+    vice versa.
+
+    The probability of this occurring is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|mistake|)>>|<cell|=>|<cell|p<around*|(|\<b-x\>\<in\>\<cal-R\><rsub|1>,\<cal-C\><rsub|2>|)>+p<around*|(|\<b-x\>\<in\>\<cal-R\><rsub|2>,\<cal-C\><rsub|1>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<cal-R\><rsub|1>>p<around*|(|\<b-x\>,\<cal-C\><rsub|2>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>>p<around*|(|\<b-x\>,\<cal-C\><rsub|1>|)>\<mathd\>\<b-x\>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|<big|int><rsub|\<cal-R\><rsub|1>>p<around*|(|\<cal-C\><rsub|2>\|\<b-x\>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>>p<around*|(|\<cal-C\><rsub|1>\|\<b-x\>|)>\<mathd\>\<b-x\>|)>p<around*|(|\<b-x\>|)>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|<big|int><rsub|\<cal-R\><rsub|1>><around*|(|1-p<around*|(|\<cal-C\><rsub|1>\|\<b-x\>|)>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>><around*|(|1-p<around*|(|\<cal-C\><rsub|2>\|\<b-x\>|)>|)>\<mathd\>\<b-x\>|)>p<around*|(|\<b-x\>|)>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_24_minimujm_error.png|.5par|||>|Schematic
+    illustration of the joint probabilities <math|p(x,\<cal-C\><rsub|k>)> for
+    each of two classes plotted \ against <math|x>, together with the
+    decision boundary <math|x=<wide|x|^>>. Values of
+    <math|x\<geqslant\><wide|x|^>> are classified as class
+    <math|\<cal-C\><rsub|2>> and hence belong to decision region
+    <math|\<cal-R\><rsub|2>>, whereas points <math|x\<less\><wide|x|^>> are
+    classified as <math|\<cal-C\><rsub|1>> and belong to
+    <math|\<cal-R\><rsub|1>>. Errors arise from the blue, green, and red
+    regions, so that for <math|x\<less\><wide|x|^>> the errors are due to
+    points from class <math|\<cal-C\><rsub|2>> being misclassified as
+    <math|\<cal-C\><rsub|1>> (represented by the sum of the red and green
+    regions), and conversely for points in the region
+    <math|x\<geqslant\><wide|x|^>> the errors are due to points from class
+    <math|\<cal-C\><rsub|1>> being misclassified as <math|\<cal-C\><rsub|2>>
+    (represented by the blue region).The optimal choice for <math|<wide|x|^>>
+    is where the curves for <math|p(x,\<cal-C\><rsub|1>)> and
+    <math|p(x,\<cal-C\><rsub|2>)> cross, corresponding to
+    <math|<wide|x|^>=x<rsub|0>>. This is equivalent to the minimum
+    misclassification rate decision rule, which assigns each value of
+    <math|x> to the class having the higher posterior probability
+    <math|p(\<cal-C\><rsub|k>\|x)>.>
+  </hidden>|<\hidden>
+    <tit|K classes>
+
+    For the more general case of K classes, it is slightly easier to maximize
+    the probability of being correct, which is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|correct|)>>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|K>p<around*|(|\<b-x\>\<in\>\<cal-R\><rsub|k>,\<cal-C\><rsub|k>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|K><big|int><rsub|\<cal-R\><rsub|k>>p<around*|(|\<b-x\>,\<cal-C\><rsub|k>|)>\<mathd\>\<b-x\>>>|<row|<cell|>|<cell|=>|<cell|p<around*|(|\<b-x\>|)><big|sum><rsub|k=1><rsup|K><big|int><rsub|\<cal-R\><rsub|k>>p<around*|(|\<cal-C\><rsub|k>\|\<b-x\>|)>\<mathd\>\<b-x\>>>>>
+    </eqnarray*>
+
+    Each <math|\<b-x\>> should be assigned to the class having the largest
+    posterior probability <math|p(\<cal-C\><rsub|k>\|\<b-x\>)>.
+  </hidden>|<\hidden>
+    <tit|Minimizing the expected loss>
+
+    <unroll-greyed|<\shown>
+      A <em|loss function>, also called a <em|cost function>, is a single,
+      overall measure of loss incurred in taking any of the available
+      decisions or actions.
+    </shown>|<\shown>
+      The goal is then to minimize the total loss incurred.
+    </shown>|<\shown>
+      Suppose that, for a new value of <math|x>, the true class is
+      <math|\<cal-C\><rsub|k>> and that we assign <math|x> to class
+      <math|\<cal-C\><rsub|j>> (where <math|j> may or may not be equal to
+      <math|k>).
+    </shown>|<\shown>
+      In so doing, we incur some level of loss that we denote by
+      <math|L<rsub|kj>>, which we can view as the <math|k,j> element of a
+      <em|loss matrix>.
+    </shown>|<\shown>
+      Note: Some authors consider instead a <em|utility function>, whose
+      value they aim to maximize. These are equivalent concepts if we take
+      the utility to be simply the negative of the loss,
+    </shown>>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    <small-figure|<image|img/fig_1_25_Lkj.png|.3par|||>|An example of a loss
+    matrix with elements <math|L<rsub|kj>> for the cancer treatment problem.
+    The rows correspond to the true class, whereas the columns correspond to
+    the assignment of class made by our decision criterion.>
+  </hidden>|<\hidden>
+    The optimal solution is the one which minimizes the loss function.
+    However, the loss function depends on the true class, which is unknown.
+    For a given input vector <math|\<b-x\>>, our uncertainty in the true
+    class is expressed through the joint probability distribution
+    <math|p(x,\<cal-C\><rsub|k>)> and so we seek instead to minimize the
+    average loss, where the average is computed with respect to this
+    distribution, which is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|L|]>>|<cell|=>|<cell|<big|sum><rsub|k><big|sum><rsub|j><big|int><rsub|\<cal-R\><rsub|j>>L<rsub|kj>p<around*|(|\<b-x\>,\<cal-C\><rsub|k>|)>\<mathd\>\<b-x\>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><big|int><rsub|\<cal-R\><rsub|j>><around*|[|<big|sum><rsub|k>L<rsub|kj>p<around*|(|\<b-x\>,\<cal-C\><rsub|k>|)>|]>\<mathd\>\<b-x\>>>>>
+    </eqnarray*>
+
+    the decision rule that minimizes the expected loss is the one that
+    assigns each new <math|\<b-x\>> to the class <math|j> for which the
+    quantity
+
+    <\equation*>
+      <big|sum><rsub|k>L<rsub|kj>p<around*|(|\<cal-C\><rsub|k>\|\<b-x\>|)>
+    </equation*>
+
+    is a minimum.
+  </hidden>|<\shown>
+    <tit|The reject option>
+
+    In some applications, it will be appropriate to avoid making decisions on
+    the difficult cases in anticipation of a lower error rate on those
+    examples for which a classification decision is made. This is known as
+    the reject option.
+
+    We can achieve this by introducing a threshold <math|\<theta\>> and
+    rejecting those inputs <math|x> for which the largest of the posterior
+    probabilities <math|p(\<cal-C\><rsub|k>\|x)> is less than or equal to
+    <math|\<theta\>>. This is illustrated for the case of two classes, and a
+    single continuous input variable <math|x>, in Figure <reference|fig1.26>.
+
+    Note that setting <math|\<theta\>=>1 will ensure that all examples are
+    rejected, whereas if there are K classes then setting <math|\<theta\>
+    \<less\> 1/K> will ensure that no examples are rejected. Thus the
+    fraction of examples that get rejected is controlled by the value of
+    <math|\<theta\>>.
+  </shown>|<\hidden>
+    <small-figure|<image|img/fig_1_26_reject_option.png|.5par|||>|<label|fig1.26>Illustration
+    of the reject option. Inputs \ <math|x> such that the larger of the two
+    posterior probabilities is less than or equal to some threshold
+    <math|\<theta\>> will be rejected.>
+  </hidden>>
 </body>
 
 <\initial>
@@ -1361,7 +1688,16 @@
     <associate|auto-22|<tuple|3|?>>
     <associate|auto-23|<tuple|18|?>>
     <associate|auto-24|<tuple|4|?>>
+    <associate|auto-25|<tuple|19|?>>
+    <associate|auto-26|<tuple|20|?>>
+    <associate|auto-27|<tuple|21|?>>
+    <associate|auto-28|<tuple|22|?>>
+    <associate|auto-29|<tuple|23|?>>
     <associate|auto-3|<tuple|2|7>>
+    <associate|auto-30|<tuple|5|?>>
+    <associate|auto-31|<tuple|24|?>>
+    <associate|auto-32|<tuple|25|?>>
+    <associate|auto-33|<tuple|26|?>>
     <associate|auto-4|<tuple|3|9>>
     <associate|auto-5|<tuple|4|12>>
     <associate|auto-6|<tuple|5|13>>
@@ -1372,6 +1708,9 @@
     <associate|fig1.14|<tuple|14|51>>
     <associate|fig1.16|<tuple|16|59>>
     <associate|fig1.2|<tuple|2|3>>
+    <associate|fig1.22|<tuple|22|?>>
+    <associate|fig1.23|<tuple|23|?>>
+    <associate|fig1.26|<tuple|26|?>>
     <associate|fig1.4|<tuple|4|9>>
     <associate|fig1.7|<tuple|7|18>>
   </collection>
@@ -1557,6 +1896,84 @@
       blocks, and the performance scores from the
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|S>>
       runs are then averaged.>|<pageref|auto-23>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|19>||Scatter plot of
+      the oil flow data \ for input variables
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x<rsub|6>>>
+      and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x<rsub|7>>>,
+      in which red denotes the `homogenous' class, green denotes the
+      `annular' class, and blue denotes the `laminar' class. Our goal is to
+      classify the new test point denoted by `\<times\>'.>|<pageref|auto-25>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|20>||Illustration of a
+      simple approach \ to the solution of a classification problem in which
+      the input space is divided into cells and any new test point is
+      assigned to the class that has a majority number of representatives in
+      the same cell as the test point. As we shall see shortly, this
+      simplistic approach has some severe shortcomings.>|<pageref|auto-26>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|21>||Illustration of
+      the curse of dimensionality, showing how the number of regions of a
+      regular grid grows exponentially with the dimensionality
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|D>>
+      of the space. For clarity, only a subset of the cubical regions are
+      shown for <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|D=3>>.>|<pageref|auto-27>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|22>||Plot of the
+      fraction of the volume of \ a sphere lying in the range
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|r=1-\<varepsilon\>>>
+      to <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|r=1>>
+      for various values of the dimensionality
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|D>>.>|<pageref|auto-28>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|23>||Plot of the
+      probability density with respect to radius
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|r>>
+      of a Gaussian distribution for various values of the dimensionality
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|D>>.
+      In a high-dimensional space, most of the probability mass of a Gaussian
+      is located within a thin shell at a specific
+      radius.>|<pageref|auto-29>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|24>||Schematic
+      illustration of the joint probabilities
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x,\<cal-C\><rsub|k>)>>
+      for each of two classes plotted \ against
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>,
+      together with the decision boundary
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x=<wide|x|^>>>.
+      Values of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x\<geqslant\><wide|x|^>>>
+      are classified as class <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-C\><rsub|2>>>
+      and hence belong to decision region
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-R\><rsub|2>>>,
+      whereas points <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x\<less\><wide|x|^>>>
+      are classified as <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-C\><rsub|1>>>
+      and belong to <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-R\><rsub|1>>>.
+      Errors arise from the blue, green, and red regions, so that for
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x\<less\><wide|x|^>>>
+      the errors are due to points from class
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-C\><rsub|2>>>
+      being misclassified as <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-C\><rsub|1>>>
+      (represented by the sum of the red and green regions), and conversely
+      for points in the region <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x\<geqslant\><wide|x|^>>>
+      the errors are due to points from class
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-C\><rsub|1>>>
+      being misclassified as <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-C\><rsub|2>>>
+      (represented by the blue region).The optimal choice for
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|<wide|x|^>>>
+      is where the curves for <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x,\<cal-C\><rsub|1>)>>
+      and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x,\<cal-C\><rsub|2>)>>
+      cross, corresponding to <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|<wide|x|^>=x<rsub|0>>>.
+      This is equivalent to the minimum misclassification rate decision rule,
+      which assigns each value of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>
+      to the class having the higher posterior probability
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(\<cal-C\><rsub|k>\|x)>>.>|<pageref|auto-31>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|25>||An example of a
+      loss matrix with elements <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|L<rsub|kj>>>
+      for the cancer treatment problem. The rows correspond to the true
+      class, whereas the columns correspond to the assignment of class made
+      by our decision criterion.>|<pageref|auto-32>>
     </associate>
     <\associate|table>
       <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Table of the
@@ -1592,6 +2009,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>The
       Curse of Dimensionality> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-24><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>Decision
+      Theory> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-30><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
