@@ -425,7 +425,7 @@
   </hidden>|<\hidden>
     <tit|illustration of a distribution>
 
-    <small-figure|<image|img/fig_1_11_illustration_of_distribution.png|.45par|||>|An
+    <small-figure|<image|img/fig_1_11_illustration_of_distribution.png|.42par|||>|An
     illustration of a distribution over two variables, <math|X>, which takes
     <math|9> possible values, and <math|Y>, which takes two possible values.
     The top left figure shows a sample of 60 points drawn from a joint
@@ -469,7 +469,7 @@
   </hidden>|<\hidden>
     <tit|Transformed Densities>
 
-    <image|img/slide_distribution_transform.png|1par|||>
+    <image|img/slide_distribution_transform.png|.95par|||>
   </hidden>|<\hidden>
     <tit|multivariate probability density>
 
@@ -559,9 +559,9 @@
     the probability distribution or probability density, then the expectation
     can be approximated as a finite sum over these points
 
-    <\equation*>
-      \<bbb-E\><around*|[|f|]>\<simeq\><frac|1|N><big|sum><rsub|n=1><rsup|N>f<around*|(|x<rsub|n>|)>.
-    </equation*>
+    <\equation>
+      \<bbb-E\><around*|[|f|]>\<simeq\><frac|1|N><big|sum><rsub|n=1><rsup|N>f<around*|(|x<rsub|n>|)>.<label|1.35>
+    </equation>
 
     The approximation becomes exact in the limit <math|N \<rightarrow\>
     \<infty\>>.
@@ -1001,7 +1001,7 @@
     that for <math|\<sigma\><rsup|2>> so that we can first evaluate Eq.
     <eqref|1.55> and then subsequently use this result to evaluate Eq.
     <eqref|1.56>.
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     \;
 
     Later in this chapter, and also in subsequent chapters, we shall
@@ -1016,7 +1016,7 @@
     over-fitting encountered in the context of polynomial curve fitting.
 
     \;
-  </hidden>|<\hidden>
+  </shown>|<\hidden>
     \;
 
     \;
@@ -1458,9 +1458,9 @@
       prediction for the value of <math|t>, or more generally take a specific
       action based on our understanding of the values <math|t> is likely to
       take, and this aspect is the subject of <em|decision theory>.
-    </shown>|<\hidden*>
+    </shown>|<\shown>
       \;
-    </hidden*>>
+    </shown>>
   </hidden>|<\hidden>
     <tit|role of probabilities>
 
@@ -1872,15 +1872,15 @@
 
     First solve the inference problem of determining the joint density
     <math|p(x, t)>. Then \ normalize to find the conditional density
-    <math|p(t\|x)>, and finally marginalize to find the conditional mean
-    given by Eq. <eqref|1.89>.
+    <math|p(t\|x)>, and finally find the conditional mean given by Eq.
+    <eqref|1.89>.
 
     First solve the inference problem of determining the conditional density
-    <math|p(t\|x)>, \ and then subsequently marginalize to find the
-    conditional mean given by Eq. <eqref|1.89>.
+    <math|p(t\|x)>, \ and then subsequently find the conditional mean given
+    by Eq. <eqref|1.89>.
 
     Find a regression function <math|y(x)> directly from the training data.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|choice of loss function>
 
     The squared loss is not the only possible choice of loss function for
@@ -1904,10 +1904,534 @@
     of <math|\<bbb-E\>[L<rsub|q>]> is given by the conditional mean for
     <math|q = 2>, the conditional median for <math|q = 1>, and the
     conditional mode for <math|q \<rightarrow\> 0>.
-  </shown>|<\hidden>
-    <small-figure|<image|img/fig_1_29_Minkowski_loss.png|.6par|||>|<label|fig1.29>Plots
+  </hidden>|<\hidden>
+    <small-figure|<space|6em><image|img/fig_1_29_Minkowski_loss.png|.6par|||>|<label|fig1.29>Plots
     of the quantity <math|L<rsub|q>= \|y \<minus\> t\|<rsup|q>> for various
     values of <math|q>.>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Information Theory>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|information>
+
+    <unroll-greyed|<\shown>
+      We begin by considering a discrete random variable <math|x> and we ask
+      how much information is received when we observe a specific value for
+      this variable. The amount of information can be viewed as the `degree
+      of surprise' on learning the value of <math|x>.
+    </shown>|<\shown>
+      Our measure of information content will therefore depend on the
+      probability distribution <math|p(x)>, and we therefore look for a
+      quantity <math|h(x)> that is a monotonic function of the probability
+      <math|p(x)> and that expresses the information content.
+    </shown>|<\shown>
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|h<around*|(|x,y|)>>|<cell|=>|<cell|h<around*|(|x|)>+h<around*|(|y|)>>>|<row|<cell|p<around*|(|x,y|)>>|<cell|=>|<cell|p<around*|(|x|)>p<around*|(|y|)>>>>>
+      </eqnarray*>
+    </shown>|<\shown>
+      <\equation>
+        h(x) = \<minus\> log<rsub|2> p(x)<label|1.92>
+      </equation>
+    </shown>>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    <tit|entropy>
+
+    Suppose that a sender wishes to transmit the value of a random variable
+    to a receiver.
+
+    The average amount of information that they transmit in the process is
+    obtained by taking the expectation of Eq. <eqref|1.92> with respect to
+    the distribution p(x) and is given by
+
+    <\equation*>
+      H<around*|[|x|]>=-<big|sum><rsub|x>p<around*|(|x|)>log<rsub|2>p<around*|(|x|)>
+    </equation*>
+
+    This important quantity is called the <em|entropy> of the random variable
+    x.\ 
+
+    Note that <math|lim<rsub|p\<rightarrow\>0> p log<rsub|2>p = 0> and so we
+    shall take <math|p(x) log<rsub|2>p(x) = 0> whenever we encounter a value
+    for x such that <math|p(x) = 0>.
+  </hidden>|<\hidden>
+    <tit|coding>
+
+    Consider a random variable x having 8 possible states, each of which is
+    equally likely. In order to communicate the value of x to a receiver, we
+    would need to transmit a message of length 3 bits. Notice that the
+    entropy of this variable is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|H<around*|[|x|]>>|<cell|=>|<cell|-8\<times\><frac|1|8>log<rsub|2><frac|1|8>>>|<row|<cell|>|<cell|=>|<cell|3
+      bits>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    Now consider an example (Cover and Thomas, 1991) of a variable having 8
+    possible states
+
+    <\equation*>
+      {a, b, c, d, e, f, g, h}
+    </equation*>
+
+    for which the respective probabilities are given by
+
+    <\equation*>
+      (<frac|1|2>,<frac|1|4>, <frac|1|8>,<frac|1|16>,<frac|1|64>,<frac|1|64>,<frac|1|64>,<frac|1|64>).
+    </equation*>
+
+    The entropy in this case is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|H<around*|[|x|]>>|<cell|=>|<cell|-<frac|1|2>log<rsub|2><frac|1|2>-<frac|1|4>log<rsub|2><frac|1|4>-<frac|1|8>log<rsub|2><frac|1|8>-<frac|1|16>log<rsub|2><frac|1|16>-<frac|4|64>log<rsub|2><frac|1|64>>>|<row|<cell|>|<cell|=>|<cell|2
+      bits>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    Represent the states <math|{a, b, c, d, e, f, g, h}> using, for instance,
+    the following set of code strings:
+
+    <\equation*>
+      0, 10, 110, 1110, 111100, 111101, 111110, 111111.
+    </equation*>
+
+    The average length of the code that has to be transmitted is then
+
+    <\equation*>
+      <frac|1|2>\<times\>1+<frac|1|4>\<times\>2+<frac|1|8>\<times\>3+<frac|1|16>*\<times\>4+4\<times\><frac|1|64>\<times\>6=2
+      bits
+    </equation*>
+
+    This relation between entropy and shortest coding length is a general
+    one. The <em|noiseless coding theorem> (Shannon, 1948) states that the
+    entropy is a lower bound on the number of bits needed to transmit the
+    state of a random variable.
+  </hidden>|<\hidden>
+    <tit|measure of disorder>
+
+    The concept of entropy has much earlier origins in physics where it was
+    introduced in the context of equilibrium thermodynamics and later given a
+    deeper interpretation as a measure of disorder through developments in
+    statistical mechanics.
+
+    Considering a set of <math|N> identical objects that are to be divided
+    amongst a set of bins, such that there are <math|n<rsub|i>> objects in
+    the i'th bin. The total number of ways of allocating the N objects to the
+    bins is given by
+
+    <\equation*>
+      W=<frac|N!|<big|prod><rsub|i>n<rsub|i>!>
+    </equation*>
+
+    which is called the multiplicity.
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \ The entropy is then defined as the logarithm of the multiplicity scaled
+    by an appropriate constant
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|H>|<cell|=>|<cell|<frac|1|N>ln
+      W>>|<row|<cell|>|<cell|=>|<cell|<frac|1|N>ln
+      N!-<frac|1|N><big|sum><rsub|i>ln n<rsub|i>!>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    We now consider the limit <math|N \<rightarrow\> \<infty\>>, in which the
+    fractions <math|n<rsub|i>/N> are held fixed, and apply Stirling's
+    approximation
+
+    <\folded>
+      <\equation*>
+        ln N!\<simeq\>N ln N-N
+      </equation*>
+    <|folded>
+      note: <math|ln n!=<big|sum><rsub|n>ln n\<approx\><big|int>ln x
+      \<mathd\>x=x ln x-x>
+    </folded>
+
+    which gives
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|H>|<cell|=>|<cell|-lim<rsub|N\<rightarrow\>\<infty\>><big|sum><rsub|i><around*|(|<frac|n<rsub|i>|N>|)>ln<around*|(|<frac|n<rsub|i>|N>|)>>>|<row|<cell|>|<cell|=>|<cell|-<big|sum><rsub|i>p<rsub|i>ln
+      p<rsub|i>>>>>
+    </eqnarray*>
+
+    where we have used <math|<big|sum><rsub|i>n<rsub|i>=N>, <math|p<rsub|i> =
+    lim<rsub|N\<rightarrow\>\<infty\>>(n<rsub|i>/N )> is the probability \ of
+    an object being assigned to the i'th bin.
+
+    In physics terminology, the specific arrangements of objects in the bins
+    is called a <em|microstate>, and the overall distribution of occupation
+    numbers, expressed through the ratios <math|n<rsub|i>/N> , is called a
+    <math|macrostate>. The multiplicity <math|W> is also known as the weight
+    of the macrostate.
+  </hidden>|<\hidden>
+    We can interpret the bins as the states <math|x<rsub|i>> of a discrete
+    random variable <math|X>, where <math|p(X = x<rsub|i>) = p<rsub|i>>. The
+    entropy of the random variable <math|X> is then
+
+    <\equation*>
+      H[p] = \<minus\> <big|sum><rsub|i>p(x<rsub|i>) ln p(x<rsub|i>).
+    </equation*>
+
+    Distributions <math|p(x<rsub|i>)> that are sharply peaked around a few
+    values will have a relatively low entropy, whereas those that are spread
+    more evenly across many values will have higher entropy, as illustrated
+    in Figure <reference|fig1.30>.
+  </hidden>|<\hidden>
+    The maximum entropy configuration can be found by maximizing <math|H>
+    using a Lagrange multiplier to enforce the normalization constraint \ on
+    the probabilities. Thus we maximize
+
+    <\equation*>
+      <wide|H|~>=-<big|sum><rsub|i>p<around*|(|x<rsub|i>|)>ln
+      p<around*|(|x<rsub|i>|)>+\<lambda\><around*|(|<big|sum><rsub|i>p<around*|(|x<rsub|i>|)>-1|)><rsub|>
+    </equation*>
+
+    from which we find that all of the <math|p(x<rsub|i>)> are equal and are
+    given by <math|p(x<rsub|i>) = 1/M> where <math|M> is the total number of
+    states <math|x<rsub|i>>.
+
+    <\equation*>
+      <frac|\<partial\><rsup|2><wide|H|~>|\<partial\>p<around*|(|x<rsub|i>|)>\<partial\>p<around*|(|x<rsub|j>|)>>=-I<rsub|ij><frac|1|p<rsub|i>>
+    </equation*>
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_30_entropy_histogram.png|.9par|||>|<label|fig1.30>Histograms
+    of two probability distributions over 30 bins illustrating the higher
+    value of the entropy H for the broader distribution. The largest entropy
+    would arise from a uniform distribution that would give <math|H =
+    \<minus\> ln(1/30) = 3.40>.>
+  </hidden>|<\hidden>
+    <tit|continuous variables>
+
+    Divide \ continuous variables <math|x> into bins of width
+    <math|\<#2206\>>. Assuming <math|p(x)> is continuous, the <em|mean value
+    theorem> (Weisstein, 1999) tells us that, for each such bin, there must
+    exist a value <math|x<rsub|i>> such that
+
+    <\equation>
+      <big|int><rsub|i\<Delta\>><rsup|<around*|(|i+1|)>\<Delta\>>p<around*|(|x|)>\<mathd\>x=p<around*|(|x<rsub|i>|)>\<Delta\><label|1.101>
+    </equation>
+
+    We can now quantize the continuous variable <math|x> by assigning any
+    value <math|x> to the value <math|x<rsub|i>> whenever <math|x> falls in
+    the i'th bin. The probability of observing the value <math|x<rsub|i>> is
+    then <math|p(xi)\<#2206\>>.
+
+    This gives a discrete distribution for which the entropy takes the form
+
+    <\equation>
+      H<rsub|\<#2206\>> = \<minus\><big|sum><rsub|i>p(x<rsub|i>)\<#2206\>
+      ln(p(x<rsub|i>)\<#2206\>) =\<minus\><big|sum><rsub|i>p(x<rsub|i>)\<#2206\>
+      ln p(x<rsub|i>) \<minus\> ln \<#2206\><label|1.102>
+    </equation>
+
+    where we have used <math|<big|sum><rsub|i>p(x<rsub|i>)\<#2206\>=1>, which
+    follows from Eq. <eqref|1.101>.
+  </hidden>|<\hidden>
+    <tit|differential entropy>
+
+    We now omit \ the second term <math|\<minus\> ln \<#2206\>> on the
+    right-hand side of<space|1em>Eq. <eqref|1.102> and then consider the
+    limit<math| \<#2206\> \<rightarrow\> 0>. The first term on the right-hand
+    side of Eq. <eqref|1.102> will approach the integral of <math|p(x) ln
+    p(x)> in this limit so that
+
+    <\equation*>
+      lim<rsub|\<Delta\>\<rightarrow\>0><around*|{|-<big|sum><rsub|i>p<around*|(|x<rsub|i>|)>\<Delta\>ln
+      p<around*|(|x<rsub|i>|)>|}>=-<big|int>p<around*|(|x|)>ln
+      p<around*|(|x|)>\<mathd\>x
+    </equation*>
+
+    where the quantity on the right-hand side is called the <em|differential
+    entropy>.
+
+    For a density defined over multiple continuous variables, denoted
+    collectively by the vector <math|\<b-x\>>, the differential entropy is
+    given by
+
+    <\equation*>
+      H<around*|[|\<b-x\>|]>=-<big|int>p<around*|(|\<b-x\>|)>ln
+      p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>
+    </equation*>
+
+    <\equation*>
+      \;
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|maximum entropy>
+
+    Consider the maximum entropy configuration for a continuous variable. In
+    order for this maximum to be well defined, it will be necessary to
+    constrain the first and second moments of <math|p(x)> as well as
+    preserving the normalization constraint. We therefore maximize the
+    differential entropy with the three constraints
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<big|int><rsub|-\<infty\>><rsup|\<infty\>>p<around*|(|x|)>\<mathd\>x>|<cell|=>|<cell|1>>|<row|<cell|<big|int><rsub|-\<infty\>><rsup|\<infty\>>x
+      p<around*|(|x|)>\<mathd\>x>|<cell|=>|<cell|\<mu\>>>|<row|<cell|<big|int><rsub|-\<infty\>><rsup|\<infty\>><around*|(|x-\<mu\>|)><rsup|2>
+      p<around*|(|x|)>\<mathd\>x>|<cell|=>|<cell|\<sigma\><rsup|2>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    The constrained maximization can be performed using Lagrange multipliers
+    so that \ we maximize the following functional with respect to
+    <math|p(x)>
+
+    <\equation*>
+      <big|int><rsub|-\<infty\>><rsup|\<infty\>>-p<around*|(|x|)>ln
+      p<around*|(|x|)>\<mathd\>x+\<lambda\><rsub|1><around*|(|<big|int><rsub|-\<infty\>><rsup|\<infty\>>p<around*|(|x|)>\<mathd\>x-1|)>+\<lambda\><rsub|2><around*|(|<big|int><rsub|-\<infty\>><rsup|\<infty\>>x
+      p<around*|(|x|)>\<mathd\>x-\<mu\>|)>+\<lambda\><rsub|3><around*|(|<big|int><rsub|-\<infty\>><rsup|\<infty\>><around*|(|x-\<mu\>|)><rsup|2>p<around*|(|x|)>\<mathd\>x-\<sigma\><rsup|2>|)>
+    </equation*>
+
+    Using the calculus of variations, we set the derivative of this
+    functional to zero giving
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|x|)>>|<cell|=>|<cell|exp<around*|{|-1+\<lambda\><rsub|1>+\<lambda\><rsub|2>x+\<lambda\><rsub|3><around*|(|x-\<mu\>|)><rsup|2>|}>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|<sqrt|2\<pi\>>\<sigma\>>exp<around*|{|-<frac|<around*|(|x-\<mu\>|)><rsup|2>|2\<sigma\><rsup|2>>|}>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    If we evaluate the differential entropy of the Gaussian, we obtain
+
+    <\equation>
+      H<around*|[|x|]>=<frac|1|2><around*|{|1+ln<around*|(|2\<pi\>\<sigma\><rsup|2>|)>|}><label|1.110>
+    </equation>
+
+    Thus we see again that the entropy increases as the distribution becomes
+    broader, i.e., as <math|\<sigma\><rsup|2>> increases.\ 
+
+    This result also shows that the differential entropy, unlike the discrete
+    entropy, can be negative, because <math|H(x) \<less\> 0> in Eq.
+    <eqref|1.110> for <math|\<sigma\><rsup|2> \<less\> 1/(2\<pi\>e)>.
+  </hidden>|<\hidden>
+    <tit|conditional entropy>
+
+    Thus the average additional information needed to specify y can be
+    written as
+
+    <\equation*>
+      H<around*|[|y\|x|]>=-<big|int><big|int>p<around*|(|y,x|)>ln
+      p<around*|(|y\|x|)>\<mathd\>y\<mathd\>x
+    </equation*>
+
+    which is called the conditional entropy of <math|y> given <math|x>. It is
+    easily seen, using the product rule, that the conditional entropy
+    satisfies the relation
+
+    <\equation*>
+      H<around*|[|x.y|]>=H<around*|[|y\|x|]>+H<around*|[|x|]>
+    </equation*>
+
+    where <math|H[x, y]> is the differential entropy of <math|p(x, y)> and
+    <math|H[x]> is the differential entropy of the marginal distribution
+    <math|p(x)>. Thus the information needed to describe <math|x> and
+    <math|y> is given by the sum of the information needed to describe
+    <math|x> alone plus the additional information required to specify
+    <math|y> given <math|x>.
+  </hidden>|<\hidden>
+    <tit|Relative entropy>
+
+    Consider some unknown distribution <math|p(x)>, and suppose that we have
+    modelled this using an approximating distribution <math|q(x)>. If we use
+    <math|q(x)> to construct a coding scheme for the purpose of transmitting
+    values of <math|x> to a receiver, then the average additional amount of
+    information required to specify the value of <math|x> (assuming we choose
+    an efficient coding scheme) as a result of using <math|q(x)> instead of
+    the true distribution <math|p(x)> is given by \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|KL<around*|(|p\<\|\|\>q|)>>|<cell|=>|<cell|-<big|int>p<around*|(|x|)>ln
+      q<around*|(|x|)>\<mathd\>x-<around*|(|-<big|int>p<around*|(|x|)>ln
+      p<around*|(|x|)>\<mathd\>x|)>>>|<row|<cell|>|<cell|=>|<cell|-<big|int>p<around*|(|x|)>ln<around*|{|<frac|q<around*|(|x|)>|p<around*|(|x|)>>|}>\<mathd\>x>>>>
+    </eqnarray*>
+
+    This is known as the <em|relative entropy> or <em|Kullback-Leibler
+    divergence>, or <em|KL divergence> (Kullback and Leibler, 1951), between
+    the distributions <math|p(x)> and <math|q(x)>. Note that it is not a
+    symmetrical quantity, that is to say <math|KL(p\<\|\|\>q) \<equiv\>
+    KL(q\<\|\|\>p)>.
+  </hidden>|<\hidden>
+    <tit|properties of <math|KL(p\|\|q)>>
+
+    The Kullback-Leibler divergence satisfies
+
+    <\equation*>
+      KL(p\<\|\|\>q)\<geqslant\>0
+    </equation*>
+
+    with equality if, and only if,
+
+    <\equation*>
+      p(x) = q(x).
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|convex function>
+
+    A function <math|f(x)> is said to be convex if it has the property that
+    every chord lies on or above the function, as shown in Figure
+    <reference|fig1.31>.
+
+    Any value of <math|x> in the interval from <math|x = a> to <math|x = b>
+    can be written in the form <math|\<lambda\>a + (1 \<minus\> \<lambda\>)b>
+    where <math|0\<leqslant\>\<lambda\>\<leqslant\>1>.\ 
+
+    The corresponding point on the chord is given by <math|\<lambda\>f (a) +
+    (1 \<minus\> \<lambda\>)f (b)>, and the corresponding value of the
+    function is <math|f (\<lambda\>a + (1 \<minus\> \<lambda\>)b)>. Convexity
+    then implies
+
+    <\equation*>
+      f (\<lambda\>a + (1 \<minus\> \<lambda\>)b)\<leqslant\>\<lambda\>f (a)
+      + (1 \<minus\> \<lambda\>)f (b).
+    </equation*>
+
+    This is equivalent to the requirement that the second derivative of the
+    function be everywhere positive.
+
+    Examples of convex functions are <math|x ln x> (for <math|x \<gtr\> 0>)
+    and <math|x<rsup|2>>.
+
+    A \ function is called <em|strictly convex> if the equality is satisfied
+    only for <math|\<lambda\> = 0> and <math|\<lambda\> = 1>.
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_31_convex.png|0.5par|||>|<label|fig1.31>A
+    convex function <math|f(x)> is one for which every chord (shown in blue)
+    lies on or above the function (shown in red).>
+  </hidden>|<\hidden>
+    <tit|Jensen's inequality>
+
+    <\equation*>
+      f<around*|(|<big|sum><rsub|i=1><rsup|M>\<lambda\><rsub|i>x<rsub|i>|)>\<leqslant\><big|sum><rsub|i=1><rsup|M>\<lambda\><rsub|i>f<around*|(|x<rsub|i>|)>
+    </equation*>
+
+    where <math|\<lambda\><rsub|i>\<geqslant\>0> and
+    <math|<big|sum><rsub|i>\<lambda\><rsub|i>=1>, for any set of points
+    <math|{x<rsub|i>}>.\ 
+  </hidden>|<\hidden>
+    If we interpret the <math|\<lambda\><rsub|i>> as the probability
+    distribution over a discrete variable <math|x> taking the values
+    <math|{x<rsub|i>}>,\ 
+
+    <\equation*>
+      f<around*|(|\<bbb-E\><around*|[|x|]>|)>\<leqslant\>\<bbb-E\><around*|[|f<around*|(|x|)>|]>
+    </equation*>
+
+    where <math|E[\<cdummy\>]> denotes the expectation.
+
+    For continuous variables, Jensen's inequality takes the form
+
+    <\equation*>
+      f<around*|(|<big|int>x p<around*|(|x|)>\<mathd\>x|)>\<leqslant\><big|int>f<around*|(|x|)>p<around*|(|x|)>\<mathd\>x
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|<math|KL(p\|\|q)\<geqslant\>0>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|KL<around*|(|p\<\|\|\>q|)>>|<cell|=>|<cell|-<big|int>p<around*|(|x|)>ln<frac|q<around*|(|x|)>|p<around*|(|x|)>>\<mathd\>x>>|<row|<cell|>|<cell|=>|<cell|-ln<around*|(|<big|int>p<around*|(|x|)><frac|q<around*|(|x|)>|p<around*|(|x|)>>\<mathd\>x|)>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|-ln<big|int>q<around*|(|x|)>\<mathd\>x>>|<row|<cell|>|<cell|=>|<cell|0>>>>
+    </eqnarray*>
+
+    Note: <math|-ln<around*|(|\<cdummy\>|)>> is convex
+  </hidden>|<\hidden>
+    <tit|parameter estimation>
+
+    Suppose that data is being generated from an unknown distribution
+    <math|p(x)> that we wish to model.
+
+    We can try to approximate this distribution using some parametric
+    distribution <math|q(x\|\<theta\>)>, governed by a set of adjustable
+    parameters <math|\<theta\>>, for example a multivariate Gaussian.
+
+    One way to determine <math|\<theta\>> is to minimize the Kullback-Leibler
+    divergence between <math|p(x)> and <math|q(x\|\<theta\>)> with respect to
+    <math|\<theta\>>.
+
+    <\equation*>
+      L<around*|(|\<theta\>|)>=KL<around*|(|p\<\|\|\>q|)>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    We cannot do this directly because we don't know <math|p(x)>. Suppose,
+    however, that we have observed a finite set of training points
+    <math|x<rsub|n>>, for <math|n = 1, . . . , N> , drawn from <math|p(x)>.
+    Then the expectation with respect to <math|p(x)> can be approximated by a
+    finite sum over these points, using Eq. <eqref|1.35>, so that
+
+    <\equation>
+      KL<around*|(|p\<\|\|\>q|)>\<simeq\><frac|1|N><big|sum><rsub|n=1><rsup|N><around*|{|-ln
+      q<around*|(|x<rsub|n>\|\<theta\>|)>+ln
+      p<around*|(|x<rsub|n>|)>|}><label|1.119>
+    </equation>
+
+    The second term on the right-hand side of Eq. <eqref|1.119> is
+    independent of <math|\<theta\>>, and the first term is the negative log
+    likelihood function for <math|\<theta\>> under the distribution
+    <math|q(x\|\<theta\>)> evaluated using the training set.\ 
+
+    Thus we see that minimizing this Kullback-Leibler divergence is
+    equivalent to maximizing the likelihood function.
+  </hidden>|<\hidden>
+    <tit|mutual information>
+
+    Consider the joint distribution between two sets of variables <math|x>
+    and <math|y> given by <math|p(x,y)>.
+
+    If the sets of variables are independent, then their joint distribution
+    will factorize into the product of their marginals <math|p(x, y) =
+    p(x)p(y)>.
+
+    If the variables are not independent, we can gain some idea of whether
+    they are `close' to being independent by considering the Kullback-Leibler
+    divergence between the joint distribution and the product of the
+    marginals, given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|I<around*|[|x,y|]>>|<cell|=>|<cell|KL<around*|(|p<around*|(|x,y|)>\<\|\|\>p<around*|(|x|)>p<around*|(|y|)>|)>>>|<row|<cell|>|<cell|=>|<cell|-<big|iint>p<around*|(|x,y|)>ln<around*|(|<frac|p<around*|(|x|)>p<around*|(|y|)>|p<around*|(|x,y|)>>|)>\<mathd\>x\<mathd\>y>>>>
+    </eqnarray*>
+
+    which is called the mutual information between the variables <math|x> and
+    <math|y>.
+  </hidden>|<\hidden>
+    <tit|properties of <math|I[x,y]>>
+
+    From the properties of the Kullback-Leibler divergence, we see that
+
+    <\equation*>
+      I<around*|[|x, y|]>\<geqslant\>0
+    </equation*>
+
+    with equality if, and only if, <math|x> and <math|y> are independent.\ 
+  </hidden>|<\hidden>
+    Using the sum and product rules of probability, we see that the mutual
+    information is related to the conditional entropy through
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|I<around*|[|x,y|]>>|<cell|=>|<cell|-<big|iint>p<around*|(|x,y|)>ln<around*|(|<frac|p<around*|(|x|)>|p<around*|(|x\|y|)>>|)>\<mathd\>x\<mathd\>y>>|<row|<cell|>|<cell|=>|<cell|-<big|iint>p<around*|(|x,y|)>ln
+      p<around*|(|x|)>\<mathd\>x\<mathd\>y+<big|iint>p<around*|(|x,y|)>ln
+      p<around*|(|x\|y|)>\<mathd\>x\<mathd\>y>>|<row|<cell|>|<cell|=>|<cell|H<around*|[|x|]>-H<around*|[|x\|y|]>>>|<row|<cell|>|<cell|=>|<cell|H<around*|[|y|]>-H<around*|[|y\|x|]>>>>>
+    </eqnarray*>
   </hidden>>
 </body>
 
@@ -1923,23 +2447,29 @@
 <\references>
   <\collection>
     <associate|1.1|<tuple|1|5>>
+    <associate|1.101|<tuple|21|?>>
+    <associate|1.102|<tuple|22|?>>
+    <associate|1.110|<tuple|23|?>>
+    <associate|1.119|<tuple|24|?>>
     <associate|1.2|<tuple|2|6>>
     <associate|1.3|<tuple|3|11>>
+    <associate|1.35|<tuple|8|?>>
     <associate|1.4|<tuple|4|17>>
-    <associate|1.43|<tuple|8|40>>
+    <associate|1.43|<tuple|9|40>>
     <associate|1.5|<tuple|5|23>>
-    <associate|1.53|<tuple|9|50>>
-    <associate|1.54|<tuple|10|53>>
-    <associate|1.55|<tuple|11|54>>
-    <associate|1.56|<tuple|12|54>>
+    <associate|1.53|<tuple|10|50>>
+    <associate|1.54|<tuple|11|53>>
+    <associate|1.55|<tuple|12|54>>
+    <associate|1.56|<tuple|13|54>>
     <associate|1.6|<tuple|6|23>>
-    <associate|1.60|<tuple|13|58>>
-    <associate|1.62|<tuple|14|?>>
-    <associate|1.65|<tuple|15|?>>
-    <associate|1.66|<tuple|16|1>>
-    <associate|1.68|<tuple|17|?>>
+    <associate|1.60|<tuple|14|58>>
+    <associate|1.62|<tuple|15|?>>
+    <associate|1.65|<tuple|16|?>>
+    <associate|1.66|<tuple|17|1>>
+    <associate|1.68|<tuple|18|?>>
     <associate|1.8|<tuple|7|24>>
-    <associate|1.89|<tuple|18|?>>
+    <associate|1.89|<tuple|19|?>>
+    <associate|1.92|<tuple|20|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|2|20>>
     <associate|auto-11|<tuple|8|21>>
@@ -1970,8 +2500,11 @@
     <associate|auto-34|<tuple|27|?>>
     <associate|auto-35|<tuple|28|?>>
     <associate|auto-36|<tuple|29|?>>
+    <associate|auto-37|<tuple|6|?>>
+    <associate|auto-38|<tuple|30|1>>
+    <associate|auto-39|<tuple|31|?>>
     <associate|auto-4|<tuple|3|9>>
-    <associate|auto-5|<tuple|4|12>>
+    <associate|auto-5|<tuple|4|1>>
     <associate|auto-6|<tuple|5|13>>
     <associate|auto-7|<tuple|1|14>>
     <associate|auto-8|<tuple|6|18>>
@@ -1985,7 +2518,9 @@
     <associate|fig1.26|<tuple|26|?>>
     <associate|fig1.27|<tuple|27|?>>
     <associate|fig1.29|<tuple|29|?>>
-    <associate|fig1.4|<tuple|4|9>>
+    <associate|fig1.30|<tuple|30|?>>
+    <associate|fig1.31|<tuple|31|?>>
+    <associate|fig1.4|<tuple|4|1>>
     <associate|fig1.7|<tuple|7|18>>
   </collection>
 </references>
@@ -2271,6 +2806,23 @@
       function <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|y(x)>>,
       \ which minimizes the expected squared loss, is given by the mean of
       the conditional distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(t\|x)>>.>|<pageref|auto-35>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|29>||Plots of the
+      quantity <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|L<rsub|q>=
+      \|y \<minus\> t\|<rsup|q>>> for various values of
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|q>>.>|<pageref|auto-36>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|30>||Histograms of two
+      probability distributions over 30 bins illustrating the higher value of
+      the entropy H for the broader distribution. The largest entropy would
+      arise from a uniform distribution that would give
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|H
+      = \<minus\> ln(1/30) = 3.40>>.>|<pageref|auto-38>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|31>||A convex function
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|f(x)>>
+      is one for which every chord (shown in blue) lies on or above the
+      function (shown in red).>|<pageref|auto-39>>
     </associate>
     <\associate|table>
       <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Table of the
@@ -2310,6 +2862,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>Decision
       Theory> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-30><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|6<space|2spc>Information
+      Theory> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-37><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
