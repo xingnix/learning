@@ -1616,7 +1616,7 @@
     </equation*>
 
     is a minimum.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|The reject option>
 
     In some applications, it will be appropriate to avoid making decisions on
@@ -1635,11 +1635,279 @@
     \<less\> 1/K> will ensure that no examples are rejected. Thus the
     fraction of examples that get rejected is controlled by the value of
     <math|\<theta\>>.
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <small-figure|<image|img/fig_1_26_reject_option.png|.5par|||>|<label|fig1.26>Illustration
     of the reject option. Inputs \ <math|x> such that the larger of the two
     posterior probabilities is less than or equal to some threshold
     <math|\<theta\>> will be rejected.>
+  </hidden>|<\hidden>
+    <tit|Inference and decision>
+
+    <\itemize-dot>
+      <item>We have broken the classification problem down into two separate
+      stages,\ 
+
+      <\itemize-minus>
+        <item>the <em|inference stage> in which we use training data to learn
+        a model for <math|p(\<cal-C\><rsub|k>\|x)>, and
+
+        <item>the subsequent <em|decision stage> in which we use these
+        posterior probabilities to make optimal class assignments.
+      </itemize-minus>
+
+      <item>An alternative possibility would be to solve both problems
+      together and simply learn a function that maps inputs <math|\<b-x\>>
+      directly into decisions. Such a function is called a <em|discriminant
+      function>.
+    </itemize-dot>
+  </hidden>|<\hidden>
+    <tit|approaches to solving decision problems(1/3)>
+
+    Solve the inference problem of determining the class-conditional
+    densities \ <math|p(x\|\<cal-C\><rsub|k>)> for each class
+    <math|\<cal-C\><rsub|k>> individually. Also separately infer the prior
+    class probabilities <math|p(\<cal-C\><rsub|k>)>.\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<cal-C\><rsub|k>\|\<b-x\>|)>>|<cell|=>|<cell|<frac|p<around*|(|\<b-x\>,\<cal-C\><rsub|k>|)>|p<around*|(|\<b-x\>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|\<b-x\>\|\<cal-C\><rsub|k>|)>p<around*|(|\<cal-C\><rsub|k>|)>|p<around*|(|\<b-x\>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|\<b-x\>\|\<cal-C\><rsub|k>|)>p<around*|(|\<cal-C\><rsub|k>|)>|<big|sum><rsub|k>p<around*|(|\<b-x\>\|\<cal-C\><rsub|k>|)>p<around*|(|\<cal-C\><rsub|k>|)>>>>>>
+    </eqnarray*>
+
+    Then use decision theory to determine class membership for each new input
+    <math|\<cal-x\>>.
+
+    Approaches that explicitly or implicitly model the distribution of inputs
+    as well as outputs are known as <em|generative models>, because by
+    sampling from them it is possible to generate synthetic data points in
+    the input space.
+  </hidden>|<\hidden>
+    <tit|approaches to solving decision problems(2/3)>
+
+    \;
+
+    <\itemize-dot>
+      <item>First solve the inference problem of determining the posterior
+      class probabilities <math|p(\<cal-C\><rsub|k>\|\<b-x\>)>, and
+
+      <item>then subsequently use decision theory to assign each new
+      <math|\<b-x\>> to one of the classes.\ 
+
+      <item>Approaches that model the posterior probabilities directly are
+      called <em|discriminative models>.
+    </itemize-dot>
+  </hidden>|<\hidden>
+    <tit|approaches to solving decision problems(3/3)>
+
+    <\itemize-dot>
+      <item>Find a function <math|f(\<b-x\>)>, called a discriminant
+      function, which maps each input <math|\<b-x\>> \ directly onto a class
+      label.
+
+      <item>For instance, in the case of two-class problems,
+      <math|f(\<cdummy\>)> might be binary valued and such that
+
+      <math|f=0> represents class <math|\<cal-C\><rsub|1>> and
+
+      <math|f=1> represents class <math|\<cal-C\><rsub|2>>.
+
+      <item>In this case, probabilities play no role.
+    </itemize-dot>
+  </hidden>|<\hidden>
+    <tit|generative/discriminative>
+
+    Generative models need a large training set in order to be able to
+    determine the class-conditional densities to reasonable accuracy.
+
+    Allows the marginal density of data <math|p(x)> to be determined, useful
+    for detecting new data points that have low probability under the model
+    and for which the predictions may be of low accuracy, which is known as
+    outlier detection or novelty detection (Bishop, 1994; Tarassenko, 1995).
+
+    Indeed, the class-conditional densities may contain a lot of structure
+    that has little effect on the posterior probabilities, as illustrated in
+    Figure <reference|fig1.27>.
+
+    \;
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_27_conditional_posterior.png|.9par|||>|<label|fig1.27>Example
+    of the class-conditional densities for 2 classes having a single input
+    variable <math|x> (left) together with the corresponding posterior
+    probabilities (right). The left-hand mode of the class-conditional
+    density <math|p(x\|\<cal-C\><rsub|1>)>, shown in blue on the left plot,
+    has no effect on the posterior probabilities. The vertical green line in
+    the right plot shows the decision boundary in <math|x> that gives the
+    minimum misclassification rate.<math|<around*|(|p<around*|(|\<cal-C\><rsub|1>|)>=p<around*|(|\<cal-C\><rsub|2>|)>|)>>>
+  </hidden>|<\hidden>
+    <tit|role of <math|p(\<cal-C\><rsub|k>\|\<b-x\>)>>
+
+    <\description>
+      <item*|Minimizing risk>The loss matrix are \ subjected to revision from
+      time to time (such as might occur in a financial application).
+
+      <item*|Reject option>Posterior probabilities allow us to determine a
+      rejection criterion that \ will minimize the misclassification rate, or
+      more generally the expected loss, for a given fraction of rejected data
+      points.
+
+      <item*|Compensating for class priors>The posterior probabilities can be
+      adjusted since they are proportional to the prior probabilities, which
+      we can interpret as the fractions of points in each class.
+
+      <item*|Combining models>As long as each model gives posterior
+      probabilities for the classes, we can combine the outputs
+      systematically using the rules of probability.
+    </description>
+  </hidden>|<\hidden>
+    <tit|Combining models>
+
+    assume <math|x<rsub|1>> and <math|x<rsub|2>> are independent, so that
+
+    <\equation*>
+      p<around*|(|x<rsub|1>,x<rsub|2>\|\<cal-C\><rsub|k>|)>=p<around*|(|x<rsub|1>\|\<cal-C\><rsub|k>|)>p<around*|(|x<rsub|2>\|\<cal-C\><rsub|k>|)>
+    </equation*>
+
+    This is an example of <em|conditional independence> property, because the
+    independence holds when the distribution is conditioned on the class
+    <math|\<cal-C\><rsub|k>>.
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<cal-C\><rsub|k>\|x<rsub|1>,x<rsub|2>|)>>|<cell|\<propto\>>|<cell|p<around*|(|x<rsub|1>,x<rsub|2>\|\<cal-C\><rsub|k>|)>p<around*|(|\<cal-C\><rsub|k>|)>>>|<row|<cell|>|<cell|\<propto\>>|<cell|p<around*|(|x<rsub|1>\|\<cal-C\><rsub|k>|)>p<around*|(|x<rsub|2>\|\<cal-C\><rsub|k>|)>p<around*|(|\<cal-C\><rsub|k>|)>>>|<row|<cell|>|<cell|\<propto\>>|<cell|<frac|p<around*|(|\<cal-C\><rsub|k>\|x<rsub|1>|)>p<around*|(|\<cal-C\><rsub|k><around*|\||x<rsub|2>|\|>|)>|p<around*|(|\<cal-C\><rsub|k>|)>>>>>>
+    </eqnarray*>
+
+    Thus we need the class prior probabilities <math|p(\<cal-C\><rsub|k>)>,
+    which we can easily estimate from the fractions of data points in each
+    class.
+  </hidden>|<\hidden>
+    <tit|Decision Theory for Regression>
+
+    Inference step
+
+    <space|1em>Determine <math|p(x,t)>
+
+    Decision step
+
+    <space|1em>For given <math|x>, make optimal prediction, <math|y(x)>, for
+    <math|t>.
+
+    Loss function:
+
+    <\equation*>
+      \<bbb-E\><around*|[|L|]>=<big|int><big|int>L<around*|(|t,y<around*|(|x|)>|)>p<around*|(|x,t|)>\<mathd\>x\<mathd\>t
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|Loss functions for regression>
+
+    The decision stage consists of choosing a specific estimate <math|y(x)>
+    of the value of <math|t> for each input <math|x>. Suppose that in doing
+    so, we incur a loss <math|L(t, y(x))>. The average, or expected, loss is
+    then given by
+
+    <\equation*>
+      \<bbb-E\><around*|[|L|]>=<big|int><big|int>L<around*|(|t,y<around*|(|x|)>|)>p<around*|(|x,t|)>\<mathd\>x\<mathd\>t
+    </equation*>
+
+    A common choice of loss function in regression problems is the squared
+    loss given by
+
+    <\equation*>
+      L(t, y(x))={y(x) \<minus\> t}<rsup|2>.
+    </equation*>
+
+    In this case, the expected loss can be written
+
+    <\equation*>
+      \<bbb-E\><around*|[|L|]>=<big|iint><around*|{|y<around*|(|x|)>-t|}><rsup|2>p<around*|(|x,t|)>\<mathd\>x\<mathd\>t
+    </equation*>
+  </hidden>|<\hidden>
+    Our goal is to choose <math|y(x)> so as to minimize <math|\<bbb-E\>[L]>.
+    If we assume a completely flexible function <math|y(x)>, we can do this
+    formally using the calculus of variations to \ give
+
+    <\equation*>
+      <frac|\<delta\>\<bbb-E\><around*|[|L|]>|\<delta\>y<around*|(|x|)>>=2<big|int><around*|{|y<around*|(|x|)>-t|}>p<around*|(|x,t|)>\<mathd\>t=0
+    </equation*>
+
+    Solving for <math|y(x)>, and using the sum and product rules of
+    probability, we obtain
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|y<around*|(|t|)>>|<cell|=>|<cell|<frac|<big|int>t
+      p<around*|(|x,t|)>\<mathd\>t|p<around*|(|x|)>>>>|<row|<cell|>|<cell|=>|<cell|<big|int>t
+      p<around*|(|t\|x|)>\<mathd\>t>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><rsub|t><around*|[|t\|x|]><eq-number><label|1.89>>>>>
+    </eqnarray*>
+
+    which is the conditional average of <math|t> conditioned on <math|x> and
+    is known as the <em|regression function>.
+  </hidden>|<\hidden>
+    <small-figure|<image|img/fig_1_28_regression.png|.5par|||>|The regression
+    function <math|y(x)>, \ which minimizes the expected squared loss, is
+    given by the mean of the conditional distribution <math|p(t\|x)>.>
+  </hidden>|<\hidden>
+    We can also derive this result in a slightly different way, which will
+    also shed light on the nature of the regression problem. Armed with the
+    knowledge that the optimal solution is the conditional expectation, we
+    can expand the square term as follows
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<around*|{|y<around*|(|x|)>-t|}><rsup|2>>|<cell|=>|<cell|<around*|{|y<around*|(|x|)>-\<bbb-E\><around*|[|t\|x|]>+\<bbb-E\><around*|[|t\|x|]>-t|}><rsup|2>>>|<row|<cell|>|<cell|=>|<cell|<around*|{|y<around*|(|x|)>-\<bbb-E\><around*|[|t\|x|]>|}><rsup|2>+2<around*|{|y<around*|(|x|)>-\<bbb-E\><around*|[|t\|x|]>|}><around*|{|\<bbb-E\><around*|[|t\|x|]>-t|}>+<around*|{|\<bbb-E\><around*|[|t\|x|]>-t|}><rsup|2>>>>>
+    </eqnarray*>
+
+    Substituting into the loss function and performing the integral over t,
+    we see that the cross-term vanishes and we obtain an expression for the
+    loss function in the form
+
+    <\equation*>
+      \<bbb-E\><around*|[|L|]>=<big|int><around*|{|y<around*|(|x|)>-\<bbb-E\><around*|[|t\|x|]>|}><rsup|2>p<around*|(|x|)>\<mathd\>x+<big|int><around*|{|\<bbb-E\><around*|[|t\|x|]>-t|}><rsup|2>p<around*|(|x|)>\<mathd\>x
+    </equation*>
+
+    The function <math|y(x)> we seek to determine enters only in the first
+    term, which will be minimized when y(x) is equal to E[t\|x]. This is
+    simply the result that we derived previously.
+
+    The second term is the variance of the distribution of <math|t>, averaged
+    over <math|x>. It represents the intrinsic variability of the target data
+    and can be regarded as noise. Because it is independent of <math|y(x)>,
+    it represents the irreducible minimum value of the loss function.
+  </hidden>|<\hidden>
+    <tit|approaches to solving regression problems>
+
+    First solve the inference problem of determining the joint density
+    <math|p(x, t)>. Then \ normalize to find the conditional density
+    <math|p(t\|x)>, and finally marginalize to find the conditional mean
+    given by Eq. <eqref|1.89>.
+
+    First solve the inference problem of determining the conditional density
+    <math|p(t\|x)>, \ and then subsequently marginalize to find the
+    conditional mean given by Eq. <eqref|1.89>.
+
+    Find a regression function <math|y(x)> directly from the training data.
+  </hidden>|<\shown>
+    <tit|choice of loss function>
+
+    The squared loss is not the only possible choice of loss function for
+    regression. Indeed, there are situations in which squared loss can lead
+    to very poor results and where we need to develop more sophisticated
+    approaches. An important example concerns situations in which the
+    conditional distribution <math|p(t\|x)> is multimodal, as often arises in
+    the solution of inverse problems.\ 
+
+    Here we consider briefly one simple \ generalization of the squared loss,
+    called the <em|Minkowski loss>, whose expectation is given by
+
+    <\equation*>
+      \<bbb-E\>[L<rsub|q>]=<big|iint> <around*|\||y(x) \<minus\>
+      t|\|><rsup|q>p(x, t)\<mathd\>x\<mathd\>t
+    </equation*>
+
+    which reduces to the expected squared loss for <math|q = 2>. The function
+    <math|\|y \<minus\> t\|<rsup|q>> is plotted against <math|y\<minus\>t>
+    for various values of <math|q> in Figure <reference|fig1.29>. The minimum
+    of <math|\<bbb-E\>[L<rsub|q>]> is given by the conditional mean for
+    <math|q = 2>, the conditional median for <math|q = 1>, and the
+    conditional mode for <math|q \<rightarrow\> 0>.
+  </shown>|<\hidden>
+    <small-figure|<image|img/fig_1_29_Minkowski_loss.png|.6par|||>|<label|fig1.29>Plots
+    of the quantity <math|L<rsub|q>= \|y \<minus\> t\|<rsup|q>> for various
+    values of <math|q>.>
   </hidden>>
 </body>
 
@@ -1671,6 +1939,7 @@
     <associate|1.66|<tuple|16|1>>
     <associate|1.68|<tuple|17|?>>
     <associate|1.8|<tuple|7|24>>
+    <associate|1.89|<tuple|18|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|2|20>>
     <associate|auto-11|<tuple|8|21>>
@@ -1698,6 +1967,9 @@
     <associate|auto-31|<tuple|24|?>>
     <associate|auto-32|<tuple|25|?>>
     <associate|auto-33|<tuple|26|?>>
+    <associate|auto-34|<tuple|27|?>>
+    <associate|auto-35|<tuple|28|?>>
+    <associate|auto-36|<tuple|29|?>>
     <associate|auto-4|<tuple|3|9>>
     <associate|auto-5|<tuple|4|12>>
     <associate|auto-6|<tuple|5|13>>
@@ -1711,6 +1983,8 @@
     <associate|fig1.22|<tuple|22|?>>
     <associate|fig1.23|<tuple|23|?>>
     <associate|fig1.26|<tuple|26|?>>
+    <associate|fig1.27|<tuple|27|?>>
+    <associate|fig1.29|<tuple|29|?>>
     <associate|fig1.4|<tuple|4|9>>
     <associate|fig1.7|<tuple|7|18>>
   </collection>
@@ -1974,6 +2248,29 @@
       for the cancer treatment problem. The rows correspond to the true
       class, whereas the columns correspond to the assignment of class made
       by our decision criterion.>|<pageref|auto-32>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|26>||Illustration of
+      the reject option. Inputs \ <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>
+      such that the larger of the two posterior probabilities is less than or
+      equal to some threshold <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<theta\>>>
+      will be rejected.>|<pageref|auto-33>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|27>||Example of the
+      class-conditional densities for 2 classes having a single input
+      variable <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>
+      (left) together with the corresponding posterior probabilities (right).
+      The left-hand mode of the class-conditional density
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x\|\<cal-C\><rsub|1>)>>,
+      shown in blue on the left plot, has no effect on the posterior
+      probabilities. The vertical green line in the right plot shows the
+      decision boundary in <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>
+      that gives the minimum misclassification
+      rate.<with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|<around*|(|p<around*|(|\<cal-C\><rsub|1>|)>=p<around*|(|\<cal-C\><rsub|2>|)>|)>>>>|<pageref|auto-34>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|28>||The regression
+      function <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|y(x)>>,
+      \ which minimizes the expected squared loss, is given by the mean of
+      the conditional distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(t\|x)>>.>|<pageref|auto-35>>
     </associate>
     <\associate|table>
       <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Table of the
