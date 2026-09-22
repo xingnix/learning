@@ -29,11 +29,15 @@
     <\padded-center>
       <section|<with|font|fireflysung|\<#7B80\>\<#4ECB\>>>
     </padded-center>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     <space|5em><image|image/neuralnetworktimeline.png|.7par|||>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
+    <space|3em><image|image/neuralnetworkhistory.png|.8par|||>
+  </hidden>|<\hidden>
+    <space|1em><image|image/tensorflowplayground.png|.96par|||>
+  </hidden>|<\hidden>
     <tit|\<#4EBA\>\<#5DE5\>\<#795E\>\<#7ECF\>\<#7F51\>\<#7EDC\>\<#FF08\>Artificial
     Neural Networks\V\VANNs\<#FF09\>>
 
@@ -59,7 +63,7 @@
       </itemize>
     </itemize>
   </hidden>|<\hidden>
-    <tit|`\<#793A\>\<#4F8B\>>
+    <tit|\<#793A\>\<#4F8B\>>
 
     <\itemize>
       <item>Pomerleau<with|font|roman|\<#FF08\>>1993<with|font|roman|\<#FF09\>><with|font|fireflysung|\<#7684\>
@@ -189,6 +193,29 @@
       <section|<with|font|fireflysung|\<#611F\>\<#77E5\>\<#5668\>>>
     </padded-center>
   </hidden>|<\hidden>
+    <tit|Biological neurons were the inspiration for ANN>
+
+    \;
+
+    \;
+
+    <space|7em><image|image/neuron.png|.5par|||>
+
+    \;
+
+    <space|11em><with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://www.kdnuggets.com/a-brief-history-of-the-neural-networks>
+  </hidden>|<\hidden>
+    <space|4em><image|image/McCullochPitts.png|.72par|||>
+
+    <with|font|AR PL New Sung|font-family|sans|font-base-size|5|<quotation|\PA
+    Logical Calculus of the Ideas Immanent in Nervous
+    Activity\Q>><space|4em><with|font|AR PL New
+    Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/mcculloch-and-pitts-neural-network-1943/>
+  </hidden>|<\hidden>
+    <space|4em><image|image/FrankRosenblattPerceptron.png|.7par|||>
+
+    <space|7em><with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/who-invented-perceptron-frank-rosenblatt/>
+  </hidden>|<\hidden>
     <tit|\<#611F\>\<#77E5\>\<#5668\>>
 
     \;
@@ -210,6 +237,14 @@
     <tit|\<#4E24\>\<#8F93\>\<#5165\>\<#611F\>\<#77E5\>\<#5668\>\<#7684\>\<#51B3\>\<#7B56\>\<#5E73\>\<#9762\>>
 
     <image|./image/ann-linearly-separable.png|.9par|||>
+  </hidden>|<\hidden>
+    <space|4em><image|image/FrankRosenblatt_vs_MarvinMinsky.png|.7par|||>
+
+    <with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/minsky-vs-rosenblatt-ai-feud/>
+  </hidden>|<\hidden>
+    <space|3em><image|image/PerceptronControversy.png|.7par|||>
+
+    <space|8em><with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/perceptron-controversy-ai-history/>
   </hidden>|<\hidden>
     <tit|\<#611F\>\<#77E5\>\<#5668\>\<#8BAD\>\<#7EC3\>\<#6CD5\>\<#5219\>(perceptron
     learning rule)>
@@ -281,6 +316,10 @@
     <tit|\<#8BEF\>\<#5DEE\>\<#66F2\>\<#9762\>>
 
     <space|7em><image|./image/parabola-floor.png|0.6par|||>
+  </hidden>|<\hidden>
+    <space|4em><image|image/gradientdescent.png|.7par|||>
+
+    <with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/gradient-descent-explained-neural-networks/>
   </hidden>|<\hidden>
     <tit|\<#68AF\>\<#5EA6\>\<#4E0B\>\<#964D\>\<#7B97\>\<#6CD5\>>
 
@@ -412,6 +451,10 @@
       <section|<with|font|fireflysung|\<#591A\>\<#5C42\>\<#7F51\>\<#7EDC\>\<#548C\>\<#53CD\>\<#5411\>\<#4F20\>\<#64AD\>\<#7B97\>\<#6CD5\>>>
     </padded-center>
   </hidden>|<\hidden>
+    <space|4em><image|image/mlp.png|.7par|||>
+
+    <space|10em><with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/multilayer-perceptron-history/>
+  </hidden>|<\hidden>
     <tit|\<#591A\>\<#5C42\>\<#7F51\>\<#7EDC\>>
 
     <space|5em><image|./image/ann-lippmann.png|.6par|||>
@@ -473,6 +516,14 @@
       <tformat|<table|<row|<cell|<frac|\<partial\>*E|\<partial\>*w<rsub|i>>>|<cell|=>|<cell|-<big|sum><rsub|d\<in\>D><around|(|t<rsub|d>-o<rsub|d>|)>*o<rsub|d><around|(|1-o<rsub|d>|)>*x<rsub|i,d>>>>>
     </eqnarray>
   </hidden>|<\hidden>
+    <space|4em><image|image/history_bp.png|.7par|||>
+
+    <with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/history-of-backpropagation-deep-learning/>
+  </hidden>|<\shown>
+    <space|4em><image|image/who_bp.png|.7par|||>
+
+    <with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/who-invented-backpropagation-ai/>
+  </shown>|<\hidden>
     <tit|\<#53CD\>\<#5411\>\<#4F20\>\<#64AD\>\<#7B97\>\<#6CD5\>>
 
     Backpropagation( training_examples , <math|\<eta\>> , <math|n<rsub|i*n>>
@@ -602,6 +653,18 @@
       <item><with|font|fireflysung|\<#6743\>\<#503C\>\<#5171\>\<#4EAB\>><with|font|roman|\<#FF08\>>weight
       sharing<with|font|roman|\<#FF09\> >
     </itemize>
+  </hidden>|<\hidden>
+    <space|4em><image|image/yanlecun_cnn.png|.7par|||>
+
+    <with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/who-invented-cnn-yann-lecun/>
+  </hidden>|<\hidden>
+    <space|3em><image|image/cnn.png|.7par|||>
+
+    <space|8em><with|font|AR PL New Sung|font-family|sans|font-base-size|5|https://techhistorylab.com/history-of-cnn-neural-networks/>
+  </hidden>|<\hidden>
+    <space|4em><image|image/lenet.png|.8par|||>
+  </hidden>|<\hidden>
+    <space|3em><image|image/alexnet.png|.8par|||>
   </hidden>>
 </body>
 
