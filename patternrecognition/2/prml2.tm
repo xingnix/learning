@@ -592,7 +592,7 @@
     </equation*>
 
     Note that such vectors satisfy <math|<big|sum><rsub|k=1><rsup|K>x<rsub|k>=1>.
-    </hidden>|<\hidden>
+  </hidden>|<\hidden>
     <tit|K-value descrete variables>
 
     If we denote the probability of <math|x<rsub|k>= 1> \ by the parameter
@@ -1054,7 +1054,7 @@
       <math|\<lambda\><rsup|1/2><rsub|i>> , as illustrated in Figure
       <reference|fig2.7>.
     </shown>>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <small-figure|<image|image/fig_2_7_transform.png|.5par|||>|<label|fig2.7>The
     red curve shows the elliptical surface of constant probability density
     for a Gaussian in a two-dimensional space <math|x = (x<rsub|1>,
@@ -1062,7 +1062,7 @@
     at <math|x = \<mu\>>. The axes of the ellipse are defined by the
     eigenvectors <math|\<b-u\><rsub|i>> of the covariance matrix, with
     corresponding eigenvalues <math|\<lambda\><rsub|i>>.>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|<math|\<lambda\><rsub|i>>>
 
     <unroll-greyed|<\shown>
@@ -1205,10 +1205,10 @@
     where again we have changed variables using
     <math|\<b-z\>=\<b-x\>-\<b-mu\>>.
   </hidden>|<\hidden>
-    <tit|<math|\<b-mu\>\<b-z\><rsup|T>,\<b-mu\><rsup|T>\<b-z\>,\<b-z\>\<b-z\><rsup|T>>>
+    <tit|<math|\<b-mu\>\<b-z\><rsup|T>,\<b-z\>\<b-mu\><rsup|T>,\<b-z\>\<b-z\><rsup|T>>>
 
     Note that the cross-terms involving <math|\<b-mu\>\<b-z\><rsup|T>> and
-    <math|\<b-mu\><rsup|T>\<b-z\>> will again vanish by symmetry.
+    <math|\<b-z\>\<b-mu\><rsup|T>> will again vanish by symmetry.
 
     The term <math|\<b-mu\>\<b-mu\><rsup|T>> is constant and can be taken
     outside the integral, which itself is unity because the Gaussian
@@ -1280,6 +1280,942 @@
     Because the parameter matrix <math|\<Sigma\>> governs the covariance of
     <math|x> under the Gaussian distribution, it is called the <em|covariance
     matrix>.
+  </hidden>|<\hidden>
+    <tit|Complexity>
+
+    <unroll-greyed|<\shown>
+      Consider the number of free parameters in the distribution.
+    </shown>|<\shown>
+      A general symmetric covariance matrix <math|\<Sigma\>> will have
+      <math|D(D + 1)/2> independent parameters, and there are another D
+      independent parameters in <math|\<b-mu\>>, giving <math|D(D + 3)/2>
+      parameters in total.
+    </shown>|<\shown>
+      For large <math|D>, the total number of parameters therefore grows
+      quadratically with <math|D>, and the computational task of manipulating
+      and inverting large matrices can become prohibitive.
+    </shown>|<\shown>
+      One way to address this problem is to use restricted forms of the
+      covariance matrix.
+    </shown>>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Diagonal covariance>
+
+    If we consider covariance matrices that are <em|diagonal>, so that
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|>|<cell|\<Sigma\>=>|<cell|diag(\<sigma\><rsub|i><rsup|2>)>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<sigma\><rsub|1><rsup|2>>|<cell|>|<cell|>>|<row|<cell|>|<cell|\<ddots\>>|<cell|>>|<row|<cell|>|<cell|>|<cell|\<sigma\><rsub|D><rsup|2>>>>>>>>>>
+    </eqnarray*>
+
+    <\equation*>
+      \;
+    </equation*>
+
+    There are <math|2D> independent parameters in the density model.
+
+    The corresponding contours of constant density are given by axis-aligned
+    ellipsoids.
+  </hidden>|<\hidden>
+    <tit|Isotropic covariance>
+
+    Further restrict the covariance matrix to be proportional to the identity
+    matrix,
+
+    <\equation*>
+      \<Sigma\> = \<sigma\><rsup|2>I
+    </equation*>
+
+    known as an <em|isotropic covariance>, giving <math|D+1> independent
+    parameters in the model and spherical surfaces of constant density.
+  </hidden>|<\hidden>
+    <small-figure|<image|image/fig_2_8_contour_gaussian.png|.9par|||>|Contours
+    of constant probability density for a Gaussian distribution in two
+    dimensions in which the covariance matrix is (a) of general form, (b)
+    diagonal, in which the elliptical contours are aligned with the
+    coordinate axes, and (c) proportional to the identity matrix, in which
+    the contours are concentric circles.>
+  </hidden>|<\hidden>
+    <tit|Extension>
+
+    <\overlays-greyed|6|6>
+      <overlay-from|2|A further limitation of the Gaussian distribution is
+      that it is intrinsically <em|unimodal> (i.e., has a single maximum) and
+      so is unable to provide a good approximation to multimodal
+      distributions.|>
+
+      <overlay-from|3|The Gaussian distribution can be both too flexible, in
+      the sense of having too many parameters, while also being too limited
+      in the range of distributions that it can adequately represent.|>
+
+      <overlay-from|4|The introduction of <em|latent variables>, also called
+      <em|hidden variables> or <em|unobserved variables>, allows both of
+      these problems to be addressed. In particular, a rich family of
+      multimodal distributions is obtained by introducing discrete latent
+      variables leading to mixtures of Gaussians.|>
+
+      <overlay-from|5|Similarly, the introduction of <em|continuous latent
+      variables> leads to models in which the number of free parameters can
+      be controlled independently of the dimensionality <math|D> of the data
+      space while still allowing the model to capture the dominant
+      correlations in the data set.|>
+    </overlays-greyed>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    <unroll-greyed|<\shown>
+      These two approaches can be combined and further extended to derive a
+      very rich set of hierarchical models that can be adapted to a broad
+      range of practical applications.
+    </shown>|<\shown>
+      The Gaussian version of the <em|Markov random field>, \ which is widely
+      used as a probabilistic model of images, is a Gaussian distribution
+      over the joint space of pixel intensities but rendered tractable
+      through the imposition of considerable structure reflecting the spatial
+      organization of the pixels.
+    </shown>|<\shown>
+      The <em|linear dynamical system>, used to model time series data for
+      applications such as tracking, is also a joint Gaussian distribution
+      over a potentially large number of observed and latent variables and
+      again is tractable due to the structure imposed on the distribution.
+    </shown>|<\shown>
+      A powerful framework for expressing the form and properties of such
+      complex distributions is that of <em|probabilistic graphical models>.
+    </shown>>
+  </hidden>|<\hidden>
+    <tit|Conditional Gaussian distributions>
+
+    An important property of the multivariate Gaussian distribution is that
+    if two sets of variables are jointly Gaussian, then the conditional
+    distribution of one set conditioned on the other is again Gaussian.
+
+    Similarly, the marginal distribution of either set is also Gaussian.
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|y|)>>|<cell|=>|<cell|<big|int>p<around*|(|x,y|)>\<mathd\>x>>|<row|<cell|p<around*|(|x|)>>|<cell|=>|<cell|<big|int>p<around*|(|x,y|)>\<mathd\>y>>|<row|<cell|p<around*|(|y\|x|)>>|<cell|=>|<cell|p<around*|(|x,y|)>/p<around*|(|x|)>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|<math|\<b-x\>=<matrix|<tformat|<table|<row|<cell|\<b-x\><rsub|a>>>|<row|<cell|\<b-x\><rsub|b>>>>>>>>
+
+    Consider first the case of conditional distributions. Suppose
+    <math|\<b-x\>> is a D-dimensional vector with Gaussian distribution
+
+    <\equation*>
+      \<b-x\>\<sim\>\<cal-N\>(\<b-x\>\|\<b-mu\>,\<Sigma\>)
+    </equation*>
+
+    and that we partition <math|\<b-x\>> into two disjoint subsets
+    <math|\<b-x\><rsub|a>> and <math|\<b-x\><rsub|b>>.
+
+    Take <math|\<b-x\><rsub|a>> to form the first <math|M> components of
+    <math|\<b-x\>>, with <math|\<b-x\><rsub|b>> comprising the remaining
+    <math|D\<minus\>M> components, so that
+
+    <\equation>
+      \<b-x\>=<matrix|<tformat|<table|<row|<cell|\<b-x\><rsub|a>>>|<row|<cell|\<b-x\><rsub|b>>>>>><label|2.65>
+    </equation>
+  </hidden>|<\hidden>
+    <tit|<math|\<b-mu\>,\<Sigma\>>>
+
+    Define corresponding partitions of the mean vector <math|\<b-mu\>> given
+    by
+
+    <\equation*>
+      \ \<b-mu\>= \ <matrix|<tformat|<table|<row|<cell|\<b-mu\><rsub|a>>>|<row|<cell|\<b-mu\><rsub|b>>>>>>
+    </equation*>
+
+    and of the covariance matrix <math|\<Sigma\>> given by
+
+    <\equation>
+      \<Sigma\>=<matrix|<tformat|<table|<row|<cell|\<Sigma\><rsub|a
+      a>>|<cell|\<Sigma\><rsub|a b>>>|<row|<cell|\<Sigma\><rsub|b
+      a>>|<cell|\<Sigma\><rsub|b b>>>>>> \ .<label|2.67>
+    </equation>
+
+    Note that the symmetry <math|\<Sigma\><rsup|T>= \<Sigma\>> of the
+    covariance matrix implies that <math|\<Sigma\><rsub|a a>> and
+    <math|\<Sigma\><rsub|b b>> are symmetric, while <math|\<Sigma\><rsub|b a>
+    = \<Sigma\><rsub|a b><rsup|T>>.
+  </hidden>|<\hidden>
+    <tit|Precision matrix>
+
+    In many situations, it will be convenient to work with the inverse of the
+    covariance matrix
+
+    <\equation*>
+      \<Lambda\> \<equiv\> \<Sigma\><rsup|\<minus\>1>
+    </equation*>
+
+    which is known as the <em|precision matrix>.
+
+    In fact, some properties of Gaussian distributions are most naturally
+    expressed in terms of the covariance, whereas others take a simpler form
+    when viewed in terms of the precision.
+
+    The partitioned form of the precision matrix
+
+    <\equation*>
+      \<Lambda\>= \ <matrix|<tformat|<table|<row|<cell|\<Lambda\><rsub|a
+      a>>|<cell|\<Lambda\><rsub|a b>>>|<row|<cell|\<Lambda\><rsub|b
+      a>>|<cell|\<Lambda\><rsub|b b>>>>>>
+    </equation*>
+
+    corresponding to the partitioning <eqref|2.65> of the vector
+    <math|\<b-x\>>. Because the inverse of a symmetric matrix is also
+    symmetric, we see that <math|\<Lambda\><rsub|a a>> and
+    <math|\<Lambda\><rsub|b b>> are symmetric, while
+    \ <math|\<Lambda\><rsub|a b><rsup|T> = \<Lambda\><rsub|b a>>.
+  </hidden>|<\hidden>
+    <tit|<math|p(\<b-x\>) = p(\<b-x\><rsub|a>, \<b-x\><rsub|b>)>>
+
+    considering the quadratic form in the exponent of the Gaussian
+    distribution
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|>|<cell|>|<cell|-<frac|1|2><around*|(|\<b-x\>-\<b-mu\>|)><rsup|T>\<Sigma\><rsup|-1><around*|(|\<b-x\>-\<b-mu\>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)><rsup|T>\<Lambda\><rsub|a
+      a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>-<frac|1|2><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)><rsup|T>\<Lambda\><rsub|a
+      b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)>>>|<row|<cell|>|<cell|>|<cell|-<frac|1|2><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)><rsup|T>\<Lambda\><rsub|b
+      a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>-<frac|1|2><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)><rsup|T>\<Lambda\><rsub|b
+      b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)><eq-number><label|2.70>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|Completing the square>
+
+    Given a quadratic form defining the exponent terms in a Gaussian
+    distribution, and we need to determine the corresponding mean and
+    covariance.
+
+    Such problems can be solved straightforwardly by noting that the exponent
+    in a general Gaussian distribution <math|\<cal-N\>(\<b-x\>\|\<b-mu\>,\<Sigma\>)>
+    can be written
+
+    <\equation>
+      -<frac|1|2><around*|(|\<b-x\>-\<b-mu\>|)><rsup|T>\<Sigma\><rsup|-1><around*|(|\<b-x\>-\<b-mu\>|)>=-<frac|1|2>\<b-x\><rsup|T>\<Sigma\><rsup|-1>\<b-x\>+\<b-x\><rsup|T>\<Sigma\><rsup|-1>\<b-mu\>+const<label|2.71>
+    </equation>
+
+    where `const' denotes terms which are independent of <math|\<b-x\>>, and
+    we have made use of the symmetry of <math|\<Sigma\>>.
+
+    Thus if we take our general quadratic form and express it in the form
+    given by the right-hand side of Eq. <eqref|2.71>, then we can immediately
+    equate the matrix of coefficients entering the second order term in
+    <math|\<b-x\>> to the inverse covariance \ matrix
+    <math|\<Sigma\><rsup|\<minus\>1>> and the coefficient of the linear term
+    in <math|\<b-x\>> to <math|\<Sigma\><rsup|\<minus\>1>\<b-mu\>>, from
+    which we can obtain <math|\<b-mu\>>.
+  </hidden>|<\hidden>
+    <tit|<math|\<Sigma\><rsub|a\|b>>>
+
+    Consider the functional dependence of Eq. <eqref|2.70> on
+    <math|\<b-x\><rsub|a>> in which <math|\<b-x\><rsub|b>> is regarded as a
+    constant.
+
+    If we pick out all terms that are second order in <math|\<b-x\><rsub|a>>,
+    we have \ 
+
+    <\equation*>
+      -<frac|1|2>\<b-x\><rsub|a><rsup|T>\<Lambda\><rsub|a a>\<b-x\><rsub|a>
+    </equation*>
+
+    from which we can immediately conclude that the covariance (inverse
+    precision) of <math|p<around*|(|\<b-x\><rsub|a>\|\<b-x\><rsub|b>|)>> is
+    given by
+
+    <\equation>
+      \<Sigma\><rsub|a\|b> = \<Lambda\><rsub|a a><rsup|-1>.<label|2.73>
+    </equation>
+  </hidden>|<\hidden>
+    <tit|<math|\<b-mu\><rsub|a\|b >>>
+
+    Now consider all of the terms in Eq. <eqref|2.70> that are linear in
+    <math|\<b-x\><rsub|a>>
+
+    <\equation*>
+      \<b-x\><rsub|a><rsup|T><around*|{|\<Lambda\><rsub|a
+      a>\<b-mu\><rsub|a>-\<Lambda\><rsub|a
+      b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)>|}>
+    </equation*>
+
+    where we have used <math|\<Lambda\><rsub|b
+    a><rsup|T>=\<Lambda\><rsub|ab>>.
+
+    From our discussion of the general form <eqref|2.71>, the coefficient of
+    <math|\<b-x\><rsub|a>> in this expression must equal
+    <math|\<Sigma\><rsub|a\|b><rsup|-1>\<b-mu\><rsub|a\|b>> and hence \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-mu\><rsub|a\|b>>|<cell|=>|<cell|\<Sigma\><rsub|a\|b><around*|{|\<Lambda\><rsub|a
+      a>\<b-mu\><rsub|a>-\<Lambda\><rsub|a
+      b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)>|}>>>|<row|<cell|>|<cell|=>|<cell|\<b-mu\><rsub|a>-\<Lambda\><rsub|a
+      a><rsup|-1>\<Lambda\><rsub|a b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)><eq-number><label|2.75>>>>>
+    </eqnarray*>
+
+    where Eq. <eqref|2.73> is used.
+  </hidden>|<\hidden>
+    <tit|Inverse of a partitioned matrix>
+
+    Express these results in terms of the corresponding partitioned
+    covariance matrix.
+
+    To do this, we make use of the following identity for the inverse of a
+    partitioned matrix
+
+    <\equation>
+      <matrix|<tformat|<table|<row|<cell|A>|<cell|B>>|<row|<cell|C>|<cell|D>>>>><rsup|-1>=<matrix|<tformat|<table|<row|<cell|M>|<cell|-M
+      B D<rsup|<rsup|-1>>>>|<row|<cell|-D<rsup|-1>C
+      M>|<cell|D<rsup|-1>+D<rsup|-1>C M B D<rsup|-1>>>>>><label|2.76>
+    </equation>
+
+    where
+
+    <\equation*>
+      M=<around*|(|A-B D<rsup|-1>C|)><rsup|-1>
+    </equation*>
+
+    The quantity <math|M<rsup|\<minus\>1>> is known as the <em|Schur
+    complement> of the matrix on the left-hand side of Eq. <eqref|2.76> with
+    respect to the submatrix <math|D>.
+  </hidden>|<\hidden>
+    <tit|Partitioned precision>
+
+    \;
+
+    <\equation>
+      <matrix|<tformat|<table|<row|<cell|\<Sigma\><rsub|a
+      a>>|<cell|\<Sigma\><rsub|a b>>>|<row|<cell|\<Sigma\><rsub|b
+      a>>|<cell|\<Sigma\><rsub|b b>>>>>><rsup|-1>=<matrix|<tformat|<table|<row|<cell|\<Lambda\><rsub|a
+      a>>|<cell|\<Lambda\><rsub|a b>>>|<row|<cell|\<Lambda\><rsub|b
+      a>>|<cell|\<Lambda\><rsub|b b>>>>>><label|2.78>
+    </equation>
+
+    make use of Eq. <eqref|2.76>,
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<Lambda\><rsub|a
+      a>>|<cell|=>|<cell|<around*|(|\<Sigma\><rsub|a a>-\<Sigma\><rsub|a
+      b>\<Sigma\><rsub|b b><rsup|-1>\<Sigma\><rsub|b
+      a>|)><rsup|-1>>>|<row|<cell|\<Lambda\><rsub|a
+      b>>|<cell|=>|<cell|-<around*|(|\<Sigma\><rsub|a a>-\<Sigma\><rsub|a
+      b>\<Sigma\><rsub|b b><rsup|-1>\<Sigma\><rsub|b
+      a>|)><rsup|-1>\<Sigma\><rsub|a b>\<Sigma\><rsub|b b><rsup|-1>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|<math|\<b-mu\><rsub|a\|b>,\<Sigma\><rsub|a\|b><around*|(|\<Sigma\>|)>>>
+
+    Obtain the following expressions for the mean and covariance of the
+    conditional distribution\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-mu\><rsub|a\|b>>|<cell|=>|<cell|\<b-mu\><rsub|a>+\<Sigma\><rsub|a
+      b>\<Sigma\><rsub|b b><rsup|-1><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)><eq-number><label|2.81>>>|<row|<cell|\<Sigma\><rsub|a\|b>>|<cell|=>|<cell|\<Sigma\><rsub|a
+      a>-\<Sigma\><rsub|a b>\<Sigma\><rsub|b b><rsup|-1>\<Sigma\><rsub|b
+      a><eq-number><label|2.82>>>>>
+    </eqnarray*>
+
+    Comparing Eq. <eqref|2.73> and <eqref|2.82>, we see that the conditional
+    distribution <math|p<around*|(|\<b-x\><rsub|a>\|\<b-x\><rsub|b>|)>> takes
+    a simpler form when expressed in terms of the partitioned precision
+    matrix than when it is expressed in terms of the partitioned covariance
+    matrix.
+
+    Note that the mean of the conditional distribution
+    \ <math|p<around*|(|\<b-x\><rsub|a>\|\<b-x\><rsub|b>|)>>, given by Eq.
+    <eqref|2.81>, is a linear function of <math|\<b-x\><rsub|b>> and that the
+    covariance, given by Eq. <eqref|2.82>, is independent of
+    <math|\<b-x\><rsub|b>>. This represents an example of a
+    <em|linear-Gaussian model>.
+  </hidden>|<\hidden>
+    <tit|Marginal Gaussian distributions>
+
+    <\equation*>
+      p<around*|(|\<b-x\><rsub|a>|)>=<big|int>p<around*|(|\<b-x\><rsub|a>,\<b-x\><rsub|b>|)>\<mathd\>\<b-x\><rsub|b>
+    </equation*>
+
+    The quadratic form for the joint distribution can be expressed, using the
+    partitioned precision matrix, in the form <eqref|2.70>.
+
+    Because our goal is to integrate out <math|\<b-x\><rsub|b>>, this is most
+    easily achieved by first considering the terms involving
+    <math|\<b-x\><rsub|b>> and then completing the square in order to
+    facilitate integration.
+  </hidden>|<\hidden>
+    From Eq. <eqref|2.70>, Picking out just those terms that involve
+    <math|\<b-x\><rsub|b>>,
+
+    <\eqnarray*>
+      <tformat|<cwith|1|2|3|3|color|black>|<table|<row|<cell|>|<cell|>|<cell|-<frac|1|2><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)><rsup|T>\<Lambda\><rsub|b
+      b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)>-<frac|1|2><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)><rsup|T>\<Lambda\><rsub|a
+      b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)>-<frac|1|2><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)><rsup|T>\<Lambda\><rsub|b
+      a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>+\<b-v\>|)><rsup|T>\<Lambda\><rsub|b
+      b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>+\<b-v\>|)>+<frac|1|2>\<b-v\><rsup|T>\<Lambda\><rsub|b
+      b>\<b-v\><eq-number><label|2.84>>>|<row|<cell|\<b-v\>>|<cell|=>|<cell|\<Lambda\><rsub|b
+      b><rsup|-1>\<Lambda\><rsub|b a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)><eq-number><label|2.85>>>>>
+    </eqnarray*>
+
+    By completing the square with respect to <math|\<b-x\><rsub|b>>, we can
+    integrate out <math|\<b-x\><rsub|b>> and the only term remaining from the
+    contributions on the left-hand side of Eq. <eqref|2.84> that depends on
+    <math|\<b-x\><rsub|a>> is the last term on the right-hand side of Eq.
+    <eqref|2.84>.
+
+    <\equation*>
+      <frac|1|2>\<b-v\><rsup|T>\<Lambda\><rsub|b
+      b>\<b-v\>=<frac|1|2><around*|{|\<Lambda\><rsub|b
+      b><rsup|-1>\<Lambda\><rsub|b a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>|}><rsup|T>\<Lambda\><rsub|b
+      b><around*|{|\<Lambda\><rsub|b b><rsup|-1>\<Lambda\><rsub|b
+      a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>|}>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    Combining this term with the remaining terms from Eq. <eqref|2.70> that
+    depend on <math|\<b-x\><rsub|a>>, we obtain
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|>|<cell|>|<cell|<frac|1|2><around*|{|\<Lambda\><rsub|b
+      b><rsup|-1>\<Lambda\><rsub|b a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>|}><rsup|T>\<Lambda\><rsub|b
+      b><around*|{|\<Lambda\><rsub|b b><rsup|-1>\<Lambda\><rsub|b
+      a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>|}>-<frac|1|2><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)><rsup|T>\<Lambda\><rsub|a
+      a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|2><around*|{|\<Lambda\><rsub|b
+      a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>|}><rsup|T>\<Lambda\><rsub|b
+      b><rsup|-1><around*|{|\<Lambda\><rsub|b
+      a><around*|(|\<b-x\><rsub|a>-\<b-mu\><rsub|a>|)>|}>-<frac|1|2>\<b-x\><rsub|a><rsup|T>\<Lambda\><rsub|a
+      a>\<b-x\><rsub|a>+\<b-x\><rsub|a><rsup|T>\<Lambda\><rsub|a
+      a>\<b-mu\><rsub|a>+const>>|<row|<cell|>|<cell|=>|<cell|<frac|1|2>\<b-x\><rsub|a><rsup|T>\<Lambda\><rsub|a
+      b>\<Lambda\><rsub|b b><rsup|-1>\<Lambda\><rsub|b
+      a>\<b-x\><rsub|a>-\<b-x\><rsub|a><rsup|T>\<Lambda\><rsub|a
+      b>\<Lambda\><rsub|b b><rsup|-1>\<Lambda\><rsub|b
+      a>\<b-mu\><rsub|a>-<frac|1|2>\<b-x\><rsub|a><rsup|T>\<Lambda\><rsub|a
+      a>\<b-x\><rsub|a>+\<b-x\><rsub|a><rsup|T>\<Lambda\><rsub|a
+      a>\<b-mu\><rsub|a>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2>\<b-x\><rsub|a><rsup|T><around*|(|\<Lambda\><rsub|a
+      a>-\<Lambda\><rsub|a b>\<Lambda\><rsub|b b><rsup|-1>\<Lambda\><rsub|b
+      a>|)>\<b-x\><rsub|a>+\<b-x\><rsub|a><rsup|T><around*|(|\<Lambda\><rsub|a
+      a>-\<Lambda\><rsub|a b>\<Lambda\><rsub|b b><rsup|-1>\<Lambda\><rsub|b
+      a>|)>\<b-mu\><rsub|a>+const>>>>
+    </eqnarray*>
+
+    where `const' denotes quantities independent of <math|\<b-x\><rsub|a>>.
+  </hidden>|<\hidden>
+    <tit|<math|\<bbb-E\><around*|[|\<b-x\><rsub|a>|]>,cov<around*|[|\<b-x\><rsub|a>|]><around*|(|\<Lambda\>|)>>>
+
+    \ Again, by comparison with Eq. <eqref|2.71>, we see that the covariance
+    of the marginal distribution of <math|p(\<b-x\><rsub|a>)> is given by
+
+    <\equation>
+      \<Sigma\><rsub|a> = (\<Lambda\><rsub|a a> \<minus\>
+      \<Lambda\><rsub|ab>\<Lambda\><rsub|b b><rsup|-1> \<Lambda\><rsub|b
+      a>)<rsup|\<minus\>1><label|2.88>
+    </equation>
+
+    Similarly, the mean is given by
+
+    <\equation*>
+      \<Sigma\><rsub|a><around*|(|\<Lambda\><rsub|a a>-\<Lambda\><rsub|a
+      b>\<Lambda\><rsub|b b><rsup|-1>\<Lambda\><rsub|b
+      a>|)>\<b-mu\><rsub|a>=\<b-mu\><rsub|a>
+    </equation*>
+
+    where we have used Eq. <eqref|2.88>.
+  </hidden>|<\hidden>
+    <tit|Use covariance matrix <math|\<Sigma\>>>
+
+    rewrite this in terms of the corresponding partitioning of the covariance
+    matrix given by Eq. <eqref|2.67>, as we did for the conditional
+    distribution.
+
+    These partitioned matrices are related by
+
+    <\equation*>
+      <matrix|<tformat|<table|<row|<cell|\<Lambda\><rsub|a
+      a>>|<cell|\<Lambda\><rsub|a b>>>|<row|<cell|\<Lambda\><rsub|b
+      a>>|<cell|\<Lambda\><rsub|b b>>>>>><rsup|-1>=<matrix|<tformat|<table|<row|<cell|\<Sigma\><rsub|a
+      a>>|<cell|\<Sigma\><rsub|a b>>>|<row|<cell|\<Sigma\><rsub|b
+      a>>|<cell|\<Sigma\><rsub|b b>>>>>>
+    </equation*>
+
+    Making use of Eq. <eqref|2.76>, then
+
+    <\equation*>
+      (\<Lambda\><rsub|a a> \<minus\> \<Lambda\><rsub|a b>\<Lambda\><rsub|b
+      b><rsup|-1>\<Lambda\><rsub|b a> \ )<rsup|\<minus\>1> = \<Sigma\><rsub|a
+      a>.
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|<math|\<bbb-E\><around*|[|\<b-x\><rsub|a>|]>,cov<around*|[|\<b-x\><rsub|a>|]><around*|(|\<Sigma\>|)>>>
+
+    Thus we obtain the intuitively satisfying result that the marginal
+    distribution <math|p(\<b-x\><rsub|a><rsub|>)> has mean and covariance
+    given by \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-x\><rsub|a>|]>>|<cell|=>|<cell|\<b-mu\><rsub|a><eq-number><label|2.92>>>|<row|<cell|cov<around*|[|\<b-x\><rsub|a>|]>>|<cell|=>|<cell|\<Sigma\><rsub|a
+      a><eq-number><label|2.93>>>>>
+    </eqnarray*>
+
+    We see that for a marginal distribution, the mean and covariance are most
+    simply expressed in terms of the partitioned covariance matrix, in
+    contrast to the conditional distribution for which the partitioned
+    precision matrix gives rise to simpler expressions.
+  </hidden>|<\hidden>
+    <tit|Partitioned Gaussians summarize>
+
+    Given a joint Gaussian distribution <math|\<cal-N\><around*|(|\<b-x\>\|\<b-mu\>,\<Sigma\>|)>>
+    with <math|\<Lambda\> \<equiv\> \<Sigma\><rsup|\<minus\>1>> and
+
+    <\equation*>
+      \<b-x\>=<matrix|<tformat|<table|<row|<cell|\<b-x\><rsub|a>>>|<row|<cell|\<b-x\><rsub|b>>>>>>,\<b-mu\>=<matrix|<tformat|<table|<row|<cell|\<b-mu\><rsub|a>>>|<row|<cell|\<b-mu\><rsub|b>>>>>>,\<Sigma\>=<matrix|<tformat|<table|<row|<cell|\<Sigma\><rsub|aa>>|<cell|\<Sigma\><rsub|a
+      b>>>|<row|<cell|\<Sigma\><rsub|b a>>|<cell|\<Sigma\><rsub|b
+      b>>>>>>,\<Lambda\>=<matrix|<tformat|<table|<row|<cell|\<Lambda\><rsub|a
+      a>>|<cell|\<Lambda\><rsub|a b>>>|<row|<cell|\<Lambda\><rsub|b
+      a>>|<cell|\<Lambda\><rsub|b b>>>>>>
+    </equation*>
+
+    Conditional distribution:
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-x\><rsub|a>\|\<b-x\><rsub|b>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\>\|\<b-mu\><rsub|a\|b>,\<Lambda\><rsub|a
+      a><rsup|-1>|)>>>|<row|<cell|\<b-mu\><rsub|a\|b>>|<cell|=>|<cell|\<b-mu\><rsub|a>-\<Lambda\><rsub|a
+      a><rsup|-1>\<Lambda\><rsub|a b><around*|(|\<b-x\><rsub|b>-\<b-mu\><rsub|b>|)>>>>>
+    </eqnarray*>
+
+    Marginal distribution:
+
+    <\equation*>
+      p<around*|(|\<b-x\><rsub|a>|)>=\<cal-N\><around*|(|\<b-x\><rsub|a>\|\<b-mu\><rsub|a>,\<Sigma\><rsub|a
+      a>|)>
+    </equation*>
+  </hidden>|<\hidden>
+    <small-figure|<image|image/fig_2_9_conditional_marginal.png|.9par|||>|The
+    plot on the left shows the contours of a Gaussian distribution
+    <math|p(x<rsub|a>, x<rsub|b>)> over two variables, and the plot on the
+    right shows the marginal distribution <math|p(x<rsub|a>)> (blue curve)
+    and the conditional distribution <math|p(x<rsub|a>\|x<rsub|b>)> for
+    <math|x<rsub|b> = 0.7> (red curve).>
+  </hidden>|<\hidden>
+    <tit|Bayes' theorem for Gaussian variables>
+
+    In a Gaussian <math|p(\<b-x\>)> partitioned the vector <math|\<b-x\>>
+    into two subvectors <math|\<b-x\>= (\<b-x\><rsub|a><rsup|T>,
+    \<b-x\><rsub|b><rsup|T>)<rsup|T>> and then found expressions for the
+    conditional distribution <math|p<around*|(|\<b-x\><rsub|a>\|\<b-x\><rsub|b>|)>>
+    and the marginal distribution <math|p<around*|(|\<b-x\><rsub|a>|)>>.
+
+    The mean of the conditional distribution
+    <math|p<around*|(|\<b-x\><rsub|a>\|\<b-x\><rsub|b>|)>> was a linear
+    function of <math|\<b-x\><rsub|b>>.
+
+    Consider a Gaussian marginal distribution <math|p(\<b-x\>)> and a
+    Gaussian conditional distribution
+
+    <\equation*>
+      p<around*|(|\<b-y\>\|\<b-x\>|)>=\<cal-N\><around*|(|\<b-mu\><around*|(|\<b-x\>|)>,\<Sigma\>|)>
+    </equation*>
+
+    which has a mean that is a linear function of <math|\<b-x\>>, and a
+    covariance which is independent of <math|\<b-x\>>. This is an example of
+    a <em|linear Gaussian model> (Roweis and Ghahramani, 1999).
+
+    We wish to find the marginal distribution <math|p(\<b-y\>)> and the
+    conditional distribution <math|p<around*|(|\<b-x\>\|\<b-y\>|)>>.
+  </hidden>|<\hidden>
+    <tit|marginal and conditional distributions>
+
+    We shall take the marginal and conditional distributions to be
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-x\>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\>\|\<b-mu\>,\<Lambda\><rsup|-1>|)>>>|<row|<cell|p<around*|(|\<b-y\>\|\<b-x\>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-y\>\|\<b-A\>\<b-x\>+\<b-b\>,L<rsup|-1>|)>>>>>
+    </eqnarray*>
+
+    where <math|\<b-mu\>>, <math|A>, and <math|\<b-b\>> are parameters
+    governing the means, and <math|\<Lambda\>> and <math|L> are precision
+    matrices.
+
+    If <math|\<b-x\>> has dimensionality <math|M> and <math|\<b-y\>> has
+    dimensionality <math|D>, then the matrix <math|A> has size
+    <math|D\<times\>M>.
+  </hidden>|<\hidden>
+    <tit|log of the joint distribution>
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln p<around*|(|\<b-x\>,\<b-y\>|)>>|<cell|=>|<cell|ln
+      p<around*|(|\<b-x\>|)>+ln p<around*|(|\<b-y\>\|\<b-x\>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2><around*|(|\<b-x\>-\<b-mu\>|)><rsup|T>\<Lambda\><around*|(|\<b-x\>-\<b-mu\>|)>-<frac|1|2><around*|(|\<b-y\>-A\<b-x\>-\<b-b\>|)><rsup|T>L<around*|(|\<b-y\>-A\<b-x\>-\<b-b\>|)>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2><matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>><rsup|T><matrix|<tformat|<table|<row|<cell|\<Lambda\>+A<rsup|T>L
+      A>|<cell|-A<rsup|T>L>>|<row|<cell|-L
+      A>|<cell|L>>>>><matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>>>>|<row|<cell|>|<cell|>|<cell|+<matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>><rsup|T><matrix|<tformat|<table|<row|<cell|\<Lambda\>\<b-mu\>+A<rsup|T>L\<b-b\>>>|<row|<cell|L\<b-b\>>>>>>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|1|2><around*|[|<matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>>-\<bbb-E\><around*|[|<matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>>|]>|]><rsup|T>cov<around*|[|<matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>>|]><rsup|-1><around*|[|<matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>>-\<bbb-E\><around*|[|<matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>>|]>|]>>>|<row|<cell|>|<cell|>|<cell|+const>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|<math|cov<around*|[|\<cdummy\>|]>,\<bbb-E\><around*|[|\<cdummy\>|]>>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|cov<around*|[|<matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>>|]>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<Lambda\>+A<rsup|T>L
+      A>|<cell|-A<rsup|T>L>>|<row|<cell|-L
+      A>|<cell|L>>>>><rsup|-1>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<Lambda\><rsup|-1>>|<cell|\<Lambda\><rsup|-1>A<rsup|T>>>|<row|<cell|A\<Lambda\><rsup|-1>>|<cell|L<rsup|-1>+A\<Lambda\><rsup|-1>A<rsup|T>>>>>><eq-number><label|2.105>>>|<row|<cell|\<bbb-E\><around*|[|<matrix|<tformat|<table|<row|<cell|\<b-x\>>>|<row|<cell|\<b-y\>>>>>>|]>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<Lambda\>+A<rsup|T>L
+      A>|<cell|-A<rsup|T>L>>|<row|<cell|-L
+      A>|<cell|L>>>>><rsup|-1><matrix|<tformat|<table|<row|<cell|\<Lambda\>\<b-mu\>-A<rsup|T>L\<b-b\>>>|<row|<cell|L\<b-b\>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-mu\>>>|<row|<cell|A\<b-mu\>+\<b-b\>>>>>><eq-number><label|2.108>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|<math|\<bbb-E\><around*|[|\<b-y\>|]>,cov<around*|[|\<b-y\>|]>>>
+
+    Next find an expression for the marginal distribution <math|p(\<b-y\>)>
+    in which we have marginalized over <math|\<b-x\>>.
+
+    The marginal distribution over a subset of the components of a Gaussian
+    random vector takes a particularly simple form when expressed in terms of
+    the partitioned covariance matrix.
+
+    Its mean and \ covariance are given by Eq. <eqref|2.92> and <eqref|2.93>,
+    respectively.
+
+    Making use of Eq. <eqref|2.105> and <eqref|2.108> we see that the mean
+    and covariance of the marginal distribution p(y) are given by \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-y\>|]>>|<cell|=>|<cell|A\<b-mu\>+\<b-b\>>>|<row|<cell|cov<around*|[|\<b-y\>|]>>|<cell|=>|<cell|L<rsup|-1>+A\<Lambda\><rsup|-1>A<rsup|T>>>>>
+    </eqnarray*>
+
+    When <math|A=I>. It reduces to the convolution of two Gaussians.
+
+    The mean is the sum of the mean of the two Gaussians, and the covariance
+    is the sum of their covariances.
+  </hidden>|<\hidden>
+    <tit|<math|\<bbb-E\><around*|[|\<b-x\>\|\<b-y\>|]>,cov<around*|[|\<b-x\>\|\<b-y\>|]>>>
+
+    Finally seek an expression for the conditional <math|p(x\|y)>.
+
+    Recall that the results for the conditional distribution are most easily
+    expressed in terms of the partitioned precision matrix, using Eq.
+    <eqref|2.73> and <eqref|2.75>.
+
+    Applying these results to Eq. <eqref|2.105> and \ <eqref|2.108> we see
+    that the conditional distribution <math|p(x\|y)> has mean and covariance
+    given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-x\>\|\<b-y\>|]>>|<cell|=>|<cell|<around*|(|\<Lambda\>+A<rsup|T>L
+      A|)><rsup|-1><around*|{|A<rsup|T>L<around*|(|\<b-y\>-\<b-b\>|)>+L\<b-mu\>|}>>>|<row|<cell|cov<around*|[|\<b-x\>\|\<b-y\>|]>>|<cell|=>|<cell|<around*|(|\<Lambda\>+A<rsup|T>L
+      A|)><rsup|-1>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|Posterior>
+
+    The evaluation of this conditional can be seen as an example of Bayes'
+    theorem.
+
+    We can interpret the distribution <math|p(x)> as a prior distribution
+    over x.
+
+    If the variable y is observed, then the conditional distribution
+    <math|p(x\|y)> represents the corresponding posterior distribution over
+    <math|x>.
+
+    Having found the marginal and conditional distributions, we effectively
+    expressed the joint distribution
+
+    <\equation*>
+      p(x,y) = p(x)p(y\|x)
+    </equation*>
+
+    in the form
+
+    <\equation*>
+      p(x\|y)p(y).
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|Marginal and conditional Gaussians sumarize>
+
+    Given a marginal Gaussian distribution for x and a conditional Gaussian
+    distribution for <math|\<b-y\>> given <math|\<b-x\>> in the form \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-x\>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\>\|\<mu\>,\<Lambda\><rsup|-1>|)>>>|<row|<cell|p<around*|(|\<b-y\>\|\<b-x\>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-y\>\|A\<b-x\>+b|)>>>>>
+    </eqnarray*>
+
+    \ \ the marginal distribution of <math|\<b-y\>> and the conditional
+    distribution of <math|\<b-x\>> given <math|\<b-y\>> are given by \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-y\>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-y\>\|A\<b-mu\>+\<b-b\>,L<rsup|-1>+A\<Lambda\><rsup|-1>A<rsup|T>|)>>>|<row|<cell|p<around*|(|\<b-x\>\|\<b-y\>|)>>|<cell|=>|<cell|\<cal-N\><around*|(|\<b-x\>\|\<Sigma\><around*|{|A<rsup|T>L<around*|(|\<b-y\>-\<b-b\>|)>+\<Lambda\>\<b-mu\>|}>,\<Sigma\>|)>>>>>
+    </eqnarray*>
+
+    where
+
+    <\equation*>
+      \<Sigma\>=<around*|(|\<Lambda\>+A<rsup|T>L A|)><rsup|-1>
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|Maximum likelihood for the Gaussian>
+
+    Given a data set <math|X = (\<b-x\><rsub|1>, . . . , \<b-x\><rsub|N>
+    )<rsup|T>> in which the observations <math|{\<b-x\><rsub|n>}> are assumed
+    to be drawn independently from a multivariate Gaussian distribution, we
+    can estimate the parameters of the distribution by maximum likelihood.
+    The log likelihood function is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|>|<cell|>|<cell|ln
+      p<around*|(|X\|\<b-mu\>,\<Sigma\>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|N
+      D|2>ln<around*|(|2\<pi\>|)>-<frac|N|2>ln<around*|\||\<Sigma\>|\|>-<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)><rsup|T>\<Sigma\><rsup|-1><around*|(|\<b-x\><rsub|n>-\<b-mu\>|)>>>|<row|<cell|>|<cell|=>|<cell|-<frac|N|2>ln<around*|\||\<Sigma\>|\|>-<frac|1|2><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n><rsup|T>\<Sigma\><rsup|-1>\<b-x\><rsub|n>-<frac|1|2><big|sum><rsub|n=1><rsup|N>\<b-mu\><rsup|T>\<Sigma\><rsup|-1>\<b-mu\>+<big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n><rsup|T>\<Sigma\><rsup|-1>\<b-mu\>+const>>|<row|<cell|>|<cell|=>|<cell|-<frac|N|2>ln<around*|\||\<Sigma\>|\|>-<frac|1|2>tr<around*|{|<around*|[|<big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>\<b-x\><rsub|n><rsup|T>|]>\<Sigma\><rsup|-1>|}>-<frac|1|2><big|sum><rsub|n=1><rsup|N>\<b-mu\><rsup|T>\<Sigma\><rsup|-1>\<b-mu\>+<around*|[|<big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n><rsup|T>|]>\<Sigma\><rsup|-1>\<b-mu\>+const>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|Sufficient statistics>
+
+    The likelihood function depends on the data set only through the two
+    quantities\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell| <big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>,>|<cell|>|<cell|<big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>\<b-x\><rsub|n><rsup|T>>>>>
+    </eqnarray*>
+
+    \ \ These are known as the <em|sufficient statistics> for the Gaussian
+    distribution.
+  </hidden>|<\hidden>
+    <tit|<math|\<b-mu\><rsub|ML>>>
+
+    The derivative of the log likelihood with respect to <math|\<b-mu\>> is
+    given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>|\<partial\>\<b-mu\>>ln
+      p<around*|(|X\|\<b-mu\>,\<Sigma\>|)>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>\<Sigma\><rsup|-1><around*|(|\<b-x\><rsub|n>-\<mu\>|)>=0>>|<row|<cell|\<b-mu\><rsub|ML>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n><label|2.121><eq-number>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|<math|\<Sigma\><rsub|ML>>>
+
+    The maximization with respect to \<Sigma\> is rather more involved. The
+    simplest approach is to ignore the symmetry constraint and show that the
+    resulting solution is symmetric as required.
+
+    Alternative derivations of this result, which impose the symmetry and
+    positive definiteness constraints explicitly, can be found in Magnus and
+    Neudecker (1999).
+
+    The result is as expected and takes the form \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>|\<partial\>\<Sigma\><rsup|-1>>ln
+      p<around*|(|X\|\<b-mu\>,\<Sigma\>|)>>|<cell|=>|<cell|<frac|N|2>\<Sigma\><rsup|>-<frac|1|2><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>\<b-x\><rsub|n><rsup|T>-<frac|1|2><big|sum><rsub|n=1><rsup|N>\<b-mu\>\<b-mu\><rsup|T>+<frac|1|2><big|sum><rsub|n=1><rsup|N>\<b-mu\>\<b-x\><rsub|n><rsup|T>+<frac|1|2><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>\<b-mu\><rsup|T>=0>>|<row|<cell|\<Sigma\><rsub|ML>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|ML>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|ML>|)><rsup|T>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    If we evaluate the expectations of the maximum likelihood solutions under
+    the true distribution, we obtain the following results\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-mu\><rsub|ML>|]>>|<cell|=>|<cell|\<b-mu\>>>|<row|<cell|\<bbb-E\><around*|[|\<Sigma\><rsub|ML>|]>>|<cell|=>|<cell|<frac|N-1|N>\<Sigma\>>>>>
+    </eqnarray*>
+
+    We see that the expectation of the maximum likelihood estimate for the
+    mean is equal to the true mean. However, the maximum likelihood estimate
+    for the covariance has an expectation that is less than the true value,
+    and hence it is biased. We can correct this bias by defining a different
+    estimator <math|<wide|\<Sigma\>|~>> given by\ 
+
+    <\equation*>
+      <wide|\<Sigma\>|~>=<frac|1|N-1><big|sum><rsub|n=1><rsup|N><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|ML>|)><around*|(|\<b-x\><rsub|n>-\<b-mu\><rsub|ML>|)><rsup|T>
+    </equation*>
+
+    The expectation of <math|<wide|\<Sigma\>|~>> is equal to
+    <math|\<Sigma\>>.
+  </hidden>|<\hidden>
+    <tit|Sequential estimation>
+
+    Our discussion of the maximum likelihood solution for the parameters of a
+    Gaussian distribution provides a convenient opportunity to give a more
+    general discussion of the topic of sequential estimation for maximum
+    likelihood.
+
+    Sequential methods allow data points to be processed one at a time and
+    then discarded and are important for on-line applications, and also where
+    large data sets are involved so that batch processing of all data points
+    at once is infeasible.
+
+    \;
+  </hidden>|<\hidden>
+    Consider the result <eqref|2.121> for the maximum likelihood estimator of
+    the mean <math|\<b-mu\><rsub|ML>>, which we will denote by
+    <math|\<b-mu\><rsup|(N) \ ><rsub|ML>> when it is based on <math|N>
+    observations.
+
+    If we dissect out the contribution from the final data point
+    <math|\<b-x\><rsub|N>> , we obtain
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-mu\><rsup|<around*|(|N|)>><rsub|ML>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N-1>\<b-x\><rsub|n>+<frac|1|N>\<b-x\><rsub|N>>>|<row|<cell|>|<cell|=>|<cell|<frac|N-1|N>\<b-mu\><rsub|ML><rsup|<around*|(|N-1|)>>+<frac|1|N>\<b-x\><rsub|N>>>|<row|<cell|>|<cell|=>|<cell|\<b-mu\><rsub|ML><rsup|<around*|(|N-1|)>>+<frac|1|N><around*|(|\<b-x\><rsub|N>-\<b-mu\><rsub|ML><rsup|<around*|(|N-1|)>>|)><eq-number><label|2.126>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|Robbins-Monro algorithm>
+
+    Consider a pair of random variables <math|\<theta\>> and <math|z>
+    governed by a joint distribution <math|p(z, \<theta\>)>.
+
+    The conditional expectation of <math|z> given <math|\<theta\>> defines a
+    deterministic function <math|f(\<theta\>)> that is given by
+
+    <\equation*>
+      f (\<theta\>) \<equiv\> \<bbb-E\>[z\|\<theta\>] = \ <big|int>z
+      p(z\|\<theta\>)\<mathd\>z
+    </equation*>
+
+    and is illustrated schematically in Figure <reference|fig2.10>.\ 
+
+    Functions defined in this way are called <em|regression functions>.
+  </hidden>|<\hidden>
+    <small-figure|<image|image/fig_2_10_Robbins_Monro_algorithm.png|.5par|||>|<label|fig2.10>A
+    schematic illustration of two correlated random variables <math|z> and
+    <math|\<theta\>>, together with the regression function
+    <math|f(\<theta\>)> given by the conditional expectation
+    <math|\<bbb-E\>[z\|\<theta\>]>. The RobbinsMonro algorithm provides a
+    general sequential procedure for finding the root <math|\<theta\>> of
+    such functions.>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    Our goal is to find the root <math|\<theta\><rsup|\<ast\>>> at which
+    f<math|(\<theta\><rsup|\<ast\>>)=0>.
+
+    If we had a large data set of observations of <math|z> and
+    <math|\<theta\>>, then we could model the regression function directly
+    and then obtain an estimate of its root.
+
+    Suppose, however, that we observe values of <math|z> one at a time and we
+    wish to find a corresponding sequential estimation scheme for
+    <math|\<theta\><rsup|\<ast\>>>.
+
+    The general procedure for solving such problems was given by Robbins and
+    Monro (1951).
+
+    \;
+  </hidden>|<\hidden>
+    We shall assume that the conditional variance of <math|z> is finite so
+    that
+
+    <\equation*>
+      \<bbb-E\><around*|[|<around*|(|z-f|)><rsup|2>\|\<theta\>|]>\<less\>\<infty\>
+    </equation*>
+
+    Consider the case where <math|f (\<theta\>) \<gtr\> 0> for<math|
+    \<theta\> \<gtr\> \<theta\>> and<math| f (\<theta\>) \<less\> 0> for
+    <math|\<theta\> \<less\> \<theta\>> , as is the case in Figure
+    <reference|fig2.10>.
+
+    The Robbins-Monro procedure then defines a sequence of successive
+    estimates of the root <math|\<theta\><rsup|\<ast\>>> given by
+
+    <\equation>
+      \<theta\><rsup|<around*|(|N|)>>=\<theta\><rsup|*<around*|(|N-1|)>>-a<rsub|N-1>z<around*|(|\<theta\><rsup|<around*|(|N-1|)>>|)><label|2.129>
+    </equation>
+
+    where <math|z(\<theta\><rsup|(N)>)> is an observed value of <math|z> when
+    <math|\<theta\>> takes the value <math|\<theta\><rsup|(N)>>.\ 
+  </hidden>|<\hidden>
+    The coefficients <math|{a<rsub|N> }> represent a sequence of positive
+    numbers that satisfy the conditions
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|lim<rsub|N\<rightarrow\>\<infty\>>a<rsub|N>>|<cell|=>|<cell|0<eq-number><label|2.130>>>|<row|<cell|<big|sum><rsub|N=1><rsup|\<infty\>>a<rsub|N>>|<cell|=>|<cell|\<infty\><eq-number><label|2.131>>>|<row|<cell|<big|sum><rsub|N=1><rsup|N>a<rsub|N><rsup|2>>|<cell|\<less\>>|<cell|\<infty\><eq-number><label|2.132>>>>>
+    </eqnarray*>
+
+    <\folded>
+      It can then be shown (Robbins and Monro, 1951; Fukunaga, 1990) that the
+      sequence of estimates given by Eq. <eqref|2.129> does indeed converge
+      to the root with probability one.
+    <|folded>
+      Note that the first condition <eqref|2.130> ensures that the successive
+      corrections decrease in magnitude so that the process can converge to a
+      limiting value. The second condition <eqref|2.131> is required to
+      ensure that the algorithm does not converge short of the root, and the
+      third condition <eqref|2.132> is needed to ensure that the accumulated
+      noise has finite variance and hence does not spoil convergence.
+    </folded>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|A general maximum likelihood problem>
+
+    consider how a general maximum likelihood problem can be solved
+    sequentially using the Robbins-Monro algorithm.
+
+    By definition, the maximum likelihood solution <math|\<theta\><rsub|ML>>
+    is a stationary point of the log likelihood function and hence satisfies
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<around*|\<nobracket\>|<frac|\<partial\>|\<partial\>\<theta\>><around*|{|<frac|1|N><big|sum><rsub|n=1><rsup|N>ln
+      p<around*|(|x<rsub|n>\|\<theta\>|)>|}>|\|><rsub|\<theta\><rsub|ML>>>|<cell|=>|<cell|0>>|<row|<cell|lim<rsub|N\<rightarrow\>\<infty\>><frac|1|N><big|sum><rsub|n=1><rsup|N><frac|\<partial\>|\<partial\>\<theta\>>ln
+      p<around*|(|x<rsub|n>\|\<theta\>|)>>|<cell|=>|<cell|\<bbb-E\><rsub|x><around*|[|<frac|\<partial\>|\<partial\>\<theta\>>ln
+      p<around*|(|x<rsub|n>\|\<theta\>|)>|]>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    Finding the maximum likelihood solution corresponds to finding the root
+    of a regression function. Apply the Robbins-Monro procedure, which now
+    takes the form
+
+    <\equation>
+      \<theta\><rsup|<around*|(|N|)>>=\<theta\><rsup|<around*|(|N-1|)>>+a<rsub|N-1><frac|\<partial\>|\<partial\>\<theta\><rsup|<around*|(|N-1|)>>>ln
+      p<around*|(|x<rsub|N>\|\<theta\><rsup|<around*|(|N-1|)>>|)><label|2.135>
+    </equation>
+
+    Note:
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>|\<partial\>\<theta\><rsup|<around*|(|N-1|)>>>ln
+      p<around*|(|x<rsub|N>\|\<theta\><rsup|<around*|(|N-1|)>>|)>>|<cell|\<gtr\>>|<cell|0<space|3em>,\<theta\><rsup|<around*|(|N-1|)>>\<less\>\<theta\><rsup|\<ast\>>>>|<row|<cell|<frac|\<partial\>|\<partial\>\<theta\><rsup|<around*|(|N-1|)>>>ln
+      p<around*|(|x<rsub|N>\|\<theta\><rsup|<around*|(|N-1|)>>|)>>|<cell|\<less\>>|<cell|0<space|3em>,\<theta\><rsup|<around*|(|N-1|)>>\<gtr\>\<theta\><rsup|\<ast\>>>>>>
+    </eqnarray*>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|>|<cell|>|<cell|>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    As a specific example, we consider once again the sequential estimation
+    of the mean of a Gaussian distribution, in which case the parameter
+    <math|\<theta\><rsup|(N)>> is the estimate
+    \ <math|\<mu\><rsup|(N)><rsub|ML>> \ of the mean of the Gaussian, and the
+    random variable <math|z> is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|z>|<cell|=>|<cell|<frac|\<partial\>|\<partial\>\<mu\><rsub|ML>>ln
+      p<around*|(|x\|\<mu\><rsub|ML>,\<sigma\><rsup|2>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|\<sigma\><rsup|2>><around*|(|x-\<mu\><rsub|ML>|)><label|2.136><eq-number>>>>>
+    </eqnarray*>
+
+    Thus the distribution of <math|z> is Gaussian with mean <math|\<mu\>
+    \<minus\> \<mu\><rsub|ML>>, as illustrated in Figure 2.11.
+
+    Substituting Eq. <eqref|2.136> into Eq. <eqref|2.135>, we obtain the
+    univariate form of Eq. <eqref|2.126>, provided we choose the coefficients
+    <math|a<rsub|N>> to have the form <math|a<rsub|N>=\<sigma\><rsup|2>/N>.
+
+    Note that although we have focussed on the case of a single variable, the
+    same technique, together with the same restrictions
+    <eqref|2.130>\U<eqref|2.132> on the coefficients <math|a<rsub|N>>, apply
+    equally to the multivariate case (Blum, 1965).
+  </shown>|<\hidden>
+    <small-figure|<image|image/fig_2_11_Robbins_Monro_algorithm_example_maximum_likelihood.png|.3par|||>|In
+    the case of a Gaussian distribution, with <math|\<theta\>>
+    \ corresponding to the mean <math|\<mu\><rsub|ML>>, the regression
+    function illustrated in Figure <reference|fig2.10> takes the form of a
+    straight line, as shown in red. In this case, the random variable
+    <math|z> corresponds to the derivative of the log likelihood function and
+    is given by <math|(x \<minus\> \<mu\><rsub|ML>)/\<sigma\><rsup|2>>, and
+    its expectation that defines the regression function is a straight line
+    given by <math|(\<mu\> \<minus\> \<mu\>ML)/\<sigma\><rsup|2>>. The root
+    of the regression function corresponds to the true mean <math|\<mu\>>.>
+  </hidden>|<\hidden>
+    \;
   </hidden>>
 </body>
 
@@ -1294,7 +2230,17 @@
 
 <\references>
   <\collection>
+    <associate|2.105|<tuple|38|?>>
+    <associate|2.108|<tuple|39|?>>
+    <associate|2.121|<tuple|39|?>>
+    <associate|2.126|<tuple|41|?>>
+    <associate|2.129|<tuple|42|?>>
     <associate|2.13|<tuple|7|15>>
+    <associate|2.130|<tuple|43|?>>
+    <associate|2.131|<tuple|44|?>>
+    <associate|2.132|<tuple|45|?>>
+    <associate|2.135|<tuple|46|?>>
+    <associate|2.136|<tuple|46|?>>
     <associate|2.15|<tuple|8|16>>
     <associate|2.18|<tuple|9|19>>
     <associate|2.20|<tuple|10|23>>
@@ -1313,11 +2259,30 @@
     <associate|2.50|<tuple|20|?>>
     <associate|2.55|<tuple|21|?>>
     <associate|2.62|<tuple|22|?>>
+    <associate|2.65|<tuple|23|?>>
+    <associate|2.67|<tuple|24|?>>
     <associate|2.7|<tuple|4|9>>
+    <associate|2.70|<tuple|25|?>>
+    <associate|2.71|<tuple|26|?>>
+    <associate|2.73|<tuple|27|?>>
+    <associate|2.75|<tuple|28|?>>
+    <associate|2.76|<tuple|29|?>>
+    <associate|2.78|<tuple|30|?>>
     <associate|2.8|<tuple|5|10>>
+    <associate|2.81|<tuple|31|?>>
+    <associate|2.82|<tuple|32|?>>
+    <associate|2.84|<tuple|33|1>>
+    <associate|2.85|<tuple|34|1>>
+    <associate|2.88|<tuple|35|?>>
     <associate|2.9|<tuple|6|11>>
+    <associate|2.92|<tuple|36|?>>
+    <associate|2.93|<tuple|37|?>>
     <associate|auto-1|<tuple|1|5>>
-    <associate|auto-10|<tuple|7|?>>
+    <associate|auto-10|<tuple|7|1>>
+    <associate|auto-11|<tuple|8|?>>
+    <associate|auto-12|<tuple|9|?>>
+    <associate|auto-13|<tuple|10|?>>
+    <associate|auto-14|<tuple|11|?>>
     <associate|auto-2|<tuple|1|12>>
     <associate|auto-3|<tuple|2|17>>
     <associate|auto-4|<tuple|3|21>>
@@ -1327,9 +2292,10 @@
     <associate|auto-8|<tuple|3|41>>
     <associate|auto-9|<tuple|6|44>>
     <associate|fig2.1|<tuple|1|12>>
+    <associate|fig2.10|<tuple|10|?>>
     <associate|fig2.2|<tuple|2|17>>
     <associate|fig2.4|<tuple|4|36>>
-    <associate|fig2.7|<tuple|7|?>>
+    <associate|fig2.7|<tuple|7|1>>
   </collection>
 </references>
 
@@ -1396,6 +2362,50 @@
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<b-u\><rsub|i>>>
       of the covariance matrix, with corresponding eigenvalues
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\><rsub|i>>>.>|<pageref|auto-10>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|8>||Contours of
+      constant probability density for a Gaussian distribution in two
+      dimensions in which the covariance matrix is (a) of general form, (b)
+      diagonal, in which the elliptical contours are aligned with the
+      coordinate axes, and (c) proportional to the identity matrix, in which
+      the contours are concentric circles.>|<pageref|auto-11>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|9>||The plot on the
+      left shows the contours of a Gaussian distribution
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x<rsub|a>,
+      x<rsub|b>)>> over two variables, and the plot on the right shows the
+      marginal distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x<rsub|a>)>>
+      (blue curve) and the conditional distribution
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x<rsub|a>\|x<rsub|b>)>>
+      for <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x<rsub|b>
+      = 0.7>> (red curve).>|<pageref|auto-12>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|10>||A schematic
+      illustration of two correlated random variables
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z>>
+      and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<theta\>>>,
+      together with the regression function
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|f(\<theta\>)>>
+      given by the conditional expectation
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<bbb-E\>[z\|\<theta\>]>>.
+      The RobbinsMonro algorithm provides a general sequential procedure for
+      finding the root <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<theta\>>>
+      of such functions.>|<pageref|auto-13>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|11>||In the case of a
+      Gaussian distribution, with <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<theta\>>>
+      \ corresponding to the mean <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\><rsub|ML>>>,
+      the regression function illustrated in Figure <reference|fig2.10> takes
+      the form of a straight line, as shown in red. In this case, the random
+      variable <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|z>>
+      corresponds to the derivative of the log likelihood function and is
+      given by <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|(x
+      \<minus\> \<mu\><rsub|ML>)/\<sigma\><rsup|2>>>, and its expectation
+      that defines the regression function is a straight line given by
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|(\<mu\>
+      \<minus\> \<mu\>ML)/\<sigma\><rsup|2>>>. The root of the regression
+      function corresponds to the true mean
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\>>>.>|<pageref|auto-14>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Binary
