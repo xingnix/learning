@@ -2124,18 +2124,18 @@
       <tformat|<table|<row|<cell|lim<rsub|N\<rightarrow\>\<infty\>>a<rsub|N>>|<cell|=>|<cell|0<eq-number><label|2.130>>>|<row|<cell|<big|sum><rsub|N=1><rsup|\<infty\>>a<rsub|N>>|<cell|=>|<cell|\<infty\><eq-number><label|2.131>>>|<row|<cell|<big|sum><rsub|N=1><rsup|N>a<rsub|N><rsup|2>>|<cell|\<less\>>|<cell|\<infty\><eq-number><label|2.132>>>>>
     </eqnarray*>
 
-    <\folded>
+    <\unfolded>
       It can then be shown (Robbins and Monro, 1951; Fukunaga, 1990) that the
       sequence of estimates given by Eq. <eqref|2.129> does indeed converge
       to the root with probability one.
-    <|folded>
+    <|unfolded>
       Note that the first condition <eqref|2.130> ensures that the successive
       corrections decrease in magnitude so that the process can converge to a
       limiting value. The second condition <eqref|2.131> is required to
       ensure that the algorithm does not converge short of the root, and the
       third condition <eqref|2.132> is needed to ensure that the accumulated
       noise has finite variance and hence does not spoil convergence.
-    </folded>
+    </unfolded>
 
     \;
   </hidden>|<\hidden>
@@ -2180,7 +2180,7 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|>|<cell|>|<cell|>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     As a specific example, we consider once again the sequential estimation
     of the mean of a Gaussian distribution, in which case the parameter
     <math|\<theta\><rsup|(N)>> is the estimate
@@ -2193,7 +2193,7 @@
     </eqnarray*>
 
     Thus the distribution of <math|z> is Gaussian with mean <math|\<mu\>
-    \<minus\> \<mu\><rsub|ML>>, as illustrated in Figure 2.11.
+    \<minus\> \<mu\><rsub|ML>>, as illustrated in Figure <reference|fig2.11>.
 
     Substituting Eq. <eqref|2.136> into Eq. <eqref|2.135>, we obtain the
     univariate form of Eq. <eqref|2.126>, provided we choose the coefficients
@@ -2203,8 +2203,8 @@
     same technique, together with the same restrictions
     <eqref|2.130>\U<eqref|2.132> on the coefficients <math|a<rsub|N>>, apply
     equally to the multivariate case (Blum, 1965).
-  </shown>|<\hidden>
-    <small-figure|<image|image/fig_2_11_Robbins_Monro_algorithm_example_maximum_likelihood.png|.3par|||>|In
+  </hidden>|<\hidden>
+    <small-figure|<image|image/fig_2_11_Robbins_Monro_algorithm_example_maximum_likelihood.png|.3par|||>|<label|fig2.11>In
     the case of a Gaussian distribution, with <math|\<theta\>>
     \ corresponding to the mean <math|\<mu\><rsub|ML>>, the regression
     function illustrated in Figure <reference|fig2.10> takes the form of a
@@ -2215,6 +2215,93 @@
     given by <math|(\<mu\> \<minus\> \<mu\>ML)/\<sigma\><rsup|2>>. The root
     of the regression function corresponds to the true mean <math|\<mu\>>.>
   </hidden>|<\hidden>
+    <tit|Bayesian inference for the Gaussian>
+
+    Develop a Bayesian treatment by introducing prior distributions over
+    these parameters.
+
+    Begin with a simple example with a single Gaussian random variable
+    <math|x>.
+
+    Suppose that the variance <math|\<sigma\><rsup|2>> is known, and consider
+    the task of inferring the mean <math|\<mu\>> given a set of <math|N>
+    observations <math|X = {x<rsub|1>, . . . , x<rsub|N>}>.
+
+    The likelihood function, that is the probability of the observed data
+    given <math|\<mu\>>, viewed as a function of <math|\<mu\>>, is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p(X\|\<mu\>)
+      >|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>p(x<rsub|n>\|\<mu\>)
+      >>|<row|<cell|>|<cell|=>|<cell| <frac|1|(2\<pi\>\<sigma\><rsup|2>)<rsup|N/2>>
+      exp<around*|{|\<minus\><frac|1| \ 2\<sigma\><rsup|2>><big|sum><rsub|n=1><rsup|N>(x<rsub|n>\<minus\>\<mu\>)<rsup|2>|}>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    The likelihood function <math|p(X\|\<mu\>)> is not a probability
+    distribution over <math|\<mu\>> and is not normalized.
+
+    The likelihood function takes the form of the exponential of a quadratic
+    form in <math|\<mu\>>.
+
+    Thus if we choose a prior <math|p(\<mu\>)> given by a Gaussian, it will
+    be a conjugate distribution for this likelihood function because the
+    corresponding posterior will be a product of two exponentials of
+    quadratic functions of <math|\<mu\>> and hence will also be Gaussian.
+
+    The prior distribution is to be \ 
+
+    <\equation*>
+      p(\<mu\>) = \<cal-N\>(\<mu\>\|\<mu\><rsub|0>, \<sigma\><rsub|0><rsup|2>
+      \ )
+    </equation*>
+
+    \ \ and the posterior distribution is given by \ 
+
+    <\equation*>
+      p(\<mu\>\|X) \<propto\> p(X\|\<mu\>)p(\<mu\>)
+    </equation*>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    Simple manipulation involving completing the square in the exponent shows
+    that the \ posterior distribution is given by\ 
+
+    <\equation>
+      \ p(\<mu\>\|X) = \<cal-N\>(\<mu\>\|\<mu\><rsub|N>,\<sigma\><rsup|2><rsub|N>
+      )<label|2.140>
+    </equation>
+
+    \ where \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<mu\><rsub|N>
+      >|<cell|=>|<cell|<frac|\<sigma\><rsup|2>|N\<sigma\><rsub|0><rsup|2>+\<sigma\><rsup|2>>\<mu\><rsub|0>+<frac|N\<sigma\><rsub|0><rsup|2>|N\<sigma\><rsub|0><rsup|2>+\<sigma\><rsup|2>>\<mu\><rsub|ML>>>|<row|<cell|<frac|1|\<sigma\><rsub|N><rsup|2>>>|<cell|=>|<cell|<frac|1|\<sigma\><rsub|0><rsup|2>>+<frac|N|\<sigma\><rsup|2>>>>>>
+    </eqnarray*>
+
+    \ \ in which <math|\<mu\><rsub|ML>> is the maximum likelihood solution
+    for <math|\<mu\>> given by the sample mean \ 
+
+    <\equation*>
+      \<mu\><rsub|ML>=<frac|1|N><big|sum><rsub|n=1><rsup|N>x<rsub|n>
+    </equation*>
+  </hidden>|<\shown>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_12_bayesian_inference_mu.png|.5par|||>|Illustration
+      of Bayesian inference for \ the mean <math|\<mu\>> of a Gaussian
+      distribution, in which the variance is assumed to be known. The curves
+      show the prior distribution over <math|\<mu\>> (the curve labelled
+      <math|N = 0>), which in this case is itself Gaussian, along with the
+      posterior distribution given by Eq. <eqref|2.140> for increasing
+      numbers <math|N> of data points. The data points are generated from a
+      Gaussian of mean 0.8 and variance 0.1, and the prior is chosen to have
+      mean 0. In both the prior and the likelihood function, the variance is
+      set to the true value.>
+    </padded-center>
+  </shown>|<\hidden>
     \;
   </hidden>>
 </body>
@@ -2240,7 +2327,8 @@
     <associate|2.131|<tuple|44|?>>
     <associate|2.132|<tuple|45|?>>
     <associate|2.135|<tuple|46|?>>
-    <associate|2.136|<tuple|46|?>>
+    <associate|2.136|<tuple|46|1>>
+    <associate|2.140|<tuple|48|?>>
     <associate|2.15|<tuple|8|16>>
     <associate|2.18|<tuple|9|19>>
     <associate|2.20|<tuple|10|23>>
@@ -2283,6 +2371,7 @@
     <associate|auto-12|<tuple|9|?>>
     <associate|auto-13|<tuple|10|?>>
     <associate|auto-14|<tuple|11|?>>
+    <associate|auto-15|<tuple|12|?>>
     <associate|auto-2|<tuple|1|12>>
     <associate|auto-3|<tuple|2|17>>
     <associate|auto-4|<tuple|3|21>>
@@ -2293,6 +2382,7 @@
     <associate|auto-9|<tuple|6|44>>
     <associate|fig2.1|<tuple|1|12>>
     <associate|fig2.10|<tuple|10|?>>
+    <associate|fig2.11|<tuple|11|?>>
     <associate|fig2.2|<tuple|2|17>>
     <associate|fig2.4|<tuple|4|36>>
     <associate|fig2.7|<tuple|7|1>>
@@ -2406,6 +2496,20 @@
       \<minus\> \<mu\>ML)/\<sigma\><rsup|2>>>. The root of the regression
       function corresponds to the true mean
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\>>>.>|<pageref|auto-14>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|12>||Illustration of
+      Bayesian inference for \ the mean <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\>>>
+      of a Gaussian distribution, in which the variance is assumed to be
+      known. The curves show the prior distribution over
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\>>>
+      (the curve labelled <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|N
+      = 0>>), which in this case is itself Gaussian, along with the posterior
+      distribution given by Eq. (<reference|2.140>) for increasing numbers
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|N>>
+      of data points. The data points are generated from a Gaussian of mean
+      0.8 and variance 0.1, and the prior is chosen to have mean 0. In both
+      the prior and the likelihood function, the variance is set to the true
+      value.>|<pageref|auto-15>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Binary
