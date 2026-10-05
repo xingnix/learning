@@ -2288,7 +2288,7 @@
     <\equation*>
       \<mu\><rsub|ML>=<frac|1|N><big|sum><rsub|n=1><rsup|N>x<rsub|n>
     </equation*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <\padded-center>
       <small-figure|<image|image/fig_2_12_bayesian_inference_mu.png|.5par|||>|Illustration
       of Bayesian inference for \ the mean <math|\<mu\>> of a Gaussian
@@ -2301,9 +2301,524 @@
       mean 0. In both the prior and the likelihood function, the variance is
       set to the true value.>
     </padded-center>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
+    <tit|sequential update>
+
+    Bayesian paradigm leads very naturally to a sequential view of the
+    inference problem.
+
+    To see this in the context of the inference of the mean of a Gaussian,
+    write the posterior distribution with the contribution from the final
+    data point <math|x<rsub|N>> separated out so that
+
+    <\equation*>
+      p(\<mu\>\|D) \<propto\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|<around*|[|
+      p(\<mu\>)<big|prod><rsub|n=1><rsup|N-1>p(x<rsub|n>\|\<mu\>)|]>>>>>>p(x<rsub|N>\|\<mu\>)
+    </equation*>
+
+    The term in square brackets is (up to a normalization coefficient) just
+    the posterior distribution after observing <math|N \<minus\> 1> data
+    points. This can be viewed as a prior distribution, which is combined
+    using Bayes' theorem with the likelihood function associated with data
+    point <math|x<rsub|N>> to arrive at the posterior distribution after
+    observing <math|N> data points.
+
+    This sequential view of Bayesian inference is very general and applies to
+    any problem in which the observed data are assumed to be independent and
+    identically distributed.
+  </hidden>|<\hidden>
+    <tit|Variance estimation>
+
+    So far, we have assumed that the variance of the Gaussian distribution
+    over the data is known and our goal is to infer the mean.
+
+    Suppose that the mean is known and we wish to infer the variance.
+
+    Choose a conjugate form for the prior distribution. It turns out to be
+    most convenient to work with the precision
+    <math|\<lambda\>\<equiv\>1/\<sigma\><rsup|2>>. The likelihood function
+    for <math|\<lambda\>> takes the form
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|X\|\<lambda\>|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N>\<cal-N\><around*|(|x<rsub|n>\|\<mu\>,\<lambda\><rsup|-1>|)>>>|<row|<cell|>|<cell|\<propto\>>|<cell|\<lambda\><rsup|N/2>exp<around*|{|-<frac|\<lambda\>|2><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|}>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|gamma distribution>
+
+    The corresponding conjugate prior should therefore be proportional to the
+    product of a power of <math|\<lambda\>> and the exponential of a linear
+    function of <math|\<lambda\>>.
+
+    This corresponds to the gamma distribution which is defined by \ 
+
+    <\equation>
+      Gam(\<lambda\>\|a, b) = <frac|1|\<Gamma\>(a)>b<rsup|a>\<lambda\><rsup|a-1>exp(\<minus\>b\<lambda\>).
+      <label|2.146>
+    </equation>
+
+    \ \ Here <math|\<Gamma\>(a)> is the gamma function that is defined by
+    (1.141) and that ensures that Eq. <eqref|2.146> is correctly normalized.
+
+    The gamma distribution has a finite integral if <math|a\<gtr\>0>, \ and
+    the distribution itself is finite if <math|a\<geqslant\>1>. It is
+    plotted, for various values of <math|a> and <math|b>, in Figure
+    <reference|fig2.13>.
+  </hidden>|<\hidden>
     \;
-  </hidden>>
+
+    \;
+
+    \;
+
+    <small-figure|<image|image/fig_2_13_gamma_dist.png|.9par|||>|<label|fig2.13>Plot
+    of the gamma distribution <math|Gam(\<lambda\>\|a,b)> defined by Eq.
+    <eqref|2.146> for various values of the parameters <math|a> and
+    <math|b>.>
+  </hidden>|<\hidden>
+    <tit|mean and variance>
+
+    The mean and variance of the gamma distribution are given by \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\>[\<lambda\>]
+      >|<cell|=>|<cell|<frac|a|b>>>|<row|<cell|var<around*|[|\<lambda\>|]>>|<cell|=>|<cell|<frac|a|b<rsup|2>>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|posterior>
+
+    Consider a prior distribution <math|Gam(\<lambda\>\|a<rsub|0>,
+    b<rsub|0>)>. Multiply by the likelihood function (2.145), then we obtain
+    a posterior distribution\ 
+
+    <\equation*>
+      \ p(\<lambda\>\|X) \<propto\> \<lambda\><rsup|a<rsub|0>-1>\<lambda\><rsup|N/2>exp<around*|{|-b<rsub|0>\<lambda\>-<frac|\<lambda\>|2><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|}>
+    </equation*>
+
+    \ which we recognize as a gamma distribution of the form
+    <math|Gam(\<lambda\>\|a<rsub|N>,b<rsub|N>)> where
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|a<rsub|N>>|<cell|=>|<cell|a<rsub|0>+<frac|N|2>>>|<row|<cell|b<rsub|N>>|<cell|=>|<cell|b<rsub|0>+<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>=b<rsub|0>+<frac|N|2>\<sigma\><rsub|ML><rsup|2>>>>>
+    </eqnarray*>
+
+    where <math|\<sigma\><rsub|ML><rsup|2>> is the maximum likelihood
+    estimator of the variance.
+  </hidden>|<\hidden>
+    <tit|Interprestation>
+
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      Tthe effect of observing N data points is to increase the value of the
+      coefficient <math|a> by <math|N/2>.Thus we can interpret the parameter
+      <math|a<rsub|0>> in the prior in terms of <math|2a<rsub|0>> `effective'
+      prior observations.
+    </shown>|<\shown>
+      The <math|N> data points contribute
+      <math|N\<sigma\><rsup|2><rsub|ML>/2> to the parameter <math|b>, where
+      <math|\<sigma\><rsup|2><rsub|ML>> is the variance, and so we can
+      interpret the parameter <math|b<rsub|0>> in the prior as arising from
+      the <math|2a<rsub|0>> `effective' prior observations having variance
+      <math|2b<rsub|0>/<around*|(|2a<rsub|0>|)>=b<rsub|0>/a<rsub|0>>.
+    </shown>|<\shown>
+      Recall Section 2.2 that we made an analogous interpretation for the
+      Dirichlet prior. These distributions \ are examples of the exponential
+      family, and we shall see that the interpretation of a conjugate prior
+      in terms of effective fictitious data points is a general one for the
+      exponential family of distributions.
+    </shown>|<\shown>
+      Instead of working with the precision, we can consider the variance
+      itself.The conjugate prior in this case is called the <em|inverse gamma
+      distribution>, although we shall not discuss this further because we
+      will find it more convenient to work with the precision.
+    </shown>>
+  </hidden>|<\hidden>
+    <tit|estimate <math|\<mu\>,\<lambda\>>>
+
+    Now suppose that both the mean and the precision are unknown.
+
+    To find a conjugate prior, we consider the dependence of the likelihood
+    function on <math|\<mu\>> and <math|\<lambda\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|X\|\<mu\>,\<lambda\>|)>>|<cell|=>|<cell|<big|prod><rsub|n=1><rsup|N><around*|(|<frac|\<lambda\>|2\<pi\>>|)><rsup|1/2>exp<around*|{|-<frac|\<lambda\>|2><around*|(|x<rsub|n>-\<mu\>|)><rsup|2>|}>>>|<row|<cell|>|<cell|\<propto\>>|<cell|<around*|[|\<lambda\><rsup|1/2>exp<around*|(|-<frac|\<lambda\>\<mu\><rsup|2>|2>|)>|]><rsup|N>exp<around*|{|\<lambda\>\<mu\><big|sum><rsub|n=1><rsup|N>x<rsub|n>-<frac|\<lambda\>|2><big|sum><rsub|n=1><rsup|N>x<rsub|n><rsup|2>|}>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|prior <math|p<around*|(|\<mu\>,\<lambda\>|)>>>
+
+    We now wish to identify a prior distribution <math|p(\<mu\>, \<lambda\>)>
+    that has the same functional dependence on <math|\<mu\>> and
+    <math|\<lambda\>> as the likelihood function and that should therefore
+    take the form
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<mu\>,\<lambda\>|)>>|<cell|\<propto\>>|<cell|<around*|[|\<lambda\><rsup|1/2>exp<around*|(|-<frac|\<lambda\>\<mu\><rsup|2>|2>|)>|]><rsup|\<beta\>>exp<around*|{|c\<lambda\>\<mu\>-d\<lambda\>|}>>>|<row|<cell|>|<cell|=>|<cell|exp<around*|{|-<frac|\<beta\>\<lambda\>|2><around*|(|\<mu\>-c/\<beta\>|)><rsup|2>|}>\<lambda\><rsup|\<beta\>/2>exp<around*|{|-<around*|(|d-<frac|c<rsup|2>|2\<beta\>>|)>\<lambda\>|}>>>>>
+    </eqnarray*>
+
+    where <math|c, d>, and <math|\<beta\>> are constants.
+  </hidden>|<\hidden>
+    <tit|<em|Gaussian-gamma> distribution>
+
+    Since we can always write <math|p(\<mu\>, \<lambda\>) =
+    p(\<mu\>\|\<lambda\>)p(\<lambda\>)>, we can find
+    <math|p(\<mu\>\|\<lambda\>)> and <math|p(\<lambda\>)> by inspection. In
+    particular, we see that <math|p(\<mu\>\|\<lambda\>)> is a Gaussian whose
+    precision is a linear function of <math|\<lambda\>> and that
+    <math|p(\<lambda\>)> is a gamma distribution, so that the normalized
+    prior takes the form \ 
+
+    <\equation>
+      p(\<mu\>, \<lambda\>) = \<cal-N\>(\<mu\>\|\<mu\><rsub|0>,<around*|(|\<beta\>\<lambda\>|)><rsup|-1>)Gam(\<lambda\>\|a,
+      b) <label|2.154>
+    </equation>
+
+    \ \ where we have defined new constants given by <math|\<mu\><rsub|0> =
+    c/\<beta\>, a = 1 + \<beta\>/2, b = d\<minus\>c<rsup|2>/2\<beta\>>. The
+    distribution is called the <em|normal-gamma> or <em|Gaussian-gamma>
+    distribution and is plotted in Figure <reference|fig2.14>.
+
+    Note that this is not simply the product of an independent Gaussian prior
+    over <math|\<mu\>> and a gamma prior over <math|\<lambda\>>, because the
+    precision of <math|\<mu\>> is a linear function of <math|\<lambda\>>.
+    Even if we chose a prior in which <math|\<mu\>> and <math|\<lambda\>>
+    were independent, the posterior distribution would exhibit a coupling
+    between the precision of \<mu\> and the value of \<lambda\>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_14_contour_normal_gamma.png|.5par|||>|<label|fig2.14>Contour
+      plot of the normal-gamma distribution Eq. <eqref|2.154> for parameter
+      values <math|\<mu\><rsub|0> = 0, \<beta\> = 2, a = 5> and <math|b =
+      6>.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|multivariate>
+
+    In the case of the multivariate Gaussian distribution
+    <math|\<cal-N\>(\<b-x\>\|\<b-mu\>,\<Lambda\><rsup|\<minus\>1>)> for a
+    <math|D> dimensional variable <math|\<b-x\>>, the conjugate prior
+    distribution for the mean <math|\<b-mu\>>, assuming the precision is
+    known, is again a Gaussian.
+
+    For known mean and unknown precision matrix <math|\<Lambda\>>, the
+    conjugate prior is the <em|Wishart> distribution given by\ 
+
+    <\equation*>
+      \ \<cal-W\>(\<Lambda\>\|W, \<nu\>) =
+      B\|\<Lambda\>\|<rsup|(\<nu\>\<minus\>D\<minus\>1)/2
+      >exp<around*|(|-<frac|1|2>Tr(W<rsup|\<minus\>1>\<Lambda\>)|)>
+    </equation*>
+
+    where <math|\<nu\>> is called the number of <em|degrees of freedom> of
+    the distribution, <math|W> is a <math|D\<times\>D> scale matrix, and
+    <math|Tr(\<cdummy\>)> denotes the trace. The normalization constant
+    <math|B> is given by \ 
+
+    <\equation*>
+      B(W, \<nu\>) = \|W\|<rsup|\<minus\>\<nu\>/2><around*|(|
+      \ 2<rsup|\<nu\>D/2> \<pi\><rsup|D(D\<minus\>1)/4><big|prod><rsub|i=1><rsup|D>\<Gamma\><around*|(|<frac|\<nu\>+1-i|2>|)>|)><rsup|-1>
+    </equation*>
+  </hidden>|<\hidden>
+    \;
+
+    Again, it is also possible to define a conjugate prior over the
+    covariance matrix itself, rather than over the precision matrix, which
+    leads to the <em|inverse Wishart> distribution.
+
+    If both the mean and the precision are unknown, then, following a similar
+    line of reasoning to the univariate case, the conjugate prior is given by
+    \ 
+
+    <\equation*>
+      p<around*|(|\<b-mu\>,\<Lambda\>\|\<b-mu\><rsub|0>,\<beta\>,W,\<nu\>|)>=\<cal-N\><around*|(|\<b-mu\>\|\<b-mu\><rsub|0>,<around*|(|\<beta\>\<Lambda\>|)><rsup|-1>|)>\<cal-W\><around*|(|\<Lambda\>\|W,\<nu\>|)>
+    </equation*>
+
+    \ \ which is known as the <em|normal-Wishart> or <em|Gaussian-Wishart>
+    distribution.
+  </hidden>|<\hidden>
+    <tit|Student's t-distribution>
+
+    The conjugate prior for the precision of a Gaussian is given by a gamma
+    distribution.
+
+    If we have a univariate Gaussian <math|\<cal-N\><around*|(|x\|\<mu\>,\<tau\><rsup|-1>|)>>
+    together \ with a Gamma prior <math|Gam(\<tau\>\|a,b)> and we integrate
+    out the precision, we obtain the marginal distribution of <math|x> in the
+    form
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|x\|\<mu\>,a,b|)>>|<cell|=>|<cell|<big|int><rsub|0><rsup|\<infty\>>\<cal-N\><around*|(|x\|\<mu\>,\<tau\><rsup|-1>|)>Gam<around*|(|\<tau\>\|a,b|)>\<mathd\>\<tau\><eq-number><label|2.158>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|0><rsup|\<infty\>><frac|b<rsup|a>e<rsup|-b\<tau\>>\<tau\><rsup|a-1>|\<Gamma\><around*|(|a|)>><around*|(|<frac|\<tau\>|2\<pi\>>|)><rsup|1/2>exp<around*|{|-<frac|\<tau\>|2><around*|(|x-\<mu\>|)><rsup|2>|}>\<mathd\>\<tau\>>>|<row|<cell|>|<cell|=>|<cell|<frac|b<rsup|a>|\<Gamma\><around*|(|a|)>><around*|(|<frac|1|2\<pi\>>|)><rsup|1/2><around*|[|b+<frac|<around*|(|x-\<mu\>|)><rsup|2>|2>|]><rsup|-a-1/2>\<Gamma\><around*|(|a+1/2|)>>>>>
+    </eqnarray*>
+
+    where we have made the change of variable <math|z = \<tau\> [b + (x
+    \<minus\> \<mu\>)<rsup|2>/2]>.
+  </hidden>|<\hidden>
+    By convention we define new parameters given by <math|\<nu\> = 2a> and
+    <math|\<lambda\> = a/b>, in terms of which the distribution
+    <math|p(x\|\<mu\>, a, b)> takes the form
+
+    <\equation>
+      St<around*|(|x\|\<mu\>,\<lambda\>,\<nu\>|)>=<frac|\<Gamma\><around*|(|\<nu\>/2+1/2|)>|\<Gamma\><around*|(|\<nu\>/2|)>><around*|(|<frac|\<lambda\>|\<pi\>\<nu\>>|)><rsup|1/2><around*|[|1+<frac|\<lambda\><around*|(|x-\<mu\>|)><rsup|2>|\<nu\>>|]><rsup|-\<nu\>/2-1/2><label|2.159>
+    </equation>
+
+    which is known as Student's t-distribution.
+
+    The parameter <math|\<lambda\>> is sometimes called the precision of the
+    t-distribution, even though it is not in general equal to the inverse of
+    the variance.
+
+    The parameter <math|\<nu\>> is called the degrees of freedom, and its
+    effect is illustrated in Figure <reference|fig2.15>. For the particular
+    case of <math|\<nu\> = 1>, the t-distribution reduces to the <em|Cauchy>
+    distribution, while in the limit <math|\<nu\> \<rightarrow\> \<infty\>>
+    the t-distribution <math|St(x\|\<mu\>, \<lambda\>, \<nu\>)> becomes a
+    Gaussian <math|\<cal-N\>(x\|\<mu\>, \<lambda\><rsup|\<minus\>1>)> with
+    mean <math|\<mu\>> and precision <math|\<lambda\>>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_15_t_dist.png|.5par|||>|<label|fig2.15>Plot
+      of Student's t-distribution <eqref|2.159> \ for <math|\<mu\> = 0> and
+      <math|\<lambda\> = 1> for various values of <math|\<nu\>>. The limit
+      <math|\<nu\> \<rightarrow\> \<infty\>> corresponds to a Gaussian
+      distribution with mean <math|\<mu\>> and precision <math|\<lambda\>>.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|Interpretation>
+
+    From Eq. <eqref|2.158>, we see that Student's t-distribution is obtained
+    by adding up an infinite number of Gaussian distributions having the same
+    mean but different precisions.
+
+    This can be interpreted as an infinite mixture of Gaussians. The result
+    is a distribution that in general has longer `tails' than a Gaussian, as
+    was seen in Figure <reference|fig2.15>.
+
+    This gives the tdistribution an important property called
+    <em|robustness>, which means that it is much less sensitive than the
+    Gaussian to the presence of a few data points which are outliers.\ 
+
+    The robustness of the t-distribution is illustrated in Figure
+    <reference|fig2.16>, which compares the maximum likelihood solutions for
+    a Gaussian and a t-distribution.
+
+    Note that the maximum likelihood solution for the t-distribution can be
+    found using the expectation maximization (EM) algorithm.
+
+    \;
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_16_robustness_t_dist.png|.5par|||>|<label|fig2.16>Illustration
+      of the robustness of Student's t-distribution compared to a Gaussian.
+      (a) Histogram distribution of 30 data points drawn from a Gaussian
+      distribution, together with the maximum likelihood fit obtained from a
+      t-distribution (red curve) and a Gaussian (green curve, largely hidden
+      by the red curve). Because the t-distribution contains the Gaussian as
+      a special case it gives almost the same solution as the Gaussian. (b)
+      The same data set but with three additional outlying data points
+      showing how the Gaussian (green curve) is strongly distorted by the
+      outliers, whereas the t-distribution (red curve) is relatively
+      unaffected.>
+    </padded-center>
+  </hidden>|<\hidden>
+    Here we see that the effect of a small number of outliers is much less
+    significant for the t-distribution than for the Gaussian.
+
+    Outliers can arise in practical applications either because the process
+    that generates the data corresponds to a distribution having a heavy tail
+    or simply through mislabelled data.
+
+    Robustness is also an important property for regression problems.
+
+    Unsurprisingly, the least squares approach to regression does not exhibit
+    robustness, because it corresponds to maximum likelihood under a
+    (conditional) Gaussian distribution.
+
+    By basing a regression model on a heavy-tailed distribution such as a
+    t-distribution, can obtain a more robust model.
+  </hidden>|<\hidden>
+    <tit|multivariate>
+
+    If we go back to Eq. <eqref|2.158> and substitute the alternative
+    parameters <math|\<nu\> = 2a, \<lambda\> = a/b,> and <math|\<eta\> =
+    \<tau\> b/a>, we see that the t-distribution can be written in the form
+    \ 
+
+    <\equation*>
+      St(x\|\<mu\>, \<lambda\>, \<nu\>) =
+      <big|int><rsub|0><rsup|\<infty\>>\<cal-N\>(x\|\<mu\>,(\<eta\>\<lambda\>)<rsup|\<minus\>1>)
+      Gam(\<eta\>\|\<nu\>/2, \<nu\>/2) \<mathd\>\<eta\>.
+    </equation*>
+
+    \ \ We can then generalize this to a multivariate Gaussian <math|N
+    (x\|\<mu\>, \<Lambda\>)> to obtain the corresponding multivariate
+    Student's t-distribution in the form \ 
+
+    <\equation*>
+      St(x\|\<b-mu\>, \<Lambda\>, \<nu\>) =
+      \ <big|int><rsub|0><rsup|\<infty\>>\<cal-N\>(x\|\<b-mu\>,
+      (\<eta\>\<Lambda\>)<rsup|\<minus\>1>)Gam(\<eta\>\|\<nu\>/2,
+      \<nu\>/2)\<mathd\>\<eta\>.
+    </equation*>
+
+    Using the same technique as for the univariate case, we can evaluate this
+    integral to give
+  </hidden>|<\hidden>
+    <\equation*>
+      St(x\|\<b-mu\>, \<Lambda\>, \<nu\>) =<frac| \<Gamma\>(D/2 + \<nu\>/2)|
+      \ \<Gamma\>(\<nu\>/2)> <frac| \|\<Lambda\>\|<rsup|1/2> | (\<pi\> \<nu\>
+      )<rsup|D/2>> \ <around*|[|1 + <frac|\<#2206\><rsup|2>|\<nu\>>|]><rsup|\<minus\>D/2\<minus\>\<nu\>/2>
+    </equation*>
+
+    where <math|D> is the dimensionality of <math|x>, and
+    <math|\<#2206\><rsup|2>> is the squared Mahalanobis distance defined by
+    \ 
+
+    <\equation*>
+      \<#2206\><rsup|2> = (\<b-x\>\<minus\>
+      \<b-mu\>)<rsup|T>\<Lambda\>(\<b-x\> \<minus\>\<b-mu\>).
+    </equation*>
+
+    \ \ This is the multivariate form of Student's t-distribution and
+    satisfies the following properties \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|\<b-x\>|]>>|<cell|=>|<cell|\<b-mu\>>>|<row|<cell|cov<around*|[|\<b-x\>|]>>|<cell|=>|<cell|<frac|\<nu\>|<around*|(|n-2|)>>\<Lambda\><rsup|-1>>>|<row|<cell|mode<around*|[|\<b-x\>|]>>|<cell|=>|<cell|\<b-mu\>>>>>
+    </eqnarray*>
+
+    with corresponding results for the univariate case.
+  </hidden>|<\hidden>
+    <tit|Periodic variables>
+
+    Let us consider the problem of evaluating the mean of a set of
+    observations <math|D = {\<theta\><rsub|1>, . . . , \<theta\><rsub|N> }>
+    of a periodic variable.
+
+    Assume that \<theta\> is measured in radians.
+
+    The simple average <math|(\<theta\><rsub|1>+\<cdots\>+\<theta\><rsub|N>)/N>
+    will be strongly coordinate dependent.
+
+    To find an invariant measure of the mean, we note that the observations
+    can be viewed as points on the unit circle and can therefore be described
+    instead by two-dimensional unit vectors
+
+    <\equation*>
+      \<b-x\><rsub|1>, . . . ,\<b-x\><rsub|N>
+    </equation*>
+
+    where
+
+    <\equation*>
+      \<\|\|\>\<b-x\><rsub|n>\<\|\|\> = 1
+    </equation*>
+
+    for <math|n = 1, . . . , N> , as illustrated in Figure
+    <reference|fig2.17>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_16_periodic_var.png|.3par|||>|<label|fig2.17>Illustration
+      of the representation of values <math|\<theta\><rsub|n>> of a periodic
+      variable as two dimensional vectors <math|x<rsub|n>> living on the unit
+      circle. Also shown is the average <math|<wide|x|\<bar\>>> of those
+      vectors.>
+    </padded-center>
+
+    \;
+  </hidden>|<\hidden>
+    We can average the vectors <math|{x<rsub|n>}> instead to give \ 
+
+    <\equation>
+      <wide|\<b-x\>|\<wide-bar\>>=<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-x\><rsub|n><label|2.167>
+    </equation>
+
+    \ \ and then find the corresponding angle <math|\<theta\>> of this
+    average. Clearly, this definition will ensure that the location of the
+    mean is independent of the origin of the angular coordinate.
+
+    Note that <math|<wide|\<b-x\>|\<wide-bar\>>> will typically lie inside
+    the unit circle.
+  </hidden>|<\hidden>
+    The Cartesian coordinates of the observations are given by
+    \ <math|\<b-x\><rsub|n> = (cos \<theta\><rsub|n>, sin \<theta\><rsub|n>)>
+    , and we can write the Cartesian coordinates of the sample mean in the
+    form <math|<wide|\<b-x\>|\<wide-bar\>> = (<wide|r|\<wide-bar\>> cos
+    \<theta\>,<wide|r|\<wide-bar\>> sin \<theta\>)>.\ 
+
+    Substituting into Eq. <eqref|2.167> and equating the <math|x<rsub|1>> and
+    <math|x<rsub|2>> components then gives \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<wide|r|\<wide-bar\>>cos<wide|\<theta\>|\<wide-bar\>>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N>cos\<theta\><rsub|n>>>|<row|<cell|<wide|r|\<wide-bar\>>sin<wide|\<theta\>|\<wide-bar\>>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N>sin\<theta\><rsub|n>>>>>
+    </eqnarray*>
+
+    Taking the ratio, and using the identity <math|tan \<theta\> = sin
+    \<theta\>/ cos \<theta\>>, we can solve for <math|\<theta\>> to give \ 
+
+    <\equation*>
+      <wide|\<theta\>|\<wide-bar\>> = tan<rsup|\<minus\>1><around*|{|<frac|<big|sum><rsub|n>sin
+      \<theta\><rsub|n>|<big|sum><rsub|n>cos \<theta\><rsub|n>>|}>
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|<em|von Mises> distribution>
+
+    We now consider a periodic generalization of the Gaussian called the
+    <em|von Mises> distribution.
+
+    Consider distributions <math|p(\<theta\>)> that have period
+    <math|2\<pi\>>.
+
+    Any probability density <math|p(\<theta\>)> defined over <math|\<theta\>>
+    must not only be nonnegative and integrate to one, but it must also be
+    periodic. Thus <math|p(\<theta\>)> must satisfy the three conditions
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<theta\>|)>>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|<big|int><rsub|0><rsup|2\<pi\>>p<around*|(|\<theta\>|)>\<mathd\>\<theta\>>|<cell|=>|<cell|1>>|<row|<cell|p<around*|(|\<theta\>+2\<pi\>|)>>|<cell|=>|<cell|p<around*|(|\<theta\>|)>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    We can easily obtain a Gaussian-like distribution that satisfies these
+    three properties as follows.
+
+    Consider a Gaussian distribution over two variables
+
+    <\equation*>
+      \<b-x\>=(x<rsub|1>,x<rsub|2>)
+    </equation*>
+
+    having mean
+
+    <\equation*>
+      \<b-mu\> = (\<mu\><rsub|1>, \<mu\><rsub|2>)
+    </equation*>
+
+    and a covariance matrix
+
+    <\equation*>
+      \<Sigma\> = \<sigma\><rsup|2>I
+    </equation*>
+
+    where <math|I> is the <math|2\<times\>2> identity matrix, so that
+
+    <\equation>
+      p<around*|(|x<rsub|1>,x<rsub|2>|)>=<frac|1|2\<pi\>\<sigma\><rsup|2>>exp<around*|{|-<frac|<around*|(|x<rsub|1>-\<mu\><rsub|1>|)><rsup|2>+<around*|(|x<rsub|2>-\<mu\><rsub|2>|)><rsup|2>|2\<sigma\><rsup|2>>|}><label|2.173>
+    </equation>
+
+    The contours of constant <math|p(x)> are circles, as illustrated in
+    Figure <reference|fig2.18>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|<tuple|<#89504E470D0A1A0A0000000D49484452000000DE000000D808020000000B5CCAFD000000097048597300000EC400000EC401952B0E1B00001D4B49444154789CED9D7D7054D5F9C7BFD18892044CAD8B1BDE1AE6C73811748129059B6069865552D04604D10DAD5319E98886CDD8FCE1102D76D3518719A235ABD519A8567113E4AD80090E4310A91B85522CECF2A20E651701597679299025C4DDE4FEFE389B9BBB9B7D39775FEE3D7BF77C2633793BF7DE67EFFDDEE7BC3DE73979822080C3618F1BD43680C3890E97268751B834398CC2A5C961142E4D0EA370697218854B93C3285C9A1C46E1D2E4300A97268751B834398CC2A5C961142E4D0EA37069721825A7A5B971E3C63FFCE10FC160506D433851C8CBE578CDBCBC3C00369BADA6A6466D5B3891E4AED7ECECEC243FAC5CB9525D4B3851C95D69BEF5D65BE40787C3E1743AD5358633981CADD0FD7E7F515191F8ABC9646A696951D11ECE6072D46B363535497F6D6D6DF5FBFD6A19C3894A767BCDCB972F6FD8B0A1AFAFEFBFFFFDEFF2E5CBD7AC59535050100804EAEAEAE21C150C06C78C19E3F178A47FB45AADB5B5B519B6972307216BE9EDED6D6C6C0C068382202C58B060D6AC59DDDDDD4F3DF5D4D4A9534981BEBEBE03070E7CFAE9A7972E5D921E68B7DB07DF07BD5EAFC267E0C4268B2BF49D3B77CE9B37EFC61B6F0470E1C285F2F2F25B6EB9E5C5175FDCB2650B80EBD7AFD7D7D75FBE7CB9B7B7F781071ED8B871A378E0A851A3F47A7DC4D92A2B2B95349E9318B5DF8D34100C06870D1BF6E9A79F4AFFF8F7BFFFBDAEAE8EFCBC76EDDA1FFFF8C77D7D7D11076AE60E68927C755F8CB470E0C0819E9E9E7BEFBD57FAC7E9D3A7777777939F478E1C79E5CA9540203064C810350CE4248316A4B96BD7AE69D3A60D1D3A14C0F7DF7FEFF3F9264D9A545656565656460AB4B6B62E59B284EB32BBC8E2B6E6430F3DF4C20B2FF4F5F5D96C365185369BEDCE3BEF9416DBB061436F6F6F7373B31A367292278BA5E9F7FBC78E1DFBDA6BAFAD5EBDFAECD9B3DBB76FB75AAD555555C47D12B66EDD7AEAD4A977DF7DF7DCB973BDBDBD2A5ACB914B768F6BBA5CAE9292925B6EB905C0C99327C78E1D4B223608DBB66DBB7AF5EA830F3ED8DBDBDBD4D4F4F2CB2F471C4E0A67F51DD030D92DCD38ECDAB5ABAAAA4A0C782B2F2F17E33944B8345946B3D2A4814B9365B2B8ADC9D1365C9A1C46E1D2E4300A97268751B834398CC2A5C961142E4D0EA370697218854B93C3285C9A1C46E1D2E4300A97268751B834398CC2A5C961142E4D0EA370697218854B93C3285A58ECAB2E3E1F0667F21A3D1AF9FCD6A606BF7F32080671EC189C4EECDB079F0FADAD09CA1B0C983811E5E59832059327A3B050112BB5025F1B94786D90CF878F3EC2D6ADE8E8885EC0640AFBF5C811381C518A190C983F1FB36661FA74EE5313C3A519539A7E3FB66EC5CA95613A23F29A3A15132640A74BE008DD6E9C39839327D1D616E9622D16CC9B877BEE49F9336818B5922DB140AC3BE0720966B3000C7C592C82DD2E7475A57439974BB05A058361E0B40683D0DE2E0402299D56AB706986DD01974B309906A463360B767BFAA5E3F50A56ABA0D787AEA2D70B369BA2023D7EFC787777374D49A7D399696362C1A519BA035D5D619ED26249D547D260B70F3851BD5EB0DB337E4541109C4E6743430365E1B56BD76EDDBA35A3F6C4824B138220D86C033E4C19514A910AD46412BCDE0C5EEBEAD5AB0F3FFC30A5CB242C5DBAF49B6FBEC99C49B1E0D2D4198D0AC9220E818060B30DF8ECF6F64C5DA8A1A1E1E38F3F967588DBED9E33674E86EC89438E4BB30238AB64651A9FAEAE8196AED99CFED6E7F5EBD70D06436F6FAFDC031F7DF4D17FFFFBDF69B62611B93B51D9D808C00EE88D461C3F8E8A0AB50D020A0BD1D282F67600686EC69831F0F9D279FE9D3B77565656DE7083EC87FEC0030FBCFFFEFBE9348506855F05160804A43D9E5AB5CD8982D71B6A7DEAF582CB25E3C0BD7BF7AE59B3A6BEBEBEA7A767CD9A35AB57AF7EF6D967BDFDCD94C58B17B7B4B48885BFFCF2CB2953A68C1A35AAA4A464F6ECD982209C3C79F28E3BEE183972E4840913A4F5FEB163C7264E9C98968F464FCE49331010C4C62550C1ECCB29B593BEB1F1E73FFF591084F1E3C72F5EBCB8ABAB4B108437DE7863E1C285E4BF53A64CF9CF7FFE33F810008F3FFE785F5F5F7777777979B9CD668B28F3C30F3FE4E7E70FDEA721A330FA603284F8BC893762BCDE907A771A757A3C9EB56BD75EBB766DC89021FFFAD7BFC81F376CD8307CF870F2F3C89123DD6EF7E0037FFBDBDF0258BE7CF9BC79F3DE78E38DA8271F366CD8F9F3E793FC2449C1EE83493B525D922A2E8DD274B9425F691F78B258E4F9CE5DBB764977A2696C6C1477EB1A3A74685479F5F4F4DC77DF7D001E79E49158A71D356AD4B7DF7E2BDBFA14C8A16E507D3D3A3AA0D7C3E1804E97D2A99C4E3436A2A6069326212F0F797918372EF4555414FA4B4D0DEAEAB07D7B94903959AC58018B0500162CA0EA157DF6D9673367CE141387EFDFBF7FEAD4A9E4E7E2E2E26BD7AE0D3E64C890213367CE1C3264485B5B5BD4ADE800F8FDFEE2E2E2A43E41B228F91EA888E87BA4BD0A5977201010EC76C16C1E189C977E190C82C9246DC5867D198D82D59AD2A0A9E8EF137AE5FBEEBB4FAC94AF5CB9525050D0D1D1417E9D3469D2A14387061FF2DE7BEFCD9933E7D0A143B7DE7AEBEDB7DF7EE2C4898802BDBDBD37DD745312A34EA99013D2B4DBA3D78994D224E3E152451A0C82C522381C31BBCF5D5D82CB25B4B787CDC893517D593D6EA90D449D4663BC62A4A1F9C1071F905F972E5DBA78F162F1BF8F3DF698B4874ED8B265CBB469D3489F69C78E1DF9F9F913274EBC7CF9B2B4CCB163C7264F9E9C8CDD29A07D697ABD215559AD91FFA291A6549446A360B3C9767EA2BB950A348926695757CC0F22D2D1D1F1A31FFDE82F7FF94B5B5BDB1FFFF847B2AF92F8DF77DE79A7BEBE5EFC75DBB66DE3C78F2F2828282E2E3E7DFAB42008EBD6AD1B3E7C784141416969E9EF7FFF7BB1E4071F7C60B158645B9C1ADA97661C67135F9A0EC7C0D4B6C19086E9A2AEAE81760599AC973BDFE370848E7538A21778F1C5174957E6CC99333FFCF043C47F2F5EBC3861C28424C6801E7DF4D1A82D818CA271699289E9584DB438D2B45A331510249D8D341A65FB60226E8321BAAC67CC98618DE35405C16C36EFD8B143D615CF9C3953555525EB90B4A065698A35602C6D4595A674343109C74689CB15B24DAF8FE902A31208847C79C4B8786F6FEF575F7D75D34D376DDEBC99EC111F954B972ECD9D3BF7FAF5EBF4575CBA74E9E1C38765989826B42C4DA23093296681C1D2F47A939983490EE97C8FAC5023B15A975605DF7DF7DDAA55AB9A9B9B57AD5A75E0C0813887EFDFBF9F3E5EB3A5A565DDBA75328C4B1F9A95A6CB157A7E716ACC08698A1D26714C3ED3040203ADCFB8F57024A44910E7AD8BCF912347FC7E3F4DC9F82ACF289A95267978F1BB9552694A4767140E256E6F97EDA7BBBAA20CD36A0C6D4A537499F145269526A9FD69C6B43381E83BE9BD353944F1211DE5D0A634291F9B284DB13FAE5694BBD0EFE6F57ADA8E97D74BF5FA652F1A94A658D9257C66449A62AF42DD4077CAF91E29348D96EC4583D2244D379A2E029126198B49F101A725F248EC8751BE24E4A5EA8F2BD21A1A9426911ACDD30500D4C8AA46A5381C82C5123DDAC36814DADB9391299923301868CB93ABCB1A19CD16B4264DB105462335209F2C5B935B954B97E78A934651238FE42E1D0E04426A1B14691E1DD24AD6649DAE356912AF63365315262E93DE4509E163F27ABD60B54619BEE9EA8A8C399235A24EE2A4281DB9F82A6A0FAD7D2622081A2F180808725DA674769126158C344D8DAC39CFA85391B12026696F80536BD2A41F4FE90FE2A40DA811C74AE58EC98B23EA94BE5CB48DB2AB4E466429759C45684A9A443D9415747F0C07D5625FB1EF9C5CC087383E45391B1908C878C7E84724B20B4D4993343429FB04FD3D6B1D4D6171C431E9402431D29EB2374D5A02348D54AD363735B56CEDF87100183F3E7149A7131E0F000790782558676768BDDB962DC96713AEA808AD3EFBCD6FA8CA93621F7E98B8A4B8042F184CCE3446D19434BFFE1A00CACB1397DCB3877CDF4473DA679E0180A6A65493B1373484D6737676262E3C732600B4B65209CE680480D3A753328F3534254D92949A46405F7C41BEFF236149A7130E070C062C5C98926D00F2F3D1D404007FFA53E2C285853204471CE7D1A32918C71E9A922681668DF99123E4FBD58425FFF10F0058B2243D1B03545703404707D5E274F241AE26B6110F3E0800FFFB5F2AA6318776A4292B1341FFCE01893DD2DB6F03FDCF3E75445F78F060E2C2656500E074A6E7D2598776A449325B180CB20E4ADC8EF37800A0B434098BA2F3E4930070F264E29234FD3929FBF625630FB368479A848913139771BBA1836FAACE5D0A9492DFDDEEA8DD0DB71B00F4FA745A48A097111976880FD9E425BDC9385547EB3B2BF9FD3871024E278E1FC7D75F63F76E783CA580179251A371E3C20E217BA43DF8208A8BF3874F004A2B2BD369111940A091112949861DE2336C586A36318916A5E9F7E3E041ECDA854D9BA26F7B0600F8EAB659DF5CDC05C0643211C986FEE170C0E120BDFDD18000ECDEFD385A1E4279795AEAF53367D25F529368479A79D7FC73B0A761F76B28DA15F60F9309E5E5B8ED369497A3B0103A9DDF8FA222E022803C00A6969681C2C1204E9F0EED91B66F5FDFA79FDD70D851E9598745EB420552DE268DB43269065F49499A1E98C6868D42A83D1D950E22520A9119659B2D4E344E7FC1C477A0105D15B0F7BC60098BD024F17049AD2422EB9668A231C8BC2B7D4959CB85D9279BA5190808EDED52C5EC84710EA836D6EB3F4297509A64F63C143817B14D1A9249FD461FC3463F8D4E2FE22C223BA519915690844F7675D1C7B7F787519626942689EB898C67236B2FE40B54D66A1E6224CD89E93D71169185D2B4DB0744199EC18D38509A67D95FFFCF4928CD78C9082252BF51E42694B506927C4A9A560339ADC65608659534BDDE81A8F1686905E943DCFBC37B5B685ADB447E31032223041A3BFC9D32710381F857CAD8537A1167115922CD40202CAD608CAA8BBEC925FA42209FBE70BC669F3437A1C130D88389EBD1285D267D720E31EE586364C307922E15339BE3F81C12AE4B19EFDD7FCA0A9AC2E20692095A0BD274B1E11D6672B958793107434E435347CBF2AF5904F3D2145B9614892845F74643BF178EBE4DCE60881B4B9C09569AFDCD6814BABA066F0A931012B84ED95BD2EA7A5FB6A5293E63EAECE7F43D21B939830281811ADB6A4DE4FCFADFA8804EFFC89D0E2A4D4B209F9B72995BD8F0968660559AD2BCA8720645C843A51C7C065AE4FA1BF165D1EB85F6B843A8DF1DF03AF5B348E927FEEF73FA3E8AAC0485B216B865174C4A535A05CAF406A4B949D9F0024A9378AED2F6A438F1D4DE2EB85C82C321D86C61D96656A05FCBD469121226539622EBF36617EC4953ECF424951B58F422348702208E937E85B888DD1E73032BD1AD86B2CA889E96C23FD3245396423F63947530264D718825859CD5F4753A0040475F7B0E86E490B1D9049329F465B10836DBA00E9BD8C34FA44E5963F2F4E91AB31196A429D6E306432A379B7E32908477885DEF0C6D761122D6966F124401537E7A529E3E1F6776C18C34931862890D651E43224D71BB938C3F63517AD12CA3906E186205A3BDBE398119698ABE2B1DD36D641E3261E7400C8A93E68DC92C62BB33BCCA4FC2000D7780086C48537427698A50A0F428D2784D312D51C6BB14E24BD85F6D27E7B6C9219AEC00111890A6D8294DEB6DA649EF1B114A2CBE20998DC90D4FDAEEF58644463F8729F4570B196F1FAB8ADAD2143D4612E337894E9C30BDEFE02877B1BE359B33F9D4FBEBEF6F5EB211230D06190D19F1A369D8650AEA4B938C2FCBF218D488E97D637578A32EC010BB2349EC6D2ADB38A0142EB909E8C8FBA3D58EB988AAD214DB7719930019268CE59163AD0D92EE089809CF44B2159389A2B377C87B2DC5E68FF6D21047A09E34636D519B56C4188EA80A8BB36CADAB6B60B2272D9BA18BA715DB0CF9085CBF4DCE9602F2833EB31AF5A429F65332DC92173B37835D73C21595EDED616B3D52193FF07AC362E143739862EB816E903D93CD1FE650499AE2149B22EB5948B53EF889D22CF68D5821479A07763BED848DCB2558AD91E120617571FC3687043127BCC6165AC4224FE87F428A525787E666984C90A627C818C120C68C81C703A3119F7C32908E302F2F0F00CD1D0806B17E3D56AE0CCB06623442A70BA530F8C94F306A14D09FB95392C666A0BCD98CE79E1B9401C4E7C3881100E072C5C90ED2D989193300A0BD1D73E624B45713A8F03AA811951075BA25893BE0F50AEDED09628EA45F24FEC8E1885B0527581737D062CE8526A6881A5EB3B1112FBDA498CB14713A43290E2D16AC5801C8F19A83F1FBE1F38532D000686B0BFDBDAC2C947CB03F8D0DDDB98A8A80E88ED3E783C1008F47F91BA6364ABF0BAA6E322FF63A88FB51E70E4425C6024AD1D9A7B2F94696A2F883495479651A519D66B340B291A9654918D1562A4907FF734D97820AD264602B5AF191033B8142152D098374D5FBE7EFC5FEB8C9948BBA14949626334BA6C58A1238CB4A3E96FE28B7406020EF5D4EF57B2250569AE496B3916CCFEB255E931D8B4255CAEC321764AF24D5200A4A53D68A324500F28115E2648FBAB3D28180B0778E450056C0222B1049AB28284DF6C2B2490FDDE11898EC899BB726839019D17BE01080CB0577E466E332020577C0D8B50B009E7F5EB92BD271CF3D38750A562B003437A3A8088D8DF276214A85CE4E4C9A84B973E1F120CF704F50A71F7EED5CFE256D6D66911CCABD05F4395F9422E20E487324922E48E66AD5888CCA03D9EF48735CDB41C27428254D5999B29422EACB49822945811A0C82D59ACE5A3E22F13C11E5400D1E3D0B722EA2945664E517548A38F586CB15961F8668D4629111731471369246413ABD6E340A76FBA0314B5949E2348D5273E864DEDC66434D8D1297A323E11C7A30887DFBB07E3D9A9BC3FEAED7A3B2326CBA5C8A7462FDC891C8AD8B0C062C5982279F8CBD037149093C1E78BD7413F09A452969D6D4A0B5357EDC97F2C80A8A3B760C7BF660EB567474C8BE90C180F9F3316B16264FA6D8139BDC2B872395DD89348052D2CCCB03C09A27483AF2C8E783DF1F0ACD14638EA4903DB44810E7E8D13237AC7EF34D2C5BC65A0DA33C8AECB626EE4CCA922E5341A7834E17AA00D2AF9FDB6E03807DFB725C9A8A8C6B9E3E0D20B411382721F41BAC6A1A45A449F601D58ACBCC38E446B5B6AA6D87CA28224DFA1D433900454729275070A29234A13839494949494949494B4B8B9F7A0A5841697272188FC7E3F178162D5A545454545757E7743A131EC2A5C9306EB7DA166484E6E66683C13069D2A4EDDBB7C72B979639A5F6F6F63897201191393D10229316F46F3BAC755A5A5A62894A09AF795C816B688B896A1BA00CF9F9F9E5713AC769F19A0960752779E5EE805C40BDB37B9610A13AB3D9EC4A141EA9C86C102739E4CD6F66010683E1F9E79FAFAEAE2EA41820D3DA87E7B089D7EBFDF6DB6F2B2A2AE80F51509A393F294C8B18729055ECD8B1E3FCF9F30E87A3BABAFACA952B274E9C70BBDDCB962D1B33660C009D4EA793391DA88834F9A4B02C48C801C9CF9425ECD8B1A3A8A868F6ECD993274FBEFFFEFB57AE5CF9EB5FFF7AECD8B13367CE24D24C0245C63549C322E727856921210713B3A99B7EF8F06152595FB870E1E2C58B0B162C183972E4DEBD7BE748122E5EBC78F12499B2A64311698A9E3C3BAB2AA521CF8FE4EDCC12EAEBEBC90F7BF7EE9D3E7DFAD0A1436FB8E18669D3A69188D8C3870FAF5AB5AAAAAA6AE3C68DF4E754AAAD6934A2A303A74F3315E5CE28FBF6014071B1DA7624C3679F7DF6CB5FFE32E28F77DF7DF7DD77DF2DCB6542B9894AE2384955C589CFD1A300306182DA76C8261008FCF39FFFFCC52F7E417E4D300F9908A5A449AA2792258113876030B4F868F468B54DA165CF9E3D23468CB872E5CAFAF5EB7B7A7ACACACA009C3A75EADCB973A99C562969924EFAA64D0A5D2E7B39760C008CC62C1A6FBF7EFDFA5D77DD65B7DBCF9F3FDFD4D4F4F6DB6F7FFCF1C7DBB66DFBDDEF7E97CA6995FAFCA489E970C0EFE7A1B2F1D8B30700AAABD5B64306B367CFAEA8A8B878F122E98F5FBE7CB9B7B7F7A1871E4AF1B40A06C5994C0070F0A07257CC46B66E05809933D5B6431E45454563C78E253FDF7AEBADB7450B1B8F3A991E0705A5499A9BEBD72B77C5ACC3EF0F3534EFBA4B6D53D2C98913275E7BEDB5CECECEB6B6B6D75F7FDD4737F9A2E00E18E206398100230DA95476C0C808DBB763EEDCDCDBEA223A0A7A4D9D2EB4DE978CDB7106B37C39003CFBACDA763081B2FB0611AF603462E74EE52E1A1BB6BC267BB58ABA28BB3688B4EE3B3A94CBAC9A457CF4110098CD5C970465A5595818EAA73735297A5DF60906F1F2CB00F0D4536A9BC20A8A6F04E87663DC38E8F538754A75F7C05085DED282458B6030E0D021B54D6105C517FB969686B65CE4A3485248E4CE5FFFAAB61D0CA1C6F6A9640365061C272B5E93DC10EE32C3512345424505779C03048378E6190078F555B54D610B35BC26243BCF7775A938A5CE84D7145B99070EA8DEF8660A9512CB545484BAEA0D0DEA18C0087E3F162D02800F3FE4BA8C4025AF09C908B37A09DED5F79A246D3B9F998C867AE9B874BAD00E67D5D539BA66A8B333B4946FF56AB54D61115533C53DFD34F47A381CE85FF49443F8FD58B000006C361EC01A15F52A740219810760B7434E6A87B4A066857EFFFDE8E860279C8041D4CEAF595A0A9B0D00162CC8A11C0A6FBE898E0EE8F5D8B2456D53D8456DAF4920BD01A3119F7CA26447551DAF290E9CE5FCA655F151DB6B1256AF865E8F8E0EFCEA571AEF12B9DD215D5A2C5C97F161439A8585703842EAD47097C8E7C3CF7F0E00663356AC50DB1AD661A34227885D228B459927A76885EEF385A667156FB764296C784D426929EC760078E9253436AA6D4D5AE1BA940F4BD204505111A64E6DB43BB92E9382A50A5D44ECC366F8592A51A1777662C102AECB2460CC6B122A2AE0720DF4D9B377BC73FB76CC98C175991CEA48B3AFAF6FF3E6CD4F3CF144CC12A5A5037D7683019D9D0A5A970E8241D4D561EE5C00B058B07327D7A55C54A8D05F7DF5D59E9E1EBBDDDED3D3F3F9E79FC72BEAF7E3E18743092D2C163434A4F70167AA4277BB515D0D870300DADB21C9CCCB91411AF78691456D6DED8C1933A88A926D8700C16010126D36238BF4DF814020CC5AAF379D27CF31986C6B465053136A7A3A1C18370E75758C2E63773AF1D39F864283CD661C38C0B7804F85C8FA71D3A64D274E9C282929B9F7DE7BF7EFDFEFF3F9468F1EFDC8238FA862DC00A5A538750AEFBC8365CBD0DC8CF5EBD1D484850B5969C0F9FD58B224147C6930E0C30FF92464EA843DDA73E7CE5DBA7469FEFCF993274F7EE595576A6B6B2B2B2B753ADD6069EEDDBBD746228662F3F4D34F4F4CE3360EF9F9A8ADC5638FA1AE0EADAD58B408F5F5EA0BD4EDC6EBAFA3B939F4ABCDC6D00B93E5847583DE7FFFFDAAAAAA2FBFFC72E9D2A56EB7FBE69B6F3E76EC58494949F1A094F7DDDDDDDF7FFF7DFC538F193366C89021B1FEBB6CD9B283070F26E806C5A2B313CF3C13EA67E8F5686A4275751201B9297583DC6E34340CEC386336E395577850703A19DCFC349BCD353535996EE4CAE806C5C26E170C86509F0310CC66C16E97B5E568AC3B100FAF57B05AC3AE6BB1085D5DF24EC2A1204AD5B37BF7EEDADADAF8820E0683172E5C885FE6F6DB6FBFF1C61B937B61A8A8A8C0A143E8ECC45B6FA1B515CDCDA18AD562C1AC59983C399D3ECCEDC6175FE0BDF742235900F47A2C5D8AFA7AEE293344E4B8E6F9F3E7478C1871F4E851B28F412CEC76FBDFFEF6B7F8A77EEEB9E70CB177B34BA9421F8CDF8F3D7BB07C79A89627180C983F1FB36661D4A8A88B36E355E87E3F7C3E7CF105DADA22F789339BB170A1F2CB45728D48696EDAB4A9B6B6F6ECD9B399BEF092254B0E1E3CB87FFFFE349FD7E7C3CE9D51F40440AF476525CACA307E3CF9C3A2458B0084F5E7F6EDC3D1A303AE517AECC28558B810D3A7F35E8E32444AB3A1A1C1E3F1BCFBEEBB99BB645353D3C99327376FDE7CF5EAD59A9A9A828282A60CE53424B5705B1B8E1C09F3A694984CD0E9307B367EF6333E42A93C91D2BC74E9D2CD37DF5C5050A0964119C4E783C703A753FCC34B8B16950126AB15E28E0DC5C59830013A1D6F41AA0E9341714AA17EF60E4E6CB261A292939370697218854B93C3285C9A1C46E1D2E4300A97268751B834398CC2A5C961949C9E0EB65AAD5177EEE6B0404ECF0671588657E81C46E1D2E4300A97268751B834398CC2A5C961142E4D0EA370697218854B93C3285C9A1C46F97F9426DFB91E0A38ED0000000049454E44AE426082>|png>|.3par|||>|<label|fig2.18>The
+      von Mises distribution can be derived by considering \ a
+      two-dimensional Gaussian of the form <eqref|2.173>, whose density
+      contours are shown in blue and conditioning on the unit circle shown in
+      red.>
+    </padded-center>
+  </hidden>|<\shown>
+    \;
+  </shown>>
 </body>
 
 <\initial>
@@ -2329,7 +2844,13 @@
     <associate|2.135|<tuple|46|?>>
     <associate|2.136|<tuple|46|1>>
     <associate|2.140|<tuple|48|?>>
+    <associate|2.146|<tuple|49|?>>
     <associate|2.15|<tuple|8|16>>
+    <associate|2.154|<tuple|50|?>>
+    <associate|2.158|<tuple|51|?>>
+    <associate|2.159|<tuple|52|?>>
+    <associate|2.167|<tuple|53|?>>
+    <associate|2.173|<tuple|54|?>>
     <associate|2.18|<tuple|9|19>>
     <associate|2.20|<tuple|10|23>>
     <associate|2.29|<tuple|11|30>>
@@ -2371,8 +2892,14 @@
     <associate|auto-12|<tuple|9|?>>
     <associate|auto-13|<tuple|10|?>>
     <associate|auto-14|<tuple|11|?>>
-    <associate|auto-15|<tuple|12|?>>
+    <associate|auto-15|<tuple|12|1>>
+    <associate|auto-16|<tuple|13|?>>
+    <associate|auto-17|<tuple|14|?>>
+    <associate|auto-18|<tuple|15|?>>
+    <associate|auto-19|<tuple|16|?>>
     <associate|auto-2|<tuple|1|12>>
+    <associate|auto-20|<tuple|17|?>>
+    <associate|auto-21|<tuple|18|?>>
     <associate|auto-3|<tuple|2|17>>
     <associate|auto-4|<tuple|3|21>>
     <associate|auto-5|<tuple|2|26>>
@@ -2383,6 +2910,12 @@
     <associate|fig2.1|<tuple|1|12>>
     <associate|fig2.10|<tuple|10|?>>
     <associate|fig2.11|<tuple|11|?>>
+    <associate|fig2.13|<tuple|13|?>>
+    <associate|fig2.14|<tuple|14|?>>
+    <associate|fig2.15|<tuple|15|?>>
+    <associate|fig2.16|<tuple|16|?>>
+    <associate|fig2.17|<tuple|17|?>>
+    <associate|fig2.18|<tuple|18|?>>
     <associate|fig2.2|<tuple|2|17>>
     <associate|fig2.4|<tuple|4|36>>
     <associate|fig2.7|<tuple|7|1>>
@@ -2510,6 +3043,54 @@
       0.8 and variance 0.1, and the prior is chosen to have mean 0. In both
       the prior and the likelihood function, the variance is set to the true
       value.>|<pageref|auto-15>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|13>||Plot of the gamma
+      distribution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|Gam(\<lambda\>\|a,b)>>
+      defined by Eq. (<reference|2.146>) for various values of the parameters
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|a>>
+      and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|b>>.>|<pageref|auto-16>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|14>||Contour plot of
+      the normal-gamma distribution Eq. (<reference|2.154>) for parameter
+      values <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\><rsub|0>
+      = 0, \<beta\> = 2, a = 5>> and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|b
+      = 6>>.>|<pageref|auto-17>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|15>||Plot of Student's
+      t-distribution (<reference|2.159>) \ for
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\>
+      = 0>> and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\>
+      = 1>> for various values of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<nu\>>>.
+      The limit <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<nu\>
+      \<rightarrow\> \<infty\>>> corresponds to a Gaussian distribution with
+      mean <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<mu\>>>
+      and precision <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\>>>.>|<pageref|auto-18>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|16>||Illustration of
+      the robustness of Student's t-distribution compared to a Gaussian. (a)
+      Histogram distribution of 30 data points drawn from a Gaussian
+      distribution, together with the maximum likelihood fit obtained from a
+      t-distribution (red curve) and a Gaussian (green curve, largely hidden
+      by the red curve). Because the t-distribution contains the Gaussian as
+      a special case it gives almost the same solution as the Gaussian. (b)
+      The same data set but with three additional outlying data points
+      showing how the Gaussian (green curve) is strongly distorted by the
+      outliers, whereas the t-distribution (red curve) is relatively
+      unaffected.>|<pageref|auto-19>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|17>||Illustration of
+      the representation of values <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<theta\><rsub|n>>>
+      of a periodic variable as two dimensional vectors
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x<rsub|n>>>
+      living on the unit circle. Also shown is the average
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|<wide|x|\<bar\>>>>
+      of those vectors.>|<pageref|auto-20>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|18>||The von Mises
+      distribution can be derived by considering \ a two-dimensional Gaussian
+      of the form (<reference|2.173>), whose density contours are shown in
+      blue and conditioning on the unit circle shown in
+      red.>|<pageref|auto-21>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Binary
