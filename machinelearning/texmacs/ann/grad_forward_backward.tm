@@ -1,11 +1,13 @@
-<TeXmacs|2.1.4>
+<TeXmacs|2.1>
 
 <style|generic>
 
 <\body>
   <doc-data|<doc-title|Gradient, Forward and Backward>>
 
-  The neuralnetwork can be represented by a graph. Each node represents a
+  <section|Model>
+
+  The neural network can be represented by a graph. Each node represents a
   variable which can be regarded as a output of a function. The output node
   represents lost.
 
@@ -26,7 +28,7 @@
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|f<rsub|i>>|<cell|=>|<cell|<big|sum><rsub|<around*|{|j<around*|\|||\<nobracket\>>i\<leftarrow\>j|}>>f<rsub|j>>>|<row|<cell|f<rsub|i>>|<cell|=>|<cell|<around*|\<nobracket\>|w<rsub|i
-    j>*f<rsub|j>*|\|><rsub|i\<leftarrow\>j>>>|<row|<cell|f<rsub|i>>|<cell|=>|<cell|\<sigma\><around*|(|f<rsub|j>|)>>>>>
+    j>*f<rsub|j>*|\|><rsub|i\<leftarrow\>j><eq-number><label|linear>>>|<row|<cell|f<rsub|i>>|<cell|=>|<cell|\<sigma\><around*|(|f<rsub|j>|)>>>>>
   </eqnarray*>
 
   As for input node <math|i>, \ <math|f<rsub|i>> is an independent variable.
@@ -41,12 +43,12 @@
     <tformat|<table|<row|<cell|E>|<cell|=>|<cell|f<rsub|e><rsub|>>>>>
   </eqnarray*>
 
-  \;
+  <section|Grad>
 
   There are two ways to compute the gradient. One is forwad, like the
   computing process of the functions, but functions are substuted by their
   gradients. The other is backward where the gradients are computed in the
-  inverted order.
+  inverted order. The recursive representation is listed below.
 
   Forward:
 
@@ -59,7 +61,8 @@
   where
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|E>|<cell|=>|<cell|f<rsub|e>>>|<row|<cell|\<Delta\><rsub|q>>|<cell|=>|<cell|<frac|\<partial\>f<rsub|q>|\<partial\>w<rsub|i
+    <tformat|<table|<row|<cell|E>|<cell|=>|<cell|f<rsub|e>>>|<row|<cell|\<Delta\><rsub|e>>|<cell|=>|<cell|<frac|\<partial\>f<rsub|e>|\<partial\>w<rsub|i
+    j>>>>|<row|<cell|\<Delta\><rsub|q>>|<cell|=>|<cell|<frac|\<partial\>f<rsub|q>|\<partial\>w<rsub|i
     j>>>>>>
   </eqnarray*>
 
@@ -75,8 +78,10 @@
 
   <\eqnarray*>
     <tformat|<table|<row|<cell|\<delta\><rsub|j>>|<cell|=>|<cell|<frac|\<partial\>E|\<partial\>f<rsub|i>>>>|<row|<cell|<frac|\<partial\>f<rsub|i>|\<partial\>w<rsub|i
-    j>>>|<cell|=>|<cell|f<rsub|j>>>>>
+    j>>>|<cell|=>|<cell|f<rsub|j><eq-number><label|grad-wij>>>>>
   </eqnarray*>
+
+  <eqref|grad-wij> is deduced by <eqref|linear>.
 
   and
 
@@ -109,6 +114,8 @@
     j>>>|<cell|=>|<cell|<big|sum><rsub|<around*|{|p<around*|\||e\<leftarrow\>p|\<nobracket\>>|}>><around*|(|<frac|\<partial\>f<rsub|e>|\<partial\>f<rsub|p>><big|sum><rsub|<around*|{|q<around*|\||p\<leftarrow\>q|\<nobracket\>>|}>><around*|(|<frac|\<partial\>f<rsub|p>|\<partial\>f<rsub|q>>\<cdots\><frac|\<partial\>f<rsub|k>|\<partial\>f<rsub|i>>f<rsub|j>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|<around*|{|q<around*|\||p\<leftarrow\>q|\<nobracket\>>|}>><around*|(|<big|sum><rsub|<around*|{|p<around*|\||e\<leftarrow\>p|\<nobracket\>>|}>><frac|\<partial\>f<rsub|e>|\<partial\>f<rsub|p>><frac|\<partial\>f<rsub|p>|\<partial\>f<rsub|q>>|)>\<cdots\><frac|\<partial\>f<rsub|k>|\<partial\>f<rsub|i>>f<rsub|j>>>>>
   </eqnarray*>
 
+  <section|Example>
+
   Example:
 
   <\session|dot|default>
@@ -139,10 +146,10 @@
     <tformat|<table|<row|<cell|f<rsub|2>>|<cell|\<leftarrow\>>|<cell|w<rsub|21>f<rsub|1>>>|<row|<cell|f<rsub|3>>|<cell|\<leftarrow\>>|<cell|\<sigma\><around*|(|f<rsub|2>|)>>>|<row|<cell|f<rsub|4>>|<cell|\<leftarrow\>>|<cell|w<rsub|43>f<rsub|3>>>|<row|<cell|f<rsub|5>>|<cell|\<leftarrow\>>|<cell|w<rsub|53>f<rsub|3>>>|<row|<cell|f<rsub|6>>|<cell|\<leftarrow\>>|<cell|f<rsub|4>+f<rsub|5>>>|<row|<cell|f<rsub|7>>|<cell|\<leftarrow\>>|<cell|\<sigma\><around*|(|f<rsub|6>|)>>>>>
   </eqnarray*>
 
-  then
+  backward:
 
   <\eqnarray*>
-    <tformat|<table|<row|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>w<rsub|21>>>|<cell|=>|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><big|sum><rsub|i><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><big|sum><rsub|j><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|<big|sum><rsub|i><frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|<big|sum><rsub|i=4,5><frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><big|sum><rsub|k><frac|\<partial\>f<rsub|j>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k><around*|(|<big|sum><rsub|j><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>f<rsub|k>>|)><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k><around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)>\<sigma\><rprime|'>f<rsub|1>>>>>
+    <tformat|<table|<row|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>w<rsub|21>>>|<cell|=>|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><big|sum><rsub|i><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><big|sum><rsub|j><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|<big|sum><rsub|i><frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|<big|sum><rsub|i=4,5><frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><big|sum><rsub|k><frac|\<partial\>f<rsub|j>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k><around*|(|<big|sum><rsub|j=3><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>f<rsub|k>>|)><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k=2><around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)>\<sigma\><rprime|'>f<rsub|1>>>>>
   </eqnarray*>
 
   \;
@@ -153,3 +160,13 @@
     <associate|page-medium|paper>
   </collection>
 </initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-2|<tuple|2|?>>
+    <associate|auto-3|<tuple|3|?>>
+    <associate|grad-wij|<tuple|2|?>>
+    <associate|linear|<tuple|1|?>>
+  </collection>
+</references>
