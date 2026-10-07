@@ -3138,9 +3138,9 @@
     The function <math|g(\<b-eta\>)> can be interpreted as the coefficient
     that ensures that the distribution is normalized and therefore satisfies
 
-    <\equation*>
-      g(\<b-eta\>)<big|int>h(\<b-x\>)exp{\<b-eta\><rsup|T>\<b-u\>(\<b-x\>)}\<mathd\>\<b-x\>=1
-    </equation*>
+    <\equation>
+      g(\<b-eta\>)<big|int>h(\<b-x\>)exp{\<b-eta\><rsup|T>\<b-u\>(\<b-x\>)}\<mathd\>\<b-x\>=1<label|2.195>
+    </equation>
 
     where the integration is replaced by summation if <math|\<b-x\>> is a
     discrete variable.
@@ -3286,7 +3286,7 @@
 
     <\equation*>
       \ \<b-eta\> = (\<eta\><rsub|1>, . . . ,
-      \<eta\><rsub|M\<minus\>1>)<rsup|T>
+      \<eta\><rsub|M\<minus\>1>,0)<rsup|T>
     </equation*>
 
     \ in which
@@ -3294,10 +3294,389 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<b-u\><around*|(|\<b-x\>|)>>|<cell|=>|<cell|\<b-x\>>>|<row|<cell|h<around*|(|\<b-x\>|)>>|<cell|=>|<cell|1>>|<row|<cell|g<around*|(|\<b-eta\>|)>>|<cell|=>|<cell|<around*|(|1+<big|sum><rsub|k=1><rsup|M-1>exp<around*|(|\<eta\><rsub|k>|)>|)><rsup|-1>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
-    <tit|Gaussian distribution>
+  </hidden>|<\hidden>
+    <tit|univariate Gaussian>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|x\|\<mu\>,\<sigma\><rsup|2>|)>>|<cell|=>|<cell|<frac|1|<around*|(|2\<pi\>\<sigma\><rsup|2>|)><rsup|1/2>>exp<around*|{|-<frac|1|2\<sigma\><rsup|2>><around*|(|x-\<mu\>|)><rsup|2>|}>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|<around*|(|2\<pi\>\<sigma\><rsup|2>|)><rsup|1/2>>exp<around*|{|-<frac|x<rsup|2>-2\<mu\>x+\<mu\><rsup|2>|2\<sigma\><rsup|2>>|}>>>|<row|<cell|\<b-eta\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|<frac|\<mu\>|\<sigma\><rsup|2>>>|<cell|-<frac|1|2\<sigma\><rsup|2>>>>>>><rsup|T>>>|<row|<cell|\<b-u\><around*|(|x|)>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|x>|<cell|x<rsup|2>>>>>><rsup|T>>>|<row|<cell|h<around*|(|x|)>>|<cell|=>|<cell|<around*|(|2\<pi\>|)><rsup|-1/2>>>|<row|<cell|g<around*|(|\<b-eta\>|)>>|<cell|=>|<cell|<around*|(|-2\<eta\><rsub|2>|)><rsup|1/2>exp<around*|(|<frac|\<eta\><rsub|1><rsup|2>|4\<eta\><rsub|2>>|)>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|Maximum likelihood>
+
+    Consider the problem of estimating the parameter vector <math|\<b-eta\>>
+    in the general exponential family distribution <eqref|2.194> using the
+    technique of maximum likelihood.
+
+    Taking the gradient of both sides of Eq. <eqref|2.195> with respect to
+    <math|\<b-eta\>>, we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|0>|<cell|=>|<cell|\<nabla\>g<around*|(|\<b-eta\>|)><big|int>h<around*|(|x|)>exp<around*|{|\<b-eta\><rsup|T>\<b-u\><around*|(|x|)>|}>\<mathd\>x+g<around*|(|\<b-eta\>|)><big|int>h<around*|(|x|)>exp<around*|{|\<b-eta\><rsup|T>\<b-u\><around*|(|x|)>|}>\<b-u\><around*|(|x|)>\<mathd\>x>>|<row|<cell|-<frac|\<nabla\>g<around*|(|\<b-eta\>|)>|g<around*|(|\<b-eta\>|)>>>|<cell|=>|<cell|g<around*|(|\<b-eta\>|)><big|int>h<around*|(|x|)>exp<around*|{|\<b-eta\><rsup|T>\<b-u\><around*|(|x|)>|}>\<b-u\><around*|(|x|)>\<mathd\>x>>|<row|<cell|-\<nabla\>ln
+      g<around*|(|\<b-h\>|)>>|<cell|=>|<cell|\<bbb-E\><around*|[|\<b-u\><around*|(|x|)>|]><eq-number><label|2.226>>>>>
+    </eqnarray*>
+
+    Note that the covariance of <math|\<b-u\>(x)> can be expressed in terms
+    of the second derivatives of <math|g(\<b-eta\>)>, and similarly for
+    higher order moments.Thus, provided we can normalize a \ distribution
+    from the exponential family, we can always find its moments by simple
+    differentiation.
+  </hidden>|<\hidden>
+    Consider a set of independent identically distributed data denoted by
+    <math|X = {\<b-x\><rsub|1>, . . . , \<b-x\><rsub|N>}>, for which the
+    likelihood function is given by \ 
+
+    <\equation>
+      p(X\|\<b-eta\>) = \ <around*|(|<big|prod><rsub|n=1><rsup|N>h<around*|(|\<b-x\><rsub|n>|)>|)>g<around*|(|\<b-eta\>|)><rsup|N>exp<around*|{|\<b-eta\><rsup|T><big|sum><rsub|n=1><rsup|N>\<b-u\><around*|(|\<b-x\><rsub|n>|)>|}><label|2.227>
+    </equation>
+
+    Setting the gradient of <math|ln p(X\|\<b-eta\>)> with respect to
+    <math|\<b-eta\>> to zero, we get the following condition to be satisfied
+    by the maximum likelihood estimator <math|\<b-eta\><rsub|ML>>
+
+    <\equation>
+      \ \<minus\>\<nabla\> ln g(\<b-eta\><rsub|ML>)
+      =<frac|1|N><big|sum><rsub|n=1><rsup|N>\<b-u\><around*|(|\<b-x\><rsub|n>|)><label|2.228>
+    </equation>
+  </hidden>|<\hidden>
+    <tit|sufficient statistics>
+
+    <unroll-greyed|<\shown>
+      \;
+    </shown>|<\shown>
+      We see that the solution for the maximum likelihood estimator depends
+      on the data only through <math|<big|sum><rsub|n>\<b-u\><around*|(|\<b-x\><rsub|n>|)>>,
+      which \ is therefore called the <em|sufficient statistic> of the
+      distribution <eqref|2.194>.
+    </shown>|<\shown>
+      We do not need to store the entire data set itself but only the value
+      of the sufficient statistic.
+    </shown>|<\shown>
+      For the Bernoulli distribution, for example, the function
+      <math|\<b-u\>(x)> is given just by <math|x> and so we need only keep
+      the sum of the data points <math|{x<rsub|n>}>, whereas for the Gaussian
+      <math|\<b-u\>(x) = (x, x<rsup|2>)<rsup|T>>, and so we should keep both
+      the sum of <math|{x<rsub|n>}> and the sum of
+      <math|{x<rsup|2><rsub|n>}>.
+    </shown>|<\shown>
+      If we consider the limit <math|N \<rightarrow\> \<infty\>>, then the
+      right-hand side of Eq. <eqref|2.228> becomes
+      <math|\<bbb-E\>[\<b-u\>(x)]>, and so by comparing with Eq.
+      <eqref|2.226> we see that in this limit <math|\<b-eta\><rsub|ML>> will
+      equal the true value <math|\<b-eta\>>.
+    </shown>>
 
     \;
+  </hidden>|<\hidden>
+    <tit|Conjugate priors>
+
+    For example in the context of the <with|color|blue|Bernoulli>
+    distribution (for which the conjugate prior is the <with|color|blue|beta>
+    distribution) or the <with|color|blue|Gaussian> (where the conjugate
+    prior for the mean is a <with|color|blue|Gaussian>, and the conjugate
+    prior for the precision is the <with|color|blue|Wishart> distribution).
+
+    In general, for a given probability distribution <math|p(x\|\<b-eta\>)>,
+    we can seek a prior <math|p(\<b-eta\>)> that is conjugate to the
+    likelihood function, so that the posterior distribution has the same
+    functional form as the prior.
+  </hidden>|<\hidden>
+    For any member of the exponential family <eqref|2.194>, there exists a
+    conjugate prior that can be written in the form \ 
+
+    <\equation*>
+      p(\<b-eta\>\|\<b-chi\>,\<nu\>) = f (\<b-chi\>,
+      \<nu\>)g(\<b-eta\>)<rsup|\<nu\>> exp {\<nu\>\<b-eta\><rsup|T>\<b-chi\>}
+    </equation*>
+
+    where <math|f (\<b-chi\>, \<nu\>)> is a normalization coefficient,
+    <math|g<around*|(|\<b-eta\>|)>> is the same function as appears in Eq.
+    <eqref|2.194>.
+
+    To see that this is indeed conjugate, let us multiply the prior by the
+    likelihood function <eqref|2.227> to obtain the posterior distribution,
+    up to a normalization coefficient, in the form \ 
+
+    <\equation*>
+      p(\<b-eta\>\|X, \<b-chi\>, \<nu\>) \<propto\>
+      g<around*|(|\<b-eta\>|)><rsup|\<nu\>+N>
+      exp<around*|{|\<b-eta\><rsup|T><around*|(|\<nu\>\<b-chi\>+<big|sum><rsub|n=1><rsup|N>\<b-u\><around*|(|\<b-x\><rsub|n>|)>|)>|}>
+    </equation*>
+
+    \ \ This again takes the same functional form as the prior, confirming
+    conjugacy.
+
+    Furthermore, we see that the parameter <math|\<nu\>> can be interpreted
+    as an effective number of pseudo-observations in the prior, each of which
+    has a value for the sufficient statistic <math|\<b-u\>(x)> given by
+    <math|\<b-chi\>>.
+  </hidden>|<\hidden>
+    <tit|Noninformative priors>
+
+    In some applications of probabilistic inference, we may have prior
+    knowledge that can be conveniently expressed through the prior
+    distribution.
+
+    For example, if the prior assigns zero probability to some value of
+    variable, then the posterior distribution will necessarily also assign
+    zero probability to that value, irrespective of any subsequent
+    observations of data.
+
+    In many cases, however, we may have little idea of what form the
+    distribution should take.
+
+    We may then seek a form of prior distribution, called a
+    <em|noninformative prior>, which is intended to have as little influence
+    on the posterior distribution as possible.
+
+    This is sometimes referred to as `<em|letting the data speak for
+    themselves>'.
+  </hidden>|<\hidden>
+    <tit|improper prior>
+
+    If we have a distribution <math|p(x\|\<lambda\>)> governed by a parameter
+    <math|\<lambda\>>, we might be tempted to propose a prior distribution
+    <math|p(\<lambda\>) = const> as a suitable prior.
+
+    If <math|\<lambda\>> is a discrete variable with <math|K> states, this
+    simply amounts to setting the prior probability of each state to
+    <math|1/K>.
+
+    In the case of continuous parameters, however, there are two potential
+    difficulties with this approach.
+
+    The first is that, if the domain of <math|\<lambda\>> is unbounded, this
+    prior distribution cannot be correctly normalized because the integral
+    over \<lambda\> diverges.Such priors are called <em|improper>.
+
+    In practice, improper priors can often be used provided the corresponding
+    posterior distribution is proper, i.e., that it can be correctly
+    normalized.
+
+    For instance, if we put a uniform prior distribution over the mean of a
+    Gaussian, then the posterior distribution for the mean, once we have
+    observed at least one data point, will be proper.
+  </hidden>|<\hidden>
+    <tit|transformation behaviour>
+
+    A second difficulty arises from the transformation behaviour of a
+    probability density under a nonlinear change of variables, given by
+    (1.27).
+
+    If a function <math|h(\<lambda\>)> \ is constant, and we change variables
+    to <math|\<lambda\> = \<eta\><rsup|2>>, then <math|<wide|h|^>(\<eta\>) =
+    h(\<eta\><rsup|2>)> will also be constant. However, if we choose the
+    density <math|p<rsub|\<lambda\>>(\<lambda\>)> to be constant, then the
+    density of <math|\<eta\>> will be given, from (1.27), by \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<rsub|\<eta\>>(\<eta\>) >|<cell|=>|<cell|
+      p<rsub|\<lambda\>>(\<lambda\>) \ <around*|\||<frac|\<mathd\>\<lambda\>|\<mathd\>\<eta\>>|\|>>>|<row|<cell|>|<cell|=>|<cell|p<rsub|\<lambda\>>(\<eta\><rsup|2>)2\<eta\>
+      >>|<row|<cell|>|<cell|\<propto\>>|<cell|\<eta\>>>>>
+    </eqnarray*>
+
+    and so the density over <math|\<eta\>> will not be constant.
+
+    \;
+  </hidden>|<\hidden>
+    This issue does not arise when we use maximum likelihood, because the
+    likelihood function <math|p(x\|\<lambda\>)> is a simple function of
+    <math|\<lambda\>> and so we are free to use any convenient
+    parameterization.
+
+    If, however, we are to choose a prior distribution that is constant, we
+    must take care to use an appropriate representation for the parameters.
+  </hidden>|<\hidden>
+    <tit|translation invariance>
+
+    If a density takes the form \ 
+
+    <\equation*>
+      p(x\|\<mu\>) = f (x \<minus\> \<mu\>)
+    </equation*>
+
+    then the parameter <math|\<mu\>> is known as a location parameter.
+
+    This family of densities exhibits translation invariance because if we
+    shift <math|x> by a constant to give <math|<wide|x|^> = x + c>, then \ 
+
+    <\equation*>
+      p(<wide|x|^>\|<wide|\<mu\>|^>) = f (<wide|x|^>
+      \<minus\><wide|\<mu\>|^>)
+    </equation*>
+
+    where we have defined <math|<wide|\<mu\>|^> = \<mu\> + c.>
+
+    Thus the density takes the same form in the new variable as in the
+    original one, and so the density is independent of the choice of origin.
+  </hidden>|<\hidden>
+    We would like to choose a prior distribution that reflects this
+    translation invariance property, and so we choose a prior that assigns
+    equal probability mass to an interval
+    <math|A\<leqslant\>\<mu\>\<leqslant\>B> as to the shifted interval
+    <math|A-c\<leqslant\>\<mu\>\<leqslant\>B-c>. This implies
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<big|int><rsub|A><rsup|B>p<around*|(|\<mu\>|)>\<mathd\>\<mu\>>|<cell|=>|<cell|<big|int><rsub|A-c><rsup|B-c>p<around*|(|\<mu\>|)>\<mathd\>\<mu\>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|A><rsup|B>p<around*|(|\<mu\>-c|)>\<mathd\>\<mu\>>>>>
+    </eqnarray*>
+
+    and because this must hold for all choices of <math|A> and <math|B>, we
+    have \ 
+
+    <\equation*>
+      p(\<mu\> \<minus\> c) = p(\<mu\>)
+    </equation*>
+
+    which implies that <math|p(\<mu\>)> is constant.
+  </hidden>|<\hidden>
+    An example of a location parameter would be the mean <math|\<mu\>> of a
+    Gaussian distribution.
+
+    As we have seen, the conjugate prior distribution for <math|\<mu\>> in
+    this case is a Gaussian
+
+    <\equation*>
+      p(\<mu\>\|\<mu\><rsub|0>, \<sigma\><rsub|0><rsup|2>)= N
+      (\<mu\>\|\<mu\><rsub|0>, \<sigma\><rsub|0><rsup|2>) ,
+    </equation*>
+
+    and we obtain a \ noninformative prior by taking the limit
+    <math|\<sigma\><rsub|0><rsup|2> \<rightarrow\> \<infty\>>.
+
+    This gives a posterior distribution over <math|\<mu\>> in which the
+    contributions from the prior vanish.
+  </hidden>|<\hidden>
+    <tit|scale invariance>
+
+    consider a density of the form \ 
+
+    <\equation*>
+      p(x\|\<sigma\>) = <frac|1|\<sigma\>>f<around*|(|<frac|x|\<sigma\>>|)>\ 
+    </equation*>
+
+    \ \ where <math|\<sigma\> \<gtr\> 0>. Note that this will be a normalized
+    density provided <math|f (x)> is correctly \ normalized. The parameter
+    <math|\<sigma\>> is known as a scale parameter, and the density exhibits
+    \ <em|scale invariance> because if we scale <math|x> by a constant to
+    give <math|<wide|x|^> = c x>, then
+
+    <\equation*>
+      p<around*|(|<wide|x|^>\|<wide|\<sigma\>|^>|)>=<frac|1|<wide|\<sigma\>|^>>f<around*|(|<frac|<wide|x|^>|<wide|\<sigma\>|^>>|)>
+    </equation*>
+
+    where we have defined <math|<wide|\<sigma\>|^> = c\<sigma\>>.
+  </hidden>|<\hidden>
+    This transformation corresponds to a change of scale, and we would like
+    to choose a prior distribution that reflects this scale invariance.
+
+    If we consider an interval <math|A\<leqslant\>\<sigma\>\<leqslant\>B>,
+    and a scaled interval <math|A/c\<leqslant\>\<sigma\>\<leqslant\>B/c>,
+    then the prior should assign equal probability mass to these two
+    intervals. Thus we have \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<big|int><rsub|A><rsup|B>p<around*|(|\<sigma\>|)>\<mathd\>\<sigma\>>|<cell|=>|<cell|<big|int><rsub|A/c><rsup|B/c>p<around*|(|\<sigma\>|)>\<mathd\>\<sigma\>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|A><rsup|B>p<around*|(|<frac|\<sigma\>|c>|)><frac|1|c>\<mathd\>\<sigma\>>>>>
+    </eqnarray*>
+
+    \ \ and because this must hold for choices of <math|A> and <math|B>, we
+    have \ 
+
+    <\equation*>
+      p(\<sigma\>) = p<around*|(|<frac|\<sigma\>|c>|)><frac|1|c>
+    </equation*>
+
+    and hence <math|p(\<sigma\>) \<propto\> 1/\<sigma\>>.\ 
+  </hidden>|<\hidden>
+    Note that again this is an improper prior because the integral of the
+    distribution over <math|0\<leqslant\>\<sigma\>\<leqslant\>\<infty\>> is
+    divergent.
+
+    It is sometimes also convenient to think of the prior distribution for a
+    scale parameter in terms of the density of the log of the parameter.
+
+    Using the transformation rule (1.27) for densities we see that <math|p(ln
+    \<sigma\>) = const>. Thus, for this prior there is the same probability
+    mass in the range <math|1\<leqslant\>\<sigma\>\<leqslant\>10> as in the
+    range <math|10\<leqslant\>\<sigma\>\<leqslant\>100> and in
+    <math|100\<leqslant\>\<sigma\>\<leqslant\>1000>.
+  </hidden>|<\hidden>
+    An example of a scale parameter would be the standard deviation
+    <math|\<sigma\>> of a Gaussian distribution, after we have taken account
+    of the location parameter <math|\<mu\>>, because \ 
+
+    <\equation*>
+      N (x\|\<mu\>, \<sigma\><rsup|2>) \<propto\> \<sigma\><rsup|\<minus\>1>
+      exp {\<minus\>(<wide|x|~>/\<sigma\>)<rsup|2>}
+    </equation*>
+
+    where \ <math|<wide|x|~> = x \<minus\> \<mu\>>.
+
+    As discussed earlier, it is often more convenient to work in terms of the
+    precision <math|\<lambda\> = 1/\<sigma\><rsup|2>> rather than
+    <math|\<sigma\>> itself.
+
+    Using the transformation rule for densities, we see that a distribution
+    <math|p(\<sigma\>) \<propto\> 1/\<sigma\>> corresponds to a distribution
+    over <math|\<lambda\>> of the form <math|p(\<lambda\>) \<propto\>
+    1/\<lambda\>>.
+
+    We have seen that the conjugate prior for <math|\<lambda\>> was the gamma
+    distribution <math|Gam(\<lambda\>\|a<rsub|0>, b<rsub|0>)> given by Eq.
+    <eqref|2.146>.
+
+    The noninformative prior is obtained \ as the special case
+    <math|a<rsub|0>=b<rsub|0>= 0>.
+
+    If we examine the results for the posterior distribution of
+    <math|\<lambda\>>, we see that for <math|a<rsub|0>=b<rsub|0>= 0>, the
+    posterior depends only on terms arising from the data and not from the
+    prior.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Nonparametric Methods>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|histogram>
+
+    Standard histograms simply partition continuous variable <math|x> into
+    distinct bins of width <math|\<#2206\><rsub|i>> and then count the number
+    <math|n<rsub|i>> of observations of <math|x> falling in bin <math|i>.
+
+    In order to turn this count into a normalized probability density, we
+    simply divide by the total number <math|N> of observations and by the
+    width <math|\<#2206\><rsub|i>> of the bins to obtain probability values
+    for each bin given by \ 
+
+    <\equation*>
+      p<rsub|i>=<frac|n<rsub|i>|N\<Delta\><rsub|i>>
+    </equation*>
+
+    for which it is easily seen that
+
+    <\equation*>
+      <big|int>p(x)\<mathd\>x = 1.
+    </equation*>
+
+    This gives a model for the density <math|p(x)> that is constant over the
+    width of each bin, and often the bins are chosen to have the same width
+    <math|\<#2206\><rsub|i> = \<#2206\>>.
+  </hidden>|<\shown>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_24_histogram.png|.5par|||>|An
+      illustration of the histogram approach \ to density estimation, in
+      which a data set of 50 data points is generated from the distribution
+      shown by the green curve. Histogram density estimates with a common bin
+      width \<#2206\> are shown for various values of \<#2206\>.>
+    </padded-center>
   </shown>>
 </body>
 
@@ -3337,8 +3716,12 @@
     <associate|2.188|<tuple|57|1>>
     <associate|2.189|<tuple|58|?>>
     <associate|2.194|<tuple|59|?>>
-    <associate|2.199|<tuple|60|1>>
+    <associate|2.195|<tuple|60|?>>
+    <associate|2.199|<tuple|61|1>>
     <associate|2.20|<tuple|10|23>>
+    <associate|2.226|<tuple|62|?>>
+    <associate|2.227|<tuple|63|?>>
+    <associate|2.228|<tuple|64|?>>
     <associate|2.29|<tuple|11|30>>
     <associate|2.3|<tuple|1|7>>
     <associate|2.34|<tuple|12|33>>
@@ -3392,6 +3775,8 @@
     <associate|auto-25|<tuple|22|1>>
     <associate|auto-26|<tuple|23|?>>
     <associate|auto-27|<tuple|4|?>>
+    <associate|auto-28|<tuple|5|?>>
+    <associate|auto-29|<tuple|24|?>>
     <associate|auto-3|<tuple|2|17>>
     <associate|auto-4|<tuple|3|21>>
     <associate|auto-5|<tuple|2|26>>
@@ -3638,6 +4023,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>The
       Exponential Family> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-27><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>Nonparametric
+      Methods> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-28><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
