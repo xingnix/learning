@@ -2742,12 +2742,23 @@
     Note that <math|<wide|\<b-x\>|\<wide-bar\>>> will typically lie inside
     the unit circle.
   </hidden>|<\hidden>
-    The Cartesian coordinates of the observations are given by
-    \ <math|\<b-x\><rsub|n> = (cos \<theta\><rsub|n>, sin \<theta\><rsub|n>)>
-    , and we can write the Cartesian coordinates of the sample mean in the
-    form <math|<wide|\<b-x\>|\<wide-bar\>> = (<wide|r|\<wide-bar\>> cos
-    \<theta\>,<wide|r|\<wide-bar\>> sin \<theta\>)>.\ 
+    \;
 
+    The Cartesian coordinates of the observations are given by
+
+    <\equation*>
+      \<b-x\><rsub|n> = (cos \<theta\><rsub|n>, sin \<theta\><rsub|n>) ,
+    </equation*>
+
+    and we can write the Cartesian coordinates of the sample mean in the form
+
+    <\equation*>
+      <wide|\<b-x\>|\<wide-bar\>> = (<wide|r|\<wide-bar\>> cos
+      \<theta\>,<wide|r|\<wide-bar\>> sin \<theta\>).
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
     Substituting into Eq. <eqref|2.167> and equating the <math|x<rsub|1>> and
     <math|x<rsub|2>> components then gives \ 
 
@@ -2960,9 +2971,9 @@
 
     Consider a superposition of <math|K> Gaussian densities of the form \ 
 
-    <\equation*>
-      p(x) = <big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>\<cal-N\><around*|(|x\|\<mu\><rsub|k>,\<Sigma\><rsub|k>|)>
-    </equation*>
+    <\equation>
+      p(x) = <big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>\<cal-N\><around*|(|x\|\<mu\><rsub|k>,\<Sigma\><rsub|k>|)><label|2.188>
+    </equation>
 
     which is called a <em|mixture of Gaussians>.
 
@@ -2982,7 +2993,7 @@
       Gaussians which has been fitted to the data by maximum likelihood which
       gives a better representation of the data.>
     </padded-center>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     \;
@@ -2994,9 +3005,300 @@
       of a Gaussian mixture distribution \ in one dimension showing three
       Gaussians (each scaled by a coefficient) in blue and their sum in red.>
     </padded-center>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_23_mixture_gaussian_2D_surface.png|.93par|||>|Illustration
+      of a mixture of 3 Gaussians in a two-dimensional space. (a) Contours of
+      constant density for each of the mixture components, in which the 3
+      components are denoted red, blue and green, and the values of the
+      mixing coefficients are shown below each component. (b) Contours of the
+      marginal probability density <math|p(x)> of the mixture distribution.
+      (c) A surface plot of the distribution <math|p(x)>.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|<em|mixing coefficients>>
+
+    The parameters <math|\<pi\><rsub|k>> in Eq. <eqref|2.188> are called
+    <em|mixing coefficients>.
+
+    Integrate both sides of Eq. <eqref|2.188> with respect to <math|x>, and
+    note that both <math|p(x)> and the individual Gaussian components are
+    normalized,\ 
+
+    <\equation>
+      <big|sum><rsub|k=1><rsup|K>\<pi\><rsub|k>=1<label|2.189>
+    </equation>
+
+    Also, \ given that <math|N(x\|\<mu\><rsub|k>, \<Sigma\><rsub|k>) \<gtr\>
+    0>, a sufficient condition for the requirement <math|p(x)\<gtr\>0> is
+    that <math|\<pi\><rsub|k>\<gtr\>0> for all <math|k>.
+
+    Combining this with the condition <eqref|2.189> we obtain
+
+    <\equation*>
+      0\<leqslant\>\<pi\><rsub|k>\<leqslant\>1.
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|prior>
+
+    From the sum and product rules, the marginal density is given by \ 
+
+    <\equation*>
+      p(x) =<big|sum><rsub|k=1><rsup|K>p<around*|(|x\|k|)>p<around*|(|k|)>
+    </equation*>
+
+    which is equivalent to Eq. <eqref|2.188>\ 
+
+    <\description>
+      <item*|prior probability of picking the k'th component,>
+
+      <\equation*>
+        \<pi\><rsub|k> = p(k)
+      </equation*>
+
+      <item*|the probability of <math|x> conditioned on <math|k>>
+
+      <\equation*>
+        \<cal-N\>(x\|\<mu\><rsub|k>, \<Sigma\><rsub|k>)=p(x\|k)
+      </equation*>
+    </description>
+
     \;
-  </hidden>>
+  </hidden>|<\hidden>
+    <tit|posterior>
+
+    The posterior probabilities <math|p(k\|x)> are known as
+    <em|responsibilities>.
+
+    From Bayes' theorem these are given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<gamma\><rsub|k><around*|(|x|)>>|<cell|\<equiv\>>|<cell|p<around*|(|k\|x|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|p<around*|(|k|)>p<around*|(|x\|k|)>|<big|sum><rsub|l>p<around*|(|l|)>p<around*|(|x\|l|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<pi\><rsub|k>\<cal-N\><around*|(|x\|\<mu\><rsub|k>,\<Sigma\><rsub|k>|)>|<big|sum><rsub|l>\<pi\><rsub|l>\<cal-N\><around*|(|x\|\<mu\><rsub|l>,\<Sigma\><rsub|l>|)>>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|liklihood>
+
+    The form of the Gaussian mixture distribution is governed by the
+    parameters <math|\<b-pi\>>, <math|\<b-mu\>> and <math|\<b-Sigma\>>, where
+    <math|\<b-pi\> \<equiv\> {\<pi\><rsub|1>, . . . , \<pi\><rsub|K>}>,
+    <math|\<b-mu\>\<equiv\> {\<b-mu\><rsub|1>, . . . ,\<b-mu\><rsub|K>}> and
+    <math|\<b-Sigma\>\<equiv\>{\<Sigma\><rsub|1>, . . . \<Sigma\><rsub|K>}>.
+    One way to set the values of these parameters is to use maximum
+    likelihood. From Eq. <eqref|2.188> the log of the likelihood function is
+    given by \ 
+
+    <\equation*>
+      ln p(X\|\<b-pi\>,\<b-mu\>,\<b-Sigma\>)
+      =<big|sum><rsub|n=1><rsup|N>ln<around*|{|<big|sum><rsub|k=1><rsup|K>\<cal-N\><around*|(|\<b-x\><rsub|n>\|\<b-mu\><rsub|k>,
+      \<Sigma\><rsub|k>|)>|}>
+    </equation*>
+
+    \ where <math|X = {x<rsub|1>, . . . , x<rsub|N>}>.
+
+    The situation is now much more complex than with a single Gaussian, due
+    to the presence of the summation over <math|k> inside the logarithm. As a
+    result, the maximum likelihood solution for the parameters no longer has
+    a closed-form analytical solution.
+
+    One approach to maximizing the likelihood function is to use iterative
+    numerical optimization techniques. Alternatively can employ a powerful
+    framework called <em|expectation maximization>.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|The Exponential Family>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|exponential family>
+
+    The exponential family of distributions over <math|x>, given parameters
+    \<eta\>, is defined to be the set of distributions of the form \ 
+
+    <\equation>
+      p(\<b-x\>\|\<b-eta\>) = h(\<b-x\>)g(\<b-eta\>)exp{\<b-eta\><rsup|T>\<b-u\>(\<b-x\>)}
+      <label|2.194>
+    </equation>
+
+    where <math|\<b-x\>> may be scalar or vector, and may be discrete or
+    continuous.
+
+    Here <math|\<b-eta\>> are called the natural parameters of the
+    distribution, and <math|\<b-u\>(\<b-x\>)> is some function of
+    <math|\<b-x\>>.
+
+    The function <math|g(\<b-eta\>)> can be interpreted as the coefficient
+    that ensures that the distribution is normalized and therefore satisfies
+
+    <\equation*>
+      g(\<b-eta\>)<big|int>h(\<b-x\>)exp{\<b-eta\><rsup|T>\<b-u\>(\<b-x\>)}\<mathd\>\<b-x\>=1
+    </equation*>
+
+    where the integration is replaced by summation if <math|\<b-x\>> is a
+    discrete variable.
+  </hidden>|<\hidden>
+    <tit|Bernoulli distribution>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|x\|\<mu\>|)>>|<cell|=>|<cell|Bern<around*|(|x\|\<mu\>|)>>>|<row|<cell|>|<cell|=>|<cell|\<mu\><rsup|x><around*|(|1-\<mu\>|)><rsup|1-x>>>>>
+    </eqnarray*>
+
+    Expressing the right-hand side as the exponential of the logarithm, we
+    have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|x\|\<mu\>|)>>|<cell|=>|<cell|exp<around*|{|x
+      ln\<mu\>+<around*|(|1-x|)>ln<around*|(|1-\<mu\>|)>|}>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|1-\<mu\>|)>exp<around*|{|ln<around*|(|<frac|\<mu\>|1-\<mu\>>|)>x|}>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    Comparison with Eq. <eqref|2.194> to identify\ 
+
+    <\equation*>
+      \ \<eta\> = ln<around*|(|<frac|\<mu\>|1\<minus\>\<mu\> >|)>
+    </equation*>
+
+    which we can solve for <math|\<mu\>> to give <math|\<mu\> =
+    \<sigma\>(\<eta\>)>, where \ 
+
+    <\equation>
+      \<sigma\>(\<eta\>) = <frac|1|1+exp<around*|(|-\<eta\>|)>><label|2.199>
+    </equation>
+
+    is called the <em|logistic sigmoid function>.
+
+    \;
+  </hidden>|<\hidden>
+    Thus we can write the Bernoulli distribution using the standard
+    representation <eqref|2.194> in the form \ 
+
+    <\equation*>
+      p(x\|\<eta\>) = \<sigma\>(\<minus\>\<eta\>) exp(\<eta\>x) (2.200)
+    </equation*>
+
+    where we have used
+
+    <\equation*>
+      1 \<minus\> \<sigma\>(\<eta\>) = \<sigma\>(\<minus\>\<eta\>),
+    </equation*>
+
+    which is easily proved from Eq. <eqref|2.199>. Comparison with Eq.
+    <eqref|2.194> shows that
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|u<around*|(|x|)>>|<cell|=>|<cell|x>>|<row|<cell|h<around*|(|x|)>>|<cell|=>|<cell|1>>|<row|<cell|g<around*|(|\<eta\>|)>>|<cell|=>|<cell|\<sigma\><around*|(|-\<eta\>|)>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|multinomial distribution>
+
+    For a single observation <math|x>, takes the form \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<b-x\>\|\<b-mu\>|)>>|<cell|=>|<cell|<big|prod><rsub|k=1><rsup|M>\<mu\><rsub|k><rsup|x<rsub|k>>>>|<row|<cell|>|<cell|=>|<cell|exp<around*|{|<big|sum><rsub|k=1><rsup|M>x<rsub|k>ln\<mu\><rsub|k>|}>>>>>
+    </eqnarray*>
+
+    \ \ where <math|x = (x<rsub|1>, . . . , x<rsub|M>)<rsup|T>>.\ 
+  </hidden>|<\hidden>
+    Write in the standard representation <eqref|2.194>,
+
+    <\equation*>
+      p(x\|\<eta\>) = exp(\<b-eta\><rsup|T>\<b-x\>)
+    </equation*>
+
+    where <math|\<eta\><rsub|k> = ln \<mu\><rsub|k>>, and <math|\<b-eta\>=
+    (\<eta\><rsub|1>, . . . , \<eta\><rsub|M>)<rsup|T>>.
+
+    Again, comparing with Eq. <eqref|2.194> we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-u\><around*|(|\<b-x\>|)>>|<cell|=>|<cell|\<b-x\>>>|<row|<cell|h<around*|(|\<b-x\>|)>>|<cell|=>|<cell|1>>|<row|<cell|g<around*|(|\<b-eta\>|)>>|<cell|=>|<cell|1>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    The parameters <math|\<eta\><rsub|k>> are not independent because the
+    parameters <math|\<mu\><rsub|k>> are subject to the
+    <with|color|blue|constraint> \ 
+
+    <\equation*>
+      <big|sum><rsub|k=1><rsup|M>\<mu\><rsub|k>=1
+    </equation*>
+
+    so that, given any <math|<with|color|blue|M \<minus\> 1>> of the
+    parameters <math|\<mu\><rsub|k>>, the value of the remaining parameter is
+    fixed.
+
+    In some circumstances, it will be convenient to remove this constraint by
+    expressing the distribution in terms of only <math|M \<minus\> 1>
+    parameters.
+
+    This can be achieved by expressing <math|\<mu\><rsub|M>> in terms of the
+    remaining <math|{\<mu\><rsub|k>} >where <math|k = 1, . . . , M \<minus\>
+    1>, thereby leaving <math|M \<minus\> 1> parameters.
+
+    Note that these remaining parameters are still subject to the constraints
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|0\<leqslant\>\<mu\><rsub|k>>|<cell|\<leqslant\>>|<cell|1>>|<row|<cell|<big|sum><rsub|k=1><rsup|M-1>\<mu\><rsub|k>>|<cell|\<leqslant\>>|<cell|1>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    the multinomial distribution in this representation then becomes
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|exp<around*|{|<big|sum><rsub|k=1><rsup|M>x<rsub|k>ln\<mu\><rsub|k>|}>>|<cell|=>|<cell|exp<around*|{|<big|sum><rsub|k=1><rsup|M-1>x<rsub|k>ln\<mu\><rsub|k>+<around*|(|1-<big|sum><rsub|k=1><rsup|M-1>x<rsub|k>|)>ln<around*|(|1-<big|sum><rsub|k=1><rsup|M>\<mu\><rsub|k>|)>|}>>>|<row|<cell|>|<cell|=>|<cell|exp<around*|{|<big|sum><rsub|k=1><rsup|M-1>x<rsub|k>ln<around*|(|<frac|\<mu\><rsub|k>|1-<big|sum><rsub|j=1><rsup|M-1>\<mu\><rsub|j>>|)>+ln<around*|(|1-<big|sum><rsub|k=1><rsup|M>\<mu\><rsub|k>|)>|}>>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    We now identify \ 
+
+    <\equation*>
+      ln<around*|(|<frac|\<mu\><rsub|k>|1-<big|sum><rsub|j=1><rsup|M-1>\<mu\><rsub|j>>|)>
+      = \<eta\><rsub|k>
+    </equation*>
+
+    which we can solve for <math|\<mu\><rsub|k>> by first summing both sides
+    over <math|k> and then rearranging and back-substituting to give \ 
+
+    <\equation*>
+      \<mu\><rsub|k> = <frac|exp(\<eta\><rsub|k>)|1+<big|sum><rsub|j=1><rsup|M-1>exp<around*|(|\<eta\><rsub|j>|)>>.
+    </equation*>
+
+    \ \ This is called the <em|softmax function>, or the <em|normalized
+    exponential>.
+  </hidden>|<\hidden>
+    In this representation, the multinomial distribution therefore takes the
+    form \ 
+
+    <\equation*>
+      p(\<b-x\>\|\<b-eta\>) = <around*|(|1+<big|sum><rsub|k=1><rsup|M-1>exp<around*|(|\<eta\><rsub|k>|)>|)><rsup|-1>exp<around*|(|\<b-eta\><rsup|T>\<b-x\>|)>
+    </equation*>
+
+    \ \ This is the standard form of the exponential family, with parameter
+    vector
+
+    <\equation*>
+      \ \<b-eta\> = (\<eta\><rsub|1>, . . . ,
+      \<eta\><rsub|M\<minus\>1>)<rsup|T>
+    </equation*>
+
+    \ in which
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-u\><around*|(|\<b-x\>|)>>|<cell|=>|<cell|\<b-x\>>>|<row|<cell|h<around*|(|\<b-x\>|)>>|<cell|=>|<cell|1>>|<row|<cell|g<around*|(|\<b-eta\>|)>>|<cell|=>|<cell|<around*|(|1+<big|sum><rsub|k=1><rsup|M-1>exp<around*|(|\<eta\><rsub|k>|)>|)><rsup|-1>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    <tit|Gaussian distribution>
+
+    \;
+  </shown>>
 </body>
 
 <\initial>
@@ -3032,6 +3334,10 @@
     <associate|2.173|<tuple|55|?>>
     <associate|2.18|<tuple|9|19>>
     <associate|2.181|<tuple|56|?>>
+    <associate|2.188|<tuple|57|1>>
+    <associate|2.189|<tuple|58|?>>
+    <associate|2.194|<tuple|59|?>>
+    <associate|2.199|<tuple|60|1>>
     <associate|2.20|<tuple|10|23>>
     <associate|2.29|<tuple|11|30>>
     <associate|2.3|<tuple|1|7>>
@@ -3083,7 +3389,9 @@
     <associate|auto-22|<tuple|19|?>>
     <associate|auto-23|<tuple|20|?>>
     <associate|auto-24|<tuple|21|?>>
-    <associate|auto-25|<tuple|22|?>>
+    <associate|auto-25|<tuple|22|1>>
+    <associate|auto-26|<tuple|23|?>>
+    <associate|auto-27|<tuple|4|?>>
     <associate|auto-3|<tuple|2|17>>
     <associate|auto-4|<tuple|3|21>>
     <associate|auto-5|<tuple|2|26>>
@@ -3304,6 +3612,15 @@
       Gaussian mixture distribution \ in one dimension showing three
       Gaussians (each scaled by a coefficient) in blue and their sum in
       red.>|<pageref|auto-25>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|23>||Illustration of a
+      mixture of 3 Gaussians in a two-dimensional space. (a) Contours of
+      constant density for each of the mixture components, in which the 3
+      components are denoted red, blue and green, and the values of the
+      mixing coefficients are shown below each component. (b) Contours of the
+      marginal probability density <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x)>>
+      of the mixture distribution. (c) A surface plot of the distribution
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x)>>.>|<pageref|auto-26>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Binary
@@ -3317,6 +3634,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>The
       Gaussian Distribution> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-8><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>The
+      Exponential Family> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-27><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
