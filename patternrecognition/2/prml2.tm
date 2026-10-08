@@ -274,7 +274,7 @@
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<bbb-E\><around*|[|m|]>>|<cell|=>|<cell|<big|sum><rsub|m=1><rsup|N>m
-      Bin<around*|(|m\|N,\<mu\>|)>>>|<row|<cell|>|<cell|=>|<cell|N\<mu\>>>|<row|<cell|var<around*|[|m|]>>|<cell|=>|<cell|<big|sum><rsub|m=0><rsup|N><around*|(|m-\<bbb-E\><around*|[|m|]>|)><rsup|2>Bin<around*|(|m\|N,\<mu\>|)>>>|<row|<cell|>|<cell|=>|<cell|N\<mu\><around*|(|1-\<mu\>|)>>>>>
+      Bin<around*|(|m\|N,\<mu\>|)>>>|<row|<cell|>|<cell|=>|<cell|N\<mu\><eq-number><label|2.11>>>|<row|<cell|var<around*|[|m|]>>|<cell|=>|<cell|<big|sum><rsub|m=0><rsup|N><around*|(|m-\<bbb-E\><around*|[|m|]>|)><rsup|2>Bin<around*|(|m\|N,\<mu\>|)>>>|<row|<cell|>|<cell|=>|<cell|N\<mu\><around*|(|1-\<mu\>|)><eq-number><label|2.12>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|Prior distribution <math|p(\<mu\>)>>
@@ -3669,15 +3669,358 @@
     This gives a model for the density <math|p(x)> that is constant over the
     width of each bin, and often the bins are chosen to have the same width
     <math|\<#2206\><rsub|i> = \<#2206\>>.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <\padded-center>
-      <small-figure|<image|image/fig_2_24_histogram.png|.5par|||>|An
+      <small-figure|<image|image/fig_2_24_histogram.png|.3par|||>|<label|fig2.24>An
       illustration of the histogram approach \ to density estimation, in
       which a data set of 50 data points is generated from the distribution
       shown by the green curve. Histogram density estimates with a common bin
       width \<#2206\> are shown for various values of \<#2206\>.>
     </padded-center>
-  </shown>>
+  </hidden>|<\hidden>
+    <tit|property>
+
+    Once the histogram has been computed, the data set itself can be
+    discarded, which can be advantageous if the data set is large. Also, the
+    histogram approach is easily applied if the data points are arriving
+    sequentially.
+
+    Can be useful for obtaining a quick visualization of data in one or two
+    dimensions but is unsuited to most density estimation applications.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|problems>
+
+    One problem is that the estimated density has
+    <with|color|blue|discontinuities> that are due to the bin edges rather
+    than any property of the underlying distribution that generated the data.
+
+    Another major limitation of the histogram approach is its scaling with
+    dimensionality.
+
+    If we divide each variable in a D-dimensional space into M bins, then the
+    total number of bins will be <math|M<rsup|D>>.
+
+    This exponential scaling with D is an example of the
+    <with|color|blue|curse of dimensionality>.
+
+    In a space of high dimensionality, the quantity of data needed to provide
+    meaningful estimates of local probability density would be prohibitive.
+  </hidden>|<\hidden>
+    <tit|Probability density estimation>
+
+    To estimate the probability density at a particular
+    <with|color|blue|location>, we should consider the data points that lie
+    within some local neighbourhood of that point.
+
+    The value of the <with|color|blue|smoothing parameter> should be neither
+    too large nor too small in order to obtain good results.
+  </hidden>|<\hidden>
+    <tit|density estimators>
+
+    Suppose that observations are being drawn from some unknown probability
+    density <math|p(x)> in some D-dimensional Euclidean space.
+
+    Consider some small region <math|\<cal-R\>> containing <math|\<b-x\>>.
+
+    The probability mass associated with this region is given by \ 
+
+    <\equation*>
+      P= \ <big|int><rsub|\<cal-R\>> \ p(\<b-x\>) \<mathd\>\<b-x\>
+    </equation*>
+  </hidden>|<\shown>
+    Collected a data set comprising <math|N> observations drawn from
+    <math|p(x)>.
+
+    Each data point has a probability <math|P> of falling within
+    <math|\<cal-R\>>.
+
+    The total number <math|K> of points that lie inside <math|\<cal-R\>> will
+    be distributed according to the binomial distribution \ 
+
+    <\equation*>
+      Bin(K\|N, P ) = <frac|N!|K!<around*|(|N-K|)>!>P<rsup|K><around*|(|1-P|)><rsup|N-K>
+    </equation*>
+
+    \;
+  </shown>|<\hidden>
+    Using Eq.<eqref|2.11>, we see that the mean fraction of points falling
+    inside the region is\ 
+
+    <\equation*>
+      \<bbb-E\><around*|[|<frac|K|N>|]> = P
+    </equation*>
+
+    and similarly using Eq. <eqref|2.12> we see that the variance around this
+    mean is\ 
+
+    <\equation*>
+      var<around*|[|<frac|K|N>|]>=<frac|P (1 \<minus\> P )|N>.
+    </equation*>
+  </hidden>|<\hidden>
+    For large <math|N> , this distribution will be sharply peaked around the
+    mean and so \ 
+
+    <\equation*>
+      K\<simeq\>N P.\ 
+    </equation*>
+
+    If, however, we also assume that the region <math|\<cal-R\>> is
+    sufficiently small that the probability density <math|p(x)> is roughly
+    constant over the region, then we have\ 
+
+    <\equation*>
+      \ P\<simeq\>p(\<b-x\>)V
+    </equation*>
+
+    where <math|V> is the volume of <math|\<cal-R\>>. The density estimate in
+    the form \ 
+
+    <\equation>
+      p(x) = <frac|K|N V>.<label|2.246>
+    </equation>
+  </hidden>|<\hidden>
+    <tit|Exploit>
+
+    \;
+
+    Exploit the result <eqref|2.246> in two different ways.
+
+    <\itemize-dot>
+      <item>Fix <math|K> and determine the value of <math|V> from the data,
+      which gives rise to the <em|K-nearest-neighbour> technique.
+
+      <item>Fix <math|V> and determine <math|K> from the data, giving rise to
+      the <em|kernel> approach.
+    </itemize-dot>
+
+    It can be shown that both the K-nearest-neighbour density estimator and
+    the kernel density estimator converge to the true probability density in
+    the limit <math|N \<rightarrow\> \<infty\>> provided <math|V> shrinks
+    suitably with <math|N> , and <math|K> grows with <math|N> (Duda and Hart,
+    1973).
+  </hidden>|<\hidden>
+    <tit|Parzen window>
+
+    The region <math|\<cal-R\>> is a small hypercube centred on the point
+    <math|\<b-x\>>.
+
+    In order to count the number <math|K> of points falling within this
+    region, it is convenient to define the following function \ 
+
+    <\equation*>
+      k(\<b-u\>) =<choice|<tformat|<table|<row|<cell|1,>|<cell|<around*|\||u<rsub|i>|\|>\<leqslant\>1/2,>|<cell|i=1,\<cdots\>,D,>>|<row|<cell|0,>|<cell|otherwise>|<cell|>>>>>
+    </equation*>
+
+    which represents a unit cube centred on the origin.
+
+    The function <math|k(\<b-u\>)> is an example of a <em|kernel function>,
+    and in this context is also called a <em|Parzen window>.
+  </hidden>|<\hidden>
+    The quantity <math|k((\<b-x\>\<minus\> \<b-x\><rsub|n>)/h)> will be one
+    if the data point <math|\<b-x\><rsub|n>> lies inside a cube of side
+    <math|h> centred on <math|\<b-x\>>, and zero otherwise.
+
+    The total number of data points lying inside this cube will therefore be
+    \ 
+
+    <\equation*>
+      K=<big|sum><rsub|n=1><rsup|N>k<around*|(|<frac|\<b-x\>-\<b-x\><rsub|n>|h>|)>
+    </equation*>
+
+    Substituting this expression into Eq. <eqref|2.246> then gives the
+    following result for the estimated density at <math|\<b-x\>> \ 
+
+    <\equation>
+      p(x) = <frac|1|N h<rsup|D>><big|sum><rsub|n=1><rsup|N>k<around*|(|<frac|\<b-x\>-\<b-x\><rsub|n>|h>|)><label|2.249>
+    </equation>
+
+    where we have used <math|V = h <rsup|D>> for the volume of a hypercube of
+    side <math|h> in <math|D> dimensions.
+
+    Using the symmetry of the function <math|k(\<b-u\>)>, we can now
+    re-interpret this equation, not as a single cube centred on
+    <math|\<b-x\>> but as the sum over <math|N> cubes centred on the <math|N>
+    data points <math|\<b-x\><rsub|n>>.
+  </hidden>|<\hidden>
+    We can obtain a smoother density model if we choose a smoother kernel
+    function, and a common choice is the Gaussian, which gives rise to the
+    following kernel density model \ 
+
+    <\equation>
+      p(x) = <frac|1|N><big|sum><rsub|n=1><rsup|N><frac|1|<around*|(|2\<pi\>h<rsup|2>|)><rsup|D/2>>exp<around*|{|-<frac|<around*|\<\|\|\>|\<b-x\>-\<b-x\><rsub|n>|\<\|\|\>><rsup|2>|2h<rsup|2>>|}><label|2.250>
+    </equation>
+
+    where <math|h> represents the standard deviation of the Gaussian
+    components.
+
+    Thus our density model is obtained by placing a Gaussian over each data
+    point and then adding up the contributions over the whole data set, and
+    then dividing by <math|N> so that the density is correctly normalized.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_25_kernel_density.png|.3par|||>|<label|fig2.25>Illustration
+      of the kernel density model <eqref|2.250> applied to the same data set
+      used to demonstrate the histogram approach in Figure
+      <reference|fig2.24>. We see that <math|h> acts as a smoothing parameter
+      and that if it is set too small (top panel), the result is a very noisy
+      density model, whereas if it is set too large (bottom panel), then the
+      bimodal nature of the underlying distribution from which the data is
+      generated (shown by the green curve) is washed out. The best density
+      model is obtained for some intermediate value of <math|h> (middle
+      panel).>
+    </padded-center>
+  </hidden>|<\hidden>
+    <unroll-greyed|<\shown>
+      We can choose any other kernel function <math|k(\<b-u\>)> in Eq.
+      <eqref|2.249> subject to the conditions \ 
+
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|k<around*|(|\<b-u\>|)>>|<cell|\<geqslant\>>|<cell|0>>|<row|<cell|<big|int>k<around*|(|\<b-u\>|)>\<mathd\>\<b-u\>>|<cell|=>|<cell|1>>>>
+      </eqnarray*>
+
+      which ensure that the resulting probability distribution is nonnegative
+      everywhere and integrates to one.
+    </shown>|<\shown>
+      The class of density model given by Eq. <eqref|2.249> is called a
+      kernel density estimator, or Parzen estimator.
+    </shown>|<\shown>
+      It has a great merit that there is no computation involved in the
+      `training' phase because this simply requires storage of the training
+      set.
+    </shown>|<\shown>
+      However, this is also one of its great weaknesses because the
+      computational cost of evaluating the density grows linearly with the
+      size of the data set.
+    </shown>>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Nearest-neighbour methods>
+
+    One of the difficulties with the kernel approach to density estimation is
+    that the parameter <math|h> governing the kernel width is fixed for all
+    kernels.
+
+    In regions of high data density, a large value of <math|h> may lead to
+    over-smoothing and a washing out of structure that might otherwise be
+    extracted from the data.
+
+    However, reducing <math|h> may lead to noisy estimates elsewhere in data
+    space where the density is smaller.
+
+    Thus the optimal choice for <math|h> may be dependent on location within
+    the data space.
+
+    This issue is addressed by <em|nearest-neighbour> methods for density
+    estimation.
+  </hidden>|<\hidden>
+    Instead of fixing <math|V> and determining the value of <math|K> from the
+    data, we consider a fixed value of <math|K> and use the data to find an
+    appropriate value for <math|V> .
+
+    To do this, we consider a small sphere centred on the point <math|x> at
+    which we wish to estimate the density <math|p(x)>, and we allow the
+    radius of the sphere to grow until it contains precisely <math|K> data
+    points.
+
+    The estimate of the density <math|p(x)> is then given by Eq.
+    <eqref|2.246> with <math|V> set to the volume of the resulting sphere.
+
+    This technique is known as <em|K nearest neighbours>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <\small-figure|<image|image/fig_2_26_k_nearest_neighbour_density.png|.3par|||>>
+        Illustration of K-nearest-neighbour density estimation using the same
+        data set as in Figures <reference|fig2.25> and <reference|fig2.24>.
+        We see that the parameter K governs the degree of smoothing, so that
+        a small value of <math|K> leads to a very noisy density model (top
+        panel), whereas a large value (bottom panel) smoothes out the bimodal
+        nature of the true distribution (shown by the green curve) from which
+        the data set was generated.
+      </small-figure>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|K-nearest-neighbour classification>
+
+    Apply the K-nearest-neighbour density estimation technique to each class
+    separately and then make use of Bayes' theorem.
+
+    Suppose that we have a data set comprising <math|N<rsub|k>> points in
+    class <math|C<rsub|k>> with <math|N> points in total, so that
+    <math|<big|sum><rsub|k>N<rsub|k> = N >.
+
+    If we \ wish to classify a new point <math|x>, we draw a sphere centred
+    on <math|x> containing precisely <math|K> points irrespective of their
+    class.
+
+    Suppose this sphere has volume <math|V> and contains <math|K<rsub|k>>
+    points from class <math|C<rsub|k>>.
+
+    Then Eq. <eqref|2.246> provides an estimate of the density associated
+    with each class\ 
+
+    <\equation*>
+      p(x\|C<rsub|k>) =<frac|K<rsub|k>|N<rsub|k>V>
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    \ \ Similarly, the unconditional density is given by \ 
+
+    <\equation*>
+      p(x) = <frac|K|N V>
+    </equation*>
+
+    \ \ while the class priors are given by \ 
+
+    <\equation*>
+      p(C<rsub|k>) = <frac|N<rsub|k>|N>
+    </equation*>
+
+    Using Bayes' theorem to obtain the posterior probability of class
+    membership \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|C<rsub|k>\|x|)>>|<cell|=>|<cell|<frac|p<around*|(|x\|C<rsub|k>|)>p<around*|(|C<rsub|k>|)><rsub|>|p<around*|(|x|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|K<rsub|k>|K>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    If we wish to minimize the probability of misclassification, this is done
+    by assigning the test point <math|x> to the class having the largest
+    posterior probability, corresponding to the largest value of
+    <math|K<rsub|k>/K>.
+
+    Thus to classify a new point, we identify the K nearest points from the
+    training data set and then assign the new point to the class having the
+    largest number of representatives amongst this set.
+
+    Ties can be broken at random.
+
+    The particular case of <math|K = 1> is called the nearest-neighbour rule,
+    because a test point is simply assigned to the same class as the nearest
+    point from the training set.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_27_k_nearest_neighbour_classification.png|.5par|||>|(a)
+      In the K-nearestneighbour classifier, a new point, shown by the black
+      diamond, is classified according to the majority class membership of
+      the K closest training data points, in this case <math|K = 3>. (b) In
+      the nearest-neighbour (<math|K = 1>) approach to classification, the
+      resulting decision boundary is composed of hyperplanes that form
+      perpendicular bisectors of pairs of points from different classes.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_2_28_k_nearest_neighbour_classification_oil_data.png|.9par|||>|Plot
+      of 200 data points from the oil data set showing values of
+      <math|x<rsub|6>> plotted against <math|x<rsub|7>>, where the red,
+      green, and blue points correspond to the `laminar', `annular', and
+      `homogeneous' classes, respectively. Also shown are the classifications
+      of the input space given by the K-nearest-neighbour algorithm for
+      various values of K.>
+    </padded-center>
+  </hidden>>
 </body>
 
 <\initial>
@@ -3691,70 +4034,75 @@
 
 <\references>
   <\collection>
-    <associate|2.105|<tuple|38|?>>
-    <associate|2.108|<tuple|39|?>>
-    <associate|2.121|<tuple|39|?>>
-    <associate|2.126|<tuple|41|?>>
-    <associate|2.129|<tuple|42|?>>
-    <associate|2.13|<tuple|7|15>>
-    <associate|2.130|<tuple|43|?>>
-    <associate|2.131|<tuple|44|?>>
-    <associate|2.132|<tuple|45|?>>
-    <associate|2.135|<tuple|46|?>>
-    <associate|2.136|<tuple|46|1>>
-    <associate|2.140|<tuple|48|?>>
-    <associate|2.146|<tuple|49|?>>
-    <associate|2.15|<tuple|8|16>>
-    <associate|2.154|<tuple|50|?>>
-    <associate|2.158|<tuple|51|?>>
-    <associate|2.159|<tuple|52|?>>
-    <associate|2.167|<tuple|53|?>>
-    <associate|2.169|<tuple|54|?>>
-    <associate|2.173|<tuple|55|?>>
-    <associate|2.18|<tuple|9|19>>
-    <associate|2.181|<tuple|56|?>>
-    <associate|2.188|<tuple|57|1>>
-    <associate|2.189|<tuple|58|?>>
-    <associate|2.194|<tuple|59|?>>
-    <associate|2.195|<tuple|60|?>>
-    <associate|2.199|<tuple|61|1>>
-    <associate|2.20|<tuple|10|23>>
-    <associate|2.226|<tuple|62|?>>
-    <associate|2.227|<tuple|63|?>>
-    <associate|2.228|<tuple|64|?>>
-    <associate|2.29|<tuple|11|30>>
+    <associate|2.105|<tuple|40|?>>
+    <associate|2.108|<tuple|41|?>>
+    <associate|2.11|<tuple|7|?>>
+    <associate|2.12|<tuple|8|?>>
+    <associate|2.121|<tuple|41|?>>
+    <associate|2.126|<tuple|43|?>>
+    <associate|2.129|<tuple|44|?>>
+    <associate|2.13|<tuple|9|15>>
+    <associate|2.130|<tuple|45|?>>
+    <associate|2.131|<tuple|46|?>>
+    <associate|2.132|<tuple|47|?>>
+    <associate|2.135|<tuple|48|?>>
+    <associate|2.136|<tuple|48|1>>
+    <associate|2.140|<tuple|50|?>>
+    <associate|2.146|<tuple|51|?>>
+    <associate|2.15|<tuple|10|16>>
+    <associate|2.154|<tuple|52|?>>
+    <associate|2.158|<tuple|53|?>>
+    <associate|2.159|<tuple|54|?>>
+    <associate|2.167|<tuple|55|?>>
+    <associate|2.169|<tuple|56|?>>
+    <associate|2.173|<tuple|57|?>>
+    <associate|2.18|<tuple|11|19>>
+    <associate|2.181|<tuple|58|?>>
+    <associate|2.188|<tuple|59|1>>
+    <associate|2.189|<tuple|60|?>>
+    <associate|2.194|<tuple|61|?>>
+    <associate|2.195|<tuple|62|?>>
+    <associate|2.199|<tuple|63|1>>
+    <associate|2.20|<tuple|12|23>>
+    <associate|2.226|<tuple|64|?>>
+    <associate|2.227|<tuple|65|?>>
+    <associate|2.228|<tuple|66|?>>
+    <associate|2.246|<tuple|67|?>>
+    <associate|2.249|<tuple|68|?>>
+    <associate|2.250|<tuple|69|?>>
+    <associate|2.29|<tuple|13|30>>
     <associate|2.3|<tuple|1|7>>
-    <associate|2.34|<tuple|12|33>>
-    <associate|2.38|<tuple|13|37>>
+    <associate|2.34|<tuple|14|33>>
+    <associate|2.38|<tuple|15|37>>
     <associate|2.4|<tuple|2|7>>
-    <associate|2.43|<tuple|14|?>>
-    <associate|2.44|<tuple|15|44>>
-    <associate|2.45|<tuple|16|?>>
-    <associate|2.46|<tuple|17|46>>
-    <associate|2.48|<tuple|18|?>>
-    <associate|2.49|<tuple|19|47>>
+    <associate|2.43|<tuple|16|?>>
+    <associate|2.44|<tuple|17|44>>
+    <associate|2.45|<tuple|18|?>>
+    <associate|2.46|<tuple|19|46>>
+    <associate|2.48|<tuple|20|?>>
+    <associate|2.49|<tuple|21|47>>
     <associate|2.5|<tuple|3|7>>
-    <associate|2.50|<tuple|20|?>>
-    <associate|2.55|<tuple|21|?>>
-    <associate|2.62|<tuple|22|?>>
-    <associate|2.65|<tuple|23|?>>
-    <associate|2.67|<tuple|24|?>>
+    <associate|2.50|<tuple|22|?>>
+    <associate|2.55|<tuple|23|?>>
+    <associate|2.62|<tuple|24|?>>
+    <associate|2.65|<tuple|25|?>>
+    <associate|2.67|<tuple|26|?>>
     <associate|2.7|<tuple|4|9>>
-    <associate|2.70|<tuple|25|?>>
-    <associate|2.71|<tuple|26|?>>
-    <associate|2.73|<tuple|27|?>>
-    <associate|2.75|<tuple|28|?>>
-    <associate|2.76|<tuple|29|?>>
-    <associate|2.78|<tuple|30|?>>
+    <associate|2.70|<tuple|27|?>>
+    <associate|2.71|<tuple|28|?>>
+    <associate|2.73|<tuple|29|?>>
+    <associate|2.75|<tuple|30|?>>
+    <associate|2.76|<tuple|31|?>>
+    <associate|2.78|<tuple|32|?>>
     <associate|2.8|<tuple|5|10>>
-    <associate|2.81|<tuple|31|?>>
-    <associate|2.82|<tuple|32|?>>
-    <associate|2.84|<tuple|33|1>>
-    <associate|2.85|<tuple|34|1>>
-    <associate|2.88|<tuple|35|?>>
+    <associate|2.81|<tuple|33|?>>
+    <associate|2.82|<tuple|34|?>>
+    <associate|2.84|<tuple|35|1>>
+    <associate|2.85|<tuple|36|1>>
+    <associate|2.88|<tuple|37|?>>
     <associate|2.9|<tuple|6|11>>
-    <associate|2.92|<tuple|36|?>>
-    <associate|2.93|<tuple|37|?>>
+    <associate|2.92|<tuple|38|?>>
+    <associate|2.93|<tuple|39|?>>
     <associate|auto-1|<tuple|1|5>>
     <associate|auto-10|<tuple|7|1>>
     <associate|auto-11|<tuple|8|?>>
@@ -3776,8 +4124,12 @@
     <associate|auto-26|<tuple|23|?>>
     <associate|auto-27|<tuple|4|?>>
     <associate|auto-28|<tuple|5|?>>
-    <associate|auto-29|<tuple|24|?>>
+    <associate|auto-29|<tuple|24|1>>
     <associate|auto-3|<tuple|2|17>>
+    <associate|auto-30|<tuple|25|?>>
+    <associate|auto-31|<tuple|26|?>>
+    <associate|auto-32|<tuple|27|?>>
+    <associate|auto-33|<tuple|28|?>>
     <associate|auto-4|<tuple|3|21>>
     <associate|auto-5|<tuple|2|26>>
     <associate|auto-6|<tuple|4|36>>
@@ -3796,6 +4148,8 @@
     <associate|fig2.19|<tuple|19|?>>
     <associate|fig2.2|<tuple|2|17>>
     <associate|fig2.20|<tuple|20|?>>
+    <associate|fig2.24|<tuple|24|?>>
+    <associate|fig2.25|<tuple|25|?>>
     <associate|fig2.4|<tuple|4|36>>
     <associate|fig2.7|<tuple|7|1>>
   </collection>
@@ -4006,6 +4360,46 @@
       marginal probability density <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x)>>
       of the mixture distribution. (c) A surface plot of the distribution
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|p(x)>>.>|<pageref|auto-26>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|24>||An illustration of
+      the histogram approach \ to density estimation, in which a data set of
+      50 data points is generated from the distribution shown by the green
+      curve. Histogram density estimates with a common bin width \<#2206\>
+      are shown for various values of \<#2206\>.>|<pageref|auto-29>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|25>||Illustration of
+      the kernel density model (<reference|2.250>) applied to the same data
+      set used to demonstrate the histogram approach in Figure
+      <reference|fig2.24>. We see that <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|h>>
+      acts as a smoothing parameter and that if it is set too small (top
+      panel), the result is a very noisy density model, whereas if it is set
+      too large (bottom panel), then the bimodal nature of the underlying
+      distribution from which the data is generated (shown by the green
+      curve) is washed out. The best density model is obtained for some
+      intermediate value of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|h>>
+      (middle panel).>|<pageref|auto-30>>
+
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|26>|>
+        Illustration of K-nearest-neighbour density estimation using the same
+        data set as in Figures <reference|fig2.25> and <reference|fig2.24>.
+        We see that the parameter K governs the degree of smoothing, so that
+        a small value of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|K>>
+        leads to a very noisy density model (top panel), whereas a large
+        value (bottom panel) smoothes out the bimodal nature of the true
+        distribution (shown by the green curve) from which the data set was
+        generated.
+      </surround>|<pageref|auto-31>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|27>||(a) In the
+      K-nearestneighbour classifier, a new point, shown by the black diamond,
+      is classified according to the majority class membership of the K
+      closest training data points, in this case
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|K
+      = 3>>. (b) In the nearest-neighbour
+      (<with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|K
+      = 1>>) approach to classification, the resulting decision boundary is
+      composed of hyperplanes that form perpendicular bisectors of pairs of
+      points from different classes.>|<pageref|auto-32>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Binary
