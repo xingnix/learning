@@ -139,7 +139,7 @@
 
     <\equation*>
       y(x, w) = \ <big|sum><rsub|j=0><rsup|M-1>w<rsub|j>\<varphi\><rsub|j>(x)
-      =\<b-w\><rsup|T>\<b-varphi\>(\<b-x\>)\ 
+      =\<b-varphi\>(\<b-x\>)<rsup|T>\<b-w\>
     </equation*>
 
     where
@@ -170,9 +170,9 @@
     functions of the input variable, so that changes in one region of input
     space affect all other regions.
 
-    This can be resolved by dividing the input space up into regions and fit
-    a different polynomial in each region, leading to <em|spline functions>
-    (Hastie et al., 2001).
+    This can be resolved by dividing the input space up into regions and
+    fitting a different polynomial in each region, leading to <em|spline
+    functions> (Hastie et al., 2001).
   </hidden>|<\hidden>
     <tit|Basis functions>
 
@@ -210,7 +210,7 @@
     the logistic sigmoid by\ 
 
     <\equation*>
-      tanh(a) = 2\<sigma\>(a) \<minus\> 1
+      tanh(a) = 2\<sigma\>(2a) \<minus\> 1
     </equation*>
 
     and so a general linear combination of logistic sigmoid functions is
@@ -329,7 +329,7 @@
       p(\<b-t\>\|X, \<b-w\>, \<beta\>) = \ <big|prod><rsub|n=1><rsup|N>\<cal-N\>(t<rsub|n>\|\<b-w\><rsup|T>\<b-varphi\>(\<b-x\><rsub|n>),
       \<beta\><rsup|\<minus\>1>)\ 
     </equation*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|Log likelihood>
 
     Taking the logarithm of the likelihood function, and making use of the
@@ -341,7 +341,7 @@
       (t<rsub|n>\|\<b-w\><rsup|T>\<b-varphi\>(\<b-x\><rsub|n>),
       \<beta\><rsup|\<minus\>1>) >>|<row|<cell|>|<cell|=>|<cell|<frac|N|2> ln
       \<beta\> \<minus\> <frac|N|2> ln(2\<pi\>) \<minus\>
-      \<beta\>E<rsub|D>(\<b-w\>) \ >>>>
+      \<beta\>E<rsub|D>(\<b-w\>) \ <eq-number><label|3.11>>>>>
     </eqnarray*>
 
     where the <em|sum-of-squares error> function is defined by \ 
@@ -350,6 +350,77 @@
       E<rsub|D>(w) =<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>
       \<minus\> \<b-w\><rsup|T>\<b-varphi\>(\<b-x\><rsub|n>)|}><rsup|2>
     </equation*>
+  </hidden>|<\hidden>
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|E<rsub|D>(w)>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>
+      \<minus\> \<b-w\><rsup|T>\<b-varphi\>(\<b-x\><rsub|n>)|}><rsup|2>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|\<b-t\>-\<Phi\>\<b-w\>|)><rsup|T><around*|(|\<b-t\>-\<Phi\>\<b-w\>|)>>>|<row|<cell|\<Phi\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-varphi\><around*|(|\<b-x\><rsub|1>|)><rsup|T>>>|<row|<cell|\<b-varphi\><around*|(|\<b-x\><rsub|2>|)><rsup|T>>>|<row|<cell|\<vdots\>>>|<row|<cell|\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T>>>>>>>>|<row|<cell|\<b-t\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|t<rsub|1>>>|<row|<cell|t<rsub|2>>>|<row|<cell|\<vdots\>>>|<row|<cell|t<rsub|N>>>>>>>>>>
+    </eqnarray*>
+
+    <math|\<Phi\>> is an <math|N\<times\>M> matrix, called the design matrix,
+    whose elements are given by <math|\<Phi\><rsub|n j> =
+    \<varphi\><rsub|j>(\<b-x\><rsub|n>)>.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|<math|\<b-w\><rsub|ML>>>
+
+    The gradient of the log likelihood
+
+    <\equation*>
+      \;
+    </equation*>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<nabla\>ln
+      p<around*|(|\<b-t\>\|\<b-w\>,\<beta\>|)>>|<cell|=>|<cell|\<beta\><around*|(|\<b-t\>-\<Phi\>\<b-w\>|)><rsup|T><around*|(|-\<Phi\>|)>>>|<row|<cell|0>|<cell|=>|<cell|\<Phi\><rsup|T>\<b-t\>-\<Phi\><rsup|T>\<Phi\>\<b-w\>>>|<row|<cell|\<b-w\><rsub|ML>>|<cell|=>|<cell|<around*|(|\<Phi\><rsup|T>\<Phi\>|)><rsup|-1>\<Phi\><rsup|T>\<b-t\>>>>>
+    </eqnarray*>
+
+    which are known as the normal equations for the least squares problem.
+
+    The quantity \ 
+
+    <\equation*>
+      \<Phi\><rsup|\<dagger\>>\<equiv\>(\<Phi\><rsup|T>\<Phi\>)<rsup|\<minus\>1>\<Phi\><rsup|T>
+    </equation*>
+
+    \ \ is known as the <em|Moore-Penrose pseudo-inverse> of the matrix
+    <math|\<Phi\>>.
+  </hidden>|<\hidden>
+    <tit|<math|w<rsub|0>>>
+
+    If we make the bias parameter explicit, then the error function becomes
+    \ 
+
+    <\equation*>
+      E<rsub|D>(w)=<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-w<rsub|0>-<big|sum><rsub|j=1><rsup|M-1>w<rsub|j>\<varphi\><rsub|j><around*|(|\<b-x\><rsub|n>|)>|}><rsup|2>
+    </equation*>
+
+    \ \ Setting the derivative with respect to <math|w<rsub|0>> equal to
+    zero, and solving for <math|w<rsub|0>>, we obtain \ 
+
+    <\equation*>
+      w<rsub|0>=<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-<big|sum><rsub|j=1><rsup|M-1>w<rsub|j>\<varphi\><rsub|j><around*|(|\<b-x\><rsub|n>|)>|}>
+    </equation*>
+
+    \ \ Thus the bias <math|w<rsub|0>> compensates for the difference between
+    the averages (over the training set) of the target values and the
+    weighted sum of the averages of the basis function values.
+  </hidden>|<\hidden>
+    <tit|<math|\<beta\><rsub|ML>>>
+
+    maximize the log likelihood function <eqref|3.11> with respect to the
+    noise precision parameter <math|\<beta\>>, giving
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<nabla\>ln
+      p<around*|(|\<b-t\>\|\<b-w\>,\<beta\>|)>>|<cell|=>|<cell|<frac|N|2\<beta\>>
+      \ \<minus\> <frac|1|2><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>
+      \<minus\> \<b-w\><rsup|T>\<b-varphi\>(\<b-x\><rsub|n>)|}><rsup|2>>>|<row|<cell|<frac|1|\<beta\><rsub|ML>>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-w\><rsub|ML><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>|}><rsup|2>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    <tit|Geometry of least squares>
+
+    \;
   </shown>>
 </body>
 
@@ -364,12 +435,13 @@
 
 <\references>
   <\collection>
-    <associate|3.4|<tuple|1|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|3.5|<tuple|2|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|3.8|<tuple|3|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-1|<tuple|1|1|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|auto-2|<tuple|1|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
-    <associate|fig3.1|<tuple|1|?|../../../../.TeXmacs/texts/scratch/no_name_6.tm>>
+    <associate|3.11|<tuple|4|?>>
+    <associate|3.4|<tuple|1|?>>
+    <associate|3.5|<tuple|2|?>>
+    <associate|3.8|<tuple|3|?>>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|1|?>>
+    <associate|fig3.1|<tuple|1|?>>
   </collection>
 </references>
 
