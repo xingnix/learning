@@ -3,7 +3,7 @@
 <style|<tuple|beamer|manila-paper|chinese>>
 
 <\body>
-  <screens|<\hidden>
+  <screens|<\shown>
     \;
 
     \;
@@ -15,7 +15,7 @@
     \;
 
     <doc-data|<doc-title|\<#8D1D\>\<#53F6\>\<#65AF\>\<#5B66\>\<#4E60\>>>
-  </hidden>|<\hidden>
+  </shown>|<\hidden>
     \;
 
     \;
@@ -232,14 +232,18 @@
       </itemize>
     </itemize>
   </hidden>|<\hidden>
-    <with|font|fireflysung|\<#53EF\>\<#5F97\>><with|font|roman|\<#FF1A\>>
+    \;
 
     <\eqnarray*>
-      <tformat|<cwith|4|4|1|1|cell-halign|c>|<cwith|4|4|1|1|cell-lborder|0ln>|<cwith|4|4|2|2|cell-halign|l>|<cwith|4|4|2|2|cell-rborder|0ln>|<table|<row|<cell|P<around|(|h\|D|)>>|<cell|=>|<cell|<frac|P<around|(|D\|h|)>*P<around|(|h|)>|P<around|(|D|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|P<around|(|D\|h|)>*P<around|(|h|)>|<big|sum><rsub|h<rsub|i>\<in\>H>P<around|(|D\|h<rsub|i>|)>*P<around|(|h<rsub|i>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|P<around|(|D\|h|)>\<cdot\><frac|1|<around|\||H|\|>>|<big|sum><rsub|h<rsub|i>\<in\>V*S<rsub|H,D>>1\<times\><frac|1|<around|\||H|\|>>+<big|sum><rsub|h<rsub|i>\<nin\>V*S<rsub|H,D>>0\<times\><frac|1|<around|\||H|\|>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|P<around|(|D\|h|)>|<around|\||V*S<rsub|H,D>|\|>>>>|<row|<cell|>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|<frac|1|<around|\||V*S<rsub|H,D>|\|>>>|<cell|<text|if
-      <math|h> is consistent with >D>>|<row|<cell|0>|<cell|otherwise>>>>>>>>>
+      <tformat|<cwith|4|4|1|1|cell-halign|c>|<cwith|4|4|1|1|cell-lborder|0ln>|<cwith|4|4|2|2|cell-halign|l>|<cwith|4|4|2|2|cell-rborder|0ln>|<table|<row|<cell|P<around|(|h\|D|)>>|<cell|=>|<cell|<frac|P<around|(|D\|h|)>*P<around|(|h|)>|P<around|(|D|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|P<around|(|D\|h|)>*P<around|(|h|)>|<big|sum><rsub|h<rsub|i>\<in\>H>P<around|(|D\|h<rsub|i>|)>*P<around|(|h<rsub|i>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|P<around|(|D\|h|)>\<cdot\><frac|1|<around|\||H|\|>>|<big|sum><rsub|h<rsub|i>\<in\>V*S<rsub|H,D>>1\<times\><frac|1|<around|\||H|\|>>+<big|sum><rsub|h<rsub|i>\<nin\>V*S<rsub|H,D>>0\<times\><frac|1|<around|\||H|\|>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|P<around|(|D\|h|)>|<around|\||V*S<rsub|H,D>|\|>>>>>>
     </eqnarray*>
 
-    \;
+    <with|font|fireflysung|\<#53EF\>\<#5F97\>><with|font|roman|\<#FF1A\>>
+
+    <\equation*>
+      p<around*|(|h\|D|)>=<choice|<tformat|<table|<row|<cell|<frac|1|<around|\||V*S<rsub|H,D>|\|>>>|<cell|<text|if
+      <math|h> is consistent with >D>>|<row|<cell|0>|<cell|otherwise>>>>>
+    </equation*>
   </hidden>|<\hidden>
     <tit|\<#8D1D\>\<#53F6\>\<#65AF\>\<#6CD5\>\<#5219\>>
 
@@ -1149,29 +1153,29 @@
   </hidden>|<\hidden>
     <tit|\<#8868\>\<#793A\>\<#8054\>\<#5408\>\<#6982\>\<#7387\>>
 
-    beginitemize
+    <\itemize-dot>
+      <item><with|font|fireflysung|\<#4F8B\>\<#5982\>><with|font|roman|\<#FF1A\>
+      ><math|P*<around|(|S*t*o*r*m,B*u*s*T*o*u*r*G*r*o*u*p,\<ldots\>,F*o*r*e*s*t*F*i*r*e|)>>
 
-    <item><with|font|fireflysung|\<#4F8B\>\<#5982\>><with|font|roman|\<#FF1A\>
-    ><math|P*<around|(|S*t*o*r*m,B*u*s*T*o*u*r*G*r*o*u*p,\<ldots\>,F*o*r*e*s*t*F*i*r*e|)>>
+      <item><with|font|fireflysung|\<#5BF9\>\<#7F51\>\<#7EDC\>\<#53D8\>\<#91CF\>\<#7684\>\<#5143\>\<#7EC4\>
+      ><math|<around|(|Y<rsub|1>,\<ldots\>,Y<rsub|n>|)>>
+      <with|font|fireflysung|\<#53D6\>\<#503C\>
+      ><math|<around|(|y<rsub|1>,\<ldots\>,y<rsub|n>|)>>
+      <with|font|fireflysung|\<#7684\>\<#8054\>\<#5408\>\<#6982\>\<#7387\>><with|font|roman|\<#FF1A\>
+      >
 
-    <item><with|font|fireflysung|\<#5BF9\>\<#7F51\>\<#7EDC\>\<#53D8\>\<#91CF\>\<#7684\>\<#5143\>\<#7EC4\>
-    ><math|<around|(|Y<rsub|1>,\<ldots\>,Y<rsub|n>|)>>
-    <with|font|fireflysung|\<#53D6\>\<#503C\>
-    ><math|<around|(|y<rsub|1>,\<ldots\>,y<rsub|n>|)>>
-    <with|font|fireflysung|\<#7684\>\<#8054\>\<#5408\>\<#6982\>\<#7387\>><with|font|roman|\<#FF1A\>
-    >
+      <\equation*>
+        P*<around|(|y<rsub|1>,\<ldots\>,y<rsub|n>|)>=<big|prod><rsub|i=1><rsup|n>P*<around|(|y<rsub|i>\|P*a*r*e*n*t*s<around|(|Y<rsub|i>|)>|)>
+      </equation*>
 
-    <\equation*>
-      P*<around|(|y<rsub|1>,\<ldots\>,y<rsub|n>|)>=<big|prod><rsub|i=1><rsup|n>P*<around|(|y<rsub|i>\|P*a*r*e*n*t*s<around|(|Y<rsub|i>|)>|)>
-    </equation*>
-
-    <with|font|fireflysung|\<#5176\>\<#4E2D\>
-    ><math|P*a*r*e*n*t*s<around|(|Y<rsub|i>|)>>
-    <with|font|fireflysung|\<#8868\>\<#793A\>\<#7F51\>\<#7EDC\>\<#4E2D\>
-    ><math|Y<rsub|i>> <with|font|fireflysung|\<#7684\>\<#7ACB\>\<#5373\>\<#524D\>\<#9A71\>\<#7684\>\<#96C6\>\<#5408\>>\<#3002\><with|font|fireflysung|\<#6CE8\>\<#610F\>
-    ><math|P*<around|(|y<rsub|i>\|P*a*r*e*n*t*s<around|(|Y<rsub|i>|)>|)>>
-    <with|font|fireflysung|\<#7684\>\<#503C\>\<#7B49\>\<#4E8E\>\<#4E0E\>\<#7ED3\>\<#70B9\>
-    ><math|Y<rsub|i>> <with|font|fireflysung|\<#5173\>\<#8054\>\<#7684\>\<#6761\>\<#4EF6\>\<#6982\>\<#7387\>\<#8868\>\<#4E2D\>\<#7684\>\<#503C\>>\<#3002\>
+      <with|font|fireflysung|\<#5176\>\<#4E2D\>
+      ><math|P*a*r*e*n*t*s<around|(|Y<rsub|i>|)>>
+      <with|font|fireflysung|\<#8868\>\<#793A\>\<#7F51\>\<#7EDC\>\<#4E2D\>
+      ><math|Y<rsub|i>> <with|font|fireflysung|\<#7684\>\<#7ACB\>\<#5373\>\<#524D\>\<#9A71\>\<#7684\>\<#96C6\>\<#5408\>>\<#3002\><with|font|fireflysung|\<#6CE8\>\<#610F\>
+      ><math|P*<around|(|y<rsub|i>\|P*a*r*e*n*t*s<around|(|Y<rsub|i>|)>|)>>
+      <with|font|fireflysung|\<#7684\>\<#503C\>\<#7B49\>\<#4E8E\>\<#4E0E\>\<#7ED3\>\<#70B9\>
+      ><math|Y<rsub|i>> <with|font|fireflysung|\<#5173\>\<#8054\>\<#7684\>\<#6761\>\<#4EF6\>\<#6982\>\<#7387\>\<#8868\>\<#4E2D\>\<#7684\>\<#503C\>>\<#3002\>
+    </itemize-dot>
   </hidden>|<\hidden>
     <tit|\<#8D1D\>\<#53F6\>\<#65AF\>\<#7F51\>\<#7EDC\>\<#63A8\>\<#7406\>>
 
@@ -1507,7 +1511,7 @@
 
       <item>Hidden Markov Models
     </itemize>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     <with|font|fireflysung|\<#5B9A\>\<#4E49\>\<#4F3C\>\<#7136\>\<#51FD\>\<#6570\>
@@ -1545,7 +1549,7 @@
         h\<leftarrow\>arg max<rsub|h<rprime|'>> Q<around|(|h<rprime|'>\|h|)>
       </equation*>
     </itemize>
-  </shown>>
+  </hidden>>
 </body>
 
 <\initial>
