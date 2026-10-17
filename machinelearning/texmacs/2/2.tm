@@ -3,7 +3,7 @@
 <style|<tuple|beamer|chinese|manila-paper>>
 
 <\body>
-  <screens|<\shown>
+  <screens|<\hidden>
     \;
 
     \;
@@ -15,7 +15,7 @@
     <doc-data|<doc-title|<with|font-base-size|10|\<#6A21\>\<#578B\>\<#8BC4\>\<#4F30\>\<#4E0E\>\<#9009\>\<#62E9\>>>>
 
     \;
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|\<#9519\>\<#8BEF\>\<#7387\>\<#4E0E\>\<#51C6\>\<#786E\>\<#7387\>>
 
     \;
@@ -450,8 +450,14 @@
     \<#FF0C\>\<#5219\>\<#5047\>\<#8BBE\>\<#4E0D\>\<#80FD\>\<#88AB\>\<#62D2\>\<#7EDD\>\<#FF0C\>\<#5373\>\<#8BA4\>\<#4E3A\>\<#4E24\>\<#4E2A\>\<#5B66\>\<#4E60\>\<#5668\>\<#7684\>\<#6027\>\<#80FD\>\<#6CA1\>\<#6709\>\<#663E\>\<#8457\>\<#5DEE\>\<#522B\>\<#FF1B\>
 
     \<#5426\>\<#5219\>\<#53EF\>\<#8BA4\>\<#4E3A\>\<#4E24\>\<#4E2A\>\<#5B66\>\<#4E60\>\<#5668\>\<#7684\>\<#6027\>\<#80FD\>\<#6709\>\<#663E\>\<#8457\>\<#5DEE\>\<#522B\>\<#FF0C\>\<#4E14\>\<#5E73\>\<#5747\>\<#9519\>\<#8BEF\>\<#7387\>\<#8F83\>\<#5C0F\>\<#7684\>\<#90A3\>\<#4E2A\>\<#5B66\>\<#4E60\>\<#5668\>\<#6027\>\<#80FD\>\<#8F83\>\<#4F18\>\<#3002\><math|t<rsub|\<alpha\>/2,k-1>>\<#662F\>\<#81EA\>\<#7531\>\<#5EA6\><math|k-1>\<#7684\><math|t>\<#5206\>\<#5E03\>\<#4E0A\>\<#5C3E\>\<#90E8\>\<#7D2F\>\<#79EF\>\<#5206\>\<#5E03\>\<#4E3A\><math|\<alpha\>/2>\<#7684\>\<#4E34\>\<#754C\>\<#503C\>\<#3002\>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <tit|\<#504F\>\<#5DEE\>\<#4E0E\>\<#65B9\>\<#5DEE\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|E>|<cell|=>|<cell|\<bbb-E\><around*|(|<wide|p|^>-p|)><rsup|2>>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><around*|(|<wide|p|^>-\<bbb-E\><around*|(|<wide|p|^>|)>+\<bbb-E\><around*|(|<wide|p|^>|)>-p|)><rsup|2>>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><around*|(|<wide|p|^>-\<bbb-E\><around*|(|<wide|p|^>|)>|)><rsup|2>+\<bbb-E\><around*|(|<wide|p|^>-\<bbb-E\><around*|(|<wide|p|^>|)>|)><around*|(|\<bbb-E\><around*|(|<wide|p|^>|)>-p|)>+\<bbb-E\><around*|(|\<bbb-E\><around*|(|<wide|p|^>|)>-p|)><rsup|2>>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><around*|(|<wide|p|^>-\<bbb-E\><around*|(|<wide|p|^>|)>|)><rsup|2>+\<bbb-E\><around*|(|\<bbb-E\><around*|(|<wide|p|^>|)>-p|)><rsup|2>>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><around*|(|<wide|p|^>-\<bbb-E\><around*|(|<wide|p|^>|)>|)><rsup|2>+<around*|(|\<bbb-E\><around*|(|<wide|p|^>|)>-p|)><rsup|2>>>>>
+    </eqnarray*>
+  </shown>|<\hidden>
+    <tit|\<#504F\>\<#5DEE\>\U\<#65B9\>\<#5DEE\>\<#5206\>\<#89E3\>>
 
     \ <space|4em><image|image/bias-variance.png|0.6par|||>
   </hidden>|<\hidden>
