@@ -137,10 +137,10 @@
 
     so that
 
-    <\equation*>
+    <\equation>
       y(x, w) = \ <big|sum><rsub|j=0><rsup|M-1>w<rsub|j>\<varphi\><rsub|j>(x)
-      =\<b-varphi\>(\<b-x\>)<rsup|T>\<b-w\>
-    </equation*>
+      =\<b-varphi\>(\<b-x\>)<rsup|T>\<b-w\><label|3.3>
+    </equation>
 
     where
 
@@ -325,10 +325,10 @@
     likelihood function, which is a function of the adjustable parameters
     <math|\<b-w\>> and <math|\<beta\>>, in the form \ 
 
-    <\equation*>
+    <\equation>
       p(\<b-t\>\|X, \<b-w\>, \<beta\>) = \ <big|prod><rsub|n=1><rsup|N>\<cal-N\>(t<rsub|n>\|\<b-w\><rsup|T>\<b-varphi\>(\<b-x\><rsub|n>),
-      \<beta\><rsup|\<minus\>1>)\ 
-    </equation*>
+      \<beta\><rsup|\<minus\>1>) <label|3.10>
+    </equation>
   </hidden>|<\hidden>
     <tit|Log likelihood>
 
@@ -706,7 +706,7 @@
     the expected squared loss can be written in the form
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|L|]>>|<cell|=>|<cell|<big|int><around*|{|y<around*|(|\<b-x\>,\<b-w\>|)>-t|}><rsup|2>p<around*|(|\<b-x\>,t|)>\<mathd\>\<b-x\>\<mathd\>t>>|<row|<cell|>|<cell|=>|<cell|<big|int><around*|{|y<around*|(|\<b-x\>,\<b-w\>|)>-h<around*|(|\<b-x\>|)>|}><rsup|2>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>+<wide*|<big|int><around*|{|h<around*|(|\<b-x\>|)>-t|}><rsup|2>p<around*|(|\<b-x\>,t|)>\<mathd\>\<b-x\>\<mathd\>t|\<wide-underbrace\>><rsub|arises
+      <tformat|<table|<row|<cell|\<bbb-E\><around*|[|L|]>>|<cell|=>|<cell|<big|int><around*|{|y<around*|(|\<b-x\>,\<b-w\>|)>-t|}><rsup|2>p<around*|(|\<b-x\>,t|)>\<mathd\>\<b-x\>\<mathd\>t>>|<row|<cell|>|<cell|=>|<cell|<big|int><around*|{|y<around*|(|\<b-x\>,\<b-w\>|)>-h<around*|(|\<b-x\>|)>|}><rsup|2>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>+<wide*|<big|iint><around*|{|h<around*|(|\<b-x\>|)>-t|}><rsup|2>p<around*|(|\<b-x\>,t|)>\<mathd\>\<b-x\>\<mathd\>t|\<wide-underbrace\>><rsub|arises
       from the intrinsic noise><eq-number><label|3.37>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
@@ -755,7 +755,7 @@
     \ where
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|<around*|(|bias|)><rsup|2>>|<cell|=>|<cell|<big|int><around*|{|\<bbb-E\><rsub|\<cal-D\>><around*|[|y<around*|(|\<b-x\>;\<cal-D\>|)>|]>-h<around*|(|\<b-x\>|)>|}><rsup|2>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>>>|<row|<cell|variance>|<cell|=>|<cell|<big|int>\<bbb-E\><rsub|\<cal-D\>><around*|[|<around*|{|y<around*|(|\<b-x\>;\<cal-D\>|)>-\<bbb-E\><rsub|\<cal-D\>><around*|[|y<around*|(|\<b-x\>;\<cal-D\>|)>|]>|}><rsup|2>|]>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>>>|<row|<cell|noise>|<cell|=>|<cell|<big|int><around*|{|h<around*|(|\<b-x\>|)>-t|}><rsup|2>p<around*|(|\<b-x\>,t|)>\<mathd\>\<b-x\>\<mathd\>t>>>>
+      <tformat|<table|<row|<cell|<around*|(|bias|)><rsup|2>>|<cell|=>|<cell|<big|int><around*|{|\<bbb-E\><rsub|\<cal-D\>><around*|[|y<around*|(|\<b-x\>;\<cal-D\>|)>|]>-h<around*|(|\<b-x\>|)>|}><rsup|2>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>>>|<row|<cell|variance>|<cell|=>|<cell|<big|int>\<bbb-E\><rsub|\<cal-D\>><around*|[|<around*|{|y<around*|(|\<b-x\>;\<cal-D\>|)>-\<bbb-E\><rsub|\<cal-D\>><around*|[|y<around*|(|\<b-x\>;\<cal-D\>|)>|]>|}><rsup|2>|]>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>>>|<row|<cell|noise>|<cell|=>|<cell|<big|iint><around*|{|h<around*|(|\<b-x\>|)>-t|}><rsup|2>p<around*|(|\<b-x\>,t|)>\<mathd\>\<b-x\>\<mathd\>t>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <\padded-center>
@@ -816,9 +816,329 @@
     <\padded-center>
       <section|Bayesian Linear Regression>
     </padded-center>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
+    The effective model complexity, governed by the <strong|number> of basis
+    functions, needs to be controlled according to the size of the data set.
+
+    Adding a <strong|regularization> term to the log likelihood function
+    means the effective model complexity can then be controlled by the value
+    of the regularization coefficient, although the choice of the number and
+    form of the basis functions is of course still important in determining
+    the overall behaviour of the model.
+
+    This leaves the issue of deciding the appropriate model complexity for
+    the particular problem, which cannot be decided simply by maximizing the
+    likelihood function, because this always leads to excessively complex
+    models and over-fitting.
+
+    Independent hold-out data can be used to determine model complexity, as
+    discussed in Section 1.3, but this can be both computationally expensive
+    and wasteful of valuable data.
+
+    A Bayesian treatment of linear regression will avoid the over-fitting
+    problem of maximum likelihood, and which will also lead to automatic
+    methods of determining model complexity using the training data alone.
+
+    Again, for simplicity we will focus on the case of a single target
+    variable <math|t>.
+  </hidden>|<\hidden>
+    <tit|prior probability distribution>
+
+    Introduce a prior probability distribution over the model parameters
+    <math|\<b-w\>>.
+
+    Treat the noise precision parameter <math|\<beta\>> as a known constant.
+
+    The likelihood function <math|p(t\|\<b-w\>)> defined by Eq. <eqref|3.10>
+    is the exponential of a quadratic function of <math|\<b-w\>>.
+
+    The corresponding conjugate prior is therefore given by a Gaussian
+    distribution of the form \ 
+
+    <\equation*>
+      p(\<b-w\>)=\<cal-N\>(\<b-w\>\|\<b-m\><rsub|0>, S<rsub|0>)
+    </equation*>
+
+    \ \ having mean <math|\<b-m\><rsub|0>> and covariance <math|S<rsub|0>>.
+  </hidden>|<\hidden>
+    <tit|posterior distribution>
+
+    Next compute the posterior distribution, which is proportional to the
+    product of the likelihood function and the prior.
+
+    Due to the choice of a conjugate Gaussian prior distribution, the
+    posterior will also be Gaussian.\ 
+
+    Evaluate this distribution by the usual procedure of completing the
+    square in the exponential, and then finding the normalization coefficient
+    using the standard result for a normalized Gaussian.
+
+    The posterior distribution is in the form \ 
+
+    <\equation>
+      p(\<b-w\>\|\<b-t\>,X)=\<cal-N\>(\<b-w\>\|\<b-m\><rsub|N>,
+      S<rsub|N>)<label|3.49>
+    </equation>
+
+    \ \ where
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-m\><rsub|N>>|<cell|=>|<cell|S<rsub|N><around*|(|S<rsub|0><rsup|-1>\<b-m\><rsub|0>+\<beta\>\<Phi\><rsup|T>\<b-t\>|)>>>|<row|<cell|S<rsub|N><rsup|-1>>|<cell|=>|<cell|S<rsub|0><rsup|-1>+\<beta\>\<Phi\><rsup|T>\<Phi\><eq-number><label|3.51>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    Note that because the posterior distribution is Gaussian, its mode
+    coincides with its mean.
+
+    Thus the maximum posterior weight vector is simply given by\ 
+
+    <\equation*>
+      \<b-w\><rsub|MAP> = \<b-m\><rsub|N> .
+    </equation*>
+
+    If we consider an infinitely broad prior\ 
+
+    <\equation*>
+      S<rsub|0> = \<alpha\><rsup|\<minus\>1>I
+    </equation*>
+
+    with <math|\<alpha\> \<rightarrow\> 0>, the mean <math|\<b-m\><rsub|N>>
+    of the posterior distribution reduces to the maximum likelihood value
+    <math|\<b-w\><rsub|ML>> given by Eq. <eqref|3.15>.
+
+    Similarly, if <math|N = 0>, then the posterior distribution reverts to
+    the prior.
+
+    Furthermore, if data points arrive sequentially, then the posterior
+    distribution at any stage acts as the prior distribution for the
+    subsequent data point, such that the new posterior distribution is again
+    given by Eq. <eqref|3.49>.
+
     \;
-  </shown>>
+  </hidden>|<\hidden>
+    Consider a zero-mean isotropic Gaussian governed by a single precision
+    parameter <math|\<alpha\>> so that \ 
+
+    <\equation*>
+      p(\<b-w\>\|\<alpha\>)=N (\<b-w\>\|\<b-0\>, \<alpha\><rsup|\<minus\>1>I)
+    </equation*>
+
+    \ \ and the corresponding posterior distribution over <math|\<b-w\>> is
+    then given by Eq. <eqref|3.49> with \ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-m\><rsub|N>>|<cell|=>|<cell|\<beta\>S<rsub|N>\<Phi\><rsup|T>\<b-t\><eq-number><label|3.53>>>|<row|<cell|S<rsub|N><rsup|-1>>|<cell|=>|<cell|\<alpha\>I+\<beta\>\<Phi\><rsup|T>\<Phi\>>>>>
+    </eqnarray*>
+
+    \ \ The log of the posterior distribution is given by the sum of the log
+    likelihood and the log of the prior and, as a function of w, takes the
+    form \ 
+
+    <\equation*>
+      ln p(\<b-w\>\|t) =-<frac|\<beta\>|2><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T>\<b-w\>|}><rsup|2>-<frac|\<alpha\>|2>\<b-w\><rsup|T>\<b-w\>+const
+    </equation*>
+
+    Maximization of this posterior distribution with respect to
+    <math|\<b-w\>> is therefore equivalent to the minimization of the
+    sum-of-squares error function with the addition of a quadratic
+    regularization term, corresponding to Eq. <eqref|3.27> with
+    <math|\<lambda\> = \<alpha\>/\<beta\>>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      \;
+
+      \;
+
+      <small-figure|<tabular|<tformat|<table|<row|<cell|<image|image/fig_3_7_sequential_bayesian_1.png|.42par|||>>|<cell|<image|image/fig_3_7_sequential_bayesian_2.png|.42par|||>>>>>>|Illustration
+      of sequential Bayesian learning for a simple linear model of the
+      form<math| y(x, w) = \ w<rsub|0>+w<rsub|1>x>. A detailed description of
+      this figure is given in the text.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|Other forms of prior>
+
+    Other forms of prior over the parameters can be considered.
+
+    For instance, we can generalize the Gaussian prior to give \ 
+
+    <\equation*>
+      p(\<b-w\>\|\<alpha\>) = \ <around*|[|<frac|q|2><around*|(|<frac|\<alpha\>|2>|)><rsup|1/q><frac|1|\<Gamma\><around*|(|1/q|)>>|]><rsup|M>exp<around*|(|-<frac|\<alpha\>|2><big|sum><rsub|j=0><rsup|M-1><around*|\||w<rsub|j>|\|><rsup|q>|)>
+    </equation*>
+
+    in which <math|q = 2> corresponds to the Gaussian distribution, and only
+    in this case is the prior conjugate to the likelihood function
+    <eqref|3.10>.
+
+    Finding the maximum of the posterior distribution over <math|w>
+    corresponds to minimization of the regularized error function
+    <eqref|3.29>.
+
+    In the case of the Gaussian prior, the mode of the posterior distribution
+    was equal to the mean, although this will no longer hold if
+    <math|q\<neq\>2>.
+  </hidden>|<\hidden>
+    <tit|Predictive distribution>
+
+    Make predictions of <math|t> for new values of <math|x>.
+
+    Requires that we evaluate the predictive distribution defined by \ 
+
+    <\equation>
+      p(t\|\<b-t\>,<with|color|purple|X,\<b-x\>>, \<alpha\>, \<beta\>) =
+      \ <big|int> p(t\|x,\<b-w\>,\<beta\>)p(\<b-w\>\|\<b-t\>,<with|color|magenta|X>,
+      \<alpha\>, \<beta\>)\<mathd\>\<b-w\><label|3.57>
+    </equation>
+
+    in which <math|\<b-t\>> is the vector of target values from the training
+    set, and omitted the corresponding input vectors from the right-hand side
+    of the conditioning statements to simplify the notation.
+
+    The conditional distribution <math|p(t\|\<b-x\>,\<b-w\>, \<beta\>)> of
+    the target variable is given by Eq. <eqref|3.8>, and the posterior weight
+    distribution is given by Eq. <eqref|3.49>.
+  </hidden>|<\hidden>
+    the predictive distribution takes the form \ 
+
+    <\equation>
+      p(t\|\<b-x\>,\<b-t\>,<with|color|magenta|X>, \<alpha\>, \<beta\>) =
+      \<cal-N\> (t\|\<b-m\><rsup|T><rsub|N> \<b-varphi\>(\<b-x\>),
+      \<sigma\><rsup|2><rsub|N> (\<b-x\>))<label|3.58>
+    </equation>
+
+    where the variance <math|\<sigma\><rsup|2><rsub|N>(x)> of the predictive
+    distribution is given by \ 
+
+    <\equation>
+      \<sigma\><rsub|N><rsup|2>(\<b-x\>) = 1/\<beta\>
+      +\<b-varphi\>(\<b-x\>)<rsup|T>S<rsub|N>\<b-varphi\>(\<b-x\>)
+      <label|3.59>
+    </equation>
+
+    The first term in Eq. <eqref|3.59> represents the noise on the data
+    whereas the second term reflects the uncertainty associated with the
+    parameters <math|w>.
+
+    Because the noise process and the distribution of <math|w> are
+    independent Gaussians, their variances are additive.
+
+    Note that, as additional data points are observed, the posterior
+    distribution becomes narrower. As a consequence it can be shown (Qazaz et
+    al., 1997) that <math|\<sigma\><rsup|2><rsub|N+1>(x)\<leqslant\>\<sigma\><rsup|2><rsub|N>
+    (x)>.
+
+    In the limit <math|N \<rightarrow\> \<infty\>>, the second term in Eq.
+    <eqref|3.59> goes to zero, and the variance \ of the predictive
+    distribution arises solely from the additive noise governed by the
+    parameter <math|\<beta\>>.
+
+    \;
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_8_predictive_distribution_sine.png|.6par|||>|<label|fig3.8>Examples
+      of the predictive distribution <eqref|3.58> for a model consisting of 9
+      Gaussian basis functions of the form <eqref|3.4> using the synthetic
+      sinusoidal data set of <math|sin<around*|(|2\<pi\>x|)>>.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_9_sample_posterior_sine.png|.6par|||>|Plots
+      of the function <math|y(x, w)> using samples from the posterior
+      distributions over <math|w> corresponding to the plots in Figure
+      <reference|fig3.8>.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|Equivalent kernel>
+
+    Substitute Eq. <eqref|3.53> into the expression <eqref|3.3>, we see that
+    the predictive mean can be written in the form\ 
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|y<around*|(|\<b-x\>,\<b-m\><rsub|N>|)>>|<cell|=>|<cell|\<b-varphi\><around*|(|\<b-x\>|)><rsup|T>\<b-m\><rsub|N>>>|<row|<cell|>|<cell|=>|<cell|\<beta\>\<b-varphi\><around*|(|\<b-x\>|)><rsup|T>S<rsub|N>\<Phi\><rsup|T>\<b-t\>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>\<beta\>\<b-varphi\><around*|(|\<b-x\>|)><rsup|T>S<rsub|N>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>t<rsub|n>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|n1><rsup|N>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>t<rsub|n>>>|<row|<cell|k<around*|(|\<b-x\>,\<b-x\><rprime|'>|)>>|<cell|=>|<cell|\<beta\>\<b-varphi\><around*|(|\<b-x\>|)><rsup|T>S<rsub|N>\<b-varphi\><around*|(|\<b-x\><rprime|'>|)><eq-number><label|3.62>>>>>
+    </eqnarray*>
+
+    where <math|S<rsub|N>> is defined by Eq. <eqref|3.51>.
+    \ <math|k<around*|(|\<b-x\>,\<b-x\><rprime|'>|)>> is the <em|smoother
+    matrix> or the <em|equivalent kernel>.
+  </hidden>|<\shown>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_10_equivalent_kernel.png|.9par|||>|The
+      equivalent kernel <math|k(x, x\<prime\>)> for the Gaussian basis
+      functions in Figure <reference|fig3.1>, shown as \ a plot of <math|x>
+      versus <math|x\<prime\>>, together with three slices through this
+      matrix corresponding to three different values of <math|x>. The data
+      set used to generate this kernel comprised 200 values of <math|x>
+      equally spaced over the interval <math|(\<minus\>1, 1)>.>
+    </padded-center>
+  </shown>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_11_kernel_polynomial_sigmoidal.png|.5par|||>|Examples
+      of equivalent kernels <math|k(x, x\<prime\>)> for <math|x = 0>
+      \ plotted as a function of <math|x\<prime\>>, corresponding (left) to
+      the polynomial basis functions and (right) to the sigmoidal basis
+      functions shown in Figure <reference|fig3.1>. Note that these are
+      localized functions of <math|x\<prime\>> even though the corresponding
+      basis functions are nonlocal.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|kernel/covariance>
+
+    Further insight into the role of the equivalent kernel can be obtained by
+    considering the covariance between <math|y(x)> and <math|y(x\<prime\>)>,
+    which is given by
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|cov<around*|[|y<around*|(|\<b-x\>|)>,y<around*|(|\<b-x\><rprime|'>|)>|]>>|<cell|=>|<cell|cov<around*|[|\<b-varphi\><around*|(|\<b-x\>|)><rsup|T>\<b-w\>,\<b-w\><rsup|T>\<b-varphi\><around*|(|\<b-x\><rprime|'>|)>|]>>>|<row|<cell|>|<cell|=>|<cell|\<b-varphi\><around*|(|\<b-x\>|)><rsup|T>S<rsub|N>\<b-varphi\><around*|(|\<b-x\><rprime|'>|)>>>|<row|<cell|>|<cell|=>|<cell|\<beta\><rsup|-1>k<around*|(|\<b-x\>,\<b-x\><rprime|'>|)>>>>>
+    </eqnarray*>
+
+    where we have made use of Eq. <eqref|3.49>) and <eqref|3.62>.
+
+    From the form of the equivalent kernel, we see that the predictive mean
+    at nearby points will be highly correlated, whereas for more distant
+    pairs of points the correlation will be smaller.
+  </hidden>|<\hidden>
+    It can be shown that these weights sum to one, in other words \ 
+
+    <\equation>
+      <big|sum><rsub|n=1><rsup|N>k<around*|(|\<b-x\>,\<b-x\><rsub|n>|)>=1<label|3.64>
+    </equation>
+
+    for all values of <math|x>.\ 
+
+    Note that the kernel function can be negative as well as positive, so
+    although it satisfies a summation constraint, the corresponding
+    predictions are not necessarily convex combinations of the training set
+    target variables.
+
+    The equivalent kernel \ satisfies an important property shared by kernel
+    functions in general, namely that it can be expressed in the form an
+    \ inner product with respect to a vector
+    <math|\<b-psi\><around*|(|\<b-x\>|)>> of nonlinear functions, so that \ 
+
+    <\equation*>
+      k(\<b-x\>,\<b-x\><rprime|'>) = \<b-psi\>(x)<rsup|T>\<b-psi\>(x<rprime|'>)
+    </equation*>
+
+    \ \ where\ 
+
+    <\equation*>
+      \<b-psi\>(\<b-x\>) = \<beta\><rsup|1/2>S<rsup|1/2><rsub|N>\<b-varphi\>(\<b-x\>)
+    </equation*>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Bayesian Model Comparison>
+    </padded-center>
+  </hidden>|<\hidden>
+    \;
+  </hidden>>
 </body>
 
 <\initial>
@@ -833,17 +1153,33 @@
 
 <\references>
   <\collection>
-    <associate|3.11|<tuple|4|?>>
-    <associate|3.12|<tuple|5|?>>
-    <associate|3.15|<tuple|6|?>>
-    <associate|3.27|<tuple|7|?>>
-    <associate|3.29|<tuple|8|?>>
-    <associate|3.30|<tuple|9|?>>
-    <associate|3.37|<tuple|10|?>>
-    <associate|3.4|<tuple|1|?>>
-    <associate|3.5|<tuple|2|?>>
-    <associate|3.8|<tuple|3|?>>
+    <associate|3.10|<tuple|5|?>>
+    <associate|3.11|<tuple|6|?>>
+    <associate|3.12|<tuple|7|?>>
+    <associate|3.15|<tuple|8|?>>
+    <associate|3.27|<tuple|9|?>>
+    <associate|3.29|<tuple|10|?>>
+    <associate|3.3|<tuple|1|?>>
+    <associate|3.30|<tuple|11|?>>
+    <associate|3.37|<tuple|12|?>>
+    <associate|3.4|<tuple|2|?>>
+    <associate|3.49|<tuple|13|?>>
+    <associate|3.5|<tuple|3|?>>
+    <associate|3.51|<tuple|14|?>>
+    <associate|3.53|<tuple|15|?>>
+    <associate|3.57|<tuple|16|?>>
+    <associate|3.58|<tuple|17|?>>
+    <associate|3.59|<tuple|18|?>>
+    <associate|3.62|<tuple|19|?>>
+    <associate|3.64|<tuple|20|?>>
+    <associate|3.8|<tuple|4|?>>
     <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|7|?>>
+    <associate|auto-11|<tuple|8|?>>
+    <associate|auto-12|<tuple|9|?>>
+    <associate|auto-13|<tuple|10|?>>
+    <associate|auto-14|<tuple|11|?>>
+    <associate|auto-15|<tuple|4|?>>
     <associate|auto-2|<tuple|1|?>>
     <associate|auto-3|<tuple|2|?>>
     <associate|auto-4|<tuple|3|?>>
@@ -853,6 +1189,7 @@
     <associate|auto-8|<tuple|6|?>>
     <associate|auto-9|<tuple|3|1>>
     <associate|fig3.1|<tuple|1|?>>
+    <associate|fig3.8|<tuple|8|?>>
   </collection>
 </references>
 
@@ -917,6 +1254,48 @@
       + variance occurs around <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|ln
       \<lambda\> = \<minus\>0.31>>, which is close to the value that gives
       the minimum error on the test data.>|<pageref|auto-8>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|7>||Illustration of
+      sequential Bayesian learning for a simple linear model of the
+      form<with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|
+      y(x, w) = \ w<rsub|0>+w<rsub|1>x>>. A detailed description of this
+      figure is given in the text.>|<pageref|auto-10>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|8>||Examples of the
+      predictive distribution (<reference|3.58>) for a model consisting of 9
+      Gaussian basis functions of the form (<reference|3.4>) using the
+      synthetic sinusoidal data set of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|sin<around*|(|2\<pi\>x|)>>>.>|<pageref|auto-11>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|9>||Plots of the
+      function <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|y(x,
+      w)>> using samples from the posterior distributions over
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|w>>
+      corresponding to the plots in Figure
+      <reference|fig3.8>.>|<pageref|auto-12>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|10>||The equivalent
+      kernel <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|k(x,
+      x\<prime\>)>> for the Gaussian basis functions in Figure
+      <reference|fig3.1>, shown as \ a plot of
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>
+      versus <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x\<prime\>>>,
+      together with three slices through this matrix corresponding to three
+      different values of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>.
+      The data set used to generate this kernel comprised 200 values of
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x>>
+      equally spaced over the interval <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|(\<minus\>1,
+      1)>>.>|<pageref|auto-13>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|11>||Examples of
+      equivalent kernels <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|k(x,
+      x\<prime\>)>> for <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x
+      = 0>> \ plotted as a function of <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x\<prime\>>>,
+      corresponding (left) to the polynomial basis functions and (right) to
+      the sigmoidal basis functions shown in Figure <reference|fig3.1>. Note
+      that these are localized functions of
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x\<prime\>>>
+      even though the corresponding basis functions are
+      nonlocal.>|<pageref|auto-14>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Linear
@@ -930,6 +1309,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Bayesian
       Linear Regression> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-9><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Bayesian
+      Model Comparison> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-15><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
