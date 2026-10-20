@@ -74,7 +74,7 @@
 # +CAPTION:    交叉
 # +LABEL:      fig:ditaaex
 \center
-#+ATTR_LATEX: width=0.8\textwidth 
+#+ATTR_LATEX: width 0.8\textwidth 
 [[./image/cross_over_genes_Figure_17_02_01.jpg]]
 
 
@@ -83,7 +83,7 @@
 # #+CAPTION:    变异
 \center
 #+Center:
-#+ATTR_LaTeX: width=0.8\textwidth
+#+ATTR_LaTeX: width 0.8\textwidth
 [[./image/crossover_mutation.png]]
 
 
@@ -403,12 +403,14 @@ GP操作的程序一般被表示为程序的解析（parse）树。每个函数�
     :BEAMER_col: 0.7
     :END:
 
-#+ATTR_LATEX: width=0.5\textwidth
+#+ATTR_LATEX: width 0.5\textwidth
 [[./image/gp-rep.png]]
 
 
 ** 解析树交叉							    :B_block:
-#+ATTR_LATEX: width=0.7\textwidth
+
+
+#+attr_latex: :width 0.7\textwidth
 [[./image/gp-crossover.png]]
 
 ** Block Problem

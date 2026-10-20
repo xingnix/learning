@@ -1,4 +1,4 @@
-% Created 2026-10-20 Tue 11:37
+% Created 2026-10-20 Tue 11:50
 % Intended LaTeX compiler: xelatex
 \documentclass[presentation]{beamer}
 
@@ -53,28 +53,28 @@
 \end{frame}
 
 \section{动机}
-\label{sec:org5aa30f4}
+\label{sec:orgccfd6bd}
 
-\begin{frame}[label={sec:orgd71c305}]{一种受生物进化启发的学习方法。}
+\begin{frame}[label={sec:orgabeab37}]{一种受生物进化启发的学习方法。}
 \begin{itemize}
 \item <2-> 它不再是从一般到特殊或从简单到复杂地搜索假设，而是通过变异和重组当前已知的最好假设来生成后续的假设。
 \item <3-> 在每一步，被称为当前群体（population）的一组假设被更新，方法是通过使用目前适应度最高的假设的后代替代群体的某个部分。
 \item <4-> 这个过程形成了对假设的生成并测试（generate-and-test）柱状搜索（beam-search），其中若干个最佳当前假设的变体最有可能在下一步被考虑。
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgcec25c5}]{遗传算子}
+\begin{frame}[label={sec:org5f1ada7}]{遗传算子}
 \center
 \begin{center}
 \includegraphics[width=.9\linewidth]{./image/cross_over_genes_Figure_17_02_01.jpg}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgf7716c1}]{遗传算子}
+\begin{frame}[label={sec:org21eabb8}]{遗传算子}
 \center
 \begin{center}
 \includegraphics[width=.9\linewidth]{./image/crossover_mutation.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orga64c592}]{GA的普及和发展得益于：}
+\begin{frame}[label={sec:orge696472}]{GA的普及和发展得益于：}
 \begin{itemize}
 \item <2-> 在生物系统中进化被认为是一种成功的自适应方法，并且具有很好的鲁棒性。
 \item <3-> GA搜索的假设空间中，假设的各个部分相互作用，每一部分对总的假设适应度的影响难以建模。
@@ -82,8 +82,8 @@
 \end{itemize}
 \end{frame}
 \section{遗传算法计算示例}
-\label{sec:orgbb3d6c5}
-\begin{frame}[label={sec:org25cc67a}]{问题}
+\label{sec:orgc06ba45}
+\begin{frame}[label={sec:orgca30e5c}]{问题}
     求二元函数的最大值：
 \[ f(x_1,x_2) =x_1^2+x_2^2 \]
 其中：
@@ -92,7 +92,7 @@
    x_2 &\in \{1,2,3,4,5,6,7\} 
 \end{align*}
 \end{frame}
-\begin{frame}[label={sec:org4aae199}]{个体编码}
+\begin{frame}[label={sec:org70c2168}]{个体编码}
 \begin{itemize}
 \item <2-> 遗传算法的运算对象是表示个体的符号串，所以必须把变量 \(x_1,x_2\) 编码为一种符号串。
 \item <3-> 因 x1, x2 为 \([0,7]\) 之间的整数，所以分别用3位无符号二进制整数来表示，将它们连接在一起所组成的6位无符号二进制数就形成了个体的基因型，表示一个可行解。
@@ -106,7 +106,7 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org2d69c09}]{产生初始种群}
+\begin{frame}[label={sec:orgb93aee3}]{产生初始种群}
 \begin{itemize}
 \item <2-> 遗传算法是对群体进行的进化操作，需要给其淮备一些表示起始搜索点的初始群体数据。
 \item <3-> 本例中，群体规模的大小取为4，即群体由4个个体组成，每个个体可通过随机方法产生。
@@ -115,13 +115,13 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgc4c4fcc}]{适应度计算}
+\begin{frame}[label={sec:orga1a49f0}]{适应度计算}
 \begin{itemize}
 \item <2-> 遗传算法中以个体适应度的大小来评定各个个体的优劣程度，从而决定其遗传机会的大小。
 \item <3-> 本例中，目标函数总取非负值，并且是以求函数最大值为优化目标，故可直接利用目标函数值作为个体的适应度。
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6985ccf}]{选择运算}
+\begin{frame}[label={sec:org681f1cc}]{选择运算}
 \begin{itemize}
 \item <2-> 选择运算(或称为复制运算)把当前群体中适应度较高的个体按某种规则或模型遗传到下一代群体中。一般要求适应度较高的个体将有更多的机会遗传到下一代群体中。
 \item <3-> 本例中，我们采用与适应度成正比的概率来确定各个个体复制到下一代群体中的数量。
@@ -158,7 +158,7 @@
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org8564519}]{交叉运算}
+\begin{frame}[label={sec:orge526152}]{交叉运算}
 \begin{itemize}
 \item <2-> 交叉运算是遗传算法中产生新个体的主要操作过程，它以某一概率相互交换某两个个体之间的部分染色体。
 \item <3-> 本例采用单点交叉的方法，其具体操作过程是：
@@ -197,7 +197,7 @@
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgf899d3c}]{变异运算}
+\begin{frame}[label={sec:orgcf6789c}]{变异运算}
 \begin{itemize}
 \item <2-> 变异运算是对个体的某一个或某一些基因座上的基因值按某一较小的概率进行改变，它也是产生新个体的一种操作方法。
 \item <3-> 本例中，我们采用基本位变异的方法来进行变异运算，其具体操作过程是：
@@ -220,7 +220,7 @@
 \end{center}
 \end{block}
 \end{frame}
-\begin{frame}[label={sec:orge1a5f66}]{新群体}
+\begin{frame}[label={sec:org3e70233}]{新群体}
 \begin{itemize}
 \item <2-> 对群体P(t)进行一轮选择、交叉、变异运算之后可得到新一代的群体p(t+1)。
 \item <4-> 从表中可以看出，群体经过一代进化之后，其适应度的最大值、平均值都得到了明显的改进。事实上，这里已经找到了最佳个体“111111”。
@@ -240,8 +240,8 @@
 \end{block}
 \end{frame}
 \section{遗传算法}
-\label{sec:orgcb6f949}
-\begin{frame}[label={sec:org93b3307}]{遗传算法描述}
+\label{sec:org3954caa}
+\begin{frame}[label={sec:org7291fae}]{遗传算法描述}
 \begin{itemize}
 \item GA研究的问题是搜索一个候选假设的空间，以确定最佳的假设。
 \item 在GA中，“最佳假设”被定义为是使“适应度（fitness）”最优的假设，适应度是为当前问题预先定义的数字度量。
@@ -257,7 +257,7 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgc2fe7fb}]{遗传算法（变量说明）}
+\begin{frame}[label={sec:orgf4c1da8}]{遗传算法（变量说明）}
 \begin{itemize}
 \item \(Fitness\) ：适应度评分函数，为给定假设赋予一个评估得分。
 \item \(Fitness\_threshold\) ：指定终止判据的阈值。
@@ -266,7 +266,7 @@
 \item \(m\) ：变异率。
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgf8f0a4a}]{遗传算法（算法流程）}
+\begin{frame}[label={sec:orgefa49c2}]{遗传算法（算法流程）}
 GA( \(Fitness, Fitness\_threshold, p, r, m\) )
 \begin{itemize}
 \item 初始化群体：\(P \leftarrow\)  随机产生 \(p\) 个假设
@@ -284,7 +284,7 @@ $$\Pr(h_{i}) = \frac{Fitness(h_{i})}{\sum_{j=1}^{p} Fitness(h_{j})}$$
 \item 从 \(P\) 中返回适应度最高的假设。
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6e53eba}]{表示假设}
+\begin{frame}[label={sec:org3a2d3a3}]{表示假设}
 $$(Outlook = Overcast \lor Rain) \land (Wind = Strong)$$
 
 表示为
@@ -309,12 +309,12 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \end{tabular}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org6bfe8dd}]{遗传算子}
+\begin{frame}[label={sec:org32c1c11}]{遗传算子}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./image/ga-recomb.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgc0b2dca}]{适应度函数}
+\begin{frame}[label={sec:org1531cdc}]{适应度函数}
 适应度函数定义了候选假设的排名准则，并且是以概率方法选择下一代群体的准则。
 \begin{itemize}
 \item 如果任务是学习分类的规则，那么适应度函数中会有一项用来评价每个规则对训练样例集合的分类精度。
@@ -326,7 +326,7 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \end{itemize}
 适应度函数可以测量生成的过程总体性能而不是单个规则的性能。
 \end{frame}
-\begin{frame}[label={sec:org6c6c57b}]{假设选择}
+\begin{frame}[label={sec:org8440176}]{假设选择}
 \begin{itemize}
 \item 适应度比例选择（Fitness proportionate selection）
 \[ \Pr(h_{i}) = \frac{Fitness(h_{i})}{\sum_{j=1}^{p} Fitness(h_{j})} \]
@@ -344,8 +344,8 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \end{itemize}
 \end{frame}
 \section{示例}
-\label{sec:org42a94f0}
-\begin{frame}[label={sec:orgd24cc8c}]{GABIL [DeJong et al. 1993]}
+\label{sec:org4c21d1e}
+\begin{frame}[label={sec:orgeb626a2}]{GABIL [DeJong et al. 1993]}
 \begin{itemize}
 \item 学习以命题规则的析取集合表示的布尔概念
 \item 适应度（ \alert{Fitness} ）
@@ -367,7 +367,7 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orga9d1992}]{可变长度位串交叉操作(Crossover with Variable-Length Bitstrings)}
+\begin{frame}[label={sec:org3bb1b29}]{可变长度位串交叉操作(Crossover with Variable-Length Bitstrings)}
 \begin{itemize}
 \item 交叉前
 \begin{center}
@@ -395,7 +395,7 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \end{center}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org95d0243}]{GABIL 扩展}
+\begin{frame}[label={sec:org3962f55}]{GABIL 扩展}
 \begin{itemize}
 \item 增加两个新的遗传算子
 \begin{itemize}
@@ -419,7 +419,7 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \end{center}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org047b2fb}]{GABIL Results}
+\begin{frame}[label={sec:org8b0c350}]{GABIL Results}
 对人为设计的12个问题平均性能：
 \begin{itemize}
 \item GABIL达到了92.1\%的平均泛化精度，
@@ -428,8 +428,8 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \end{itemize}
 \end{frame}
 \section{假设空间搜索}
-\label{sec:org0e36fb6}
-\begin{frame}[label={sec:org96fe1f9}]{模式 （Schemas ）}
+\label{sec:orgfe54e94}
+\begin{frame}[label={sec:orgf70732c}]{模式 （Schemas ）}
 是否能用数学的方法刻画GA中群体随时间进化的过程？
 
 \begin{itemize}
@@ -438,7 +438,7 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \item 例如模式0*10表示的位串集合中只包含0010和0110。
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgfd0ee45}]{模式理论}
+\begin{frame}[label={sec:org7432631}]{模式理论}
 根据每个模式的实例数量来刻画GA中群体的进化。
 \begin{itemize}
 \item \(\bar{f}(t) =\)  群体中所有个体在时间 \(t\) 的平均适应度
@@ -447,7 +447,7 @@ $$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 \item 模式理论根据m(s, t)和模式、群体及GA参数的其他属性，来描述 \(m(s, t+1)\) 的期望值。
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org3b41129}]{考虑选择算子}
+\begin{frame}[label={sec:orgdcbc999}]{考虑选择算子}
 \begin{itemize}
 \item 单次选中 \(h\) 的概率为：
 \begin{eqnarray}
@@ -465,7 +465,7 @@ E[m(s,t+1)] & = & \frac{\hat{u}(s,t)}{\bar{f}(t)}m(s,t)  \nonumber
 \end{eqnarray}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org45aca08}]{模式定理(Schema Theorem)}
+\begin{frame}[label={sec:org6be0cf7}]{模式定理(Schema Theorem)}
 \[E[m(s,t+1)] \geq \frac{\hat{u}(s,t)}{\bar{f}(t)}m(s,t) \left(1 -
 p_{c}\frac{d(s)}{l-1}\right) (1 - p_{m})^{o(s)} \]
 
@@ -481,8 +481,8 @@ p_{c}\frac{d(s)}{l-1}\right) (1 - p_{m})^{o(s)} \]
 \end{itemize}
 \end{frame}
 \section{遗传编程（Genetic Programming ）}
-\label{sec:orgd63ea85}
-\begin{frame}[label={sec:orgc327811}]{程序的种群表示为树}
+\label{sec:orgb2d4082}
+\begin{frame}[label={sec:org4cfffc4}]{程序的种群表示为树}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 GP操作的程序一般被表示为程序的解析（parse）树。每个函数调用被表示为树的一个节点，函数的参数通过它的子结点给出。
@@ -494,25 +494,25 @@ GP操作的程序一般被表示为程序的解析（parse）树。每个函数�
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgf950530}]{解析树交叉}
+\begin{frame}[label={sec:org9493087}]{解析树交叉}
 \begin{center}
-\includegraphics[width=.9\linewidth]{./image/gp-crossover.png}
+\includegraphics[width=0.7\textwidth]{./image/gp-crossover.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org75afc7d}]{Block Problem}
+\begin{frame}[label={sec:orgb6f05ac}]{Block Problem}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./image/gp-blocks.png}
 \end{center}
 Goal: spell UNIVERSAL
 \end{frame}
-\begin{frame}[label={sec:org18031e7}]{端点参数（Terminals）:}
+\begin{frame}[label={sec:org81e01cf}]{端点参数（Terminals）:}
 \begin{itemize}
 \item CS (``current stack'') = name of the top block on stack, or \(F\).
 \item TB (``top correct block'') = name of topmost correct block on stack
 \item NN (``next necessary'') = name of the next block needed above TB in the stack
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgc2b3e66}]{原始函数（Primitive functions）:}
+\begin{frame}[label={sec:org8741abe}]{原始函数（Primitive functions）:}
 \begin{itemize}
 \item (MS \(x\)): (``move to stack''), if block \(x\) is on the table, moves \(x\) to the
 top of the stack and returns the value \(T\).  Otherwise, does nothing and
@@ -527,7 +527,7 @@ otherwise.
 until expression \(y\) returns the value \(T\)
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgc0de8d0},fragile]{Learned Program}
+\begin{frame}[label={sec:org47b9c77},fragile]{Learned Program}
  \begin{itemize}
 \item Trained to fit 166 test problems
 \item Using population of 300 programs, found this after 10 generations:
@@ -536,7 +536,7 @@ until expression \(y\) returns the value \(T\)
 (EQ (DU (MT CS) (NOT CS)) (DU (MS NN)(NOT NN)))
 \end{verbatim}
 \end{frame}
-\begin{frame}[label={sec:org9484432}]{Genetic Programming}
+\begin{frame}[label={sec:orgf46be81}]{Genetic Programming}
 \begin{itemize}
 \item More interesting example: design electronic filter circuits
 \item Individuals are programs that transform begining circuit to final
@@ -545,7 +545,7 @@ circuit, by adding/subtracting components and connections
 \item Discovers circuits competitive with best human designs
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgd9b7c9b}]{GP for Classifying Images}
+\begin{frame}[label={sec:org56663e3}]{GP for Classifying Images}
 \begin{itemize}
 \item Teller and Veloso(1997)
 \item Fitness:
@@ -564,7 +564,7 @@ refers to a global library subroutine (evolved by selecting the most useful mini
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgaf31de1}]{Biological Evolution}
+\begin{frame}[label={sec:org046ab5c}]{Biological Evolution}
 \begin{itemize}
 \item Lamark (19th century)
 \begin{itemize}
@@ -574,7 +574,7 @@ refers to a global library subroutine (evolved by selecting the most useful mini
 \item What is the impact of individual learning on population evolution?
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org3f7ee87}]{Baldwin Effect}
+\begin{frame}[label={sec:orgac3959d}]{Baldwin Effect}
 \begin{itemize}
 \item Assume
 \begin{itemize}
@@ -591,7 +591,7 @@ refers to a global library subroutine (evolved by selecting the most useful mini
 
 \(\rightarrow\) individual learning (indirectly) increases rate of evolution
 \end{frame}
-\begin{frame}[label={sec:org315390f}]{Baldwin Effect,Plausible example:}
+\begin{frame}[label={sec:org3b2823a}]{Baldwin Effect,Plausible example:}
 \begin{itemize}
 \item New predator appears in environment
 \item Individuals who can learn (to avoid it) will be selected
@@ -600,7 +600,7 @@ refers to a global library subroutine (evolved by selecting the most useful mini
 \item possibly resulting in new non-learned traits such as instintive fear of predator
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org9ebd8a5}]{Computer Experiments on Baldwin Effect}
+\begin{frame}[label={sec:orgfdb91c5}]{Computer Experiments on Baldwin Effect}
 \begin{itemize}
 \item Hinton and Nowlan(1987)
 \item Evolve simple neural networks:
@@ -619,7 +619,7 @@ refers to a global library subroutine (evolved by selecting the most useful mini
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org2cc535a}]{Summary: Evolutionary Programming}
+\begin{frame}[label={sec:org9ed3b3a}]{Summary: Evolutionary Programming}
 \begin{itemize}
 \item Conduct randomized, parallel, hill-climbing search through \(H\)
 \item Approach learning as optimization problem (optimize fitness)
