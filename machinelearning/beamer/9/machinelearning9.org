@@ -24,7 +24,7 @@
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 # +LaTeX_CLASS_OPTIONS: [bigger]
- # +latex_header: \usepackage{beamerarticle}
+# +latex_header: \usepackage{beamerarticle}
 # +latex_header: \mode<beamer>{\usetheme{JuanLesPins}}
 #+latex_header: \mode<beamer>{\usetheme{Frankfurt}}
 #+latex_header: \mode<beamer>{\usecolortheme{dove}}
@@ -37,7 +37,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -93,7 +93,7 @@
 - <4-> 遗传算法易于并行化，且可降低由于使用超强计算机硬件的带来的昂贵费用。
 
 * 遗传算法计算示例
-\mode<article>{为更好地理解遗传算法的运算过程，下面用手工计算来简单地模拟遗传算法的各个主要执行步骤。}
+# \mode<article>{为更好地理解遗传算法的运算过程，下面用手工计算来简单地模拟遗传算法的各个主要执行步骤。}
 ** 问题
     求二元函数的最大值：
 \[ f(x_1,x_2) =x_1^2+x_2^2 \]
@@ -242,7 +242,7 @@
 GA( $Fitness, Fitness\_threshold, p, r, m$ )
 - 初始化群体：$P \leftarrow$  随机产生 $p$ 个假设
 - 评估：对于 $P$ 中的每一个 $h$ ，计算 $Fitness(h)$
-- 当 $\displaystyle \max_{h}[Fitness(h)]} < Fitness\_threshold$ ，产生新的一代 $P_S$ ：
+- 当 ${\displaystyle \max_{h}[Fitness(h)]} < Fitness\_threshold$ ，产生新的一代 $P_S$ ：
       - 选择：用概率方法选择 $P$ 的 $(1-r)p$ 个成员加入 $P_S$ 。从 $P$ 中选择假设 $h_i$ 的概率 $\Pr(h_i)$ 通过下面公式计算：
           $$\Pr(h_{i}) = \frac{Fitness(h_{i})}{\sum_{j=1}^{p} Fitness(h_{j})}$$
       - 交叉：根据上面给出的 $\Pr(h_i)$ ，从 $P$ 中按概率选择 $\frac{r \cdot p}{2}$ 对假设。
@@ -262,12 +262,12 @@ $$(Outlook = Overcast \lor Rain) \land (Wind = Strong)$$
 |       011 |     10 |
 
 
-$$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } PlayTennis=yes$$
+$$\mbox{IF\ \ } Wind = Strong \mbox{\ \ \ THEN\ \ } Action=yes$$
 
 表示为
 
 
-| $Outlook$ | $Wind$ | $PlayTennis$ |
+| $Outlook$ | $Wind$ | $Action$ |
 |       111 |     10 |           10 |
 
 
@@ -403,7 +403,7 @@ GP操作的程序一般被表示为程序的解析（parse）树。每个函数�
     :BEAMER_col: 0.7
     :END:
 
-#+ATTR_LATEX： width=0.5\textwidth
+#+ATTR_LATEX: width=0.5\textwidth
 [[./image/gp-rep.png]]
 
 
