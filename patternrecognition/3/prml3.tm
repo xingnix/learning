@@ -415,7 +415,7 @@
       <tformat|<table|<row|<cell|\<nabla\>ln
       p<around*|(|\<b-t\>\|\<b-w\>,\<beta\>|)>>|<cell|=>|<cell|<frac|N|2\<beta\>>
       \ \<minus\> <frac|1|2><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>
-      \<minus\> \<b-w\><rsup|T>\<b-varphi\>(\<b-x\><rsub|n>)|}><rsup|2>>>|<row|<cell|<frac|1|\<beta\><rsub|ML>>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-w\><rsub|ML><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>|}><rsup|2>>>>>
+      \<minus\> \<b-w\><rsup|T>\<b-varphi\>(\<b-x\><rsub|n>)|}><rsup|2>>>|<row|<cell|<frac|1|\<beta\><rsub|ML>>>|<cell|=>|<cell|<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-w\><rsub|ML><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>|}><rsup|2><label|3.21><eq-number>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|Geometry of least squares>
@@ -484,15 +484,15 @@
     One of the simplest forms of regularizer is given by the sum-of-squares
     of the weight vector elements\ 
 
-    <\equation*>
-      \ E<rsub|W> (\<b-w\>) =<frac|1|2>\<b-w\><rsup|T>\<b-w\>
-    </equation*>
+    <\equation>
+      \ E<rsub|W> (\<b-w\>) =<frac|1|2>\<b-w\><rsup|T>\<b-w\><label|3.25>
+    </equation>
   </hidden>|<\hidden>
     If we also consider the sum-of-squares error function given by \ 
 
-    <\equation*>
-      E<rsub|D>(\<b-w\>) =<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T>\<b-w\>|}><rsup|2>
-    </equation*>
+    <\equation>
+      E<rsub|D>(\<b-w\>) =<frac|1|2><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-varphi\><around*|(|\<b-x\><rsub|n>|)><rsup|T>\<b-w\>|}><rsup|2><label|3.26>
+    </equation>
 
     then the total error function becomes
 
@@ -918,15 +918,16 @@
     Consider a zero-mean isotropic Gaussian governed by a single precision
     parameter <math|\<alpha\>> so that \ 
 
-    <\equation*>
-      p(\<b-w\>\|\<alpha\>)=N (\<b-w\>\|\<b-0\>, \<alpha\><rsup|\<minus\>1>I)
-    </equation*>
+    <\equation>
+      p(\<b-w\>\|\<alpha\>)=N (\<b-w\>\|\<b-0\>,
+      \<alpha\><rsup|\<minus\>1>I)<label|3.52>
+    </equation>
 
     \ \ and the corresponding posterior distribution over <math|\<b-w\>> is
     then given by Eq. <eqref|3.49> with \ 
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-m\><rsub|N>>|<cell|=>|<cell|\<beta\>S<rsub|N>\<Phi\><rsup|T>\<b-t\><eq-number><label|3.53>>>|<row|<cell|S<rsub|N><rsup|-1>>|<cell|=>|<cell|\<alpha\>I+\<beta\>\<Phi\><rsup|T>\<Phi\>>>>>
+      <tformat|<table|<row|<cell|\<b-m\><rsub|N>>|<cell|=>|<cell|\<beta\>S<rsub|N>\<Phi\><rsup|T>\<b-t\><eq-number><label|3.53>>>|<row|<cell|S<rsub|N><rsup|-1>>|<cell|=>|<cell|\<alpha\>I+\<beta\>\<Phi\><rsup|T>\<Phi\><eq-number><label|3.54>>>>>
     </eqnarray*>
 
     \ \ The log of the posterior distribution is given by the sum of the log
@@ -1058,7 +1059,7 @@
     where <math|S<rsub|N>> is defined by Eq. <eqref|3.51>.
     \ <math|k<around*|(|\<b-x\>,\<b-x\><rprime|'>|)>> is the <em|smoother
     matrix> or the <em|equivalent kernel>.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <\padded-center>
       <small-figure|<image|image/fig_3_10_equivalent_kernel.png|.9par|||>|The
       equivalent kernel <math|k(x, x\<prime\>)> for the Gaussian basis
@@ -1068,7 +1069,7 @@
       set used to generate this kernel comprised 200 values of <math|x>
       equally spaced over the interval <math|(\<minus\>1, 1)>.>
     </padded-center>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <\padded-center>
       <small-figure|<image|image/fig_3_11_kernel_polynomial_sigmoidal.png|.5par|||>|Examples
       of equivalent kernels <math|k(x, x\<prime\>)> for <math|x = 0>
@@ -1137,8 +1138,936 @@
       <section|Bayesian Model Comparison>
     </padded-center>
   </hidden>|<\hidden>
+    <tit|model selection>
+
+    In Chapter 1, we highlighted the problem of over-fitting as well as the
+    use of <em|crossvalidation> as a technique for setting the values of
+    regularization parameters or for choosing between alternative models.
+
+    Here we consider the problem of <em|model selection> from a Bayesian
+    perspective.
+
     \;
-  </hidden>>
+  </hidden>|<\hidden>
+    \;
+
+    <\itemize-dot>
+      <item>As we shall see, the over-fitting associated with maximum
+      likelihood can be avoided by <strong|marginalizing> (summing or
+      integrating) over the model parameters instead of making point
+      estimates of their values.
+
+      <item>Models can then be compared directly on the training data,
+      without the need for a validation set.
+
+      <\itemize-minus>
+        <item>This allows all available data to be used for training and
+        avoids the multiple training runs for each model associated with
+        cross-validation.
+
+        <item>It also allows multiple complexity parameters to be determined
+        simultaneously as part of the training process.\ 
+      </itemize-minus>
+    </itemize-dot>
+
+    \;
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Bayesian view>
+
+    The Bayesian view of model comparison simply involves the use of
+    probabilities to represent uncertainty in the choice of model, along with
+    a consistent application of the sum and product rules of probability.
+
+    Suppose we wish to compare a set of <math|L> models
+    <math|{\<cal-M\><rsub|i>}> where <math|i = 1, . . . , L>. Here a model
+    refers to a probability distribution over the observed data
+    <math|\<cal-D\>>.
+
+    In the case of the polynomial curve-fitting problem, the distribution is
+    defined over the set of target values <math|<math-tt|<strong|t>>>, while
+    the set of input values <math|X> is assumed to be known.
+
+    Other types of model define a joint distributions over <math|X> and
+    <math|<math-bf|<verbatim|t>>>. We shall suppose that the data is
+    generated from one of these models but we are uncertain which one.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Model evidence>
+
+    Uncertainty is expressed through a prior probability distribution
+    <math|p(\<cal-M\><rsub|i>)>. Given a training set <math|\<cal-D\>>,
+    evaluate the posterior distribution
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|p<around*|(|\<cal-M\><rsub|i>\|\<cal-D\>|)>>|<cell|\<propto\>>|<cell|p<around*|(|\<cal-M\><rsub|i>|)>p<around*|(|\<cal-D\>\|\<cal-M\><rsub|i>|)>>>>>
+    </eqnarray*>
+
+    The prior allows us to express a preference for different models. Let us
+    simply assume that all models are given equal prior probability.
+
+    The interesting term is the <em|model evidence>
+    <math|p(\<cal-D\>\|\<cal-M\><rsub|i>)> which expresses the preference
+    shown by the data for different models, and we shall examine this term in
+    more detail shortly.
+
+    The model evidence is sometimes also called the <em|marginal likelihood>
+    because it can be viewed as a likelihood function over the space of
+    models, in which the parameters have been marginalized out.
+
+    The ratio of model evidences <math|p(\<cal-D\>\|\<cal-M\><rsub|i>)/p(\<cal-D\>\|\<cal-M\><rsub|j>)>
+    for two models is known as a <em|Bayes factor> (Kass and Raftery, 1995).
+  </hidden>|<\hidden>
+    <tit|Predictive distribution>
+
+    Once we know the posterior distribution over models, the predictive
+    distribution is given, from the sum and product rules, by \ 
+
+    <\equation*>
+      p(t\|\<b-x\>,\<cal-D\>)=<big|sum><rsub|i=1><rsup|L>p(t\|\<b-x\>,\<cal-M\><rsub|i>,\<cal-D\>)p(\<cal-M\><rsub|i>\|\<cal-D\>)
+    </equation*>
+
+    <space|1em>This is an example of a <em|mixture distribution> in which the
+    overall predictive distribution is obtained by averaging the predictive
+    distributions <math|p(t\|\<b-x\>,\<cal-M\><rsub|i>,\<cal-D\>)> of
+    individual models, weighted by the posterior probabilities
+    <math|p(\<cal-M\><rsub|i>\|\<cal-D\>)> of those models.
+
+    <space|1em>For instance, if we have two models that are a-posteriori
+    equally likely and one predicts a narrow distribution around <math|t = a>
+    while the other predicts a narrow distribution around <math|t = b>, the
+    overall predictive distribution will be a bimodal distribution with modes
+    at <math|t = a> and <math|t = b>, not a single model at <math|t = (a +
+    b)/2>.
+  </hidden>|<\hidden>
+    <tit|<math|\<b-w\>>>
+
+    \;
+
+    For a model governed by a set of parameters <math|\<b-w\>>, the model
+    evidence is given, from the sum and product rules of probability, by \ 
+
+    <\equation*>
+      p(\<cal-D\>\|\<cal-M\><rsub|i>)=<big|int>
+      \ p(\<cal-D\>\|\<b-w\>,\<cal-M\><rsub|i>)p(\<b-w\>\|\<cal-M\><rsub|i>)\<mathd\>\<b-w\>.
+    </equation*>
+
+    From a sampling perspective, the marginal likelihood can be viewed as the
+    probability of generating the data set <math|\<cal-D\>> from a model
+    whose parameters are sampled at random from the prior.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Normalizing term>
+
+    \;
+
+    \;
+
+    It is also interesting to note that the evidence is precisely the
+    normalizing term that appears in the denominator in Bayes' theorem when
+    evaluating the posterior distribution over parameters because \ 
+
+    <\equation*>
+      p(\<b-w\>\|\<cal-D\>,\<cal-M\><rsub|i>)=<frac|p(\<cal-D\>\|\<b-w\>,\<cal-M\><rsub|i>)p(\<b-w\>\|\<cal-M\><rsub|i>)|<with|color|magenta|p(\<cal-D\>\|\<cal-M\><rsub|i>)>>.
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|A simple approximation>
+
+    We can obtain some insight into the model evidence by making a simple
+    approximation to the integral over parameters.
+
+    Consider first the case of a model having a single parameter <math|w>.
+    The posterior distribution over parameters is proportional to
+    <math|p(\<cal-D\>\|w)p(w)>, where we <strong|omit> the dependence on the
+    model <math|M<rsub|i>> to keep the notation uncluttered.
+
+    If we assume that the posterior distribution is sharply peaked around the
+    most probable value <math|w<rsub|MAP>>, with width
+    <math|\<#2206\>w<rsub|posterior>>, then we can approximate the integral
+    by the value of the integrand at its maximum times the width of the peak.
+  </hidden>|<\hidden>
+    If we further assume that the prior is flat with width
+    <math|\<#2206\>w<rsub|prior>> so that <math|p(w) =
+    1/\<#2206\>w<rsub|prior>>, then we have \ 
+
+    <\equation>
+      p(\<cal-D\>) = \ <big|int>p(\<cal-D\>\|w)p(w) \<mathd\>w\<simeq\>
+      p(\<cal-D\>\|w<rsub|MAP>)<frac| \<#2206\>w<rsub|posterior>|\<#2206\>w<rsub|prior>><label|3.70>
+    </equation>
+
+    and so taking logs we obtain
+
+    <\equation*>
+      ln p(\<cal-D\>) ln p(\<cal-D\>\|w<rsub|MAP>) +
+      ln<around*|(|<frac|\<#2206\><rsub|wposterior>|\<#2206\>w<rsub|prior>>|)>
+    </equation*>
+
+    This approximation is illustrated in Figure <reference|fig3.12>.
+
+    The first term represents the fit to the data given by the most probable
+    parameter values, and for a flat prior this would correspond to the log
+    likelihood.
+
+    The second term penalizes the model according to its complexity. Because
+    <math|\<#2206\>w<rsub|posterior>\<less\>\<#2206\>w<rsub|prior>> this term
+    is negative, and it increases in magnitude as the ratio gets smaller.
+
+    Thus, if parameters are finely tuned to the data in the posterior
+    distribution, then the penalty term is large.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_12_model_evidence_approximation.png|.5par|||>|<label|fig3.12>We
+      can obtain a rough approximation to \ the model evidence if we assume
+      that the posterior distribution over parameters is sharply peaked
+      around its mode \ <math|w<rsub|MAP>>.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|M parameters>
+
+    For a model having a set of M parameters, we can make a similar
+    approximation for each parameter in turn.
+
+    Assuming that all parameters have the same ratio of
+    <math|\<#2206\>w<rsub|posterior>/\<#2206\>w<rsub|prior>>, we obtain
+
+    <\equation*>
+      ln p<around*|(|\<cal-D\>|)>\<simeq\>ln
+      p<around*|(|\<cal-D\>\|\<b-w\><rsub|MAP>|)>+M
+      ln<around*|(|<frac|\<mathLaplace\>w<rsub|posterior><rsub|>|\<Delta\>w<rsub|prior>>|)>
+    </equation*>
+
+    In this very simple approximation, the size of the complexity penalty
+    increases linearly with the number M of adaptive parameters in the model.
+
+    As we increase the complexity of the model, the first term will typically
+    decrease, because a more complex model is better able to fit the data,
+    whereas the second term will increase due to the dependence on M. The
+    optimal model complexity, as determined by the maximum evidence, will be
+    given by a trade-off between these two competing terms.
+  </hidden>|<\hidden>
+    <tit|Another example>
+
+    We can gain further insight into Bayesian model comparison and understand
+    how the marginal likelihood can favour models of intermediate complexity
+    by considering Figure <reference|fig3.13>.
+
+    Here the horizontal axis is a one-dimensional representation of the space
+    of possible data sets, so that each point on this axis corresponds to a
+    specific data set.
+
+    Consider three models <math|\<cal-M\><rsub|1>>, <math|\<cal-M\><rsub|2>>
+    and <math|\<cal-M\><rsub|3>> of successively increasing complexity.
+    Imagine running these models generatively to produce example data sets,
+    and then looking at the distribution of data sets that result.
+
+    Any given model can generate a variety of different data sets since the
+    parameters are governed by a prior probability distribution, and for any
+    choice of the parameters there may be random noise on the target
+    variables.
+
+    To generate a particular data set from a specific model, we first choose
+    the values of the parameters from their prior distribution
+    <math|p(\<b-w\>)>, and then for these parameter values we sample the data
+    from <math|p(D\|\<b-w\>)>.
+  </hidden>|<\hidden>
+    <small-figure|<image|image/fig_3_13_model_evidence_3.png|.5par|||>|<label|fig3.13>Schematic
+    illustration of the \ distribution of data sets for three models of
+    different complexity, in which <math|\<cal-M\><rsub|1>> is the simplest
+    and <math|\<cal-M\><rsub|3>> is the most complex. Note that the
+    distributions are normalized. In this example, for the particular
+    observed data set <math|\<cal-D\><rsub|0>>, the model
+    <math|\<cal-M\><rsub|2>> with intermediate complexity has the largest
+    evidence.>
+  </hidden>|<\hidden>
+    note:
+
+    A simple model (for example, based on a first order polynomial) has
+    little variability and so will generate data sets that are fairly similar
+    to each other. Its distribution <math|p(\<cal-D\>)> is therefore confined
+    to a relatively small region of the horizontal axis.
+
+    By contrast, a complex model (such as a ninth order polynomial) can
+    generate a great variety of different data sets, and so its distribution
+    <math|p(\<cal-D\>)> is spread over a large region of the space of data
+    sets.
+
+    Because the distributions <math|p(\<cal-D\>\|\<cal-M\><rsub|i>)> are
+    normalized, we see that the particular data set <math|\<cal-D\><rsub|0>>
+    can have the highest value of the evidence for the model of intermediate
+    complexity.
+
+    Essentially, the simpler model cannot fit the data well, whereas the more
+    complex model spreads its predictive probability over too broad a range
+    of data sets and so assigns relatively small probability to any one of
+    them.
+  </hidden>|<\hidden>
+    <tit|Assumption>
+
+    Implicit in the Bayesian model comparison framework is the assumption
+    that\ 
+
+    <with|color|blue|the true distribution from which the data are generated
+    is contained within the set of models under consideration.>
+
+    Provided this is so, we can show that Bayesian model comparison will on
+    average favour the correct model.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Expected Bayes factor>
+
+    To see this, consider two models <math|\<cal-M\><rsub|1>> and
+    <math|\<cal-M\><rsub|2>> in which the truth corresponds to
+    <math|\<cal-M\><rsub|1>>.
+
+    For a given finite data set, it is possible for the Bayes factor to be
+    larger for the incorrect model.
+
+    However, if we average the Bayes factor over the distribution of data
+    sets, we obtain the expected Bayes factor in the form
+
+    <\equation*>
+      <big|int>p<around*|(|\<cal-D\>\|\<cal-M\><rsub|1>|)>ln<frac|p<around*|(|\<cal-D\>\|\<cal-M\><rsub|1>|)>|p<around*|(|\<cal-D\>\|\<cal-M\><rsub|2>|)>>\<mathd\>\<cal-D\>
+    </equation*>
+
+    where the average has been taken with respect to the true distribution of
+    the data.\ 
+
+    This quantity is an example of the Kullback-Leibler divergence and
+    satisfies the property of always being positive unless the two
+    distributions are equal in which case it is zero.
+
+    Thus on average the Bayes factor will always favour the correct model.
+  </hidden>|<\hidden>
+    <tit|Note>
+
+    The Bayesian framework avoids the problem of over-fitting and allows
+    models to be compared on the basis of the training data alone.
+
+    However,a Bayesian approach, like any approach to pattern recognition,
+    needs to make assumptions about the form of the model, and if these are
+    invalid then the results can be misleading.
+
+    In particular, we see from Figure <reference|fig3.12> that the model
+    evidence can be sensitive to many aspects of the prior, such as the
+    behaviour in the tails.
+
+    Indeed, the evidence is not defined if the prior is improper, as can be
+    seen by noting that an improper prior has an arbitrary scaling factor (in
+    other words, the normalization coefficient is not defined because the
+    distribution cannot be normalized).
+
+    \;
+  </hidden>|<\hidden>
+    If we consider a proper prior and then take a suitable limit in order to
+    obtain an improper prior (for example, a Gaussian prior in which we take
+    the limit of infinite variance) then the evidence will go to zero, as can
+    be seen from Eq. <eqref|3.70> and Figure <reference|fig3.12>.
+
+    <\equation*>
+      p(\<cal-D\>) \<simeq\> lim<rsub|\<Delta\>w<rsub|prior>\<rightarrow\>\<infty\>>p(\<cal-D\>\|w<rsub|MAP>)<frac|
+      \<#2206\>w<rsub|posterior>|\<#2206\>w<rsub|prior>>=0
+    </equation*>
+
+    It may, however, be possible to consider the evidence ratio between two
+    models first and then take a limit to obtain a meaningful answer. \ 
+
+    In a practical application, therefore, it will be wise to keep aside an
+    independent test set of data on which to evaluate the overall performance
+    of the final system.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|The Evidence Approximation>
+    </padded-center>
+  </hidden>|<\hidden>
+    In a fully Bayesian treatment of the linear basis function model, we
+    would introduce prior distributions over the hyperparameters
+    <math|\<alpha\>> and <math|\<beta\>> and make predictions by
+    marginalizing with respect to these hyperparameters as well as with
+    respect to the parameters <math|\<b-w\>>.
+
+    <\equation>
+      p(t\|\<b-t\>) =<big|iiint>p(t\|\<b-w\>, \<beta\>)p(\<b-w\>\|t,
+      \<alpha\>, \<beta\>)p(\<alpha\>, \<beta\>\|t)
+      \<mathd\>\<b-w\>\<mathd\>\<alpha\>\<mathd\>\<beta\> <label|3.74>
+    </equation>
+
+    where <math|p(t\|w, \<beta\>)> is given by Eq. <eqref|3.8> and
+    <math|p(w\|t, \<alpha\>, \<beta\>)> is given by Eq. <eqref|3.49> with
+    <math|m<rsub|N>> and <math|S<rsub|N>> defined by Eq. <eqref|3.53> and
+    <eqref|3.54> respectively. Here we have omitted the dependence on the
+    input variable x to keep the notation uncluttered.
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    However, although we can integrate analytically either over
+    <math|\<b-w\>> or over the hyperparameters, the complete marginalization
+    over all of these variables is analytically intractable.
+
+    Here we discuss an approximation in which we set the hyperparameters to
+    specific values determined by maximizing the marginal likelihood function
+    obtained by first integrating over the parameters <math|w>.
+
+    This framework is known in the statistics literature as <em|empirical
+    Bayes> (Bernardo and Smith, 1994; Gelman et al., 2004), or <em|type 2
+    maximum likelihood> (Berger, 1985), or <em|generalized maximum
+    likelihood> (Wahba, 1975), and in the machine learning literature is also
+    called the <em|evidence approximation> (Gull, 1989; MacKay, 1992a).
+  </hidden>|<\hidden>
+    <tit|Fixed <math|\<alpha\>,\<beta\>>>
+
+    \;
+
+    \;
+
+    \;
+
+    If the posterior distribution<math| p(\<alpha\>, \<beta\>\|t)> is sharply
+    peaked around values <math|<wide|\<alpha\>|^>> and
+    <math|<wide|\<beta\>|^>>, then the predictive distribution is obtained
+    simply by marginalizing over <math|w> in which <math|\<alpha\>> and
+    <math|\<beta\>> are fixed to the values <math|<wide|\<alpha\>|^>> and
+    <math|<wide|\<beta\>|^>>, so that \ 
+
+    <\equation*>
+      p(t\|\<b-t\>)\<simeq\> p(t\|\<b-t\>, <wide|\<alpha\>|^>,
+      <wide|\<beta\>|^>) = \ \<big-int\> \ p(t\|\<b-w\>,
+      <wide|\<beta\>|^>)p(\<b-w\>\|t, <wide|\<alpha\>|^>, <wide|\<beta\>|^>)
+      \<mathd\>\<b-w\>.
+    </equation*>
+  </hidden>|<\hidden>
+    <tit|Maximizing the marginal likelihood>
+
+    From Bayes' theorem, the posterior distribution for <math|\<alpha\>> and
+    <math|\<beta\>> is given by \ 
+
+    <\equation*>
+      p(\<alpha\>, \<beta\>\|t) \<propto\> p(t\|\<alpha\>,
+      \<beta\>)p(\<alpha\>, \<beta\>).
+    </equation*>
+
+    If the prior is relatively flat, then in the evidence framework the
+    values of <math|<wide|\<alpha\>|^>> and <math|<wide|\<beta\>|^>> are
+    obtained by maximizing the marginal likelihood function
+    <math|p(t\|\<alpha\>,\<beta\>)>.
+
+    We shall proceed by evaluating the marginal likelihood for the linear
+    basis function model and then finding its maxima.
+
+    This will allow us to determine values for these hyperparameters from the
+    training data alone, without recourse to cross-validation. Recall that
+    the ratio <math|\<alpha\>/\<beta\>> is analogous to a regularization
+    parameter.
+  </hidden>|<\hidden>
+    <tit|Evaluation of the evidence function>
+
+    Marginal likelihood function<math| p(\<b-t\>\|\<alpha\>, \<beta\>)> is
+    obtained by integrating over the weight parameters <math|w>,
+
+    <\equation*>
+      \ p(\<b-t\>\|\<alpha\>, \<beta\>) = \ <big|int>p(t\|w,
+      \<beta\>)p(w\|\<alpha\>) \<mathd\>w.
+    </equation*>
+
+    Complete the square in the exponent and make use of the standard form for
+    the normalization coefficient of a Gaussian. From Eq. <eqref|3.11>,
+    <eqref|3.12>, and <eqref|3.52>, write the evidence function in the form\ 
+
+    <\equation>
+      \ p(\<b-t\>\|\<alpha\>, \<beta\>) =
+      \ <around*|(|<frac|\<beta\>|2\<pi\>>|)><rsup|N/2><around*|(|<frac|\<alpha\>|2\<pi\>>|)><rsup|M/2><big|int>exp
+      <around*|{|-E<around*|(|\<b-w\>|)>|}>\<mathd\>\<b-w\><label|3.78>
+    </equation>
+
+    where <math|M> is the dimensionality of <math|\<b-w\>>, and we have
+    defined
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|E<around*|(|\<b-w\>|)>>|<cell|=>|\<beta\>E<rsub|D><around*|(|\<b-w\>|)>+\<alpha\>E<rsub|W><around*|(|\<b-w\>|)>>|<row|<cell|>|<cell|=>|<cell|<frac|1|2>\<beta\><around*|\<\|\|\>|\<b-t\>-\<Phi\>\<b-w\>|\<\|\|\>><rsup|2>+<frac|1|2>\<alpha\>\<b-w\><rsup|T>\<b-w\>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    We now complete the square over <math|\<b-w\>> \ giving \ 
+
+    <\equation*>
+      E(\<b-w\>) = E(\<b-m\><rsub|N> ) +<frac|1|2><around*|(|\<b-w\>\<minus\>
+      \<b-m\><rsub|N>|)><rsup|T>A(\<b-w\>\<minus\> \<b-m\><rsub|N>)
+    </equation*>
+
+    where we have introduced \ 
+
+    <\equation>
+      A = \<alpha\>I + \<beta\>\<Phi\><rsup|T>\<Phi\><label|3.81>
+    </equation>
+
+    together with \ 
+
+    <\equation*>
+      E(\<b-m\><rsub|N> ) =<frac|\<beta\>|2>\<\|\|\>\<b-t\> \<minus\>
+      \<Phi\>\<b-m\><rsub|N>\<\|\|\><rsup|2>
+      +<frac|\<alpha\>|2>\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>.\ 
+    </equation*>
+
+    \;
+  </hidden>|<\hidden>
+    Note that A corresponds to the matrix of second derivatives of the error
+    function\ 
+
+    <\equation*>
+      A = \<nabla\>\<nabla\>E(\<b-w\>)
+    </equation*>
+
+    and is known as the <em|Hessian matrix>.
+
+    <\equation>
+      \<b-m\><rsub|N> =\<beta\>A<rsup|\<minus\>1>\<Phi\><rsup|T>\<b-t\>.<label|3.84>
+    </equation>
+
+    Using Eq. <eqref|3.54>, we see that\ 
+
+    <\equation*>
+      A = S<rsub|N><rsup|-1>
+    </equation*>
+
+    and hence Eq. <eqref|3.84> is equivalent to the previous definition
+    <eqref|3.53>, and therefore represents the mean of the posterior
+    distribution.
+
+    \;
+  </hidden>|<\hidden>
+    The integral over <math|\<b-w\>> can now be evaluated simply by appealing
+    to the standard result for the normalization coefficient of a
+    multivariate Gaussian, giving
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<big|int>exp<around*|{|-E<around*|(|\<b-w\>|)>|}>\<mathd\>\<b-w\>>|<cell|=>|<cell|exp<around*|{|-E<around*|(|\<b-m\><rsub|N>|)>|}><big|int>exp<around*|{|-<frac|1|2><around*|(|\<b-w\>-\<b-m\><rsub|N>|)><rsup|T>A<around*|(|\<b-w\>-\<b-m\><rsub|N>|)>|}>\<mathd\>\<b-w\>>>|<row|<cell|>|<cell|=>|<cell|exp<around*|{|-E<around*|(|\<b-m\><rsub|N>|)>|}><around*|(|2\<pi\>|)><rsup|M/2><around*|\||A|\|><rsup|-1/2>>>>>
+    </eqnarray*>
+
+    Using Eq. <eqref|3.78> we can then write the log of the marginal
+    likelihood in the form
+
+    <\equation>
+      ln p<around*|(|\<b-t\>\|\<alpha\>,\<beta\>|)>=<frac|M|2>ln\<alpha\>+<frac|N|2>ln\<beta\>-E<around*|(|\<b-m\><rsub|N>|)>-<frac|1|2>ln<around*|\||A|\|>-<frac|N|2>ln<around*|(|2\<pi\>|)><label|3.86>
+    </equation>
+
+    which is the required expression for the evidence function.
+  </hidden>|<\hidden>
+    <tit|Polynomial regression problem>
+
+    Returning to the polynomial regression problem, we can plot the model
+    evidence against the order of the polynomial, as shown in Figure 3.14.
+
+    Here we have assumed a prior of the form\ 
+
+    <\equation*>
+      p(\<b-w\>\|\<alpha\>) = N (\<b-w\>\|0, \<alpha\><rsup|\<minus\>1>I)
+    </equation*>
+
+    with the parameter <math|\<alpha\>> fixed at <math|\<alpha\> = 5
+    \<times\> 10<rsup|\<minus\>3>>.\ 
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_14_model_evidence_regression.png|.5par|||>|Plot
+      of the model evidence versus \ the order <math|M>, for the polynomial
+      regression model, showing that the evidence favours the model with
+      <math|M = 3>.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|Maximizing the evidence function>
+
+    Let us first consider the maximization of <math|p(\<b-t\>\|\<alpha\>,
+    \<beta\>)> with respect to <math|\<alpha\>>. This can be done by first
+    defining the following eigenvector equation\ 
+
+    <\equation>
+      \ (\<beta\>\<Phi\><rsup|T>\<Phi\>) \<b-u\><rsub|i>=
+      \<lambda\><rsub|i>\<b-u\><rsub|i>.<label|3.87>
+    </equation>
+
+    From Eq. <eqref|3.81>, it then follows that <math|A> has eigenvalues
+    <math|\<alpha\> + \<lambda\><rsub|i>>.
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln p<around*|(|\<b-t\>\|\<alpha\>,\<beta\>|)>>|<cell|=>|<cell|<with|color|blue|<frac|M|2>ln\<alpha\>>+<frac|N|2>ln\<beta\><with|color|blue|-E<around*|(|\<b-m\><rsub|N>|)>><with|color|blue|-<frac|1|2>ln<around*|\||A|\|>>-<frac|N|2>ln<around*|(|2\<pi\>|)>>>|<row|<cell|<frac|\<mathd\>|\<mathd\>\<alpha\>>ln
+      p<around*|(|\<b-t\>\|\<alpha\>,\<beta\>|)>>|<cell|=>|<cell|<frac|M|2\<alpha\>>-<frac|\<mathd\>|\<mathd\>\<alpha\>><around*|(|<frac|\<beta\>|2>\<\|\|\>\<b-t\>
+      \<minus\> \<Phi\>\<b-m\><rsub|N>\<\|\|\><rsup|2>
+      +<frac|\<alpha\>|2>\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>|)>-<frac|1|2><frac|\<mathd\>|\<mathd\>\<alpha\>><around*|[|ln<big|prod><rsub|i><around*|(|\<lambda\><rsub|i>+\<alpha\>|)>|]>>>|<row|<cell|0>|<cell|=>|<cell|<frac|M|2\<alpha\>>-<frac|1|2>\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>-<frac|1|2><big|sum><rsub|i><frac|1|\<lambda\><rsub|i>+\<alpha\>>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    Multiplying through by <math|2\<alpha\>> and rearranging, we obtain \ 
+
+    <\equation>
+      \<alpha\>\<b-m\><rsub|N><rsup|T>\<b-m\><rsub|N>=M\<minus\>\<alpha\><big|sum><rsub|i=1><rsup|M><frac|1|\<lambda\><rsub|i>+\<alpha\>>=\<gamma\><label|3.90>
+    </equation>
+
+    Since there are <math|M> terms in the sum over <math|i>, the quantity
+    <math|\<gamma\>> can be written \ 
+
+    <\equation>
+      \<gamma\>= <big|sum><rsub|i><frac|\<lambda\><rsub|i>|\<alpha\> +
+      \<lambda\><rsub|i>> <label|3.91>
+    </equation>
+
+    The interpretation of the quantity <math|\<gamma\>> will be discussed
+    shortly. From Eq. <eqref|3.90> we see that the value of <math|\<alpha\>>
+    that maximizes the marginal likelihood satisfies \ 
+
+    <\equation>
+      \<alpha\>= <frac|\<gamma\>|\<b-m\><rsub|N><rsup|T>\<b-m\><rsub|N>><label|3.92>
+    </equation>
+
+    <\folded>
+      Note...
+    <|folded>
+      \;
+
+      This is an implicit solution for <math|\<alpha\>> not only because
+      <math|\<gamma\>> depends on <math|\<alpha\>>, but also because the mode
+      <math|\<b-m\><rsub|N>> of the posterior distribution itself depends on
+      the choice of <math|\<alpha\>>. We therefore adopt an iterative
+      procedure in which we make an initial choice for <math|\<alpha\>> and
+      use this to find <math|\<b-m\><rsub|N>> , which is given by Eq.
+      <eqref|3.53>, and also to evaluate <math|\<gamma\>>, which is given by
+      Eq. <eqref|3.91>. These values are then used to re-estimate
+      <math|\<alpha\>> using Eq. <eqref|3.92>, and the process repeated until
+      convergence. Note that because the matrix <math|\<Phi\><rsup|T>\<Phi\>>
+      is fixed, we can compute its eigenvalues once at the start and then
+      simply multiply these by <math|\<beta\>> to obtain the
+      <math|\<lambda\><rsub|i>>.
+
+      It should be emphasized that the value of \<alpha\> has been determined
+      purely by looking at the training data. In contrast to maximum
+      likelihood methods, no independent data set is required in order to
+      optimize the model complexity.
+    </folded>
+  </hidden>|<\hidden>
+    We can similarly maximize the log marginal likelihood <eqref|3.86> with
+    respect to <math|\<beta\>>. To do this, we note that the eigenvalues
+    <math|\<lambda\><rsub|i>> defined by Eq. <eqref|3.87> are proportional to
+    <math|\<beta\>>, and hence <math|d\<lambda\><rsub|i>/d\<beta\> =
+    \<lambda\><rsub|i>/\<beta\>>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|ln p<around*|(|\<b-t\>\|\<alpha\>,\<beta\>|)>>|<cell|=>|<cell|<with|color|blue|<frac|M|2>ln\<alpha\>>+<frac|N|2>ln\<beta\><with|color|blue|-E<around*|(|\<b-m\><rsub|N>|)>><with|color|blue|-<frac|1|2>ln<around*|\||A|\|>>-<frac|N|2>ln<around*|(|2\<pi\>|)>>>|<row|<cell|<frac|\<mathd\>|\<mathd\>\<beta\>>ln
+      p<around*|(|\<b-t\>\|\<alpha\>,\<beta\>|)>>|<cell|=>|<cell|<frac|N|2\<beta\>>-<frac|\<mathd\>|\<mathd\>\<beta\>><around*|(|<frac|\<beta\>|2>\<\|\|\>\<b-t\>
+      \<minus\> \<Phi\>\<b-m\><rsub|N>\<\|\|\><rsup|2>
+      +<frac|\<alpha\>|2>\<b-m\><rsup|T><rsub|N>\<b-m\><rsub|N>|)>-<frac|1|2><dfrac|\<mathd\>|\<mathd\>\<beta\>><big|sum><rsub|i>ln<around*|(|\<lambda\><rsub|i>+\<alpha\>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|N|2\<beta\>>-<frac|1|2><with|color|blue|\<\|\|\>\<b-t\>
+      \<minus\> \<Phi\>\<b-m\><rsub|N>\<\|\|\><rsup|2>>
+      -<frac|1|2\<beta\>><with|color|red|<big|sum><rsub|i><around*|(|<frac|\<lambda\><rsub|i>|\<lambda\><rsub|i>+\<alpha\>>
+      |)>>>>|<row|<cell|0>|<cell|=>|<cell|<frac|N|2\<beta\>>-<frac|1|2><with|color|blue|<big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-m\><rsub|N><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>|}><rsup|2>>
+      -<frac|<with|color|red|\<gamma\>>|2\<beta\>>>>|<row|<cell|\<beta\><rsup|-1>>|<cell|=>|<cell|<frac|1|N-\<gamma\>><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-m\><rsub|N><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>|}><rsup|2><eq-number><label|3.95>>>>>
+    </eqnarray*>
+
+    <\folded>
+      ...
+    <|folded>
+      \ \ Again, this is an implicit solution for <math|\<beta\>> and can be
+      solved by choosing an initial value for <math|\<beta\>> and then using
+      this to calculate <math|\<b-m\><rsub|N>> and <math|\<gamma\>> and then
+      re-estimate <math|\<beta\>> using Eq. <eqref|3.95>, repeating until
+      convergence.
+
+      If both <math|\<alpha\>> and <math|\<beta\>> are to be determined from
+      the data, then their values can be re-estimated together after each
+      update of <math|\<gamma\>>.
+    </folded>
+  </hidden>|<\hidden>
+    <tit|Effective number of parameters>
+
+    The result
+
+    <\equation*>
+      \<alpha\>= <frac|\<gamma\>|\<b-m\><rsub|N><rsup|T>\<b-m\><rsub|N>>
+    </equation*>
+
+    has an elegant interpretation (MacKay, 1992a), which provides insight
+    into the Bayesian solution for <math|\<alpha\>>.
+
+    Consider the contours of the likelihood function and the prior as
+    illustrated in Figure <reference|fig3.15>. Here we have implicitly
+    transformed to a rotated set of axes in parameter space aligned with the
+    eigenvectors <math|\<b-u\><rsub|i>> defined in <eqref|3.87>.
+
+    Contours of the likelihood function are then axis-aligned ellipses. The
+    eigenvalues <math|\<lambda\><rsub|i>> measure the curvature of the
+    likelihood function, and so in Figure <reference|fig3.15> the eigenvalue
+    <math|\<lambda\><rsub|1>> is small compared with
+    <math|\<lambda\><rsub|2>> (because a smaller curvature corresponds to a
+    greater elongation of the contours of the likelihood function).
+  </hidden>|<\hidden>
+    Because <math|\<beta\>\<Phi\><rsup|T>\<Phi\>> is a positive definite
+    matrix, it will have positive eigenvalues, and so the ratio
+    <math|\<lambda\><rsub|i>/(\<lambda\><rsub|i> + \<alpha\>)> will lie
+    between 0 and 1.\ 
+
+    Consequently, the quantity
+
+    <\equation*>
+      \<gamma\>= <big|sum><rsub|i><frac|\<lambda\><rsub|i>|\<alpha\> +
+      \<lambda\><rsub|i>>\ 
+    </equation*>
+
+    will lie in the range <math|0\<leqslant\>-\<gamma\>\<leqslant\>M> .\ 
+
+    For directions in which <math|\<lambda\><rsub|i>\<gg\>\<alpha\>>, the
+    corresponding parameter <math|w<rsub|i>> will be close to its maximum
+    likelihood value, and the ratio <math|\<lambda\><rsub|i>/(\<lambda\><rsub|i>+
+    \<alpha\>)> will be close to 1. Such parameters are called well
+    determined because their values are tightly constrained by the data.
+
+    Conversely, for directions in which <math|\<lambda\><rsub|i>\<ll\>\<alpha\>>,
+    the corresponding parameters wi will be close to zero, as will the ratios
+    <math|\<lambda\><rsub|i>/(\<lambda\><rsub|i>+ \<alpha\>)>. These are
+    directions in which the likelihood function is relatively insensitive to
+    the parameter value and so the parameter has been set to a small value by
+    the prior. The quantity <math|\<gamma\>> \ therefore measures the
+    effective total number of well determined parameters.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_15_contour_liklihood_prior.png|.42par|||>|<label|fig3.15>Contours
+      of the likelihood function (red) and the prior (green) in which the
+      axes in parameter space have been rotated to align with the
+      eigenvectors ui of the Hessian. For <math|\<alpha\> = 0>, the mode of
+      the posterior is given by the maximum likelihood solution
+      <math|w<rsub|ML>>, whereas for nonzero <math|\<alpha\>> the mode is at
+      <math|\<b-w\><rsub|MAP >= \<b-m\><rsub|N>> . In the direction
+      <math|w<rsub|1>> the eigenvalue <math|\<lambda\><rsub|1>>, defined by
+      Eq. <eqref|3.87>, is small compared with <math|\<alpha\>> and so the
+      quantity <math|\<lambda\><rsub|1>/(\<lambda\><rsub|1> + \<alpha\>)> is
+      close to zero, and the corresponding MAP value of <math|w<rsub|1>> is
+      also close to zero. By contrast, in the direction <math|w<rsub|2>> the
+      eigenvalue <math|\<lambda\><rsub|2>> is large compared with
+      <math|\<alpha\>> and so the quantity
+      <math|\<lambda\><rsub|2>/(\<lambda\><rsub|2> +\<alpha\>)> is close to
+      unity, and the MAP value of <math|w<rsub|2>> is close to its maximum
+      likelihood value.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|<math|N-\<gamma\>>>
+
+    \;
+
+    We can obtain some insight into the result
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<beta\><rsup|-1>>|<cell|=>|<cell|<frac|1|<with|color|blue|N-\<gamma\>>><big|sum><rsub|n=1><rsup|N><around*|{|t<rsub|n>-\<b-m\><rsub|N><rsup|T>\<b-varphi\><around*|(|\<b-x\><rsub|n>|)>|}><rsup|2>>>>>
+    </eqnarray*>
+
+    for re-estimating <math|\<beta\>> by comparing it with the corresponding
+    maximum likelihood result given by <eqref|3.21>. Both of these formulae
+    express the variance (the inverse precision) as an average of the squared
+    differences between the targets and the model predictions.
+
+    However, they differ in that the number of data points <math|N> in the
+    denominator of the maximum likelihood result is replaced by
+    <math|N\<minus\>\<gamma\>> in the Bayesian result.
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Biased estimation>
+
+    \;
+
+    \;
+
+    We recall from (1.56) that the maximum likelihood estimate of the
+    variance for a Gaussian distribution over a single variable x is given by
+    \ 
+
+    <\equation*>
+      \<sigma\><rsub|ML><rsup|2>=<frac|1|N><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\><rsub|ML>|)><rsup|2>
+    </equation*>
+
+    and that this estimate is <with|color|blue|biased> because the maximum
+    likelihood solution <math|\<mu\><rsub|ML>> for the mean has fitted some
+    of the noise on the data.
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    In effect, this has used up one degree of freedom in the model. The
+    corresponding unbiased estimate is given by (1.59) and takes the form \ 
+
+    <\equation*>
+      \<sigma\><rsub|MAP><rsup|2>=<frac|1|N-1><big|sum><rsub|n=1><rsup|N><around*|(|x<rsub|n>-\<mu\><rsub|ML>|)><rsup|2>
+    </equation*>
+
+    The factor of <math|N \<minus\> 1> in the denominator of the Bayesian
+    result takes account of the fact that one degree of freedom has been used
+    in fitting the mean and removes the bias of maximum likelihood.
+  </hidden>|<\hidden>
+    <tit|Corresponding results>
+
+    \;
+
+    Corresponding results for the linear regression model.
+
+    \;
+
+    The mean of the target distribution is now given by the function
+    <math|\<b-w\><rsup|T>\<varphi\>(x)>, which contains M parameters.
+    However, not all of these parameters are tuned to the data.
+
+    The effective number of parameters that are determined by the data is
+    <math|\<gamma\>>, with the remaining <math|M \<minus\>\<gamma\>>
+    parameters set to small values by the prior.
+
+    This is reflected in the Bayesian result for the variance that has a
+    factor <math|N \<minus\> \<gamma\>> in the denominator, thereby
+    correcting for the bias of the maximum likelihood result.
+  </hidden>|<\hidden>
+    <tit|Example>
+
+    \;
+
+    \;
+
+    \;
+
+    Illustrate the evidence framework for setting hyperparameters using the
+    sinusoidal synthetic data set from Section 1.1, together with the
+    Gaussian basis function model comprising 9 basis functions, so that the
+    total number of parameters in the model is given by <math|M = 10>
+    including the bias.
+
+    Here, for simplicity of illustration, we have set <math|\<beta\>> to its
+    true value of <math|11.1> and then used the evidence framework to
+    determine <math|\<alpha\>>, as shown in Figure <reference|fig3.16>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_16_evidence_maximum.png|.9par|||>|<label|fig3.16>The
+      left plot shows <math|\<gamma\>> (red curve) and
+      <math|2\<alpha\>E<rsub|W>(\<b-m\><rsub|N>)=\<alpha\>\<b-m\><rsub|N><rsup|T>\<b-m\><rsub|N>>
+      (blue curve) versus <math|ln\<alpha\>> for the sinusoidal synthetic
+      data set. It is the intersection of these two curves that defines the
+      optimum value for <math|\<alpha\>> given by the evidence procedure. The
+      right plot shows the corresponding graph of log evidence <math|ln
+      p(t\|\<alpha\>, \<beta\>)> versus <math|ln \<alpha\>> (red curve)
+      showing that the peak coincides with the crossing point of the curves
+      in the left plot. Also shown is the test set error (blue curve) showing
+      that the evidence maximum occurs close to the point of best
+      generalization.>
+    </padded-center>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    We can also see how the parameter \<alpha\> controls the magnitude of the
+    parameters <math|{w<rsub|i>}>, by plotting the individual parameters
+    versus the effective number <math|\<gamma\>> of parameters, as shown in
+    Figure <inactive|<reference|fig3.17>>.
+  </hidden>|<\hidden>
+    <\padded-center>
+      <small-figure|<image|image/fig_3_17_gamma_w_i.png|.5par|||>|Plot of the
+      10 parameters <math|w<rsub|i>> \ from the Gaussian basis function model
+      versus the effective number of parameters <math|\<gamma\>>, in which
+      the hyperparameter <math|\<alpha\>> is varied in the range
+      <math|0\<leqslant\>\<alpha\>\<leqslant\>\<infty\>> causing
+      <math|\<gamma\>> to vary in the range
+      <math|0\<leqslant\>\<gamma\>\<leqslant\>M>.>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|<math|N\<gg\>M>>
+
+    If we consider the limit <math|N\<gg\>M> in which the number of data
+    points is large in relation to the number of parameters, then from Eq.
+    <eqref|3.87> all of the parameters will be well determined by the data
+    because <math|\<Phi\><rsup|T>\<Phi\>> involves an implicit sum over data
+    points, and so the eigenvalues <math|\<lambda\><rsub|i>> increase with
+    the size of the data set.
+
+    In this case, <math|\<gamma\> = M> , and the re-estimation equations for
+    <math|\<alpha\>> and <math|\<beta\>> become
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<alpha\>>|<cell|=>|<cell|<frac|M|2E<rsub|W><around*|(|\<b-m\><rsub|N>|)>>>>|<row|<cell|\<beta\>>|<cell|=>|<cell|<frac|N|2E<rsub|D><around*|(|\<b-m\><rsub|N>|)>>>>>>
+    </eqnarray*>
+
+    where <math|E<rsub|W>> and <math|E<rsub|D>> are defined by Eq.
+    <eqref|3.25>) and <eqref|3.26>, respectively. These results can be used
+    as an easy-to-compute approximation to the full evidence re-estimation
+    formulae, because they do not require evaluation of the eigenvalue
+    spectrum of the Hessian.
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Limitations of Fixed Basis Functions>
+    </padded-center>
+  </hidden>|<\hidden>
+    There are some significant shortcomings with linear models, which will
+    cause us to turn in later chapters to more complex models such as support
+    vector machines and neural networks.
+
+    The difficulty stems from the assumption that the basis functions
+    <math|\<varphi\><rsub|j>(x)> are fixed before the training data set is
+    observed and is a manifestation of the curse of dimensionality discussed
+    in Section 1.4.
+
+    As a consequence, the number of basis functions needs to grow rapidly,
+    often exponentially, with the dimensionality <math|D> of the input space.
+
+    Fortunately, there are two properties of real data sets that we can
+    exploit to help alleviate this problem.
+
+    \;
+  </hidden>|<\hidden>
+    First of all, the data vectors <math|{x<rsub|n>}> typically lie close to
+    a nonlinear manifold whose intrinsic dimensionality is smaller than that
+    of the input space as a result of strong correlations between the input
+    variables
+
+    If we are using localized basis functions, we can arrange that they are
+    scattered in input space only in regions containing data. This approach
+    is used in radial basis function networks and also in support vector and
+    relevance vector machines.
+
+    Neural network models, which use adaptive basis functions having
+    sigmoidal nonlinearities, can adapt the parameters so that the regions of
+    input space over which the basis functions vary corresponds to the data
+    manifold.
+
+    \;
+  </hidden>|<\shown>
+    The second property is that target variables may have significant
+    dependence on only a small number of possible directions within the data
+    manifold.
+
+    Neural networks can exploit this property by choosing the directions in
+    input space to which the basis functions respond.
+  </shown>>
 </body>
 
 <\initial>
@@ -1157,30 +2086,54 @@
     <associate|3.11|<tuple|6|?>>
     <associate|3.12|<tuple|7|?>>
     <associate|3.15|<tuple|8|?>>
-    <associate|3.27|<tuple|9|?>>
-    <associate|3.29|<tuple|10|?>>
+    <associate|3.21|<tuple|8|?>>
+    <associate|3.25|<tuple|10|?>>
+    <associate|3.26|<tuple|11|?>>
+    <associate|3.27|<tuple|12|?>>
+    <associate|3.29|<tuple|13|?>>
     <associate|3.3|<tuple|1|?>>
-    <associate|3.30|<tuple|11|?>>
-    <associate|3.37|<tuple|12|?>>
+    <associate|3.30|<tuple|14|?>>
+    <associate|3.37|<tuple|15|?>>
     <associate|3.4|<tuple|2|?>>
-    <associate|3.49|<tuple|13|?>>
+    <associate|3.49|<tuple|16|?>>
     <associate|3.5|<tuple|3|?>>
-    <associate|3.51|<tuple|14|?>>
-    <associate|3.53|<tuple|15|?>>
-    <associate|3.57|<tuple|16|?>>
-    <associate|3.58|<tuple|17|?>>
-    <associate|3.59|<tuple|18|?>>
-    <associate|3.62|<tuple|19|?>>
-    <associate|3.64|<tuple|20|?>>
+    <associate|3.51|<tuple|17|?>>
+    <associate|3.52|<tuple|18|?>>
+    <associate|3.53|<tuple|19|?>>
+    <associate|3.54|<tuple|20|?>>
+    <associate|3.57|<tuple|21|?>>
+    <associate|3.58|<tuple|22|?>>
+    <associate|3.59|<tuple|23|?>>
+    <associate|3.62|<tuple|24|?>>
+    <associate|3.64|<tuple|25|?>>
+    <associate|3.70|<tuple|26|?>>
+    <associate|3.74|<tuple|27|?>>
+    <associate|3.78|<tuple|28|?>>
     <associate|3.8|<tuple|4|?>>
+    <associate|3.81|<tuple|29|?>>
+    <associate|3.84|<tuple|30|?>>
+    <associate|3.86|<tuple|31|?>>
+    <associate|3.87|<tuple|32|?>>
+    <associate|3.90|<tuple|33|?>>
+    <associate|3.91|<tuple|34|1>>
+    <associate|3.92|<tuple|35|1>>
+    <associate|3.95|<tuple|36|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|7|?>>
     <associate|auto-11|<tuple|8|?>>
     <associate|auto-12|<tuple|9|?>>
-    <associate|auto-13|<tuple|10|?>>
+    <associate|auto-13|<tuple|10|1>>
     <associate|auto-14|<tuple|11|?>>
     <associate|auto-15|<tuple|4|?>>
+    <associate|auto-16|<tuple|12|1>>
+    <associate|auto-17|<tuple|13|?>>
+    <associate|auto-18|<tuple|5|?>>
+    <associate|auto-19|<tuple|14|1>>
     <associate|auto-2|<tuple|1|?>>
+    <associate|auto-20|<tuple|15|?>>
+    <associate|auto-21|<tuple|16|?>>
+    <associate|auto-22|<tuple|17|?>>
+    <associate|auto-23|<tuple|6|?>>
     <associate|auto-3|<tuple|2|?>>
     <associate|auto-4|<tuple|3|?>>
     <associate|auto-5|<tuple|4|?>>
@@ -1189,6 +2142,10 @@
     <associate|auto-8|<tuple|6|?>>
     <associate|auto-9|<tuple|3|1>>
     <associate|fig3.1|<tuple|1|?>>
+    <associate|fig3.12|<tuple|12|1>>
+    <associate|fig3.13|<tuple|13|?>>
+    <associate|fig3.15|<tuple|15|?>>
+    <associate|fig3.16|<tuple|16|?>>
     <associate|fig3.8|<tuple|8|?>>
   </collection>
 </references>
@@ -1296,6 +2253,77 @@
       <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|x\<prime\>>>
       even though the corresponding basis functions are
       nonlocal.>|<pageref|auto-14>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|12>||We can obtain a
+      rough approximation to \ the model evidence if we assume that the
+      posterior distribution over parameters is sharply peaked around its
+      mode \ <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|w<rsub|MAP>>>.>|<pageref|auto-16>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|13>||Schematic
+      illustration of the \ distribution of data sets for three models of
+      different complexity, in which <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-M\><rsub|1>>>
+      is the simplest and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-M\><rsub|3>>>
+      is the most complex. Note that the distributions are normalized. In
+      this example, for the particular observed data set
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-D\><rsub|0>>>,
+      the model <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<cal-M\><rsub|2>>>
+      with intermediate complexity has the largest
+      evidence.>|<pageref|auto-17>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|14>||Plot of the model
+      evidence versus \ the order <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|M>>,
+      for the polynomial regression model, showing that the evidence favours
+      the model with <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|M
+      = 3>>.>|<pageref|auto-19>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|15>||Contours of the
+      likelihood function (red) and the prior (green) in which the axes in
+      parameter space have been rotated to align with the eigenvectors ui of
+      the Hessian. For <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<alpha\>
+      = 0>>, the mode of the posterior is given by the maximum likelihood
+      solution <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|w<rsub|ML>>>,
+      whereas for nonzero <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<alpha\>>>
+      the mode is at <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<b-w\><rsub|MAP
+      >= \<b-m\><rsub|N>>> . In the direction
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|w<rsub|1>>>
+      the eigenvalue <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\><rsub|1>>>,
+      defined by Eq. (<reference|3.87>), is small compared with
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<alpha\>>>
+      and so the quantity <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\><rsub|1>/(\<lambda\><rsub|1>
+      + \<alpha\>)>> is close to zero, and the corresponding MAP value of
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|w<rsub|1>>>
+      is also close to zero. By contrast, in the direction
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|w<rsub|2>>>
+      the eigenvalue <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\><rsub|2>>>
+      is large compared with <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<alpha\>>>
+      and so the quantity <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<lambda\><rsub|2>/(\<lambda\><rsub|2>
+      +\<alpha\>)>> is close to unity, and the MAP value of
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|w<rsub|2>>>
+      is close to its maximum likelihood value.>|<pageref|auto-20>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|16>||The left plot
+      shows <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<gamma\>>>
+      (red curve) and <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|2\<alpha\>E<rsub|W>(\<b-m\><rsub|N>)=\<alpha\>\<b-m\><rsub|N><rsup|T>\<b-m\><rsub|N>>>
+      (blue curve) versus <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|ln\<alpha\>>>
+      for the sinusoidal synthetic data set. It is the intersection of these
+      two curves that defines the optimum value for
+      <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<alpha\>>>
+      given by the evidence procedure. The right plot shows the corresponding
+      graph of log evidence <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|ln
+      p(t\|\<alpha\>, \<beta\>)>> versus <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|ln
+      \<alpha\>>> (red curve) showing that the peak coincides with the
+      crossing point of the curves in the left plot. Also shown is the test
+      set error (blue curve) showing that the evidence maximum occurs close
+      to the point of best generalization.>|<pageref|auto-21>>
+
+      <tuple|normal|<surround|<hidden-binding|<tuple>|17>||Plot of the 10
+      parameters <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|w<rsub|i>>>
+      \ from the Gaussian basis function model versus the effective number of
+      parameters <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<gamma\>>>,
+      in which the hyperparameter <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<alpha\>>>
+      is varied in the range <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|0\<leqslant\>\<alpha\>\<leqslant\>\<infty\>>>
+      causing <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|\<gamma\>>>
+      to vary in the range <with|color|<quote|#503050>|font-family|<quote|rm>|<with|mode|<quote|math>|0\<leqslant\>\<gamma\>\<leqslant\>M>>.>|<pageref|auto-22>>
     </associate>
     <\associate|toc>
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Linear
@@ -1313,6 +2341,14 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Bayesian
       Model Comparison> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-15><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>The
+      Evidence Approximation> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-18><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|6<space|2spc>Limitations
+      of Fixed Basis Functions> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-23><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
