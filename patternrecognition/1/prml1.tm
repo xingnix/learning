@@ -37,7 +37,7 @@
   </hidden>|<\hidden>
     <tit|Polynomial Curve Fitting>
 
-    <small-figure|<image|img/fig_1_2_polynomial_curve_fitting.png|.45par|||>|<label|fig1.2>Plot
+    <small-figure|<image|img/fig_1_2_polynomial_curve_fitting.png|.42par|||>|<label|fig1.2>Plot
     of a training data set of <math|N=10> points, shown as blue circles, each
     comprising an observation of the input variable <math|x> along with the
     corresponding target variable <math|t>. The green curve shows the
@@ -548,8 +548,6 @@
     <\equation*>
       \<bbb-E\><around*|[|f|]>=<big|int>p<around*|(|x|)>f<around*|(|x|)>\<mathd\>x
     </equation*>
-
-    \;
   </hidden>|<\hidden>
     \;
 
@@ -1001,7 +999,7 @@
     that for <math|\<sigma\><rsup|2>> so that we can first evaluate Eq.
     <eqref|1.55> and then subsequently use this result to evaluate Eq.
     <eqref|1.56>.
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     \;
 
     Later in this chapter, and also in subsequent chapters, we shall
@@ -1016,7 +1014,7 @@
     over-fitting encountered in the context of polynomial curve fitting.
 
     \;
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     \;
 
     \;
@@ -1070,9 +1068,7 @@
 
     given the value of <math|x>, the corresponding value of <math|t> has a
     Gaussian distribution with a mean equal to the value <math|y(x,\<b-w\>)>
-    of the polynomial curve given by Eq. <eqref|1.1>.\ 
-
-    Thus:
+    of the polynomial curve given by Eq. <eqref|1.1>. Thus:
 
     <\equation>
       p(t\|x, \<b-w\>, \<beta\>) = \<cal-N\>(t\|y(x,\<b-w\>),\<beta\><rsup|\<minus\>1>)
@@ -1217,9 +1213,8 @@
       p<around*|(|t\|x,\<b-up-x\>,\<b-t\>|)>=<big|int>p<around*|(|t\|x,\<b-w\>|)>p<around*|(|\<b-w\>\|\<b-up-x\>,\<b-t\>|)>\<mathd\>\<b-w\><label|1.68>
     </equation>
 
-    Here <math|p(t\|x,\<b-w\>)> is given by Eq. <eqref|1.60>, and we have
-    omitted the dependence on <math|\<alpha\>> and <math|\<beta\>> to
-    simplify the notation.
+    Here <math|p(t\|x,\<b-w\>)> is given by Eq. <eqref|1.60>, and omitted the
+    dependence on <math|\<alpha\>,\<beta\>><math|> to simplify the notation.
 
     <math|p(w\|\<b-up-x\>,\<b-t\>)> is the posterior distribution over
     parameters, and can be found by normalizing the right-hand side of Eq.
@@ -1325,7 +1320,7 @@
     the same cell as the test point. As we shall see shortly, this simplistic
     approach has some severe shortcomings.>
   </hidden>|<\hidden>
-    <small-figure|<image|img/fig_1_21_d1d2d3.png|.9par|||>|Illustration of
+    <small-figure|<image|img/fig_1_21_d1d2d3.png|.85par|||>|Illustration of
     the curse of dimensionality, showing how the number of regions of a
     regular grid grows exponentially with the dimensionality <math|D> of the
     space. For clarity, only a subset of the cubical regions are shown for
@@ -1445,7 +1440,7 @@
     </shown>|<\shown>
       Suppose we have input vectors <math|X> together with a corresponding
       vector <math|\<b-t\>> of target variables, and our goal is to predict
-      <math|t> given a new value for <math|x>. For regression problems,
+      <math|t> given a new value for <math|\<b-x\>>. For regression problems,
       <math|t> will comprise continuous variables, whereas for classification
       problems <math|t> will represent class labels.\ 
     </shown>|<\shown>
@@ -1519,10 +1514,10 @@
     The probability of this occurring is given by
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|p<around*|(|mistake|)>>|<cell|=>|<cell|p<around*|(|\<b-x\>\<in\>\<cal-R\><rsub|1>,\<cal-C\><rsub|2>|)>+p<around*|(|\<b-x\>\<in\>\<cal-R\><rsub|2>,\<cal-C\><rsub|1>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<cal-R\><rsub|1>>p<around*|(|\<b-x\>,\<cal-C\><rsub|2>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>>p<around*|(|\<b-x\>,\<cal-C\><rsub|1>|)>\<mathd\>\<b-x\>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|<big|int><rsub|\<cal-R\><rsub|1>>p<around*|(|\<cal-C\><rsub|2>\|\<b-x\>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>>p<around*|(|\<cal-C\><rsub|1>\|\<b-x\>|)>\<mathd\>\<b-x\>|)>p<around*|(|\<b-x\>|)>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|<big|int><rsub|\<cal-R\><rsub|1>><around*|(|1-p<around*|(|\<cal-C\><rsub|1>\|\<b-x\>|)>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>><around*|(|1-p<around*|(|\<cal-C\><rsub|2>\|\<b-x\>|)>|)>\<mathd\>\<b-x\>|)>p<around*|(|\<b-x\>|)>>>>>
+      <tformat|<table|<row|<cell|p<around*|(|mistake|)>>|<cell|=>|<cell|p<around*|(|\<b-x\>\<in\>\<cal-R\><rsub|1>,\<cal-C\><rsub|2>|)>+p<around*|(|\<b-x\>\<in\>\<cal-R\><rsub|2>,\<cal-C\><rsub|1>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<cal-R\><rsub|1>>p<around*|(|\<b-x\>,\<cal-C\><rsub|2>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>>p<around*|(|\<b-x\>,\<cal-C\><rsub|1>|)>\<mathd\>\<b-x\>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<cal-R\><rsub|1>>p<around*|(|\<cal-C\><rsub|2>\|\<b-x\>|)>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>>p<around*|(|\<cal-C\><rsub|1>\|\<b-x\>|)>p<around*|(|\<b-x\>|)>\<mathd\>\<b-x\>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<cal-R\><rsub|1>>p<around*|(|\<b-x\>|)><around*|(|1-p<around*|(|\<cal-C\><rsub|1>\|\<b-x\>|)>|)>\<mathd\>\<b-x\>+<big|int><rsub|\<cal-R\><rsub|2>>p<around*|(|\<b-x\>|)><around*|(|1-p<around*|(|\<cal-C\><rsub|2>\|\<b-x\>|)>|)>\<mathd\>\<b-x\>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
-    <small-figure|<image|img/fig_1_24_minimujm_error.png|.5par|||>|Schematic
+    <small-figure|<image|img/fig_1_24_minimujm_error.png|.45par|||>|Schematic
     illustration of the joint probabilities <math|p(x,\<cal-C\><rsub|k>)> for
     each of two classes plotted \ against <math|x>, together with the
     decision boundary <math|x=<wide|x|^>>. Values of
@@ -1673,7 +1668,7 @@
     </eqnarray*>
 
     Then use decision theory to determine class membership for each new input
-    <math|\<cal-x\>>.
+    <math|\<b-x\>>.
 
     Approaches that explicitly or implicitly model the distribution of inputs
     as well as outputs are known as <em|generative models>, because by
@@ -1720,7 +1715,8 @@
     Allows the marginal density of data <math|p(x)> to be determined, useful
     for detecting new data points that have low probability under the model
     and for which the predictions may be of low accuracy, which is known as
-    outlier detection or novelty detection (Bishop, 1994; Tarassenko, 1995).
+    <em|outlier detection> or <em|novelty detection> (Bishop, 1994;
+    Tarassenko, 1995).
 
     Indeed, the class-conditional densities may contain a lot of structure
     that has little effect on the posterior probabilities, as illustrated in
@@ -1728,7 +1724,7 @@
 
     \;
   </hidden>|<\hidden>
-    <small-figure|<image|img/fig_1_27_conditional_posterior.png|.9par|||>|<label|fig1.27>Example
+    <small-figure|<image|img/fig_1_27_conditional_posterior.png|.89par|||>|<label|fig1.27>Example
     of the class-conditional densities for 2 classes having a single input
     variable <math|x> (left) together with the corresponding posterior
     probabilities (right). The left-hand mode of the class-conditional
@@ -1830,7 +1826,7 @@
     probability, we obtain
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|y<around*|(|t|)>>|<cell|=>|<cell|<frac|<big|int>t
+      <tformat|<table|<row|<cell|y<around*|(|x|)>>|<cell|=>|<cell|<frac|<big|int>t
       p<around*|(|x,t|)>\<mathd\>t|p<around*|(|x|)>>>>|<row|<cell|>|<cell|=>|<cell|<big|int>t
       p<around*|(|t\|x|)>\<mathd\>t>>|<row|<cell|>|<cell|=>|<cell|\<bbb-E\><rsub|t><around*|[|t\|x|]><eq-number><label|1.89>>>>>
     </eqnarray*>
@@ -1901,14 +1897,14 @@
     which reduces to the expected squared loss for <math|q = 2>. The function
     <math|\|y \<minus\> t\|<rsup|q>> is plotted against <math|y\<minus\>t>
     for various values of <math|q> in Figure <reference|fig1.29>. The minimum
-    of <math|\<bbb-E\>[L<rsub|q>]> is given by the conditional mean for
-    <math|q = 2>, the conditional median for <math|q = 1>, and the
-    conditional mode for <math|q \<rightarrow\> 0>.
-  </hidden>|<\hidden>
+    of <math|\<bbb-E\>[L<rsub|q>]> is given by the <strong|conditional mean>
+    for <math|q = 2>, the <strong|conditional median> for <math|q = 1>, and
+    the <strong|conditional mode> for <math|q \<rightarrow\> 0>.
+  </hidden>|<\shown>
     <small-figure|<space|6em><image|img/fig_1_29_Minkowski_loss.png|.6par|||>|<label|fig1.29>Plots
     of the quantity <math|L<rsub|q>= \|y \<minus\> t\|<rsup|q>> for various
     values of <math|q>.>
-  </hidden>|<\hidden>
+  </shown>|<\hidden>
     \;
 
     \;
@@ -2386,9 +2382,9 @@
     </equation>
 
     The second term on the right-hand side of Eq. <eqref|1.119> is
-    independent of <math|\<theta\>>, and the first term is the negative log
-    likelihood function for <math|\<theta\>> under the distribution
-    <math|q(x\|\<theta\>)> evaluated using the training set.\ 
+    independent of <math|\<theta\>>, and the first term is the
+    <strong|negative log likelihood function> for <math|\<theta\>> under the
+    distribution <math|q(x\|\<theta\>)> evaluated using the training set.\ 
 
     Thus we see that minimizing this Kullback-Leibler divergence is
     equivalent to maximizing the likelihood function.
@@ -2437,6 +2433,7 @@
 
 <\initial>
   <\collection>
+    <associate|info-flag|minimal>
     <associate|page-height|auto>
     <associate|page-medium|paper>
     <associate|page-type|16:9>
@@ -2446,54 +2443,54 @@
 
 <\references>
   <\collection>
-    <associate|1.1|<tuple|1|5>>
+    <associate|1.1|<tuple|1|6>>
     <associate|1.101|<tuple|21|?>>
     <associate|1.102|<tuple|22|?>>
     <associate|1.110|<tuple|23|?>>
     <associate|1.119|<tuple|24|?>>
-    <associate|1.2|<tuple|2|6>>
-    <associate|1.3|<tuple|3|11>>
-    <associate|1.35|<tuple|8|?>>
-    <associate|1.4|<tuple|4|17>>
-    <associate|1.43|<tuple|9|40>>
-    <associate|1.5|<tuple|5|23>>
-    <associate|1.53|<tuple|10|50>>
-    <associate|1.54|<tuple|11|53>>
-    <associate|1.55|<tuple|12|54>>
-    <associate|1.56|<tuple|13|54>>
-    <associate|1.6|<tuple|6|23>>
-    <associate|1.60|<tuple|14|58>>
-    <associate|1.62|<tuple|15|?>>
-    <associate|1.65|<tuple|16|?>>
-    <associate|1.66|<tuple|17|1>>
-    <associate|1.68|<tuple|18|?>>
-    <associate|1.8|<tuple|7|24>>
+    <associate|1.2|<tuple|2|7>>
+    <associate|1.3|<tuple|3|12>>
+    <associate|1.35|<tuple|8|38>>
+    <associate|1.4|<tuple|4|18>>
+    <associate|1.43|<tuple|9|44>>
+    <associate|1.5|<tuple|5|25>>
+    <associate|1.53|<tuple|10|54>>
+    <associate|1.54|<tuple|11|57>>
+    <associate|1.55|<tuple|12|58>>
+    <associate|1.56|<tuple|13|58>>
+    <associate|1.6|<tuple|6|25>>
+    <associate|1.60|<tuple|14|62>>
+    <associate|1.62|<tuple|15|64>>
+    <associate|1.65|<tuple|16|67>>
+    <associate|1.66|<tuple|17|67>>
+    <associate|1.68|<tuple|18|69>>
+    <associate|1.8|<tuple|7|26>>
     <associate|1.89|<tuple|19|?>>
     <associate|1.92|<tuple|20|?>>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|2|20>>
     <associate|auto-11|<tuple|8|21>>
     <associate|auto-12|<tuple|2|22>>
-    <associate|auto-13|<tuple|9|27>>
-    <associate|auto-14|<tuple|10|28>>
-    <associate|auto-15|<tuple|11|46>>
-    <associate|auto-16|<tuple|12|51>>
-    <associate|auto-17|<tuple|13|57>>
-    <associate|auto-18|<tuple|14|59>>
-    <associate|auto-19|<tuple|15|1>>
+    <associate|auto-13|<tuple|9|23>>
+    <associate|auto-14|<tuple|10|24>>
+    <associate|auto-15|<tuple|11|30>>
+    <associate|auto-16|<tuple|12|31>>
+    <associate|auto-17|<tuple|13|50>>
+    <associate|auto-18|<tuple|14|55>>
+    <associate|auto-19|<tuple|15|61>>
     <associate|auto-2|<tuple|1|3>>
-    <associate|auto-20|<tuple|16|?>>
-    <associate|auto-21|<tuple|17|?>>
-    <associate|auto-22|<tuple|3|?>>
-    <associate|auto-23|<tuple|18|?>>
-    <associate|auto-24|<tuple|4|?>>
-    <associate|auto-25|<tuple|19|?>>
-    <associate|auto-26|<tuple|20|?>>
-    <associate|auto-27|<tuple|21|?>>
-    <associate|auto-28|<tuple|22|?>>
-    <associate|auto-29|<tuple|23|?>>
-    <associate|auto-3|<tuple|2|7>>
-    <associate|auto-30|<tuple|5|?>>
+    <associate|auto-20|<tuple|16|63>>
+    <associate|auto-21|<tuple|17|71>>
+    <associate|auto-22|<tuple|3|72>>
+    <associate|auto-23|<tuple|18|73>>
+    <associate|auto-24|<tuple|4|75>>
+    <associate|auto-25|<tuple|19|75>>
+    <associate|auto-26|<tuple|20|76>>
+    <associate|auto-27|<tuple|21|77>>
+    <associate|auto-28|<tuple|22|81>>
+    <associate|auto-29|<tuple|23|83>>
+    <associate|auto-3|<tuple|2|4>>
+    <associate|auto-30|<tuple|5|84>>
     <associate|auto-31|<tuple|24|?>>
     <associate|auto-32|<tuple|25|?>>
     <associate|auto-33|<tuple|26|?>>
@@ -2503,25 +2500,25 @@
     <associate|auto-37|<tuple|6|?>>
     <associate|auto-38|<tuple|30|1>>
     <associate|auto-39|<tuple|31|?>>
-    <associate|auto-4|<tuple|3|9>>
-    <associate|auto-5|<tuple|4|1>>
+    <associate|auto-4|<tuple|3|8>>
+    <associate|auto-5|<tuple|4|10>>
     <associate|auto-6|<tuple|5|13>>
     <associate|auto-7|<tuple|1|14>>
-    <associate|auto-8|<tuple|6|18>>
+    <associate|auto-8|<tuple|6|15>>
     <associate|auto-9|<tuple|7|19>>
-    <associate|fig1.10|<tuple|10|22>>
-    <associate|fig1.14|<tuple|14|51>>
-    <associate|fig1.16|<tuple|16|59>>
-    <associate|fig1.2|<tuple|2|3>>
-    <associate|fig1.22|<tuple|22|?>>
-    <associate|fig1.23|<tuple|23|?>>
+    <associate|fig1.10|<tuple|10|24>>
+    <associate|fig1.14|<tuple|14|55>>
+    <associate|fig1.16|<tuple|16|63>>
+    <associate|fig1.2|<tuple|2|4>>
+    <associate|fig1.22|<tuple|22|81>>
+    <associate|fig1.23|<tuple|23|83>>
     <associate|fig1.26|<tuple|26|?>>
     <associate|fig1.27|<tuple|27|?>>
     <associate|fig1.29|<tuple|29|?>>
     <associate|fig1.30|<tuple|30|?>>
     <associate|fig1.31|<tuple|31|?>>
-    <associate|fig1.4|<tuple|4|1>>
-    <associate|fig1.7|<tuple|7|18>>
+    <associate|fig1.4|<tuple|4|10>>
+    <associate|fig1.7|<tuple|7|19>>
   </collection>
 </references>
 
