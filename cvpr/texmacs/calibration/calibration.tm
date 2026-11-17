@@ -1,6 +1,6 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
-<style|<tuple|beamer|blackboard>>
+<style|<tuple|beamer|manila-paper>>
 
 <\body>
   <screens|<\hidden>
@@ -20,18 +20,16 @@
 
     \;
 
-    <image|img/point_line_projections.png|1par|||>
+    <space|4em><image|img/point_line_projections.png|.7par|||>
   </hidden>|<\hidden>
     <tit|\<#5750\>\<#6807\>\<#7CFB\>>
 
-    <image|img/coordinate_system.png|1par|||>
+    <space|4em><image|img/coordinate_system.png|.8par|||>
   </hidden>|<\hidden>
-    <tit|>
+    \;
 
     <image|img/plane_equation.png|1par|||>
   </hidden>|<\hidden>
-    <tit|>
-
     <\eqnarray*>
       <tformat|<table|<row|<cell|<wide|OP|\<vect\>>>|<cell|=>|<cell|x\<b-i\>+y\<b-j\>+z\<b-k\>>>>>
     </eqnarray*>
@@ -45,22 +43,22 @@
     and
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-P\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|x>>|<row|<cell|y>>|<row|<cell|z>>>>>\<in\>\<bbb-R\><rsup|3>>>>>
+      <tformat|<table|<row|<cell|\<b-P\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|x>|<cell|y>|<cell|z>>>>><rsup|T>\<in\>\<bbb-R\><rsup|3>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|\<#9F50\>\<#6B21\>\<#5750\>\<#6807\>>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|a>|<cell|b>|<cell|c>|<cell|-d>>>>><matrix|<tformat|<table|<row|<cell|x>>|<row|<cell|y>>|<row|<cell|z>>|<row|<cell|1>>>>>>|<cell|=>|<cell|0>>|<row|<cell|\<b-Pi\>\<cdummy\>\<b-P\>>|<cell|=>|<cell|0>>|<row|<cell|\<b-Pi\>>|<cell|\<equiv\>>|<cell|<matrix|<tformat|<table|<row|<cell|a>>|<row|<cell|b>>|<row|<cell|c>>|<row|<cell|-d>>>>>>>|<row|<cell|\<b-P\>>|<cell|\<equiv\>>|<cell|<matrix|<tformat|<table|<row|<cell|x>>|<row|<cell|y>>|<row|<cell|z>>|<row|<cell|1>>>>>>>>>
+      <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|a>|<cell|b>|<cell|c>|<cell|-d>>>>><matrix|<tformat|<table|<row|<cell|x>>|<row|<cell|y>>|<row|<cell|z>>|<row|<cell|1>>>>>>|<cell|=>|<cell|0>>|<row|<cell|\<b-Pi\>\<cdummy\>\<b-P\>>|<cell|=>|<cell|0>>|<row|<cell|\<b-Pi\>>|<cell|\<equiv\>>|<cell|<matrix|<tformat|<table|<row|<cell|a>|<cell|b>|<cell|c>|<cell|-d>>>>><rsup|T>>>|<row|<cell|\<b-P\>>|<cell|\<equiv\>>|<cell|<matrix|<tformat|<table|<row|<cell|x>|<cell|y>|<cell|z>|<cell|1>>>>><rsup|T>>>>>
     </eqnarray*>
 
     \;
   </hidden>|<\hidden>
     <tit|\<#5750\>\<#6807\>\<#53D8\>\<#6362\>\V\V\<#5E73\>\<#79FB\>>
 
-    <image|img/pure_translation.png|1par|||>
+    <space|4em><image|img/pure_translation.png|.8par|||>
   </hidden>|<\hidden>
-    <tit|>
+    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|<wide|OP|\<vect\>>>|<cell|=>|<cell|x\<b-i\>+y\<b-j\>+z\<b-k\>>>|<row|<cell|<lsup|F>P>|<cell|=>|<cell|<lsup|F><wide|OP|\<vect\>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|x>>|<row|<cell|y>>|<row|<cell|z>>>>>>>|<row|<cell|<lsup|B>P>|<cell|=>|<cell|<lsup|A>P+<lsup|B>O<rsub|A>>>>>
@@ -68,13 +66,25 @@
   </hidden>|<\hidden>
     <tit|\<#5750\>\<#6807\>\<#53D8\>\<#6362\>\V\V\<#65CB\>\<#8F6C\>>
 
-    <image|img/pure_rotation.png|1par|||>
+    <space|5em><image|img/pure_rotation.png|.6par|||>
   </hidden>|<\hidden>
     \;
 
+    \;
+
+    \;
+
     <\eqnarray*>
-      <tformat|<table|<row|<cell|<wide|OP|\<vect\>>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-i\><rsub|A>>|<cell|\<b-j\><rsub|A>>|<cell|\<b-k\><rsub|A>>>>>><matrix|<tformat|<table|<row|<cell|A<rsub|x>>>|<row|<cell|A<rsub|y>>>|<row|<cell|A<rsub|z>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-i\><rsub|B>>|<cell|\<b-j\><rsub|B>>|<cell|\<b-k\><rsub|B>>>>>><matrix|<tformat|<table|<row|<cell|B<rsub|x>>>|<row|<cell|B<rsub|y>>>|<row|<cell|B<rsub|z>>>>>>>>>>
+      <tformat|<table|<row|<cell|<wide|OP|\<vect\>>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-i\><rsub|A>>|<cell|\<b-j\><rsub|A>>|<cell|\<b-k\><rsub|A>>>>>><matrix|<tformat|<table|<row|<cell|A<rsub|x>>|<cell|A<rsub|y>>|<cell|A<rsub|z>>>>>><rsup|T>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-i\><rsub|B>>|<cell|\<b-j\><rsub|B>>|<cell|\<b-k\><rsub|B>>>>>><matrix|<tformat|<table|<row|<cell|B<rsub|x>>|<cell|B<rsub|y>>|<cell|B<rsub|z>>>>>><rsup|T>>>>>
     </eqnarray*>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|<lsup|B>P>|<cell|=>|<cell|<lsup|B><lsub|A>\<cal-R\><lsup|A>P>>>>
@@ -83,12 +93,8 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|<lsup|B><lsub|A>\<cal-R\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-i\><rsub|B>>|<cell|\<b-j\><rsub|B>>|<cell|\<b-k\><rsub|B>>>>>><rsup|<rsup|T>><matrix|<tformat|<table|<row|<cell|\<b-i\><rsub|A>>|<cell|\<b-j\><rsub|A>>|<cell|\<b-k\><rsub|A>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-i\><rsub|B>\<cdummy\>\<b-i\><rsub|A>>|<cell|\<b-i\><rsub|B>\<cdummy\>\<b-j\><rsub|A>>|<cell|\<b-i\><rsub|B>\<cdummy\>\<b-k\><rsub|A>>>|<row|<cell|\<b-j\><rsub|B>\<cdummy\>\<b-i\><rsub|A>>|<cell|\<b-j\><rsub|B>\<cdummy\>\<b-j\><rsub|A>>|<cell|\<b-j\><rsub|B>\<cdummy\>\<b-k\><rsub|A>>>|<row|<cell|\<b-k\><rsub|B>\<cdummy\>\<b-i\><rsub|A>>|<cell|\<b-k\><rsub|B>\<cdummy\>\<b-j\><rsub|A>>|<cell|\<b-k\><rsub|B>\<cdummy\>\<b-k\><rsub|A>>>>>>>>>>
     </eqnarray*>
-
-    \;
   </hidden>|<\hidden>
-    <tit|>
-
-    <image|img/rotation_of_theta.png|1par|||>
+    <space|2em><image|img/rotation_of_theta.png|.9par|||>
   </hidden>|<\hidden>
     <tit|>
 
@@ -101,12 +107,14 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|<lsup|B><lsub|A>\<cal-R\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|cos\<theta\>>|<cell|sin\<theta\>>|<cell|0>>|<row|<cell|-sin\<theta\>>|<cell|cos\<theta\>>|<cell|0>>|<row|<cell|0>|<cell|o>|<cell|1>>>>>>>>>
     </eqnarray*>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|\<#5750\>\<#6807\>\<#53D8\>\<#6362\>>
 
     <image|img/rigid_transformation.png|1par|||>
-  </shown>|<\hidden>
-    <tit|>
+  </hidden>|<\hidden>
+    \;
+
+    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|<lsup|B>P>>|<row|<cell|1>>>>>>|<cell|=>|<cell|<lsup|B><lsub|A>\<cal-T\><matrix|<tformat|<table|<row|<cell|<lsup|A>P>>|<row|<cell|1>>>>>>>|<row|<cell|<lsup|B><lsub|A>\<cal-T\>>|<cell|\<equiv\>>|<cell|<matrix|<tformat|<table|<row|<cell|<lsup|B><lsub|A>\<cal-R\>>|<cell|<lsup|B>O<rsub|A>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>>>
@@ -114,16 +122,10 @@
   </hidden>|<\hidden>
     <tit|\<#5750\>\<#6807\>\<#65CB\>\<#8F6C\>\<#793A\>\<#4F8B\>>
 
-    <image|img/mapping_p.png|1par|||>
+    <space|2em><image|img/mapping_p.png|0.9par|||>
   </hidden>|<\hidden>
-    <tit|>
-
-    \;
-
-    \;
-
     <\eqnarray*>
-      <tformat|<table|<row|<cell|<lsup|F>P<rprime|'>>|<cell|=>|<cell|\<cal-R\><rsup|F>P>>>>
+      <tformat|<table|<row|<cell|<lsup|F>P<rprime|'>>|<cell|=>|<cell|<lsup|F>P<rprime|''>+\<b-t\>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-R\>>|<cell|\<b-t\>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>><matrix|<tformat|<table|<row|<cell|<lsup|F>P>>|<row|<cell|1>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-R\><rsup|F>P+\<b-t\>>>|<row|<cell|1>>>>>>>>>
     </eqnarray*>
 
     where
@@ -134,30 +136,38 @@
   </hidden>|<\hidden>
     <tit|\<#51E0\>\<#4F55\>\<#76F8\>\<#673A\>\<#53C2\>\<#6570\>\V\V\<#5185\>\<#53C2\>\<#6570\>>
 
-    <image|img/physical_normal_image_coordinate_system.png|1par|||>
+    <space|3em><image|img/physical_normal_image_coordinate_system.png|.8par|||>
   </hidden>|<\hidden>
-    <tit|>
+    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|<wide|\<b-P\>|^>>|<cell|=>|<cell|<frac|1|z><matrix|<tformat|<table|<row|<cell|\<b-I\>>|<cell|\<b-0\>>>>>><matrix|<tformat|<table|<row|<cell|\<b-P\>>>|<row|<cell|1>>>>>>>|<row|<cell|<wide|u|^>>|<cell|=>|<cell|<frac|x|z>>>|<row|<cell|<wide|v|^>>|<cell|=>|<cell|<frac|y|z>>>|<row|<cell|u>|<cell|=>|<cell|k\<nospace\>f<frac|x|z>>>|<row|<cell|v>|<cell|=>|<cell|l\<nospace\>f<frac|y|z>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
-    <tit|>
-
-    <\eqnarray*>
-      <tformat|<table|<row|<cell|u>|<cell|=>|<cell|\<alpha\><frac|x|z>+u<rsub|0>>>|<row|<cell|v>|<cell|=>|<cell|\<beta\><frac|y|z>+v<rsub|0>>>>>
-    </eqnarray*>
+    <tit|\<#4F4D\>\<#7F6E\>\<#53C2\>\<#6570\>>
 
     \;
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|u>|<cell|=>|<cell|\<alpha\><frac|x|z>-\<alpha\>cot\<theta\><frac|y|z>+u<rsub|0>>>|<row|<cell|v>|<cell|=>|<cell|<frac|\<beta\>|sin\<theta\>><frac|y|z>+v<rsub|0>>>>>
+      <tformat|<table|<row|<cell|u>|<cell|=>|<cell|\<alpha\><frac|x|z>+<with|color|magenta|u<rsub|0>>>>|<row|<cell|v>|<cell|=>|<cell|\<beta\><frac|y|z>+<with|color|magenta|v<rsub|0>>>>>>
     </eqnarray*>
+
+    \;
   </hidden>|<\hidden>
-    <tit|>
+    <tit|\<#503E\>\<#659C\>\<#53C2\>\<#6570\>>
+
+    \;
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-P\>>|<cell|=>|<cell|<frac|1|z>\<cal-M\><wide|\<b-P\>|^>>>|<row|<cell|\<b-P\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|u>>|<row|<cell|v>>|<row|<cell|1>>>>>>>|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-K\>>|<cell|\<b-0\>>>>>>>>|<row|<cell|\<cal-K\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<alpha\>>|<cell|-\<alpha\>cot\<theta\>>|<cell|u<rsub|0>>>|<row|<cell|0>|<cell|<frac|\<beta\>|sin\<theta\>>>|<cell|v<rsub|0>>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>>>
+      <tformat|<table|<row|<cell|u>|<cell|=>|<cell|\<alpha\><frac|x|z>-\<alpha\>cot<with|color|magenta|\<theta\>><frac|y|z>+u<rsub|0>>>|<row|<cell|v>|<cell|=>|<cell|<frac|\<beta\>|sin<with|color|magenta|\<theta\>>><frac|y|z>+v<rsub|0>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|<math|\<cal-M\>>>
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<b-p\>>|<cell|=>|<cell|<frac|1|z>\<cal-K\><wide|\<b-p\>|^>>>|<row|<cell|\<cal-K\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<alpha\>>|<cell|-\<alpha\>cot\<theta\>>|<cell|u<rsub|0>>>|<row|<cell|0>|<cell|<frac|\<beta\>|sin\<theta\>>>|<cell|v<rsub|0>>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>|<row|<cell|\<b-p\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|u>|<cell|v>|<cell|1>>>>><rsup|T>>>|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-K\>>|<cell|\<b-0\>>>>>>>>|<row|<cell|\<b-p\>>|<cell|=>|<cell|<frac|1|z>\<cal-M\>\<b-P\>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|\<#51E0\>\<#4F55\>\<#76F8\>\<#673A\>\<#53C2\>\<#6570\>\V\V\<#5916\>\<#53C2\>\<#6570\>>
@@ -171,28 +181,23 @@
     \;
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<alpha\>\<b-r\><rsub|1><rsup|T>-\<alpha\>cot\<theta\>\<b-r\><rsub|2><rsup|T>+u<rsub|0>\<b-r\><rsub|3><rsup|T>>|<cell|\<alpha\>t<rsub|x>-\<alpha\>cot\<theta\>t<rsub|y>+u<rsub|0>t<rsub|z>>>|<row|<cell|<frac|\<beta\>|sin\<theta\>>\<b-r\><rsub|2><rsup|T>+v<rsub|0>\<b-r\><rsub|3><rsup|T>>|<cell|<frac|\<beta\>|sin\<theta\>>t<rsub|y>+v<rsub|0>t<rsub|z>>>|<row|<cell|\<b-r\><rsub|3><rsup|T>>|<cell|t<rsub|z>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-M\>>|<cell|\<b-b\>>>>>>>>|<row|<cell|\<cal-R\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-r\><rsub|1><rsup|T>>>|<row|<cell|\<b-r\><rsub|2><rsup|T>>>|<row|<cell|\<b-r\><rsub|3><rsup|<rsup|T>>>>>>>>>|<row|<cell|\<b-t\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|t<rsub|x>>>|<row|<cell|t<rsub|y>>>|<row|<cell|t<rsub|z>>>>>>>>>>
+      <tformat|<table|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<alpha\>\<b-r\><rsub|1><rsup|T>-\<alpha\>cot\<theta\>\<b-r\><rsub|2><rsup|T>+u<rsub|0>\<b-r\><rsub|3><rsup|T>>|<cell|\<alpha\>t<rsub|x>-\<alpha\>cot\<theta\>t<rsub|y>+u<rsub|0>t<rsub|z>>>|<row|<cell|<frac|\<beta\>|sin\<theta\>>\<b-r\><rsub|2><rsup|T>+v<rsub|0>\<b-r\><rsub|3><rsup|T>>|<cell|<frac|\<beta\>|sin\<theta\>>t<rsub|y>+v<rsub|0>t<rsub|z>>>|<row|<cell|\<b-r\><rsub|3><rsup|T>>|<cell|t<rsub|z>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-M\>>|<cell|\<b-b\>>>>>>>>|<row|<cell|\<cal-R\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-r\><rsub|1>>|<cell|\<b-r\><rsub|2>>|<cell|\<b-r\><rsub|3><rsup|>>>>>><rsup|T>>>|<row|<cell|\<b-t\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|t<rsub|x>>|<cell|t<rsub|y>>|<cell|t<rsub|z>>>>>><rsup|T>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|<with|math-display|true|<math|\<cal-M\>=<matrix|<tformat|<table|<row|<cell|\<cal-A\>>|<cell|\<b-b\>>>>>>>>>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<cal-M\><matrix|<tformat|<table|<row|<cell|\<b-O\>>>|<row|<cell|1>>>>>>|<cell|=>|<cell|0>>|<row|<cell|\<b-O\>>|<cell|=>|<cell|-\<cal-A\><rsup|-1>\<b-b\>>>>>
+      <tformat|<table|<row|<cell|\<cal-M\><matrix|<tformat|<table|<row|<cell|\<b-O\>>>|<row|<cell|1>>>>>>|<cell|=>|<cell|0>>|<row|<cell|\<b-O\>>|<cell|=>|<cell|-\<cal-A\><rsup|-1>\<b-b\><space|2em>where
+      \ \<cal-A\>=<matrix|<tformat|<table|<row|<cell|\<b-a\><rsub|1>>|<cell|\<b-a\><rsub|2>>|<cell|\<b-a\><rsub|3>>>>>><rsup|T>>>>>
     </eqnarray*>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|Det<around*|(|\<cal-A\>|)>>|<cell|\<neq\>>|<cell|0>>|<row|<cell|<around*|(|\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|)>\<cdummy\><around*|(|\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|)>>|<cell|=>|<cell|0>>|<row|<cell|<around*|\||\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|\|>>|<cell|=>|<cell|<around*|\||\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|\|>>>>>
-    </eqnarray*>
-
-    where
-
-    <\eqnarray*>
-      <tformat|<table|<row|<cell|\<cal-A\>>|<cell|=<matrix|<tformat|<table|<row|<cell|\<b-a\><rsub|1><rsup|T>>>|<row|<cell|\<b-a\><rsub|2><rsup|T>>>|<row|<cell|\<b-a\><rsub|3><rsup|T>>>>>>>|<cell|>>>>
+      <tformat|<table|<row|<cell|Det<around*|(|\<cal-A\>|)>>|<cell|\<neq\>>|<cell|0>>|<row|<cell|<around*|(|\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|)>\<cdummy\><around*|(|\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|)>>|<cell|=>|<cell|0<space|7em>\<#FF08\>\<#65E0\>\<#503E\>\<#659C\>\<#FF09\>>>|<row|<cell|<around*|\||\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|\|>>|<cell|=>|<cell|<around*|\||\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|\|><space|4em>\<#FF08\>\<#7B49\>\<#957F\>\<#5BBD\>\<#6BD4\>\<#FF09\>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|\<#4EFF\>\<#5C04\>\<#6295\>\<#5F71\>>
 
-    <space|2em><image|img/affine_projection_models.png|0.8par|||>
+    <space|6em><image|img/affine_projection_models.png|0.6par|||>
   </hidden>|<\hidden>
     <tit|\<#5F31\>\<#900F\>\<#89C6\>\<#6295\>\<#5F71\>\<#6A21\>\<#578B\>>
 
@@ -201,11 +206,17 @@
     </eqnarray*>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-p\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|x>|<cell|y>>>>><rsup|T>>>|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<frac|1|Z<rsub|r>>\<cal-K\><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|Z<rsub|r>>>>>><matrix|<tformat|<table|<row|<cell|\<cal-R\>>|<cell|\<b-t\>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>|<row|<cell|\<b-P\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|X>|<cell|Y>|<cell|Z>|<cell|1>>>>><rsup|T>>>|<row|<cell|\<cal-K\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-K\><rsub|2>>|<cell|p<rsub|0>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>|<row|<cell|\<cal-K\><rsub|2>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<alpha\>>|<cell|-\<alpha\>cot\<theta\>>>|<row|<cell|0>|<cell|<frac|\<beta\>|sin\<theta\>>>>>>>>>|<row|<cell|p<rsub|0>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|x<rsub|0>>|<cell|y<rsub|0>>>>>><rsup|T>>>>>
+      <tformat|<table|<row|<cell|\<b-p\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|x>|<cell|y>|<cell|1>>>>><rsup|T>>>|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<frac|1|Z<rsub|r>>\<cal-K\><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|Z<rsub|r>>>>>><matrix|<tformat|<table|<row|<cell|\<cal-R\>>|<cell|\<b-t\>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>|<row|<cell|\<b-P\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|X>|<cell|Y>|<cell|Z>|<cell|1>>>>><rsup|T>>>|<row|<cell|>|<cell|>|<cell|>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     \;
 
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-K\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-K\><rsub|2>>|<cell|p<rsub|0>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>|<row|<cell|\<cal-K\><rsub|2>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<alpha\>>|<cell|-\<alpha\>cot\<theta\>>>|<row|<cell|0>|<cell|<frac|\<beta\>|sin\<theta\>>>>>>>>>|<row|<cell|p<rsub|0>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|u<rsub|0>>|<cell|v<rsub|0>>>>>><rsup|T>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<cal-A\>>|<cell|\<b-b\>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|Z<rsub|r>>\<cal-K\><matrix|<tformat|<table|<row|<cell|\<cal-R\><rsub|2>>|<cell|\<b-t\><rsub|2>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|Z<rsub|r>><matrix|<tformat|<table|<row|<cell|\<cal-K\><rsub|2>>|<cell|p<rsub|0>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>><matrix|<tformat|<table|<row|<cell|\<cal-R\><rsub|2>>|<cell|\<b-t\><rsub|2>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|Z<rsub|r>><matrix|<tformat|<table|<row|<cell|\<cal-K\><rsub|2>\<cal-R\><rsub|2>>|<cell|\<cal-K\><rsub|2>\<b-t\><rsub|2>+p<rsub|0>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|Z<rsub|r>><matrix|<tformat|<table|<row|<cell|k>|<cell|s>>|<row|<cell|0>|<cell|1>>>>><matrix|<tformat|<table|<row|<cell|\<cal-R\><rsub|2>>|<cell|\<b-t\><rsub|2>>>>>>>>>>
     </eqnarray*>
@@ -213,17 +224,31 @@
     <tit|\<#7C7B\>\<#900F\>\<#89C6\>\<#6295\>\<#5F71\>\<#6A21\>\<#578B\>>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|<wide|X|^>>>|<row|<cell|<wide|Y|^>>>|<row|<cell|<wide|Z|^>>>>>>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|X-<frac|X<rsub|r>|Z<rsub|r>><around*|(|Z-Z<rsub|r>|)>>>|<row|<cell|Y-<frac|Y<rsub|r>|Z<rsub|r>><around*|(|Z-Z<rsub|r>|)>>>|<row|<cell|Z<rsub|r>>>>>>>>|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<frac|1|Z<rsub|r>>\<cal-K\><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|-<frac|X<rsub|r>|Z<rsub|r>>>|<cell|Z<rsub|r>>>|<row|<cell|0>|<cell|1>|<cell|-<frac|Y<rsub|r>|Z<rsub|r>>>|<cell|Z<rsub|r>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|Z<rsub|r>>>>>><matrix|<tformat|<table|<row|<cell|\<cal-R\>>|<cell|\<b-t\>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<frac|1|Z<rsub|r>><matrix|<tformat|<table|<row|<cell|k>|<cell|s>>|<row|<cell|0>|<cell|1>>>>><matrix|<tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|-<frac|X<rsub|r>|Z<rsub|r>>>>|<row|<cell|0>|<cell|1>|<cell|-<frac|Y<rsub|r>|Z<rsub|r>>>>>>>\<cal-R\>>|<cell|\<b-t\><rsub|2>>>>>>>>>>
+      <tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|<wide|X|^>>>|<row|<cell|<wide|Y|^>>>|<row|<cell|<wide|Z|^>>>>>>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|X-<frac|X<rsub|r>|Z<rsub|r>><around*|(|Z-Z<rsub|r>|)>>>|<row|<cell|Y-<frac|Y<rsub|r>|Z<rsub|r>><around*|(|Z-Z<rsub|r>|)>>>|<row|<cell|Z<rsub|r>>>>>>>>|<row|<cell|>|<cell|>|<cell|>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<frac|1|Z<rsub|r>>\<cal-K\><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|-<frac|X<rsub|r>|Z<rsub|r>>>|<cell|X<rsub|r>>>|<row|<cell|0>|<cell|1>|<cell|-<frac|Y<rsub|r>|Z<rsub|r>>>|<cell|Y<rsub|r>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|Z<rsub|r>>>>>><matrix|<tformat|<table|<row|<cell|\<cal-R\>>|<cell|\<b-t\>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|1>>>>>>>|<row|<cell|\<cal-M\>>|<cell|=>|<cell|<frac|1|Z<rsub|r>><matrix|<tformat|<table|<row|<cell|k>|<cell|s>>|<row|<cell|0>|<cell|1>>>>><matrix|<tformat|<table|<row|<cell|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|-<frac|X<rsub|r>|Z<rsub|r>>>>|<row|<cell|0>|<cell|1>|<cell|-<frac|Y<rsub|r>|Z<rsub|r>>>>>>>\<cal-R\>>|<cell|\<b-t\><rsub|2>>>>>>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|\<#76F8\>\<#673A\>\<#6807\>\<#5B9A\>>
 
-    <image|img/camera_calibration_setup.png|1par|||>
+    <space|6em><image|img/camera_calibration_setup.png|.7par|||>
   </hidden>|<\hidden>
     <tit|\<#4F30\>\<#8BA1\><math|\<cal-M\>>>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|<around*|(|\<b-m\><rsub|1>-u<rsub|i>\<b-m\><rsub|3>|)>\<cdummy\>\<b-P\><rsub|i>>|<cell|=>|<cell|0>>|<row|<cell|<around*|(|\<b-m\><rsub|12>-u<rsub|v>\<b-m\><rsub|3>|)>\<cdummy\>\<b-P\><rsub|i>>|<cell|=>|<cell|0>>|<row|<cell|\<cal-P\>\<b-m\>>|<cell|=>|<cell|0>>>>
+      <tformat|<table|<row|<cell|<around*|(|\<b-m\><rsub|1>-u<rsub|i>\<b-m\><rsub|3>|)>\<cdummy\>\<b-P\><rsub|i>>|<cell|=>|<cell|0>>|<row|<cell|<around*|(|\<b-m\><rsub|2>-v<rsub|i>\<b-m\><rsub|3>|)>\<cdummy\>\<b-P\><rsub|i>>|<cell|=>|<cell|0>>|<row|<cell|>|<cell|>|<cell|>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|\<cal-P\>\<b-m\>>|<cell|=>|<cell|0>>>>
     </eqnarray*>
 
     where
@@ -235,40 +260,48 @@
     <tit|\<#4F30\>\<#8BA1\>\<#5185\>\<#53C2\>\<#6570\>>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<rho\><matrix|<tformat|<table|<row|<cell|\<cal-A\>>|<cell|\<b-b\>>>>>>>|<cell|=>|<cell|\<cal-K\><matrix|<tformat|<table|<row|<cell|\<cal-R\>>|<cell|\<b-t\>>>>>>>>|<row|<cell|\<rho\><matrix|<tformat|<table|<row|<cell|\<b-a\><rsup|T><rsub|1>>>|<row|<cell|\<b-a\><rsub|2><rsup|T>>>|<row|<cell|\<b-a\><rsub|3><rsup|T>>>>>>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<alpha\>\<b-r\><rsub|1><rsup|T>-\<alpha\>cot\<theta\>\<b-r\><rsup|T><rsub|2>+u<rsub|0>\<b-r\><rsub|3><rsup|T>>>|<row|<cell|<frac|\<beta\>|sin\<theta\>>\<b-r\><rsub|2><rsup|T>+v<rsub|0>\<b-r\><rsub|3><rsup|T>>>|<row|<cell|\<b-r\><rsub|3><rsup|<rsup|T>>>>>>>>>>>
+      <tformat|<table|<row|<cell|\<rho\><matrix|<tformat|<table|<row|<cell|\<cal-A\>>|<cell|\<b-b\>>>>>>>|<cell|=>|<cell|\<cal-K\><matrix|<tformat|<table|<row|<cell|\<cal-R\>>|<cell|\<b-t\>>>>>>>>|<row|<cell|\<rho\><matrix|<tformat|<table|<row|<cell|\<b-a\><rsup|T><rsub|1>>>|<row|<cell|\<b-a\><rsub|2><rsup|T>>>|<row|<cell|\<b-a\><rsub|3><rsup|T>>>>>>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<alpha\>\<b-r\><rsub|1><rsup|T>-\<alpha\>cot\<theta\>\<b-r\><rsup|T><rsub|2>+u<rsub|0>\<b-r\><rsub|3><rsup|T>>>|<row|<cell|<frac|\<beta\>|sin\<theta\>>\<b-r\><rsub|2><rsup|T>+v<rsub|0>\<b-r\><rsub|3><rsup|T>>>|<row|<cell|\<b-r\><rsub|3><rsup|<rsup|T>>>>>>><eq-number><label|ref1>>>>>
     </eqnarray*>
+
+    \;
+
+    \;
+  </hidden>|<\hidden>
+    \;
 
     <math|<matrix|<tformat|<table|<row|<cell|\<b-r\><rsub|1>>|<cell|\<b-r\><rsub|2>>|<cell|\<b-r\><rsub|3>>>>>>>\<#4E3A\>\<#5355\>\<#4F4D\>\<#6B63\>\<#4EA4\>\<#9635\>\<#FF1A\>
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<rho\>\<b-a\><rsub|3>>|<cell|=>|<cell|\<b-r\><rsub|3>>>|<row|<cell|\<rho\>>|<cell|=>|<cell|<frac|\<varepsilon\>|<around*|\||\<b-a\><rsub|3>|\|>>>>|<row|<cell|\<rho\><rsup|2><around*|(|\<b-a\><rsub|1>\<cdummy\>\<b-a\><rsub|3>|)>>|<cell|=>|<cell|u<rsub|0>>>|<row|<cell|\<rho\><rsup|2><around*|(|\<b-a\><rsub|2>\<cdummy\>\<b-a\><rsub|3>|)>>|<cell|=>|<cell|v<rsub|0>>>>>
     </eqnarray*>
-
-    \;
   </hidden>|<\hidden>
     \;
 
-    \<#5229\>\<#7528\>\<#53C9\>\<#4E58\>\<#FF1A\>
+    \<#7531\>Eq. <eqref|ref1> \<#4F7F\>\<#7528\>\<#53C9\>\<#4E58\>\<#FF1A\>
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<rho\><rsup|2><around*|(|\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|)>>|<cell|=>|<cell|-\<alpha\>\<b-r\><rsub|2>-\<alpha\>cot\<theta\>\<b-r\><rsub|1>>>|<row|<cell|\<rho\><rsup|2><around*|\||\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|\|>>|<cell|=>|<cell|<frac|a|sin\<theta\>>>>|<row|<cell|\<rho\><rsup|2><around*|(|\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|)>>|<cell|=>|<cell|<frac|\<beta\>|sin\<theta\>>\<b-r\><rsub|1>>>|<row|<cell|\<rho\><rsup|2><around*|\||\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|\|>>|<cell|=>|<cell|<frac|\<beta\>|sin\<theta\>>>>>>
     </eqnarray*>
 
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
     \<#5F97\>\<#FF1A\>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|cos\<theta\>>|<cell|=>|<cell|-<cfrac|<around*|(|\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|)><around*|(|\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|)>|<around*|\||\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|\|><around*|\||\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|\|>>>>|<row|<cell|\<alpha\>>|<cell|=>|<cell|\<rho\><rsup|2><around*|\||\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|\|>sin\<theta\>>>|<row|<cell|\<beta\>>|<cell|=>|<cell|\<rho\><rsup|2><around*|\||\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|\|>sin\<theta\>>>>>
+      <tformat|<table|<row|<cell|cos\<theta\>>|<cell|=>|<cell|-<cfrac|<around*|(|\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|)>\<cdummy\><around*|(|\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|)>|<around*|\||\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|\|><around*|\||\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|\|>>>>|<row|<cell|\<alpha\>>|<cell|=>|<cell|\<rho\><rsup|2><around*|\||\<b-a\><rsub|1>\<times\>\<b-a\><rsub|3>|\|>sin\<theta\>>>|<row|<cell|\<beta\>>|<cell|=>|<cell|\<rho\><rsup|2><around*|\||\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|\|>sin\<theta\>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
     <tit|\<#4F30\>\<#8BA1\>\<#5916\>\<#53C2\>\<#6570\>>
 
-    \;
+    \<#7531\>Eq. <eqref|ref1>\<#5F97\>\<#FF1A\>
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<b-r\><rsub|1>>|<cell|=>|<cell|<frac|\<rho\><rsup|2>sin\<theta\>|\<beta\>><around*|(|\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|<around*|\||\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|\|>><around*|(|\<b-a\><rsub|2>\<times\>\<b-a\><rsub|3>|)>>>|<row|<cell|\<b-r\><rsub|2>>|<cell|=>|<cell|\<b-r\><rsub|3>\<times\>\<b-r\><rsub|1>>>>>
     </eqnarray*>
-
-    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<cal-K\>\<b-t\>>|<cell|=>|<cell|\<rho\>\<b-b\>>>|<row|<cell|\<b-t\>>|<cell|=>|<cell|\<rho\>\<cal-K\><rsup|-1>\<b-b\>>>>>
@@ -282,8 +315,6 @@
       <tformat|<table|<row|<cell|\<b-0\>>|<cell|=>|<cell|\<cal-P\>\<b-l\>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-P\><rsub|1><rsup|T>>|<cell|\<b-0\><rsup|T>>|<cell|-u<rsub|1>\<b-P\><rsub|1><rsup|T>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|\<b-P\><rsub|1><rsup|T>>|<cell|-v<rsub|1>\<b-P\><rsub|1><rsup|T>>>|<row|<cell|\<cdots\>>|<cell|\<cdots\>>|<cell|\<cdots\>>>|<row|<cell|\<b-P\><rsub|n><rsup|T>>|<cell|\<b-0\><rsup|T>>|<cell|-u<rsub|n>\<b-P\><rsub|n><rsup|T>>>|<row|<cell|\<b-0\><rsup|T>>|<cell|\<b-P\><rsub|n><rsup|T>>|<cell|-v<rsub|n>\<b-P\><rsub|n><rsup|T>>>>>><matrix|<tformat|<table|<row|<cell|\<b-lambda\>>>|<row|<cell|\<b-mu\>>>|<row|<cell|\<b-nu\>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-P\><rsub|1><rsup|T>\<b-lambda\>-u<rsub|1>\<b-P\><rsub|1><rsup|T>\<b-nu\>>>|<row|<cell|\<b-P\><rsub|1><rsup|T>\<b-mu\>-v<rsub|1>\<b-P\><rsub|1><rsup|T>\<b-nu\>>>|<row|<cell|\<cdots\>>>|<row|<cell|\<b-P\><rsub|n><rsup|T>\<b-lambda\>-u<rsub|n>\<b-P\><rsub|n><rsup|T>\<b-nu\>>>|<row|<cell|\<b-P\><rsub|n><rsup|T>\<b-mu\>-v<rsub|n>\<b-P\><rsub|n><rsup|T>\<b-nu\>>>>>>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
-    \;
-
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<b-P\><rsup|T><rsub|i>\<b-lambda\>-<frac|\<b-m\><rsub|1><rsup|T>\<b-P\><rsub|i>|\<b-m\><rsup|T><rsub|3>\<b-P\><rsub|i>>\<b-P\><rsup|T><rsub|i>\<b-nu\>>|<cell|=>|<cell|0>>|<row|<cell|\<b-P\><rsup|T><rsub|i>\<b-mu\>-<frac|\<b-m\><rsub|2><rsup|T>\<b-P\><rsub|i>|\<b-m\><rsup|T><rsub|3>\<b-P\><rsub|i>>\<b-P\><rsup|T><rsub|i>\<b-nu\>>|<cell|=>|<cell|0>>>>
     </eqnarray*>
@@ -293,6 +324,12 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<b-P\><rsup|T><rsub|i><around*|(|\<b-m\><rsub|3>\<b-lambda\><rsup|T>-\<b-m\><rsub|1>\<b-nu\><rsup|T>|)>\<b-P\><rsub|i>>|<cell|=>|<cell|0>>|<row|<cell|\<b-P\><rsup|T><rsub|i><around*|(|\<b-m\><rsub|3>\<b-mu\><rsup|T>-\<b-m\><rsub|2>\<b-nu\><rsup|T>|)>\<b-P\><rsub|i>>|<cell|=>|<cell|0>>>>
     </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    \;
 
     \<#82E5\>\<#5B58\>\<#5728\>\<#5E73\>\<#9762\><math|\<Pi\>>\<#4F7F\><math|\<Pi\>\<cdummy\>\<b-P\><rsub|i>=0>\<#FF0C\>\<#5219\>
 
@@ -355,7 +392,7 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|<around*|(|\<b-m\><rsub|1>-\<lambda\>u\<b-m\><rsub|3>|)>\<cdummy\>\<b-P\>>|<cell|=>|<cell|0>>|<row|<cell|<around*|(|\<b-m\><rsub|2>-\<lambda\>v\<b-m\><rsub|3>|)>\<cdummy\>\<b-P\>>|<cell|=>|<cell|0>>|<row|<cell|\<b-m\><rsub|3>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|\<b-r\><rsub|3>>>|<row|<cell|t<rsub|z>>>>>>>>>>
     </eqnarray*>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <tit|\<#5F84\>\<#5411\>\<#7578\>\<#53D8\>>
 
     <\eqnarray*>
@@ -363,7 +400,7 @@
     </eqnarray*>
 
     \;
-  </hidden>>
+  </shown>>
 </body>
 
 <\initial>
@@ -373,6 +410,15 @@
     <associate|font-family|rm>
     <associate|info-flag|minimal>
     <associate|math-font|roman>
+    <associate|page-height|auto>
     <associate|page-medium|beamer>
+    <associate|page-type|16:9>
+    <associate|page-width|auto>
   </collection>
 </initial>
+
+<\references>
+  <\collection>
+    <associate|ref1|<tuple|1|?>>
+  </collection>
+</references>
