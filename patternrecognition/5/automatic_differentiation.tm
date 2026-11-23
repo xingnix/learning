@@ -3,7 +3,7 @@
 <style|<tuple|beamer|manila-paper>>
 
 <\body>
-  <screens|<\shown>
+  <screens|<\hidden>
     \;
 
     \;
@@ -15,8 +15,24 @@
     \;
 
     <doc-data|<doc-title|Automatic Differentiation>>
-  </shown>|<\hidden>
-    <section|Dual number>
+  </hidden>|<\hidden>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Dual number>
+    </padded-center>
+  </hidden>|<\hidden>
+    <tit|<math|a+b\<varepsilon\>>>
+
+    \;
 
     In algebra, the dual numbers are a quadratic algebra first introduced in
     the 19th century. They are expressions of the form <math|a +
@@ -50,8 +66,8 @@
     dual-number-valued argument,
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|P<around*|(|a+b\<varepsilon\>|)>>|<cell|=>|<cell|p<rsub|0>+p<rsub|1><around*|(|a+b\<varepsilon\>|)>+\<cdots\>+p<rsub|n><around*|(|a+b\<varepsilon\>|)><rsup|n>>>|<row|<cell|>|<cell|=>|<cell|p<rsub|0>+p<rsub|1><around*|(|a|)>+\<cdots\>+p<rsub|n><around*|(|a|)><rsup|n>+p<rsub|0>+p<rsub|1><around*|(|a+b\<varepsilon\>|)>+\<cdots\>+n
-      p<rsub|n><around*|(|a|)><rsub|><rsup|n-1>b\<varepsilon\>>>|<row|<cell|>|<cell|=>|<cell|P<around*|(|a|)>+P<rprime|'><around*|(|a|)>b\<varepsilon\>>>>>
+      <tformat|<table|<row|<cell|P<around*|(|a+b\<varepsilon\>|)>>|<cell|=>|<cell|p<rsub|0>+p<rsub|1><around*|(|a+b\<varepsilon\>|)>+\<cdots\>+p<rsub|n><around*|(|a+b\<varepsilon\>|)><rsup|n>>>|<row|<cell|>|<cell|=>|<cell|<around*|[|p<rsub|0>+p<rsub|1>a+\<cdots\>+p<rsub|n>a<rsup|n>|]>+<around*|[|p<rsub|1>b\<varepsilon\>+\<cdots\>+n
+      p<rsub|n>a<rsup|n-1>b\<varepsilon\>|]>>>|<row|<cell|>|<cell|=>|<cell|P<around*|(|a|)>+P<rprime|'><around*|(|a|)>b\<varepsilon\>>>>>
     </eqnarray*>
 
     where <math|P<rprime|'>> is the derivative of <math|P>.
@@ -79,7 +95,19 @@
     examining the coefficient of <math|\<varepsilon\>> in the result we find
     we have automatically computed the derivative of the composition.
   </hidden>|<\hidden>
-    <section|Model>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Model>
+    </padded-center>
+  </hidden>|<\hidden>
+    \;
 
     A neural network can be represented by a computational graph.
 
@@ -119,7 +147,21 @@
       <tformat|<table|<row|<cell|E>|<cell|=>|<cell|f<rsub|e><rsub|>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
-    <section|Grad>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Grad>
+    </padded-center>
+  </hidden>|<\hidden>
+    \;
 
     There are two ways to compute the gradient.
 
@@ -190,6 +232,53 @@
       j>>|]>>>|<row|<cell|>|<cell|=>|<cell|\<cdots\><around*|[|<big|sum><rsub|<around*|{|q<around*|\||p\<leftarrow\>q|\<nobracket\>>|}>><around*|[|<big|sum><rsub|<around*|{|p<around*|\||e\<leftarrow\>p|\<nobracket\>>|}>><frac|\<partial\>f<rsub|e>|\<partial\>f<rsub|p>><frac|\<partial\>f<rsub|p>|\<partial\>f<rsub|q>>|]>|]>\<cdots\><frac|\<partial\>f<rsub|k>|\<partial\>f<rsub|i>>f<rsub|j>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
+    <tit|Matrix representation>
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|M<rsub|g
+      f>>|<cell|=>|<cell|<matrix|<tformat|<table|<row|<cell|<frac|\<partial\>g<rsub|1>|\<partial\>f<rsub|1>>>|<cell|\<cdots\>>|<cell|<frac|\<partial\>g<rsub|1>|\<partial\>f<rsub|m>>>>|<row|<cell|\<vdots\>>|<cell|\<ddots\>>|<cell|\<vdots\>>>|<row|<cell|<frac|\<partial\>g<rsub|n>|\<partial\>f<rsub|1>>>|<cell|\<nosymbol\>\<cdots\>>|<cell|<frac|\<partial\>g<rsub|n>|\<partial\>f<rsub|m>>>>>>><rsub|><space|2em>where<space|1em>g<rsub|i>\<leftarrow\>f<rsub|j><space|1em>,1\<leqslant\>i\<leqslant\>n,1\<leqslant\>j\<leqslant\>m>>>>
+    </eqnarray*>
+
+    \;
+  </hidden>|<\hidden>
+    \;
+
+    Dirivative can be represented by chain rule:
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>e|\<partial\>w>>|<cell|=>|<cell|M<rsub|e
+      q>M<rsub|q p>\<cdots\>M<rsub|g f>M<rsub|f w>>>>>
+    </eqnarray*>
+
+    where
+
+    <\equation*>
+      e\<leftarrow\>q\<leftarrow\>q\<leftarrow\>p\<leftarrow\>\<cdots\>\<leftarrow\>g\<leftarrow\>f\<leftarrow\>w
+    </equation*>
+  </hidden>|<\hidden>
+    Example
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|M<rsub|e
+      q>=<matrix|<tformat|<table|<row|<cell|<frac|\<partial\>e|\<partial\>q<rsub|1>>>|<cell|<frac|\<partial\>e|\<partial\>q<rsub|2>>>>>>>>|<cell|>|<cell|>>|<row|<cell|M<rsub|q
+      p>=<matrix|<tformat|<table|<row|<cell|<frac|\<partial\>q<rsub|1>|\<partial\>p<rsub|1>>>|<cell|<frac|\<partial\>q<rsub|1>|\<partial\>p<rsub|2>>>>|<row|<cell|<frac|\<partial\>q<rsub|2>|\<partial\>p<rsub|1>>>|<cell|<frac|\<partial\>q<rsub|2>|\<partial\>p<rsub|2>>>>>>>>|<cell|>|<cell|M<rsub|
+      p g>=<matrix|<tformat|<table|<row|<cell|<frac|\<partial\>p<rsub|1>|\<partial\>g<rsub|1>>>|<cell|<frac|\<partial\>p<rsub|1>|\<partial\>g<rsub|2>>>>|<row|<cell|<frac|\<partial\>p<rsub|2>|\<partial\>g<rsub|1>>>|<cell|<frac|\<partial\>p<rsub|2>|\<partial\>g<rsub|2>>>>>>>>>|<row|<cell|M<rsub|
+      g f>=<matrix|<tformat|<table|<row|<cell|<frac|\<partial\>g<rsub|1>|\<partial\>f<rsub|1>>>|<cell|<frac|\<partial\>g<rsub|1>|\<partial\>f<rsub|2>>>>|<row|<cell|<frac|\<partial\>g<rsub|2>|\<partial\>f<rsub|1>>>|<cell|<frac|\<partial\>g<rsub|2>|\<partial\>f<rsub|2>>>>>>>>|<cell|>|<cell|M<rsub|f
+      w><matrix|<tformat|<table|<row|<cell|<frac|\<partial\>f<rsub|1>|\<partial\>w<rsub|1>>>|<cell|0>>|<row|<cell|0>|<cell|<frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|2>>>>>>>>>>>
+    </eqnarray*>
+  </hidden>|<\shown>
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    <\padded-center>
+      <section|Examples>
+    </padded-center>
+  </shown>|<\hidden>
     <tit|Consider a network>
 
     \;
@@ -272,7 +361,7 @@
       k><rsup|<around*|(|1|)>>=<with|color|dark
       cyan|<big|sum><rsub|k>x<rsub|k>>\<mathd\>w<rsub|i
       k><rsup|<around*|(|1|)>>>>|<row|<cell|\<mathd\>o<rsub|i><rsup|<around*|(|1|)>>>|<cell|=>|<cell|<with|color|dark
-      blue|<around*|\<nobracket\>|<frac|\<mathd\>\<sigma\><around*|(|x|)>|\<mathd\>x>|\|><rsub|x=n<rsub|i><rsup|<around*|(|1|)>>>>\<mathd\>n<rsub|i><rsup|<around*|(|1|)>>>>|<row|<cell|\<mathd\>n<rsub|j><rsup|<around*|(|1|)>>>|<cell|=>|<cell|<big|sum><rsub|i><frac|\<partial\>n<rsub|j><rsup|<around*|(|1|)>>|\<partial\>o<rsub|i><rsup|<around*|(|1|)>>>\<mathd\>o<rsub|i><rsup|<around*|(|1|)>>=<with|color|brown|<big|sum><rsub|i>w<rsub|j
+      blue|<around*|\<nobracket\>|<frac|\<mathd\>\<sigma\><around*|(|x|)>|\<mathd\>x>|\|><rsub|x=n<rsub|i><rsup|<around*|(|1|)>>>>\<mathd\>n<rsub|i><rsup|<around*|(|1|)>>>>|<row|<cell|\<mathd\>n<rsub|j><rsup|<around*|(|2|)>>>|<cell|=>|<cell|<big|sum><rsub|i><frac|\<partial\>n<rsub|j><rsup|<around*|(|2|)>>|\<partial\>o<rsub|i><rsup|<around*|(|1|)>>>\<mathd\>o<rsub|i><rsup|<around*|(|1|)>>=<with|color|brown|<big|sum><rsub|i>w<rsub|j
       i><rsup|<around*|(|2|)>>>\<mathd\>o<rsub|i><rsup|<around*|(|1|)>>>>|<row|<cell|\<mathd\>o<rsub|j><rsup|<around*|(|2|)>>>|<cell|=>|<cell|<with|color|blue|<around*|\<nobracket\>|<frac|\<mathd\>\<sigma\><around*|(|x|)>|\<mathd\>x>|\|><rsub|x=n<rsub|j><rsup|<around*|(|2|)>>>>\<mathd\>n<rsub|j><rsup|<around*|(|2|)>>>>|<row|<cell|\<mathd\>l>|<cell|=>|<cell|<big|sum><rsub|j><frac|\<partial\>l|\<partial\>o<rsub|j><rsup|<around*|(|2|)>>>\<mathd\>o<rsub|j><rsup|<around*|(|2|)>>=<with|color|red|<big|sum><rsub|j><with|color|dark
       yellow|<around*|(|o<rsub|j><rsup|<around*|(|2|)>>-t<rsub|j>|)>>>\<mathd\>o<rsub|j><rsup|<around*|(|2|)>>>>|<row|<cell|>|<cell|=>|<cell|<with|color|red|<big|sum><rsub|j><with|color|dark
       yellow|<around*|(|o<rsub|j><rsup|<around*|(|2|)>>-t<rsub|j>|)>>><with|color|blue|<around*|\<nobracket\>|<frac|\<mathd\>\<sigma\><around*|(|x|)>|\<mathd\>x>|\|><rsub|x=n<rsub|j><rsup|<around*|(|2|)>>>><with|color|brown|<big|sum><rsub|i>w<rsub|j
@@ -371,9 +460,9 @@
       cyan|x<rsub|k<rprime|'>>>
     </equation*>
   </hidden>|<\hidden>
-    <section|Example>
+    <tit|Another example graph>
 
-    Example:
+    \;
 
     <\session|dot|default>
       <\unfolded-io>
@@ -407,13 +496,60 @@
       <tformat|<table|<row|<cell|f<rsub|2>>|<cell|\<leftarrow\>>|<cell|w<rsub|21>f<rsub|1>>>|<row|<cell|f<rsub|3>>|<cell|\<leftarrow\>>|<cell|\<sigma\><around*|(|f<rsub|2>|)>>>|<row|<cell|f<rsub|4>>|<cell|\<leftarrow\>>|<cell|w<rsub|43>f<rsub|3>>>|<row|<cell|f<rsub|5>>|<cell|\<leftarrow\>>|<cell|w<rsub|53>f<rsub|3>>>|<row|<cell|f<rsub|6>>|<cell|\<leftarrow\>>|<cell|f<rsub|4>+f<rsub|5>>>|<row|<cell|f<rsub|7>>|<cell|\<leftarrow\>>|<cell|\<sigma\><around*|(|f<rsub|6>|)>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
-    backward:
+    <tit|Grad>
+
+    \;
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>w<rsub|21>>>|<cell|=>|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><big|sum><rsub|i><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><big|sum><rsub|j><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|<big|sum><rsub|i><frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|<big|sum><rsub|i=4,5><frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|i>><frac|\<partial\>f<rsub|i>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|j><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><big|sum><rsub|k><frac|\<partial\>f<rsub|j>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k><around*|(|<big|sum><rsub|j=3><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|j>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|j>>|)><frac|\<partial\>f<rsub|j>|\<partial\>f<rsub|k>>|)><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k><around*|(|\<sigma\><rprime|'><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>>+\<sigma\><rprime|'><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|k=2><around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|k>><frac|\<partial\>f<rsub|k>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|\<sigma\><rprime|'>w<rsub|43>+\<sigma\><rprime|'>w<rsub|53>|)>\<sigma\><rprime|'>f<rsub|1>>>>>
+      <tformat|<table|<row|<cell|f<rsub|7><around*|(|f<rsub|1>|)>>|<cell|=>|<cell|f<rsub|7><around*|(|f<rsub|6><around*|(|f<rsub|4><around*|(|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|f<rsub|3><around*|(|f<rsub|2><around*|(|f<rsub|1>|)>|)>>>>>>|)>,f<rsub|5><around*|(|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|f<rsub|3><around*|(|f<rsub|2><around*|(|f<rsub|1>|)>|)>>>>>>|)>|)>|)>>>|<row|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>w<rsub|21>>>|<cell|=>|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>>\<cdummy\><around*|(|<frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|4>>\<cdummy\><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>>\<cdummy\><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>>\<cdummy\><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>+<frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|5>>\<cdummy\><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>>\<cdummy\><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>>\<cdummy\><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><around*|(|<frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|4>>\<cdummy\><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>>+<frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|5>>\<cdummy\><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>>\<cdummy\><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>>>
     </eqnarray*>
 
     \;
+
+    \;
+  </hidden>|<\hidden>
+    <tit|Forward>
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>w<rsub|21>>>|<cell|=>|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><around*|(|<frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|4>>\<cdummy\><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>>+<frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|5>>\<cdummy\><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>>|)><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>>\<cdummy\><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|[|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>><around*|[|<around*|[|<frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|4>>\<cdummy\><around*|[|<frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>><around*|[|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|<frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>>\<cdummy\><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>>>>|]>|]>|]>+<around*|[|<frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|5>><around*|[|<frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>><around*|[|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|<frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>>\<cdummy\><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>>>>|]>|]>|]>|]>|]>>>>>
+    </eqnarray*>
+  </hidden>|<\hidden>
+    <tit|Reverse>
+
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>w<rsub|21>>>|<cell|=>|<cell|<around*|[|<around*|[|<around*|[|<around*|[|<around*|[|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>>>>>>>\<cdummy\><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|4>>|]>\<cdummy\><frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>>|]>+<around*|[|<around*|[|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|<frac|\<partial\>f<rsub|7>|\<partial\>f<rsub|6>>>>>>>\<cdummy\><frac|\<partial\>f<rsub|6>|\<partial\>f<rsub|5>>|]>\<cdummy\><frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>>|]>|]><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>>|]><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>|]>>>|<row|<cell|>|<cell|=>|<cell|<around*|[|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|\<sigma\><rprime|'>>>>>>\<cdummy\>1\<cdummy\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      red>|<table|<row|<cell|<frac|\<partial\>f<rsub|4>|\<partial\>f<rsub|3>>>>>>>+<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|\<sigma\><rprime|'>>>>>>\<cdummy\>1\<cdummy\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      cyan>|<table|<row|<cell|<frac|\<partial\>f<rsub|5>|\<partial\>f<rsub|3>>>>>>>|]><frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|[|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|\<sigma\><rprime|'>>>>>>\<cdummy\>1\<cdummy\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      red>|<table|<row|<cell|w<rsub|43>>>>>>+<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|\<sigma\><rprime|'>>>>>>\<cdummy\>1\<cdummy\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      cyan>|<table|<row|<cell|w<rsub|53>>>>>>|]><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      green>|<table|<row|<cell|<frac|\<partial\>f<rsub|3>|\<partial\>f<rsub|2>>>>>>><frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>|<row|<cell|>|<cell|=>|<cell|<around*|[|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|\<sigma\><rprime|'>>>>>>\<cdummy\>1\<cdummy\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      red>|<table|<row|<cell|w<rsub|43>>>>>>+<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|\<sigma\><rprime|'>>>>>>\<cdummy\>1\<cdummy\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      cyan>|<table|<row|<cell|w<rsub|53>>>>>>|]><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      green>|<table|<row|<cell|\<sigma\><rprime|'>>>>>><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      yellow>|<table|<row|<cell|<frac|\<partial\>f<rsub|2>|\<partial\>w<rsub|21>>>>>>>>>|<row|<cell|>|<cell|=>|<cell|<around*|[|<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|\<sigma\><rprime|'>>>>>>\<cdummy\>1\<cdummy\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      red>|<table|<row|<cell|w<rsub|43>>>>>>+<tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      magenta>|<table|<row|<cell|\<sigma\><rprime|'>>>>>>\<cdummy\>1\<cdummy\><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      cyan>|<table|<row|<cell|w<rsub|53>>>>>>|]><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      green>|<table|<row|<cell|\<sigma\><rprime|'>>>>>><tabular|<tformat|<cwith|1|1|1|1|cell-background|pastel
+      yellow>|<table|<row|<cell|f<rsub|1>>>>>>>>>>
+    </eqnarray*>
   </hidden>>
 </body>
 
@@ -428,12 +564,12 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|1|../../machinelearning/texmacs/ann/grad_forward_backward.tm>>
-    <associate|auto-2|<tuple|2|3|../../machinelearning/texmacs/ann/grad_forward_backward.tm>>
-    <associate|auto-3|<tuple|3|?|../../machinelearning/texmacs/ann/grad_forward_backward.tm>>
-    <associate|auto-4|<tuple|4|?|../../machinelearning/texmacs/ann/grad_forward_backward.tm>>
-    <associate|grad-wij|<tuple|2|?|../../machinelearning/texmacs/ann/grad_forward_backward.tm>>
-    <associate|linear|<tuple|1|1|../../machinelearning/texmacs/ann/grad_forward_backward.tm>>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|3>>
+    <associate|auto-3|<tuple|3|?>>
+    <associate|auto-4|<tuple|4|?>>
+    <associate|grad-wij|<tuple|2|?>>
+    <associate|linear|<tuple|1|1>>
   </collection>
 </references>
 
@@ -452,7 +588,7 @@
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-3><vspace|0.5fn>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Example>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Examples>
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-4><vspace|0.5fn>
     </associate>
