@@ -1,11 +1,9 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
-<style|<tuple|beamer|blackboard>>
+<style|<tuple|beamer|manila-paper>>
 
 <\body>
   <screens|<\hidden>
-    \;
-
     \;
 
     \;
@@ -30,17 +28,15 @@
   </hidden>|<\hidden>
     <tit|\<#5B9A\>\<#6027\>\<#8F90\>\<#5C04\>\<#5B66\>>
 
-    <space|4em><image|img/infinitely_high_wall_shaddow.png|0.7par|||>
+    <space|4em><image|img/infinitely_high_wall_shaddow.png|0.5par|||>
 
     \;
   </hidden>|<\hidden>
-    <tit|>
-
     <space|4em><image|img/half_infinite_wall.png|0.7par|||>
   </hidden>|<\hidden>
     <tit|\<#5149\>\<#6E90\>\<#6548\>\<#679C\>>
 
-    <space|5em><image|img/point_sphere_on_surface.png|0.6par|||>
+    <space|5em><image|img/point_sphere_on_surface.png|0.5par|||>
   </hidden>|<\hidden>
     <tit|>
 
@@ -58,15 +54,23 @@
 
     \;
   </hidden>|<\hidden>
-    <tit|\<#70B9\>\<#5149\>\<#6E90\>>
+    <tit|\<#8FD1\>\<#70B9\>\<#5149\>\<#6E90\>>
 
-    \<#8FD1\>\<#70B9\>\<#5149\>\<#6E90\>
+    \;
+
+    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|>|<cell|>|<cell|\<rho\><rsub|d><around*|(|\<b-x\>|)><frac|\<b-N\><around*|(|x|)>\<cdummy\>\<b-S\><around*|(|\<b-x\>|)>|r<around*|(|\<b-x\>|)><rsup|2>>>>>>
     </eqnarray*>
 
-    \<#65E0\>\<#7A77\>\<#8FDC\>\<#70B9\>\<#5149\>\<#6E90\>
+    \;
+  </hidden>|<\hidden>
+    <tit|\<#65E0\>\<#7A77\>\<#8FDC\>\<#70B9\>\<#5149\>\<#6E90\>>
+
+    \;
+
+    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|<frac|\<b-N\>\<cdummy\>\<b-S\><around*|(|\<b-x\>|)>|r<around*|(|\<b-x\>|)><rsup|2>>>|<cell|=>|<cell|<frac|\<b-N\>\<cdummy\><around*|(|\<b-S\><rsub|0>+\<Delta\>\<b-S\><around*|(|\<b-x\>|)>|)>|<around*|(|r<rsub|0>+r<around*|(|\<b-x\>|)>|)><rsup|2>>>>|<row|<cell|>|<cell|\<approx\>>|<cell|<frac|\<b-N\>\<cdummy\>\<b-S\><rsub|0>|r<rsub|0><rsup|2>>>>|<row|<cell|B<around*|(|\<b-x\>|)>>|<cell|=>|<cell|\<rho\><rsub|d><around*|(|\<b-x\>|)><around*|(|\<b-N\>\<cdummy\>\<b-S\>|)>>>>>
@@ -74,11 +78,11 @@
   </hidden>|<\hidden>
     <tit|\<#7EBF\>\<#5149\>\<#6E90\>>
 
-    <image|img/line_source.png|0.9par|||>
+    <space|5em><image|img/line_source.png|0.7par|||>
   </hidden>|<\hidden>
     <tit|\<#9762\>\<#5149\>\<#6E90\>>
 
-    <space|7em><image|img/area_source.png|0.5par|||>
+    <space|7em><image|img/area_source.png|0.42par|||>
   </hidden>|<\hidden>
     <tit|\<#9762\>\<#5149\>\<#6E90\>\<#8F90\>\<#5C04\>\<#5EA6\>>
 
@@ -134,15 +138,15 @@
   </hidden>|<\hidden>
     <tit|\<#9762\>\<#5149\>\<#6E90\>\<#4E0E\>\<#9634\>\<#5F71\>>
 
-    <space|4em><image|img/area_source_shadow.png|.6par|||>
-  </hidden>|<\shown>
+    <space|4em><image|img/area_source_shadow.png|.5par|||>
+  </hidden>|<\hidden>
     <tit|\<#73AF\>\<#5883\>\<#5149\>>
 
-    <space|4em><image|img/ambient_illumination.png|0.6par|||>
-  </shown>|<\hidden>
+    <space|4em><image|img/ambient_illumination.png|0.5par|||>
+  </hidden>|<\hidden>
     <tit|\<#8868\>\<#9762\>\<#53CD\>\<#5C04\>>
 
-    <image|img/surface_reflection.png|1par|||>
+    <space|2em><image|img/surface_reflection.png||.8pag||>
   </hidden>|<\hidden>
     <tit|\<#6717\>\<#4F2F\>\<#4E0E\>\<#955C\>\<#9762\>\<#53CD\>\<#5C04\>\<#6A21\>\<#578B\>>
 
@@ -155,8 +159,6 @@
     </equation*>
   </hidden>|<\hidden>
     <tit|\<#8F90\>\<#5C04\>\<#6807\>\<#5B9A\>>
-
-    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|I<rsup|<around*|(|k|)>><rsub|i\<nospace\>j>>|<cell|=>|<cell|f<around*|(|E<rsub|i\<nospace\>j>\<Delta\>t<rsub|k>|)>>>|<row|<cell|log\<nospace\>g<around*|(|I<rsub|i\<nospace\>j><rsup|<around*|(|k|)>>|)>>|<cell|=>|<cell|log\<nospace\>E<rsub|i\<nospace\>j>+log\<Delta\>t<rsub|k>>>>>
@@ -181,14 +183,12 @@
   </hidden>|<\hidden>
     <tit|\<#955C\>\<#9762\>\<#53CD\>\<#5C04\>\<#5F62\>\<#72B6\>>
 
-    <image|img/specular_surface_coordinate.png|1par|||>
-  </hidden>|<\hidden>
+    <space|4em><image|img/specular_surface_coordinate.png||.8pag||>
+  </hidden>|<\shown>
     <tit|\<#955C\>\<#9762\>\<#53CD\>\<#5C04\>\<#7684\>\<#8FB9\>\<#754C\>>
 
-    \;
-
     <\eqnarray*>
-      <tformat|<table|<row|<cell|\<b-V\>\<cdummy\>\<b-P\>>|<cell|\<geqslant\>>|<cell|1-\<varepsilon\>>>|<row|<cell|1-\<varepsilon\>>|<cell|=>|<cell|\<b-V\>\<cdummy\>\<b-P\>>>|<row|<cell|>|<cell|=>|<cell|2<frac|<around*|(|\<b-H\>\<point\>\<b-N\>|)><rsup|2>|<around*|(|\<b-H\>\<cdummy\>\<b-H\>|)>>-1>>>>
+      <tformat|<table|<row|<cell|\<b-V\>\<cdummy\>\<b-P\>>|<cell|\<geqslant\>>|<cell|1-\<varepsilon\>>>|<row|<cell|1-\<varepsilon\>>|<cell|=>|<cell|\<b-V\>\<cdummy\>\<b-P\>>>|<row|<cell|>|<cell|=>|<cell|2<frac|<around*|(|\<b-H\>\<cdummy\>\<b-N\>|)><rsup|2>|<around*|(|\<b-H\>\<cdummy\>\<b-H\>|)>>-1>>>>
     </eqnarray*>
 
     <\eqnarray*>
@@ -198,12 +198,12 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<kappa\><rsup|2><rsub|1>x<rsup|2>+\<kappa\><rsub|2><rsup|2>y<rsup|2>>|<cell|=>|<cell|\<zeta\>>>>>
     </eqnarray*>
-  </hidden>|<\hidden>
+  </shown>|<\hidden>
     <tit|\<#955C\>\<#9762\>\<#53CD\>\<#5C04\>\<#7684\>\<#79FB\>\<#52A8\>>
 
-    <image|img/specularities_convex_concave.png|1par|||>
+    <space|2em><image|img/specularities_convex_concave.png|.8par|||>
   </hidden>|<\hidden>
-    <tit|>
+    \;
 
     <math|\<b-S\>>\<#4E0D\>\<#53D8\> \<#FF1A\>
 
@@ -236,12 +236,6 @@
     <|unfolded>
       \<#53D8\>\<#5316\>\<#7F13\>\<#6162\>
     </unfolded>
-
-    \;
-
-    \;
-
-    \;
   </hidden>|<\hidden>
     <tit|\<#4EAE\>\<#5EA6\>\<#7B97\>\<#6CD5\>\<#793A\>\<#4F8B\>>
 
@@ -257,11 +251,7 @@
       <item>\<#79EF\>\<#5206\>
     </itemize-dot>
 
-    \;
-
     \<#6216\>
-
-    \;
 
     <\itemize-dot>
       <item>\<#8BA1\>\<#7B97\>\<#9608\>\<#503C\>\<#5316\>\<#68AF\>\<#5EA6\><math|\<b-p\>,\<b-q\>>
@@ -272,15 +262,11 @@
         <tformat|<table|<row|<cell|<around*|\||\<cal-M\><rsub|x>\<b-l\>-\<b-p\>|\|><rsup|2>+<around*|\||\<cal-M\><rsub|y>\<b-l\>-\<b-q\>|\|><rsup|2>>|<cell|>|<cell|>>>>
       </eqnarray*>
     </itemize-dot>
-
-    \;
   </hidden>|<\hidden>
     <tit|\<#5149\>\<#5EA6\>\<#7ACB\>\<#4F53\>\<#6CD5\>>
 
-    <image|img/monge_patch.png|1par|||>
+    <space|3em><image|img/monge_patch.png|.8par|||>
   </hidden>|<\hidden>
-    <tit|>
-
     <space|3em><image|img/shading_sphere.png|0.8par|||>
   </hidden>|<\hidden>
     <tit|\<#56FE\>\<#50CF\>\<#4E0E\>\<#6CD5\>\<#5411\>\<#91CF\>>
@@ -305,7 +291,7 @@
   </hidden>|<\hidden>
     <tit|\<#6CD5\>\<#5411\>\<#91CF\>\<#573A\>>
 
-    <image|img/normal_field_sphere.png|0.9par|||>
+    <space|2em><image|img/normal_field_sphere.png|0.8par|||>
   </hidden>|<\hidden>
     <tit|\<#4ECE\>\<#6CD5\>\<#5411\>\<#91CF\>\<#83B7\>\<#53D6\>\<#5F62\>\<#72B6\>>
 
@@ -321,15 +307,15 @@
   </hidden>|<\hidden>
     <tit|\<#6CD5\>\<#5411\>\<#91CF\>\<#573A\>\<#5230\>\<#9AD8\>\<#5EA6\>\<#573A\>>
 
-    <image|img/height_field.png|0.9par|||>
+    <space|4em><image|img/height_field.png|0.8par|||>
   </hidden>|<\hidden>
     <tit|\<#4E92\>\<#53CD\>\<#5C04\>>
 
-    <space|2em><image|img/interreflection.png|0.8par|||>
+    \ <space|3em><image|img/interreflection.png|0.7par|||>
   </hidden>|<\hidden>
     <tit|\<#4E92\>\<#53CD\>\<#5C04\>\<#6A21\>\<#578B\>>
 
-    <space|1em><image|img/interreflection_kernel_terminology.png|0.9par|||>
+    <space|1em><image|img/interreflection_kernel_terminology.png||.8pag||>
   </hidden>|<\hidden>
     <tit|\<#8BA1\>\<#7B97\>\<#51FA\>\<#5C04\>\<#5EA6\>>
 
@@ -340,7 +326,7 @@
       j>visible<around*|(|\<b-x\>,\<b-v\>|)>K<around*|(|\<b-x\>,\<b-v\>|)>\<mathd\>A<rsub|\<b-v\>>\<mathd\>A<rsub|\<b-x\>>B<rsub|j>>>>>
     </eqnarray*>
   </hidden>|<\hidden>
-    <tit|>
+    \;
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|B<rsub|i>>|<cell|=>|<cell|E<rsub|i>+<big|sum><rsub|all
@@ -366,6 +352,9 @@
     <associate|font-family|rm>
     <associate|info-flag|minimal>
     <associate|math-font|roman>
+    <associate|page-height|auto>
     <associate|page-medium|beamer>
+    <associate|page-type|16:9>
+    <associate|page-width|auto>
   </collection>
 </initial>

@@ -1,12 +1,10 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
-<style|<tuple|beamer|blackboard>>
+<style|<tuple|beamer|manila-paper>>
 
 <\body>
   <\slideshow>
     <\slide>
-      \;
-
       \;
 
       \;
@@ -21,7 +19,7 @@
     <\slide>
       <tit|\<#900F\>\<#89C6\>\<#7F29\>\<#51CF\>>
 
-      <space|4em><image|img/point_on_a_surface_hemisphere.png|0.7par|||>
+      <space|4em><image|img/point_on_a_surface_hemisphere.png|0.5par|||>
     </slide>
 
     <\slide>
@@ -29,11 +27,11 @@
 
       \;
 
-      <space|4em><image|img/solid_angle.png|0.7par|||>
+      <space|4em><image|img/solid_angle.png|0.5par|||>
     </slide>
 
     <\slide>
-      <tit|>
+      \;
 
       <\eqnarray*>
         <tformat|<table|<row|<cell|\<mathd\>\<varphi\>>|<cell|=>|<cell|<frac|\<mathd\>l\<nospace\>cos\<theta\>|r>>>|<row|<cell|\<mathd\>\<omega\>>|<cell|=>|<cell|<frac|\<mathd\>A\<nospace\>cos\<theta\>|r<rsup|2>>>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|\<mathd\>\<omega\>>|<cell|=>|<cell|<frac|r\<nospace\>sin\<theta\>\<mathd\>\<varphi\>\<cdummy\>r\<mathd\>\<theta\>|r<rsup|2>>>>|<row|<cell|>|<cell|=>|<cell|\<nospace\>sin\<theta\>\<mathd\>\<theta\>\<mathd\>\<varphi\>>>>>
@@ -43,11 +41,11 @@
     <\slide>
       <tit|\<#8F90\>\<#5C04\>\<#7387\>>
 
-      <space|5em><image|img/radiance_A1_to_A2.png||0.8pag||>
+      <space|5em><image|img/radiance_A1_to_A2.png||0.7pag||>
     </slide>
 
     <\slide>
-      <tit|>
+      \;
 
       <\equation*>
         L<around*|(|x<rsub|1>,\<theta\>,\<varphi\>|)><around*|(|cos\<theta\><rsub|1>\<mathd\>A<rsub|1>|)><around*|(|d\<omega\>|)><around*|(|d\<nospace\>t|)>
@@ -59,7 +57,7 @@
     </slide>
 
     <\slide>
-      <tit|>
+      \;
 
       \<#8F90\>\<#7167\>\<#5EA6\>
 
@@ -67,10 +65,10 @@
         <tformat|<table|<row|<cell|L<rsub|i><around*|(|x,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\>>|<cell|>|<cell|>>>>
       </eqnarray*>
 
-      \<#53CC\>\<#5411\>\<#53CD\>\<#5C04\>\<#5206\>\<#5E03\>\<#51FD\>\<#6570\>
+      \<#53CC\>\<#5411\>\<#53CD\>\<#5C04\>\<#5206\>\<#5E03\>\<#51FD\>\<#6570\><math|\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>>
 
       <\eqnarray*>
-        <tformat|<table|<row|<cell|\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>>|<cell|=>|<cell|<frac|\<mathd\>L<rsub|0><around*|(|x,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>|L<rsub|i><around*|(|x,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\>>>>>>
+        <tformat|<table|<row|<cell|L<rsub|0><around*|(|x,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>>|<cell|=>|<cell|\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>L<rsub|i><around*|(|x,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\>>>>>
       </eqnarray*>
 
       \;
@@ -87,15 +85,15 @@
         <tformat|<table|<row|<cell|L<rsub|i><around*|(|\<b-x\>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>>|<cell|=>|<cell|<big|int><rsub|\<Omega\>><frac|1|cos\<theta\>>cos\<theta\>\<mathd\>\<omega\>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|0><rsup|2\<pi\>><big|int><rsub|0><rsup|<frac|\<pi\>|2>>sin\<theta\>\<mathd\>\<theta\>\<mathd\>\<varphi\>>>|<row|<cell|>|<cell|=>|<cell|2\<pi\>>>>>
       </eqnarray*>
 
-      \<#5F97\>
-
-      <\eqnarray*>
-        <tformat|<table|<row|<cell|L<around*|(|\<b-x\>,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>>|<cell|=>|<cell|<big|int><rsub|\<Omega\>>\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>L<rsub|i><around*|(|\<b-x\>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\>>>>>
-      </eqnarray*>
+      \;
     </slide>
 
     <\slide>
-      <tit|>
+      \<#5F97\>
+
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|L<rsub|o><around*|(|\<b-x\>,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>>|<cell|=>|<cell|<big|int><rsub|\<Omega\>>\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>L<rsub|i><around*|(|\<b-x\>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\>>>>>
+      </eqnarray*>
 
       <\eqnarray*>
         <tformat|<table|<row|<cell|2\<pi\>>|<cell|\<geqslant\>>|<cell|<big|int><rsub|\<Omega\><rsub|o>>L<rsub|o><around*|(|\<b-x\>,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<Omega\><rsub|o>><big|int><rsub|\<Omega\><rsub|i>>\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>L<rsub|i><around*|(|\<b-x\>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\><rsub|i>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<Omega\><rsub|o>><big|int><rsub|\<Omega\><rsub|i>>\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>\<mathd\>\<omega\><rsub|i>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<Omega\><rsub|o>><big|int><rsub|\<Omega\><rsub|i>>\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>sin\<theta\><rsub|i>\<mathd\>\<theta\><rsub|i>\<mathd\>\<varphi\><rsub|i>cos\<theta\><rsub|o>sin\<theta\><rsub|o>\<mathd\>\<theta\><rsub|o>\<mathd\>\<varphi\><rsub|o>>>>>
@@ -111,6 +109,10 @@
         <tformat|<table|<row|<cell|B<around*|(|\<b-x\>|)>>|<cell|=>|<cell|<big|int><rsub|\<Omega\>>L<around*|(|\<b-x\>,\<theta\>,\<varphi\>|)>cos\<theta\>\<mathd\>\<omega\>>>>>
       </eqnarray*>
 
+      \;
+    </slide>
+
+    <\slide>
       \<#8BBE\>
 
       <\eqnarray*>
@@ -126,7 +128,7 @@
       <tit|\<#65B9\>\<#5411\>\<#6027\>\<#534A\>\<#7403\>\<#53CD\>\<#5C04\>>
 
       <\eqnarray*>
-        <tformat|<table|<row|<cell|\<rho\><rsub|dh><around*|(|\<theta\><rsub|i>,\<varphi\><rsub|i>|)>>|<cell|=>|<cell|<frac|<big|int><rsub|\<Omega\>>L<rsub|o><around*|(|\<b-x\>,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>|L<rsub|i><around*|(|\<b-x\>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\><rsub|i>>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<Omega\>><frac|L<rsub|o><around*|(|\<b-x\>,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>|L<rsub|i><around*|(|\<b-x\>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<Omega\>>\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>>>>>
+        <tformat|<table|<row|<cell|\<rho\><rsub|dh><around*|(|\<theta\><rsub|i>,\<varphi\><rsub|i>|)>>|<cell|=>|<cell|<frac|<big|int><rsub|\<Omega\>>L<rsub|o><around*|(|\<b-x\>,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>|L<rsub|i><around*|(|\<b-x\>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\><rsub|i>>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<Omega\>><frac|L<rsub|o><around*|(|\<b-x\>,\<theta\><rsub|o>,\<varphi\><rsub|o>|)>|L<rsub|i><around*|(|\<b-x\>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|i>\<mathd\>\<omega\><rsub|i>>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>>>|<row|<cell|>|<cell|=>|<cell|<big|int><rsub|\<Omega\>>\<rho\><rsub|bd><around*|(|\<theta\><rsub|o>,\<varphi\><rsub|o>,\<theta\><rsub|i>,\<varphi\><rsub|i>|)>cos\<theta\><rsub|o>\<mathd\>\<omega\><rsub|o>>>>>
       </eqnarray*>
 
       \;
@@ -173,7 +175,9 @@
     <associate|font-family|rm>
     <associate|info-flag|minimal>
     <associate|math-font|roman>
+    <associate|page-height|auto>
     <associate|page-medium|paper>
-    <associate|page-packet|5>
+    <associate|page-type|16:9>
+    <associate|page-width|auto>
   </collection>
 </initial>
