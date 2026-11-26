@@ -1,6 +1,6 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1>
 
-<style|<tuple|beamer|blackboard>>
+<style|<tuple|beamer|manila-paper>>
 
 <\body>
   <screens|<\hidden>
@@ -12,13 +12,7 @@
 
     \;
 
-    \;
-
-    <doc-data|<doc-title|<with|font-base-size|20|\<#8BA1\>\<#7B97\>\<#89C6\>\<#89C9\>\<#4E0E\>\<#6A21\>\<#5F0F\>\<#8BC6\>\<#522B\>>>>
-
-    \;
-  </hidden>|<\hidden>
-    <tit|\<#7EBF\>\<#6027\>\<#6EE4\>\<#6CE2\>\<#5668\>>
+    <doc-data|<doc-title|<with|font-base-size|16|\<#7EBF\>\<#6027\>\<#6EE4\>\<#6CE2\>\<#5668\>>>>
 
     \;
   </hidden>|<\hidden>
@@ -38,24 +32,23 @@
   </hidden>|<\hidden>
     <tit|\<#5747\>\<#503C\>\<#6EE4\>\<#6CE2\>\<#793A\>\<#4F8B\>>
 
-    <space|7em><image|img/uniform_weighted_average.png|0.5par|||>
+    <space|10em><image|img/uniform_weighted_average.png||.7pag||>
 
     <\folded-std>
-      Figure 8.1.
+      ...
     <|folded-std>
-      Although a uniform local average may seem to give a good blurring
-      model, it generates effects that are not usually seen in defocussing a
-      lens. The images above compare the effects of a uniform local average
-      with weighted average. The image at the top shows a view of grass. On
-      the left in the second row, the result of blurring this image using a
-      uniform local model and on the right, the result of blurring this image
-      using a set of Gaussian weights. The degree of blurring in each case is
-      about the same, but the uniform average produces a set of narrow
-      vertical and horizontal bars \V an effect often known as ringing. The
-      bottom row shows the weights used to blur the image, themselves
-      rendered as an image; bright points represent large values and dark
-      points represent small values (in this example the smallest values are
-      zero).
+      FIGURE 4.1: Although a uniform local average may seem to give a good
+      blurring model, it generates e\[ects not usually seen in defocusing a
+      lens. The images above compare the e\[ects of a uniform local average
+      with weighted average. The image on the left shows a view of grass; in
+      the center, the result of blurring this image using a uniform local
+      model; and on the right, the result of blurring this image using a set
+      of Gaussian weights. The degree of blurring in each case is about the
+      same, but the uniform average produces a set of narrow vertical and
+      horizontal bars\Van e\[ect often known as ringing. The small insets
+      show the weights used to blur the image, themselves rendered as an
+      image; bright points represent large values and dark points represent
+      small values (in this example, the smallest values are zero).
     </folded-std>
   </hidden>|<\hidden>
     <tit|\<#9AD8\>\<#65AF\>\<#6838\>>
@@ -76,21 +69,21 @@
   </hidden>|<\hidden>
     <tit|\<#9AD8\>\<#65AF\>\<#6838\>>
 
-    <space|4em><image|img/gaussian_kernel.png|0.7par|||>
+    \ <space|6em><image|img/gaussian_kernel.png||0.7pag||>
   </hidden>|<\hidden>
     <tit|\<#9AD8\>\<#65AF\>\<#566A\>\<#58F0\>\<#4E0E\>\<#9AD8\>\<#65AF\>\<#6EE4\>\<#6CE2\>\<#5668\>>
 
-    <space|4em><image|img/gaussian_noise_filter.png|0.6par|||>
+    <space|9em><image|img/gaussian_noise_filter.png||.7pag||>
 
     <\folded-std>
-      FIGURE 4.3:
+      ...
     <|folded-std>
-      The top row shows images of a constant mid-gray level corrupted by
-      additive Gaussian noise. In this noise model, each pixel has a
-      zero-mean normal random variable added to it. The range of pixel values
-      is from zero to one, so that the standard deviation of the noise in the
-      first column is about 1/20 of full range. The center row shows the
-      effect of smoothing the corresponding image in the top row with a
+      FIGURE 4.3:The top row shows images of a constant mid-gray level
+      corrupted by additive Gaussian noise. In this noise model, each pixel
+      has a zero-mean normal random variable added to it. The range of pixel
+      values is from zero to one, so that the standard deviation of the noise
+      in the first column is about 1/20 of full range. The center row shows
+      the effect of smoothing the corresponding image in the top row with a
       Gaussian filter of \<sigma\> one pixel. Notice the annoying overloading
       of notation here; there is Gaussian noise and Gaussian filters, and
       both have \<sigma\>'s. One uses context to keep these two straight,
@@ -106,15 +99,15 @@
   </hidden>|<\hidden>
     <tit|\<#6912\>\<#76D0\>\<#566A\>\<#58F0\>\<#4E0E\>\<#9AD8\>\<#65AF\>\<#6EE4\>\<#6CE2\>>
 
-    <space|7em><image|img/salt_pepper_gaussian_filter.png|0.5par|||>
+    <space|12em><image|img/salt_pepper_gaussian_filter.png||.7pag||>
 
     <\folded-std>
-      Figure 8.3.
+      ...
     <|folded-std>
-      \ In salt-and-pepper noise, we choose pixels uniformly at random, and
-      uni-formly at random make them either black or white. Gaussian
-      smoothing is particularly effective at suppressing the effects of
-      salt-and-pepper noise. The top row shows an image, and versions
+      Figure 8.3. In salt-and-pepper noise, we choose pixels uniformly at
+      random, and uni-formly at random make them either black or white.
+      Gaussian smoothing is particularly effective at suppressing the effects
+      of salt-and-pepper noise. The top row shows an image, and versions
       smoothed by a symmetric Gaussian with \<sigma\> two pixels and four
       pixels. The images in the second row are obtained by corrupting the
       images in the top row by this noise model and then smoothing the
@@ -134,6 +127,10 @@
       <tformat|<table|<row|<cell|<frac|\<partial\>f|\<partial\>x>>|<cell|=>|<cell|lim<rsub|\<varepsilon\>\<rightarrow\>0><frac|f<around*|(|x+\<varepsilon\>,y|)>-f<around*|(|x,y|)>|\<varepsilon\>>>>>>
     </eqnarray*>
 
+    \;
+  </hidden>|<\hidden>
+    \;
+
     \<#6709\>\<#9650\>\<#5DEE\>\<#5206\>
 
     <\eqnarray*>
@@ -145,17 +142,19 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|\<cal-H\>>|<cell|=>|<cell|<around*|{|<tabular|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|1>|<cell|0>|<cell|-1>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>|}>>>>>
     </eqnarray*>
+
+    \;
   </hidden>|<\hidden>
     <tit|\<#5DEE\>\<#5206\>\<#56FE\>\<#50CF\>>
 
-    <space|3em><image|img/difference_image_zebra.png|0.8par|||>
+    <space|6em><image|img/difference_image_zebra.png||.7pag||>
 
     <\folded-std>
-      FIGURE 4.4:
+      ...
     <|folded-std>
-      The top row shows estimates of derivatives obtained by finite
-      differences. The image at the left shows a detail from a picture of a
-      zebra. The center image shows the partial derivative in the
+      FIGURE 4.4 The top row shows estimates of derivatives obtained by
+      finite differences. The image at the left shows a detail from a picture
+      of a zebra. The center image shows the partial derivative in the
       y-direction\Vwhich responds strongly to horizontal stripes and weakly
       to vertical stripes\Vand the right image shows the partial derivative
       in the x-direction\Vwhich responds strongly to vertical stripes and
@@ -196,9 +195,15 @@
       <tformat|<table|<row|<cell|\<b-e\><rsub|0>>|<cell|=>|<cell|\<ldots\>.0,0,0,1,0,0,0\<ldots\>.>>|<row|<cell|\<b-f\>>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|\<b-e\><rsub|0>,i|)>>>|<row|<cell|R<around*|(|Shift<around*|(|\<b-f\>,k|)>|)>>|<cell|=>|<cell|Shift<around*|(|R<around*|(|\<b-f\>|)>,k|)>>>|<row|<cell|R<around*|(|k\<b-f\>|)>>|<cell|=>|<cell|k\<nospace\>R<around*|(|\<b-f\>|)>>>>>
     </eqnarray*>
 
+    \;
+  </hidden>|<\hidden>
+    \;
+
     <\eqnarray*>
       <tformat|<table|<row|<cell|R<around*|(|\<b-f\>|)>>|<cell|=>|<cell|R<around*|(|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|\<b-e\><rsub|0>,i|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>R<around*|(|f<rsub|i>Shift<around*|(|\<b-e\><rsub|0>,i|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>R<around*|(|Shift<around*|(|\<b-e\><rsub|0>,i|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|R<around*|(|\<b-e\><rsub|0>|)>,i|)>>>>>
     </eqnarray*>
+
+    \;
   </hidden>|<\hidden>
     <tit|\<#79BB\>\<#6563\>\<#5377\>\<#79EF\>\<#FF08\>\<#7EED\>\<#FF09\>>
 
@@ -215,8 +220,16 @@
     <tit|\<#8FDE\>\<#7EED\>\<#5377\>\<#79EF\>>
 
     <\eqnarray*>
-      <tformat|<table|<row|<cell|R<around*|(|k\<nospace\>f|)>>|<cell|=>|<cell|k\<nospace\>R<around*|(|f|)>>>|<row|<cell|Shift<around*|(|f,c|)>>|<cell|=>|<cell|f<around*|(|u-c|)>>>|<row|<cell|R<around*|(|Shift<around*|(|f,c|)>|)>>|<cell|=>|<cell|Shift<around*|(|R<around*|(|f|)>,c|)>>>|<row|<cell|box<rsub|\<varepsilon\>><around*|(|x|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|0>|<cell|abs<around*|(|x|)>\<gtr\><frac|\<varepsilon\>|2>>>|<row|<cell|1>|<cell|abs<around*|(|x|)>\<less\><frac|\<varepsilon\>|2>>>>>>>>|<row|<cell|R<around*|(|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|box<rsub|\<varepsilon\>>,x<rsub|i>|)>|)>>|<cell|=>|<cell|<big|sum><rsub|i>R<around*|(|f<rsub|i>Shift<around*|(|box<rsub|\<varepsilon\>>,x<rsub|i>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>R<around*|(|Shift<around*|(|box<rsub|\<varepsilon\>>,x<rsub|i>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|R<around*|(|<frac|box<rsub|\<varepsilon\>>|\<varepsilon\>>\<varepsilon\>|)>,x<rsub|i>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|R<around*|(|<frac|box<rsub|\<varepsilon\>>|\<varepsilon\>>|)>,x<rsub|i>|)>\<varepsilon\>>>>>
+      <tformat|<table|<row|<cell|R<around*|(|k\<nospace\>f|)>>|<cell|=>|<cell|k\<nospace\>R<around*|(|f|)>>>|<row|<cell|Shift<around*|(|f,c|)>>|<cell|=>|<cell|f<around*|(|u-c|)>>>|<row|<cell|R<around*|(|Shift<around*|(|f,c|)>|)>>|<cell|=>|<cell|Shift<around*|(|R<around*|(|f|)>,c|)>>>|<row|<cell|box<rsub|\<varepsilon\>><around*|(|x|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|0>|<cell|abs<around*|(|x|)>\<gtr\><frac|\<varepsilon\>|2>>>|<row|<cell|1>|<cell|abs<around*|(|x|)>\<less\><frac|\<varepsilon\>|2>>>>>>>>|<row|<cell|>|<cell|>|<cell|>>>>
     </eqnarray*>
+  </hidden>|<\hidden>
+    \;
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|R<around*|(|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|box<rsub|\<varepsilon\>>,x<rsub|i>|)>|)>>|<cell|=>|<cell|<big|sum><rsub|i>R<around*|(|f<rsub|i>Shift<around*|(|box<rsub|\<varepsilon\>>,x<rsub|i>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>R<around*|(|Shift<around*|(|box<rsub|\<varepsilon\>>,x<rsub|i>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|R<around*|(|<frac|box<rsub|\<varepsilon\>>|\<varepsilon\>>\<varepsilon\>|)>,x<rsub|i>|)>>>|<row|<cell|>|<cell|=>|<cell|<big|sum><rsub|i>f<rsub|i>Shift<around*|(|R<around*|(|<frac|box<rsub|\<varepsilon\>>|\<varepsilon\>>|)>,x<rsub|i>|)>\<varepsilon\>>>>>
+    </eqnarray*>
+
+    \;
   </hidden>|<\hidden>
     <tit|\<#8FDE\>\<#7EED\>\<#5377\>\<#79EF\>\<#FF08\>\<#7EED\>\<#FF09\>>
 
@@ -226,11 +239,15 @@
       <tformat|<table|<row|<cell|d<rsub|\<varepsilon\>><around*|(|x|)>>|<cell|=>|<cell|<frac|box<rsub|\<varepsilon\>><around*|(|x|)>|\<varepsilon\>>>>|<row|<cell|\<delta\><around*|(|x|)>>|<cell|=>|<cell|lim<rsub|\<varepsilon\>\<rightarrow\>0>d<rsub|\<varepsilon\>><around*|(|x|)>>>>>
     </eqnarray*>
 
+    \;
+  </hidden>|<\hidden>
     \<#5377\>\<#79EF\>
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|R<around*|(|f|)>>|<cell|=>|<cell|<big|int><around*|{|R<around*|(|\<delta\><around*|(|u-x<rprime|'>|)>|)>|}>f<around*|(|x<rprime|'>|)>\<mathd\>x<rprime|'>>>|<row|<cell|>|<cell|=>|<cell|<big|int>g<around*|(|u-x<rprime|'>|)>f<around*|(|x<rprime|'>|)>\<mathd\>x<rprime|'>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|g\<ast\>f|)>>>|<row|<cell|<around*|(|g\<ast\>f|)>>|<cell|=>|<cell|<around*|(|h\<ast\>g|)>>>|<row|<cell|<around*|(|f\<ast\><around*|(|g*\<ast\>h|)>|)>>|<cell|=>|<cell|<around*|(|<around*|(|f\<ast\>g|)>\<ast\>h|)>>>>>
     </eqnarray*>
+
+    \;
   </hidden>|<\hidden>
     <tit|\<#4E8C\>\<#7EF4\>\<#5377\>\<#79EF\>>
 
@@ -248,6 +265,8 @@
       i\<nospace\>sin(2\<pi\>(u\<nospace\>x + v\<nospace\>y))>>>>
     </eqnarray*>
 
+    \;
+  </hidden>|<\hidden>
     \<#7EBF\>\<#6027\>
 
     <\eqnarray*>
@@ -259,6 +278,8 @@
     <\eqnarray*>
       <tformat|<table|<row|<cell|g<around*|(|x,y|)>>|<cell|=>|<cell|<big|int><big|int>\<cal-F\><around*|(|g|)>e<rsup|i2\<pi\><around*|(|u\<nospace\>x+v\<nospace\>y|)>>\<mathd\>u\<mathd\>v>>>>
     </eqnarray*>
+
+    \;
   </hidden>|<\hidden>
     <tit|\<#5085\>\<#91CC\>\<#53F6\>\<#57FA\>\<#5B9E\>\<#90E8\>\<#793A\>\<#4F8B\>>
 
@@ -272,7 +293,20 @@
   </hidden>|<\hidden>
     <tit|\<#5085\>\<#91CC\>\<#53F6\>\<#53D8\>\<#6362\>\<#793A\>\<#4F8B\>>
 
-    <space|3em><image|img/magnitude_phase_swap.png|0.8par|||>
+    <space|3em><image|img/magnitude_phase_swap.png||.7pag||>
+
+    <\folded>
+      ...
+    <|folded>
+      FIGURE 4.6: The second image in each row shows the log of the magnitude
+      spectrum for the rst image in the row; the third image shows the phase
+      spectrum scaled so that \<minus\>\<pi\> is dark and \<pi\> is light.
+      The nal images are obtained by swapping the magnitude spectra.
+      Although this swap leads to substantial image noise, it doesn't
+      substantially a\[ect the interpretation of the image, suggesting that
+      the phase spectrum is more important for perception than the magnitude
+      spectrum.
+    </folded>
   </hidden>|<\hidden>
     <tit|\<#91C7\>\<#6837\>\<#4E0E\>\<#5931\>\<#771F\>>
 
@@ -355,11 +389,11 @@
     <tit|\<#5E73\>\<#6ED1\>\<#4E0E\>\<#91CD\>\<#91C7\>\<#6837\>(\<#9AD8\>\<#65AF\>\<#5E73\>\<#6ED1\>)>
 
     <space|2em><image|img/smooth_resample_2.png|0.8par|||>
-  </hidden>|<\shown>
+  </hidden>|<\hidden>
     <tit|\<#9AD8\>\<#65AF\>\<#91D1\>\<#5B57\>\<#5854\>>
 
     <space|7em><image|img/gaussian_pyramid.png|0.5par|||>
-  </shown>|<\hidden>
+  </hidden>|<\hidden>
     <tit|\<#5C3A\>\<#5EA6\>\<#7A7A\>\<#95F4\>>
 
     <space|5em><image|img/scale_space.png|0.6par|||>
@@ -367,11 +401,11 @@
     <tit|Zero-crossing>
 
     <space|5em><image|img/zero_crossing.png|0.6par|||>
-  </hidden>|<\hidden>
+  </hidden>|<\shown>
     <tit|2D>
 
     <image|img/scale_space_2D.png|1par|||>
-  </hidden>>
+  </shown>>
 </body>
 
 <\initial>
@@ -381,7 +415,10 @@
     <associate|font-family|rm>
     <associate|info-flag|minimal>
     <associate|math-font|roman>
+    <associate|page-height|auto>
     <associate|page-medium|beamer>
+    <associate|page-type|16:9>
+    <associate|page-width|auto>
     <associate|preamble|false>
   </collection>
 </initial>
